@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.openai/robogym
 
 Every fact cites its source at commit `9ff1111fd557b1a01911d7d8c9d59a453071c96e`; all are `upstream_code` (an MJCF

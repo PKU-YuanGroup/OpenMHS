@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Explicit pinned Python source surfaces
 
 This change adds source-only selectors for upstream modules and filenames that

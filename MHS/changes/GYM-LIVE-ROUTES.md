@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # GYM-LIVE-ROUTES — asynchronous environments, dm_env environments and resets that integrate physics
 
 Three opt-in Gymnasium profiles serve live routes the synchronous bridge could not: an owned event loop for `async def step` (`asyncio_owned_loop_v1`), a dm_env adapter that maps a `TimeStep` explicitly (`dm_env_v1`), and physics timing for resets that integrate physics, with an explicit checkpoint opt-out. Undeclared backends keep their behavior and gate digests. ProjectAirSim and SimplerEnv pass after review; RoboPianist stays blocked.

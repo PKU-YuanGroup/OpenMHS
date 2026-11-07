@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # ROS control without an acknowledged stop
 
 An effectful ROS profile could report an achieved safe state after a software-only e-stop in simulated mode while the external peer retained its last target. The local latch prevented later commands but did not stop the external controller. RosBridge now reports explicit unconfirmed safety when a profile declares effectful commands, writes or a native reset without an acknowledged stop binding or safe-state Action. The stock server returns `MHS.SAFETY.SAFE_STATE_UNREACHED` and retains the latch.

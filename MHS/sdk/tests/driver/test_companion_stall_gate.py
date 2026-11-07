@@ -246,7 +246,7 @@ def scratch_package(test: unittest.TestCase, name: str, driver: str, fake: str):
                  "acceptance": f"python3 -m mhs.driver check MHS/drivers/robots/acme__{name} --backend fake",
                  "companions": [entry]})
     base.write_card(root, directory, card)
-    lock = {"$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json", "openmhs": "0.9",
+    lock = {"$schema": "https://mhs.openai4s.org/schema/0.9/driver-lock.schema.json", "openmhs": "0.9",
             "package_id": f"gh.acme/{name}",
             "upstream": {"repo_url": f"https://github.com/acme/{name}", "commit": commit, "license_spdx": "MIT"},
             "companions": [{"package_id": "gh.acme/sim", "commit": companion_commit}],

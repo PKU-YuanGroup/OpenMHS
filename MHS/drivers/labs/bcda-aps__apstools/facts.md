@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.bcda-aps/apstools
 
 Every fact cites the pinned clone at commit `6250dbaa2f0413611fab56d6956c523d9fe2d293`. `upstream_code` refs name

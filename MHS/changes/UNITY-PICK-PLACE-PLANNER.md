@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # UNITY-PICK-PLACE-PLANNER — the Unity ROS-TCP item: no route owns Unity's execution; a plan-only package
 
 The blocked Unity object-pose-estimation demo (`gh.unity-technologies/robotics-object-pose-estimation`, triage class C) now passes as a plan-only `RosDriver` package: one observational command asks the demo's MoveIt service `ur3_moveit` for its five pick-and-place trajectories and returns them, executing nothing. No SDK change was needed and none was made. The simulated arm stays out of reach of any route (Unity executes plans in a coroutine that only its own request starts, and its scripts expose no ROS interface), and the pose estimation service stays uncovered (its image exists only inside Unity); both are recorded with their evidence. No passing package's gate digest moved.

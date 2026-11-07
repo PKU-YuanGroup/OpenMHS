@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.shupx/fastswarmsim
 
 Every fact cites the pinned clone at commit `56a6380fcd409a0700baedc39a632a823622d633`.

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5 sensed-confirmation stop: epfl-lasa/kuka-rviz-simulation
 
 Repair of the simulated ROS 1 package `MHS/drivers/robots/epfl-lasa__kuka-rviz-simulation` (SAFE-049, CORE-088). The package stays a repair: `driver.lock.json` `authored_by` is still `deepseek-v4.1-flash:1017`, run `ros-wave-c-116`, date 2026-11-05, and `reviewed_by` stays null. One model-review paragraph was appended to `RESULT.json` notes. No human review is claimed.

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Literal composition of a ROS endpoint, and the Webots demo sensed stop
 
 Written by Grok (grok-4.7, a model and not a human) on 2026-11-05, run

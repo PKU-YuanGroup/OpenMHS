@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.moler-group/scanning-squid
 
 Every fact cites the pinned clone at commit `32a61e8f8f4f6671f04e583752e361cb00276188`. Below, `atto.py` is

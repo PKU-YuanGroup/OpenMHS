@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # ProjectAirSim live route: the five former adapter requirements
 
 The selected route remains `ProjectAirSimDroneLandingEnv`: three NED velocity components per step, four pose/yaw observations, reward, episode status and reset. The earlier version of this file listed five requirements that blocked the package because the synchronous Gymnasium bridge never awaited `async def step` (`projectairsim_dronelanding_env.py:63-88`). The SDK now has an asynchronous profile (`asyncio_owned_loop_v1`) and the package declares it for both backends. This file records, for each requirement, what is settled by contract and what remains unproven. Nothing here was run against a Project AirSim server.

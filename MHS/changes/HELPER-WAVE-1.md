@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Helper wave 1: the 33 cards the helper integration opened, reviewed by Claude (21 contracts, 11 blocks, 1 skip)
 
 The [helper integration](HELPER-INTEGRATION.md) made 33 cards dispatchable: 10 Ophyd, 8 QCoDeS, 5 PyLabRobot, 3

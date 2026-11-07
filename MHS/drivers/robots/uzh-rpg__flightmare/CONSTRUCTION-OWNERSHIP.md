@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Flightmare construction and validation boundary
 
 The one-environment production adapter still preserves the complete four-action vector, batched native observations/rewards/done/info, explicit reset and seed policy. It continues to reject `num_envs != 1`; it does not invent actions for unselected environments or hide multi-environment outcomes.

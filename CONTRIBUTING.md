@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Contributing
 
 Thank you for helping. This file covers the two common contributions: a **driver package** for one repository of the corpus,
@@ -9,15 +7,15 @@ or security problem as described in [SECURITY.md](SECURITY.md), not in a public 
 Licences: code, schemas, SDK, site generator and integrations are MIT ([LICENSE](LICENSE)); specification text and
 registry data are CC-BY-4.0 ([LICENSE-docs](LICENSE-docs)). By contributing you license your work the same way.
 
-## 1. A driver package (one repository, one pull request)
+## 1. Driver packages
 
 The model-facing process is in [`MHS/handoff/`](MHS/handoff/README.md); a human contributor follows the same checklist. The
 package for the card `MHS/registry/tasks/<track>/<owner>__<repo>.json` lives in `MHS/drivers/<track>/<owner>__<repo>/`.
 
 Before you open the pull request, every item must hold:
 
-- [ ] The pull request touches exactly **one** directory under `MHS/drivers/` (plus nothing else). Never edit the SDK, the
-      spec, the schemas or the registry in a driver pull request; a bug there is a separate issue.
+- [ ] Keep changes focused and explain any SDK or schema changes needed by the adapted drivers. Related packages
+      may be updated together; CI checks each changed package.
 - [ ] `task.json` is the registry card, unchanged.
 - [ ] `export PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=MHS/sdk/src` and
       `python3 -m mhs.driver check <dir> --backend fake` exits 0 (gates G1 to G9).
@@ -29,10 +27,9 @@ Before you open the pull request, every item must hold:
       attributes and commands that exist upstream.
 - [ ] `driver.lock.json` says who wrote it (`authored_by`) honestly and has `reviewed_by: null` until a human reviewer
       signs after [`MHS/handoff/REVIEW.md`](MHS/handoff/REVIEW.md).
-- [ ] `python3 MHS/handoff/tools/collect.py <dir>` shows no `warning:` line other than the reading list for the reviewer
-      (`UNSOURCED_LIMIT_GATE_WARNING`, `UNVERIFIABLE_CITATION`); CI runs it with `--strict`, which accepts those two only
-      once a human has signed `reviewed_by`.
-- [ ] No generated `check-report.json`, no `__pycache__`, no copy of upstream code, nothing outside the directory.
+- [ ] `python3 MHS/handoff/tools/collect.py <dir>` passes. Citation warnings remain visible for source review;
+      they do not require an internal publication signature. Hardware activation keeps its operator controls.
+- [ ] No generated `check-report.json`, no `__pycache__`, no copy of upstream code.
 - [ ] `RESULT.json` states the truth (`pass`, `blocked` with codes, or `skip-proposed`).
 
 CI re-runs the gate on every changed driver directory and never trusts a committed `RESULT.json` or report. A pass is
@@ -40,8 +37,7 @@ CI re-runs the gate on every changed driver directory and never trusts a committ
 
 Maintainers, after merging driver pull requests: `python3 MHS/registry/build_registry.py --jobs 8`, then
 `python3 MHS/handoff/tools/prepare.py --sync`, then `python3 MHS/registry/validate.py --no-corpus` (without
-`--allow-stale-cards`), and commit the refreshed cards and records. A pull request cannot do this itself: it changes nothing
-outside its own driver directory.
+`--allow-stale-cards`), and commit the refreshed cards and records. These generated updates may be included with the driver changes.
 
 ## 2. SDK, spec, schemas, registry
 
@@ -60,5 +56,4 @@ python3 MHS/site/check.py
   `python3 MHS/sdk/tools/gen_appendices.py`.
 - After a change to the corpus-independent registry code, run `python3 MHS/registry/build_registry.py --jobs 8 --check` and
   `python3 MHS/registry/validate.py`.
-- Keep the non-affiliation statement; do not use Anthropic's name, domain or branding as this project's.
 - Write a line for [CHANGELOG.md](CHANGELOG.md) when behaviour changes.

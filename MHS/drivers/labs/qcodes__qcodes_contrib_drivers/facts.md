@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.qcodes/qcodes_contrib_drivers
 
 Every fact cites the pinned clone at commit `187164d608ed3a281fccdf3f68693d29b2d46a62`. `upstream_code` refs name

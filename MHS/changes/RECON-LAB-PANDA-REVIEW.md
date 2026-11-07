@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Source-file lab drivers and concrete Panda review
 
 The next four DeepSeek-authored packages have completed model review. Both Keithley power-supply packages pass

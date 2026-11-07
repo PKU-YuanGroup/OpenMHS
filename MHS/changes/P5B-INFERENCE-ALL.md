@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5B inference and companion message types
 
 Written by Grok (grok-4.7, a model and not a human) on 2026-11-05 as the external item p5b-inference, run `ext-p5b-inference--all-20261105`, in this working copy. Nothing in the stopped Claude attempt (`development/p5b-inference`) or the stopped Grok attempt (`development/ext-p5b-inference.fast-stopped`) was copied. No hardware run, simulator run, ROS graph or human review is claimed. Evidence for the two repaired packages is `contract_checked` on the fake backend. `reviewed_by` stays null.

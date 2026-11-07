@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Source facts for gh.nasa/astrobee
 
 Pinned commit: `bf43a42d5f89bf0679e51ab25e7a9b7800313e9c`. Source declarations and controlled fake results are not native execution.

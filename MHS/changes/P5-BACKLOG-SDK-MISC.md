@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5-BACKLOG-SDK-MISC — Ophyd export family, stop-once stamp test, MuJoCo recipe note
 
 Grok (grok-4.7, a model and not a human) authored this record on 2026-11-05. `reviewed_by` stays null. Run id `ext-p5-backlog-sdk--misc-20261105`. This unit is BL-01, BL-02 and BL-03 from `result.backlog.items`. BL-20 and BL-24 are another unit; their files were left alone. No driver package was re-authored, and no `RESULT.json` note was edited.

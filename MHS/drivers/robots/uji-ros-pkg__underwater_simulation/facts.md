@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.uji-ros-pkg/underwater_simulation
 
 Every fact cites the pinned clone at commit `7f4a276c55f34524e418f56a6da401172943f886`.

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Finite ROS image sources and per-capture headers
 
 A single ROS driver package previously exposed one fixed image stream and omitted the source header. The opt-in `cameras` declaration now selects among a finite set of static, source-checked image subscriptions through the existing `camera` input. Each capture retains complete pixels and the exact validated ROS1 or ROS2 header in its scoped artifact descriptor. The stable four-field image output and legacy flat subscription behavior stay unchanged; no synchronized capture, producer freshness or physical-camera validation is claimed.

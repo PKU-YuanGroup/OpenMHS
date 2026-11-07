@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # OpenMHS registry
 
 Generated **2026-10-20T00:00:00Z** by `MHS/registry/build_registry.py` (registry version 0.9.0, publisher id `openmhs-registry`). Stdlib only, offline and deterministic: a rebuild from the same inputs is byte-identical (`MHS_REGISTRY_DATE` sets the date; `SOURCE_DATE_EPOCH` is ignored).

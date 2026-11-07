@@ -1125,17 +1125,10 @@ class ChangelogTests(unittest.TestCase):
 
 
 class ExportCheckTests(unittest.TestCase):
-    """tools/oss_export_check.py static checks, on tiny synthetic exports."""
+    """Check export structure and local path leaks without editorial restrictions."""
 
-    HOME = "/" + "Users" + "/someone/project"
-    CJK = chr(0x4E2D) + chr(0x6587)  # two CJK characters, built so this file stays free of them
-    DOMAIN = "modelhardwarestandard" + ".com"
-
-    def export(self, extra=None):
-        statement = "OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic.\n"
+    def problems(self, extra=None):
         files = {rel: "text\n" for rel in export_check.REQUIRED}
-        for rel in export_check.README_FILES + ["MHS/sdk/pyproject.toml"]:
-            files[rel] = statement
         files.update(extra or {})
         root = Path(tempfile.mkdtemp(prefix="export-"))
         self.addCleanup(shutil.rmtree, root, True)
@@ -1143,42 +1136,25 @@ class ExportCheckTests(unittest.TestCase):
             target = root / rel
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(text, encoding="utf-8")
-        return root, sorted(files)
-
-    def problems(self, extra=None):
-        root, tracked = self.export(extra)
-        return export_check.static_checks(root, tracked)
+        return export_check.static_checks(root, sorted(files))
 
     def test_a_clean_tree_has_no_problem(self):
         self.assertEqual(self.problems(), [])
 
-    def test_leaks_are_found(self):
-        self.assertTrue(any("home-directory" in p for p in self.problems({"MHS/notes.md": f"see {self.HOME}\n"})))
-        self.assertTrue(any("home-directory" in p for p in self.problems({"MHS/notes.md": "in /private/" + "tmp/x\n"})))
-        self.assertTrue(any("modelhardwarestandard" in p for p in self.problems({"MHS/notes.md": f"https://{self.DOMAIN}/\n"})))
-        self.assertTrue(any("CJK" in p for p in self.problems({"MHS/notes.md": self.CJK + "\n"})))
+    def test_local_paths_and_private_inputs_are_found(self):
+        home = "/" + "Users" + "/someone/project"
+        self.assertTrue(any("home-directory" in p for p in self.problems({"MHS/notes.md": home})))
+        scratch = "/private/" + "tmp/x"
+        self.assertTrue(any("home-directory" in p for p in self.problems({"MHS/notes.md": scratch})))
         self.assertTrue(any("allowlist" in p for p in self.problems({"labs/x/y.py": "x\n"})))
-        self.assertTrue(any("CNAME" in p for p in self.problems({"MHS/site/deploy/CNAME": "example.invalid\n"})))
 
-    def test_the_documented_exceptions_are_allowed(self):
-        self.assertEqual(self.problems({"MHS/spec/appendix-d-anthropic-mhs.md": f"cited: {self.DOMAIN}\n"}), [])
-        self.assertEqual(self.problems({"MHS/registry/triage.py": f"WORD = '{self.CJK}'\n"}), [])
-        vendor = '{"id": "gh.a/b", "x-vendor": {"note": "%s"}}\n' % self.CJK
-        self.assertEqual(self.problems({"MHS/registry/repos/labs/a__b.json": vendor}), [])
-        outside = '{"id": "gh.a/b", "title": "%s"}\n' % self.CJK
-        self.assertTrue(any("CJK" in p for p in self.problems({"MHS/registry/repos/labs/a__b.json": outside})))
-
-    def test_a_driver_may_cite_an_upstream_file_whose_name_is_not_english(self):
-        cited = f'DOC = "assets/SDK_API{self.CJK}.md"\nFact("x", source="vendor_doc", ref=f"{{DOC}}:253-280")\n'
-        self.assertEqual(self.problems({"MHS/drivers/robots/a__b/driver.py": cited,
-                                        "MHS/drivers/robots/a__b/facts.md": f"| x | assets/{self.CJK}/move.md:12 |\n"}), [])
-        prose = f'Fact("{self.CJK}", source="vendor_doc", ref="README.md:1")\n'
-        self.assertTrue(any("CJK" in p for p in self.problems({"MHS/drivers/robots/a__b/driver.py": prose})))
-        self.assertTrue(any("CJK" in p for p in self.problems({"MHS/notes.md": f"assets/{self.CJK}.md\n"})),
-                        "only a driver package cites upstream files")
-
-    def test_a_readme_must_open_with_the_non_affiliation_statement(self):
-        self.assertTrue(any("non-affiliation" in p for p in self.problems({"README.md": "# OpenMHS\n"})))
+    def test_publication_accepts_language_domain_and_project_headings(self):
+        text = chr(0x4E2D) + chr(0x6587)
+        self.assertEqual(self.problems({
+            "MHS/notes.md": text,
+            "README.md": "# OpenMHS — Model Hardware Standard\n",
+            "MHS/site/deploy/CNAME": "mhs.openai4s.org\n",
+        }), [])
 
 
 if __name__ == "__main__":

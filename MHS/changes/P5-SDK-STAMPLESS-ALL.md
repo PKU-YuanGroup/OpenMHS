@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Arrival freshness, ROS 1 stamp refusal, and three simulator packages
 
 Authored by grok-4.7 (a model and not a human; run ext-p5-sdk-stampless--all-20261105). `reviewed_by` stays null. Nothing here was taken from the stopped Claude attempt at `development/p5-sdk-stampless` or the stopped Grok attempt at `development/ext-p5-sdk-stampless.fast-stopped`: both trees matched their base manifests. Evidence is fake `contract_checked` only. No hardware run, no simulator run, and no human review is claimed. This record does not publish any package.

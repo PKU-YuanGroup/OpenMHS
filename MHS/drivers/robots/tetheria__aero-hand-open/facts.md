@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.tetheria/aero-hand-open
 
 Every fact cites the pinned clone at commit `7bb2f23485a7d440960c21046da642de132b7745`. `upstream_code` refs name

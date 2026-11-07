@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # OpenMHS family: sila2
 
 **SiLA 2 features through Sila2Driver (controlled peer, one pinned Phenix source profile)**

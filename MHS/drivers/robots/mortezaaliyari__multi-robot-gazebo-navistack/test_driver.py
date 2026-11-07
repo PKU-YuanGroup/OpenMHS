@@ -35,7 +35,7 @@ ENVELOPE = "MHS.SAFETY.ENVELOPE_VIOLATION"
 
 #: A test-only operator overlay.  These example bounds are not device facts.
 OVERLAY = {
-    "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+    "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
     "openmhs": "0.9",
     "site": "driver test overlay",
     "issued_by": {"id": "operator:test"},

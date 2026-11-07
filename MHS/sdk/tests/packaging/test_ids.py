@@ -24,7 +24,7 @@ class IdentifierValuesTests(unittest.TestCase):
         self.assertEqual(_ids.SPEC_VERSION, "0.9")
         self.assertEqual(_ids.SDK_VERSION, "0.9.0.dev0")
         self.assertEqual(_ids.WIRE_VERSION, "1.0")
-        self.assertEqual(_ids.SCHEMA_BASE, "https://openmhs.invalid/schema/0.9/")
+        self.assertEqual(_ids.SCHEMA_BASE, "https://mhs.openai4s.org/schema/0.9/")
         # The legacy prefix is spelled only in _ids.py (the one place the old
         # namespace may appear outside appendix D); check its shape instead.
         legacy = urlsplit(_ids.LEGACY_SCHEMA_PREFIX)
@@ -32,6 +32,14 @@ class IdentifierValuesTests(unittest.TestCase):
         self.assertNotEqual(legacy.hostname, urlsplit(_ids.SCHEMA_BASE).hostname)
         self.assertEqual(_ids.REGISTRY_ID, "openmhs-registry")
         self.assertEqual(_ids.ADAPTER_ID_PREFIX, "openmhs:")
+
+    def test_previous_schema_namespace_still_resolves(self) -> None:
+        from mhs.schema import default_store
+        store = default_store()
+        current = store.resolve_public(_ids.SCHEMA_BASE + "device.schema.json")
+        previous = store.resolve_public(_ids.PLACEHOLDER_SCHEMA_PREFIX + "device.schema.json")
+        self.assertEqual(previous, current)
+        self.assertEqual(_ids.SITE_URL, "https://mhs.openai4s.org")
 
     def test_module_defines_only_the_identifiers(self) -> None:
         public = {name for name in vars(_ids) if name.isupper()}
@@ -82,7 +90,7 @@ class PyprojectTests(unittest.TestCase):
 
     def test_alpha_classifier_and_description(self) -> None:
         self.assertIn("Development Status :: 3 - Alpha", self.project["classifiers"])
-        self.assertIn("not affiliated with or endorsed by Anthropic", self.project["description"])
+        self.assertIn("Model Hardware Standard", self.project["description"])
         self.assertEqual(self.project["dependencies"], [])
 
     def test_console_scripts(self) -> None:

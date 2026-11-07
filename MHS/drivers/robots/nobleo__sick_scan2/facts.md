@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.nobleo/sick_scan2
 
 Every fact cites the pinned clone at commit `8e851e7f728e5cfb1a68a721bff833c1b50e4410`.

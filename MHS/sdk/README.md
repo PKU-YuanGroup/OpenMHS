@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # OpenMHS SDK (distribution `openmhs`, import `mhs`)
 
 The reference Python SDK for **OpenMHS 0.9** (development draft). It is pure

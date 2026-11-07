@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5 sensed confirmation for okermorgant/map_simulator
 
 Repair of `MHS/drivers/robots/okermorgant__map_simulator` only. The package keeps its

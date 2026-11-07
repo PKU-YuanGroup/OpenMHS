@@ -1210,7 +1210,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="mhs",
         description=f"{_ids.PROJECT_NAME} command line: serve drivers, talk to endpoints, run code files. "
-                    f"{_ids.NON_AFFILIATION}",
+                    f"Open-source Model Hardware Standard. Documentation: {_ids.SITE_URL}",
         epilog=_EPILOG,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )

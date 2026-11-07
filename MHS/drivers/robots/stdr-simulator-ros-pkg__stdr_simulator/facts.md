@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.stdr-simulator-ros-pkg/stdr_simulator
 
 Every fact cites the pinned clone at commit `1bcdec7b79c9e4a2960f7fcf9c150c67485ecab4`.

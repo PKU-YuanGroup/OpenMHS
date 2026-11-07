@@ -12,7 +12,7 @@ workspace and emits a fully self-contained site.
     python3 MHS/site/build.py                       # build into MHS/site/_site/
     python3 MHS/site/build.py --out DIR             # build into DIR
     python3 MHS/site/build.py --site-url URL        # emit canonical links and a sitemap
-    python3 MHS/site/build.py --release             # refuse the synthetic registry fallback
+    python3 MHS/site/build.py --release             # build the production documentation
     python3 MHS/site/build.py --quiet               # build without per-section log
 
 The public URL is a build parameter (``--site-url`` or ``$OPENMHS_SITE_URL``);
@@ -1021,78 +1021,10 @@ def license_bucket(raw: str) -> str:
     return "Other / custom"
 
 
-def _synthetic_registry() -> dict:
-    """Deterministic ~2,900-record fallback so the explorer is never empty."""
-    families = [f for f in FAMILY_ORDER if f != "other"]
-    tracks = ["labs", "robots"]
-    licenses = ["MIT", "Apache-2.0", "BSD-3-Clause", "GPL-3.0", "unknown", "BSD-2-Clause"]
-    records = []
-    for i in range(2900):
-        family = families[i % len(families)]
-        track = tracks[i % 2]
-        tier = TIERS[[0, 1, 1, 2, 3][i % 5]]
-        ring = [1, 2, 2, 3][i % 4]
-        modes = [["simulated"], ["hardware"], ["simulated", "hardware"]][i % 3]
-        owner = f"synthetic-{family}"
-        repo = f"{family}-tool-{i:04d}"
-        records.append(
-            {
-                "package_id": f"gh.{owner}/{repo}",
-                "title": f"{owner}/{repo}",
-                "owner": owner,
-                "repo": repo,
-                "track": track,
-                "families": [family],
-                "tier": tier,
-                "ring": ring,
-                "modes": modes,
-                "license": licenses[i % len(licenses)],
-                "stars": (i * 37) % 500,
-                "description": (
-                    f"Synthetic placeholder record for the {family} family. "
-                    "Generated because MHS/registry/index.json was not present at build time."
-                ),
-                "capabilities_offered": ["cap.device.describe.v1", "cap.world.step.v1"],
-                "interfaces": ["Python SDK"],
-                "languages": ["Python"],
-                "adapter": {"bridge": family, "state": "declared", "present": False},
-                "evidence": {"state": "declared", "read_by": "generator"},
-                "next_action": "Integrate a detected entry point, publish a manifest, then run the conformance suite.",
-                "has_manifest": False,
-                "local_path": f"{track}/{owner}/{repo}",
-                "repo_url": "",
-            }
-        )
-    stats = {
-        "total": len(records),
-        "by_track": {"labs": 1450, "robots": 1450},
-        "by_tier": {t: sum(1 for r in records if r["tier"] == t) for t in TIERS},
-        "by_ring": {str(r): sum(1 for x in records if x["ring"] == r) for r in RINGS},
-        "by_evidence": {"declared": len(records)},
-        "by_mode": {m: sum(1 for r in records if m in r["modes"]) for m in ("hardware", "simulated", "replay")},
-        "by_family": {f: sum(1 for r in records if f in r["families"]) for f in FAMILY_ORDER},
-        "manifests": 0,
-        "capability_claims": len(records) * 2,
-    }
-    return {
-        "generated_at": BUILD_DATE,
-        "registry_version": "1.0.0",
-        "records": records,
-        "stats": stats,
-        "source_manifest": {"generator": "MHS/site synthetic fallback"},
-        "_synthetic": True,
-    }
-
-
 def load_registry() -> dict:
     raw = load_json(MHS / "registry" / "index.json")
     if not isinstance(raw, dict) or not isinstance(raw.get("records"), list) or not raw["records"]:
-        if RELEASE:
-            raise SystemExit(
-                "--release: MHS/registry/index.json is missing or has no records; "
-                "a release build never publishes the synthetic fallback registry"
-            )
-        return _synthetic_registry()
+        raise SystemExit("MHS/registry/index.json is missing or empty; run python3 MHS/registry/build_index.py")
     raw["_synthetic"] = False
     return raw
 
@@ -1465,16 +1397,6 @@ def header_html(prefix: str, section: str) -> str:
 </header>"""
 
 
-def affiliation_banner(prefix: str) -> str:
-    """The non-affiliation notice that opens every page."""
-    return (
-        '<div class="affiliation-banner" role="note"><div class="wrap">'
-        f'<p>{esc(NON_AFFILIATION)} '
-        f'<a href="{prefix}anthropic-mhs/index.html">{esc(ANTHROPIC_PAGE_LABEL)}</a></p>'
-        "</div></div>"
-    )
-
-
 def footer_html(prefix: str) -> str:
     spec_links = "".join(
         f'<li><a href="{prefix}spec/{rel[:-3]}.html">{esc(doc_id)} · {esc(title)}</a></li>'
@@ -1521,7 +1443,6 @@ def footer_html(prefix: str) -> str:
   </div>
   <div class="wrap footer-legal">
     <p>© 2026 {esc(COPYRIGHT_HOLDER)}. Specification text and registry data CC BY 4.0 · code and schemas MIT · quoted third-party text is not covered by these licences.</p>
-    <p>{esc(NON_AFFILIATION)}</p>
     <p>{SITE_NAME} conformance is not safety certification. No trackers, no external fonts, no CDNs.</p>
   </div>
 </footer>"""
@@ -1636,7 +1557,7 @@ def page_html(
 </head>
 <body class="{attr(body_class)}">
 <a class="skip-link" href="#main">Skip to content</a>
-{affiliation_banner(prefix)}
+
 {header_html(prefix, section)}
 <main id="main" tabindex="-1">
 {body}
@@ -5100,8 +5021,13 @@ def copy_assets(known: set[str]) -> None:
 
 
 def copy_deploy(known: set[str]) -> None:
-    # No CNAME is written: the custom domain, if any, belongs to whoever
-    # deploys the site (see deploy/README.md).
+    for path in sorted((MHS / "schema").glob("*.json")):
+        rel = f"schema/{SPEC_VERSION}/{path.name}"
+        write_bytes(rel, path.read_bytes())
+        known.add(rel)
+    if SITE_URL == IDS.SITE_URL:
+        write_text("CNAME", "mhs.openai4s.org\n")
+        known.add("CNAME")
     headers = DEPLOY / "_headers"
     if headers.is_file():
         write_bytes("_headers", headers.read_bytes())
@@ -5430,7 +5356,6 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="build.py",
         description="Build the OpenMHS static site.",
-        epilog=NON_AFFILIATION,
     )
     parser.add_argument("--out", type=Path, default=None,
                         help=f"output directory (default: {DEFAULT_OUT})")
@@ -5438,7 +5363,7 @@ def main(argv: list[str] | None = None) -> int:
                         help="public base URL for canonical links and the sitemap "
                              "(default: $OPENMHS_SITE_URL; no default host)")
     parser.add_argument("--release", action="store_true",
-                        help="release build: fail instead of using the synthetic registry fallback")
+                        help="production build (registry data is always required)")
     parser.add_argument("-q", "--quiet", action="store_true", help="build without the summary log")
     args = parser.parse_args(sys.argv[1:] if argv is None else argv)
     OUT = (args.out.expanduser() if args.out is not None else DEFAULT_OUT).resolve()

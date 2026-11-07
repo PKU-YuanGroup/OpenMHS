@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Unitree A1 original declaration remains rejected
 
 The complete original twelve-joint position/velocity/effort/gain surface and twenty-entry LowState observation are retained unchanged. All twelve selected A1 URDF limit elements and all thirty-six numeric position/velocity/effort bounds match the pinned primary source. Gains remain operator-required. This does not establish a valid or safe deployment.

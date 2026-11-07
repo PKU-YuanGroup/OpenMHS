@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.clydemcqueen/flock2
 
 Every fact cites the pinned clone at commit `b6ee071c61189445f83b4a4dcc706726945b5090`.

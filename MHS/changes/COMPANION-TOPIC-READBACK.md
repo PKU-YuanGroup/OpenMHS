@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Companion topic read-back: a fresh-sample world-state read-back, operator-run bridges and three gz-sim packages
 
 A companion-cited e-stop may now be confirmed by a boolean world-state flag read from fresh topic samples (E2: gz-sim's `WorldStatistics.paused`, since the reply of its world control confirms nothing), and a ROS driver may declare the ros_gz bridges its operator must run (E3: `operator_bridges`, checked by gate G7 and listed in the reference file). Three gz-sim simulator packages pass with the WorldControl pause as their stop: linorobot2, VRX and TortoiseBot. vision-agh/crazyflie-sim was evaluated and stays blocked.

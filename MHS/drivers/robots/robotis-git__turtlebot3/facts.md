@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Source facts for gh.robotis-git/turtlebot3
 
 Pinned commit: `fc817ce3073af1d6032397c64504134882af5e9a`. Source declarations and controlled fake evidence do not prove native execution.

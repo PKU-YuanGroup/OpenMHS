@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5-GZ-PAUSE: wh200720041/warehouse_simulation_toolkit
 
 The warehouse Gazebo package now passes with a companion-cited world pause and a paused-flag read-back. It offers no unpause. This is a repair of the existing package: `authored_by` stays `deepseek-v4.1-flash:1017`, run `ros-wave-c-059`, date 2026-11-04. `reviewed_by` stays null.

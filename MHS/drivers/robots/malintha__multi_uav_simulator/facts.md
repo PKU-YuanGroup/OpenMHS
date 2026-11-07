@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.malintha/multi_uav_simulator
 
 Every fact cites the pinned clone at commit `f2cc09b22e4752c057cb8cc29c47e6fecfe04dde`.

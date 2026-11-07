@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # ROS receiver startup and bounded close
 
 A request can send its first rosbridge frame and publish the receiver Thread

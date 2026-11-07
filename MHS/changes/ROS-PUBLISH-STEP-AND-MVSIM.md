@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # ROS-PUBLISH-STEP-AND-MVSIM — publish-then-step ROS commands, pybind11 native selectors, Webots gym bridge and MVSim
 
 Two SDK gaps of the blocked-package triage (class C) closed: a `RosDriver` command can publish and then call a step service and read a fresh sample after it, and gate G7 can resolve a native class that the upstream exposes only through pybind11 binding source. With them the Webots gym bridge passes after repair, and MVSim passes as a direct driver over its own ZMQ/protobuf services. The SDK stays standard-library only; no passing package's gate digest moved.

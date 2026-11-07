@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # SIM-HOST — an isolated simulator host for environments that own a ROS and Gazebo lifecycle
 
 A `GymnasiumDriver` backend can now declare `isolated_process_v1`: its environment is built and driven in a child process that the endpoint starts and owns, an exit or a global ROS shutdown inside the environment ends only that process, every call is bounded, and the e-stop is the declared simulator stop confirmed by a declared state read-back, or an unreached safe state. gh.rickstaa/ros-gazebo-gym passes on it (risk raised to R2); gh.ut-amrl/socialgym2 stays blocked because its simulator has no stop with a read-back.

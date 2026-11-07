@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.josuablejeru/labmastro
 
 Every fact cites the pinned clone at commit `86db05e8dd4e37d66667e18e4d8e2fadbb864b18`. `upstream_code` refs name

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.ctu-mrs/mrs_uav_flightforge_simulator
 
 Every fact cites the pinned clone at commit `e4715a8c75aac70a9bcd7f75113746b938139117`.

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.fdcl-gwu/uav_simulator
 
 Every fact cites the pinned clone at commit `7270fe4e274f2a5d84432336311da478d87d8d3d`.

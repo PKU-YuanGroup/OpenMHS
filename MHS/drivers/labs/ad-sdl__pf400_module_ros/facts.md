@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.ad-sdl/pf400_module_ros
 
 Every fact cites the pinned clone at commit `dad325c4bf86efda3b81f98d33837ec5ce21fc0c`. The TCP command server

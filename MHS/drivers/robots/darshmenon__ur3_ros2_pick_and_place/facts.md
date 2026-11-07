@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.darshmenon/ur3_ros2_pick_and_place
 
 Every fact cites the pinned clone at commit `e58ea6178d8d8195beb92387ba365227840a96a9`.

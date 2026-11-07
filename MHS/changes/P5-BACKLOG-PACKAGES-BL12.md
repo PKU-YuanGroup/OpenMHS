@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5 backlog packages, BL-12
 
 Unit BL-12 repairs two passing lab packages. Both used to send `*RST` from the safety reset. The clones do not state the effect on the output, so SAFE-042 (`MHS/spec/04-safety.md`, the paragraph that begins "SAFE-042") forbids that call as a reset step. Each package now offers the upstream reset method as an ordinary command. The safety reset sends nothing. `authored_by` is unchanged. `reviewed_by` stays null. Evidence is `contract_checked` on the fake backend. No hardware run and no human review are claimed.

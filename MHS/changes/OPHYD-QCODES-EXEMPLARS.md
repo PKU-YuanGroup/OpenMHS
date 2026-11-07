@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Ophyd and QCoDeS family exemplars
 
 The registry families `ophyd` and `qcodes` waited on `helper:ophyd` and `helper:qcodes` although `OphydDriver` and `QcodesDriver` existed: no complete package showed the helpers on a real upstream class. Each family now has an exemplar package that passes the full G1-G9 fake gate and `collect.py --strict`, and the triage family table names the helper and the exemplar.

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Exemplar: gh.bcda-aps/apstools (a read-only OphydDriver)
 
 The APS storage-ring machine parameters, read through the classic Ophyd Device

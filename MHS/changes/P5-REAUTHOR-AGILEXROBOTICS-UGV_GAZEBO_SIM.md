@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5 re-author: agilexrobotics/ugv_gazebo_sim
 
 Unit of item p5-reauthor. Author: grok-4.7 (a model, not a human), run `ext-p5-reauthor--agilexrobotics__ugv_gazebo_sim-20261105`, 2026-11-05. `reviewed_by` stays null. Nothing was taken from the stopped Claude tree or the stopped Grok tree; both had no file newer than their base manifests.

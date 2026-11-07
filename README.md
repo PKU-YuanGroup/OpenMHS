@@ -1,8 +1,8 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
+# OpenMHS — Model Hardware Standard
 
-# OpenMHS
+[Website and documentation](https://mhs.openai4s.org) · [OpenAI4S](https://github.com/PKU-YuanGroup/OpenAI4S) · [Playground](https://github.com/PKU-YuanGroup/OpenAI4S-Playground)
 
-OpenMHS is an open draft contract between AI agents and the equipment they
+OpenMHS is the open-source Model Hardware Standard: an open draft contract between AI agents and the equipment they
 operate: laboratory instruments, robots and the simulators that stand in for
 them. It defines how a device describes itself (what it measures, what can be
 adjusted, which actions exist, its limits and how it stops), how an agent
@@ -40,7 +40,7 @@ claim are documented in
 | [`MHS/sdk/`](MHS/sdk/) | The Python SDK, distribution `openmhs`, import name `mhs`; standard library only. Endpoint runtime, client, schema validator, bridges, deterministic reference endpoints, conformance suite, MCP projection and CLI. |
 | [`MHS/registry/`](MHS/registry/) | A catalogue of about 2,967 public lab-automation and robotics repositories, with the generator and validator that produce it. |
 | [`MHS/drivers/`](MHS/drivers/) | Driver packages, one per upstream repository. Four exemplars (a lab instrument, a SCPI instrument, a robot arm, a simulator) show the pattern. |
-| [`MHS/handoff/`](MHS/handoff/) | The kit for turning the corpus into driver packages with a model, one repository at a time: prompt, playbook, waves, sandbox and review rules, and tools. |
+| [`MHS/handoff/`](MHS/handoff/) | Driver package states, source review notes and validation tools. |
 | [`tools/`](tools/) | Repository tools: fetch a pinned upstream clone, build the changelog index, check the open-source export. |
 | [`MHS/conformance/`](MHS/conformance/) | Self-issued conformance reports for the reference endpoints. |
 | [`MHS/site/`](MHS/site/) | Offline static-site generator, checker and local preview server. |
@@ -114,15 +114,15 @@ on `PYTHONPATH`; see [`integration/openai4s/README.md`](integration/openai4s/REA
 
 ## Contributing
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) (a driver package is one directory per pull request) and
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) and
 [`CHANGELOG.md`](CHANGELOG.md), whose first section lists the behaviour changes of this draft.
 
 ## Naming and compatibility
 
 - Project identifiers (name, versions, schema namespace) are defined once in
   [`MHS/sdk/src/mhs/_ids.py`](MHS/sdk/src/mhs/_ids.py).
-- The schema namespace `https://openmhs.invalid/schema/0.9/` is a placeholder
-  on a reserved top-level domain until the project has its own domain.
+- Website: `https://mhs.openai4s.org`; schema namespace:
+  `https://mhs.openai4s.org/schema/0.9/`. Earlier schema identifiers remain readable.
 - Wire identifiers stay as they are during 0.x: methods `mhs.*`, error codes
   `MHS.*`, and `mhs_version: "1.0"`, which means *wire revision 1*. The Python
   import name stays `mhs`.

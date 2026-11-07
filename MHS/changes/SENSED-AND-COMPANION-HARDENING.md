@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Sensed-stop replay, companion read-back meaning and the served simulated-only binding
 
 Three minor safety findings of the phase-3 verification (lens safety-path) are fixed. A sensed-confirmation stop now counts only samples published after its subscription was opened: the bridge discards one sample on ROS 1 (a latched message) and the declared publisher history on ROS 2 (cited or operator_required). Gate G7 checks what a companion read-back means (the stop's world, no acknowledgement field, a field assigned from state). And only what the endpoint serves, a simulated manifest on the SDK's own route, lets a sensed confirmation stand for a stop. Every passing digest is unchanged.

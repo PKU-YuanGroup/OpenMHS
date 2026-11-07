@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Preserve missing-stop semantics in hardware-driver fakes
 
 A direct Driver with a hardware control contract and no declared stop could return an achieved safe state when served through its fake backend. The server used simulated-mode software-latch behavior even when an earlier native call remained active. Direct Driver safety status now explicitly reports unconfirmed safety for hardware profiles with resolved risk R1 or higher and effectful capabilities, writable parameters or a reset hook but neither an estop method nor a safe-state action. This inspection uses the resolved contract and does not construct the backend. The server retains its latch and returns `MHS.SAFETY.SAFE_STATE_UNREACHED`.

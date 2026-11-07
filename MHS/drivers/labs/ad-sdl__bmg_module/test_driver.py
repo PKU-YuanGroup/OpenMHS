@@ -20,7 +20,7 @@ HEATER_OFF = "x-cap.ad-sdl.bmg_heater_off.v1"
 CONFIGURE = "cap.device.configure.v1"
 # A test overlay for an extended-temperature-range unit (not a statement about any installed device).
 EXTENDED_OVERLAY = {
-    "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+    "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
     "openmhs": "0.9",
     "site": "Test bench (extended-range BMG reader)",
     "issued_by": {"id": "operator:test"},

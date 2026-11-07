@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Sensed-confirmation stop for robotis-git/turtlebot3_simulations
 
 Repair of `MHS/drivers/robots/robotis-git__turtlebot3_simulations` only (SAFE-049, CORE-088). The package was blocked `HELPER_MISSING`: the pinned `turtlebot3_fake_node` has no acknowledged stop. It now declares `safety_bindings["sensed_stop"]` for the fake node in simulated mode. `RESULT.json` status is `pass`. Evidence is fake `contract_checked` only. No ROS graph, simulator process, or hardware was run.

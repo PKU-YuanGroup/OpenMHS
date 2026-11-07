@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.shupx/swarm_sync_sim
 
 Every fact cites the pinned clone at commit `4837b511c3d2bcaa36448e5e5af51335004bafd8`.

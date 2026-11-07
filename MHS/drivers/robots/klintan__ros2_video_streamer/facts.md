@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.klintan/ros2_video_streamer
 
 Every fact cites the pinned clone at commit `4fc6d858d748322250cb0dc5a7864ac2576d148f`:

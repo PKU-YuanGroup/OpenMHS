@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Exemplar: gh.oelemento/star-sim (a PyLabRobotDriver profile)
 
 The Hamilton STARlet digital twin of `oelemento/star-sim` (`star_sim.env:RobotEnv`, PyLabRobot on its ChatterBox

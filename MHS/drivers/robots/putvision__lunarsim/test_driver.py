@@ -20,7 +20,7 @@ UNREACHED = "MHS.SAFETY.SAFE_STATE_UNREACHED"
 
 #: An example operator overlay; these values are test data, not device facts.
 SITE_LIMITS = {
-    "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+    "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
     "openmhs": "0.9",
     "site": "LunarSim unit-test overlay",
     "issued_by": {"id": "operator:unit-test"},

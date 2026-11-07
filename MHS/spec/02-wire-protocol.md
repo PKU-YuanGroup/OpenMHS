@@ -299,7 +299,7 @@ the one reported by `cap.device.describe.v1` if bound
 
 Params: `ref` — either a schema reference (a shipped schema file name such as
 `device.schema.json`, or a schema `$id` such as
-`https://openmhs.invalid/schema/0.9/device.schema.json`, a placeholder base) or a
+`https://mhs.openai4s.org/schema/0.9/device.schema.json`) or a
 `capability_id`; optional `device_id` and `resource` select the binding whose
 effective schema is wanted.
 

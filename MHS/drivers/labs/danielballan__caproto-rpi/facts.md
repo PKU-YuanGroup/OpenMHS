@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.danielballan/caproto-rpi
 
 Every fact cites the pinned clone at commit `3642405070a513369de87c7c684962cbd148bcff`. `upstream_code` refs name

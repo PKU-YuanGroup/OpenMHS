@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.justagist/panda_simulator
 
 Every fact cites its source at commit `6cec91dcc739df105a845e2f29e361b6c608bb48`: `vendor_doc` (a

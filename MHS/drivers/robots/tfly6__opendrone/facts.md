@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.tfly6/opendrone
 
 Every fact cites the pinned clone at commit `3cf7779c7c8abe0cec01b7f24673ad9d4e455e4d`.

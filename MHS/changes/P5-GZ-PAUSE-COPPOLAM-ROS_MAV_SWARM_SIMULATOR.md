@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Gazebo pause for coppolam/ros_mav_swarm_simulator
 
 The coppolam/ros_mav_swarm_simulator package now pauses the Gazebo world with `/gazebo/pause_physics` and confirms it by reading `/gazebo/get_physics_properties` with `pause == true`. It does not unpause. The fake-backend gate passes (evidence `contract_checked` only). Risk stays R2, and `publish_review` stays required because the licence is NOASSERTION.

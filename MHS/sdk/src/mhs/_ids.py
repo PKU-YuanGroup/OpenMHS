@@ -11,9 +11,8 @@ spell them out.
 * ``WIRE_VERSION`` is the value of ``mhs_version`` on the wire.  ``"1.0"``
   means *wire revision 1*; it is unchanged so existing endpoints, clients and
   reports keep interoperating.
-* ``SCHEMA_BASE`` is a placeholder on the reserved ``.invalid`` top-level
-  domain until the project picks an organisation.  It must stay a
-  hierarchical ``https`` URL because the schemas use relative ``$ref``.
+* ``SCHEMA_BASE`` uses the project domain. The previous placeholder and
+  legacy namespace remain readable for existing 0.9 documents.
 * ``LEGACY_SCHEMA_PREFIX`` is accepted by :mod:`mhs.schema.store` for reading
   only, so documents written before the rename keep validating.  It is
   scheduled for removal in 0.10 and must not be used to write new documents.
@@ -25,6 +24,8 @@ __all__ = [
     "ADAPTER_ID_PREFIX",
     "DIST_NAME",
     "LEGACY_SCHEMA_PREFIX",
+    "PLACEHOLDER_SCHEMA_PREFIX",
+    "SITE_URL",
     "NON_AFFILIATION",
     "PROJECT_NAME",
     "REGISTRY_ID",
@@ -39,7 +40,9 @@ DIST_NAME = "openmhs"
 SPEC_VERSION = "0.9"
 SDK_VERSION = "0.9.0.dev0"
 WIRE_VERSION = "1.0"
-SCHEMA_BASE = "https://openmhs.invalid/schema/0.9/"
+SITE_URL = "https://mhs.openai4s.org"
+SCHEMA_BASE = SITE_URL + "/schema/0.9/"
+PLACEHOLDER_SCHEMA_PREFIX = "https://openmhs.invalid/schema/0.9/"
 LEGACY_SCHEMA_PREFIX = "https://modelhardwarestandard.com/schema/"
 REGISTRY_ID = "openmhs-registry"
 ADAPTER_ID_PREFIX = "openmhs:"

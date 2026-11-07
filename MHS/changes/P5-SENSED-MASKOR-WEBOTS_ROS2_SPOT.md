@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Sensed-confirmation stop for maskor/webots_ros2_spot
 
 Repair of `gh.maskor/webots_ros2_spot` only. `authored_by` stays the deepseek record in `driver.lock.json` (`deepseek-v4.1-flash:1017`, `ros-wave-c-031`, 2026-11-04). `reviewed_by` stays null. This file was written by Grok (grok-4.7, a model and not a human) on 2026-11-05. No hardware run, Webots run, ROS graph, or human review is claimed. The gate evidence is `contract_checked` on the fake backend.

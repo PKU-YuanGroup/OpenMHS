@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Driver packages
 
 One upstream repository of the corpus (`labs/`, `robots/`) becomes one driver package here:

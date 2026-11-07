@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Finite primary-pixel camera helper candidate
 
 The SDK candidate adds an explicitly owned single-camera fixture workflow through the selected ImSwitch `acquireSingleFrame` shape. Complete mono8, mono16 and RGB8 arrays become lossless PNG artifacts through stock endpoint/MCP publication. Geometry/exposure capture inputs assert current settings, finite configuration requires operator limits and verified readback, and native hardware/simulator admission remains refused.

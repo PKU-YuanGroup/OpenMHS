@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # UR3 native admission remains closed
 
 At commit10f96dc362a7700b14e4a2469c8025134ef3e4f7, `controllers.py:482-489` sends asynchronously after clearing its result/handle; `493-498` cancels only a known handle without awaiting it; `500-515` waits up to15seconds. `arm.py:578-579` dereferences the result even when unavailable. An earlier remote action can remain capable of effects after a local timeout/error. Dashboard acknowledgement does not retire that owner.

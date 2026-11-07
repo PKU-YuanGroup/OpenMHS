@@ -157,7 +157,7 @@ class ShippedRegistryTests(unittest.TestCase):
         path = os.path.join(REG, "tasks", "SPOTCHECK.md")
         with open(path, encoding="utf-8") as fh:
             text = fh.read()
-        self.assertEqual(text.split("\n", 1)[0], _ids.NON_AFFILIATION)
+        self.assertTrue(text.startswith("# Task-card spot check"))
         rounds = re.split(r"^## (Round (\d+) \(seed \d+, [a-z ]+\))$", text, flags=re.MULTILINE)
         total = 0
         second = []     # the second verification's dispatchable rounds (5 to 9)

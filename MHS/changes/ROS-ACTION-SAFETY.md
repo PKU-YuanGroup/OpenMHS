@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Action-backed ROS safety and Franka gripper contract
 
 RosDriver supports an explicitly declared fixed action as an independent stop/safe-state path. ROS 1 actionlib and ROS 2 native profiles validate goal identity, terminal status, application success and the declared output schema before acknowledging safety. Action safety has its own bounded admission lane, separate from ordinary transactions. An accepted cancellation or a dispatched goal does not establish native completion or stopping.

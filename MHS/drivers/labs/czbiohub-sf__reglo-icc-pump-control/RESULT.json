@@ -1,7 +1,7 @@
 {
   "status": "pass",
   "gate": {
-    "digest": "sha256:61abb3228cb74738601ba825627457dd0224ab05efe6c9bbff27c6ba0059bf23",
+    "digest": "sha256:aedb0ad8e2f01f4d1f94f9acc6a4be9a030478e0cbc879a3e8d843570f25cbf3",
     "failed": []
   },
   "notes": "DEVIATION FROM THE CARD: a direct Driver with native.py instead of the SerialDriver helper. The upstream builds every command from the channel number, a command letter and the pump address at run time (reglo_icc_pump/_driver.py:393-396), so a command table cannot reproduce the wire syntax. The package drives one channel selected by the backend option channel (default 1); the pump still reports all channels. NOT COVERED: the optional duration_s input of cap.actuation.pump.v1 (the upstream API moves a volume at a rate, so a duration-only command is not exposed); show_msg (display text) and a direct wait_for_stop action (the pump action polls is_running and honours cancellation). dispensed_volume is the commanded volume, not a metered reading: the upstream class has no public metered-volume read. The fake replies and the fixture inputs are test data, marked # placeholder in fake.py; the example site overlay supplies operator values (tubing ID 1.52 mm, 1-100 uL/s, 1-5000 uL) and is not a statement about a pump. The last gate run passed G1-G9 with no warnings; no hardware path was run; the package is model-authored and unreviewed, reviewed_by is null.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.",

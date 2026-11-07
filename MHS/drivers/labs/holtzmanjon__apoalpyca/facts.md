@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.holtzmanjon/apoalpyca
 
 Every fact cites the pinned clone at commit `3d4c48ec092c7dfd095f47b30efe9eb29ca2d031`. `upstream_code` refs name

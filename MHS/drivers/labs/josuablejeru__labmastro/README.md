@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # labmastro Hanmatek HM supply: the tag-bridge exemplar
 
 A configuration-only `TagDriver` (profile `modbus`) for the holding registers that labmastro's

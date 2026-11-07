@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Human review of a model-written driver
 
 A passing gate proves a package's *contract* on a fake: limits are enforced before the native layer, the e-stop reaches

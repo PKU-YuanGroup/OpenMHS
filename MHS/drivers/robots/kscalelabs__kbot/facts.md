@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.kscalelabs/kbot
 
 Every fact cites its source at commit `76aba70e3372fecf3583ed6dbe5f379d44c8511c`: `vendor_doc` (a text file of the

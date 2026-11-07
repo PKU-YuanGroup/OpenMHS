@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.nsls2/hxn-profile-collection
 
 Every fact cites the pinned clone at commit `14429cea35cf05a95f90f5c69f721f3ffc62faa7` with `upstream_code`

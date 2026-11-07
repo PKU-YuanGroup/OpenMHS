@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Finite camera helper: controlled fixtures only
 
 `PymmcorePlusDriver`, `CameraProfile` and `CameraFactory` provide a bounded single-camera workflow for an explicitly constructed Python fixture. Native hardware and native simulator backends are refused. This API does not establish an ImSwitch installation, MMCore binary identity, device-adapter stop guarantee or owned singleton factory. No waiting registry family or package is automatically enabled by its presence.

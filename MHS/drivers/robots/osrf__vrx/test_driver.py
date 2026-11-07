@@ -35,7 +35,7 @@ STATS = "/world/sydney_regatta/stats"
 #: Test-only operator overlay.  The numbers are local test data, not device
 #: facts and not a recommendation for a deployment envelope.
 OVERLAY = {
-    "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+    "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
     "openmhs": "0.9",
     "site": "unit-test overlay",
     "issued_by": {"id": "operator:test"},

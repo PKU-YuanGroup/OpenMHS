@@ -684,7 +684,7 @@ class EndToEndCompanionPackageTests(unittest.TestCase):
                      "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/acme__sim_world --backend fake",
                      "companions": [entry]})
         write_card(self.root, self.dir, card)
-        lock = {"$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json", "openmhs": "0.9",
+        lock = {"$schema": "https://mhs.openai4s.org/schema/0.9/driver-lock.schema.json", "openmhs": "0.9",
                 "package_id": "gh.acme/sim_world",
                 "upstream": {"repo_url": "https://github.com/acme/sim_world", "commit": commit,
                              "license_spdx": "MIT"},

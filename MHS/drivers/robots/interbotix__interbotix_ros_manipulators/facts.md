@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.interbotix/interbotix_ros_manipulators
 
 All citations are at commit `0bb2b0e6d0e619bff02cf74dbd5af5681dcf80c9`, relative to the clone root. The selected profile is the **wx250s** X-Series arm; the repository is a family of XS and UX arm packages and does not select one model itself.

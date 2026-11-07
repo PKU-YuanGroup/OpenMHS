@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # SIMULATION-RISK-ERRATUM — align the safety examples with the catalogue
 
 The safety chapter listed simulation stepping as an R1 example, while the

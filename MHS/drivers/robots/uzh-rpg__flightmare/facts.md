@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Source facts for gh.uzh-rpg/flightmare
 
 Pinned commit: `d4218aedac18cbe9364a0a0df10ab992c4b65e4f`. Source declarations and controlled fake results are not native execution.

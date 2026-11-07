@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Declared re-enable after a reset, and a declared terminal e-stop
 
 A device may now declare how it recovers from an e-stop. `safety.estop.reenable` names the one command that re-enables a device whose stop leaves it disabled: the latch refuses it, the reset of such a device only releases the latch, and conformance test TSAFE-001 sends it after the reset and before its recovery command. `safety.estop.terminal` states why a device's native stop cannot be undone without a new native session: after that stop the endpoint refuses every reset with `terminal_estop` and keeps the latch, and the conformance runner gives every later test a new endpoint. A reset may re-establish communication only when that changes nothing on the device. A device that declares neither field behaves exactly as before.

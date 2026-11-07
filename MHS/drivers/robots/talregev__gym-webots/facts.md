@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.talregev/gym-webots
 
 Every fact cites its source at commit `023ae0bebd8067ea8c7fbb4b84b31ae29a9fb9f3`: `upstream_code`

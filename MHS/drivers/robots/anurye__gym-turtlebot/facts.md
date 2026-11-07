@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.anurye/gym-turtlebot
 
 Every fact cites the pinned clone at commit `c1e8b72a1081b92821dc14320fc7105b10423c54`.

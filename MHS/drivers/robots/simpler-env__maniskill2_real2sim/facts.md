@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.simpler-env/maniskill2_real2sim
 
 Every fact cites its source at commit `ef7a4d4fdf4b69f2c2154db5b15b9ac8dfe10682`. The same facts are written into

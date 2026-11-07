@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5-REAUTHOR-UNITY-TECHNOLOGIES-UNITY-ROBOTICS-HUB — plan-only RosDriver for the Niryo pick-and-place tutorial
 
 The blocked Unity Robotics Hub card (`gh.unity-technologies/unity-robotics-hub`, triage class D) now has a plan-only `RosDriver` package. One exclusive command asks the tutorial service `niryo_moveit` for four pick-and-place trajectories and returns them. `executed` is always false. Nothing in this package starts Unity, the gripper, or `sim_real_pnp.py`. No SDK change was made. The registry card and `task.json` were not edited, so the card stays `package_status` blocked until an integrator rebuilds the registry. `CHANGELOG.md` was not edited; the integrator runs `python3 tools/build_changelog.py`.

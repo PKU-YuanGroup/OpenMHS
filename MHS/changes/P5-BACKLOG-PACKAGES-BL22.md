@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5 backlog packages, BL-22: no unpause on three Gazebo simulations
 
 Written by Grok (grok-4.7, a model and not a human) on 2026-11-05 for unit BL-22. `reviewed_by` stays null. This unit repairs three passing packages. It does not re-author them: `authored_by` is unchanged, and no package directory was moved aside.

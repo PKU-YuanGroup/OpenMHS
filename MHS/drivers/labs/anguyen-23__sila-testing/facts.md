@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and scope for gh.anguyen-23/sila-testing (PhenixImager feature)
 
 Every fact cites the pinned clone `labs/anguyen-23/sila-testing` at commit `0b572380e06977c1920510773b4bfee7bcd0eec5`.

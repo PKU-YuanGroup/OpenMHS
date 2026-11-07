@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.squad-lab/qcdrivers
 
 Every fact cites the pinned clone at commit `6704e1c1794eff30811b8db62593673b2e39b6b4`. Below, `mux.py` is

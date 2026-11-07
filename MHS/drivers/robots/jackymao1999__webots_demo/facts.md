@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.jackymao1999/webots_demo
 
 Every fact cites the pinned clone at commit `1c45e4bdefb30b8ebbe8e1c4af9b59e22cb0c17f`.

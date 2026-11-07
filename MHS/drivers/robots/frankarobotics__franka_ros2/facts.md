@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.frankarobotics/franka_ros2
 
 Every fact cites the pinned clone at commit `4acc05c01ebfcdf916ee6b3df966df0ad7b2f9ec`.

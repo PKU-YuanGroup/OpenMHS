@@ -1,13 +1,10 @@
-# Template: copy to .github/workflows/pages.yml at the repository root to use it.
-# It builds the OpenMHS site for the URL GitHub Pages assigns (or the custom
-# domain configured in Settings -> Pages) and deploys it. No CNAME file is
-# committed; the domain is a deployment setting owned by whoever deploys.
 name: Deploy the OpenMHS site
 
 on:
   push:
     branches: [main]
     paths:
+      - ".github/workflows/pages.yml"
       - "MHS/spec/**"
       - "MHS/schema/**"
       - "MHS/registry/**"
@@ -46,12 +43,12 @@ jobs:
       - name: Build the site
         run: >-
           python3 MHS/site/build.py --release
-          --site-url "${{ steps.pages.outputs.base_url }}"
+          --site-url "https://mhs.openai4s.org"
           --out "$RUNNER_TEMP/site"
       - name: Verify links, assets and data
         run: >-
           python3 MHS/site/check.py --site "$RUNNER_TEMP/site"
-          --site-url "${{ steps.pages.outputs.base_url }}" --fresh
+          --site-url "https://mhs.openai4s.org" --fresh
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ runner.temp }}/site

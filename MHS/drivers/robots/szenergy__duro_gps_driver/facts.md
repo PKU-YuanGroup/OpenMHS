@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.szenergy/duro_gps_driver
 
 Every fact cites the pinned clone at commit `d09c1f33aa07ba89d082c3e213282e2bbdbbe725`:

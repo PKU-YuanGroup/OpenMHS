@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Tutorial driver package: the TH-1 thermostat (synthetic)
 
 A complete driver package for a made-up thermostat, small enough to read in

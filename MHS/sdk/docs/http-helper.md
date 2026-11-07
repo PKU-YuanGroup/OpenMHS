@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Finite HTTP workflow candidate
 
 This private candidate adds `HttpDriver`, `mhs.bridge.http.HttpBridge` and the first finite request profile, `ot2-run-v1`. It does not supply an HTTP client or enable a registry family. Native helper construction and the exemplar's direct native factory refuse. The SDK's existing unsigned R2 loader refusal remains independent.

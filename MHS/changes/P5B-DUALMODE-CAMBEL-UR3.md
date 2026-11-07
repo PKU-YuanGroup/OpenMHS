@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # p5b-dualmode: cambel/ur3 served only as the ur_gripper_gz simulation
 
 Written by Grok (grok-4.7, a model and not a human) on 2026-11-05. `reviewed_by` stays null. No hardware was attached, no Gazebo or ROS graph was started, and no human review is claimed. The passing evidence is the fake backend, `contract_checked`.

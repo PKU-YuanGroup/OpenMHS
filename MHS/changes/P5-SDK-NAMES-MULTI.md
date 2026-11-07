@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5-SDK-NAMES-MULTI — one E4 read-back for several named elements
 
 Round 1 of the ext-integrator-B review left the package directory and the companion-sources-lock entry out. The final package decision is block, and the admission rule requires accept. The E4 list predicate in the SDK remains.

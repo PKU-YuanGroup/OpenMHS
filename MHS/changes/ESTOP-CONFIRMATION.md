@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Emergency-stop retry and confirmation lifecycle
 
 An initial failed native stop now keeps its required background retry even when writing the initial receipt fails. The recording error still reaches the caller. A background confirmation settles its original command ids only after its own receipt is recorded; an evidence failure retains those ids and the bounded retry instead of escaping from the worker and claiming confirmation in a finally block.

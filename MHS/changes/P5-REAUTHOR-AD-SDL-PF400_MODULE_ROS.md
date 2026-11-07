@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # PF400 arm through ad-sdl/pf400_module_ros, re-authored (2026-11-05)
 
 Authored by Grok (grok-4.7, a model and not a human), run `ext-p5-reauthor--ad-sdl__pf400_module_ros-20261105`. Codex reviews. `reviewed_by` stays null. Nothing in this package was taken from the stopped trees `development/p5-reauthor` or `development/ext-p5-reauthor.fast-stopped`: both still held only the old `RESULT.json` and `task.json`. The old blocked package was copied to this unit's `originals/` and moved to `moved-aside/`; it was not deleted, and its notes were not shortened.

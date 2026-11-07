@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Declared MuJoCo checkpoint state
 
 MuJoCo resource reads and snapshots now share one declared world document, including a readonly native checkpoint. The endpoint validates its schema, identity, digests and public/native component agreement before restore and verifies the actual restored state. Complete native integration state and an explicitly limited basic fallback are separate profiles. State API presence no longer implies seeded or exact determinism. See `sdk/docs/mujoco-checkpoints.md`.

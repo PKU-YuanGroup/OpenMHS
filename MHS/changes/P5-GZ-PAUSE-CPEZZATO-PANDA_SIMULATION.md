@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # cpezzato/panda_simulation: Gazebo world pause with a paused-flag read-back
 
 `robots/cpezzato__panda_simulation` moves from `blocked` (`HELPER_MISSING`) to `pass`. The stop is the fetched Kinetic companion service `/gazebo/pause_physics`, confirmed only when `/gazebo/get_physics_properties` reads `pause` true. The package offers no unpause. Evidence is `contract_checked` on the fake backend. No Gazebo process, ROS graph, hardware run or human review is claimed. `reviewed_by` stays null.

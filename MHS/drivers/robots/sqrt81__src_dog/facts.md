@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.sqrt81/src_dog
 
 Every fact cites the pinned clone at commit `1399108d258e964ef04850ddbfb6865dbd117000`.

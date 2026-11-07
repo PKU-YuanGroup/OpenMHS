@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Gymnasium live routes: asynchronous environments and dm_env
 
 Two optional, per-backend declarations let `GymnasiumDriver` serve environments whose calling convention is not the

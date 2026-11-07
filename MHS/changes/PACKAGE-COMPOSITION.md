@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Package composition: several typed resources in one driver package
 
 One driver package can now serve capabilities whose catalogue classes accept different resource kinds, such as a stable image (`sensor.camera`) and a stable point cloud (`sensor.depth`), as one device with several typed resources. A driver declares `extra_resources` and binds an action to one with `Action(resource=...)` or `@action(..., resource=...)`; each binding resolves against its own resource's kind on the core's existing multi-resource device, and the device keeps one backend object, one bridge and transport, one e-stop latch and one lifecycle. No catalogue compatibility rule was loosened. The RealSense ROS package is repaired on this basis and passes its gate on the fake backend; nothing ran on hardware.

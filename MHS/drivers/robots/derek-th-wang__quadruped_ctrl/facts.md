@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.derek-th-wang/quadruped_ctrl
 
 Pinned commit: `6e1093c1d67ff835c02d66d0ad611d2c67d912ad`. Every fact cites a text file of the clone; the same

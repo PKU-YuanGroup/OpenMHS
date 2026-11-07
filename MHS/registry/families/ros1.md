@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # OpenMHS family: ros1
 
 **ROS 1 topics, services and actions through RosDriver**

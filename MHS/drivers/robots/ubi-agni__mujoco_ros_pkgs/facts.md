@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.ubi-agni/mujoco_ros_pkgs
 
 Every fact cites the pinned clone at commit `9304ca7ec254ac1aaa0c2f556513a9a51d28530e`.

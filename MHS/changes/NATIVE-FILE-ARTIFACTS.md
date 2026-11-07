@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # NATIVE-FILE-ARTIFACTS — files a native wrote, published as artifacts; the dodal Eiger re-authored
 
 A direct driver can now publish files that its native wrote to disk through the endpoint's existing local artifact

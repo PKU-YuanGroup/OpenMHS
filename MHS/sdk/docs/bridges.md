@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Bridge families: the canonical grammar
 
 A bridge translates between the contract plane and one equipment family. The runtime (`mhs.server`) enforces every

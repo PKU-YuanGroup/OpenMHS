@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Reference endpoints (protocol fixtures)
 
 `mhs.reference` ships four deterministic, stdlib-only endpoints. They are **protocol fixtures, not driver

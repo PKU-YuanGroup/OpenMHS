@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5 sensed-confirmation stop for fdcl-gwu/uav_simulator
 
 Written by Grok (grok-4.7, a model and not a human) on 2026-11-05 in this package unit's copy. This is a repair of the existing package. `authored_by` stays `deepseek-v4.1-flash:1017` (run `ros-wave-c-025`, date 2026-11-04). `reviewed_by` stays null. No hardware, ROS graph, Gazebo process, simulator run or human review is claimed. The gate evidence is `contract_checked` on the ROS-free fake.

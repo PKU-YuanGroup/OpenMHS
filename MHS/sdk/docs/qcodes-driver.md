@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Explicit QCoDeS Parameter drivers
 
 `QcodesDriver` is a finite configuration helper over `PythonObjectBridge`. It imports no QCoDeS package and does no discovery, connection or native I/O during definition/construction. Backends remain explicit. Native calls retain the existing timeout, cancellation, uncertainty and safety protections.

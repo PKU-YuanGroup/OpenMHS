@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Complete replay snapshots and consistent revision selection
 
 Replay snapshots now include the endpoint's declared recording resource alongside every recorded source resource. Unknown optional metadata is absent instead of schema-invalid null. All replay resources read from the selected frame or current recording view; stale static manifest state no longer overrides those reads. Source frames, their receipt-bound hashes and exported source evidence remain unchanged. A source resource named recording is refused explicitly because it conflicts with the synthetic evidence resource.

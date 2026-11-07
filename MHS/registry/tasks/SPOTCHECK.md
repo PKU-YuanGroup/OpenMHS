@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Task-card spot check (WP-10, 2026-10-21)
 
 A reviewer read random task cards against their upstream clones and judged whether each card's `decision`

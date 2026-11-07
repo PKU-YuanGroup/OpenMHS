@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Exemplar: gh.xarm-developer/xarm-python-sdk (a robot arm: array and nested limits, API return codes, a watchdog)
 
 A UFACTORY xArm with 7 axes (`xarm.wrapper.xarm_api:XArmAPI`) as an R2 hardware driver. The package is model-authored

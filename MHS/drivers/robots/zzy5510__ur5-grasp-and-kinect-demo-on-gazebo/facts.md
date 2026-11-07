@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.zzy5510/ur5-grasp-and-kinect-demo-on-gazebo
 
 Every fact cites the pinned clone at commit `a5b25d72fe7637ebfad26a60c4bc57c1a8b418c4`.

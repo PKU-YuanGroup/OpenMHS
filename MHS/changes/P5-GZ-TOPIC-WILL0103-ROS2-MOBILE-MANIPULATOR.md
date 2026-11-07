@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5-GZ-TOPIC: will0103/ros2-mobile-manipulator world-pause read-back
 
 Repair of `MHS/drivers/robots/will0103__ros2-mobile-manipulator` only. The e-stop is the gz-sim world pause, confirmed by a fresh `WorldStatistics.paused` read-back (E2), and the two ros_gz bridges the operator must run are declared (E3). No unpause is offered.

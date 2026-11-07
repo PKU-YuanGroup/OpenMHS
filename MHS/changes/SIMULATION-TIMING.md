@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # SIMULATION-TIMING — opt-in physics accounting for fixed-decimation Gym environments
 
 The old Gym bridge counted one native environment call as one tick, even when

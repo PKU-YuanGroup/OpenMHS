@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.realsenseai/realsense-ros
 
 Every fact cites the pinned clone at commit `7a87097c499e3b0b69518d54a8e7a9ac1924e87c` (source version 4.59.1):

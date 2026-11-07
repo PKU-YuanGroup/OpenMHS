@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "$id": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
   "title": "OpenMHS site limits (operator overlay, site-limits.json)",
   "description": "An operator-owned overlay that narrows the limits of the devices at one site. It is keyed by device id, then by a capability id (whose value maps limit paths to rules) or by a parameter path (a writable resource-state field, i.e. an input of cap.device.configure.v1). The overlay is intersected with the class, binding and device-envelope limits and may only narrow them: a rule that widens any bound is rejected when the endpoint loads (the comparison needs the device manifest, so it is a load-time check, not a schema check). An overlay also fills limits declared operator_required. Every overlay rule carries at least one bound, and its source, when stated, is operator.",
   "type": "object",

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Exemplar: gh.thinksrs/srsinst.sr860 (a ScpiDriver command map with a transcript-backed fake)
 
 The SR860 lock-in amplifier (`srsinst.sr860.instruments.sr860:SR860`, also the SR865 and SR865A) as an R1 hardware

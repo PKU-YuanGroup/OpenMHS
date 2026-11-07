@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Retain Python safe-state actions through validated completion
 
 A declared argument-free Python safe-state action now uses the independent retained safety lane. Its role comes from the resolved driver model, not caller metadata. This lets a native stop dispatch while an earlier ordinary setter remains active, while correctly refusing to report achieved safety until all earlier native execution has settled.

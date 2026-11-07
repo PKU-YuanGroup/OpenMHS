@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # L04 — cited local ones-based Box bounds
 
 G4 previously read `high = np.ones(n)` as showing 1, but a following `Box(-high, high)` did not show -1. It now adds

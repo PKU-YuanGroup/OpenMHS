@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # MuJoCo checkpoints
 
 `MujocoDriver` declares a readonly `world.native_checkpoint` field. The resource read and snapshot capture the same world document under the bridge's native lock. The checkpoint participates in the normal state hash; there is no hidden cache or hash exclusion. Restoring a checkpoint also restores the logical tick, and the endpoint verifies the actual post-restore state before reporting completion.

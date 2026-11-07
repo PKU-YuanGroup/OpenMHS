@@ -283,8 +283,8 @@ resources in a device manifest.
   "title": "Aspirate liquid",
   "verb": "invoke",
   "resource_kinds": ["lab.liquid_handler", "lab.pipette"],
-  "input_schema": { "$ref": "https://openmhs.invalid/schema/0.9/cap/fluid.aspirate.v1.input.json" },
-  "output_schema": { "$ref": "https://openmhs.invalid/schema/0.9/cap/fluid.aspirate.v1.output.json" },
+  "input_schema": { "$ref": "https://mhs.openai4s.org/schema/0.9/cap/fluid.aspirate.v1.input.json" },
+  "output_schema": { "$ref": "https://mhs.openai4s.org/schema/0.9/cap/fluid.aspirate.v1.output.json" },
   "summary": "Draw a specified volume of liquid from a labware well into a pipette tip.",
   "tags": ["liquid handling", "pipetting", "aspirate", "volume", "labware"],
   "units": { "volume": "uL", "flow_rate": "uL/s", "position": "mm" },
@@ -737,7 +737,7 @@ The manifest below is the shipped example `MHS/schema/examples/adapter.gymnasium
 
 ```json
 {
-  "$schema": "https://openmhs.invalid/schema/0.9/adapter.schema.json",
+  "$schema": "https://mhs.openai4s.org/schema/0.9/adapter.schema.json",
   "mhs_adapter": "1.0",
   "adapter_id": "com.example.gymnasium-cartpole",
   "title": "Gymnasium CartPole as an MHS simulated device",
@@ -764,7 +764,7 @@ The manifest below is the shipped example `MHS/schema/examples/adapter.gymnasium
   },
   "devices": [
     {
-      "$schema": "https://openmhs.invalid/schema/0.9/device.schema.json",
+      "$schema": "https://mhs.openai4s.org/schema/0.9/device.schema.json",
       "mhs_version": "1.0",
       "device_id": "mhs://localhost:7401/gym/CartPole-v1",
       "instance_id": "01J8ZQ3V6Y7M2N4P6R8S0T2V4X",

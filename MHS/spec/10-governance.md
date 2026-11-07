@@ -112,7 +112,7 @@ that amends it.
 |---|---|---|
 | Protocol | `mhs_version` (`MAJOR.MINOR`), `1.0` in 0.9: wire revision 1 | §3.2. |
 | OpenMHS specification | `spec_version` (`MAJOR.MINOR`), `0.9`; the document set is the development draft `0.9-draft` | §3.2 and §3.6. |
-| JSON Schemas | `$id` URL with a versioned path (`https://openmhs.invalid/schema/0.9/…`, a placeholder base); schemas are additive within a MINOR | §3.3. |
+| JSON Schemas | `$id` URL with a versioned path (`https://mhs.openai4s.org/schema/0.9/…`, a placeholder base); schemas are additive within a MINOR | §3.3. |
 | Capability classes | `capability_id` contains class `v<MAJOR>`; MINOR changes are registry metadata | [MHS-003](03-capability-registry.md) §2. |
 | Adapter format | `mhs_adapter` (`1.0`) | MINOR additive; MAJOR incompatible. |
 | Conformance suite | `suite_version` (semver), coupled to protocol MAJOR | §3.4. |
@@ -152,7 +152,7 @@ MAJOR version are frozen at their published `$id` URLs for the life of that MAJO
 version. A MINOR release MAY add schemas or OPTIONAL fields but MUST NOT remove or
 retype fields. A breaking schema change is a MAJOR release with new `$id` paths
 (for example `/schema/2/…`). The 0.9 schemas live under the placeholder base
-`https://openmhs.invalid/schema/0.9/`; documents written with the legacy prefix of
+`https://mhs.openai4s.org/schema/0.9/`; documents written with the legacy prefix of
 earlier drafts are accepted for reading only, until 0.10, and are never written.
 
 **GOV-025.** A schema change MUST be validated against every example in

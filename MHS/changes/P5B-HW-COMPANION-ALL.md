@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Hardware stop cited to one fetched companion
 
 Round 1 of the ext-integrator-B review left the package directory and the waiting-routing override out. The final package decision is block, and the admission rule requires accept. The opt-in hardware-stop checker in the SDK remains, tested with fixtures rather than the shipped package.

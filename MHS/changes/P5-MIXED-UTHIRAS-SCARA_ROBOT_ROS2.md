@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5 mixed: uthiras/scara_robot_ros2 E1 stall read-back
 
 Repair of `gh.uthiras/scara_robot_ros2` only. `authored_by` stays `deepseek-v4.1-flash:1017`, run `ros-wave-c-118`, date 2026-11-05. `reviewed_by` stays null. This note is by Grok (grok-4.7, a model and not a human) on 2026-11-05. No hardware, Gazebo, ROS graph or human review was run. The passing evidence is the fake gate, `contract_checked`.

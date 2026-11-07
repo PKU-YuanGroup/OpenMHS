@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Explicit QCoDeS and Ophyd helper contracts
 
 QcodesDriver compiles declared Parameter get/set bindings over the retained Python bridge; OphydDriver compiles explicit classic Signal get/set bindings and deployment units. Construction performs no native discovery or connection. Reads call the declared measurement operation, and writes retain the entire native completion rather than substituting a cache or dispatch acknowledgement. Copied model/runtime configuration preserves each instance's declared fields, limits, capabilities and safety authority.

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5-MIXED — qdeyna/ur10e_2f140_topic_based_ros2_control: fake-hardware controller switch
 
 The blocked package `gh.qdeyna/ur10e_2f140_topic_based_ros2_control` (wave 5, rank 83) was a `MujocoDriver` of the vendored FZI `cartesian_controller_simulation` test robot. Its gate failed G5 and G8, status `blocked`, `blocked_on` `HELPER_MISSING`, digest `sha256:fe236da5862f7d209712acf535faf7c8f57e05afebbe07786af25a0ee3157a66`. That tree was moved aside. This unit re-authored it as a `RosDriver` for the repository's UR10e on the fake-hardware path only, with the E4 list-element read-back. The new gate passes on the fake backend. Digest `sha256:87b9947733a1c1139df9d77822e97b63e87b65a4f3c58afc76bff58c21e6f1c7`. Evidence is `contract_checked` only. `reviewed_by` stays null.

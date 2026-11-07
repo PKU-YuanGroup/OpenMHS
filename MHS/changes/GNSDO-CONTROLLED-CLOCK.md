@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Controlled GNSDO fake clock
 
 The package fake previously read the host clock. Crossing a second between two post-reset reads changed only ptime_time and state_hash, causing intermittent TSAFE-001 failures in G8 or nested G9. A stock RPC boundary probe reproduced that change with no new command or revision.

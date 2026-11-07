@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # BL-19: gh.squad-lab/qcdrivers e-stop confirmation
 
 Repair of the passing package `MHS/drivers/labs/squad-lab__qcdrivers` (gh.squad-lab/qcdrivers, device `squad-ad75019-mux`, risk R1). Grok (grok-4.7, a model and not a human) did this repair on 2026-11-05, run `ext-p5-backlog-packages--bl19-20261105`. `authored_by` stays the re-author recorded in `driver.lock.json` (claude-opus-5-5, run `p3-reauthor-qcdrivers`, 2026-11-05). `reviewed_by` stays null. This is not a re-author: the package directory was not moved aside. The pre-change package is in `development/ext-p5-backlog-packages--bl19/originals/MHS/drivers/labs/squad-lab__qcdrivers/`. No SDK, schema, registry, override, or lock file changed.

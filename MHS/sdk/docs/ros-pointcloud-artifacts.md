@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Complete ROS PointCloud2 artifacts
 
 `RosDriver` can capture one fixed `sensor_msgs/PointCloud2` (ROS1) or

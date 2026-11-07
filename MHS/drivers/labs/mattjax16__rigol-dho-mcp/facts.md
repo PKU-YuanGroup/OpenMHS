@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.mattjax16/rigol-dho-mcp
 
 Every fact cites the pinned clone at commit `f9ac7191869845ae46ca714de69a877c388b2530`. The selected source file

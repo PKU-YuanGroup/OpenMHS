@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5 sensed stop: larics/decentralized_multi_robot_exploration
 
 Repair of the blocked package `gh.larics/decentralized_multi_robot_exploration` to a sensed-confirmation stop (SAFE-049, CORE-088). This unit is that package only. `authored_by` stays `deepseek-v4.1-flash:1017`, run `ros-wave-c-114`, date 2026-11-05. `reviewed_by` stays null. Written by Grok (grok-4.7, a model and not a human) on 2026-11-05, run `ext-p5-sensed--larics__decentralized_multi_robot_exploration-20261105`. Evidence is fake `contract_checked` only. No ROS graph, Stage process, simulator or hardware was run.

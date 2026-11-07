@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # OpenMHS: specification, schemas, SDK and registry
 
 OpenMHS is an open, versioned, machine-checkable contract between **agents that
@@ -145,9 +143,8 @@ PY
 
 The schema store looks in `$MHS_SCHEMA_DIR`, then the schemas packaged with
 the SDK, then this checkout. Schema `$id`s live under
-`https://openmhs.invalid/schema/0.9/` (a placeholder until the project has its
-own domain); documents that still use the pre-0.9 prefix are accepted for
-reading during 0.9.
+`https://mhs.openai4s.org/schema/0.9/`; the earlier placeholder and pre-0.9
+identifiers remain readable during 0.9.
 
 ## Status and disclaimers
 

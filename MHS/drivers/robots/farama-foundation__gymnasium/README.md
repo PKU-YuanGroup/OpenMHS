@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Exemplar: gh.farama-foundation/gymnasium (a GymnasiumDriver family-config with a fidelity contract)
 
 The CartPole-v1 environment (`gymnasium.envs.classic_control.cartpole:CartPoleEnv`) as a simulated R0 driver. A Gymnasium

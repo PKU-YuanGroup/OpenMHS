@@ -66,8 +66,8 @@ fields outside the type's declared set.
 
 **REG-003a.** For a `package` record, `id` MUST equal `package_id` and
 `registry_id` MUST identify the publishing registry: a DNS name, or a single
-lowercase label ending in `-registry` (the reference registry uses `openmhs-registry`
-until the project has its own domain). The envelope is part of
+lowercase label ending in `-registry` (the reference registry uses the stable
+identifier `openmhs-registry`). The envelope is part of
 [`registry-record.schema.json`](../schema/registry-record.schema.json), so a
 record without either field is invalid.
 

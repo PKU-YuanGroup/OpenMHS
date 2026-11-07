@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and scope for gh.toppers/hakoniwa-digital-twin
 
 Every fact cites the pinned clone at commit `1a2c15b8aade01696a81207c8f28a77013497384`.

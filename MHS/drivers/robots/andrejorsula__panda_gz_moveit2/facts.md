@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.andrejorsula/panda_gz_moveit2
 
 Every fact cites the pinned clone at commit `8e5c6fd5d0d39ce2ad1d14968f86104f4ae0b9cb`.

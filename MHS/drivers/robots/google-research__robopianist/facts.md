@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Source facts for gh.google-research/robopianist
 
 Pinned commit: `0d9736c64eba5faafdf214ed7d38d648ffbd5c7f`.  The facts that cite `third_party/mujoco_menagerie/...` lie

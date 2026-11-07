@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.patmce/uav-drl-oa-gymnasium-ros-gazebo
 
 Every fact cites the pinned clone at commit `7e72584e02545c782bc15f3a73480a228a9498af`.

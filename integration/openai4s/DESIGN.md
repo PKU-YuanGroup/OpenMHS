@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # OpenAI4S × OpenMHS reference host — design contract
 
 This is the design the reference host implements. It has two layers: **MCP

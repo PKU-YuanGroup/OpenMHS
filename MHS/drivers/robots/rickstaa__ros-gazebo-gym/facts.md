@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.rickstaa/ros-gazebo-gym
 
 Every fact cites its source at commit `157981585c26e7d252bc10e4deb527ca450775a0`, except the last eight, which cite

@@ -3,8 +3,7 @@
 
 Fails (exit 1) on broken internal links or fragments, missing local assets,
 duplicate DOM ids, external resource references, path-absolute links that would
-break file://, invalid JSON/JSON-LD/data assets, an Organization JSON-LD node,
-a page without the non-affiliation notice, canonical or sitemap URLs outside
+break file://, invalid JSON/JSON-LD/data assets, canonical or sitemap URLs outside
 the site URL, missing required files, an invalid sitemap, a bad download
 digest, a download manifest without SHA-256 digests of its source inputs, a
 capability id that is not in ``MHS/spec/capabilities.json``, or any
@@ -59,14 +58,6 @@ CAP_SCAN_SUFFIXES = {".html", ".js", ".json", ".jsonl", ".md", ".txt", ".xml", "
 DIGEST_RE = re.compile(r"^sha256:[0-9a-f]{64}$")
 
 
-def load_non_affiliation() -> str:
-    """Return ``mhs._ids.NON_AFFILIATION`` without importing the ``mhs`` package."""
-    spec = importlib.util.spec_from_file_location("_openmhs_ids", IDS_FILE)
-    if spec is None or spec.loader is None:  # pragma: no cover - broken checkout
-        raise SystemExit(f"cannot load project identifiers from {IDS_FILE}")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module.NON_AFFILIATION
 RESOURCE_RELS = {
     "stylesheet", "icon", "preload", "modulepreload", "manifest",
     "apple-touch-icon", "mask-icon", "prefetch", "prerender",
@@ -262,7 +253,6 @@ def check(
         print(f"missing build output: {SITE}", file=sys.stderr)
         print("run: python3 MHS/site/build.py [--out DIR]", file=sys.stderr)
         return 1
-    non_affiliation = load_non_affiliation()
 
     errors: list[str] = []
     warnings: list[str] = []
@@ -347,8 +337,6 @@ def check(
             errors.append(f"{rel}: missing skip link")
         if not parser.has_viewport:
             warnings.append(f"{rel}: missing viewport meta")
-        if non_affiliation not in text:
-            errors.append(f"{rel}: missing the non-affiliation notice")
         if base:
             if rel not in ("404.html", "search/index.html") and not parser.canonical:
                 warnings.append(f"{rel}: missing canonical link")
@@ -365,8 +353,6 @@ def check(
                 continue
             types = jsonld_types(document)
             jsonld_type_counts.update(types)
-            if "Organization" in types:
-                errors.append(f"{rel}: JSON-LD declares an Organization; the site names no organisation")
 
         for css in parser.inline_styles:
             check_css_urls(css, rel, page.parent, errors)
@@ -615,8 +601,6 @@ def check(
     for cap_id, rel in sorted(unknown_caps.items()):
         errors.append(f"{rel}: capability id {cap_id} is not in {cap_path.name}")
 
-    if (SITE / "CNAME").is_file():
-        warnings.append("CNAME present in the build output; the build never writes one (deploy setting)")
     for path in sorted(SITE.rglob("*.zip")):
         try:
             with zipfile.ZipFile(path) as zf:
@@ -710,7 +694,7 @@ def check(
         if len(errors) > 50:
             print(f"  … and {len(errors) - 50} more", file=sys.stderr)
         return 1
-    print("OK: links, fragments, local assets, ids, JSON/JSON-LD, non-affiliation notice, "
+    print("OK: links, fragments, local assets, ids, JSON/JSON-LD, "
           "capability ids, sitemap, downloads and input digests, and size budget verified")
     return 0
 

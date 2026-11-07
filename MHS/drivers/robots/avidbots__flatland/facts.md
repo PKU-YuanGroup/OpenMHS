@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.avidbots/flatland
 
 Every fact cites the pinned clone at commit `fd636eea6c283d36eb662c36604daae45266eaf9`.

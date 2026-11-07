@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Explicit Gym checkpoints and retained restore ownership
 
 Gym snapshot support now requires a declared, backend-specific bounded JSON profile. The native checkpoint is part of the served world resource and normal state hash. The endpoint validates identities, aliases, digests, exact resource keys and schemas before effects, then checks the actual restored state. Hidden state, RNG completeness and native determinism still require package evidence. See `sdk/docs/gym-checkpoints.md` for the profile and its limits.

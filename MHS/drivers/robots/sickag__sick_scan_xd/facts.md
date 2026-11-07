@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.sickag/sick_scan_xd
 
 Every fact cites its source at commit `ed157563f1fdc3a2ea4ba6a6cac7e45ba3ab6e36`: `vendor_doc` (a text

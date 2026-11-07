@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Exemplar: gh.mattjax16/rigol-dho-mcp (a config-only McpClientDriver)
 
 The MCP-client family exemplar. The upstream repository is a FastMCP server for Rigol DHO800/DHO900 oscilloscopes

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Files a native wrote, published as artifacts
 
 Some upstream APIs never hand their primary output to the caller: an area detector's file writer puts frames into

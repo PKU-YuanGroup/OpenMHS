@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Source facts for gh.robotis-git/open_manipulator
 
 Pinned commit: `d31000d90c679af9c982e73de8b12d777c5ff7dd`. Source declarations and controlled fake evidence do not prove native execution.

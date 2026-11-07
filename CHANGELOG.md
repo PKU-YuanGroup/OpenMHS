@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Changelog
 
 All notable changes to OpenMHS are recorded here. OpenMHS 0.9 is a first public preview (2026-11-06): specification 0.9, SDK `0.9.0.dev0`,
@@ -84,7 +82,7 @@ These replace behaviour that failed open. A deployment or test that relied on th
 ### Changed
 
 - **Identity.** The project is OpenMHS, an independent draft; it uses no Anthropic domain, name or branding. Identifiers live in
-  `mhs/_ids.py`; the schema namespace is a placeholder (`https://openmhs.invalid/schema/0.9/`) until an owner picks one. The
+  `mhs/_ids.py`; the schema namespace is a placeholder (`https://mhs.openai4s.org/schema/0.9/`) until an owner picks one. The
   import name stays `mhs` and the wire stays revision 1.
 - **Specification.** `core.md` and `driver-profile.md` are normative and short; the architecture overview is informative; the
   precedence rule no longer lets the stalest document win.
@@ -333,6 +331,10 @@ One section per file in `MHS/changes/`. The fragments are the detailed record of
 ### Required permit for the positive cancellation control
 
 [`MHS/changes/OP011-CANCELLATION-PERMIT.md`](MHS/changes/OP011-CANCELLATION-PERMIT.md): OP-011 previously sent its positive cancellable operation without a required permit, so a correctly declared permit-gated action failed before returning an operation handle. The control now resolves the selected capability and resource together, obtains the exact-input permit through the existing suite policy, and then runs the unchanged cancellation assertions. Missing, wrong-input and reused permits still return PERMIT_INVALID with zero native or bridge actuation. Ungated ...
+
+### Open-source publication and device catalog
+
+[`MHS/changes/OPEN-SOURCE-PUBLICATION.md`](MHS/changes/OPEN-SOURCE-PUBLICATION.md): OpenMHS is the open-source Model Hardware Standard at https://mhs.openai4s.org. Schema identifiers now use `/schema/0.9/` on that domain. The SDK still reads the earlier placeholder and legacy identifiers, so existing 0.9 documents continue to work. Wire revision and SDK version are unchanged.
 
 ### Explicit operation cancellation respects the admitted binding
 

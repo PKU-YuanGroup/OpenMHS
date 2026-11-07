@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # shouryash007/robothon-2026 stays blocked: the simulator major is not proved
 
 The integrator did not apply this unit's package files. Codex's package decision was not accept (`robots/shouryash007__robothon-2026` decision `block`). The package directory stays at snapshot-6. The sections below are the unit's own account.

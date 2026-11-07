@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.jackvice/roboterrain
 
 Every fact cites the pinned clone at commit `e56a6642b21746f1c5897b9515ef7ac7d258a550`: `upstream_code` is a

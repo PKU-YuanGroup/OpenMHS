@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.pcdshub/pcdsdevices
 
 Every fact cites the pinned clone at commit `d13b06eb53e6185088a7534ce0e17ab154463407`. `upstream_code` refs name

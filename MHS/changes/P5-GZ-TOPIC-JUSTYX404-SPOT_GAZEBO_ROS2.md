@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5-GZ-TOPIC — justyx404/spot_gazebo_ros2
 
 Repair of `gh.justyx404/spot_gazebo_ros2` only (unit `ext-p5-gz-topic--justyx404__spot_gazebo_ros2-20261105`). The other packages of item p5-gz-topic are other units. `authored_by` stays `deepseek-v4.1-flash:1017`, run `ros-wave-c-071`, 2026-11-04. `reviewed_by` stays null. This is not a re-author, so the package directory was not moved aside.

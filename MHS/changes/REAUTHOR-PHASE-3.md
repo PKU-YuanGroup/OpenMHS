@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Four blocked packages re-authored: SQUAD AD75019 switch, LTAMP PyBullet PR2, Galago OT-2, scanning SQUID microscope
 
 Four packages that the blocked-package triage sent to re-authoring (class D of `TRIAGE-2.json`, with scanning-squid's recon route) are rewritten by Claude and pass the gate: gh.squad-lab/qcdrivers (a decorated driver that reports each route, reads it back with the firmware's `STAT?` and drains both `*RST` lines), gh.caelan/ltamp (the PyBullet `PBController` path, whose world advances only inside driver calls), gh.sciencecorp/galago-tools (the pack's OT-2 tool, re-selected by a routing override, with a run stop confirmed by a status read through a bounded port of its client) and gh.moler-group/scanning-squid (the repository's primary device, the scanning SQUID microscope, served for its Attocube positioners, the actuators with a stop). One routing file replaces two override entries. No SDK, spec or schema file changed.

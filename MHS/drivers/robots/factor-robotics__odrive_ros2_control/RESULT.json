@@ -1,5 +1,5 @@
 {
-  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-result.schema.json",
   "openmhs": "0.9",
   "status": "blocked",
   "blocked_on": [
@@ -7,7 +7,7 @@
   ],
   "notes": "BLOCKED on HELPER_MISSING. The pinned ODrive repository implements a C++ ros2_control hardware_interface::SystemInterface plugin, not a source-owned ROS command/stop node. odrive_hardware_interface.xml:1-4 and the header's lifecycle/read/write declarations identify that interface. The demo names external controller classes; it does not pin their endpoint/type/stop semantics. ODrive USB is the native transport. CMakeLists.txt:18-45 needs ROS/ament, pluginlib, hardware_interface, rclcpp and libusb to build; compilation does not itself require an attached ODrive. on_init and native lifecycle access USB devices. on_deactivate's idle request and the configured watchdog are lifecycle/configuration behavior, not an independently acknowledged ROS stop. A separately pinned controller profile or a concrete native plugin bridge is still required; a fake cannot supply that missing contract. No primary control is replaced by an observation-only package. The review records only the missing-layout diagnostic gate, with no native code loaded or hardware attached.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Retain blocked; correct the compile-versus-USB-lifecycle distinction without inventing a ROS interface. Complete fake/diagnostic gate remains rejected at G1, G2, G3, G9. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: RESULT.json, check-report.json. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged.",
   "gate": {
-    "digest": "sha256:742047a6eff2b043b862aa105e15bf4afffb7154d1e841af852b31ca92ddb2bd",
+    "digest": "sha256:e8af9de2089927ccbc1ae08c9e40938d0847afece288da81d185fe2040f9d8f8",
     "failed": [
       "G1",
       "G2",

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Exemplar: gh.tiagocoutinho/julabo (an async direct Driver)
 
 A JULABO circulating bath (`julabo.device:JulaboCF`) as an R2 hardware driver. The package is model-authored

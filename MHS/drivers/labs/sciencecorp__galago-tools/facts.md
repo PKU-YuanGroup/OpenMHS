@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.sciencecorp/galago-tools
 
 Every fact cites the pinned clone at commit `7ddf68c7bb7eda0243f6466cfbd6b97fdcfcf782`. Below, `driver.py` is

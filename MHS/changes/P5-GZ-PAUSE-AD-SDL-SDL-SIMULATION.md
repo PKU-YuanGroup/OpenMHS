@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5-GZ-PAUSE for gh.ad-sdl/sdl-simulation
 
 Written by Grok (grok-4.7, a model and not a human) on 2026-11-05 as the external unit `ext-p5-gz-pause--ad-sdl__sdl-simulation` (run id `ext-p5-gz-pause--ad-sdl__sdl-simulation-20261105`). This is a repair of the package authored by deepseek-v4.1-flash:1017 (run ros-wave-c-144, 2026-11-05). `authored_by` is unchanged. `reviewed_by` stays null. No hardware, Gazebo world, ROS graph or human review is involved: the gate evidence is `contract_checked` on the fake only.

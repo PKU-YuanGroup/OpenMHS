@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Sensed-confirmation stop for simulated ROS devices, and e-stop path hardening
 
 A simulated `RosDriver` whose only stop is a request that proves nothing by itself (a LAND, a zero velocity, a motor cut) may now declare `safety_bindings["sensed_stop"]`: the e-stop sends the request and is achieved only when every producer-stamped source delivers consecutive fresh samples that satisfy a closed predicate within a bound; otherwise it is `SAFE_STATE_UNREACHED` with the latch held and the background retry. Real hardware never may (SAFE-049, CORE-088). Five simulator packages pass with it, and the composed e-stop path got the hardening items of review s10 and the phase-2 verification.

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Astrobee native deployment remains unverified
 
 The full declared Motion MOVE pose sequence and independently acknowledged GNC Control STOP are preserved. Each nested position coordinate now requires operator limits; `site-limits.example.json` is explicitly fake test data, not an installed keep-in zone or physical workspace. The stock server refuses MOVE without all required limits and rejects an out-of-envelope coordinate in any array element before sending a partial sequence.

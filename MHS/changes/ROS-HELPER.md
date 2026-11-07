@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # ROS-HELPER — rosbridge topics and services, with an unsigned fake pilot
 
 On 2026-11-02 the owner approved rosbridge JSON over WebSocket, a ROS-free recording fake, and a human hardware

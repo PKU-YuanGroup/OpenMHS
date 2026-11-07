@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Isolated simulator host (`isolated_process_v1`)
 
 Some simulator environments cannot share the endpoint's process. Their constructor launches ROS and a simulator,

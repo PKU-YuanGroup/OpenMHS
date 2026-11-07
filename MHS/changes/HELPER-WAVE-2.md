@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Helper wave 2: the 15 waiting cards the phase-2 routing opened, reviewed by Claude and verified by a second model (9 contracts, 6 blocks)
 
 The model review of the waiting cards (phase 2, 2026-11-05) routed 15 of the 62 cards that waited for a helper family

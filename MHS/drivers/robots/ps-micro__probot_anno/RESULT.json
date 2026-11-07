@@ -1,5 +1,5 @@
 {
-  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-result.schema.json",
   "openmhs": "0.9",
   "status": "blocked",
   "blocked_on": [
@@ -7,7 +7,7 @@
   ],
   "notes": "BLOCKED before implementation. The pinned PROBOT tree provides model/configuration, source-visible status/IO clients and prebuilt ELF controller programs, while the primary six-joint trajectory server comes from external industrial_robot_client/controller packages. probot_anno_moveit_config/config/controllers.yaml:1-5 gives the action label and joint list, not a complete source-owned goal/result/cancel contract. The nested Blockly submodule is valid pinned source; its service declarations use Trigger, Empty and SetCurrentBlockId rather than all being Trigger. Those callbacks manage program/status flags and do not establish cancellation of MoveIt or an independent arm stop. README.md:117-118 documents a manual hardware button, not a ROS endpoint the package can invoke. The six-axis R2 motion workflow remains required; an IO/status-only substitute is not accepted. Only a missing-layout diagnostic gate is recorded. No binary or upstream implementation was executed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Retain blocked; correct the source span and Blockly service types, with the external controller gap unchanged. Complete fake/diagnostic gate remains rejected at G1, G2, G3, G9. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: RESULT.json, check-report.json. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged.",
   "gate": {
-    "digest": "sha256:9ec4bbebb2603b5984a1ed352e76b242cb915875c32de4f5a0acc2db293d964c",
+    "digest": "sha256:f62dada6be85b701251af9b75366f7d5cc50037db06f4a753dcab90bb1c5a65a",
     "failed": [
       "G1",
       "G2",

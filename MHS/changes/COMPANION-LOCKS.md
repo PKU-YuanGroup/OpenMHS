@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Companion locks: fetched companion clones, a stall read-back and a list-element read-back
 
 A companion source may now be a clone fetched at one pinned commit under `work/companions` and listed in its `LOCK.json` (a `lock` alias in the reviewed override). Gate G1 checks the clone's LOCK.json entry, HEAD, untracked files and write bits, and `tools/fetch_companions.py` puts the clones back, offline first. Two read-back forms join the companion-cited e-stop: a stall read-back (E1: the world's simulation time, read at least twice, must not advance) and a list-element predicate (E4). Eight more simulator packages pass. Seven of them offer no unpause.

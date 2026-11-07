@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.universalrobots/universal_robots_ros2_driver
 
 Every fact cites the pinned clone at commit `7e031424bc7a3e590d65fe297214ac21e1f9ffdd`.

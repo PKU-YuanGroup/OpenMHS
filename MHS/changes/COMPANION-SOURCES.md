@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Companion sources: a simulator package's stop may cite the simulator's own repository
 
 A task card may now declare reviewed companion sources (`companions`): corpus repositories cloned locally at their corpus-lock commit, such as the simulator whose world control is a simulator package's only stop. Only the e-stop binding, its read-back (`safety_bindings.safe_state`, which must read the stopped state back), the command of the one action declared `reenable=True` and facts may cite them, as `companion:<alias>/<path>:<LINE>`; the gate checks each clone, its HEAD at the pin, its tracked files, the version evidence and the scope, and fails closed. Five Gazebo simulator packages (ROS 1 Noetic, Gazebo 11) now pass with the gazebo_ros world pause as their stop.

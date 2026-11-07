@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.saga0619/mujoco_ros_sim
 
 Every fact cites the pinned clone at commit `dcdfd09ac6a4f5fc03c4a0b1a83b3faaf41f94bd`. The

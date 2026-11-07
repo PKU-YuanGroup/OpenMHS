@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Sensed-confirmation stop for autorally/autorally
 
 Repair of `MHS/drivers/robots/autorally__autorally` (`gh.autorally/autorally`), simulated card only (SAFE-049, CORE-088). `driver.lock.json` keeps `authored_by` `deepseek-v4.1-flash:1017`, run `ros-wave-c-133`, and `reviewed_by` null. The package directory was not moved aside. This file is the repair record, not a second authorship.

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Playbook: from a task card to a merged driver package
 
 For whoever runs a model (DeepSeek or another) over the corpus, and whoever reviews what it writes. The model's own

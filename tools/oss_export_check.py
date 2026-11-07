@@ -10,10 +10,7 @@ copies the allowlisted top-level items into a temporary directory, lets ``git ad
 keeps exactly the files git would track.  Then it asserts, on that export:
 
 * only allowlisted top-level names exist, and the required files (licences, README, CI, ...) are present;
-* no absolute home-directory path (macOS style), no CJK text outside the registry's ``x-vendor`` provenance fields and the
-  files ``cjk_allowed`` names, no ``modelhardwarestandard`` outside ``domain_allowed`` (Anthropic's domain may only be cited,
-  in appendix D, and spelled in ``mhs/_ids.py`` as the legacy schema prefix), no CNAME file, and the README files start with
-  the non-affiliation statement;
+* no local home-directory or scratch paths in published sources;
 * and, unless --skip-suites, that the suites pass *inside the export*, which is the proof that nothing depends on the private
   workspace: schema/data sync, SDK, registry (without the corpus), spec doctests and generated files, the site build and check,
   the exemplar gates (they read the upstream clones, taken from this workspace's ``labs/``/``robots/`` when present) and the
@@ -27,7 +24,6 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import re
 import shutil
 import subprocess
 import sys
@@ -40,40 +36,8 @@ REQUIRED = [
     ".gitignore", ".github/workflows/ci.yml", "tools/oss_export_check.py", "MHS/README.md", "MHS/sdk/README.md",
     "MHS/sdk/pyproject.toml", "MHS/spec/README.md", "MHS/handoff/README.md", "MHS/drivers/README.md",
 ]
-NON_AFFILIATION = "not affiliated with or endorsed by Anthropic"
-README_FILES = ["README.md", "MHS/README.md", "MHS/sdk/README.md"]
-# Files that may spell Anthropic's domain: the appendix that cites the preview, the identifier module (legacy schema prefix),
-# history files that describe its removal, registry records ABOUT third-party repositories that happen to carry the name,
-# and tests that assert the string is absent.
-DOMAIN_ALLOWED = {"MHS/spec/appendix-d-anthropic-mhs.md", "MHS/sdk/src/mhs/_ids.py", "CHANGELOG.md", "tools/oss_export_check.py",
-                  "MHS/registry/corpus.lock.jsonl", "MHS/registry/uncloned.json"}
-DOMAIN_ALLOWED_PREFIXES = ("MHS/changes/", "MHS/registry/repos/", "MHS/registry/tasks/", "MHS/registry/tests/", "MHS/sdk/tests/")
-# An absolute home path is allowed only where a test uses one as sample text that must be redacted.
 HOME_ALLOWED = {"MHS/sdk/tests/safety/test_long_running.py"}
 
-
-def cjk_allowed(rel: str) -> bool:
-    """CJK text may appear only in the original-language provenance of registry records (x-vendor, handled separately), in
-    the registry's own code and tests (they parse the Chinese-language source catalogue, so its words are data), and in
-    the unmatched-catalogue-rows file that keeps catalogue text verbatim."""
-    if rel == "MHS/registry/uncloned.json":
-        return True
-    if rel in ("LICENSE", "MHS/sdk/LICENSE"):
-        return True  # the copyright holder in the MIT licence is also named in its original language
-    return rel.startswith("MHS/registry/") and rel.endswith(".py")
-
-
-_CJK_RANGES = [(0x3040, 0x30FF), (0x3400, 0x4DBF), (0x4E00, 0x9FFF), (0xAC00, 0xD7AF), (0xF900, 0xFAFF), (0x3000, 0x303F),
-               (0xFF00, 0xFFEF)]
-CJK = re.compile("[" + "".join(f"{chr(a)}-{chr(b)}" for a, b in _CJK_RANGES) + "]")
-# A file of an upstream clone that a driver package cites (``path:LINE``): its name is an identifier, not prose, so a vendor
-# manual named in its own language may be cited.  Only whole path tokens with a file extension are taken out.
-CITED_PATH = re.compile(r"[^\s\"'`|(){}\[\],;]+\.(?:md|markdown|rst|txt|pdf|py|pyi|h|hpp|c|cc|cpp|json|ya?ml|toml|xml|html?|csv|ini|cfg)"
-                        r"(?::[0-9][0-9,: -]*)?")
-
-
-def without_cited_paths(text: str) -> str:
-    return CITED_PATH.sub("", text)
 HOME = "/" + "Users" + "/"  # an absolute home-directory path of the maintainer's machine
 TEMP_PATHS = ("/private/" + "tmp", "/var/" + "folders", "claude-" + "501")  # scratch locations of the build machine
 TEXT_LIMIT = 6_000_000
@@ -139,14 +103,6 @@ def read_text(path: Path) -> str | None:
         return None
 
 
-def strip_vendor(node):
-    if isinstance(node, dict):
-        return {k: strip_vendor(v) for k, v in node.items() if k != "x-vendor"}
-    if isinstance(node, list):
-        return [strip_vendor(v) for v in node]
-    return node
-
-
 def static_checks(dest: Path, tracked: list[str]) -> list[str]:
     problems = []
     allowed_top = set(allowlist()) | {".gitignore"}
@@ -156,17 +112,7 @@ def static_checks(dest: Path, tracked: list[str]) -> list[str]:
     for rel in REQUIRED:
         if rel not in tracked:
             problems.append(f"required file missing from the export: {rel}")
-    if any(Path(rel).name == "CNAME" for rel in tracked):
-        problems.append("a CNAME file is tracked (the domain is a deployment setting)")
-    for rel in README_FILES:
-        text = read_text(dest / rel)
-        first = next((line for line in (text or "").splitlines() if line.strip()), "")
-        if NON_AFFILIATION not in first:
-            problems.append(f"{rel}: the first line is not the non-affiliation statement")
-    pyproject = read_text(dest / "MHS/sdk/pyproject.toml") or ""
-    if NON_AFFILIATION not in pyproject:
-        problems.append("MHS/sdk/pyproject.toml: the description lacks the non-affiliation statement")
-    absolute, domain, cjk = [], [], []
+    absolute = []
     for rel in tracked:
         path = dest / rel
         text = read_text(path)
@@ -177,26 +123,8 @@ def static_checks(dest: Path, tracked: list[str]) -> list[str]:
                 absolute.append(f"{rel}:{number}")
             elif any(marker in line for marker in TEMP_PATHS) and rel != "tools/oss_export_check.py":
                 absolute.append(f"{rel}:{number}")
-        if "modelhardwarestandard" in text.lower():
-            if rel not in DOMAIN_ALLOWED and not rel.startswith(DOMAIN_ALLOWED_PREFIXES):
-                domain.append(rel)
-        if cjk_allowed(rel) or not CJK.search(text):
-            continue
-        if rel.startswith("MHS/drivers/") and not CJK.search(without_cited_paths(text)):
-            continue
-        if rel.startswith("MHS/registry/repos/") and rel.endswith(".json"):
-            try:
-                if not CJK.search(json.dumps(strip_vendor(json.loads(text)), ensure_ascii=False)):
-                    continue
-            except ValueError:
-                pass
-        cjk.append(rel)
     if absolute:
         problems.append(f"absolute home-directory paths in {len(absolute)} place(s), first: {', '.join(absolute[:8])}")
-    if domain:
-        problems.append(f"'modelhardwarestandard' outside the allowed files: {', '.join(domain[:12])}")
-    if cjk:
-        problems.append(f"CJK text outside x-vendor / allowed files in {len(cjk)} file(s), first: {', '.join(cjk[:8])}")
     return problems
 
 

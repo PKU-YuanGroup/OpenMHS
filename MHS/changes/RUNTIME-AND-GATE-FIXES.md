@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Runtime and gate fixes: a confirmed stop once per e-stop, transport natives resolved, record modes, a linear G4 reader
 
 Four defects that the reviews of [ROS wave C](ROS-WAVE-C.md), [helper wave 1](HELPER-WAVE-1.md) and the

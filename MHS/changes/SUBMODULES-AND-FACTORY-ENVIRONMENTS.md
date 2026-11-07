@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # SUBMODULES-AND-FACTORY-ENVIRONMENTS — git submodules read at their gitlink, and a G7 rule for factory-built environments
 
 The gate, `show_refs.py` and `collect.py` now read a citation into a git submodule of a pinned clone (`<submodule path>/...`) at the commit the pinned tree's gitlink records, from the submodule's own object store, and only while the submodule is declared, checked out and at exactly that commit; anything else fails closed. Gate G7 gains a rule for a Gymnasium environment that a factory function of the clone builds from a class outside it (`native_factory`). RoboPianist passes on them; vision-agh/crazyflie-sim's submodule finding is resolved, but it stays blocked on its stop.

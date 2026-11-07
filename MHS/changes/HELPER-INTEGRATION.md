@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Helper integration: five helper families, the AS7265x repair and reviewed card corrections
 
 This change composes the work of five agents into one source change against the registry state of 2026-11-04: the

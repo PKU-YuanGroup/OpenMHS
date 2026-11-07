@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.kinovarobotics/ros_kortex
 
 Every fact cites the pinned clone at commit `c3280d8a6a6b5d96590d51538e3f265710a6c77d`.

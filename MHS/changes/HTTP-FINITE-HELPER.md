@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Finite HTTP workflow helper
 
 This change adds a config-only `HttpDriver` and an `ot2-run-v1`

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.okermorgant/map_simulator
 
 Every fact cites the pinned clone at commit `537a06464d7fcaa2cba4f4fea9532f0556854440`.

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.patilunmesh/drone_simulator
 
 Every fact cites the pinned clone at commit `a9d0857f1ad4fe57df0250659b107cfc72f44023`.

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Source facts for gh.sidharthmohannair/ros2-ardupilot-sitl-hardware
 
 Pinned commit: `595f9916efe8efb8a08667f35fa515873b2f8450`. Source declarations and controlled fake evidence do not prove native execution.

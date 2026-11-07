@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.jacopopan/gymnasium-docker-ros2
 
 Every fact cites the pinned clone at commit `b3a00f77da38b7f074bed00d3569c56dbfe114df`:

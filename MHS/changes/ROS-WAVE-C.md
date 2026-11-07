@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # ROS wave C: the 150 remaining ROS cards, reviewed by Claude (58 contracts, 86 blocks, 6 skips)
 
 After the reviewed ROS helper ([ROS-ACTION-SAFETY.md](ROS-ACTION-SAFETY.md), [ROS-CONTINUATION-B.md](ROS-CONTINUATION-B.md)),

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Exemplar: gh.anguyen-23/sila-testing (a config-only Sila2Driver)
 
 The sila2 family exemplar. The upstream repository is a SiLA 2 server development platform with nine instrument

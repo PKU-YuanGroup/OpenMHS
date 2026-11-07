@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Scope record: position subset and world pause
 
 The accepted surface of this package is the typhoon_h480_0 position-setpoint subset plus the vendored gazebo_ros world pause. A passing fake gate is `contract_checked` evidence of that surface. It is not a hardware run and it is not a simulator run.

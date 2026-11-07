@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Retained Python native execution
 
 PythonObjectBridge previously treated the caller's timeout as the end of a nested synchronous setter. A stock

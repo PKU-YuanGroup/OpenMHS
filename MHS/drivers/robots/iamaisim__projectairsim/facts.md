@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Source facts for gh.iamaisim/projectairsim
 
 Pinned commit: `62229cd7c77ad31da7bc8aba8dd6303c564d8ba2`. Source declarations and controlled fake results are not native execution.

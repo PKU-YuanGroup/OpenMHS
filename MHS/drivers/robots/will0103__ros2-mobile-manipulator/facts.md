@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.will0103/ros2-mobile-manipulator
 
 Every fact cites the pinned clone at commit `6f49e8f3b306a864d8d139d2dc270afebecea819`, or a companion clone named in `task.json` (`companion:<alias>/path:LINE`). The same facts are written into `driver.py` (`facts = [...]`); the reference file is generated from the driver, not from this page.

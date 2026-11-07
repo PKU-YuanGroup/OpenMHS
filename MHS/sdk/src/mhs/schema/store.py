@@ -38,7 +38,7 @@ from pathlib import Path, PureWindowsPath
 from typing import Any, Mapping
 from urllib.parse import urljoin, urlparse
 
-from .._ids import LEGACY_SCHEMA_PREFIX, SCHEMA_BASE
+from .._ids import LEGACY_SCHEMA_PREFIX, PLACEHOLDER_SCHEMA_PREFIX, SCHEMA_BASE
 from .validator import SchemaError, resolve_pointer
 
 __all__ = [
@@ -54,7 +54,7 @@ __all__ = [
 
 #: ``$id`` prefixes the store accepts.  The legacy prefix is read-only and is
 #: scheduled for removal in 0.10.
-KNOWN_SCHEMA_PREFIXES = (SCHEMA_BASE, LEGACY_SCHEMA_PREFIX)
+KNOWN_SCHEMA_PREFIXES = (SCHEMA_BASE, PLACEHOLDER_SCHEMA_PREFIX, LEGACY_SCHEMA_PREFIX)
 
 _PUBLIC_NAME = re.compile(r"[a-z0-9][a-z0-9-]*(?:\.schema)?\.json")
 _PUBLIC_REF_MAX = 512

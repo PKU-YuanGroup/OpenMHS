@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Source facts for gh.robin-shaun/xtdrone
 
 Pinned commit: `671f3d45b22bfe4b7f2b23ae8d4251f3172781b3`. Each row is one Fact on the driver class. Source declarations and controlled fake results are not native execution.

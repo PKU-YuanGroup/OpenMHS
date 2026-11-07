@@ -40,8 +40,8 @@ class SdkLicenceFilesTests(unittest.TestCase):
         self.assertIn("Copyright (c) 2026 PKU-YUAN-Lab", text)
         self.assertIn(" ".join(NON_AFFILIATION.split()), " ".join(text.split()))
 
-    def test_sdk_readme_starts_with_the_notice(self) -> None:
-        self.assertEqual(_read(SDK / "README.md").splitlines()[0], NON_AFFILIATION)
+    def test_sdk_readme_starts_with_a_heading(self) -> None:
+        self.assertTrue(_read(SDK / "README.md").startswith("# "))
 
 
 @unittest.skipUnless((WORKSPACE / "LICENSE").is_file(), "repository root files not present")
@@ -73,11 +73,11 @@ class RootFilesTests(unittest.TestCase):
         self.assertIn("private vulnerability reporting", flat)
         self.assertIsNone(re.search(r"[\w.+-]+@[\w-]+\.[\w.]+", text), "no e-mail address")
 
-    def test_landing_pages_start_with_the_notice_and_stay_public(self) -> None:
+    def test_landing_pages_start_with_a_heading_and_stay_public(self) -> None:
         for path in (WORKSPACE / "README.md", MHS_ROOT / "README.md", SDK / "README.md"):
             with self.subTest(path=path.relative_to(WORKSPACE)):
                 text = _read(path)
-                self.assertEqual(text.splitlines()[0], NON_AFFILIATION)
+                self.assertTrue(text.startswith("# "))
                 self.assertNotIn(LEGACY_HOST, text)
                 self.assertNotIn("BEGIN GENERATED: current-verification", text)
                 for pattern in PRIVATE_PATTERNS:

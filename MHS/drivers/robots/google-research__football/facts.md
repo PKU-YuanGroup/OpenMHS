@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.google-research/football
 
 Every fact cites its source at commit `3d9e754720a95621bba6475c4d3b0d56fe919014`. The same facts are written into

@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # ROS-INSTALL-RECIPES — identify root build tools from pinned source
 
 Task-card generation previously treated any root `package.xml` as a colcon build

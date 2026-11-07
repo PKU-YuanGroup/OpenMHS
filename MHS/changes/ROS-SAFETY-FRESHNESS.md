@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Fresh ROS stop acknowledgements
 
 ROS safety acknowledgements now belong to the current native activity and stop epochs. A motion command, effectful service, cancellation or reset invalidates an older stop acknowledgement; a pending native operation continues to block a positive safe-state claim and recovery until its terminal outcome is known. A fresh stop after settlement is required. The independent stop path remains available while ordinary work is pending.

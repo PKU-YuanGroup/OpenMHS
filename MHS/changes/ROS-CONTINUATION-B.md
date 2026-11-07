@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # ROS continuation B: reviewed contracts and explicit blocks
 
 The 24 DeepSeek-authored packages were reviewed by a different model, gpt-6, on 2026-11-04. The original author outcomes were 14 passing fake gates and 10 blocks. After source review, repairs and combined checks, 8 packages are accepted as `contract_checked` and 16 remain blocked. Every existing human-signature field remains unchanged; all new model-written locks remain unsigned. This is a local integration record, not publication or hardware validation.

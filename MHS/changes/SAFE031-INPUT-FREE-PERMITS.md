@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # SAFE-031 for permit-gated capabilities without inputs (suite 1.4.1)
 
 Conformance test SAFE-031 no longer skips a permit-gated binding whose input schema admits only the empty object. Suite 1.4.0 needed a second valid input to present the permit with, so a permit-gated action without inputs, such as a declared re-enable (CORE-086), capped its endpoint at CL2 and gate G8 failed. Such a binding has no second valid input: the test now records the distinct-input presentation as not applicable and tests what still applies. Every other binding is tested as before. The fix unblocks gh.ad-sdl/ur_module, whose permit-gated brake-release re-enable now passes the gate unchanged.

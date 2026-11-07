@@ -98,24 +98,18 @@ def stable_digest_of(root: Path, report: dict) -> str | None:
     source = str(root / "MHS" / "sdk" / "src")
     if source not in sys.path:
         sys.path.insert(0, source)
-    try:
-        from mhs.driver.check import stable_digest
-        return stable_digest(report)
-    except Exception:  # noqa: BLE001 - a missing or broken SDK is the gate's finding, not this tool's
-        return None
+    from mhs.driver.check import stable_digest
+    return stable_digest(report)
 
 
 def schema_problems(root: Path, document, schema: str) -> list[str]:
-    """What ``MHS/schema/<schema>`` says is wrong with ``document`` (the SDK of this checkout); empty if valid or unavailable."""
+    """What ``MHS/schema/<schema>`` says is wrong with ``document`` (the SDK of this checkout); empty if valid."""
     sys.dont_write_bytecode = True
     source = str(root / "MHS" / "sdk" / "src")
     if source not in sys.path:
         sys.path.insert(0, source)
-    try:
-        from mhs.schema import default_store
-        return [str(item) for item in default_store().validate(document, schema)]
-    except Exception:  # noqa: BLE001 - a missing or broken SDK is the gate's finding, not this tool's
-        return []
+    from mhs.schema import default_store
+    return [str(item) for item in default_store().validate(document, schema)]
 
 
 def read_json(path: Path):

@@ -476,8 +476,8 @@ class OutputTest(_Servers):
     def test_parser_names_the_project(self):
         description = build_parser().description
         self.assertTrue(description.startswith(_ids.PROJECT_NAME))
-        self.assertIn("not affiliated", description)
-        self.assertNotIn("Model Hardware Standard", description)
+        self.assertIn("Model Hardware Standard", description)
+        self.assertIn("https://mhs.openai4s.org", description)
 
     def test_version(self):
         code, out, _err = s.run_cli("version")

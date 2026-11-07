@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5B companions, new fetches: ifra-cranfield/ros2_robotsimulation stays blocked
 
 The integrator did not apply this unit's package files. Codex's package decision was not accept (`gh.ifra-cranfield/ros2_robotsimulation` decision `block`). The package directory stays at snapshot-6. The sections below are the unit's own account.

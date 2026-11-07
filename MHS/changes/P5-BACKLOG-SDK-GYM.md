@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Gymnasium e-stop latch and stop-attempt generation
 
 GymnasiumBridge now gives each e-stop and each close a stop-attempt id, so only the latest attempt can clear an unconfirmed stop, and it latches effectful world calls until the safety reset. A confirmed stop still has an empty safety status. Reads stay available. This records BL-20 and BL-24. No passing package digest is intended to move.

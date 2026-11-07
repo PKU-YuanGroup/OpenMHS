@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # P5-BACKLOG-PACKAGES-BL04 — item 12 on passing packages outside the ROS family
 
 Written by Grok (grok-4.7, a model and not a human) on 2026-11-05 as unit BL-04 extended of p5-backlog-packages. Run id `ext-p5-backlog-packages--bl04-20261105`. `reviewed_by` stays null on every package. No hardware, ROS graph, Gazebo, PX4 or simulator run is claimed. Every gate result below is `contract_checked` on the package fake.

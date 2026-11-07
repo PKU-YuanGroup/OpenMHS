@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # ROS drivers through rosbridge
 
 `RosDriver` is a configuration-only driver over ROS 1 or ROS 2 topics, services and explicit action profiles. It does not import ROS, start a node,

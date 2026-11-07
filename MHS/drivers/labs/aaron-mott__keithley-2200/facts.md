@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # Facts and tags for gh.aaron-mott/keithley-2200
 
 Every fact cites its source at commit `348fb5df70d92bd96593452e188c90f0ae3d71c4`: `vendor_doc` for the two

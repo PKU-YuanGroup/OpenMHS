@@ -1,5 +1,3 @@
-OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
-
 # panda_gz_moveit2 stays blocked: the Galactic bridge cannot carry the Fortress pause
 
 `andrejorsula/panda_gz_moveit2` stays `blocked` (`HELPER_MISSING`). The fetched lock companions were re-read. The Fortress world pause would hold physics while it is held, but the ROS 2 Galactic bridge this package pins cannot call that service or read `WorldStatistics.paused`. Deactivating the effort trajectory controller still writes the last effort, so it is not a stop. No unpause was added. No driver, lock, card or registry override changed. `reviewed_by` stays null.

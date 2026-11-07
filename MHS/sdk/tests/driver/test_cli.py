@@ -207,7 +207,7 @@ class InterfaceTests(unittest.TestCase):
         for gate in ("G1", "G5", "G9"):
             self.assertIn(f"| {gate} |", text)
         self.assertNotIn(" at 0x", text)
-        self.assertTrue(text.startswith("OpenMHS is an independent open-source project"))
+        self.assertTrue(text.startswith("# OpenMHS SDK interface contract"))
 
 
 if __name__ == "__main__":
