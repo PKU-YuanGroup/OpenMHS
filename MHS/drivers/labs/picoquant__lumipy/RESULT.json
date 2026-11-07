@@ -1,0 +1,69 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:c518da322cc59a06d0bee22fc33ace2cd2d611ee47530e6ece608dbf31c99503",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.picoquant.start_measurement.v1",
+      "reason": "No catalogue class starts or stops a Luminosa measurement. cap.imaging.capture.v1 captures a camera image with exposure, binning and ROI fields, not the LumiPy measurement lifecycle; start_meas accepts image, line or point.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.picoquant.stop_measurement.v1",
+      "reason": "No catalogue class stops a LumiPy measurement; cap.motion.stop.v1 stops motion, not acquisition. stop_meas is the only native stop of the Measurement object.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.picoquant.set_measurement_name.v1",
+      "reason": "No catalogue class sets a measurement name; the native set_next_measurement_name has no getter and no catalogue state field.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.picoquant.configure_image_stop.v1",
+      "reason": "cap.device.configure.v1 fits semantically, but the cap.device.configure.v1 tool with all 17 writable parameters was 3421 bytes, over the 2048-byte MCP tool bound. This smaller invoke configures the image stop conditions; the same fields remain readable state.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.picoquant.configure_point_stop.v1",
+      "reason": "cap.device.configure.v1 fits semantically, but the cap.device.configure.v1 tool with all 17 writable parameters was 3421 bytes, over the 2048-byte MCP tool bound. This smaller invoke configures the point stop conditions; the same fields remain readable state.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.picoquant.set_ptu_output.v1",
+      "reason": "cap.device.configure.v1 fits semantically, but the cap.device.configure.v1 tool with all 17 writable parameters was 3421 bytes, over the 2048-byte MCP tool bound. This smaller invoke configures PTU output; write_ptu_file remains readable state.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.picoquant.get_analysis_curve.v1",
+      "reason": "No catalogue class reads a live analysis curve. cap.sensing.read.v1 is a sensor-field read with a different output shape; this native call returns a 1-D curve plus optional FCS fit arrays.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.picoquant.get_analysis_curve_types.v1",
+      "reason": "No catalogue class lists the curve types of one configured live analysis; cap.sensing.read.v1 does not express per-analysis type discovery.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.picoquant.get_analysis_image_types.v1",
+      "reason": "No catalogue class lists the image types of one configured live analysis; cap.imaging.capture.v1 is an acquisition binding, not type discovery.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.picoquant.get_analysis_param.v1",
+      "reason": "No catalogue class reads a type-dependent live analysis parameter dict; cap.sensing.read.v1 returns sensor values keyed by field, not a per-analysis parameter object.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.picoquant.get_analysis_param_types.v1",
+      "reason": "No catalogue class lists the parameter types of one configured live analysis; the available keys and types are defined by the Luminosa analysis, not by a catalogue class.",
+      "verb": "read"
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the card's family-config/mcp-client shape was not used. The pinned MCP server (MCPTool/lumipy_mcp_server.py) is an arbitrary-Python-code bridge to a remote execution server, not a finite device tool contract; it exposes execute_python_code and related code-execution tools rather than the Measurement interface. The card's entry symbol and hints point at libs/pqlumi:Measurement, so this package is a direct Driver over libs.pqlumi:Measurement, with native.py and an in-memory fake. Coverage: reads version, analysis names, running/elapsed time, scan range and stop settings, PTU state; writes scan range, scan speed and image size through cap.device.configure.v1; extension actions configure image and point stop conditions and PTU output, set the next measurement name, start/stop measurements, and read analysis names, curve/image/parameter types, curve, image and parameter data. Not covered: load_user_setting, block_airy_adjustment, point_list, selected_point and lumi_finder, and the separate pqdc/pqscan laser, shutter, attenuator and stage interfaces. Evidence: only the fake backend was run; no hardware run, no upstream import, and the gate reports contract_checked. The fake's values (3x3 image, five-point curve, starting scan range/stop settings and analysis/type names) are placeholders; the real image size follows the configured image_size, and the complete image and curve arrays are returned inline, not truncated. The native factory returns the installed pqlumi.measurement but refuses the upstream is_fake fallback so a hardware backend cannot silently serve canned values. Safety: R1; the Measurement interface starts/stops acquisition and changes scan settings, but does not switch lasers, shutters, attenuators or stages. The native stop is stop_meas; the safe-state action calls it with no input. stop_meas stops acquisition but does not prove laser/shutter/stage off, and no independent hardware e-stop is documented for this object, so estop_physical_ref is not set. A deployment that couples this driver to laser/shutter hardware must raise the risk and add the relevant stop. The split configuration extension bindings exist because the cap.device.configure.v1 tool with all 17 writable parameters was 3421 bytes, over the 2048-byte MCP tool bound; every split field remains readable state.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked the direct Driver over libs.pqlumi:Measurement against pqlumi.py, the demos, the MCP server and disclaimer, and the readiness evidence (exemplars-service: the MCP route only runs arbitrary code). The Measurement route is an honest different class of the repository, but the risk was R1 although a Luminosa measurement scans the instrument's lasers (laser assemblies, pqlumi.py:1093-1097; no laser class stated), the claim that this interface does not switch lasers or shutters is not provable (every call goes into the closed delphi_pqlumi bridge), the e-stop called stop_meas without confirming meas_status, and get_analysis_image returned complete 2-D images inline (large data). The reviewer raised the risk to R2, made the e-stop and the safe-state action confirm that meas_status() reads False within 0.5 s (otherwise SAFE_STATE_UNREACHED), removed get_analysis_image (NOT COVERED, NEEDS_ARTIFACTS), corrected two facts and added two, added a stop_ignored fake switch with a test, and changed driver.py, fake.py, test_driver.py and facts.md, regenerating reference.json, REFERENCE.md and check-report.json; the gate and strict collect pass, digest unchanged (sha256:c518da322cc59a06d0bee22fc33ace2cd2d611ee47530e6ece608dbf31c99503). Stale author text: the RESULT.json notes (R1, the image action) and the get_analysis_image catalogue request. Not a predicted block: the evidence covered the MCP route only. For the human reviewer: At R2 the loader refuses the hardware backend until a human signs. The stop ends the measurement as the Luminosa software reports it; it is not shown to switch off lasers or close shutters (pqdc is not bound): cite the instrument's laser interlock or shutter, or state its laser class. Whether the Delphi bridge is safe to call from the e-stop thread while another call runs is unknown. native.py refuses the is_fake fallback.",
+  "blocked_on": []
+}

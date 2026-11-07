@@ -1,0 +1,68 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:b208c3b3f6e0205cb81a54c2a662c0e40cb0ebf59efacab1f7d17e62621a2209",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.azdagkas.kinesis_piezo.move_to_home.v1",
+      "reason": "cap.motion.home.v1 is the closest class, but it carries optional axes and speed_scale inputs that the native move_to_home has no argument for and reports joint_positions in rad; the native command takes no input and the controller value is percentage travel or output voltage. The extension is also the safe-state action.",
+      "verb": "invoke",
+      "summary": "Drive the piezo travel to zero with the native move_to_home; the safe-state action.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.azdagkas.kinesis_piezo.jog_up.v1",
+      "reason": "no catalogue class expresses a relative one-step jog with no input: cap.motion.joint_velocity.v1 takes rad/s and this controller has no velocity API, and cap.motion.joint_position.v1 takes rad while the controller value is percentage travel or output voltage.",
+      "verb": "invoke",
+      "summary": "Step the controller value up by one configured jog step.",
+      "similar": [
+        "cap.motion.joint_velocity.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.azdagkas.kinesis_piezo.jog_down.v1",
+      "reason": "no catalogue class expresses a relative one-step jog with no input: cap.motion.joint_velocity.v1 takes rad/s and this controller has no velocity API, and cap.motion.joint_position.v1 takes rad while the controller value is percentage travel or output voltage.",
+      "verb": "invoke",
+      "summary": "Step the controller value down by one configured jog step.",
+      "similar": [
+        "cap.motion.joint_velocity.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.azdagkas.kinesis_piezo.calibrate_position.v1",
+      "reason": "cap.device.calibrate.v1 is the closest class, but its resource_kinds are robot.arm, instrument, sensor and optics.laser, not motion.axis, and its standard_ref, targets and notes inputs do not match the native calibrate_pos, which takes no input and fits percentage travel to the strain gauge reading.",
+      "verb": "invoke",
+      "summary": "Fit percentage travel to the strain gauge reader with the native calibrate_pos.",
+      "similar": [
+        "cap.device.calibrate.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.azdagkas.kinesis_piezo.move_to_position.v1",
+      "reason": "cap.motion.joint_position.v1 is the closest motion class, but it requires joint_positions in rad; the native move_to_pos takes a strain gauge reading in the reader display unit (micrometre, volt or newton) and converts it to percentage travel with the stored calibration.",
+      "verb": "invoke",
+      "summary": "Move to a strain gauge reader position with the stored percentage calibration.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.azdagkas.kinesis_piezo.zero_reader.v1",
+      "reason": "no catalogue class zeros a strain gauge reader: cap.device.calibrate.v1 does not list motion.axis and its standard_ref and targets inputs do not match the native reader set_zero, which takes no input.",
+      "verb": "invoke",
+      "summary": "Zero the strain gauge reader with the native reader set_zero.",
+      "similar": [
+        "cap.device.calibrate.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). Model-authored and unreviewed: authored_by is the model deepseek-v4.1-flash:1017 (run wB2-196) and reviewed_by stays null; native.py, pythonnet, the Kinesis DLLs and the upstream package were never imported or run, and no hardware test was performed. DEVIATION FROM THE CARD: the card names PythonObjectDriver, but the package is a direct decorated Driver over the confirmed entry symbol piezo:PiezoController because the value is mode-dependent (percentage travel in closed loop, output voltage in open loop), the calibration uses the upstream a/b conversion, and the actions need outputs and preconditions that the family's static mapping cannot express. COVERAGE: reads value, units, closed_loop, reader_reading, reader_units and zeroing; writes value (operator_required) and closed_loop; actions x-cap.azdagkas.kinesis_piezo.move_to_home.v1 (also the safe-state action), jog_up, jog_down, calibrate_position, move_to_position (operator_required input) and zero_reader; @estop calls the native move_to_home. The value field has no single UCUM unit (percent in closed loop, volts in open loop), so it is declared with unit 1 and the units read reports the physical unit; reader_reading and the calibrated position use the reader display unit, reported by reader_units. The fake starts in closed loop with placeholder calibration and reader values (marked # placeholder) so the calibrated move can be exercised; the hardware driver refuses move_to_position until calibrate_position has run and refuses calibration in open loop. The only gate warning is G6.NO_NATIVE_CALL for zero_reader: the action calls PiezoController.reader.set_zero(), and the gate's recorder wraps only the controller object, not the reader object the upstream class owns, so it cannot see the nested native call; the action returns the reader zeroing flag and the zeroing read changes, so it is not a no-op, and the upstream class has no controller-level zero method to call instead. NOT COVERED: the upstream reader display-mode changes (the clone has no setter), the move_pos_up, move_pos_down and move_pos_to_home convenience methods (the calibrated move and the jog actions are exposed instead), the open-loop voltage range beyond the operator-supplied value bound, the piezogui.py GUI and any device class other than PiezoController. The clone's README says the code was tested with Python 2.7 and 3.6; the lock install says python >=3.10 because the MHS SDK requires it. check-report.json is regenerated by every gate run and is not part of the package; gate.digest is the digest the last check printed.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): refreshed the passing fake gate after nested Recorder support. Changed check-report.json and RESULT.json only. The prior G6.NO_NATIVE_CALL warning is now absent because the recorder observes the actual nested reader.set_zero call; the normalized report differs only by removing that warning and changing G6 from warn to pass. The new stable digest is from this fresh gate run. This is stronger fake-path instrumentation, not new hardware or safety validation. Originals are preserved in work/handoff-runs/mhs-build-20261102/originals/nested-evidence-refresh/. Authorship and the null human signature are unchanged.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review."
+}

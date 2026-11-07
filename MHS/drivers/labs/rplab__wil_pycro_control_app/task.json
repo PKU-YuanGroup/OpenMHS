@@ -1,0 +1,96 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.rplab/wil_pycro_control_app",
+  "track": "labs",
+  "local_path": "labs/rplab/wil_pycro_control_app",
+  "driver_dir": "MHS/drivers/labs/rplab__wil_pycro_control_app",
+  "upstream": {
+    "repo_url": "https://github.com/rplab/wil_pycro_control_app",
+    "commit": "dc2f18836064c0e2391d96f0d72734e2a24764f8",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 54,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pyfile:WIL_Pycro_Control_App/hardware/stage.py#*",
+      "file": "WIL_Pycro_Control_App/hardware/stage.py",
+      "line": 1,
+      "confidence": "override"
+    },
+    {
+      "symbol": "pyfile:WIL_Pycro_Control_App/hardware/camera.py#*",
+      "file": "WIL_Pycro_Control_App/hardware/camera.py",
+      "line": 1,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "AcquisitionDirectory.get_directory",
+      "AcquisitionDirectory.get_file_name"
+    ],
+    "writes": [
+      "AcquisitionDirectory.set_acq_type",
+      "AcquisitionDirectory.set_fish_num",
+      "AcquisitionDirectory.set_region_num",
+      "AcquisitionDirectory.set_time_point",
+      "multipage_datastore.set_summary_metadata",
+      "ram_datastore.set_summary_metadata"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "WIL_Pycro_Control_App/acquisition/acquisition_sequences.py:19 ATTEMPT_LIMIT = 1",
+      "WIL_Pycro_Control_App/acquisition/imaging_sequences.py:101 SINGLE_SAVE_IMAGE_LIMIT = 10000",
+      "WIL_Pycro_Control_App/hardware/camera.py:40 MAX_EXPOSURE = 2000",
+      "WIL_Pycro_Control_App/hardware/camera.py:41 MIN_EXPOSURE = 0.01",
+      "WIL_Pycro_Control_App/utils/globals.py:20 MIN_TO_S = 60",
+      "WIL_Pycro_Control_App/utils/globals.py:22 S_IN_MIN = 60"
+    ]
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/rplab__wil_pycro_control_app --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

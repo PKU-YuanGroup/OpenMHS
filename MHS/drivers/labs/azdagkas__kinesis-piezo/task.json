@@ -1,0 +1,91 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.azdagkas/kinesis-piezo",
+  "track": "labs",
+  "local_path": "labs/azdagkas/kinesis-piezo",
+  "driver_dir": "MHS/drivers/labs/azdagkas__kinesis-piezo",
+  "upstream": {
+    "repo_url": "https://github.com/azdagkas/kinesis-piezo",
+    "commit": "ecfe0586cef37d83e287a1fee3496a3eb67f4acd",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 17,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "piezo:PiezoController",
+      "file": "piezo.py",
+      "line": 159,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "PiezoController.get_units",
+      "PiezoController.get_value",
+      "PiezoController.is_closed_loop",
+      "PiezoController.reader.get_pos",
+      "PiezoController.reader.is_zeroing"
+    ],
+    "writes": [
+      "PiezoController.set_closed_loop",
+      "PiezoController.set_open_loop",
+      "PiezoController.set_value",
+      "PiezoController.reader.set_zero"
+    ],
+    "actions": [
+      "PiezoController.calibrate_pos",
+      "PiezoController.connect_enable",
+      "PiezoController.move_pos_down",
+      "PiezoController.move_pos_to_home",
+      "PiezoController.move_pos_up",
+      "PiezoController.move_to_home",
+      "PiezoController.move_to_pos"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.device.calibrate.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/azdagkas__kinesis-piezo --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:6c004dedca7af613f414a391bffe78a1e3ab134eb890578768ccf78e2e8ff8fc",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.akperuht.output_off.v1",
+      "reason": "No catalogue class binds a power-supply output-off safe-state invocation. cap.device.configure.v1 is a write (used for the output state), and cap.device.self_test.v1 is a self-test, not the OUT_OFF stop path required by SAFE-045 at R2. The extension has no inputs and writes the upstream OUT_OFF command.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "Passed the fake backend (contract_checked, never an MHS-Device level); no hardware run and no human review. The package binds one upstream entry symbol, Control_lib.instrument_control:PN300 (a Digimess programmable power supply). The card's hints span several instruments; the SR810_30_lockin, AVS47, pynskabox and Anritsu68367C classes are NOT COVERED by this package. NOT COVERED for the PN300: the upstream reset method (*RST), the protection-mode write (the upstream lowercases prot_lim/prot_cut, so the driver only reads PROT?), and enable_output/disable_output as separate actions (the writable output state covers OUT_ON/OUT_OFF; the e-stop and the x-cap safe-state action write OUT_OFF). The fake is a stateful SCPI transport, not a transcript: the upstream clone has no PN300 simulator or recorded session. Its identity string, initial state and reply prefixes are placeholders marked in fake.py, not facts or limits. Voltage and current have no single bound in the clone (the current docstring gives mode-dependent ranges with non-numeric glyphs), so both are Limit.operator_required; site-limits.example.json is an illustrative deployment overlay with example bounds, not a device fact, and a real site must replace it. The declared risk is R2 because a power supply can deliver energy into an unknown load; the e-stop is the software OUT_OFF command plus the safe-state action, the manifest declares no physical e-stop, and the unreviewed model-written package must not open the hardware backend. The final gate run after the VSET/ISET value formatting change printed the same digest recorded here.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged."
+}

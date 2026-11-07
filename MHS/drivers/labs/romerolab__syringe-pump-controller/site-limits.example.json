@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (New Era syringe pump)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/new-era-syringe-pump": {
+      "flow_rate": {"min": 0.001, "max": 3600000.0, "unit": "uL/hr", "source": "operator",
+                    "reason": "example: the installed syringe and tubing admit at most 1000 uL/s (3600000 uL/hr)"},
+      "diameter": {"min": 0.1, "max": 50.0, "unit": "mm", "source": "operator",
+                   "reason": "example: only syringes with a diameter from 0.1 mm to 50 mm are used on this bench"},
+      "cap.actuation.pump.v1": {
+        "flow_rate": {"min": 0.001, "max": 1000.0, "unit": "uL/s", "source": "operator",
+                      "reason": "example: the installed syringe and tubing admit at most 1000 uL/s"},
+        "volume": {"min": 0.001, "max": 1000.0, "unit": "uL", "source": "operator",
+                   "reason": "example: the largest syringe on this bench holds 1000 uL"},
+        "duration_s": {"min": 0.001, "max": 3600.0, "unit": "s", "source": "operator",
+                       "reason": "example: a single dispense is limited to one hour"}
+      }
+    }
+  }
+}

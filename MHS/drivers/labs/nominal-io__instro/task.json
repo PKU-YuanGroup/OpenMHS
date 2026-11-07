@@ -1,0 +1,148 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nominal-io/instro",
+  "track": "labs",
+  "local_path": "labs/nominal-io/instro",
+  "driver_dir": "MHS/drivers/labs/nominal-io__instro",
+  "upstream": {
+    "repo_url": "https://github.com/nominal-io/instro",
+    "commit": "311aee4ae227205b773e6cc9c523df9ea7e7ce03",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 3,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "instro.daq.daq:InstroDAQ",
+      "file": "instro/daq/daq.py",
+      "line": 432,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instro.awg.drivers.keysight_33521b:Keysight33521B",
+      "file": "instro/awg/drivers/keysight_33521b.py",
+      "line": 99,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instro.scope.drivers.keysight_1200x:Keysight1200X",
+      "file": "instro/scope/drivers/keysight_1200x.py",
+      "line": 86,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instro.scope.drivers.tektronix_2series:Tektronix2SeriesMSO",
+      "file": "instro/scope/drivers/tektronix_2series.py",
+      "line": 85,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instro.psu.drivers.siglent_spd3303:SiglentSPD3303",
+      "file": "instro/psu/drivers/siglent_spd3303.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10,<3.15",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "instro/dmm/scpi_sim_server.py:105 SimulatedDMM",
+      "instro/dmm/scpi_sim_server.py:316 SimulatedDMMServer",
+      "instro/psu/scpi_sim_server.py:97 SimOperatingMode",
+      "instro/psu/scpi_sim_server.py:103 SimulatedLoad",
+      "instro/psu/scpi_sim_server.py:117 SimulatedPSUChannel",
+      "instro/psu/scpi_sim_server.py:160 SimulatedPSU"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "InstroDAQ.get_actual_sample_rate",
+      "InstroDAQ.get_channel",
+      "InstroDAQ.get_points_in_buffer",
+      "InstroDAQ.get_single_channel_value",
+      "InstroDAQ.is_hw_timing_configured",
+      "InstroDAQ.is_sw_timing_configured",
+      "InstroDAQ.read_analog",
+      "InstroDAQ.read_batch",
+      "InstroDAQ.read_digital_line",
+      "InstroDAQ.read_digital_port",
+      "Keysight33521B.get_amplitude",
+      "Keysight33521B.get_burst_delay"
+    ],
+    "writes": [
+      "InstroDAQ.configure_ai_hw_sample_rate",
+      "InstroDAQ.configure_ai_sample_rate",
+      "InstroDAQ.configure_ai_sw_sample_rate",
+      "InstroDAQ.configure_analog_channel",
+      "InstroDAQ.configure_current_input",
+      "InstroDAQ.configure_current_output",
+      "InstroDAQ.configure_digital_input",
+      "InstroDAQ.configure_digital_line",
+      "InstroDAQ.configure_digital_output",
+      "InstroDAQ.configure_digital_port",
+      "InstroDAQ.configure_relay_channel",
+      "InstroDAQ.configure_thermocouple_input"
+    ],
+    "actions": [
+      "InstroDAQ.start",
+      "InstroDAQ.stop",
+      "Keysight33521B.burst_enable",
+      "Keysight33521B.fire_burst_trigger",
+      "Keysight33521B.fire_sweep_trigger",
+      "Keysight33521B.modulation_enable",
+      "Keysight33521B.output_enable",
+      "Keysight1200X.force_trigger",
+      "Keysight1200X.measure",
+      "Keysight1200X.run",
+      "Keysight1200X.stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.actuation.gpio.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "instro/modbus/types.py:100 MAX_REGISTERS_PER_READ = 125",
+      "instro/modbus/types.py:103 MAX_COILS_PER_READ = 2000",
+      "instro/psu/scpi_sim_server.py:33 DEFAULT_VOLTAGE_MAX = 60.0",
+      "instro/psu/scpi_sim_server.py:34 DEFAULT_CURRENT_MAX = 10.0",
+      "instro/psu/scpi_sim_server.py:35 CHANNEL_MIN = 0.0",
+      "instro/psu/scpi_sim_server.py:36 PROTECTION_MIN = 0.0",
+      "packages/instro-daq-labjack/instro/daq/drivers/labjack/t_series_models.py:54 VALID_RANGES = [10]",
+      "packages/instro-daq-labjack/instro/daq/drivers/labjack/t_series_models.py:55 MIN_SCAN_RATE = 0.0157"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/nominal-io__instro --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

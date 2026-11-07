@@ -1,0 +1,126 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.openuc2/imswitch",
+  "track": "labs",
+  "local_path": "labs/openuc2/imswitch",
+  "driver_dir": "MHS/drivers/labs/openuc2__imswitch",
+  "upstream": {
+    "repo_url": "https://github.com/openuc2/imswitch",
+    "commit": "e5db60f1021b0d7b72f171069258768127880ac5",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 24,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "imswitch.imcontrol.model.managers.positioners.ESP32StageManager:ESP32StageManager",
+      "file": "imswitch/imcontrol/model/managers/positioners/ESP32StageManager.py",
+      "line": 33,
+      "confidence": "override"
+    },
+    {
+      "symbol": "imswitch.imcontrol.model.interfaces.standamotor:StandaMotor",
+      "file": "imswitch/imcontrol/model/interfaces/standamotor.py",
+      "line": 16,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "imswitch/imcontrol/model/SetupInfo.py:348 MockXXInfo"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "LepmonGPIO.get_all_led_states",
+      "LepmonGPIO.get_available_buttons",
+      "LepmonGPIO.get_available_leds",
+      "LepmonGPIO.get_hardware_status",
+      "LepmonGPIO.get_led_brightness",
+      "LepmonGPIO.get_led_state",
+      "LepmonGPIO.read_all_buttons",
+      "RecordingService.get_pending_io_count",
+      "RecordingService.get_status",
+      "RecordingService.get_status_dict",
+      "RecordingService.is_recording",
+      "RecordingService.is_streaming"
+    ],
+    "writes": [
+      "UC2SerialController.set_led",
+      "UC2SerialController.set_objective_slot",
+      "UC2SerialController.set_pwm_value",
+      "LepmonGPIO.set_heater",
+      "RecordingService.set_comm_channel",
+      "RecordingService.set_detectors_manager",
+      "RecordingService.set_metadata_hub",
+      "RecordingService.set_streaming_adapter",
+      "RecordingService.write_streaming_frame"
+    ],
+    "actions": [
+      "UC2SerialController.move_motor",
+      "UC2SerialController.move_motor_steps",
+      "UC2SerialController.move_xy_motors",
+      "UC2SerialController.on_snap_image_command",
+      "UC2SerialController.send_image_on_snap",
+      "UC2SerialController.snap_image",
+      "UC2SerialController.read_thread.start",
+      "LepmonGPIO.start_terminal_listener",
+      "RecordingService.snap",
+      "RecordingService.snap_numpy",
+      "RecordingService.start_streaming",
+      "RecordingService.start_video_recording"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.sensing.image.v1",
+      "cap.motion.joint_position.v1",
+      "cap.imaging.illumination.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "imswitch/imcontrol/controller/focusmetrics.py:32 min_signal_threshold = 10.0",
+      "imswitch/imcontrol/controller/focusmetrics.py:33 max_focus_value = 1000000.0",
+      "imswitch/imcontrol/controller/focusmetrics.py:37 max_peaks = 2",
+      "imswitch/imcontrol/model/SetupInfo.py:317 x_min = 500",
+      "imswitch/imcontrol/model/SetupInfo.py:320 x_max = 3500",
+      "imswitch/imcontrol/model/SetupInfo.py:323 y_min = 500",
+      "imswitch/imcontrol/model/SetupInfo.py:326 y_max = 3500",
+      "imswitch/imcontrol/model/tile_registration.py:25 MIN_QUALITY = 0.2"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/openuc2__imswitch --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

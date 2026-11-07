@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (NSLS-II CHX syringe-pump controller)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/nsls-ii-chx-syringe-pump": {
+      "flow_rate": {"min": -6000.0, "max": 6000.0, "unit": "uL/min", "source": "operator",
+                    "reason": "example: the installed syringe and tubing admit at most 100 uL/s (6000 uL/min) in either direction"},
+      "volume": {"min": 0.001, "max": 1000.0, "unit": "uL", "source": "operator",
+                 "reason": "example: the largest syringe on this bench holds 1000 uL"},
+      "cap.actuation.pump.v1": {
+        "flow_rate": {"min": 0.001, "max": 100.0, "unit": "uL/s", "source": "operator",
+                      "reason": "example: the installed syringe and tubing admit at most 100 uL/s"},
+        "volume": {"min": 0.001, "max": 1000.0, "unit": "uL", "source": "operator",
+                   "reason": "example: the largest syringe on this bench holds 1000 uL"},
+        "duration_s": {"min": 0.001, "max": 3600.0, "unit": "s", "source": "operator",
+                       "reason": "example: a single dispense is limited to one hour"}
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.freespace/pysmc100",
+  "upstream": {
+    "repo_url": "https://github.com/freespace/pysmc100",
+    "commit": "8c65638934edb9c50381b7a25488bdc728619ffc",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The upstream module is Python 2 (print statement at smc100.py:110, except syntax at smc100.py:400), so native.py is a Python 3 port of the same wire protocol and imports pyserial lazily. The fake backend needs no serial port. No hardware was attached and no hardware run is claimed."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeSMC100"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-013",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

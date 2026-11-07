@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (GSC-02C with an OSMS20-85 stage)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example overlay only: it stands for the travel range and the mm/s range of one stage. Every bound here must be checked against the stage actually attached before use.",
+  "devices": {
+    "mhs://localhost/gsc02c": {
+      "x-cap.prr8691.configure_motion.v1": {
+        "start_speed_mm_s": {"min": 0.001, "max": 2, "unit": "mm/s", "source": "operator",
+                             "reason": "example: this stage tolerates 0.001 to 2 mm/s at the start of a move"},
+        "max_speed_mm_s": {"min": 0.001, "max": 5, "unit": "mm/s", "source": "operator",
+                           "reason": "example: this stage tolerates 0.001 to 5 mm/s"}
+      },
+      "x-cap.prr8691.move_absolute_mm.v1": {
+        "position_mm": {"min": 0, "max": 85, "unit": "mm", "source": "operator",
+                        "reason": "example: the documented travel of the OSMS20-85 configuration is 0 to 85 mm"}
+      },
+      "x-cap.prr8691.move_relative_mm.v1": {
+        "distance_mm": {"min": -85, "max": 85, "unit": "mm", "source": "operator",
+                        "reason": "example: a relative move must still end inside 0 to 85 mm on this stage"}
+      },
+      "x-cap.prr8691.move_absolute_pulses.v1": {
+        "pulses": {"min": 0, "max": 85000, "unit": "1", "source": "operator",
+                   "reason": "example: at 1 um per pulse the documented 0 to 85 mm range is 0 to 85000 pulses"}
+      },
+      "x-cap.prr8691.move_relative_pulses.v1": {
+        "pulses": {"min": -85000, "max": 85000, "unit": "1", "source": "operator",
+                   "reason": "example: a relative move must still end inside 0 to 85000 pulses on this stage"}
+      }
+    }
+  }
+}

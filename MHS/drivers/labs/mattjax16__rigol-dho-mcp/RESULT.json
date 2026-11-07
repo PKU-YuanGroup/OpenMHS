@@ -1,0 +1,139 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:cc4249986d466d0eb1bea5516a2c97a9ddfc1deed14719c51ea4a14d179c3a67",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.mattjax16.identify.v1",
+      "reason": "Return the instrument identity string of the *IDN? query through the identify tool.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mattjax16.get_status.v1",
+      "reason": "Read the oscilloscope status object the get_status tool returns (trigger status, acquisition, timebase, channels); no catalogue class has this output.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mattjax16.run_control.v1",
+      "reason": "Start, stop, arm, autoset, clear or force-trigger oscilloscope acquisition; the catalogue has no acquisition run-control class.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.mattjax16.configure_channel.v1",
+      "reason": "Change several analog-channel settings in one tool call and return the queried settings; cap.device.configure.v1 writes resource parameters, not this tool contract.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mattjax16.configure_timebase.v1",
+      "reason": "Set main timebase scale and offset through one tool call with its queried readback.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mattjax16.configure_trigger_edge.v1",
+      "reason": "Configure edge triggering (mode EDGE, source, slope, level, sweep) with queried readback.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mattjax16.configure_acquisition.v1",
+      "reason": "Set memory depth, acquisition type and average count with queried readback and sample rate.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mattjax16.configure_cursors.v1",
+      "reason": "Set the cursor mode, type and sources of an oscilloscope.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mattjax16.configure_cursors_time.v1",
+      "reason": "Manual TIME cursors with coordinates in seconds; a typed projection of the configure_cursors tool.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mattjax16.configure_cursors_amplitude.v1",
+      "reason": "Manual AMPLitude cursors with coordinates in volts; a typed projection of the configure_cursors tool.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mattjax16.configure_cursors_current.v1",
+      "reason": "Manual cursors on the retained cursor type; a source-cited selection over the configure_cursors tool.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mattjax16.get_cursor_values.v1",
+      "reason": "Read cursor positions and deltas in one of three mode-dependent shapes, published as a JSON artifact.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mattjax16.get_measurement.v1",
+      "reason": "Select and read one of 33 automatic oscilloscope measurement items on one channel; cap.measure.voltage.v1 covers voltage only and has a different output.",
+      "verb": "invoke",
+      "similar": [
+        "cap.measure.voltage.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mattjax16.measure_between.v1",
+      "reason": "Select and read a delay or phase item between two channels.",
+      "verb": "invoke",
+      "similar": [
+        "cap.measure.voltage.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mattjax16.get_waveform.v1",
+      "reason": "Capture a screen or deep-memory waveform with statistics and the decimated time/voltage arrays as a JSON artifact; the catalogue has no waveform acquisition class.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mattjax16.get_screenshot.v1",
+      "reason": "Capture the oscilloscope display as a PNG image artifact; cap.sensing.image.v1 is a camera image class.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.image.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). Model-authored (claude-opus-5-5, a model, as the McpClientDriver family exemplar); reviewed_by stays null and no human review, hardware run or real MCP server run is claimed. SCOPE: all thirteen default tools of rigol_dho_mcp/server.py at f9ac7191 (server.py:147-600) as sixteen bindings; configure_cursors has three extra typed bindings so cursor coordinates carry seconds or volts. NOT COVERED: the opt-in scpi_command raw SCPI tool (registered only when RIGOL_ENABLE_SCPI_RAW is true, server.py:62,608-628) and the rigol-dho-cli command line (rigol_dho_mcp/cli.py). RISK: R0, checked against the 04-safety.md section 2.1 table (R0: data only, no physical effect; R1 starts at low-energy reversible physical actions such as small motion, illumination or a valve). The tools do write instrument state (run_control, the configure_* tools, and the select-then-query measurements), and R0 does not imply read-only (same section). Every exposed write sets how the scope acquires, triggers, displays or measures its own inputs: channel display, scale, offset, coupling, probe ratio, bandwidth limit and inversion (server.py:243-256), timebase (:275-279), edge trigger (:296-304), acquisition depth, type and averages (:323-328), cursors (:371-390), measurement selection (:454, 493) and run, stop, single, autoset, clear and force-trigger (:211-219). None sources a signal, current or voltage, moves anything or dispenses: no output or generator command is exposed, and the raw SCPI tool that could reach one is off by default and not bound. The worst consequences are a wrong configuration, recoverable by reconfiguring, and loss of an unsaved on-screen acquisition (clear, run, single, autoset), which is data loss, not a physical effect. R0 is kept; a reviewer who wants write-capable tools at R1 can raise it, and the protective run_control stop already exists. SAFE STATE: the e-stop sends run_control stop on the protective lane and requires a fresh get_status trigger_status of STOP after all older requests retired; that is proven for the controlled peer only. A real DHO's reaction to :STOP was not run. NATIVE: McpClientDriver and native.py refuse every non-fake backend before import, process start or connection (G7 warning MCP_NATIVE_UNRESOLVED, expected). The fake speaks the SDK's controlled MCP profile. Per the SDK's reviewed source assessment (MHS/sdk/docs/mcp-client.md, native compatibility section), the pinned FastMCP server (requirements.lock: mcp==1.29.0) lists pydantic-generated input schemas that differ from the declared closed schemas and can return structuredContent beside string results (identify and run_control return str); the bridge refuses both, so the package cannot drive the real server as it is. Server-process ownership (stdio or streamable-http), whole-tool retirement (each tool issues several SCPI calls, scpi.py:156-174) and exclusive instrument ownership remain unresolved. FAKE DATA: every number in fake.py is a placeholder. The fake returns a 1031-sample screen and a 20001-sample memory record and a 3 x 2 PNG; a real screen read is about 1000 points (server.py:515), deep memory can be up to 50M points (memory_depth enum, server.py:135) before the server decimates it to about max_points (server.py:576-582), and a real screenshot is a full-display PNG. The JSON waveform bound is 1 MiB and the PNG bound 1 MiB (2097152 pixels); a larger real result is refused, not truncated. TIMING: request_timeout_ms 500, stop_timeout_ms 500 and max_duration_ms 1000 (get_waveform, get_screenshot) are placeholder budgets of the controlled peer (driver.py CONTROLLED_* constants), not Rigol timings: the pinned server waits up to 30 s per deep-memory chunk, 15 s per screen read and 20 s for a screenshot (server.py:544,547,599), its socket timeout defaults to 10 s (server.py:61), and one tool issues several SCPI calls, so a real server could not meet them. They cannot go into fidelity gaps: a hardware-mode McpClientDriver served on its fake backend gets the SDK's fixed fake fidelity (F0, gap 'transport replaced by fake backend', mhs/driver/build.py:73-83,176-185) and has no fidelity declaration. LIMITS: channel indices 1-4 and max_points 10-10000 cite the tool signatures (server.py:230,443,478,479,512,517); the 1-4 range is the same for every model, and the source does not say how a model with fewer analog channels answers a channel it lacks (not verified); every other number (scale, offset, probe ratio, trigger level, average count, cursor coordinates) is Limit.operator_required; site-limits.example.json is an example overlay, not a Rigol range. DECISION_DEVIATION (collect.py note): this card was generated while triage.py still had Family('mcp-client', None, 'helper:mcp-client', None), so it says family-config with helper null and blocked_on helper:mcp-client. The driver derives from McpClientDriver, the helper of the card's own family; it is not a deviation from the card's decision or family. The triage change that names McpClientDriver and this exemplar, followed by the registry rebuild and prepare.py --sync, sets the card's helper to McpClientDriver and the note disappears; no override is needed. gate.digest is the digest the check printed (report without its clock); check-report.json is regenerated by every gate run and is not part of the package.\n\nMODEL REVIEW (claude-sonnet-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Different-model review of a package authored by claude-opus-5-5 (the user chose Claude Sonnet as the different model, 2026-11-04): Gate and collect --strict re-run clean (digest unchanged); the unsourced timing numbers are now named placeholders with the real server timeouts cited correctly, the DECISION_DEVIATION is explained in the notes, and R0 is reasoned against the hazard table in facts.md. It uses McpClientDriver honestly: fake-only, native refuses, no stop effect on a real scope claimed. The owner may still choose R1. For the human reviewer: owner may prefer R1 (nit); collect.py DECISION_DEVIATION note persists until the registry rebuild"
+}

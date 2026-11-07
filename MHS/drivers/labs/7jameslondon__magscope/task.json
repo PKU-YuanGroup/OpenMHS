@@ -1,0 +1,142 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.7jameslondon/magscope",
+  "track": "labs",
+  "local_path": "labs/7jameslondon/magscope",
+  "driver_dir": "MHS/drivers/labs/7jameslondon__magscope",
+  "upstream": {
+    "repo_url": "https://github.com/7jameslondon/magscope",
+    "commit": "d8f5f6036eb418335dff18c642998a2a6cbd4e06",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 11,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "magscope.python_microscope:PythonMicroscopeFocusMotor",
+      "file": "magscope/python_microscope.py",
+      "line": 142,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "magscope.python_microscope:PythonMicroscopeHardwareManager",
+      "file": "magscope/python_microscope.py",
+      "line": 396,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "magscope.zlut_generation:ZLUTGenerationManager",
+      "file": "magscope/zlut_generation.py",
+      "line": 49,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "magscope.python_microscope:PythonMicroscopeHardwareManagerBase",
+      "file": "magscope/python_microscope.py",
+      "line": 106,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "magscope.camera:CameraManager",
+      "file": "magscope/camera.py",
+      "line": 29,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "magscope/camera.py:307 DummyCameraNoise",
+      "magscope/camera.py:387 DummyCameraFastNoise",
+      "magscope/camera.py:482 DummyCameraBeads",
+      "magscope/ipc_commands.py:90 SetSimulatedFocusCommand"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "PythonMicroscopeFocusMotor.get_cached_bead_rois",
+      "PythonMicroscopeFocusMotor.get_current_z",
+      "PythonMicroscopeFocusMotor.get_is_moving",
+      "PythonMicroscopeFocusMotor.get_position_limits",
+      "PythonMicroscopeFocusMotor.get_target_z",
+      "PythonMicroscopeFocusMotor.is_at_target",
+      "PythonMicroscopeFocusMotor._buffer.get_count_index",
+      "PythonMicroscopeFocusMotor._buffer.get_read_index",
+      "PythonMicroscopeFocusMotor._buffer.get_write_index",
+      "PythonMicroscopeHardwareManager.get_cached_bead_rois",
+      "PythonMicroscopeHardwareManager._buffer.get_count_index",
+      "PythonMicroscopeHardwareManager._buffer.get_read_index"
+    ],
+    "writes": [
+      "PythonMicroscopeFocusMotor.configure_shared_resources",
+      "PythonMicroscopeFocusMotor.set_acquisition_dir",
+      "PythonMicroscopeFocusMotor.set_acquisition_dir_on",
+      "PythonMicroscopeFocusMotor.set_acquisition_mode",
+      "PythonMicroscopeFocusMotor.set_acquisition_on",
+      "PythonMicroscopeFocusMotor.set_settings",
+      "PythonMicroscopeHardwareManager.configure_shared_resources",
+      "PythonMicroscopeHardwareManager.set_acquisition_dir",
+      "PythonMicroscopeHardwareManager.set_acquisition_dir_on",
+      "PythonMicroscopeHardwareManager.set_acquisition_mode",
+      "PythonMicroscopeHardwareManager.set_acquisition_on",
+      "PythonMicroscopeHardwareManager.set_settings"
+    ],
+    "actions": [
+      "PythonMicroscopeFocusMotor.handle_move_absolute",
+      "PythonMicroscopeFocusMotor.move_absolute",
+      "PythonMicroscopeFocusMotor.report_focus_motor_limits",
+      "PythonMicroscopeFocusMotor.run",
+      "PythonMicroscopeHardwareManager.run",
+      "ZLUTGenerationManager.handle_capture_complete",
+      "ZLUTGenerationManager.report_focus_motor_limits",
+      "ZLUTGenerationManager.run",
+      "ZLUTGenerationManager.start_generation"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.imaging.focus.v1",
+      "cap.motion.joint_position.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "magscope/ui/controls.py:3161 _MAXIMUM = 100",
+      "magscope/ui/ui.py:147 PLOT_PROGRESS_MAXIMUM = 1000",
+      "magscope/ui/ui.py:5279 MIN_COLUMN_WIDTH = 360",
+      "magscope/ui/ui.py:5280 MAX_COLUMNS = 4"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/7jameslondon__magscope --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

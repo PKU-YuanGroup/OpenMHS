@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.complight/fisbareadybeam",
+  "track": "labs",
+  "local_path": "labs/complight/fisbareadybeam",
+  "driver_dir": "MHS/drivers/labs/complight__fisbareadybeam",
+  "upstream": {
+    "repo_url": "https://github.com/complight/fisbareadybeam",
+    "commit": "65b73a79aa1fe3eb10c809246a40e44449780492",
+    "license_spdx": "MPL-2.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 26,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "FisbaReadyBeam:FisbaReadyBeam",
+      "file": "FisbaReadyBeam/__init__.py",
+      "line": 7,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.7.5",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [
+      "FisbaReadyBeam.get_device_status",
+      "FisbaReadyBeam.get_device_type"
+    ],
+    "writes": [
+      "FisbaReadyBeam.set_brightness"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/complight__fisbareadybeam --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

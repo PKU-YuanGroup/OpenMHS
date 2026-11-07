@@ -1,0 +1,42 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:174a399084eee48c8fac39f0ec917f66ccd14377b5b611fa376385634dc1257a",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.wetenschaap.move_absolute.v1",
+      "reason": "no catalogue class moves a linear stage to absolute positions in micrometres: cap.motion.joint_position.v1 speaks named joints in rad and cap.motion.cartesian_pose.v1 binds robot.arm, requires a pose and reports in mm; the package uses an x-cap id with an inline schema meanwhile",
+      "verb": "invoke",
+      "summary": "Move the leading axes to absolute positions in micrometres and wait until the stage is idle.",
+      "similar": [
+        "cap.motion.joint_position.v1",
+        "cap.motion.cartesian_pose.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.wetenschaap.move_relative.v1",
+      "reason": "no catalogue class commands a relative linear displacement in micrometres; cap.motion.cartesian_twist.v1 is a Cartesian motion and no motion class carries a per-axis linear displacement; the package uses an x-cap id with an inline schema meanwhile",
+      "verb": "invoke",
+      "summary": "Move the leading axes by relative displacements in micrometres and wait until the stage is idle.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.wetenschaap.home_axes.v1",
+      "reason": "cap.motion.home.v1 speaks named robot axes and joint positions in rad; this stage homes every linear axis in place without a named-axis or speed-scale input, so the package uses an x-cap id with an inline schema meanwhile",
+      "verb": "invoke",
+      "summary": "Home every linear axis with the native force homing and report whether every axis is homed.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check MHS/drivers/labs/wetenschaap__pymista --backend fake; evidence contract_checked, never an MHS-Device level. DEVIATION FROM THE CARD: the card's helper is PythonObjectDriver, but this package is a direct Driver (the card's decision is direct-driver) because the upstream move methods return None, so a PythonObjectDriver result map cannot report a move, and the native stop needs an @estop plus a safe-state action. The hardware factory native.py and the pymista package were never imported or run; this package is model-authored and unreviewed, and at R1 the loader does not refuse the hardware backend for lack of reviewed_by, so a human must review it before hardware use. No text in the clone states a travel bound: both motion inputs are Limit.operator_required and site-limits.example.json contains example numbers only, explicitly not a statement about any stage. move_relative is bounded per call only and cannot enforce a cumulative absolute travel envelope; use move_absolute for position control. The fake models two axes; a real ZaberStage builds one axis per detected device and the README says typically 2 or 3. G7.MAYBE_ABSENT x5 (close, home, is_homed, is_moving, stop): these names are inherited from UniversalStage through 'from .universal import *', which the gate's AST reader cannot follow, and every name occurs in the clone. DummyStage was not used as the fake because it is a different class with arbitrary four-axis settings; the package fake is checked against ZaberStage. NOT COVERED: the upstream settings_get/settings_set and get_bounds (device-specific settings), the stage's own stop profile and limit switches, and any recording of real hardware; the fake is an in-memory stand-in. No G4.REF_VALUE or G4.REF_BINARY warnings were emitted.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. G7.MAYBE_ABSENT is a false alarm: home, stop, is_moving, is_homed and close come from UniversalStage (pymista/universal.py), imported with a star import. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (30 to 29); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

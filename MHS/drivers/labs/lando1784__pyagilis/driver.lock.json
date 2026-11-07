@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.lando1784/pyagilis",
+  "upstream": {
+    "repo_url": "https://github.com/lando1784/pyagilis",
+    "commit": "7d27bd1571aa6b4187e2e0d40c9f34feb45456f2",
+    "license_spdx": "LGPL-3.0"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.py declares no install_requires (setup.py:1-13); pyagilis imports pyserial (pyagilis/agPort.py:20), so a hardware host needs pyserial installed. The upstream package is imported by native.py only; the gate never installs or imports it."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeAGUC2"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-125",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

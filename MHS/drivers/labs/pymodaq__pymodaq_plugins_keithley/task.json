@@ -1,0 +1,115 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pymodaq/pymodaq_plugins_keithley",
+  "track": "labs",
+  "local_path": "labs/pymodaq/pymodaq_plugins_keithley",
+  "driver_dir": "MHS/drivers/labs/pymodaq__pymodaq_plugins_keithley",
+  "upstream": {
+    "repo_url": "https://github.com/pymodaq/pymodaq_plugins_keithley",
+    "commit": "7698a50e9f596e6655b33de2b88dedd4b79786f4",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 77,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "pymodaq_plugins_keithley.hardware.keithley2100.keithley2100_VISADriver:Keithley2100VISADriver",
+      "file": "src/pymodaq_plugins_keithley/hardware/keithley2100/keithley2100_VISADriver.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_keithley.hardware.keithley27XX.keithley2700_VISADriver:Keithley2700VISADriver",
+      "file": "src/pymodaq_plugins_keithley/hardware/keithley27XX/keithley2700_VISADriver.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_keithley.hardware.keithley27XX.keithley2701_VISADriver:Keithley2701VISADriver",
+      "file": "src/pymodaq_plugins_keithley/hardware/keithley27XX/keithley2701_VISADriver.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_keithley.hardware.keithley27XX.keithley2750_VISADriver:Keithley2750VISADriver",
+      "file": "src/pymodaq_plugins_keithley/hardware/keithley27XX/keithley2750_VISADriver.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_keithley.hardware.keithley2110.keithley2110_VISADriver:Keithley2110VISADriver",
+      "file": "src/pymodaq_plugins_keithley/hardware/keithley2110/keithley2110_VISADriver.py",
+      "line": 4,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Keithley2100VISADriver.get_card",
+      "Keithley2100VISADriver.get_error",
+      "Keithley2100VISADriver.get_idn",
+      "Keithley2700VISADriver.get_card",
+      "Keithley2700VISADriver.get_data",
+      "Keithley2700VISADriver.get_error",
+      "Keithley2700VISADriver.get_idn",
+      "Keithley2701VISADriver.get_card",
+      "Keithley2701VISADriver.get_data",
+      "Keithley2701VISADriver.get_error",
+      "Keithley2701VISADriver.get_idn"
+    ],
+    "writes": [
+      "Keithley2100VISADriver.set_mode",
+      "Keithley2700VISADriver.set_mode",
+      "Keithley2701VISADriver.set_mode"
+    ],
+    "actions": [
+      "Keithley2100VISADriver.reset",
+      "Keithley2700VISADriver.reset",
+      "Keithley2701VISADriver.reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymodaq__pymodaq_plugins_keithley --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

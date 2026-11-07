@@ -1,0 +1,131 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mabl/pymso5000",
+  "track": "labs",
+  "local_path": "labs/mabl/pymso5000",
+  "driver_dir": "MHS/drivers/labs/mabl__pymso5000",
+  "upstream": {
+    "repo_url": "https://github.com/mabl/pymso5000",
+    "commit": "48ebacc0317ada6d6f54a58ab03916c5d5a44e80",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 14,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pymso5000.scope:Scope",
+      "file": "src/pymso5000/scope.py",
+      "line": 189,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymso5000.mso5000_scpi:MSO5000",
+      "file": "src/pymso5000/mso5000_scpi.py",
+      "line": 255,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymso5000.mcp_server.session:AsyncScopeSession",
+      "file": "src/pymso5000/mcp_server/session.py",
+      "line": 34,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymso5000.scpi_definition_parser.commands:TotalItem",
+      "file": "src/pymso5000/scpi_definition_parser/commands.py",
+      "line": 24,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymso5000.scpi_definition_parser.indexes:IndexesItem",
+      "file": "src/pymso5000/scpi_definition_parser/indexes.py",
+      "line": 94,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.14",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Scope.get_acquisition",
+      "Scope.get_channel",
+      "Scope.get_timebase",
+      "MSO5000.resource_manager (attribute)",
+      "AsyncScopeSession.scope.get_acquisition",
+      "AsyncScopeSession.scope.get_channel",
+      "AsyncScopeSession.scope.get_timebase"
+    ],
+    "writes": [
+      "Scope.set_acquisition",
+      "Scope.set_channel",
+      "Scope.set_timebase",
+      "AsyncScopeSession.write_checked",
+      "AsyncScopeSession.scope.set_acquisition",
+      "AsyncScopeSession.scope.set_channel",
+      "AsyncScopeSession.scope.set_timebase",
+      "AsyncScopeSession.session.write_sequence"
+    ],
+    "actions": [
+      "Scope.measure",
+      "Scope.run",
+      "Scope.stop",
+      "Scope.trigger",
+      "Scope.trigger_status",
+      "AsyncScopeSession.run",
+      "AsyncScopeSession.run_interruptible",
+      "AsyncScopeSession.scope.measure",
+      "AsyncScopeSession.scope.stop",
+      "AsyncScopeSession.scope.trigger",
+      "AsyncScopeSession.scope.trigger_status"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "guide_parser/mso_guide_parser/cells.py:18 BODY_TOP_MIN = 70.0",
+      "guide_parser/mso_guide_parser/cells.py:19 BODY_TOP_MAX = 795.0",
+      "src/pymso5000/scpi_command.py:14 MAX_ECHOED_COMMAND = 80",
+      "src/pymso5000/api/digital.py:85 MAX_GROUP_LINES = 16",
+      "src/pymso5000/api/digital.py:92 MAX_DIGITAL_POSITION = 31",
+      "src/pymso5000/api/generator.py:64 ARB_DAC_MAX = 16383",
+      "src/pymso5000/api/waveform_models.py:195 MAX_SCOPE_POINTS = 200000000",
+      "src/pymso5000/api/waveform_models.py:197 MAX_INLINE_POINTS = 10000"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/mabl__pymso5000 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

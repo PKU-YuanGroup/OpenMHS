@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.ap/python-seabreeze",
+  "upstream": {
+    "repo_url": "https://github.com/ap--/python-seabreeze",
+    "commit": "3de4fdd6bbb533a701309c746c94cac2ffc05be0",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The card's install step is 'pip install .'. The upstream package is imported by native.py only and the clone is never installed or imported here; the gate never imports it. The pyseabreeze backend also needs pyusb and libusb at run time (README.md); nothing of that is needed for the fake backend."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeSpectrometer"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "pilot2-004",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

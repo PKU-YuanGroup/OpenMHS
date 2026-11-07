@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (pymso5000 MSO5000 driver)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/mso5000": {
+      "channel1_scale_per_div": {"min": 0.0005, "max": 10, "unit": "V", "source": "operator",
+                                 "reason": "example: this bench uses a 1X probe and vertical scales from 0.5 mV/div to 10 V/div"},
+      "channel1_offset": {"min": -1, "max": 1, "unit": "V", "source": "operator",
+                          "reason": "example: the signal of this bench stays inside the +/-1 V offset band"},
+      "timebase_scale_s_per_div": {"min": 1e-09, "max": 1, "unit": "s", "source": "operator",
+                                   "reason": "example: this bench only uses timebases from 1 ns/div to 1 s/div"},
+      "timebase_offset_s": {"min": -0.001, "max": 0.001, "unit": "s", "source": "operator",
+                            "reason": "example: the horizontal position stays within 1 ms of the trigger"}
+    }
+  }
+}

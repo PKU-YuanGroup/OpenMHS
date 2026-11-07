@@ -1,0 +1,110 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jrafolsr/pyinstruments",
+  "track": "labs",
+  "local_path": "labs/jrafolsr/pyinstruments",
+  "driver_dir": "MHS/drivers/labs/jrafolsr__pyinstruments",
+  "upstream": {
+    "repo_url": "https://github.com/jrafolsr/pyinstruments",
+    "commit": "631eb6fe6e61ca83e0d065aa3e36b04244c952b4",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 65,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "instruments.keysight33210A:keysight33210A",
+      "file": "instruments/keysight33210A.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instruments._temp_keysight:keysight33210A",
+      "file": "instruments/_temp_keysight.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instruments.agilentU272xA:agilentU272xA",
+      "file": "instruments/agilentU272xA.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instruments.keithley24XX:keithley24XX",
+      "file": "instruments/keithley24XX.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ivl_snapshots.tasks:SweepMyLEC",
+      "file": "ivl_snapshots/tasks.py",
+      "line": 41,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "agilentU272xA.read_values"
+    ],
+    "writes": [
+      "keysight33210A.set_amplitude",
+      "keysight33210A.set_dc_voltage",
+      "keysight33210A.set_duty_cycle",
+      "keysight33210A.set_frequency",
+      "keysight33210A.set_function",
+      "keysight33210A.set_load",
+      "keysight33210A.set_offset",
+      "agilentU272xA.set_current",
+      "agilentU272xA.set_volt"
+    ],
+    "actions": [
+      "agilentU272xA.reset"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "ads11X5_logger/tasks.py:27 BITS_MAX = 32000",
+      "pid_AK/remote_control.py:28 max_poutput = 12.0"
+    ]
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/jrafolsr__pyinstruments --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

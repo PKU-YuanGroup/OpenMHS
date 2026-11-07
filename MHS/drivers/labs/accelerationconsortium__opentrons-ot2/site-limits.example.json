@@ -1,0 +1,49 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Opentrons OT-2 driver; example-only values, not device facts)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example operator overlay only. Every bound here is a placeholder that must be replaced by the operator of the installed OT-2; the driver declares these paths operator_required and refuses them until an operator overlay supplies real bounds. The deck and pipette values are not facts about any robot.",
+  "devices": {
+    "mhs://localhost/ot2": {
+      "cap.motion.cartesian_pose.v1": {
+        "position.x": {"min": 0, "max": 300, "unit": "mm", "source": "operator",
+                       "reason": "example only: replace with the left-mount X envelope of the deployed OT-2"},
+        "position.y": {"min": 0, "max": 300, "unit": "mm", "source": "operator",
+                       "reason": "example only: replace with the left-mount Y envelope of the deployed OT-2"},
+        "position.z": {"min": -50, "max": 300, "unit": "mm", "source": "operator",
+                       "reason": "example only: replace with the left-mount Z envelope of the deployed OT-2"}
+      },
+      "x-cap.accelerationconsortium.move_axes.v1": {
+        "x": {"min": 0, "max": 300, "unit": "mm", "source": "operator",
+              "reason": "example only: replace with the X travel of the deployed OT-2"},
+        "y": {"min": 0, "max": 300, "unit": "mm", "source": "operator",
+              "reason": "example only: replace with the Y travel of the deployed OT-2"},
+        "z": {"min": -50, "max": 300, "unit": "mm", "source": "operator",
+              "reason": "example only: replace with the Z travel of the deployed OT-2"},
+        "a": {"min": -50, "max": 300, "unit": "mm", "source": "operator",
+              "reason": "example only: replace with the A travel of the deployed OT-2"},
+        "b": {"min": -50, "max": 50, "unit": "mm", "source": "operator",
+              "reason": "example only: replace with the B plunger travel of the installed pipette"},
+        "c": {"min": -50, "max": 50, "unit": "mm", "source": "operator",
+              "reason": "example only: replace with the C plunger travel of the installed pipette"}
+      },
+      "x-cap.accelerationconsortium.aspirate.v1": {
+        "volume_ul": {"min": 0, "max": 1000, "unit": "uL", "source": "operator",
+                      "reason": "example only: replace with the usable volume of the installed tip and pipette"},
+        "ul_per_mm": {"min": 0.1, "max": 100, "unit": "uL/mm", "source": "operator",
+                      "reason": "example only: replace with the measured conversion of the installed pipette"},
+        "flow_rate_ul_s": {"min": 0, "max": 1000, "unit": "uL/s", "source": "operator",
+                           "reason": "example only: replace with the aspiration flow-rate range of the installed pipette"}
+      },
+      "x-cap.accelerationconsortium.dispense.v1": {
+        "volume_ul": {"min": 0, "max": 1000, "unit": "uL", "source": "operator",
+                      "reason": "example only: replace with the usable volume of the installed tip and pipette"},
+        "ul_per_mm": {"min": 0.1, "max": 100, "unit": "uL/mm", "source": "operator",
+                      "reason": "example only: replace with the measured conversion of the installed pipette"},
+        "flow_rate_ul_s": {"min": 0, "max": 1000, "unit": "uL/s", "source": "operator",
+                           "reason": "example only: replace with the dispense flow-rate range of the installed pipette"}
+      }
+    }
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.basf/pytem",
+  "track": "labs",
+  "local_path": "labs/basf/pytem",
+  "driver_dir": "MHS/drivers/labs/basf__pytem",
+  "upstream": {
+    "repo_url": "https://github.com/basf/pytem",
+    "commit": "d2b2800329524c205c266fe72a35c7fd477cc735",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 9,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pyTEM.lib.mixins.StageMixin:StageInterface",
+      "file": "pyTEM/lib/mixins/StageMixin.py",
+      "line": 515,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyTEM.Interface:Interface",
+      "file": "pyTEM/Interface.py",
+      "line": 34,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "earlier_versions.TemPackage:TEM",
+      "file": "earlier_versions/TemPackage.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyTEM.lib.mixins.AcquisitionMixin:AcquisitionInterface",
+      "file": "pyTEM/lib/mixins/AcquisitionMixin.py",
+      "line": 491,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyTEM.lib.mixins.MagnificationMixin:MagnificationInterface",
+      "file": "pyTEM/lib/mixins/MagnificationMixin.py",
+      "line": 214,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "pyTEM/test"
+  },
+  "hints": {
+    "reads": [
+      "StageInterface.get_stage_limits",
+      "StageInterface.get_stage_position",
+      "StageInterface.get_stage_position_alpha",
+      "StageInterface.get_stage_position_beta",
+      "StageInterface.get_stage_position_x",
+      "StageInterface.get_stage_position_y",
+      "StageInterface.get_stage_position_z",
+      "Interface.get_accelerator_vacuum",
+      "Interface.get_available_cameras",
+      "Interface.get_beam_shift",
+      "Interface.get_beam_shift_matrix",
+      "Interface.get_column_vacuum"
+    ],
+    "writes": [
+      "StageInterface.set_stage_position",
+      "StageInterface.set_stage_position_alpha",
+      "StageInterface.set_stage_position_beta",
+      "StageInterface.set_stage_position_x",
+      "StageInterface.set_stage_position_y",
+      "StageInterface.set_stage_position_z",
+      "Interface.set_beam_shift",
+      "Interface.set_illumination_mode",
+      "Interface.set_image_shift",
+      "Interface.set_mode",
+      "Interface.set_projection_mode",
+      "Interface.set_stage_position"
+    ],
+    "actions": [
+      "StageInterface.reset_stage_position",
+      "StageInterface.stage_is_home"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.imaging.illumination.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/basf__pytem --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

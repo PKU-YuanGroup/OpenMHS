@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.alexlegoshin/idm-dnkmetr",
+  "upstream": {
+    "repo_url": "https://github.com/alexlegoshin/idm-dnkmetr",
+    "commit": "8f69873e51d2dce10c292feda3a44f745f1af5c1",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The hardware factory imports the upstream class as drivers:PowerSupply, so the clone root must be importable (for example on PYTHONPATH) in addition to the requirements.txt dependencies (pyvisa) and NI-VISA. The fake backend needs neither."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeGpp4323"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-028",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

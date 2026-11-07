@@ -1,0 +1,75 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.natlabrockies/multi-tube-od-reader",
+  "track": "labs",
+  "local_path": "labs/natlabrockies/multi-tube-od-reader",
+  "driver_dir": "MHS/drivers/labs/natlabrockies__multi-tube-od-reader",
+  "upstream": {
+    "repo_url": "https://github.com/natlabrockies/multi-tube-od-reader",
+    "commit": "e3948da8586d40093ffb7cc64706f4c6defa6326",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 35,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "my_app.classes.device:Device",
+      "file": "my_app/classes/device.py",
+      "line": 34,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [
+      "Experiment.write_outfile_header"
+    ],
+    "actions": [
+      "Experiment.start_experiment",
+      "Experiment.start_subproc",
+      "Experiment.stop_experiment"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/natlabrockies__multi-tube-od-reader --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

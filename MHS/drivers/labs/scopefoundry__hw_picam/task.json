@@ -1,0 +1,104 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.scopefoundry/hw_picam",
+  "track": "labs",
+  "local_path": "labs/scopefoundry/hw_picam",
+  "driver_dir": "MHS/drivers/labs/scopefoundry__hw_picam",
+  "upstream": {
+    "repo_url": "https://github.com/scopefoundry/hw_picam",
+    "commit": "fab5d61440b38e04e176e66ff880d16061f23997",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 69,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "picam_hw:PicamHW",
+      "file": "picam_hw.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "picam:PiCAM",
+      "file": "picam.py",
+      "line": 20,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "picam_readout:PicamReadoutMeasure",
+      "file": "picam_readout.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "PicamHW.cam.get_param_names",
+      "PicamHW.cam.get_param_readwrite",
+      "PicamHW.cam.read_param",
+      "PicamHW.cam.read_rois",
+      "PiCAM.get_param_names",
+      "PiCAM.get_param_readwrite",
+      "PiCAM.read_param",
+      "PiCAM.read_rois"
+    ],
+    "writes": [
+      "PicamHW.write_roi",
+      "PicamHW.cam.write_param",
+      "PicamHW.cam.write_rois",
+      "PicamHW.cam.write_single_roi",
+      "PiCAM.write_param",
+      "PiCAM.write_rois",
+      "PiCAM.write_single_roi"
+    ],
+    "actions": [
+      "PicamHW.cam.acquire",
+      "PiCAM.acquire",
+      "PicamReadoutMeasure.run"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/scopefoundry__hw_picam --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

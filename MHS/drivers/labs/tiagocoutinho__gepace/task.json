@@ -1,0 +1,98 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tiagocoutinho/gepace",
+  "track": "labs",
+  "local_path": "labs/tiagocoutinho/gepace",
+  "driver_dir": "MHS/drivers/labs/tiagocoutinho__gepace",
+  "upstream": {
+    "repo_url": "https://github.com/tiagocoutinho/gepace",
+    "commit": "4caa5f8c404277281033bc7f10b280d42941dfeb",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 53,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "gepace.pace:Pace",
+      "file": "gepace/pace.py",
+      "line": 293,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gepace.tango.server.pace:Pace",
+      "file": "gepace/tango/server/pace.py",
+      "line": 41,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gepace.pace:Module",
+      "file": "gepace/pace.py",
+      "line": 222,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.5",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gepace/simulator.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Pace.error (attribute)",
+      "Pace.hw_test (attribute)",
+      "Pace.idn (attribute)",
+      "Pace.mac (attribute)",
+      "Pace.serial_numbers (attribute)",
+      "Pace.startup_mode (attribute)",
+      "Pace.task (attribute)",
+      "Pace.version (attribute)",
+      "Pace.world_area (attribute)",
+      "Module.barometric_pressure (attribute)",
+      "Module.pressure (attribute)",
+      "Module.pressure_control (attribute)"
+    ],
+    "writes": [],
+    "actions": [
+      "Module.start",
+      "Module.stop"
+    ],
+    "candidate_classes": [
+      "cap.measure.pressure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/tiagocoutinho__gepace --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

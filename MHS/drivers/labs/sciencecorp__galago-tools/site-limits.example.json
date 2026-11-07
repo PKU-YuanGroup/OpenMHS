@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Opentrons OT-2 through galago-tools)",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "notes": "Example overlay only. It approves one protocol file; a deployment lists the absolute paths of the files its operator has reviewed for this robot's deck.",
+  "devices": {
+    "mhs://localhost/galago-ot2": {
+      "x-cap.sciencecorp.ot2_run_protocol.v1": {
+        "protocol": {
+          "allowed": ["/srv/ot2/approved/tip-check.py"],
+          "source": "operator",
+          "reason": "example only: the one protocol file this bench's operator approved"
+        }
+      }
+    }
+  }
+}

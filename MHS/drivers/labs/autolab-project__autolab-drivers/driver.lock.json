@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.autolab-project/autolab-drivers",
+  "upstream": {
+    "repo_url": "https://github.com/autolab-project/autolab-drivers",
+    "commit": "4b44dfba7444d1e8e8b5fd895fa304fa550ce882",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows",
+    "notes": "The upstream module imports numpy and pandas and the VISA connection class imports pyvisa (anritsu_MS2830A/anritsu_MS2830A.py:6-8 and 138-143); these are imported only when native.py opens the hardware backend. The gate never installs or imports the upstream package."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeMS2830A"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-194",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

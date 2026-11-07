@@ -1,0 +1,107 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.aalto-qcd/qickodes",
+  "track": "labs",
+  "local_path": "labs/aalto-qcd/qickodes",
+  "driver_dir": "MHS/drivers/labs/aalto-qcd__qickodes",
+  "upstream": {
+    "repo_url": "https://github.com/aalto-qcd/qickodes",
+    "commit": "29e7efba0021c797f627cf8097df17b5d34cf4f8",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:qcodes",
+  "role": "device-driver",
+  "family": "qcodes",
+  "helper": "QcodesDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 9,
+  "exemplar": "MHS/drivers/labs/qcodes__qcodes_contrib_drivers",
+  "entry_symbols": [
+    {
+      "symbol": "qickodes.instrument_v2:QickInstrument",
+      "file": "src/qickodes/instrument_v2.py",
+      "line": 93,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "qickodes.instruments:QickInstrument",
+      "file": "src/qickodes/instruments.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "qickodes.instructions.constant_pulse:ConstantPulse",
+      "file": "src/qickodes/instructions/constant_pulse.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "qickodes.instructions.gaussian_pulse:GaussianPulse",
+      "file": "src/qickodes/instructions/gaussian_pulse.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "qickodes.instructions.iq_constant_pulse:IQConstantPulse",
+      "file": "src/qickodes/instructions/iq_constant_pulse.py",
+      "line": 16,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "QickInstrument.get_idn",
+      "QickInstrument.final_delay.get_raw"
+    ],
+    "writes": [
+      "QickInstrument.set_macro_list",
+      "QickInstrument.final_delay.set_raw"
+    ],
+    "actions": [
+      "QickInstrument.run",
+      "QickInstrument.run_without_saving",
+      "QickInstrument.ddr4_buffer.arm"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/aalto-qcd__qickodes --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

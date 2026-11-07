@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.qpit/thorlabs_apt",
+  "upstream": {
+    "repo_url": "https://github.com/qpit/thorlabs_apt",
+    "commit": "7b5c84607c22684cc896e3c337045b9358ee7c47",
+    "license_spdx": "GPL-2.0",
+    "license_class": "copyleft"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The upstream README says the package only works on Windows because it loads APT.dll (README.md:7); the fake backend needs no APT.dll and no hardware. The gate never imports or installs the upstream package."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeMotor"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB1-028",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:4bddb1d38cb564c2b1d1e89a7b3fad176c0e3ee4525deae945fe028b62795ccd",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.ethanjli.axis_move.v1",
+      "reason": "No catalogue class moves one linear axis by a relative displacement in its calibrated physical unit. cap.motion.joint_position.v1 takes absolute joint positions in rad and cap.motion.cartesian_pose.v1 takes an absolute Cartesian pose in m, while the upstream x-axis reports centimetres and exposes a relative physical delta (lhrhost/robot/axes.py:158-166).",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.joint_position.v1",
+        "cap.motion.cartesian_pose.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ethanjli.axis_stop.v1",
+      "reason": "cap.motion.stop.v1 is the closest class, but its schema carries a deceleration in m/s2; the upstream high-level Axis has no deceleration control and a safe-state action takes no input, so the class cannot express setting all four motor duty limits to zero as the brake of this axis.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the card says family serial / SerialDriver, but the upstream host library builds a framed linear-actuator protocol from parts and has no text command table whose command words occur in the clone, so the package is a direct Driver over the card entry symbol lhrhost.robot.x_axis:Axis. The device is the x-axis of the 4-axis liquid-handling robot; the y, z and p axes are separate entry symbols and are not covered by this package. Risk is R2 (robot-axis motion), above the card's R1 floor. No line of the clone documents an independent hardware e-stop, so the independent stop is the safe-state action x-cap.ethanjli.axis_stop.v1: it sets all four motor duty limits to zero, which the manual describes as the brake (docs/source/messages/linearactuator.rst:174, 300); the e-stop method sends the same native call. The only actuation input, the relative move delta_cm, is Limit.operator_required because no text states the travel range of the assembled robot; site-limits.example.json shows the overlay. The fake is an in-memory Axis with a 1:1 sensor/physical calibration and start positions 0.0, all test data only (marked placeholder in fake.py). NOT COVERED: the hardware backend (it needs the lhrhost messaging stack and was never imported or run; the loader refuses it at R2 until reviewed_by is signed), calibration and preset-tree loading, PID and motor-limit tuning writes, direct motor duty control, and the y/z/p axes with the pipettor volume functions. No hardware run and no human review: authored_by is model, reviewed_by is null. The gate ran on the fake backend only; evidence is contract_checked.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

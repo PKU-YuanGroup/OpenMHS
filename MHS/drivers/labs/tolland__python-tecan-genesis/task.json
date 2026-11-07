@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tolland/python-tecan-genesis",
+  "track": "labs",
+  "local_path": "labs/tolland/python-tecan-genesis",
+  "driver_dir": "MHS/drivers/labs/tolland__python-tecan-genesis",
+  "upstream": {
+    "repo_url": "https://github.com/tolland/python-tecan-genesis",
+    "commit": "37e825db120b56199519bea72c82116f75269608",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:partner-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 1,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "tecan_funcs:do_cmd",
+      "file": "bin/tecan_funcs.py",
+      "line": 147,
+      "confidence": "override"
+    },
+    {
+      "symbol": "tecan_funcs:Cmd_delayed",
+      "file": "bin/tecan_funcs.py",
+      "line": 57,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "capabilities",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/tolland__python-tecan-genesis --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

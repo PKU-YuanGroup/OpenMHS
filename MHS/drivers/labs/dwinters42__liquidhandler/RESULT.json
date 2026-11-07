@@ -1,0 +1,53 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.dwinters42.add_position.v1",
+      "reason": "No catalogue class binds a memorized raw arm position on lab.liquid_handler; the clone stores uncalibrated device-step coordinates, not a Cartesian pose in mm.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.dwinters42.move_arm.v1",
+      "reason": "No catalogue class binds raw arm coordinates on lab.liquid_handler; cap.motion.cartesian_pose.v1 binds robot.arm/motion.axis and requires mm/orientation, while the clone exposes uncalibrated device steps.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.dwinters42.move_axis.v1",
+      "reason": "No catalogue class binds a single raw arm axis on lab.liquid_handler; the clone indexes the X/Y/Z axes with uncalibrated device steps.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.dwinters42.draw.v1",
+      "reason": "cap.fluid.aspirate.v1 requires uL and a labware/well source; the clone draws uncalibrated syringe units from bottle or sample and states no conversion to uL.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.dwinters42.dispense.v1",
+      "reason": "cap.fluid.dispense.v1 requires uL and a labware/well target; the clone dispenses uncalibrated syringe units and states no conversion to uL.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.dwinters42.pump.v1",
+      "reason": "No catalogue class binds the raw Sx Ay d R syringe-pump command; cap.actuation.pump.v1 binds actuation.pump/fluid.pump and uses uL/s.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.dwinters42.stop_pump.v1",
+      "reason": "No catalogue stop class binds lab.liquid_handler; cap.motion.stop.v1 binds robot.arm, robot.mobile_base and motion.axis, and the clone documents no arm stop command.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "CURRENT STATUS: blocked. The following author narrative predates the independent review; any historical stop or safe-state claim in it was withdrawn by that review. The regenerated references now match the current no-native-stop definition.\n\nGate run: G1, G2, G3, G4, G5, G6, G8 and G9 pass; G7 warn with only G7.LEGACY_SOURCE (liquidhandler.py is Python 2; the gate read it with 12 lines Python 3 cannot parse left out). There are no G4.REF_VALUE or G4.REF_BINARY warnings. Hardware was never attached and the hardware backend was never run. This package is model-authored and unreviewed; driver.lock.json reviewed_by is null and the loader refuses its R2 hardware backend until a human signs it.\n\nRisk is R2, above the card floor R0, because the device is a liquid handler with a robot arm and a syringe pump that dispenses (MHS-004 section 2.1). The clone documents no independent hardware e-stop and no stop or halt command at all (Protocol.md:55-65). The safe-state action x-cap.dwinters42.stop_pump.v1 and the @estop method command every syringe pump to zero speed at its tracked position through the native Pump method; speed 0 is inside the native check (liquidhandler.py:132-134) although the protocol text states 1 to 20 for operator commands (Protocol.md:64). The runtime latch refuses later commands. NOT COVERED: there is no physical arm stop and no independent hardware e-stop, so no such protection is claimed. The actions expose device steps and uncalibrated syringe units, not uL or mm, because the clone states no conversion. NOT COVERED: Goto, SaveLocations and LoadLocations are not exposed as actions. The fake is an in-memory stand-in, not a recording; its arm limits, one pump and 1000-unit starting volume are placeholders, and the read arrays are small (three coordinates, one syringe). The hardware factory native.py is a Python 3 port of the documented framed serial protocol, because the clone cannot be imported under Python 3; it carries the upstream copyright and permission notice, and it needs pyserial, which the card install block does not list. It was not run. The clone header is an ISC-style permission text while setup.py says BSD; the card records license_spdx NOASSERTION, and this package claims no other licence. site-limits.example.json is an example overlay, not a statement about any unit: its 2000 units, 2500/1000/1200 steps, two arms and one pump are operator examples, and an operator must issue site-limits.json for the actual instrument. The 1 to 20 speed limit is the only sourced numeric bound; the arm travel, syringe volume, pump position and arm/pump/axis counts are operator_required.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): blocked by the reviewer (second run, batch wC-retry; the first run stopped on the Python 2 parse the gate now handles): the protocol documents no stop or halt command (Protocol.md:55-65), so a moving arm cannot be stopped, and the e-stop sent a zero-speed Pump command, a speed outside the protocol's 1-20 range (Protocol.md:64). The reviewer removed the e-stop and the safe-state flag of the action it used, so the gate refuses the package for the missing stop (G3.NO_ESTOP); the author's version is kept in work/handoff-runs/wC/reviewer-originals/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): preserve BLOCKED. Regenerated reference.json and REFERENCE.md from the current driver definition so they no longer advertise the removed native stop or safe-state action; changed RESULT.json and reran the gate to regenerate check-report.json. Original files are preserved in work/handoff-runs/mhs-build-20261102/originals/final-card-and-reference-sync/. This repairs stale documentation only; no native stopping mechanism, hardware validation or human approval is added. Authored_by and reviewed_by remain unchanged. Copied task.json from the regenerated registry after a rank-only change (53 to 54); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged.",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "gate": {
+    "digest": "sha256:cec38977306c479288761d341c6af14e5107933419b64f226c17ed829bc5c7fa",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  }
+}

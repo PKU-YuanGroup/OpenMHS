@@ -1,0 +1,113 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cooper-group-uol-robotics/panda_chemistry_gym",
+  "track": "labs",
+  "local_path": "labs/cooper-group-uol-robotics/panda_chemistry_gym",
+  "driver_dir": "MHS/drivers/labs/cooper-group-uol-robotics__panda_chemistry_gym",
+  "upstream": {
+    "repo_url": "https://github.com/cooper-group-uol-robotics/panda_chemistry_gym",
+    "commit": "10e82317010f662f5f8f0602e068447d170d9bb0",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 397,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "custom_envs.envs:Capping_Env",
+      "file": "custom_envs/envs/Insertion_PandaTasks/Capping/Capping_PandaTask.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "custom_envs.envs:EmptyRackInsertion_Env",
+      "file": "custom_envs/envs/Insertion_PandaTasks/Rack_Insertion/EmptyRack_PandaTask.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "custom_envs.envs:LoadedRackInsertion_Env",
+      "file": "custom_envs/envs/Insertion_PandaTasks/Rack_Insertion/LoadedRack_PandaTask.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "custom_envs.envs:VialInsertion_From_LoadedRack_to_Rack_Env",
+      "file": "custom_envs/envs/Insertion_PandaTasks/Vial_Insertion/LoadedRack_Rack_PandaTask.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "custom_envs.envs:VialInsertion_From_Rack_to_Rack_Env",
+      "file": "custom_envs/envs/Insertion_PandaTasks/Vial_Insertion/Rack_Rack_PandaTask.py",
+      "line": 13,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "custom_envs/__init__.py:14 gym env Capping{}{}-v1",
+      "custom_envs/__init__.py:22 gym env EmptyRackInsertion{}{}-v1",
+      "custom_envs/__init__.py:29 gym env LoadedRackInsertion{}{}-v1",
+      "custom_envs/__init__.py:37 gym env VialInsertion_From_LoadedRack_to_Rack{}{}-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Capping{}{}-v1 (id template, built at run time) registered at custom_envs/__init__.py:14",
+      "gym env EmptyRackInsertion{}{}-v1 (id template, built at run time) registered at custom_envs/__init__.py:22",
+      "gym env LoadedRackInsertion{}{}-v1 (id template, built at run time) registered at custom_envs/__init__.py:29",
+      "gym env VialInsertion_From_LoadedRack_to_Rack{}{}-v1 (id template, built at run time) registered at custom_envs/__init__.py:37",
+      "gym env VialInsertion_From_Rack_to_Rack{}{}-v1 (id template, built at run time) registered at custom_envs/__init__.py:43",
+      "gym env VialInsertion_From_Rack_to_LoadedRack{}{}-v1 (id template, built at run time) registered at custom_envs/__init__.py:50",
+      "gym env VialInsertion_From_SingleHolder_to_Rack{}{}-v1 (id template, built at run time) registered at custom_envs/__init__.py:56",
+      "gym env VialInsertion_From_SingleHolder_to_LoadedRack{}{}-v1 (id template, built at run time) registered at custom_envs/__init__.py:62",
+      "gym env VialInsertion_From_SingleHolder_to_SingleHolder{}{}-v1 (id template, built at run time) registered at custom_envs/__init__.py:68",
+      "gym env Spoon{}{}-v1 (id template, built at run time) registered at custom_envs/__init__.py:74",
+      "gym env Spoon_Vial{}{}-v1 (id template, built at run time) registered at custom_envs/__init__.py:80",
+      "gym env Spoon_Horizental{}{}-v1 (id template, built at run time) registered at custom_envs/__init__.py:86"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/cooper-group-uol-robotics__panda_chemistry_gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

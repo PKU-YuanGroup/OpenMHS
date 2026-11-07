@@ -1,0 +1,132 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.thedeanlab/navigate",
+  "track": "labs",
+  "local_path": "labs/thedeanlab/navigate",
+  "driver_dir": "MHS/drivers/labs/thedeanlab__navigate",
+  "upstream": {
+    "repo_url": "https://github.com/thedeanlab/navigate",
+    "commit": "da14920d7b40d048a5d2225a7846d11f78e05212",
+    "license_spdx": "BSD-3-Clause-Clear",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 15,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "navigate.model.devices.stage.asi:MS2000Stage",
+      "file": "src/navigate/model/devices/stage/asi.py",
+      "line": 607,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "navigate.model.devices.stage.asi:MFC2000Stage",
+      "file": "src/navigate/model/devices/stage/asi.py",
+      "line": 851,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "navigate.model.devices.pump.tecan:XCaliburPump",
+      "file": "src/navigate/model/devices/pump/tecan.py",
+      "line": 49,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "navigate.model.devices.APIs.omicron.LuxxLaser:LuxxLaser",
+      "file": "src/navigate/model/devices/APIs/omicron/LuxxLaser.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "navigate.model.devices.camera.synthetic:SyntheticCamera",
+      "file": "src/navigate/model/devices/camera/synthetic.py",
+      "line": 94,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/navigate/model/device_startup_functions.py:63 DummyDeviceConnection"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [
+      "MS2000Stage.get_abs_position",
+      "MS2000Stage.get_axis_position",
+      "MS2000Stage.get_position_dict",
+      "MS2000Stage.get_speed",
+      "MFC2000Stage.get_abs_position",
+      "MFC2000Stage.get_axis_position",
+      "MFC2000Stage.get_position_dict",
+      "MFC2000Stage.get_speed",
+      "XCaliburPump.get_max_position",
+      "XCaliburPump.get_status"
+    ],
+    "writes": [
+      "MS2000Stage.set_speed",
+      "MS2000Stage.set_theta_speed",
+      "MFC2000Stage.set_speed",
+      "MFC2000Stage.set_theta_speed",
+      "XCaliburPump.set_fine_positioning_mode",
+      "XCaliburPump.set_speed"
+    ],
+    "actions": [
+      "MS2000Stage.move_absolute",
+      "MS2000Stage.move_axis_absolute",
+      "MS2000Stage.move_axis_relative",
+      "MS2000Stage.scan_axis_triggered_move",
+      "MS2000Stage.start_scan",
+      "MS2000Stage.stop",
+      "MS2000Stage.stop_scan",
+      "MS2000Stage.verify_move",
+      "MFC2000Stage.move_absolute",
+      "MFC2000Stage.move_axis_absolute",
+      "MFC2000Stage.start_scan",
+      "MFC2000Stage.stop"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.actuation.pump.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/navigate/model/devices/APIs/photometrics/PyVCAM-master/src/pyvcam/constants.py:18 MAX_CAM = 16",
+      "src/navigate/model/devices/APIs/photometrics/PyVCAM-master/src/pyvcam/constants.py:304 MAX_EXPOSE_MODE = 7"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/thedeanlab__navigate --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

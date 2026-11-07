@@ -1,0 +1,53 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:8346b246f9e8e4b3f871073bdf0dd7d207ca01d8dac43cbc2e98eb0576eeb85f",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.capotosto.fetch_formatted.v1",
+      "reason": "No catalogue class carries a formatted impedance measurement with a primary value, a secondary value and a status code; cap.measure.resistance.v1 carries one resistance and binds instrument.dmm, not a generic instrument.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.capotosto.fetch_impedance.v1",
+      "reason": "No cap.measure.impedance class exists; cap.measure.resistance.v1 returns one resistance and does not bind the generic instrument kind of an LCR meter.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.capotosto.fetch_vac.v1",
+      "reason": "cap.measure.voltage.v1 binds instrument.dmm, instrument.smu or sensor, not the generic instrument kind; no class binds the LCR meter's AC voltage signal monitor.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.capotosto.fetch_iac.v1",
+      "reason": "cap.measure.current.v1 binds instrument.dmm, instrument.smu or sensor, not the generic instrument kind; no class binds the LCR meter's AC current signal monitor.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.capotosto.fetch_vdc.v1",
+      "reason": "cap.measure.voltage.v1 binds instrument.dmm, instrument.smu or sensor, not the generic instrument kind; no class binds the LCR meter's DC voltage signal monitor.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.capotosto.fetch_idc.v1",
+      "reason": "cap.measure.current.v1 binds instrument.dmm, instrument.smu or sensor, not the generic instrument kind; no class binds the LCR meter's DC current signal monitor.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.capotosto.read_error.v1",
+      "reason": "No catalogue class reads a device-specific instrument error-queue entry.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.capotosto.set_aperture.v1",
+      "reason": "No catalogue class sets a measurement time mode and an averaging rate; the SCPI command carries both values together, so cap.device.configure.v1 cannot express it as a partial patch.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check; the evidence is contract_checked and never an MHS-Device level. Model-authored (authored_by kind model) and unreviewed (reviewed_by null); no hardware run and no claim that the wire syntax was tried on an instrument. The fake is a stateful in-memory SCPI transport; every number in it is placeholder test data. The clone states no frequency, AC voltage, AC current, DC bias or impedance-range bound, so those limits are Limit.operator_required; site-limits.example.json only illustrates an operator's narrowing values. NOT COVERED: the status text of fetch_formatted_with_status is not mapped (the numeric status code is returned); list sweep, bin sorting, correction execution and the open/short/load correction states are not served. The MCP projection bounds the single configure tool to 2048 bytes, so DC bias autorange, correction method, data format, long ASCII formatting, exponent digits, trigger source, trigger delay, continuous initiation and impedance autorange are read-only in this package. The upstream get_all_system_errors loop is represented by the bridge's automatic error query after writes and by one x-cap error-queue read, not by a loop action.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (347 to 348); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

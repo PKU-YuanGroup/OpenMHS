@@ -1,0 +1,51 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:641b13da47df3feda4bdba4487c4008bfda1e2afcd1a02ce4747ed6595086927",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.charkster.trigger.v1",
+      "reason": "No catalogue class binds an oscilloscope edge-trigger configuration. cap.device.configure.v1 is the state-patch write class (its binding is the writable resource state), while this action sends one trigger_setup call with level, horizontal offset, slope and mode and reports the six values read back with get_trigger_setup; no existing class carries that one-shot trigger input and output pair.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.charkster.force.v1",
+      "reason": "No catalogue class binds forcing a trigger event on an instrument. The action has no input and sends the clone's FORCE_TRIGGER command, then reports the trigger settings; no catalogue class carries a trigger-event action, and cap.device.configure.v1 cannot express a no-input invoke.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.charkster.reset.v1",
+      "reason": "No catalogue class resets an instrument. cap.world.reset.v1 is the simulated-world reset and binds resource kind world.sim, not an instrument; this action sends the clone's *RST and reports the horizontal scale and trigger settings after the reset.",
+      "verb": "invoke",
+      "similar": [
+        "cap.world.reset.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.charkster.measure.v1",
+      "reason": "No catalogue class carries a selectable oscilloscope measurement statistic. cap.sensing.read.v1 binds sensor, sensor.imu and sensor.force_torque, not an instrument; cap.measure.voltage.v1 binds instrument.dmm, instrument.smu and sensor and reports only a voltage with a range and saturation flag. This action selects one of the clone's implemented measurement slots and statistics (value, mean, max, min, num, sdev) and returns the result in the unit of the chosen measurement.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1",
+        "cap.measure.voltage.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.charkster.grid.v1",
+      "reason": "No catalogue class binds a display-grid setting. cap.device.configure.v1 is the state-patch write class and the clone has no grid getter to publish as a read-only state field, so the grid mode is a one-shot action that reports the value it sent to app.Display.GridMode; no existing class carries a display setting.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check MHS/drivers/labs/charkster__lecroy --backend fake; all gates G1 to G9 passed with no findings or warnings (check-report.json). Evidence is contract_checked, never an MHS-Device level.\n\nWhat the package covers: the state reads horizontal_scale, trigger_source, trigger_level, trigger_horizontal_offset, trigger_slope, trigger_mode, trigger_type, analog_channels, digital_channels and measurement_setup; cap.device.configure.v1 writes for horizontal_scale, trigger_level, trigger_horizontal_offset, trigger_slope and trigger_mode, each read back through get_horizontal_scale or get_trigger_setup; the extensions trigger (one-call trigger_setup with read-back), force (FORCE_TRIGGER), reset (*RST), measure (one numeric getValueOnChannel result) and grid (app.Display.GridMode); the e-stop calls reset_scope, which sends *RST. Slopes, modes, measurement slots, statistics and grid modes are bounded by the sets the clone lists; horizontal scale, trigger level and trigger horizontal offset are Limit.operator_required because the clone states no range for them, and site-limits.example.json shows example bounds that fill them.\n\nNOT COVERED: the screen image. get_screen_image writes a PNG file and returns its byte count (lecroy.py:15-27); no catalogue class carries an image array for an instrument and the clone writes to a local path, so the package serves the scalar settings and measurements, not the screenshot. The channel_setup, math, date/time, intensity, memory-size and channel-colour setters are not exposed: the clone has no getter for them (or, for channel_setup, calls time.sleep without importing time in a non-empty math branch), so a write could not be read back; the clone's own measurement_setup description is a partial list (lecroy.py:234), so only the statistics that getValueOnChannel implements are served. The analog, digital and measurement settings are read-only and reported as open objects.\n\nDEVIATION FROM THE CARD: the card proposes a ScpiDriver (family scpi, decision family-config). The upstream surface is an object with methods that assemble several VBS or SCPI lines from their arguments and holds a pyvisa instrument; a command table cannot reproduce those lines and the bridge would not have the upstream class's method semantics. This package is therefore a direct Driver over lecroy:lecroy with a native.py factory. The card's mock_strategy preferred a transcript; the upstream has no simulator and no recording was available, so fake.py is an in-memory recording fake over the upstream method surface (every start value is marked placeholder), not a line transcript.\n\nThe clone is a single module (lecroy.py) and does not import pyvisa itself; native.py imports pyvisa and the clone only on the hardware backend, which was never run. This package is model-authored and unreviewed (driver.lock.json authored_by is a model, reviewed_by is null); no human reviewed or tested it and no hardware run is claimed.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged."
+}

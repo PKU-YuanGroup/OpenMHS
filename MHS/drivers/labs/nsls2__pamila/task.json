@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nsls2/pamila",
+  "track": "labs",
+  "local_path": "labs/nsls2/pamila",
+  "driver_dir": "MHS/drivers/labs/nsls2__pamila",
+  "upstream": {
+    "repo_url": "https://github.com/nsls2/pamila",
+    "commit": "62a439b6be7cb72353575183a7fea26b45a35394",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 32,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pamila.middle_layer.var_list:MiddleLayerVariableListRO",
+      "file": "src/pamila/middle_layer/var_list.py",
+      "line": 569,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/pamila/sim_interface/__init__.py:13 SimulatorInterfacePath",
+      "src/pamila/sim_interface/__init__.py:29 SimulatorPvDefinition",
+      "src/pamila/sim_interface/__init__.py:35 SimulatorInterfaceSpec",
+      "src/pamila/sim_interface/__init__.py:41 SimConfigs",
+      "src/pamila/sim_interface/__init__.py:152 SimCalculation",
+      "src/pamila/sim_interface/pyat.py:217 SimPV"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "MiddleLayerVariableListRO.get_all_mlv_count",
+      "MiddleLayerVariableListRO.get_all_mlv_names",
+      "MiddleLayerVariableListRO.get_all_mlvs",
+      "MiddleLayerVariableListRO.get_enabled_mlvs",
+      "MiddleLayerVariableListRO.get_enabled_status",
+      "MiddleLayerVariableListRO.get_mlv_names",
+      "MiddleLayerVariableListRO.get_phys_length",
+      "MiddleLayerVariableListRO.get_reconstruction_spec",
+      "MiddleLayerVariableListRO.get_spec",
+      "MiddleLayerVariableListRO.get_spos",
+      "MiddleLayerVariableStatusList.get_all_mlv_count",
+      "MiddleLayerVariableStatusList.get_all_mlv_names"
+    ],
+    "writes": [
+      "MiddleLayerVariableListRO.set_and_wait",
+      "MiddleLayerVariableStatusList.set_and_wait",
+      "MiddleLayerVariable.set_and_wait"
+    ],
+    "actions": [
+      "MiddleLayerVariableListRO.disable_parallel_get",
+      "MiddleLayerVariableListRO.enable_parallel_get",
+      "MiddleLayerVariableStatusList.disable_parallel_get",
+      "MiddleLayerVariableStatusList.enable_parallel_get"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/nsls2__pamila --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

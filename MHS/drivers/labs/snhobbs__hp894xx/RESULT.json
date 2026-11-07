@@ -1,0 +1,41 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:07dfa1a27332728590a56d632f1d8b14100c8cc4f04b35b9469352eccabc5e59",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.snhobbs.acquire_spectrum.v1",
+      "reason": "no catalogue class carries an RF spectrum in hertz: cap.measure.spectrum.v1 binds instrument.spectrometer/instrument.spectrophotometer and its input and output fields are optical wavelengths in nm, while this analyzer reports a frequency-domain trace with HZ on the X axis; cap.sensing.read.v1 binds sensor resource kinds and scalar fields. The extension carries the Y values with the center, span, units and point count the README uses to reconstruct the X axis.",
+      "verb": "invoke",
+      "summary": "Read one HP 89400 trace: the Y values plus the X/Y unit strings, center and span.",
+      "similar": [
+        "cap.measure.spectrum.v1",
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.snhobbs.abort_measurement.v1",
+      "reason": "no catalogue class aborts a measurement acquisition; cap.motion.stop.v1 is for motion axes. The upstream abort writes abor and has no read-back, so the extension reports only that the write returned.",
+      "verb": "invoke",
+      "summary": "Abort the measurement with the native abor write.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.snhobbs.enable_autorange.v1",
+      "reason": "cap.device.configure.v1 derives its input from writable resource state that a read returns, but the upstream enable_autorange has no getter and the package cannot report an applied state; the boolean setting also needs no bound. The extension sends SENS:VOLT:RANGE:AUTO with the requested 0/1 value and reports only that requested value.",
+      "verb": "invoke",
+      "summary": "Enable or disable the analyzer input autorange.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "PASS on the fake backend: python3 -m mhs.driver check MHS/drivers/labs/snhobbs__hp894xx --backend fake exited 0. The evidence state is contract_checked, never an MHS-Device level. The only warning is G8.SAFE014_NOT_APPLICABLE: the package declares no Limit, so the CL3 suite has no out-of-limit input to probe and awards CL2; every other CL3 test passed. That is expected for this package: it exposes no numeric setting, so it declares no Limit and invents none from the README sample, a constructor default or an unread PDF. The README numbers are one sample capture (README.md:23-41), not a device range.\n\nThe upstream interface is observational: reads, a trace read, an abort and a boolean autorange setting; it has no motion, heater or radiation source. The declared risk is R0, so no @estop, safe_state or independent hardware e-stop is declared (SAFE-045 applies at R2 and above). The native abort is exposed as an ordinary action, not as a safe-state action.\n\nThe fake returns an 8-point trace (placeholder test data) because the gate receipt stays small; the real point count is the analyzer's CALC:DATA:HEAD:POIN? setting and is not fixed. The upstream README's sample capture shows 1601 points (README.md:41); the fake's eight values are the first eight values of that sample, marked # placeholder in fake.py. The trace array itself is covered by x-cap.snhobbs.acquire_spectrum.v1; it is not left out as NOT COVERED.\n\nNOT COVERED: (1) the screen-capture blob of read_tiff (HCOP:DEV:LANG tiff / HCOP:DATA?, python/HP894xx/HP89400Device.py:106-109): an x-cap output carries JSON values, not a binary image, and no catalogue class binds a screen capture of an analyzer; (2) RunCommands, the arbitrary GPIB/SCPI command pass-through (python/HP894xx/HP89400Device.py:159-169): the package exposes fixed reads and actions instead of an open command channel; (3) AutoRangeBlocking, the blocking one-shot autorange wait (python/HP894xx/HP89400Device.py:175-187): it needs the upstream timeout_decorator and is not used by any action; (4) clear_errors (*CLS) and reset (a transport reconnect, python/HP894xx/HP89400Device.py:78-81, 127-128); (5) numeric writes to center frequency, span or point count: the upstream class has getters only and the package exposes no such setter.\n\nThe hardware factory native.py was never imported or run, no analyzer was attached, and no hardware backend was passed to the gate. It forwards options to the upstream HP89400Device constructor and calls connect(); the upstream package and its dependencies (plx_gpib_ethernet, numpy, timeout_decorator) are not installed by this package or the card's empty install block. The hardware path needs a human review and an operator who knows the installed Prologix transport's constructor options.\n\nModel-authored by deepseek-v4.1-flash:1017, run wB2-136; reviewed_by stays null in driver.lock.json. No human reviewed or tested this package, and no hardware run is claimed. The upstream clone stayed read-only at commit 6745a53c20fb02b1a178fde70b1975b6b86f3518; no upstream code was copied. check-report.json is regenerated by every gate run and is not part of the package; the digest above is the digest the last check printed.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Copied the exact generated task.json after preserving the obsolete abstract Panda draft and recording the USB camera image-scope blocker; changed task.json and RESULT.json (card fields: rank). Package contracts, source pins, gate finding digests, author attribution and human signatures remain unchanged. This metadata synchronization is not a new complete gate collection.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

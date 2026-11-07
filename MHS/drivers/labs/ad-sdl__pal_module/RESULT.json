@@ -1,0 +1,73 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "gate": {
+    "digest": "sha256:47a5cc6d92ed5f47a23ddcb06e00af5c5c68c1ea294cc66c43e0d9e5b234c17a",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.ad-sdl.home_axes.v1",
+      "reason": "cap.motion.home.v1 declares optional axes and speed_scale inputs, but PALService.safe_home() takes no arguments and always homes the arm (PAL3_driver.py:1024-1027). Binding the class would publish inputs the driver cannot pass or honour, so the exact input-free full home is an extension.",
+      "verb": "invoke",
+      "summary": "Home all PAL3 axes with the upstream safe_home routine.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ad-sdl.move_relative.v1",
+      "reason": "cap.motion.cartesian_twist.v1 carries linear and angular velocities in m/s and rad/s plus a duration; PALService.move_relative(dx, dy, dz) takes a displacement in millimetres and no duration (PAL3_driver.py:965-978). The extension carries the exact displacement the upstream consumes.",
+      "verb": "invoke",
+      "summary": "Move the PAL3 tool by a relative X/Y/Z displacement in millimetres.",
+      "similar": [
+        "cap.motion.cartesian_twist.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ad-sdl.transfer_vial.v1",
+      "reason": "cap.manipulation.pick.v1 and cap.manipulation.place.v1 carry object coordinates or object dictionaries, not the two PAL vial addresses that set_vial and move_gripper consume (PAL3_driver.py:856-866, 1829-1860); cap.sample.move.v1 binds lab.sample and lab.labware, not robot.arm. The extension carries both PAL addresses and reports the upstream 0/1 result as moved.",
+      "verb": "invoke",
+      "summary": "Move one vial between two PAL vial addresses with the generic gripper.",
+      "similar": [
+        "cap.manipulation.pick.v1",
+        "cap.manipulation.place.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ad-sdl.clean_wash.v1",
+      "reason": "No catalogue class carries a wash or rinse maintenance routine. cap.fluid.transfer.v1 transfers a volume between two wells, while PALService.clean_wash runs two source-liner rinses and two half-syringe wash cycles (PAL3_driver.py:1140-1143).",
+      "verb": "invoke",
+      "summary": "Run the upstream PAL3 clean_wash maintenance routine.",
+      "similar": [
+        "cap.fluid.transfer.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ad-sdl.disconnect.v1",
+      "reason": "cap.motion.stop.v1 declares an optional deceleration in m/s2 and reports a stopped position; PALService.stop_remote_service() takes no argument, only disconnects the remote service and does not report a stop or a position (PAL3_driver.py:701-703). The extension is the exact input-free teardown and is the declared safe-state action.",
+      "verb": "invoke",
+      "summary": "Disconnect the PAL3 remote service; the declared safe state.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ad-sdl.reconnect.v1",
+      "reason": "No catalogue class carries a connection re-enable. cap.device.configure.v1 writes named state parameters and cannot run PALService.start_remote_service, which resolves IRemoteService, calls Remote.Connect and performs direct_service.Reset (PAL3_driver.py:682-699). The extension is the declared re-enable after a safety reset.",
+      "verb": "invoke",
+      "summary": "Reconnect the PAL3 remote service after a safety reset.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "PASS on the fake backend only: python3 -m mhs.driver check MHS/drivers/labs/ad-sdl__pal_module --backend fake exited 0 with all nine gates passing and no findings or warnings (evidence contract_checked, never an MHS-Device level). The package is model-authored and unreviewed: driver.lock.json authored_by is {\"kind\": \"model\", \"model_id\": \"deepseek-v4.1-flash:1017\", \"run_id\": \"helper-wave-2-014\"} and reviewed_by stays null; the loader refuses this R2 hardware backend until a human signs reviewed_by. No hardware was attached and no hardware or upstream-simulator run is claimed.\n\nENTRY AND SHAPE: the card's entry symbol PAL3_driver:PALService is confirmed at PAL3_driver.py:512, and the clone's MADSci node calls PALService() then std_start (PAL_module.py:40-42). DEVIATION FROM THE CARD: the card's helper is PythonObjectDriver, but the native is a stateful Windows/.NET service with a constructor-driven remote session, a head lock, an execution session created by std_start, a read-back arm position and a disconnect/start teardown; a config-only PythonObjectDriver cannot express that lifecycle, so this package is a direct Driver, matching the card's own decision 'direct-driver'. native.py is the production adapter: it imports PAL3_driver lazily, constructs PALService(host) and calls std_start(session_name). It was never run.\n\nCOVERAGE: reads x_mm, y_mm, z_mm (mm) and gripper_distance_mm (mm); actions cap.motion.cartesian_pose.v1 (absolute MoveAbsolute), x-cap.ad-sdl.home_axes.v1 (safe_home/MoveToHome), x-cap.ad-sdl.move_relative.v1 (MoveRelative), x-cap.ad-sdl.transfer_vial.v1 (set_vial twice plus move_gripper), x-cap.ad-sdl.clean_wash.v1 (clean_wash), x-cap.ad-sdl.disconnect.v1 (stop_remote_service, the safe-state action) and x-cap.ad-sdl.reconnect.v1 (start_remote_service, the declared re-enable). NOT COVERED: the NMR tube/rack methods (move_nmr_tube, move_nmr_rack, trash_nmr_rack) and the transfer/centrifuge/vortex/extraction sequences, because they need the upstream NMR/rack/transfer-map state and several return no failure status (move_nmr_tube always returns 1; drop/trash call sys.exit(2) on a gripper check); quick_transfer/quick_withdraw need the syringe and tracking state; the camera/vision methods, container tracking, project logging and the MADSci RestNode (PALNode) are not bound. The node is not the entry symbol and its execute_action path has undefined names (pal on the transfer branch and true on the pause branch); this package drives PALService directly.\n\nLIMITS: no text file of the clone states the rail or tool travel, so position.x/y/z and dx/dy/dz are Limit.operator_required; without a site overlay every move is refused MHS.SAFETY.LIMITS_UNSET. site-limits.example.json is example operator data only (0..600/0..600/0..300 mm and +/-100 mm), not a device fact. No G4 REF_VALUE or REF_BINARY warnings were reported.\n\nSAFETY: risk R2 from the card floor and from the rail-mounted arm. The upstream class has no motion-stop, abort, halt or emergency-stop method; its only stop-like member is stop_remote_service (PAL3_driver.py:701-703), which disconnects the remote service. self.pause is checked only between transfer/centrifuge loop iterations (PAL3_driver.py:1098, 1602) and does not interrupt a running session.Execute. The @estop and the safe-state action x-cap.ad-sdl.disconnect.v1 therefore call the disconnect; the package does not claim that a moving arm stopped and the fake does not model motion. x-cap.ad-sdl.reconnect.v1 is the declared re-enable because the upstream lock-retry path calls start_remote_service after a disconnect (PAL3_driver.py:737-740) and it performs direct_service.Reset; a safety reset only releases the latch and never runs it. No estop_terminal is declared because the upstream can reconnect within the endpoint; no independent hardware e-stop is documented in the clone, so estop_physical_ref is not set. The safe-state action checks IsConnected and raises a failed receipt if the disconnect did not take.\n\nFAKE AND GAPS: the upstream has no usable simulator: self.simulator only returns early from some methods (PAL3_driver.py:1141, 1146, 1204) while the constructor still loads .NET and connects. The package [...]\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked the direct Driver over PALService against PAL3_driver.py, PAL_module.py and the README at the pin, with the gate and collect.py --strict re-run (the author's pass reproduced). The pass rested on stop_remote_service, which only disconnects the remote service (PAL3_driver.py:701-703), bound as the @estop and as the safe_state=True action x-cap.ad-sdl.disconnect.v1, so the SDK reported every e-stop completed for a teardown; the class has no motion-stop, abort or halt member and a disconnect's effect on a running session.Execute lies in the .NET library outside the clone, so this actuator stays blocked under the user's decision, as the routing evidence predicted. The reviewer made the e-stop send the disconnect and then raise SAFE_STATE_UNREACHED, made the disconnect an ordinary action and rewrote safe_state (driver.py); corrected facts that overclaimed or cited the wrong line (README line 3; 'executes synchronously'; both safe_home definitions; the lock retry and sys.exit(0) paths; a universal 'no stop method' fact) and added three in driver.py and facts.md; corrected native.py's claim that the .NET imports run at module import; made the e-stop case expect SAFE_STATE_UNREACHED with the latch held and added a disconnect/re-enable case (test_driver.py); and regenerated reference.json, REFERENCE.md and check-report.json. The gate now fails only G3 SAFE-045 (R2 hardware without an independent stop), the expected blocked state (stable digest sha256:47a5cc6d92ed5f47a23ddcb06e00af5c5c68c1ea294cc66c43e0d9e5b234c17a). The author's SAFETY notes and the catalogue_requests reason for x-cap.ad-sdl.disconnect.v1 still call the disconnect the safe state; both are superseded. For the human reviewer: A CTC PAL3 rail-mounted arm with tool changes that pumps solvent in clean_wash: R2. Unblocking needs a source-backed stop of a running activity (a Ctc.Palplus stop or abort from vendor documentation or a pinned library) confirmed by state, or a human-cited physical stop. Opening the hardware backend runs std_start, which homes the arm without a command, on the hard-coded PAL1 host 192.168.99.230 unless a host is given. Home, vial transfer and wash move to positions from the PAL configuration that the operator envelope does not bound; transfer_vial and clean_wash assume the right tool is mounted. start_remote_service (constructor and re-enable) runs direct_service.Reset, whose effect is not in the clone; it, add_assembly and do_lock call sys.exit(0) on failure, and a failed Connect surfaces as a NameError (the except clause names a class bound only inside __init__). pyproject.toml declares none of clr, keyboard, psutil, pandas or cv2 that PAL3_driver imports.\n\nMODEL REVIEW (claude-sonnet-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Adversarial verification of the claude-opus-5-5 review (block) by a different model (the user chose Claude Sonnet as the different model, 2026-11-04): the verifier agreed and found no blocker or major. The block is genuine. I re-ran collect.py --strict: the gate fails at G3, and RESULT.json still says pass, so it prints RESULT_UNTRUSTED. That is the expected state until status blocked is written. In the clone at the pin, PAL3_driver.py has no stop, abort, cancel or halt member. The only stop-like method is stop_remote_service (lines 701-703), which just calls remote_service.Disconnect(). The reviewer's e-stop sends that disconnect and then raises SAFE_STATE_UNREACHED, which is honest. R2 is right for a rail arm that pumps solvent. The blocked_on code NO_HARDWARE_FREE_PATH fits. I checked the stop evidence and the strict-collector result, not the fixed Fact citations or the test and fake changes."
+}

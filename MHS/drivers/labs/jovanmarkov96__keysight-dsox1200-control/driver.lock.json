@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.jovanmarkov96/keysight-dsox1200-control",
+  "upstream": {
+    "repo_url": "https://github.com/jovanmarkov96/keysight-dsox1200-control",
+    "commit": "34ba50a758b9f4e8773dee788c3f9a4c04455f8f",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "pyproject.toml requires Python 3.8 or later and the runtime dependencies pyvisa>=1.12, pyvisa-py>=0.5 and numpy>=1.20 (pyproject.toml:11, 26-30); matplotlib>=3.4 is the gui extra (pyproject.toml:32-33). Only native.py imports keysight_dsox1200, inside the hardware factory; the gate never installs or imports the upstream package."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeDSOX1200"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB1-038",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

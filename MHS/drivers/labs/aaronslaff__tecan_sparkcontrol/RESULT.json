@@ -1,0 +1,49 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:7f0afe83580fcfd0da5ef38e55656a76eb06f61522453089a6f1c8cf163966c8",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.aaronslaff.calibrate_instrument.v1",
+      "reason": "No catalogue class runs a calibration by a free-form calibration type and returns the instrument's own JSON document. cap.device.calibrate.v1 binds the instrument resource kind but requires standard_ref and targets and a permit, and its output schema requires calibrated, calibration_ref and valid_until; the upstream calibrate_instrument posts only a type and returns response.json() with no documented keys, so the class fields and required calibration_ref cannot be filled from any source.",
+      "verb": "invoke",
+      "summary": "Run the native calibration procedure for a calibration type.",
+      "similar": [
+        "cap.device.calibrate.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.aaronslaff.start_method.v1",
+      "reason": "No catalogue class starts a previously created method by method id. cap.process.run.v1 binds process.controller, not the instrument kind, requires a recipe_ref and returns an exit_code, while the upstream start_method posts a method_id to /api/v1/methods/start and returns the instrument's own JSON document.",
+      "verb": "invoke",
+      "summary": "Start a method and remember its id for the stop path.",
+      "similar": [
+        "cap.process.run.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.aaronslaff.stop_method.v1",
+      "reason": "No catalogue class stops a method addressed by method id. cap.motion.stop.v1 binds motion resource kinds and takes a deceleration, while the upstream stop_method posts to /api/v1/methods/{method_id}/stop and returns the instrument's own JSON document.",
+      "verb": "invoke",
+      "summary": "Stop the method with the given id.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.aaronslaff.stop_active_method.v1",
+      "reason": "The R2 hardware driver needs a no-input safe-state action and no catalogue class stops the tracked method. cap.motion.stop.v1 is a motion stop with a deceleration input; the upstream has only stop_method(method_id) and no global stop request, so the driver tracks the method id and this action stops it.",
+      "verb": "invoke",
+      "summary": "Stop the tracked method (the safe state).",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Pass on the fake backend: python3 -m mhs.driver check exited 0, every gate G1-G9 passed, and the only warning is the expected G8.SAFE014_NOT_APPLICABLE (the package declares no Limit because it exposes no numeric input, so SAFE-014 has nothing to probe). Evidence is contract_checked, never an MHS-Device level. The card entry symbol spark_control_automation:SparkControlClient was confirmed at spark_control_automation.py:110. DEVIATION FROM THE CARD: the card's helper is PythonObjectDriver (family python-object), but this is a direct Driver over the upstream class. The client methods return raw JSON documents with no documented keys, the no-input reads need a driver-held method id, and the e-stop/safe-state path needs the same tracked id; the card's decision is direct-driver. The package exposes six reads (instrument_status, available_apps, instrument_settings, plate_geometry, and method_status/measurement_results for the tracked method, empty before one is tracked), calibration, start_method, stop_method and the no-input safe-state stop_active_method. It declares no writable state and no Limit: update_instrument_settings takes a free-form dictionary with no documented schema or numeric bounds, and create_method/add_measurement_strip and the strip builders take upstream dataclasses with no stated ranges, so they are not exposed. No numeric write or invoke input exists, site-limits.example.json was not needed, and the exemplar copy was deleted. The declared risk is R2, above the card floor R1: the clone exposes reagent injection with a volume and speed (spark_control_automation.py:307-329), shaking (350-372) and a measurement temperature field (81). The only stop path is stop_method(method_id) (spark_control_automation.py:402-405); no text file documents an independent hardware e-stop, so estop_physical_ref is not set and the safe-state action satisfies SAFE-045. Without a tracked method the e-stop and the safe-state action query instrument status and report that nothing was stopped; they do not claim to stop an unknown method. The fake is an in-memory stand-in, not a recording; every value in fake.py is placeholder test data marked # placeholder and no fake value is a Fact, a Limit or a reference. NOT COVERED: update_instrument_settings, export_data, create_method, add_measurement_strip, the strip builders, and method status/results for a method id the driver did not start or stop. The hardware backend native.py was never imported or run, no hardware was attached, and no hardware run is claimed. Model-authored by deepseek-v4.1-flash:1017 (run wP-007) and unreviewed; reviewed_by stays null, and the loader refuses the hardware backend of an unreviewed model-written package at R2 and R3 until a human signs. The upstream clone stayed read-only at commit d2272c6d0e0d4ded08a3af457ed19918a1e66446. gate.digest is the digest line the last check printed; check-report.json is regenerated by every gate run and is not part of the package.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed."
+}

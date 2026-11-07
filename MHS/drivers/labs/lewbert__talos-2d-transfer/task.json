@@ -1,0 +1,129 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.lewbert/talos-2d-transfer",
+  "track": "labs",
+  "local_path": "labs/lewbert/talos-2d-transfer",
+  "driver_dir": "MHS/drivers/labs/lewbert__talos-2d-transfer",
+  "upstream": {
+    "repo_url": "https://github.com/lewbert/talos-2d-transfer",
+    "commit": "2b85b6a9c74b194d4507e3d7713f343a00680a32",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 37,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "talos.hal.devices.zolix:ZolixXYRStage",
+      "file": "talos/hal/devices/zolix.py",
+      "line": 99,
+      "confidence": "override"
+    },
+    {
+      "symbol": "talos.hal.devices.sigmakoki:SigmaKokiXYZStage",
+      "file": "talos/hal/devices/sigmakoki.py",
+      "line": 62,
+      "confidence": "override"
+    },
+    {
+      "symbol": "talos.hal.devices.focus:FocusStageDriver",
+      "file": "talos/hal/devices/focus.py",
+      "line": 59,
+      "confidence": "override"
+    },
+    {
+      "symbol": "talos.hal.devices.yudian:YudianTempController",
+      "file": "talos/hal/devices/yudian.py",
+      "line": 50,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "SigmaKokiXYZStage.get_limits",
+      "SigmaKokiXYZStage.get_position",
+      "SigmaKokiXYZStage.get_status",
+      "SigmaKokiXYZStage.get_telemetry",
+      "SigmaKokiXYZStage.is_connected",
+      "SigmaKokiXYZStage._io.read_line",
+      "SigmaKokiXYZStage._io.read_reply",
+      "ZolixXYRStage.get_position",
+      "ZolixXYRStage.get_status",
+      "ZolixXYRStage.is_connected",
+      "HarvestersCamera.get_properties",
+      "HarvestersCamera.is_connected"
+    ],
+    "writes": [
+      "SigmaKokiXYZStage.set_speed",
+      "HarvestersCamera.set_flip",
+      "HarvestersCamera.set_property"
+    ],
+    "actions": [
+      "SigmaKokiXYZStage.home",
+      "SigmaKokiXYZStage.move",
+      "SigmaKokiXYZStage.move_rel_um",
+      "SigmaKokiXYZStage.stop",
+      "ZolixXYRStage.check_estop",
+      "ZolixXYRStage.home",
+      "ZolixXYRStage.move_abs_pulses",
+      "ZolixXYRStage.move_abs_um",
+      "ZolixXYRStage.move_continuous",
+      "ZolixXYRStage.move_rel_um",
+      "ZolixXYRStage.stop",
+      "ZolixXYRStage.stop_axis"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1",
+      "cap.imaging.focus.v1",
+      "cap.thermal.setpoint.v1",
+      "cap.measure.temperature.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": [
+      "talos/cv/af_roi.py:16 MIN_SIDE = 0.02",
+      "talos/cv/autofocus.py:286 max_speed = 500",
+      "talos/cv/autofocus.py:336 hill_v_min = 0.0",
+      "talos/cv/backlash_cal.py:57 max_backlash_steps = 250",
+      "talos/cv/edge.py:38 min_fill_ratio = 0.02",
+      "talos/cv/flakes.py:23 min_area_um2 = 30.0",
+      "talos/cv/flakes.py:24 max_area_um2 = 100000.0",
+      "talos/cv/flakes.py:28 min_edge_strength = 8.0"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/lewbert__talos-2d-transfer --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

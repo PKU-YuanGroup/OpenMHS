@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Keithley 2450)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/keithley2450": {
+      "source_current": {"min": -0.001, "max": 0.001, "unit": "A", "source": "operator",
+                         "reason": "example: the sample on this bench tolerates at most 1 mA; the clone states no source-current range, so the operator supplies it"},
+      "compliance_voltage": {"min": 0, "max": 50, "unit": "V", "source": "operator",
+                             "reason": "example: this bench uses at most 50 V of compliance; the clone states no compliance range, so the operator supplies it"}
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.czbiohub-sf/python-fish-sorter",
+  "track": "labs",
+  "local_path": "labs/czbiohub-sf/python-fish-sorter",
+  "driver_dir": "MHS/drivers/labs/czbiohub-sf__python-fish-sorter",
+  "upstream": {
+    "repo_url": "https://github.com/czbiohub-sf/python-fish-sorter",
+    "commit": "a8f2409fa6924b1aed83e1224c34a0528b5cb002",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 85,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "fish_sorter.hardware.picking_pipette:PickingPipette",
+      "file": "fish_sorter/hardware/picking_pipette.py",
+      "line": 15,
+      "confidence": "override"
+    },
+    {
+      "symbol": "fish_sorter.hardware.valve_controller:ValveController",
+      "file": "fish_sorter/hardware/valve_controller.py",
+      "line": 7,
+      "confidence": "override"
+    },
+    {
+      "symbol": "fish_sorter.hardware.zaber_controller:ZaberController",
+      "file": "fish_sorter/hardware/zaber_controller.py",
+      "line": 11,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": "==3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "PickingPipette.vc.read_register",
+      "PickingPipette.zc.get_pos",
+      "DispensePlate.get_abs_um_from_well_name",
+      "DispensePlate.get_px_from_well_name",
+      "DispensePlate.get_transform",
+      "DispensePlate.get_well_id",
+      "ImagingPlate.get_abs_um_from_well_name",
+      "ImagingPlate.get_px_from_well_name",
+      "ImagingPlate.get_transform",
+      "ImagingPlate.get_well_id"
+    ],
+    "writes": [
+      "PickingPipette.set_calib",
+      "PickingPipette.vc.write_register",
+      "DispensePlate.set_calib_pts",
+      "DispensePlate.set_calib_pts_default",
+      "DispensePlate.set_calib_pts_manually",
+      "ImagingPlate.set_calib_pts"
+    ],
+    "actions": [
+      "PickingPipette.dest_home",
+      "PickingPipette.move_fluor_img",
+      "PickingPipette.move_for_calib",
+      "PickingPipette.move_pipette",
+      "PickingPipette.move_pipette_increment",
+      "PickingPipette.reset",
+      "PickingPipette.zc.home_arm",
+      "PickingPipette.zc.move_arm"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/czbiohub-sf__python-fish-sorter --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

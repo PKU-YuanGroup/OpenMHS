@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.moler-group/scanning-squid",
+  "upstream": {
+    "repo_url": "https://github.com/moler-group/scanning-squid",
+    "commit": "32a61e8f8f4f6671f04e583752e361cb00276188",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "conda env create -f environment.yml"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The repository's README installs it with the conda environment of environment.yml (python 3.6, pyvisa 1.8.0, nidaqmx-python, pint and qcodes 0.1.11, environment.yml:5-27) and runs it with the clone's scanning-squid directory on the path (docs/pages/workflow.rst:15); 'pip install .' does not work because setup.py names a scanning_squid package directory the checkout does not have (setup.py:7). The hardware backend also needs the NI-DAQ, GPIB and serial hardware of the microscope. The gate never installs or imports any of it."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeSusceptometerMicroscope"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "claude-opus-5-5",
+    "run_id": "p3-reauthor-scanning-squid",
+    "date": "2026-11-05"
+  },
+  "reviewed_by": null
+}

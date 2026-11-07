@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.martinhjelmare/leicacam",
+  "upstream": {
+    "repo_url": "https://github.com/martinhjelmare/leicacam",
+    "commit": "5c33a0d6daa179377390eccf40f1fc3e584b2dad",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The upstream package needs Python 3.12 or newer (pyproject.toml requires-python) and has no runtime dependency besides the standard library; the driver imports it in native.py only, and the gate never installs or imports it."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeCAM"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "pilot1-001",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.amsikking/asi_ms_2000_500_cp",
+  "upstream": {
+    "repo_url": "https://github.com/amsikking/asi_ms_2000_500_cp",
+    "commit": "5f1f6d2cad545d5ae20359fd01e014dfdd21f11f",
+    "license_spdx": "GPL-3.0"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The upstream module imports pyserial (asi_MS_2000_500_CP.py:1). Only native.py imports the upstream package, inside the hardware factory; the gate never installs or imports it. The clone README asks for the Silicon Labs VCP USB driver (README.md:4)."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeAsiMs2000500Cp"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-002",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

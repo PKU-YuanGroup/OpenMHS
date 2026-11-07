@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (undalogic uSMU)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/usmu": {
+      "x-cap.undalogic.usmu.iv_point.v1": {
+        "voltage": {"min": -10, "max": 10, "unit": "V", "source": "operator",
+                    "reason": "example: this bench source is limited to 10 V; replace with the range of the installed unit"},
+        "current_limit": {"min": 0, "max": 100, "unit": "mA", "source": "operator",
+                          "reason": "example: this bench limits the source current to 100 mA; replace with the limit of the installed unit"}
+      },
+      "x-cap.undalogic.usmu.configure.v1": {
+        "oversample_rate": {"min": 1, "max": 100, "unit": "1", "source": "operator",
+                            "reason": "example: this bench accepts an oversample rate of 1 to 100; replace with the range of the installed unit"}
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.mcleu/pyapt",
+  "upstream": {
+    "repo_url": "https://github.com/mcleu/pyapt",
+    "commit": "2d5c4c64350d70daa60c0bd49c9afd03f85bc412",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The upstream is Python 2 and Windows-only and is not imported; the hardware backend is an independent Python 3 port in native.py. That port needs 64-bit Windows, the Thorlabs APT.dll and numpy (it loads the DLL through numpy.ctypeslib because package code must not import ctypes). The fake gate never imports native.py or numpy."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeAPTMotor"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-retry-001",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (zaber.serial ASCII axis)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only: the driver marks every motion input operator_required because the clone states no travel, speed or force limit. Replace these numbers with the limits of the installed stage before any use; they are not a statement about any device.",
+  "devices": {
+    "mhs://localhost/zaber-axis": {
+      "x-cap.ksunden.move_abs.v1": {
+        "position": {
+          "min": -10000,
+          "max": 10000,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example only: the absolute travel range of the installed stage is operator knowledge"
+        }
+      },
+      "x-cap.ksunden.move_rel.v1": {
+        "distance": {
+          "min": -10000,
+          "max": 10000,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example only: the permitted relative travel of the installed stage is operator knowledge"
+        }
+      },
+      "x-cap.ksunden.move_vel.v1": {
+        "speed": {
+          "min": -10000,
+          "max": 10000,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example only: the safe native speed range of the installed stage is operator knowledge"
+        }
+      }
+    }
+  }
+}

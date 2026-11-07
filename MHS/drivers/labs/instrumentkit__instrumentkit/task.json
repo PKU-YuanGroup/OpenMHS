@@ -1,0 +1,113 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.instrumentkit/instrumentkit",
+  "track": "labs",
+  "local_path": "labs/instrumentkit/instrumentkit",
+  "driver_dir": "MHS/drivers/labs/instrumentkit__instrumentkit",
+  "upstream": {
+    "repo_url": "https://github.com/instrumentkit/instrumentkit",
+    "commit": "a13c15020b6d62621c326d04b89ce79e471d50d2",
+    "license_spdx": "AGPL-3.0",
+    "license_class": "network-copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:driver-pack",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 1,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "instruments.thorlabs.thorlabsapt:APTPiezoInertiaActuator",
+      "file": "src/instruments/thorlabs/thorlabsapt.py",
+      "line": 346,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instruments.thorlabs.thorlabsapt:APTPiezoStage",
+      "file": "src/instruments/thorlabs/thorlabsapt.py",
+      "line": 969,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instruments.tektronix.tekdpo70000:TekDPO70000",
+      "file": "src/instruments/tektronix/tekdpo70000.py",
+      "line": 31,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instruments.hp.hp6632b:HP6632b",
+      "file": "src/instruments/hp/hp6632b.py",
+      "line": 50,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instruments.srs.srs830:SRS830",
+      "file": "src/instruments/srs/srs830.py",
+      "line": 37,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/instruments/abstract_instruments/comm/loopback_communicator.py:18 LoopbackCommunicator"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "APTPiezoInertiaActuator.identify",
+      "APTPiezoStage.identify",
+      "TekDPO70000.acquire_enhanced_enob (attribute)",
+      "TekDPO70000.acquire_enhanced_state (attribute)",
+      "TekDPO70000.acquire_interp_8bit (attribute)",
+      "TekDPO70000.acquire_magnivu (attribute)",
+      "TekDPO70000.acquire_mode (attribute)",
+      "TekDPO70000.acquire_mode_actual (attribute)",
+      "TekDPO70000.acquire_num_acquisitions (attribute)",
+      "TekDPO70000.acquire_num_avgs (attribute)",
+      "TekDPO70000.acquire_num_envelop (attribute)",
+      "TekDPO70000.acquire_num_frames (attribute)"
+    ],
+    "writes": [],
+    "actions": [
+      "TekDPO70000.force_trigger",
+      "TekDPO70000.reset",
+      "TekDPO70000.run",
+      "TekDPO70000.stop",
+      "TekDPO70000.trigger"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/instrumentkit__instrumentkit --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

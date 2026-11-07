@@ -1,0 +1,22 @@
+{
+  "status": "blocked",
+  "gate": {
+    "digest": "sha256:1be4dec7ab98b8657e1a4390f0c8bfd8e425e46ffd614a33643983cdc71f7852",
+    "failed": [
+      "G6",
+      "G8"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.aalto-qcd.arm_ddr4.v1",
+      "reason": "No catalogue class covers arming the DDR4 acquisition buffer: cap.sensing.read.v1 is a read class whose resource kinds do not include the instrument kind, and cap.device.configure.v1 writes named state but does not invoke Ddr4Buffer.arm() as an action.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the card names QcodesDriver, but the selected class qickodes.instrument_v2:QickInstrument initializes Parameters inside loops and conditionals, uses the SweepableParameter subclass for the delays, and exposes method-based control (set_macro_list, run, run_without_saving, ddr4_buffer.arm), which the config-only QcodesDriver source grammar does not express. This package is a direct Driver with a native.py factory. The fake is an analytic, source-shaped stand-in, not a recording: it replays no captured traffic and models no timing, tProc program or QICK proxy, and the pinned upstream has no simulator. NOT COVERED: run() takes a live qcodes Measurement and writes a QCoDeS dataset; run_without_saving() and set_macro_list() require a graph of Macro objects built from channels, envelopes and pulses, so the macro-driven IQ acquisition arrays are not served; the board-dependent DAC, ADC, tone and DDR4-buffer channel parameters are not published. The e-stop and safe state clear the macro list, which prevents any new run, but the pinned clone has no stop, abort or disarm method, so an acquisition already executing in the QICK proxy and an already armed DDR4 buffer are not aborted; the runtime latch refuses every later command but is not sensed quiescence. The hardware backend was never opened, no Pyro4 connection was made, no pulse was run, and the package is model-authored and unreviewed (reviewed_by is null); the gate evidence is fake-backend contract_checked only.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked the direct-Driver deviation, every fact and limit and the stop path against instrument_v2.py and parameters_v2.py at the pin; the pass contradicted the readiness evidence (blocked) and rests on an invented stop. The e-stop and safe state cleared the instrument's macro list, a Python-side list, while the clone has no stop, abort or disarm method (grep of src/) and this package never sets a macro list or starts a run, so the e-stop stopped nothing and reported completed. The served surface is five Python-side settings (SweepableParameter.set_raw only stores a QickParam, parameters_v2.py:72-83; hard_avgs and soft_avgs are ManualParameters) that reach the board only when run or run_without_saving builds a program, plus Ddr4Buffer.arm; the repository's primary control, macro-list pulse programs and their IQ acquisition (instrument_v2.py:227-401, 633-654), is not served. The reviewer changed driver.py (the @estop clears the list, then raises SAFE_STATE_UNREACHED; safe_state, docstring and one fact corrected), test_driver.py (the e-stop expects SAFE_STATE_UNREACHED with the latch held) and facts.md, and regenerated reference.json, REFERENCE.md and check-report.json. The gate now fails only G6.ESTOP_FAILED and G8 SAFE-028 (stable digest sha256:1be4dec7ab98b8657e1a4390f0c8bfd8e425e46ffd614a33643983cdc71f7852), the eight package cases pass, and the author's notes describing a pass with a macro-list safe state are superseded. For the human reviewer: A QICK RFSoC board reached over Pyro4: RF pulses reach its outputs only when a program runs, which this package does not serve, and Ddr4Buffer.arm (soc.arm_ddr4) has no disarm in the clone. The five writes have only lower bounds (the validators pass min_value only), and set_raw bypasses the QCoDeS validator; the SDK limit enforces the minimum. Unblocking needs a board-side stop (the qick library that would offer one is not in the clone) and a route that can carry Macro sequences.",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ]
+}

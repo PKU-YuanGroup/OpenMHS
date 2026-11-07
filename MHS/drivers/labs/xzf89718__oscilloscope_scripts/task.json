@@ -1,0 +1,78 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.xzf89718/oscilloscope_scripts",
+  "track": "labs",
+  "local_path": "labs/xzf89718/oscilloscope_scripts",
+  "driver_dir": "MHS/drivers/labs/xzf89718__oscilloscope_scripts",
+  "upstream": {
+    "repo_url": "https://github.com/xzf89718/oscilloscope_scripts",
+    "commit": "105e6021650f5b4f6557e733451612e4696a860d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 36,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "Tektronix_TBS2000B_control.oscilloscope_control:Oscilloscope",
+      "file": "Tektronix_TBS2000B_control/oscilloscope_control.py",
+      "line": 14,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Oscilloscope.MeasureAmpl",
+      "Oscilloscope.MeasureFreq",
+      "Oscilloscope.MeasureHigh",
+      "Oscilloscope.MeasureLow"
+    ],
+    "writes": [
+      "Oscilloscope.SetChannel"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/xzf89718__oscilloscope_scripts --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

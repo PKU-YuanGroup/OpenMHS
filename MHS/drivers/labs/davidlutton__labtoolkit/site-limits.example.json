@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (an Agilent PSA analyser)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "An example overlay, not a statement about any analyser.  The driver refuses every write of the sweep window and of the two bandwidths (MHS.SAFETY.LIMITS_UNSET) until the operator states the ranges of the unit at this site; this file shows the shape of that overlay.  The example ranges describe a bench where the analyser is used over 0.9 to 1.1 GHz with spans of 1 MHz to 20 MHz and bandwidths of 1 kHz to 2 MHz.",
+  "devices": {
+    "mhs://localhost/agilent-e44nn": {
+      "frequency_center": {"min": 900000000, "max": 1100000000, "unit": "Hz", "source": "operator",
+                           "reason": "example: this bench uses the analyser over 0.9 to 1.1 GHz"},
+      "frequency_span": {"min": 1000000, "max": 20000000, "unit": "Hz", "source": "operator",
+                         "reason": "example: the spans of this bench are 1 MHz to 20 MHz"},
+      "resolution_bandwidth": {"min": 1000, "max": 2000000, "unit": "Hz", "source": "operator",
+                               "reason": "example: the RBW values used at this bench are 1 kHz to 2 MHz"},
+      "video_bandwidth": {"min": 1000, "max": 2000000, "unit": "Hz", "source": "operator",
+                          "reason": "example: the VBW values used at this bench are 1 kHz to 2 MHz"}
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:4ca4af300e13d1bf35502aafa855701bf3ff5bea28a5290dc34e41bc4a1af5b8",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.pymodaq.pi_move_absolute.v1",
+      "reason": "no catalogue class carries an absolute position of one stage axis in the controller's own units: cap.motion.joint_position.v1 speaks robot joint positions in rad and a joint order, while PIWrapper can drive linear (mm/um) and rotation (deg) axes in the same chassis and the package publishes the controller's own unit as unit 1",
+      "verb": "invoke",
+      "summary": "Move one PI GCS2 axis to an absolute position with the native move_absolute() and report the position read back.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.pymodaq.pi_move_relative.v1",
+      "reason": "no catalogue class carries a relative step of one stage axis in the controller's own units; cap.motion.joint_position.v1 is absolute and in rad, and cap.motion.joint_velocity.v1 is a bounded velocity in rad/s, neither of which is the native MVR step",
+      "verb": "invoke",
+      "summary": "Move one PI GCS2 axis by a relative step with the native move_relative() and report the position read back.",
+      "similar": [
+        "cap.motion.joint_position.v1",
+        "cap.motion.joint_velocity.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.pymodaq.pi_home_axis.v1",
+      "reason": "cap.motion.home.v1 speaks named robot axes, a speed scale and joint positions in rad; PIWrapper.move_home() takes one axis, has no speed argument and reports only whether the axis is referenced afterwards",
+      "verb": "invoke",
+      "summary": "Home one PI GCS2 axis with the native move_home() and report the referenced state afterward.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.pymodaq.pi_stop_motion.v1",
+      "reason": "cap.motion.stop.v1 carries an optional deceleration profile and a stopped position; PIWrapper.stop() sends StopAll and takes no profile or position, so the class cannot be bound without inventing a deceleration the controller wrapper does not accept. This extension is also the safe-state action",
+      "verb": "invoke",
+      "summary": "Stop all PI GCS2 motion with the native stop() (StopAll); it takes no input and reports that the stop was issued.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check with no warning on any gate (evidence contract_checked, never an MHS-Device level). Model-authored and unreviewed: driver.lock.json authored_by is the model and reviewed_by is null; nothing here ran on hardware. The loader refuses the hardware backend of an unreviewed model-written package only at R2 and R3, so this R1 package's hardware path is not refused by that rule and still needs a human review before use. The hardware factory (native.py) was never imported or run.\n\nCARD SHAPE: the card's decision is direct-driver, which this package uses. The card's helper field names PythonObjectDriver (family python-object); that family config cannot carry the per-axis decorated reads, the per-axis actions and the e-stop this wrapper needs, so the package is a direct Driver over the card's entry symbol PIWrapper (DEVIATION FROM THE CARD: the helper family was not used; the direct-driver decision was kept).\n\nCOVERED: six reads (identity, axis names, axis units, positions, referenced state, closed-loop state), absolute and relative moves, homing, the native stop as an extension safe-state action, and the native stop as the e-stop. The wrapper's axis list is dynamic, so actions take the axis name the controller reports and the read state returns one array element per axis. Positions and moves are in the controller's own units, which the axis_units read exposes; the MHS fields use the dimensionless UCUM unit 1 and no conversion is applied.\n\nNOT COVERED: the waveform generator methods set_1D_waveform, start_waveform, stop_waveform and set_trigger_waveform are not exposed. They are a separate scanning mode and the clone states no bounds for amplitude, offset, point count, rate or trigger points. NOT COVERED: set_servo and set_referencing are not exposed as writes; the read state reports the closed-loop and referenced states. NOT COVERED: the clone's other entry symbols (MMC_Wrapper and MMCWrapperClient64 for the legacy 32-bit MMC DLL, and the E870 open-loop PiezoMike plugin) are different controller families; this package covers the GCS2 PIWrapper only. The E870 clone explicitly has no absolute position and no referencing, and the MMC wrapper needs a 32-bit DLL or an msl-loadlib server, so they are not merged into this package.\n\nLIMITS: no text file of the clone states a travel range for an axis; the wrapper only queries the controller's own qTMN/qTMX at run time, so both move inputs are Limit.operator_required and every write is refused MHS.SAFETY.LIMITS_UNSET until an operator supplies the range. site-limits.example.json is an example only and is not a statement about any stage. The PDFs under docs/ were not cited because no page was read.\n\nSAFETY: the e-stop and the safe-state action both call PIWrapper.stop(), which sends StopAll. The clone's text files document no independent hardware e-stop line, so estop_physical_ref is not set. The package risk is R1, matching the card's floor and the catalogue motion classes that bind a motion axis; the clone states no voltage, force or speed bound. The safe-state action is an extension because the catalogue stop class carries an optional deceleration profile and a stopped position that the native stop does not take.\n\nFAKE: the clone has no simulator, so the fake is an in-memory stand-in with placeholder axis names, units, positions, limits and identity, each marked # placeholder in fake.py; it is not a recording of a device. The stand-in has two axes; a real controller may have a different number, which the axis_names read reports. The gate ran on the fake backend only. driver.lock.json reviewed_by stays null. The gate digest above is the digest line of the last check run; check-report.json is regenerated by every gate run and is not part of the package.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (18 to 17); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

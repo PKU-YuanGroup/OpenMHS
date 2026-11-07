@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:24cd3d3b16908471c67c9cff5472a47ed459ef315210b8407a1b3309b5a0615c",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.iherrbenza.mute.v1",
+      "reason": "no catalogue class mutes a DDS or is a safe-state action for a signal source; cap.device.configure.v1 can write the amplitude words but a safe-state action must be an invoke action with no input, so the package uses an x-cap id with an inline output schema",
+      "verb": "invoke",
+      "summary": "Set every channel amplitude word to 0 (the safe state of this DDS); it takes no input.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend with `python3 -m mhs.driver check MHS/drivers/labs/iherrbenza__ad9959_python --backend fake` (all gates G1-G9 pass, no warnings; evidence contract_checked, never an MHS-Device level). Model-authored and unreviewed: driver.lock.json reviewed_by is null, no hardware was attached, and no hardware run is claimed. This driver is R1, so the loader does not add the R2/R3 reviewed_by gate to its hardware backend; the operator decides when to use it. DEVIATION FROM THE CARD: the card names helper PythonObjectDriver, but its one-value-per-parameter writes cannot express the upstream setter signature set_frequency(ch, freq, send) and the class needs no bridge grammar; this is a direct Driver over DDS_ESP32_lab.DDS_ESP32:DDS_ESP32 with native.py. The card's DDS_ESP32_lab.labscript_devices:DDS_ESP32 entry needs labscript and is not used. NOT COVERED: the 2-level modulation setters set_2mod_frequency/set_2mod_amplitude/set_2mod_phase, the ramp_* methods, the memory list (memory_storage/list_*), and direct_spi; raw direct_spi text would bypass every limit. The upstream class has no register getter and the ESP32 protocol sends commands without a reply, so the package declares no @read: the resource state is the last value the runtime wrote, which is the last value the driver sent, not a measurement of the output. The frequency limit is operator_required because max=clock x PLL depends on the constructor's clock and pll options; site-limits.example.json shows an example overlay (1 kHz to 100 MHz, example data only, not a fact about any board). The fake stores test placeholders and answers no real transport.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Copied the exact generated task.json after preserving the obsolete abstract Panda draft and recording the USB camera image-scope blocker; changed task.json and RESULT.json (card fields: rank). Package contracts, source pins, gate finding digests, author attribution and human signatures remain unchanged. This metadata synchronization is not a new complete gate collection.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

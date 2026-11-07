@@ -1,0 +1,148 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.biologytools/bioimager",
+  "track": "labs",
+  "local_path": "labs/biologytools/bioimager",
+  "driver_dir": "MHS/drivers/labs/biologytools__bioimager",
+  "upstream": {
+    "repo_url": "https://github.com/biologytools/bioimager",
+    "commit": "149b45255d628cc4118b3829cd7c5b10c9c6cb07",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 23,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "PythonMicroscope.microscope.cameras.ximea:XimeaCamera",
+      "file": "PythonMicroscope/microscope/cameras/ximea.py",
+      "line": 176,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PythonMicroscope.microscope.lights.cobolt:CoboltLaser",
+      "file": "PythonMicroscope/microscope/lights/cobolt.py",
+      "line": 32,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PythonMicroscope.microscope.lights.sapphire:SapphireLaser",
+      "file": "PythonMicroscope/microscope/lights/sapphire.py",
+      "line": 34,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PythonMicroscope.microscope.lights.deepstar:DeepstarLaser",
+      "file": "PythonMicroscope/microscope/lights/deepstar.py",
+      "line": 32,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PythonMicroscope.microscope.lights.obis:ObisLaser",
+      "file": "PythonMicroscope/microscope/lights/obis.py",
+      "line": 33,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "PythonMicroscope/microscope/simulators/__init__.py:154 SimulatedCamera",
+      "PythonMicroscope/microscope/simulators/__init__.py:312 SimulatedController",
+      "PythonMicroscope/microscope/simulators/__init__.py:323 SimulatedFilterWheel",
+      "PythonMicroscope/microscope/simulators/__init__.py:339 SimulatedLightSource",
+      "PythonMicroscope/microscope/simulators/__init__.py:376 SimulatedDeformableMirror",
+      "PythonMicroscope/microscope/simulators/__init__.py:403 SimulatedStageAxis"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "XimeaCamera.get_all_settings",
+      "XimeaCamera.get_binning",
+      "XimeaCamera.get_cycle_time",
+      "XimeaCamera.get_exposure_time",
+      "XimeaCamera.get_is_enabled",
+      "XimeaCamera.get_roi",
+      "XimeaCamera.get_sensor_shape",
+      "XimeaCamera.get_setting",
+      "XimeaCamera.get_transform",
+      "XimeaCamera.set_setting (attribute)",
+      "CoboltLaser.get_all_settings",
+      "CoboltLaser.get_is_enabled"
+    ],
+    "writes": [
+      "XimeaCamera.set_binning",
+      "XimeaCamera.set_client",
+      "XimeaCamera.set_exposure_time",
+      "XimeaCamera.set_readout_mode",
+      "XimeaCamera.set_roi",
+      "XimeaCamera.set_setting",
+      "XimeaCamera.set_transform",
+      "XimeaCamera.set_trigger",
+      "CoboltLaser.set_setting",
+      "CoboltLaser.set_trigger",
+      "SapphireLaser.set_setting",
+      "SapphireLaser.set_trigger"
+    ],
+    "actions": [
+      "XimeaCamera.abort",
+      "XimeaCamera.disable",
+      "XimeaCamera.enable",
+      "XimeaCamera.soft_trigger",
+      "XimeaCamera.trigger",
+      "XimeaCamera.trigger_mode",
+      "XimeaCamera.trigger_type",
+      "CoboltLaser.disable",
+      "CoboltLaser.enable",
+      "CoboltLaser.trigger",
+      "CoboltLaser.trigger_mode",
+      "CoboltLaser.trigger_type"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "PythonMicroscope/microscope/_wrappers/BMC.py:36 MAX_PATH = 260",
+      "PythonMicroscope/microscope/cameras/atmcd.py:262 DRV_TEMPERATURE_OUT_RANGE = 20038",
+      "PythonMicroscope/microscope/cameras/atmcd.py:270 DRV_TEMP_OUT_RANGE = 20038",
+      "PythonMicroscope/microscope/cameras/pvcam.py:185 MAX_CAM = 16",
+      "PythonMicroscope/microscope/cameras/pvcam.py:227 ATTR_MIN = 3",
+      "PythonMicroscope/microscope/cameras/pvcam.py:228 ATTR_MAX = 4",
+      "PythonMicroscope/microscope/cameras/pvcam.py:250 MAX_CLEAR_MODE = 6",
+      "PythonMicroscope/microscope/cameras/pvcam.py:263 MAX_EXPOSE_MODE = 7"
+    ]
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/biologytools__bioimager --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (keysight33210A driver)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/keysight33210a": {
+      "frequency": {"min": 1.0, "max": 1000000.0, "unit": "Hz", "source": "operator",
+                    "reason": "example: the loaded circuit is characterised from 1 Hz to 1 MHz"},
+      "amplitude": {"min": 0.01, "max": 1.0, "unit": "V", "source": "operator",
+                    "reason": "example: this bench drives small signals only"},
+      "offset": {"min": -1.0, "max": 1.0, "unit": "V", "source": "operator",
+                 "reason": "example: this bench keeps the DC offset within 1 V"},
+      "function": {"allowed": ["SIN", "SQU"], "source": "operator",
+                   "reason": "example: only sine and square waveforms are used on this bench"},
+      "load": {"allowed": ["50"], "source": "operator",
+               "reason": "example: the output always drives a 50 ohm load"},
+      "output": {"allowed": ["OFF"], "source": "operator",
+                 "reason": "example: this bench keeps the generator output off"}
+    }
+  }
+}

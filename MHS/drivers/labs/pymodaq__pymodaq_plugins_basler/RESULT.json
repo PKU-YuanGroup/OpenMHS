@@ -1,0 +1,40 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:b9a39102208487a72a2927e1a528f8caf7436d6ac01a8238ab8261f548407ee2",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.pymodaq.start_grabbing.v1",
+      "reason": "no catalogue class starts continuous camera acquisition; cap.sensing.image.v1 captures one image artifact and this package has no artifact store, while the camera's start_grabbing starts a continuing grab loop",
+      "verb": "invoke",
+      "summary": "Start continuous acquisition with the camera's current frame rate.",
+      "similar": [
+        "cap.sensing.image.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.pymodaq.stop_grabbing.v1",
+      "reason": "no catalogue class stops continuous camera acquisition; cap.motion.stop.v1 is for motion resources and cap.sensing.image.v1 captures one image, while this is the camera's native StopGrabbing and the safe-state action",
+      "verb": "invoke",
+      "summary": "Stop continuous acquisition; the native stop and the safe state.",
+      "similar": [
+        "cap.sensing.image.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.pymodaq.clear_roi.v1",
+      "reason": "no catalogue class resets a camera ROI to the full detector; cap.device.configure.v1 writes named ROI parameters but has no no-input restore action",
+      "verb": "invoke",
+      "summary": "Reset the ROI and binning to the full detector.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "Passed the fake backend only; evidence is contract_checked, never an MHS-Device level and never a hardware run. The package binds the camera resource of pymodaq_plugins_basler.hardware.basler:BaslerCamera: the model name, detector size, six ROI values, exposure, gain, frame rate, pixel format and grabbing state; six ROI writes through the native set_roi; start/stop grabbing actions; clear_roi; and the native stop_grabbing as the e-stop and the safe-state action. NOT COVERED: the image arrays produced by the pylon image event and consumed by the DAQ viewer (the standard's image form is an artifact reference and this package has no artifact store). NOT COVERED: exposure and gain writes (BaslerCamera has no setter method for them; the DAQ viewer writes the pylon nodes directly, so binding them would bypass the recorded native surface). Limits: every ROI value is Limit.operator_required because no text file of the clone states the usable range of an installed camera; the pylon nodes report GetMin/GetMax only at run time and the sensor size differs by model. site-limits.example.json fills the six paths with placeholder example ranges only, not measurements. The native.py hardware factory was never imported or run; this R1 package does not claim the loader's R2/R3 refusal of an unreviewed model-written hardware backend. Model-authored and unreviewed (driver.lock.json reviewed_by is null).\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (28 to 27); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.pycroscopy/dtmicroscope",
+  "upstream": {
+    "repo_url": "https://github.com/pycroscopy/dtmicroscope",
+    "commit": "17245ba6df4299aa3f13e2a8f33d9ba48a8000b4",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.py declares no python_requires and no install_requires; the upstream package is imported by native.py only, and the gate never installs or imports it. The hardware path also needs the proprietary autoscript_tem_microscope_client SDK that twisted_server.py imports from a hard-coded Windows path (twisted_server.py:12-13), which this package does not install."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeTEMClient"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-005",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

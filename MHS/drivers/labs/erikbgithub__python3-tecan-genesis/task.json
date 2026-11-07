@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.erikbgithub/python3-tecan-genesis",
+  "track": "labs",
+  "local_path": "labs/erikbgithub/python3-tecan-genesis",
+  "driver_dir": "MHS/drivers/labs/erikbgithub__python3-tecan-genesis",
+  "upstream": {
+    "repo_url": "https://github.com/erikbgithub/python3-tecan-genesis",
+    "commit": "f85fb168886b26e002f05dc984127cbb2164e9b5",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 53,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "tecan_funcs:do_cmd",
+      "file": "tecan_funcs.py",
+      "line": 120,
+      "confidence": "override"
+    },
+    {
+      "symbol": "tecan_funcs:Cmd_delayed",
+      "file": "tecan_funcs.py",
+      "line": 50,
+      "confidence": "override"
+    },
+    {
+      "symbol": "tecan_funcs:do_action",
+      "file": "tecan_funcs.py",
+      "line": 224,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "capabilities",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/erikbgithub__python3-tecan-genesis --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

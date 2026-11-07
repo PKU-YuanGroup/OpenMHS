@@ -1,0 +1,30 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.fretchen/synqs_devices",
+  "upstream": {
+    "repo_url": "https://github.com/fretchen/synqs_devices",
+    "commit": "ec4bb24639e9d0d4cb707e1c2a6296a47dfe9f02",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The package is served on the fake backend without installing anything. The upstream clone is a labscript user-device package (README.rst:22-26); the hardware path imports labscript_devices, blacs and zprocess, loads numpy, and needs the proprietary Andor SDK3 DLL (atmcd64d.dll/atmcd32d.dll) on Windows (AndorSolis/andor_sdk/andor_solis.py:21-44). The gate never imports native.py or the upstream package."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeAndorCamera"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-003",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

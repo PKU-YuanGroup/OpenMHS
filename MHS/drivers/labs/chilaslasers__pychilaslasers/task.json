@@ -1,0 +1,118 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.chilaslasers/pychilaslasers",
+  "track": "labs",
+  "local_path": "labs/chilaslasers/pychilaslasers",
+  "driver_dir": "MHS/drivers/labs/chilaslasers__pychilaslasers",
+  "upstream": {
+    "repo_url": "https://github.com/chilaslasers/pychilaslasers",
+    "commit": "ec9470e0042ccb86edb196e9834508f38dbf1b1a",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 7,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pychilaslasers.laser:Laser",
+      "file": "src/pychilaslasers/laser.py",
+      "line": 49,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pychilaslasers.laser_components.diode:Diode",
+      "file": "src/pychilaslasers/laser_components/diode.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pychilaslasers.laser_components.tec:TEC",
+      "file": "src/pychilaslasers/laser_components/tec.py",
+      "line": 21,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pychilaslasers.laser_components.heaters.phase_section:PhaseSection",
+      "file": "src/pychilaslasers/laser_components/heaters/phase_section.py",
+      "line": 31,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pychilaslasers.laser_components.heaters.heaters:TunableCoupler",
+      "file": "src/pychilaslasers/laser_components/heaters/heaters.py",
+      "line": 139,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Diode.get_current",
+      "Diode.get_value",
+      "TEC.get_target_temp",
+      "TEC.get_temp",
+      "TEC.get_value"
+    ],
+    "writes": [
+      "Laser.set_mode",
+      "Diode.set_current",
+      "Diode.set_value",
+      "TEC.set_target",
+      "TEC.set_value"
+    ],
+    "actions": [
+      "Laser.calibrate",
+      "Laser.trigger",
+      "Laser.trigger_pulse",
+      "Laser.turn_off",
+      "Laser.turn_on",
+      "Diode.turn_off",
+      "Diode.turn_on"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.measure.temperature.v1",
+      "cap.sensing.read.v1",
+      "cap.device.calibrate.v1",
+      "cap.measure.current.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/chilaslasers__pychilaslasers --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

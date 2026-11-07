@@ -1,0 +1,130 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sfinucane/sindri",
+  "track": "labs",
+  "local_path": "labs/sfinucane/sindri",
+  "driver_dir": "MHS/drivers/labs/sfinucane__sindri",
+  "upstream": {
+    "repo_url": "https://github.com/sfinucane/sindri",
+    "commit": "d560635a28a57230f1fa32cea3b9d4df0c8af8e7",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 304,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "sindri.tektronix.bertscope:BERTScope_TCP",
+      "file": "sindri/tektronix/bertscope.py",
+      "line": 464,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sindri.agilent.e363xa:E3631A_TCP",
+      "file": "sindri/agilent/e363xa.py",
+      "line": 693,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sindri.agilent.n77xx:N77XX_TCP",
+      "file": "sindri/agilent/n77xx.py",
+      "line": 1210,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sindri.agilent.n77xx:N77XX_USBVisa",
+      "file": "sindri/agilent/n77xx.py",
+      "line": 1216,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sindri.agilent.infiniium.inf90000series:DSOX92504A_TCP",
+      "file": "sindri/agilent/infiniium/inf90000series.py",
+      "line": 444,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "BERTScope_TCP.get_detector_bit_count",
+      "BERTScope_TCP.get_detector_bit_error_rate",
+      "BERTScope_TCP.get_detector_elapsed_time",
+      "BERTScope_TCP.get_detector_error_count",
+      "BERTScope_TCP.get_detector_error_free_bits_count",
+      "BERTScope_TCP.get_detector_error_free_time",
+      "BERTScope_TCP.get_detector_resyncs",
+      "BERTScope_TCP.get_internal_temperature",
+      "BERTScope_TCP.idn",
+      "BERTScope_TCP.is_running",
+      "BERTScope_TCP.event_status_reg (attribute)",
+      "E3631A_TCP.idn"
+    ],
+    "writes": [
+      "BERTScope_TCP.set_operation_complete_bit",
+      "E3631A_TCP.set_input_mode",
+      "E3631A_TCP.set_operation_complete_bit",
+      "N77XX_TCP.set_operation_complete_bit"
+    ],
+    "actions": [
+      "BERTScope_TCP.detector_reset_results",
+      "BERTScope_TCP.reset",
+      "BERTScope_TCP.run",
+      "BERTScope_TCP.run_duration",
+      "BERTScope_TCP.stop",
+      "E3631A_TCP.reset",
+      "E3631A_TCP.trigger",
+      "N77XX_TCP.reset",
+      "N77XX_TCP.reset_network_settings",
+      "N77XX_TCP.reset_presets",
+      "N77XX_TCP.start_flashing_lan_led",
+      "N77XX_TCP.stop_flashing_lan_led"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.current.v1",
+      "cap.measure.temperature.v1",
+      "cap.measure.voltage.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/sfinucane__sindri --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

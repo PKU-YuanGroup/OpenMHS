@@ -1,0 +1,138 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.eta-systems/labor-gpib",
+  "track": "labs",
+  "local_path": "labs/eta-systems/labor-gpib",
+  "driver_dir": "MHS/drivers/labs/eta-systems__labor-gpib",
+  "upstream": {
+    "repo_url": "https://github.com/eta-systems/labor-gpib",
+    "commit": "d5fe1b230344452bc32b756fc14567acde683c74",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 321,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "devices.rohde_schwarz_ngmo2:device",
+      "file": "src/devices/rohde_schwarz_ngmo2.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "devices.rohde_schwarz_ngmo2:Channel",
+      "file": "src/devices/rohde_schwarz_ngmo2.py",
+      "line": 377,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "devices.hp_3455a:device",
+      "file": "src/devices/hp_3455a.py",
+      "line": 73,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "interface.prologix_gpib:usb",
+      "file": "src/interface/prologix_gpib.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "devices.schlumberger_7150plus:device",
+      "file": "src/devices/schlumberger_7150plus.py",
+      "line": 51,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "device.get_idn",
+      "device.get_output_format",
+      "device.get_status",
+      "device.idn",
+      "device.read_sav",
+      "device.read_sre",
+      "device.channel_a.get_bandwidth",
+      "device.channel_a.get_current_range",
+      "device.channel_a.get_impedance",
+      "device.channel_a.get_interval",
+      "device.channel_a.get_sense",
+      "device.channel_a.is_on"
+    ],
+    "writes": [
+      "device.set_output_byte_order",
+      "device.set_output_format",
+      "device.channel_a.set_averaging_samples",
+      "device.display.set_channel",
+      "Channel.set_averaging_samples"
+    ],
+    "actions": [
+      "device.arm",
+      "device.reset",
+      "device.channel_a.off",
+      "device.channel_a.on",
+      "device.display.enable",
+      "Channel.off",
+      "Channel.on",
+      "device.enable_auto_cal",
+      "device.enable_high_resolution",
+      "device.enable_rqs",
+      "device.trigger",
+      "device.trigger_mode"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.voltage.v1",
+      "cap.measure.current.v1",
+      "cap.measure.resistance.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/hp6624A_calibration_.py:37 LOAD_CURRENT_MAX = 1.0",
+      "src/hp6624A_calibration_.py:38 LOAD_CURRENT_MIN = 0.1",
+      "src/prod/ngmo_DCDC_efficiency.py:43 LOAD_CURRENT_MAX = 1.0",
+      "src/prod/ngmo_DCDC_efficiency.py:44 LOAD_CURRENT_MIN = 0.05",
+      "src/prod/ngmo_DCDC_efficiency_hp_AC_DC.py:44 LOAD_CURRENT_MAX = 1.2",
+      "src/prod/ngmo_DCDC_efficiency_hp_AC_DC.py:45 LOAD_CURRENT_MIN = 0.05",
+      "src/prod/ngmo_DCDC_efficiency_hp_AC_ripple.py:48 LOAD_CURRENT_MAX = 1.0",
+      "src/prod/ngmo_DCDC_efficiency_hp_AC_ripple.py:49 LOAD_CURRENT_MIN = 0.05"
+    ]
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/eta-systems__labor-gpib --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

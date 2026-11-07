@@ -1,0 +1,39 @@
+{
+  "capabilities": {
+    "cap.device.configure.v1": {
+      "valid": {"pressure": 10},
+      "alternate": {"pressure": 20},
+      "out_of_envelope": [
+        {"pressure": -1},
+        {"pressure": 301}
+      ]
+    },
+    "x-cap.festo-se.aspirate.v1": {
+      "valid": {"channel": 1, "volume": 10.0, "liquid_class": "water"},
+      "alternate": {"channel": 2, "volume": 20.0, "liquid_class": "water"},
+      "out_of_envelope": [
+        {"channel": 0, "volume": 10.0, "liquid_class": "water"},
+        {"channel": 1, "volume": -1.0, "liquid_class": "water"},
+        {"channel": 1, "volume": 1001.0, "liquid_class": "water"}
+      ]
+    },
+    "x-cap.festo-se.dispense.v1": {
+      "valid": {"channel": 1, "volume": 10.0, "liquid_class": "water"},
+      "alternate": {"channel": 2, "volume": 20.0, "liquid_class": "water"},
+      "out_of_envelope": [
+        {"channel": 0, "volume": 10.0, "liquid_class": "water"},
+        {"channel": 1, "volume": -1.0, "liquid_class": "water"},
+        {"channel": 1, "volume": 1001.0, "liquid_class": "water"}
+      ]
+    },
+    "x-cap.festo-se.mix.v1": {
+      "valid": {"channel": 1, "volume": 5.0, "liquid_class": "water", "cycles": 2},
+      "alternate": {"channel": 2, "volume": 10.0, "liquid_class": "water", "cycles": 3},
+      "out_of_envelope": [
+        {"channel": 0, "volume": 5.0, "liquid_class": "water", "cycles": 2},
+        {"channel": 1, "volume": -1.0, "liquid_class": "water", "cycles": 2},
+        {"channel": 1, "volume": 5.0, "liquid_class": "water", "cycles": 0}
+      ]
+    }
+  }
+}

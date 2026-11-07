@@ -1,0 +1,92 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.xylophoneengine/pycss45",
+  "track": "labs",
+  "local_path": "labs/xylophoneengine/pycss45",
+  "driver_dir": "MHS/drivers/labs/xylophoneengine__pycss45",
+  "upstream": {
+    "repo_url": "https://github.com/xylophoneengine/pycss45",
+    "commit": "e4364bae4d889efd579ffb3c4947099405becb27",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 33,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pycss45:CSS45",
+      "file": "pycss45.py",
+      "line": 438,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pycss45_gui:DemoCSS45",
+      "file": "pycss45_gui.py",
+      "line": 124,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "CSS45.get_cct",
+      "CSS45.get_firmware_version",
+      "CSS45.get_last_integration_time",
+      "CSS45.get_par",
+      "CSS45.get_photopic",
+      "CSS45.get_radiometric_unit",
+      "CSS45.get_radiometric_value",
+      "CSS45.get_serial_number",
+      "CSS45.get_spectrum_by_pixel",
+      "CSS45.get_spectrum_interpolated",
+      "CSS45.get_status",
+      "CSS45.get_temperature"
+    ],
+    "writes": [],
+    "actions": [
+      "CSS45.measure",
+      "DemoCSS45.measure"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.measure.spectrum.v1",
+      "cap.measure.temperature.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/xylophoneengine__pycss45 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

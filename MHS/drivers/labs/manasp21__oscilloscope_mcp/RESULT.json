@@ -1,0 +1,45 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:f8db7c3c56779df8e6aad5ac4f89c96dfe9063bd07014794f345ccd5ce3bda6d",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.manasp21.configure_channel.v1",
+      "reason": "No catalogue class binds the configuration of one oscilloscope channel. cap.device.configure.v1 is the write class and its binding is the resource-state patch of the writable fields, so an action that sends one channel's voltage range, coupling and impedance to the native configure_channels and returns the applied values has no class; the package uses this extension until a channel-configuration class exists.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.manasp21.setup_trigger.v1",
+      "reason": "No catalogue class binds an oscilloscope trigger. The action configures source, trigger type, level, edge and holdoff, a set that no existing class carries; the package uses this extension until a trigger class exists.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.manasp21.acquire_waveform.v1",
+      "reason": "No catalogue class carries an oscilloscope trace or a scalar acquisition summary. cap.sensing.read.v1 is a sensor read with a values object and its resource kinds (sensor, sensor.imu, sensor.force_torque) do not bind an instrument; the clone returns a time axis and per-channel voltage arrays whose samples this package does not transfer, so the action reports sample count, sample rate, time window and voltage measurements under this extension.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.manasp21.stop_acquisition.v1",
+      "reason": "No catalogue stop class fits an oscilloscope. cap.motion.stop.v1 is a motion stop and the safe-state action here is the clone's native stop_acquisition; the package uses this extension as its safe-state action until an instrument stop class exists.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check MHS/drivers/labs/manasp21__oscilloscope_mcp --backend fake; all gates G1 to G9 passed and the run reported no findings or warnings (check-report.json). Evidence is contract_checked, never an MHS-Device level.\n\nWhat the package covers: the resource state (initialized, acquisition_active, channel_count, sample_rate_hz, record_length, voltage_range_v, coupling, impedance, trigger_source, trigger_type, trigger_level_v, trigger_edge, trigger_holdoff_s); cap.device.configure.v1 writes for sample_rate_hz, record_length, voltage_range_v, coupling and impedance, each read back from the native get_status; the extensions configure_channel, setup_trigger, acquire_waveform and stop_acquisition; the e-stop and the safe-state action both call the native stop_acquisition. The limits for sample rate (1e9), record length (1e9), voltage range (0.001 to 100.0 V), coupling (DC, AC, GND), impedance (50, 1M) and channel (0 to 3) cite the clone's capability record and its channel check; trigger level, trigger holdoff and acquisition timeout are Limit.operator_required because no text of the clone states a bound, and site-limits.example.json shows the operator overlay that fills them.\n\nNOT COVERED: the waveform array. The clone builds a record_length-long time axis and one voltage array per channel (simulation.py:212-260); no catalogue class carries a trace array, so the package does not transfer samples and the acquire_waveform extension reports only a scalar summary. The real trace length is the timebase record_length: 1000 samples at the simulation's default initialization (simulation.py:37) and at most 1e9 (base.py:182). The fake's 8 samples are test data and are marked as placeholders in fake.py; they are never a Fact, a Limit or a reference.\n\nThe upstream Ethernet, USB and PCIe oscilloscope classes are simulation stubs: their constructors log that hardware is not implemented and every method delegates to SimulatedOscilloscope (ethernet_backend.py:18-55, usb_backend.py:18-55, pcie_backend.py:18-55). The clone therefore implements no real instrument protocol; the hardware backend factory in native.py would reach that same simulation, and no hardware backend, instrument or network address was configured or tried. This package is model-authored and unreviewed (driver.lock.json authored_by is a model and reviewed_by is null); no human reviewed or tested it, and no hardware run is claimed. The upstream package is imported only by native.py on the operator-enabled hardware backend; the gate and the fake backend never install or import it.\n\nDEVIATION FROM THE CARD: the card names the PythonObjectDriver helper. This package is a direct Driver over oscilloscope_mcp.hardware.ethernet_backend:EthernetOscilloscope because the surface is an async hardware-backend class with an explicit native stop and a safe-state action; the decorated Driver expresses its reads, writes and actions directly (driver-authoring.md, 'Choosing the shape'), while a plain PythonObjectDriver would not carry the e-stop and safe-state contract this hardware card requires.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (17 to 16); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

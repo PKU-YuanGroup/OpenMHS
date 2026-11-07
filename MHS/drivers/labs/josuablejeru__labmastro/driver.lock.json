@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.josuablejeru/labmastro",
+  "upstream": {
+    "repo_url": "https://github.com/josuablejeru/labmastro",
+    "commit": "86db05e8dd4e37d66667e18e4d8e2fadbb864b18",
+    "license_spdx": "GPL-3.0"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The fake backend needs only the SDK. The hardware backend (native.py) imports minimalmodbus and pyserial, which the upstream pins in pyproject.toml; it never starts before a human hardware review."
+  },
+  "backends": {
+    "fake": ".fake:FakeHanmatek",
+    "hardware": ".native:connect"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "claude-opus-5-5",
+    "run_id": "tag-bridge-exemplar-v1",
+    "date": "2026-11-04"
+  },
+  "reviewed_by": null
+}

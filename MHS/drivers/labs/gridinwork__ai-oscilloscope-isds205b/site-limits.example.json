@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (ai-oscilloscope-isds205b)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/isds205b": {
+      "trigger_level_mv": {
+        "min": -5000, "max": 5000, "unit": "mV", "source": "operator",
+        "reason": "example: this bench keeps trigger levels in the same +/-5 V window as the probe; it is not a device range"
+      },
+      "x-cap.gridinwork.set_input_range.v1": {
+        "min_mv": {
+          "min": -5000, "max": 5000, "unit": "mV", "source": "operator",
+          "reason": "example: the probe on this bench is used in a +/-5 V window; it is not a device range"
+        },
+        "max_mv": {
+          "min": -5000, "max": 5000, "unit": "mV", "source": "operator",
+          "reason": "example: the probe on this bench is used in a +/-5 V window; it is not a device range"
+        }
+      }
+    }
+  }
+}

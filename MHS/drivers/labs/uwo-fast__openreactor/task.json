@@ -1,0 +1,116 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.uwo-fast/openreactor",
+  "track": "labs",
+  "local_path": "labs/uwo-fast/openreactor",
+  "driver_dir": "MHS/drivers/labs/uwo-fast__openreactor",
+  "upstream": {
+    "repo_url": "https://github.com/uwo-fast/openreactor",
+    "commit": "ade88dc17e1c06775ddcb1cdc9ca6c40e4083db0",
+    "license_spdx": "AGPL-3.0",
+    "license_class": "network-copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 41,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "openreactor.ezo:DriverPort",
+      "file": "src/openreactor/ezo.py",
+      "line": 470,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "openreactor.service:Service",
+      "file": "src/openreactor/service.py",
+      "line": 119,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "openreactor.rlht:RlhtSlice",
+      "file": "src/openreactor/rlht.py",
+      "line": 232,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "openreactor.controller:Controller",
+      "file": "src/openreactor/controller.py",
+      "line": 91,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "openreactor.rlht:CrumbsPort",
+      "file": "src/openreactor/rlht.py",
+      "line": 206,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/openreactor/web.py:72 LoopbackHostsOnly"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "DriverPort.read_ack",
+      "DriverPort.read_calibration_status",
+      "DriverPort.read_config",
+      "DriverPort.read_family",
+      "DriverPort.read_values",
+      "RlhtSlice.status"
+    ],
+    "writes": [
+      "Service.set_setpoint",
+      "RlhtSlice.set_setpoint"
+    ],
+    "actions": [
+      "Service.calibrate",
+      "Service.current_run",
+      "Service.start_run",
+      "Service.stop_all",
+      "Service.stop_now",
+      "Service.stop_run",
+      "RlhtSlice.start"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.device.calibrate.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/openreactor/config.py:40 GAIN_MAX = 25.5"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/uwo-fast__openreactor --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

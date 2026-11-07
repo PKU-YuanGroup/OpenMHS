@@ -1,0 +1,78 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nelsond/thorlabs-mtd415t",
+  "track": "labs",
+  "local_path": "labs/nelsond/thorlabs-mtd415t",
+  "driver_dir": "MHS/drivers/labs/nelsond__thorlabs-mtd415t",
+  "upstream": {
+    "repo_url": "https://github.com/nelsond/thorlabs-mtd415t",
+    "commit": "c53ec5c7db67f4cb47619d2ceaa4aead5e583923",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 10,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "thorlabs_mtd415t.mtd415t_device:MTD415TDevice",
+      "file": "thorlabs_mtd415t/mtd415t_device.py",
+      "line": 28,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "thorlabs_mtd415t.serial_device:SerialDevice",
+      "file": "thorlabs_mtd415t/serial_device.py",
+      "line": 19,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "MTD415TDevice.idn",
+      "MTD415TDevice.is_open",
+      "SerialDevice.is_open"
+    ],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/nelsond__thorlabs-mtd415t --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

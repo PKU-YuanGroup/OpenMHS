@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Opentrons Temp Deck Gen 3)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "An illustrative operator overlay, not a statement about any module. It supplies an example range for the operator_required target temperature and narrows the fan PWM of this bench; replace them with the ranges of the installed module, labware and samples.",
+  "devices": {
+    "mhs://localhost/tempdeck-gen3": {
+      "fan_power": {"max": 0.8, "unit": "1", "source": "operator",
+                    "reason": "example: this bench keeps the manual fan PWM at or below 0.8"},
+      "cap.thermal.setpoint.v1": {
+        "target_temperature": {"min": 4, "max": 95, "unit": "Cel", "source": "operator",
+                               "reason": "example: the labware and samples on this bench tolerate 4 to 95 Cel"}
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "capabilities": {
+    "cap.device.configure.v1": {
+      "valid": {
+        "horizontal_scale": 0.001,
+        "trigger_level": 0.1,
+        "trigger_horizontal_offset": 0.0,
+        "trigger_slope": "Positive",
+        "trigger_mode": "Auto"
+      },
+      "alternate": {
+        "horizontal_scale": 0.0001,
+        "trigger_level": 0.2,
+        "trigger_horizontal_offset": 0.0001,
+        "trigger_slope": "Negative",
+        "trigger_mode": "Normal"
+      },
+      "out_of_envelope": [
+        {"trigger_slope": "Up"},
+        {"trigger_mode": "Fast"}
+      ]
+    },
+    "x-cap.charkster.trigger.v1": {
+      "valid": {
+        "trigger_level": 0.1,
+        "trigger_horizontal_offset": 0.0,
+        "trigger_slope": "Positive",
+        "trigger_mode": "Auto"
+      },
+      "alternate": {
+        "trigger_level": 0.2,
+        "trigger_horizontal_offset": 0.0001,
+        "trigger_slope": "Negative",
+        "trigger_mode": "Normal"
+      },
+      "out_of_envelope": [
+        {"trigger_level": 0.1, "trigger_horizontal_offset": 0.0,
+         "trigger_slope": "Up", "trigger_mode": "Auto"},
+        {"trigger_level": 0.1, "trigger_horizontal_offset": 0.0,
+         "trigger_slope": "Positive", "trigger_mode": "Fast"}
+      ]
+    },
+    "x-cap.charkster.measure.v1": {
+      "valid": {"assigned_channel": "P1", "stat_type": "value"},
+      "alternate": {"assigned_channel": "P2", "stat_type": "mean"},
+      "out_of_envelope": [
+        {"assigned_channel": "P13", "stat_type": "value"},
+        {"assigned_channel": "P1", "stat_type": "median"}
+      ]
+    },
+    "x-cap.charkster.grid.v1": {
+      "valid": {"grid_mode": "Single"},
+      "alternate": {"grid_mode": "Dual"},
+      "out_of_envelope": [{"grid_mode": "Fast"}]
+    },
+    "x-cap.charkster.force.v1": {
+      "valid": {}
+    },
+    "x-cap.charkster.reset.v1": {
+      "valid": {}
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (IDS uEye camera)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/ueye-camera": {
+      "width": {
+        "min": 1,
+        "max": 1280,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example: this bench uses at most 1280 columns; the site supplies the AOI width range"
+      },
+      "height": {
+        "min": 1,
+        "max": 1024,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example: this bench uses at most 1024 rows; the site supplies the AOI height range"
+      },
+      "image_x": {
+        "min": 0,
+        "max": 1024,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example: this bench keeps the AOI left edge within 1024 columns; the site supplies the range"
+      },
+      "image_y": {
+        "min": 0,
+        "max": 768,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example: this bench keeps the AOI top edge within 768 rows; the site supplies the range"
+      },
+      "cap.sensing.image.v1": {
+        "width": {
+          "min": 1,
+          "max": 1280,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example: this bench captures at most 1280 columns per frame"
+        },
+        "height": {
+          "min": 1,
+          "max": 1024,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example: this bench captures at most 1024 rows per frame"
+        },
+        "exposure_ms": {
+          "min": 0.01,
+          "max": 1000,
+          "unit": "ms",
+          "source": "operator",
+          "reason": "example: this bench uses exposures from 10 us to 1 s; the site supplies the range"
+        }
+      }
+    }
+  }
+}

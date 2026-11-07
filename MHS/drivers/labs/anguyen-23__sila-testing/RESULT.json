@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:53bc6ef9b5461cd4ccd2465c103ccd331e834c9a55d02c84c9e2c8b6ed09de97",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). Model-authored (claude-opus-5-5, a model, as the sila2 family exemplar, team member w1-waiting-routing); reviewed_by stays null and no human review, hardware run, SiLA server run or Phenix connection is claimed. The author may not review its own work: the user's decision of 2026-11-04 asks a Claude Sonnet model to review Claude-written exemplars before they are merged. SCOPE: the complete PhenixImager feature of servers/phenix_imager/PhenixImager.sila.xml at 0b572380 (lines 24-276), the only SiLA feature Sila2Driver can prove: eight commands as eight x-cap.anguyen-23 capabilities, the DisplayIcon Binary property as a ninth (an artifact; a UI icon, not acquired data), six property reads and four local diagnostics of the last known acquisition execution; the e-stop is the feature's Stop (safety_bindings). The declaration is the SDK fixture MHS/sdk/tests/fixtures/sila2_phenix re-targeted at the real card and clone with the package's own capability ids; G7 proves the FDL, the generated proto and the implementation at their exact SHA-256 against the pinned clone. NOT COVERED: the eight other servers of the repository (temperature, pump, plate reader, Multidrop Combi, VENUS, barcode scanner, Micronic tube scanner, xArm 6), the Phenix server's SimulationController, ScreenStreamer, MessagingClient and shared features, the simulation/real mode switch, and image data (the feature returns status text and progress only). RISK: R2, the minimum Sila2Driver accepts, and the hazard-table level of an automated imager with a motorized, robot-loaded plate stage (FDL 65-66, 86-87); the clone does not state the laser class of this confocal instrument (pheniximager_impl.py:111), so a human must confirm it and raise the package to R3 for a class 3B or 4 source outside a class 1 enclosure. SAFE STATE: proven for the controlled peer only (a fresh authoritative observation with no active execution after Stop). On a native Phenix the Stop is an RCI STOP sent with an empty barcode (rci_transport.py:241-243, pheniximager_impl.py:272) whose reply is only checked for a REJECT (rci_transport.py:278-285) after a wait of up to 20 s (rci_transport.py:32, 261-276), DeviceState is the last status stored from a PROGRESS or STATUS reply (pheniximager_impl.py:158-162, rci_transport.py:287-301), a stopped real acquisition keeps its SiLA call waiting until progress 100 or TimeoutMinutes (pheniximager_impl.py:401-435) and the stage is ejected only after a completed run; repository cases show that an acknowledgement-only Stop, a cached or stale Idle reading and a Disconnect by another client during a run never achieve the safe state, and that a fresh endpoint's e-stop is not achieved. NATIVE: Sila2Driver refuses every non-fake backend before resolving a factory and native.py refuses too; a native route needs a reviewed SiLA 2 client (the transport is comtypes COM on Windows, rci_transport.py:175-178), a server switched out of simulation mode (pheniximager_impl.py:66; README.md:72), a source-proven retirement and stop readback, and a human hardware review. FAKE: fake.py is the SDK's controlled peer; its device behaviour follows the upstream simulation branch where the tests touch it (Connect, StageIn, StageOut keeping the plate detected, GoIdle, GoStandby, Disconnect, per-well progress text, the completion Status text, Stop leaving Idle). Differences, all stated in fake.py: it reaches one placeholder host (the simulation accepts any), refuses unknown protocol names (the simulation runs any), completes an acquisition on the second progress poll (the simulation takes 96 wells at 0.1 s), and refuses every command except Stop while an acquisition runs. The upstream accepts them, Disconnect included (pheniximager_impl.py:207-215 checks only the connection), and Stop then raises NotConnected (78-85, 263-265): a run that another client of the server disconnected cannot be stopped through the feature; foreign_disconnect() and a repository case model it. This package's own endpoint cannot interleave a Disconnect with a running acquisition (one ordinary lane; an unconfirmed acquisition fences new effects). These gaps are stated here because a hardware-mode Sila2Driver served on its fake gets the SDK's fixed fake fidelity and declares none. Every number and string in the fake is a placeholder. LIMITS: every input of every effectful command is Limit.operator_required, as Sila2Driver requires; the FDL protocol constraints (DurationSeconds at least 60, TimeoutMinutes 1 to 1440, FDL 144 and 189-190) are checked by the declaration and are not physical limits; site-limits.example.json only allows the fake's placeholder values. The 4,000 ms acquisition bound and the 500 ms request and stop budgets are the controlled peer's (declarations.py), not Phenix timings (the transport waits up to 20 s per RCI command and documents 2 min stage motion, rci_transport.py:32-33). WARNINGS: G6.NOT_EXERCISED x7 (the seven permit-gated effectful commands are exercised by the conformance suite, G8, with the gate prerequisite Connect of fixtures/gate-prerequisites.json). LICENCE: the clone has no licence file (NOASSERTION); the card says publish_review required, and the package is not published or merged into a published tree before the owner decides. gate.digest is the digest the check printed (report without its clock); check-report.json is regenerated by every gate run and is not part of the package.\n\nMODEL REVIEW (claude-sonnet-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Different-model review of a package authored by claude-opus-5-5 (the user chose Claude Sonnet as the different model, 2026-11-04): MODEL REVIEW (claude-sonnet-5-5): the gate and collect.py --strict pass; every Fact and Limit was read against its cited line (the send_stop fact is now three facts that each show their claim); the controlled stop path is acknowledged and confirmed by a fresh authoritative observation, acknowledgement-only Stop, cached and stale Idle and a foreign mid-run Disconnect all leave the e-stop unachieved, and safe_state claims nothing for a native Phenix; native.py refuses and no reflection exists; R2 matches the hazard table; provenance is model-authored with reviewed_by null; the licence is NOASSERTION so publish_review stays required and the package is not to be merged into a published tree before the owner decides. The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it.",
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.anguyen-23.connect.v1",
+      "reason": "Open the RCI connection of the PhenixImager feature to a named host and return the device name.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.anguyen-23.disconnect.v1",
+      "reason": "Close the RCI connection of the PhenixImager feature.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.anguyen-23.stagein.v1",
+      "reason": "Move the Phenix plate stage from Transfer to Operate (RCI LOAD) for a named plate barcode.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.anguyen-23.stageout.v1",
+      "reason": "Move the Phenix plate stage from Operate to Transfer (RCI EJECT) for a named plate barcode.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.anguyen-23.stop.v1",
+      "reason": "Stop the running Phenix acquisition (RCI STOP), returning only a typed confirmation; the package e-stop.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.anguyen-23.goidle.v1",
+      "reason": "Return the Phenix to its Idle state (RCI IDLE).",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.anguyen-23.gostandby.v1",
+      "reason": "Put the Phenix into Standby for a number of seconds (RCI STANDBY).",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.anguyen-23.runacquisitionprotocol.v1",
+      "reason": "Run a named Phenix acquisition protocol on a plate as an observable SiLA command with progress and a final status text; no catalogue class runs an instrument protocol by name.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.anguyen-23.displayicon.v1",
+      "reason": "Publish the instrument's UI icon PNG as an artifact; not an acquired image.",
+      "verb": "invoke"
+    }
+  ],
+  "blocked_on": []
+}

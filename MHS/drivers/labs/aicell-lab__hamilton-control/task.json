@@ -1,0 +1,145 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.aicell-lab/hamilton-control",
+  "track": "labs",
+  "local_path": "labs/aicell-lab/hamilton-control",
+  "driver_dir": "MHS/drivers/labs/aicell-lab__hamilton-control",
+  "upstream": {
+    "repo_url": "https://github.com/aicell-lab/hamilton-control",
+    "commit": "a857bd9a1f91d140a90d6a2cd29b01c50b23106a",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:pylabrobot",
+  "role": "device-driver",
+  "family": "pylabrobot",
+  "helper": "PyLabRobotDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 47,
+  "exemplar": "MHS/drivers/labs/oelemento__star-sim",
+  "entry_symbols": [
+    {
+      "symbol": "pylabrobot.incubators.incubator:Incubator",
+      "file": "pylabrobot/incubators/incubator.py",
+      "line": 23,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylabrobot.liquid_handling.backends.tecan.EVO:EVO",
+      "file": "pylabrobot/liquid_handling/backends/tecan/EVO.py",
+      "line": 168,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylabrobot.incubators.cytomat.cytomat:CytomatChatterbox",
+      "file": "pylabrobot/incubators/cytomat/cytomat.py",
+      "line": 374,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylabrobot.liquid_handling.backends.opentrons_backend:OpentronsBackend",
+      "file": "pylabrobot/liquid_handling/backends/opentrons_backend.py",
+      "line": 51,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylabrobot.liquid_handling.backends.http:HTTPBackend",
+      "file": "pylabrobot/liquid_handling/backends/http.py",
+      "line": 17,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pylabrobot/powder_dispensing/powder_dispenser_tests.py:16 MockPowderDispenserBackend",
+      "pylabrobot/pumps/agrowpumps/agrowdosepump_tests.py:10 SimulatedModbusClient"
+    ],
+    "upstream_tests": "pylabrobot/tests"
+  },
+  "hints": {
+    "reads": [
+      "Incubator.fetch_plate_to_loading_tray",
+      "Incubator.get_absolute_location",
+      "Incubator.get_absolute_rotation",
+      "Incubator.get_absolute_size_x",
+      "Incubator.get_absolute_size_y",
+      "Incubator.get_absolute_size_z",
+      "Incubator.get_all_children",
+      "Incubator.get_anchor",
+      "Incubator.get_highest_known_point",
+      "Incubator.get_num_free_sites",
+      "Incubator.get_resource",
+      "Incubator.get_root"
+    ],
+    "writes": [
+      "Incubator.set_temperature",
+      "EVO.set_deck",
+      "EVO.set_heads",
+      "EVO.liha.set_detection_mode",
+      "EVO.liha.set_end_speed_plunger",
+      "EVO.liha.set_search_retract_distance",
+      "EVO.liha.set_search_speed",
+      "EVO.liha.set_search_submerge",
+      "EVO.liha.set_search_z_max",
+      "EVO.liha.set_search_z_start",
+      "EVO.liha.set_slow_speed_z",
+      "EVO.liha.set_stop_speed_plunger"
+    ],
+    "actions": [
+      "Incubator.start_shaking",
+      "Incubator.stop",
+      "Incubator.stop_shaking",
+      "EVO.aspirate",
+      "EVO.aspirate96",
+      "EVO.dispense",
+      "EVO.dispense96",
+      "EVO.drop_tips",
+      "EVO.move_channel_x",
+      "EVO.move_channel_y",
+      "EVO.move_channel_z",
+      "EVO.move_picked_up_resource"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1",
+      "cap.manipulation.grasp.v1",
+      "cap.measure.temperature.v1",
+      "cap.thermal.setpoint.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/aicell-lab__hamilton-control --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

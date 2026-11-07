@@ -1,0 +1,113 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.knerlab/sim_control_software",
+  "track": "labs",
+  "local_path": "labs/knerlab/sim_control_software",
+  "driver_dir": "MHS/drivers/labs/knerlab__sim_control_software",
+  "upstream": {
+    "repo_url": "https://github.com/knerlab/sim_control_software",
+    "commit": "4abc7e9ddafa89bc0ab0fc8f6e25321fe676d95c",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 68,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "motorized_pol_v2:A8MRU",
+      "file": "motorized_pol_v2.py",
+      "line": 23,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyAndor_P35_a:ccd",
+      "file": "pyAndor_P35_a.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Lib64.asdk37:DM",
+      "file": "Lib64/asdk37.py",
+      "line": 95,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "A8MRU.getCurPos",
+      "A8MRU.getMode",
+      "A8MRU.getParams",
+      "A8MRU.getStartParams",
+      "A8MRU.getState",
+      "ccd.GetADChannel",
+      "ccd.GetAccTime",
+      "ccd.GetAccumulations",
+      "ccd.GetAcquisitionMode",
+      "ccd.GetAcquisitionTimings",
+      "ccd.GetBinning",
+      "ccd.GetCoolerMode"
+    ],
+    "writes": [
+      "A8MRU.setMode",
+      "A8MRU.setParams",
+      "A8MRU.setSpeed",
+      "ccd.SetADChannel"
+    ],
+    "actions": [
+      "A8MRU.MoveAbs",
+      "A8MRU.MoveAbsWait",
+      "A8MRU.MoveRel",
+      "A8MRU.Start",
+      "A8MRU.Stop",
+      "ccd.AbortAcquisition",
+      "ccd.Acquire",
+      "DM.Reset",
+      "DM.Stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.measure.temperature.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/knerlab__sim_control_software --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Newport XPS, example overlay only)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example values only, not a device specification: the travel range of a Newport XPS stage is read from the controller configuration at connection time (PositionerUserTravelLimitsGet, newportxps/newportxps.py:250-253) and depends on the installed stage. Replace the bounds with the travel range of the installed stage in controller user units.",
+  "devices": {
+    "mhs://localhost/newportxps": {
+      "x-cap.pyepics.move_stage.v1": {
+        "position": {"min": -1000, "max": 1000, "unit": "1", "source": "operator",
+                     "reason": "example only: replace with the absolute travel range of the installed stage in controller user units"}
+      },
+      "x-cap.pyepics.move_stage_relative.v1": {
+        "offset": {"min": -1000, "max": 1000, "unit": "1", "source": "operator",
+                   "reason": "example only: replace with the largest permitted relative step of the installed stage in controller user units"}
+      }
+    }
+  }
+}

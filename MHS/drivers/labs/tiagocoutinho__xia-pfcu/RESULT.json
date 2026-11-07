@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:510790d0b772ad0c69fc3be85a68bd8e9a256bd6b72d2fb07058a69c86fe1f57",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.tiagocoutinho.start_exposure.v1",
+      "reason": "no catalogue class starts a timed optical exposure: cap.optics.shutter.v1 carries only the open/closed state and has no duration input, so the package uses an x-cap id with an inline input/output schema; the duration bound is operator_required",
+      "verb": "invoke",
+      "summary": "Start a fixed-length exposure with the native start_exposure and report the duration passed to it.",
+      "similar": [
+        "cap.optics.shutter.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.tiagocoutinho.close_shutter.v1",
+      "reason": "no catalogue class closes an optical shutter without an input: cap.optics.shutter.v1 requires a state input, and a safe-state action must take no input, so the package uses an x-cap id as the safe-state action",
+      "verb": "invoke",
+      "summary": "Close the shutter (native close_shutter), the safe state of the optical path.",
+      "similar": [
+        "cap.optics.shutter.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). DEVIATION FROM THE CARD: the card names the PythonObjectDriver helper; the package uses a direct Driver over xia_pfcu.pfcu:PFCU because the upstream commands are !PFCU<module> <command> frames and the replies are multi-line status/enum decodes, and because the class has a sync/async protocol split. The fake is the package stand-in: the upstream simulator is a sinstruments BaseDevice whose entry point is handle_message, not the PFCU object the driver calls, and it needs gevent/sinstruments, which the gate must not install. The only gate warning is G4.REF_VALUE on the decimation upper bound: xia_pfcu/protocol.py:94 states 65_535 as a Python literal and the gate's number reader splits it into 65 and 535; the clone has no plain 65535 text and the PDF is not cited. Risk is R2 because cap.optics.shutter.v1 is R2 and the shutter is an optical-path actuator; the safe-state action x-cap.tiagocoutinho.close_shutter.v1 and the @estop both call the native close_shutter. The shutter commands only work when shutter mode is enabled, and the driver exposes that mode as a writable boolean. The exposure duration is operator_required; site-limits.example.json is only an example overlay (0.01 to 3600 s), not a device fact. The fake starts with shutter mode enabled and the shutter closed (placeholders) so the paths are testable; the upstream power-up default is disabled. Model-authored and unreviewed: the R2 hardware backend is refused by the loader until reviewed_by is set in driver.lock.json. NOT COVERED: insert_filter, remove_filter and clear_short_error (the four set_filters fields cover the filter channels; a latched short is not retried), the per-channel shorted/open/TTL/front-panel details, and the raw write_readline command. The hardware backend (native.py, a connio connection) was never run, and the fake is an in-memory stand-in, not a recording.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. Its UNSOURCED_LIMIT_GATE_WARNING is gone with the G4 fix of this review (MHS/changes/WAVE-B2.md): the cited docstring writes the maximum decimation as 65_535 (xia_pfcu/protocol.py:91-100). After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (55 to 54); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

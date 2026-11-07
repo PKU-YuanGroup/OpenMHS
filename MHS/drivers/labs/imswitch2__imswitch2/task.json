@@ -1,0 +1,147 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.imswitch2/imswitch2",
+  "track": "labs",
+  "local_path": "labs/imswitch2/imswitch2",
+  "driver_dir": "MHS/drivers/labs/imswitch2__imswitch2",
+  "upstream": {
+    "repo_url": "https://github.com/imswitch2/imswitch2",
+    "commit": "86763f7ba89fb15efbf3229ea5df1c9e1395fc7d",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 9,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "imswitch.imcontrol.model.managers.NidaqManager:NidaqManager",
+      "file": "imswitch/imcontrol/model/managers/NidaqManager.py",
+      "line": 89,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "imswitch.imcontrol.model.managers.RecordingManager:RecordingManager",
+      "file": "imswitch/imcontrol/model/managers/RecordingManager.py",
+      "line": 1994,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "imswitch.imcontrol.model.managers.rotators.StandaRotatorManager:StandaRotatorManager",
+      "file": "imswitch/imcontrol/model/managers/rotators/StandaRotatorManager.py",
+      "line": 5,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "imswitch.imcontrol.model.managers.lasers.PyCoboltManager:Cobolt06",
+      "file": "imswitch/imcontrol/model/managers/lasers/PyCoboltManager.py",
+      "line": 310,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "imswitch.imcontrol.model.managers.lasers.PyCoboltManager:Cobolt06DPL",
+      "file": "imswitch/imcontrol/model/managers/lasers/PyCoboltManager.py",
+      "line": 552,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "imswitch/improcess/model/virtual_image.py:16 VirtualImageArray",
+      "imswitch/improcess/model/virtual_image.py:33 VirtualImageSource",
+      "imswitch/improcess/model/virtual_image.py:76 Hdf5VirtualArray",
+      "imswitch/improcess/model/virtual_image.py:102 ZarrVirtualArray",
+      "imswitch/improcess/model/virtual_image.py:128 TiffVirtualArray",
+      "imswitch/improcess/model/virtual_image.py:189 EagerVirtualArray"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "NidaqManager.getTimerClockTerminal",
+      "NidaqManager.isSimulated",
+      "NidaqManager.isSimulating",
+      "NidaqManager.readInputTask",
+      "NidaqManager.__scanSimulator.isActive",
+      "NidaqManager.__scanSimulator.isRunning",
+      "NidaqManager.sigScanBuildFailed (attribute)",
+      "NidaqManager.sigScanBuilt (attribute)",
+      "NidaqManager.sigScanDone (attribute)",
+      "NidaqManager.sigScanStarted (attribute)",
+      "NidaqManager.sigSimScanFrameTrigger (attribute)",
+      "RecordingManager.getSaveFilePath"
+    ],
+    "writes": [
+      "NidaqManager.setAnalog",
+      "NidaqManager.setDigital",
+      "NidaqManager.setScanSimulationDetectorStateProvider",
+      "NidaqManager.__scanSimulator.setDetectorStateProvider",
+      "StandaRotatorManager.set_rot_speed",
+      "StandaRotatorManager.set_sync_in_set",
+      "StandaRotatorManager.set_zero_pos"
+    ],
+    "actions": [
+      "NidaqManager.runContinuous",
+      "NidaqManager.runScan",
+      "NidaqManager.startInputTask",
+      "NidaqManager.stopTask",
+      "NidaqManager.__scanSimulator.start",
+      "NidaqManager.__scanSimulator.stop",
+      "RecordingManager.abortRecording",
+      "RecordingManager.lastSnapStoredShapes",
+      "RecordingManager.snap",
+      "RecordingManager.snapImagePrev",
+      "RecordingManager.snapImagesPrev",
+      "RecordingManager.startRecording"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.sensing.image.v1",
+      "cap.motion.joint_position.v1",
+      "cap.actuation.gpio.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "imswitch/imcontrol/model/EtSTEDAutoCalibration.py:50 MIN_INLIERS_FOR_POLY = 10",
+      "imswitch/improcess/model/metadata_tree.py:44 max_depth = 24",
+      "imswitch/improcess/model/metadata_tree.py:45 max_children = 512",
+      "imswitch/improcess/model/metadata_tree.py:46 max_nodes = 20000",
+      "imswitch/improcess/model/metadata_tree.py:47 max_value_chars = 400",
+      "imswitch/improcess/model/provenance.py:52 MAX_NODES = 10000",
+      "imswitch/improcess/model/provenance.py:57 MAX_ARRAY_ELEMENTS = 4096",
+      "imswitch/improcess/processors/base.py:187 min_inputs = 1"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/imswitch2__imswitch2 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

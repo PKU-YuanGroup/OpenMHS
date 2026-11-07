@@ -1,0 +1,126 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.matteobroketa/harvard_pump_diy_control",
+  "track": "labs",
+  "local_path": "labs/matteobroketa/harvard_pump_diy_control",
+  "driver_dir": "MHS/drivers/labs/matteobroketa__harvard_pump_diy_control",
+  "upstream": {
+    "repo_url": "https://github.com/matteobroketa/harvard_pump_diy_control",
+    "commit": "d4a888432a81d69dad963fddb9df5adf3bc94633",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 28,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "refactored_pump_control.harvard_phd2000_driver:HarvardPHD2000Driver",
+      "file": "refactored_pump_control/harvard_phd2000_driver.py",
+      "line": 32,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "refactored_pump_control.harvard_ultra_driver:HarvardUltraDriver",
+      "file": "refactored_pump_control/harvard_ultra_driver.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "refactored_pump_control.serial_transport:SerialTransport",
+      "file": "refactored_pump_control/serial_transport.py",
+      "line": 47,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "refactored_pump_control.pump_driver_base:PumpDriverBase",
+      "file": "refactored_pump_control/pump_driver_base.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "refactored_pump_control.multi_pump_coordinator:MultiPumpCoordinator",
+      "file": "refactored_pump_control/multi_pump_coordinator.py",
+      "line": 9,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "HarvardPHD2000Driver.get_rate",
+      "HarvardPHD2000Driver.get_status",
+      "HarvardPHD2000Driver.get_syringe_info",
+      "HarvardPHD2000Driver.identify",
+      "HarvardPHD2000Driver.query_state",
+      "HarvardUltraDriver.get_rate",
+      "HarvardUltraDriver.get_status",
+      "HarvardUltraDriver.get_syringe_info",
+      "HarvardUltraDriver.identify",
+      "HarvardUltraDriver.query_state",
+      "SerialTransport.is_connected"
+    ],
+    "writes": [
+      "HarvardPHD2000Driver.set_diameter",
+      "HarvardPHD2000Driver.set_direction",
+      "HarvardPHD2000Driver.set_rate",
+      "HarvardUltraDriver.set_diameter",
+      "HarvardUltraDriver.set_direction",
+      "HarvardUltraDriver.set_rate"
+    ],
+    "actions": [
+      "HarvardPHD2000Driver.pause",
+      "HarvardPHD2000Driver.resume",
+      "HarvardPHD2000Driver.run",
+      "HarvardPHD2000Driver.start",
+      "HarvardPHD2000Driver.stop",
+      "HarvardUltraDriver.pause",
+      "HarvardUltraDriver.resume",
+      "HarvardUltraDriver.run",
+      "HarvardUltraDriver.start",
+      "HarvardUltraDriver.stop",
+      "SerialTransport.emergency_transaction"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/matteobroketa__harvard_pump_diy_control --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

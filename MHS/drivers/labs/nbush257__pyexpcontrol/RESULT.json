@@ -1,0 +1,42 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:2c617dea0e2b1fb353f06455ce30c441986affb88db9b614668b7158e4b1ec50",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.nbush257.set_valve.v1",
+      "verb": "invoke",
+      "reason": "cap.actuation.valve.v1 binds actuation.valve/fluid.valve and takes outlet/state/position; this process.controller command takes an olfactometer valve number (1 to 8) and an open/closed state, and no catalogue class binds a numbered olfactometer valve on process.controller."
+    },
+    {
+      "capability_id": "x-cap.nbush257.set_all_valves.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class expresses the upstream eight-character binary valve pattern (leftmost character is Valve 1); the runtime schema needs the pattern constraint and an array of valve states."
+    },
+    {
+      "capability_id": "x-cap.nbush257.set_gpio.v1",
+      "verb": "invoke",
+      "reason": "cap.actuation.gpio.v1 binds io.gpio/io.digital, not process.controller, and its mode/value model does not match the upstream set_gpio(pin, mode) command with the fixed high/low modes."
+    },
+    {
+      "capability_id": "x-cap.nbush257.start_camera_trigger.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class covers starting the Teensy camera trigger on a process.controller; the upstream command sends a fixed begin sequence and the driver leaves the frame rate at the upstream default."
+    },
+    {
+      "capability_id": "x-cap.nbush257.stop_camera_trigger.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class covers stopping the Teensy camera trigger on a process.controller."
+    },
+    {
+      "capability_id": "x-cap.nbush257.safe_state.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class expresses the composite safe state of this rig (laser off, all eight olfactometer valves closed, camera trigger stopped); a safe_state=True action must take no input and report that the commands were sent."
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the card lists helper PythonObjectDriver, but nebPod.Controller builds each serial command from parts (a command letter, a subcommand letter and integers) and exposes no plain command table, so this is a direct decorated Driver over nebPod:Controller with a native.py factory (driver-authoring.md, 'Choosing the shape'); the card's decision direct-driver and the entry symbol nebPod:Controller are unchanged. The driver is hardware mode R2 because the upstream commands a Cobalt laser; @estop calls the upstream turn_off_laser(0), and the safe_state=True action also closes all eight olfactometer valves and stops the camera trigger. No hardware backend was run and no human reviewed or tested the package; reviewed_by stays null. The upstream class has no state query (block_until_read only waits for one reply byte), so the four @read parameters report the driver's last commanded state, not a measurement; facts.md says so. Not covered: laser-power measurement and auto-calibration (Thorlabs photometer and calibration table), SpikeGLX recording control and the gate/run-name helpers, Hering-Breuer/tone/TTL/gas-valve commands, GPIO pulse mode (no sourced pulse-width range), and the camera frame-rate input (the action uses the upstream default). No numeric bound needed an operator overlay, so site-limits.example.json is not present. The fake is an in-memory stand-in; the gate evidence is contract_checked.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted after reviewer edits: risk raised from R2 to R3 for the device and its laser_amplitude write, because the upstream README says the analog output drives a \"cobalt MLD laser\" (README.md:50), a Cobolt MLD head, and Cobolt's owner's manual classes every 06-01 series MLD head 3B (MHS/spec/04-safety.md: class 3B+ laser); the GPIO pins share the controller. The safe-state action stays callable without a permit (SAFE-029). driver.py, native.py, facts.md and the reference changed. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (212 to 213); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Copied the exact generated task.json after preserving the obsolete abstract Panda draft and recording the USB camera image-scope blocker; changed task.json and RESULT.json (card fields: rank). Package contracts, source pins, gate finding digests, author attribution and human signatures remain unchanged. This metadata synchronization is not a new complete gate collection.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

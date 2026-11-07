@@ -1,0 +1,99 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.attolab/pymodaq_plugins_pylablib_camera",
+  "track": "labs",
+  "local_path": "labs/attolab/pymodaq_plugins_pylablib_camera",
+  "driver_dir": "MHS/drivers/labs/attolab__pymodaq_plugins_pylablib_camera",
+  "upstream": {
+    "repo_url": "https://github.com/attolab/pymodaq_plugins_pylablib_camera",
+    "commit": "ff1e71510bc1a4b07a700034d37f74a5e916abf8",
+    "license_spdx": "CECILL-B",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 99,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pymodaq_plugins_pylablib_camera.daq_viewer_plugins.plugins_2D.daq_2Dviewer_BaslerPLL:DAQ_2DViewer_BaslerPLL",
+      "file": "src/pymodaq_plugins_pylablib_camera/daq_viewer_plugins/plugins_2D/daq_2Dviewer_BaslerPLL.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_pylablib_camera.daq_viewer_plugins.plugins_2D.daq_2Dviewer_ThorlabsPLL:DAQ_2DViewer_ThorlabsPLL",
+      "file": "src/pymodaq_plugins_pylablib_camera/daq_viewer_plugins/plugins_2D/daq_2Dviewer_ThorlabsPLL.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_pylablib_camera.daq_viewer_plugins.plugins_2D.daq_2Dviewer_AndorPLL:DAQ_2DViewer_AndorPLL",
+      "file": "src/pymodaq_plugins_pylablib_camera/daq_viewer_plugins/plugins_2D/daq_2Dviewer_AndorPLL.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_pylablib_camera.daq_viewer_plugins.plugins_2D.daq_2Dviewer_PCOPLL:DAQ_2DViewer_PCOPLL",
+      "file": "src/pymodaq_plugins_pylablib_camera/daq_viewer_plugins/plugins_2D/daq_2Dviewer_PCOPLL.py",
+      "line": 7,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "DAQ_2DViewer_BaslerPLL.callback_signal (attribute)",
+      "DAQ_2DViewer_BaslerPLL.camera_list (attribute)",
+      "DAQ_2DViewer_BaslerPLL.roi_pos_size (attribute)",
+      "DAQ_2DViewer_ThorlabsPLL.callback_signal (attribute)",
+      "DAQ_2DViewer_ThorlabsPLL.camera_list (attribute)",
+      "DAQ_2DViewer_ThorlabsPLL.roi_pos_size (attribute)",
+      "DAQ_2DViewer_AndorPLL.callback_signal (attribute)",
+      "DAQ_2DViewer_AndorPLL.roi_pos_size (attribute)"
+    ],
+    "writes": [],
+    "actions": [
+      "DAQ_2DViewer_BaslerPLL.stop",
+      "DAQ_2DViewer_ThorlabsPLL.stop",
+      "DAQ_2DViewer_AndorPLL.stop"
+    ],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "capabilities"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/attolab__pymodaq_plugins_pylablib_camera --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

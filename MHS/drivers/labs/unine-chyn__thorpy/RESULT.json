@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:eaaa31dd928281d6ed605c0be4811f56c0187a23a6573f6c01966ab263c58d23",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.unine-chyn.stage_home.v1",
+      "reason": "cap.motion.home.v1 declares an optional speed_scale (0 to 1) that the Thorpy/APT clone does not expose; its home move uses the controller's configured home velocity, so the class input cannot be honoured.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.unine-chyn.stage_stop.v1",
+      "reason": "cap.motion.stop.v1 declares an optional deceleration profile in m/s2; the APT stop command only selects immediate or controlled stop mode and exposes no deceleration value, so the class input cannot be honoured.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the SerialDriver helper cannot express the Thorlabs APT framed binary protocol, so this is a direct Driver over thorpy.comm.port:Port with a native.py factory. The card's candidate cap.sensing.read.v1 binds sensor kinds only, not motion.axis. The driver serves channel 1 of a linear translation stage (Units = 1, mm); rotational stages (degrees) and the unimplemented CardSlotPort are outside this binding. Position, maximum velocity and acceleration are written through cap.device.configure.v1 with operator_required limits; site-limits.example.json contains illustrative bench values that an operator must replace. The e-stop and the stop action send the six-byte MGMSG_MOT_MOVE_STOP frame (channel 1, stop mode 0x01 immediately) through Port.send_message; that frame was not sent to a controller here. The fake is an in-memory GenericStage stand-in, not a recording, and does not reproduce the APT reader thread or status-update stream. NOT COVERED: rotational stage units, multi-channel or card-slot controllers, the controller's status-update stream, and any hardware run. This package is model-authored and unreviewed (reviewed_by null); its evidence is contract_checked and never an MHS-Device level.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (248 to 249); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

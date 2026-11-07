@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:c40591edb6a7fa7626d9435f2569359f93c54f5a6dadaf05c2d03f94d071f1a8",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.solgaardlab.move_piezo.v1",
+      "reason": "no catalogue class commands a linear piezo travel in micrometres; cap.motion.joint_position.v1 takes an array of joint positions in rad and binds robot.arm or motion.axis, which does not express a single linear piezo channel in um",
+      "verb": "invoke",
+      "summary": "Command one piezo channel to a travel in micrometres (native move()); the operator supplies the travel range.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.solgaardlab.zero_piezo.v1",
+      "reason": "no catalogue class sends a piezo to its zero position; cap.motion.home.v1 takes axes and speed_scale for robot arms and axes and is experimental, and cap.motion.stop.v1 is a deceleration stop, not a zero-position command",
+      "verb": "invoke",
+      "summary": "Command one piezo channel to its zero position (native zero()); it is also the safe-state action.",
+      "similar": [
+        "cap.motion.home.v1",
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). The digest above is from the last gate run, after the final reference generation; the report has no warning findings. DEVIATION FROM THE CARD: the card lists helper PythonObjectDriver; this package is a direct decorated Driver over one of the card's two entry symbols, interface.module:Module. The other entry symbol, interface.controller:Controller, only exposes the FTDI setup and write_data/read_data; the piezo actuator with move/zero/set_closed_loop is Module. The driver declares one Module (one bay) per device; a multi-bay APT rack would be several devices or a future multi-resource driver, and APT.disconnect() is not wired because a Module has no reference to the APT object. The clone has no position or control-mode query: position and closed_loop are the last values the driver sent (0 and True at construction, from Module.__init__), not measurements, and their descriptions say so. Controller.read_data is only used by APT to poll the bay-used response and is not exposed. The PPS photodiode in pps.py is a separate VISA instrument and is not covered. No text file states the travel bound: max_travel is the constructor argument APT supplies, so position and move_piezo.position_um are Limit.operator_required; site-limits.example.json supplies an example 0..30 um window only, not a statement about a real stage. The hardware path (native.py) was never run; it requires pyftdi and the clone root importable, and this R1 package does not carry a reviewer sign-off. The fake is an in-memory stand-in that implements only Module.move, Module.zero, Module.set_closed_loop and the max_travel attribute; every number in it is marked as a placeholder.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (327 to 328); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.7jameslondon/magscope",
+  "upstream": {
+    "repo_url": "https://github.com/7jameslondon/magscope",
+    "commit": "d8f5f6036eb418335dff18c642998a2a6cbd4e06",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The focus-stage integration uses the upstream optional dependency: the connection guide installs magscope[python-microscope] (docs/source/connect_hardware.rst:54-58). The gate never installs or imports the upstream package."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeMagscopeFocusMotor"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB1-017",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

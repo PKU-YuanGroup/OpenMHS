@@ -1,0 +1,108 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pcdshub/ophyd-ads",
+  "track": "labs",
+  "local_path": "labs/pcdshub/ophyd-ads",
+  "driver_dir": "MHS/drivers/labs/pcdshub__ophyd-ads",
+  "upstream": {
+    "repo_url": "https://github.com/pcdshub/ophyd-ads",
+    "commit": "2029e0bebee6148aba47e5947467574337fea61a",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 39,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "ophyd_ads.ads:Plc",
+      "file": "ophyd_ads/ads.py",
+      "line": 269,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd_ads.devices:NcAxis",
+      "file": "ophyd_ads/devices.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd_ads.signal:AdsSignal",
+      "file": "ophyd_ads/signal.py",
+      "line": 32,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd_ads.pydm_plugin:SymbolForPydm",
+      "file": "ophyd_ads/pydm_plugin.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd_ads.ads:Symbol",
+      "file": "ophyd_ads/ads.py",
+      "line": 177,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "ophyd_ads/tests"
+  },
+  "hints": {
+    "reads": [
+      "Plc.get_symbol",
+      "NcAxis.act_acc (attribute)",
+      "NcAxis.act_pos (attribute)",
+      "NcAxis.act_pos_modulo (attribute)",
+      "NcAxis.act_torque (attribute)",
+      "NcAxis.act_velo (attribute)",
+      "NcAxis.axis_state (attribute)",
+      "NcAxis.cmd_no (attribute)",
+      "NcAxis.control_d_word (attribute)",
+      "NcAxis.couple_state (attribute)",
+      "NcAxis.ctrl_output (attribute)",
+      "NcAxis.drive_output (attribute)"
+    ],
+    "writes": [],
+    "actions": [
+      "Plc.stop",
+      "Plc.stop_polling"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pcdshub__ophyd-ads --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

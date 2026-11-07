@@ -1,0 +1,140 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.festo-se/festo-pgva",
+  "track": "labs",
+  "local_path": "labs/festo-se/festo-pgva",
+  "driver_dir": "MHS/drivers/labs/festo-se__festo-pgva",
+  "upstream": {
+    "repo_url": "https://github.com/festo-se/festo-pgva",
+    "commit": "dd18fb94bd5fe2569fb70606a9f57c861d1eee99",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:tag-bridge",
+  "role": "device-driver",
+  "family": "tag-bridge",
+  "helper": "TagDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 19,
+  "exemplar": "MHS/drivers/labs/josuablejeru__labmastro",
+  "entry_symbols": [
+    {
+      "symbol": "pgva.pgva:PGVA",
+      "file": "src/pgva/pgva.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pgva.pgva_communication:PGVAModbusTCP",
+      "file": "src/pgva/pgva_communication.py",
+      "line": 672,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pgva.pgva_communication:PGVAModbusClient",
+      "file": "src/pgva/pgva_communication.py",
+      "line": 24,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pgva.pgva_communication:PGVAModbusSerial",
+      "file": "src/pgva/pgva_communication.py",
+      "line": 733,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pgva.pgva_interface:PGVAInterface",
+      "file": "src/pgva/pgva_interface.py",
+      "line": 10,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "PGVA.get_error_word",
+      "PGVA.get_internal_sensor_data",
+      "PGVA.get_modbus_error_word",
+      "PGVA.get_output_pressure",
+      "PGVA.get_pressure_chamber",
+      "PGVA.get_status_word",
+      "PGVA.get_vacuum_chamber",
+      "PGVA.get_warning_word",
+      "PGVAModbusTCP.get_error_word",
+      "PGVAModbusTCP.get_firmware_version",
+      "PGVAModbusTCP.get_internal_sensor_data",
+      "PGVAModbusTCP.get_modbus_error_word"
+    ],
+    "writes": [
+      "PGVA.set_output_pressure",
+      "PGVA.set_pressure_chamber",
+      "PGVA.set_vacuum_chamber",
+      "PGVAModbusTCP.set_actuation_time",
+      "PGVAModbusTCP.set_output_pressure",
+      "PGVAModbusTCP.set_pressure_chamber",
+      "PGVAModbusTCP.set_vacuum_chamber",
+      "PGVAModbusClient.set_actuation_time",
+      "PGVAModbusClient.set_output_pressure",
+      "PGVAModbusClient.set_pressure_chamber",
+      "PGVAModbusClient.set_vacuum_chamber"
+    ],
+    "actions": [
+      "PGVA.toggle_pump",
+      "PGVA.toggle_trigger",
+      "PGVA.trigger_actuation_valve",
+      "PGVAModbusTCP.toggle_manual_trigger",
+      "PGVAModbusTCP.toggle_pump",
+      "PGVAModbusClient.toggle_manual_trigger",
+      "PGVAModbusClient.toggle_pump"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.pressure.v1",
+      "cap.actuation.pump.v1",
+      "cap.actuation.valve.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/pgva/_constants.py:8 MAXIMUM_OUTPUT_PRESSURE_MBAR = 450",
+      "src/pgva/_constants.py:9 MINIMUM_OUTPUT_PRESSURE_MBAR = -450",
+      "src/pgva/_constants.py:12 MAXIMUM_PRESSURE_CHAMBER_MBAR = 1000",
+      "src/pgva/_constants.py:13 MINIMUM_PRESSURE_CHAMBER_MBAR = 200",
+      "src/pgva/_constants.py:16 MAXIMUM_VACUUM_CHAMBER_MBAR = -200",
+      "src/pgva/_constants.py:17 MINIMUM_VACUUM_CHAMBER_MBAR = -900",
+      "src/pgva/registers.py:26 MINIMUM_DAC_INCREMENT = 272",
+      "src/pgva/registers.py:28 MAXIMUM_DAC_INCREMENT = 274"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/festo-se__festo-pgva --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

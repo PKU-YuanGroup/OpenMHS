@@ -1,0 +1,74 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pangea567/gnsdo-scpi-simulator",
+  "track": "labs",
+  "local_path": "labs/pangea567/gnsdo-scpi-simulator",
+  "driver_dir": "MHS/drivers/labs/pangea567__gnsdo-scpi-simulator",
+  "upstream": {
+    "repo_url": "https://github.com/pangea567/gnsdo-scpi-simulator",
+    "commit": "a2d57a9759ab72fcfa42578a505d8ca4248bc0a4",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:serial",
+  "role": "twin-candidate",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 39,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "gnsdo_simulator.serial_server:SerialServer",
+      "file": "src/gnsdo_simulator/serial_server.py",
+      "line": 36,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "SerialServer.run_forever",
+      "SerialServer.stop"
+    ],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": [
+      "src/gnsdo_simulator/device_state.py:79 gps_survey_variance_limit = 150000",
+      "src/gnsdo_simulator/device_state.py:236 MIN_SATELLITES_FOR_LOCK = 4"
+    ]
+  },
+  "needs_recon": [
+    "capabilities"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pangea567__gnsdo-scpi-simulator --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.florianbauer/ot2-controller",
+  "track": "labs",
+  "local_path": "labs/florianbauer/ot2-controller",
+  "driver_dir": "MHS/drivers/labs/florianbauer__ot2-controller",
+  "upstream": {
+    "repo_url": "https://github.com/florianbauer/ot2-controller",
+    "commit": "eabc7fa6df1aea483d8438dbc540ccb3fffa6b67",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 23,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "ot2_controller.feature_implementations.ot2controller_impl:Ot2ControllerImpl",
+      "file": "ot2_controller/feature_implementations/ot2controller_impl.py",
+      "line": 21,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Ot2ControllerImpl.get_AvailableProtocols",
+      "Ot2ControllerImpl.get_CameraPicture",
+      "Ot2ControllerImpl.get_Connection",
+      "Ot2ControllerBase.get_AvailableProtocols",
+      "Ot2ControllerBase.get_CameraPicture",
+      "Ot2ControllerBase.get_Connection"
+    ],
+    "writes": [],
+    "actions": [
+      "Ot2ControllerImpl.RunProtocol",
+      "Ot2ControllerBase.RunProtocol"
+    ],
+    "candidate_classes": [
+      "cap.process.run.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/florianbauer__ot2-controller --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

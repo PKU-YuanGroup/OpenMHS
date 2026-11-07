@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ad-sdl/ot2_module",
+  "track": "labs",
+  "local_path": "labs/ad-sdl/ot2_module",
+  "driver_dir": "MHS/drivers/labs/ad-sdl__ot2_module",
+  "upstream": {
+    "repo_url": "https://github.com/ad-sdl/ot2_module",
+    "commit": "39ffdfdb73c3bc08bb988c5140cfc1af3cecbd0c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 36,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "ot2_interface.ot2_driver_http:OT2_Driver",
+      "file": "src/ot2_interface/ot2_driver_http.py",
+      "line": 42,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "OT2_Driver.get_robot_status",
+      "OT2_Driver.get_run",
+      "OT2_Driver.get_run_log",
+      "OT2_Driver.get_runs",
+      "OT2Node.config (attribute)"
+    ],
+    "writes": [],
+    "actions": [
+      "OT2_Driver.check_run_status",
+      "OT2_Driver.pause",
+      "OT2_Driver.reset_robot_data",
+      "OT2_Driver.resume",
+      "OT2_Driver.transfer",
+      "OT2Node.pause",
+      "OT2Node.reset",
+      "OT2Node.resume",
+      "OT2Node.run_protocol",
+      "OT2Node.safety_stop"
+    ],
+    "candidate_classes": [
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ad-sdl__ot2_module --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

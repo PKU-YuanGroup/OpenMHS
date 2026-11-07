@@ -1,0 +1,79 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.schimmilab/pico-mcp",
+  "track": "labs",
+  "local_path": "labs/schimmilab/pico-mcp",
+  "driver_dir": "MHS/drivers/labs/schimmilab__pico-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/schimmilab/pico-mcp",
+    "commit": "08fd81ee1c1e79b4d82e0997ca840b46adeef811",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 102,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pico_mcp.scope:Scope",
+      "file": "src/pico_mcp/scope.py",
+      "line": 100,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Scope.channels (attribute)"
+    ],
+    "writes": [
+      "Scope.set_channel",
+      "Scope.set_signal_generator"
+    ],
+    "actions": [
+      "Scope.capture_block",
+      "Scope.stop_signal_generator"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/pico_mcp/scope.py:105 max_adc = 0"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/schimmilab__pico-mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

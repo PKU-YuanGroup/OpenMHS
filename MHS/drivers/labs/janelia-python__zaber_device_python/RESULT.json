@@ -1,0 +1,65 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:0ad7b0cbdf8c5a1043e7f036e36fd5f93d64eb1cbccf9daf7068bab3fb427de3",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.janelia-python.home.v1",
+      "reason": "cap.motion.home.v1 advertises optional axes and speed_scale inputs that the native ZaberStage cannot apply: its home method homes the whole chain and the stage object has no home-speed scale. An x-cap home with no input avoids claiming those inputs.",
+      "verb": "invoke",
+      "summary": "Home every device in the Zaber chain and report whether the configured xyz axes report homed.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.janelia-python.stop.v1",
+      "reason": "cap.motion.stop.v1 advertises an optional deceleration that the native stop does not take: command 23 preempts motion and the device uses its own stop behaviour. An x-cap stop with no input, also the safe-state action, avoids claiming a deceleration the driver cannot apply.",
+      "verb": "invoke",
+      "summary": "Stop every device in the Zaber chain immediately (native command 23), the safe state.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.janelia-python.move_absolute.v1",
+      "reason": "cap.motion.joint_position.v1 takes joint positions in rad, while the stage positions are in the operator-chosen stage unit (dimensionless UCUM 1); cap.motion.cartesian_pose.v1 binds robot.arm only. An x-cap move in the stage unit is used.",
+      "verb": "invoke",
+      "summary": "Move the x, y and z axes to absolute positions in the stage unit.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.janelia-python.move_relative.v1",
+      "reason": "cap.motion.joint_position.v1 takes absolute joint positions in rad, not relative distances in the operator-chosen stage unit. An x-cap relative move is used.",
+      "verb": "invoke",
+      "summary": "Move the x, y and z axes by relative distances in the stage unit.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.janelia-python.move_to_stored_position.v1",
+      "reason": "no catalogue class moves a stage to a position stored under a device address; cap.motion.joint_position.v1 takes rad targets. The upstream stored-position mechanism is exposed as an x-cap action.",
+      "verb": "invoke",
+      "summary": "Move the x, y and z axes to the positions stored at an address from 0 to 15.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.janelia-python.store_position.v1",
+      "reason": "no catalogue class stores the current actuator position under a device address; this is device bookkeeping on the upstream stage. The upstream stored-position mechanism is exposed as an x-cap action.",
+      "verb": "invoke",
+      "summary": "Store the current x, y and z positions at an address from 0 to 15 and return them.",
+      "similar": []
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check with --backend fake (evidence contract_checked, never an MHS-Device level). Model-authored and unreviewed: driver.lock.json authored_by is the model and reviewed_by is null. The driver is R1, so the SDK's refusal of a model-written hardware backend at R2 and R3 does not apply; no hardware run was made and the gate never imported native.py. The card's decision is direct-driver and the package follows it with a direct Driver over zaber_device.zaber_device:ZaberStage. The card's helper field says PythonObjectDriver; that family bridge was not used because the upstream ZaberStage constructor opens the serial transport itself and the axes must be mapped by alias with the stage's own set_x_axis/set_y_axis/set_z_axis methods, which the decoration below expresses directly. No wire syntax was changed. The stage unit is the unit the operator chooses by setting the microstep size; positions, travel and microstep size are declared in the dimensionless UCUM unit 1, and every microstep/travel write and every move input is Limit.operator_required, filled only by the site overlay (site-limits.example.json is an example, not a claim about any stage). Stored-position addresses 0 to 15 are sourced from the upstream constants POSITION_ADDRESS_MIN and POSITION_ADDRESS_MAX. NOT COVERED: continuous move_at_speed and the travel-based percent moves; alias assignment through set_aliases and multi-device chains (the driver serves one device with x, y and z aliases, and the hardware factory requires all three); the upstream running/hold current, potentiometer, LED and serial-number settings; and get_positions_and_debug_info. The fake starts from placeholders (positions 0, travel 100, microstep size 1, actuator ids 1001, 1002, 1003), which are test data, not facts. check-report.json is regenerated by every gate run and is not part of the package; gate.digest is the digest line the last check printed.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (58 to 57); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

@@ -1,0 +1,83 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ad-sdl/bmg_module",
+  "track": "labs",
+  "local_path": "labs/ad-sdl/bmg_module",
+  "driver_dir": "MHS/drivers/labs/ad-sdl__bmg_module",
+  "upstream": {
+    "repo_url": "https://github.com/ad-sdl/bmg_module",
+    "commit": "22d55c6036e91f0af8d0c398727aef226208896d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 22,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "sidecar.bmg_interface:BmgCom",
+      "file": "sidecar/bmg_interface.py",
+      "line": 15,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "BmgCom.get_error",
+      "BmgCom.get_status",
+      "BmgCom.get_version",
+      "BmgCom.read_temps",
+      "BMGNode.config (attribute)"
+    ],
+    "writes": [
+      "BmgCom.set_temp",
+      "BMGNode.set_temp"
+    ],
+    "actions": [
+      "BmgCom.run_assay",
+      "BMGNode.run_assay"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.thermal.setpoint.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ad-sdl__bmg_module --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

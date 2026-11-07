@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Thorlabs Kinesis brushless motor, example overlay only)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example values only, not a device or stage specification: the travel of a Kinesis channel is set by the stage attached to the controller. Replace the bounds with the travel range of the installed stage in controller position units (the value of the 'position' read, whose unit is the string of the 'units' read).",
+  "devices": {
+    "mhs://localhost/thorlabs-brushless-channel": {
+      "x-cap.pymodaq.thorlabs_move_abs.v1": {
+        "position": {"min": -1000, "max": 1000, "unit": "1", "source": "operator",
+                     "reason": "example only: replace with the absolute travel range of the installed stage in controller position units"}
+      },
+      "x-cap.pymodaq.thorlabs_move_rel.v1": {
+        "offset": {"min": -1000, "max": 1000, "unit": "1", "source": "operator",
+                   "reason": "example only: replace with the largest permitted relative step of the installed stage in controller position units"}
+      }
+    }
+  }
+}

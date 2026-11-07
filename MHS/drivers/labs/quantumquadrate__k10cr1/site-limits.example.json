@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (k10cr1 driver)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/k10cr1": {
+      "x-cap.quantumquadrate.move_absolute.v1": {
+        "angle": {"min": -180, "max": 180, "unit": "deg", "source": "operator",
+                  "reason": "example: the optic on this stage must not leave the -180 to 180 degree window"}
+      },
+      "x-cap.quantumquadrate.move_relative.v1": {
+        "delta": {"min": -30, "max": 30, "unit": "deg", "source": "operator",
+                  "reason": "example: single steps on this bench stay within 30 degrees"}
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (OWON SPE3051)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/owon-power-supply": {
+      "voltage_setpoint": {"min": 0, "max": 30, "unit": "V", "source": "operator",
+                           "reason": "example only: the SPE3051 named in example.py:4 is rated 30 V; replace with the nameplate of the installed unit"},
+      "current_setpoint": {"min": 0, "max": 5, "unit": "A", "source": "operator",
+                           "reason": "example only: the SPE3051 named in example.py:4 is rated 5 A; replace with the nameplate of the installed unit"},
+      "voltage_limit": {"min": 1, "max": 30, "unit": "V", "source": "operator",
+                        "reason": "example only: owon_ps.py:77 comments a 1 V minimum and example.py:4 names 30 V for the SPE3051"},
+      "current_limit": {"min": 0.1, "max": 5, "unit": "A", "source": "operator",
+                        "reason": "example only: owon_ps.py:92 comments a 100 mA minimum and example.py:4 names 5 A for the SPE3051"}
+    }
+  }
+}

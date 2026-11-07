@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:f81e89f6b8cfb8a46e372de9dc0dccb9febd5bb46ad5f916d22defa3145c0093",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.bennomeier.stop_pump.v1",
+      "reason": "no catalogue class stops a syringe pump or disables its drive (cap.motion.stop.v1 binds motion.axis, not fluid.pump); the package uses an x-cap id with an inline output schema, also as its R2 safe-state action",
+      "verb": "invoke",
+      "summary": "Disable the drive with control word 0x06 (shutdown), the safe state.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). Model-authored and unreviewed: reviewed_by stays null, the R2 hardware backend is refused until a human signs it, and no hardware run is claimed. DEVIATION FROM THE CARD: the package is a direct Driver with native.py, not a SerialDriver, because cetoniSerial.py builds framed binary commands (opcode, node id, CANopen index/subindex, CRC-16 and DLE byte stuffing) instead of text lines; the card's helper/decision cannot express that wire syntax. The card's mock_strategy preferred upstream-sim, but the upstream FakeSyringe (cetoniSerial.py:472-484) only prints and overrides read/write with unrelated signatures; fake.py is a deterministic package fake that models the Syringe methods the driver uses. NOT COVERED: any hardware or serial timing, the real CRC/frame exchanges, a second syringe on a shared serial line (native.py accepts ser/node but the fake serves one object), fault clearing (the clone only points at a manual page not present in the clone), valve plumbing, and flow calibration. The site must supply the syringe volume, node id, travel range, flow range and velocity range; every numeric bound is Limit.operator_required because no text of the clone states one for a configured pump. flow_rate is derived from the velocity register with the inverse of the upstream setFlowRate conversion, so it reports the value after the upstream integer rounding. dispensed_volume for a reverse (aspirate) command is the volume moved, not a positive dispense. The e-stop and the safe-state action x-cap.bennomeier.stop_pump.v1 both write control word 0x06 to 0x6040; no independent physical e-stop is claimed.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (tecancavro driver)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/tecancavro": {
+      "start_speed": {"max": 500, "unit": "1/s", "source": "operator",
+                      "reason": "example: a gentler start keeps the sample from foaming"},
+      "top_speed": {"max": 3000, "unit": "1/s", "source": "operator",
+                    "reason": "example: the tubing on this bench tolerates at most 3000 pulses/s"},
+      "x-cap.benpruitt.dispense.v1": {
+        "port": {"min": 1, "max": 6, "unit": "1", "source": "operator",
+                 "reason": "example: only ports 1 to 6 of the distribution valve are plumbed on this bench"},
+        "volume": {"min": 0, "max": 500, "unit": "uL", "source": "operator",
+                   "reason": "example: a 1000 uL syringe, at most half of it dispensed per call on this bench"}
+      },
+      "x-cap.benpruitt.move_plunger.v1": {
+        "position": {"max": 2500, "unit": "1", "source": "operator",
+                     "reason": "example: the syringe is never filled past 2500 encoder steps here"}
+      }
+    }
+  }
+}

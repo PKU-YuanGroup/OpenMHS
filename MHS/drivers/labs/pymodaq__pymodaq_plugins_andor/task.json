@@ -1,0 +1,132 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pymodaq/pymodaq_plugins_andor",
+  "track": "labs",
+  "local_path": "labs/pymodaq/pymodaq_plugins_andor",
+  "driver_dir": "MHS/drivers/labs/pymodaq__pymodaq_plugins_andor",
+  "upstream": {
+    "repo_url": "https://github.com/pymodaq/pymodaq_plugins_andor",
+    "commit": "673a12ae4e9eaf13ed58ce7412d180002386fd5c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 68,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pymodaq_plugins_andor.hardware.andor_sdk3.api:AndorCamera",
+      "file": "src/pymodaq_plugins_andor/hardware/andor_sdk3/api.py",
+      "line": 231,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_andor.daq_viewer_plugins.plugins_1D.daq_1Dviewer_ShamrockCCDLegacy:DAQ_1DViewer_ShamrockCCDLegacy",
+      "file": "src/pymodaq_plugins_andor/daq_viewer_plugins/plugins_1D/daq_1Dviewer_ShamrockCCDLegacy.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_andor.daq_viewer_plugins.plugins_1D.daq_1Dviewer_ShamrockCCD:DAQ_1DViewer_ShamrockCCD",
+      "file": "src/pymodaq_plugins_andor/daq_viewer_plugins/plugins_1D/daq_1Dviewer_ShamrockCCD.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_andor.hardware.shamrock_sdk:ShamrockSDK",
+      "file": "src/pymodaq_plugins_andor/hardware/shamrock_sdk.py",
+      "line": 34,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_andor.daq_viewer_plugins.plugins_1D.daq_1Dviewer_ShamrockSCMOSLegacy:DAQ_1DViewer_ShamrockSCMOSLegacy",
+      "file": "src/pymodaq_plugins_andor/daq_viewer_plugins/plugins_1D/daq_1Dviewer_ShamrockSCMOSLegacy.py",
+      "line": 18,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/pymodaq_plugins_andor/hardware/andor_sdk3/api.py:270 AndorSim"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "AndorCamera.GetCCDHeight",
+      "AndorCamera.GetCCDTemp",
+      "AndorCamera.GetCCDWidth",
+      "AndorCamera.GetFPS",
+      "AndorCamera.GetIntegTime",
+      "AndorCamera.GetPicHeight",
+      "AndorCamera.GetPicWidth",
+      "AndorCamera.GetSerialNumber",
+      "AndorCamera.get_image_fom_buffer",
+      "AndorCamera.ActualExposureTime.getValue",
+      "AndorCamera.Overlap.getValue",
+      "AndorCamera.TemperatureControl.getAvailableValues"
+    ],
+    "writes": [
+      "AndorCamera.SetIntegTime",
+      "AndorCamera.SetROIIndex",
+      "AndorCamera.ActualExposureTime.setValue",
+      "AndorCamera.Overlap.setValue",
+      "AndorCamera.TemperatureControl.setIndex",
+      "AndorCamera.TemperatureControl.setString",
+      "ShamrockSDK.SetAutoSlitWidthSR",
+      "ShamrockSDK.SetGratingOffset",
+      "ShamrockSDK.SetGratingSR",
+      "ShamrockSDK.SetNumberPixelsSR",
+      "ShamrockSDK.SetPixelWidthSR",
+      "ShamrockSDK.SetWavelengthSR"
+    ],
+    "actions": [
+      "AndorCamera.GenStartMetadata",
+      "AndorCamera.StopAq",
+      "ShamrockSDK.GotoZeroOrderSR",
+      "ShamrockSDK.WavelengthResetSR",
+      "AndorSDK.AbortAcquisition"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.temperature.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymodaq__pymodaq_plugins_andor --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:41a567b264d1e8b7f5bb3e5217a6ab2f09b10f323486dcd75901fb9eedd160ae",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.drkirkm.run.v1",
+      "reason": "No catalogue class starts a pump at a rate configured by a previous write. cap.actuation.pump.v1 requires flow_rate and direction in one invoke and reports a dispensed volume; the clone's RUN handler takes no argument, the flow rate is set by a separate MLH write (pumpcontroller.py:240-278), and the clone has no direction command and no volume or position feedback. The extension only sends the clone's RUN, 01RUN or 02RUN line.",
+      "verb": "invoke",
+      "summary": "Send the RUN command of the configured pump address.",
+      "similar": [
+        "cap.actuation.pump.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.drkirkm.stop.v1",
+      "reason": "No catalogue stop class binds fluid.pump: cap.motion.stop.v1 binds robot.arm, robot.mobile_base and motion.axis and takes a deceleration. The clone's stop-all handler writes STP, 01STP and 02STP and reads no reply (pumpcontroller.py:373-377); this extension is the driver's safe-state action.",
+      "verb": "invoke",
+      "summary": "Stop all three pump addresses with STP, 01STP and 02STP.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the family-config / SerialDriver shape was replaced by a direct Driver with a native.py factory. The upstream is a Qt main window whose button handlers each open COM1, write one line and close it (pumpcontroller.py:228-389); a run is the pair 'set the rate' and RUN, and the safe state is the three lines STP, 01STP and 02STP, which a one-line-per-capability command table cannot express. The driver still writes exactly the clone's bytes and calls the upstream handler names through the fake or the injected-port hardware object. No command syntax was changed.\n\nCovered on the fake backend only: G1-G9 passed with no findings and no warnings. No hardware was attached; the hardware backend was never imported or run. The package is model-authored and unreviewed (driver.lock.json reviewed_by is null).\n\nThe fake is a recording stand-in, not a transcript: the clone contains no recorded exchange and the protocol is write-only (the upstream never reads a reply, pumpcontroller.py:232-235), so there is nothing to replay. Its starting values and empty line-edit texts are placeholders, not facts. The reads flow_rate, diameter and pumping report the last values this driver commanded, not measurements; the pump's own state is never queried. The driver exposes address 00 by default (the unprefixed handler group) and addresses 01 and 02 through the 'address' option; the upstream's three pump groups are otherwise unchanged. The ULH and ULM flow-rate commands are not exposed (the driver uses MLH in mL/h), so the upstream's 02ULM copy-paste defect (pumpcontroller.py:355-358) is not used. No volume, position or reply-based completion is covered: the clone has none, and the driver does not invent one.\n\nLimits: no text file of the clone states a flow-rate or diameter range, so both numeric writes are Limit.operator_required. site-limits.example.json carries example operator bounds for the acceptance run only; those numbers are not device facts and are not copied into driver.py. Without an operator overlay every write is refused MHS.SAFETY.LIMITS_UNSET. The driver is R2 because the pump dispenses liquid (MHS/spec/04-safety.md), above the card's R0 floor; the safe-state action x-cap.drkirkm.stop.v1 is the independent stop path, and the native e-stop sends the stop handler of the configured address. The clone states no independent hardware e-stop, so no estop_physical_ref is claimed.\n\nNot covered: the wire format of the flow-rate and diameter numbers (Python's g format, e.g. 12.06) was not checked against a pump; the upstream passes whatever text a user typed. The hardware backend needs pyserial (README.md:5) and a serial port option (the clone hardcodes COM1, README.md:6); nothing here ran it.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Copied the exact generated task.json after preserving the obsolete abstract Panda draft and recording the USB camera image-scope blocker; changed task.json and RESULT.json (card fields: rank). Package contracts, source pins, gate finding digests, author attribution and human signatures remain unchanged. This metadata synchronization is not a new complete gate collection.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

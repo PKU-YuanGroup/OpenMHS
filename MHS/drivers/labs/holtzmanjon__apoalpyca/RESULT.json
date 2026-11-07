@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:5390edd94be9d3ac62c631b4855574320183f6ee6203e2d71179ddd8e431708b",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.holtzmanjon.slew_azimuth.v1",
+      "reason": "No catalogue class commands a dome azimuth. cap.motion.joint_position.v1 binds robot.arm or motion.axis and takes joint arrays, while this server exposes one ASCOM SlewToAzimuth integer form field and returns only an acknowledgement that an asynchronous thread started. cap.motion.stop.v1 only stops motion. The package uses an x-cap id with a sourced 0..360 integer input and an inline output schema.",
+      "verb": "invoke",
+      "summary": "Start an asynchronous dome slew to an azimuth between 0 and 360 degrees.",
+      "similar": [
+        "cap.motion.joint_position.v1",
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.holtzmanjon.park.v1",
+      "reason": "No catalogue class stores and drives an observatory park position. cap.motion.home.v1 binds robot.arm or motion.axis and takes axes and speed_scale inputs, while Park is input-free and uses the server's stored park position. The command returns the server's slewing flag, so the package uses an x-cap id with an inline output schema.",
+      "verb": "invoke",
+      "summary": "Start an asynchronous park slew to the dome's stored park position.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.holtzmanjon.find_home.v1",
+      "reason": "cap.motion.home.v1 expects axes and speed_scale inputs and reports joint_positions. The dome FindHome method is input-free, rotates until a GPIO home switch asserts, and returns only the server's slewing and athome flags, so the package uses an x-cap id with an inline output schema.",
+      "verb": "invoke",
+      "summary": "Start an asynchronous dome rotation to its home switch.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.holtzmanjon.set_park.v1",
+      "reason": "No catalogue class stores a park position without commanding motion. cap.motion.home.v1 commands a homing move, and cap.device.configure.v1 requires a writable state property; the Alpaca dome here exposes atpark as a read-only property and SetPark as a method. The package uses an x-cap id with an inline atpark output.",
+      "verb": "invoke",
+      "summary": "Store the current dome azimuth as the park position without commanding motion.",
+      "similar": [
+        "cap.device.configure.v1",
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.holtzmanjon.abort_slew.v1",
+      "reason": "No catalogue class stops a dome rotation through ASCOM AbortSlew. cap.motion.stop.v1 binds robot.arm, robot.mobile_base or motion.axis and takes a deceleration input, while AbortSlew is input-free and the only confirmation is the server's slewing flag. This x-cap is also the input-free safe-state action and the e-stop route.",
+      "verb": "invoke",
+      "summary": "Stop dome rotation through AbortSlew and confirm the server's slewing flag is false.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "PASS on the fake backend: the gate ran G1-G9 with no findings or warnings and reports evidence contract_checked. This package is model-authored (deepseek-v4.1-flash:1017, run helper-wave-1-016); reviewed_by stays null and neither a real Alpaca server nor any hardware was contacted. Scope: the APO 1m Ash Dome Alpaca server (device/dome_app.py routes device type 'dome'; device/dome.py instantiates device.APOAshDome). The TCube, TC300, K8056 and LTS150 classes in the same repository are separate devices and are NOT COVERED by this package. The card's candidate classes do not bind this device: cap.sensing.read.v1 binds sensor, sensor.imu and sensor.force_torque, and cap.device.configure.v1 needs writable state properties while the dome properties used here are read-only; the package uses x-cap.holtzmanjon.* ids, listed in catalogue_requests. The card's writes hints set_lower, set_lower_time and set_upper_time are not writable Alpaca properties: the server exposes them only through its Action method with a string Parameters form field, and they configure lower-shutter support and timer durations rather than the primary dome interface, so they are NOT COVERED. SyncToAzimuth is not exposed because its responder calls dome_dev.slewtoazimuth (device/dome.py:619) rather than a sync operation, and exposing it would duplicate SlewToAzimuth. altitude and slaved are not exposed because APOAshDome reports cansetaltitude and canslave false and slave() raises. The safety-monitor Alpaca device, the weather monitor, the watchdog relay and the louver controller are not separate capabilities of this package. Limits: the only numeric input is the SlewToAzimuth azimuth, bounded 0..360 by the responder's own check (device/dome.py:578-580); it is declared integer because the responder casts the form value with int(), so a fractional azimuth is refused rather than silently truncated. No operator-required limit exists and no site-limits overlay is shipped. Stop: AbortSlew -> APOAshDome.abort_slew -> stop writes the rotation relay DOME_POWER 0 and sets slewing false; the package confirms by reading the slewing property back. This is the server's own flag, not independent relay or encoder feedback, and it does not cancel the shutter Timer objects or close the louvers. The input-free safe-state action is the same AbortSlew command; CloseShutter is a separate command and the safe direction for the shutter. A weather-blocked OpenShutter returns success without opening; if the status stays closed the confirmation does not hold and the command ends unknown. SlewToAzimuth, Park and FindHome are asynchronous: a completed command is the server's acknowledgement of the start, not proof of arrival or of the home switch. The azimuth property is the cached APOAshDome.azimuth attribute because the responder does not call get_azimuth, so it can lag the encoder; the driver reports the server value and never fabricates a fresh one. Fake: F0 analytic stand-in, not a recording; its few values are placeholders marked in fake.py; it returns methods immediately, sets opening/closing status immediately and does not model motion, encoder, weather, shutter timers, the louver subprocess, the watchdog or Alpaca transport errors. Hardware: native.py is an HTTP Alpaca client that requires the operator's host and port, imports no upstream code and was never imported or run; every tag-bridge hardware backend is refused until a human signs reviewed_by with scope hardware. The fake pass does not establish a real server or hardware run. Licence: the clone LICENSE is GPL-3.0, matching the card (copyleft); publish_review is not_required.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked the Alpaca TagDriver against device/dome.py, APOAshDome.py, APOSafety.py and dome_app.py, the tag-bridge preflight (dome rotation scope) and every fact. The author served OpenShutter and CloseShutter, actuators with no stop route (fixed relay timers held in local variables; the preflight excludes them), and completed slew, park and find-home on the server's acknowledgement, so an AbortSlew landing before the worker's rotate() could be undone after a confirmed stop (preflight F15); one fact carried a 'so ...' inference. The reviewer removed both shutter commands and points, made slew/park/find_home complete only on a fresh slewing == True read (confirm_ms 1500, poll_ms 100), rewrote safe_state and the docstring, corrected and added facts (rotate order, 0.2 s relay sleeps, sendhome leaving the relay on after its 180 s timer, the unsafe-weather branch, the busy loop, the single-threaded wsgiref server, APOSafety.stat waiting in recvfrom without a timeout and exec()ing the reply), and made the fake model start delays, targets within tolerance and parked/home no-ops; files changed: driver.py, fake.py, native.py (docstring), test_driver.py and facts.md, plus regenerated reference.json, REFERENCE.md and check-report.json. The gate and strict collect pass, digest unchanged (sha256:5390edd94be9d3ac62c631b4855574320183f6ee6203e2d71179ddd8e431708b). Stale author text: the RESULT.json notes and the open_shutter/close_shutter catalogue requests. Matches the readiness prediction (dome rotation, R2). For the human reviewer: The stop is AbortSlew: rotation relay off and the server's slewing flag false, not sensed motion (the dome coasts). Residual F15 race: a worker slower than 1.5 s (Park waits for the weather check first) or a slew from another Alpaca client (SyncToAzimuth also slews) can re-energise the relay after a confirmed stop, and FindHome leaves the relay on if the home switch never asserts within 180 s. The server is single-threaded and SlewToAzimuth waits on APOSafety's UDP status query without a timeout, which can hold AbortSlew; that query exec()s text received from 10.75.0.152:6251. The dome's power switch is the real stop; shutters, weather and watchdog threads are outside the package."
+}

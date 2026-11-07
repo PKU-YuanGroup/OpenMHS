@@ -1,0 +1,35 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:699ecb173984d60638a0410a152652626bd60c6717ca6aab3b80910a8a89943d",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.giansimone.run_pump.v1",
+      "reason": "The catalogue has no class that starts a pump at a native rate whose unit token the clone does not define. cap.actuation.pump.v1 needs flow_rate in uL/s and reports dispensed_volume, but the clone states neither a physical meaning for UM/MM/UH/MH nor any volume feedback, so binding it would invent a unit conversion and a volume. This action exposes RUN and its reply.",
+      "verb": "invoke",
+      "similar": [
+        "cap.actuation.pump.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.giansimone.stop_pump.v1",
+      "reason": "The catalogue has no stop or safe-state class for a pump; the clone's STP command is the native stop, and this safe-state action makes it callable during an e-stop.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.giansimone.test_pump.v1",
+      "reason": "The catalogue has no identity or version class for a serial pump; this action exposes the clone's VER query and its reply.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.giansimone.reverse_direction.v1",
+      "reason": "The catalogue has no direction-reversal class for a pump; this action exposes the clone's DIR REV command and its reply.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the upstream wire line is a zero-padded two-digit pump address followed by the command and a carriage return (ctrl_syringe_pumps/control.py:33, interface.py:17), so the card's SerialDriver cannot send it without changing the wire syntax or losing the first token to G7. This package is a direct Driver over ctrl_syringe_pumps.control:Control, with native.py as the hardware factory. Covered: diameter, direction, pumping rate, run, stop, test/version and reverse. Not covered or otherwise limited: (1) the clone has no query for diameter, direction, rate or run state, so the driver has no @read; the runtime reports the last value written, and VER is the only query the clone builds. (2) The RATE_UNITS tokens UM/MM/UH/MH have no stated physical meaning, so pumping_rate.value is dimensionless ('1') and operator_required; site-limits.example.json supplies an example range under the key pumping_rate.value. The generated REFERENCE.md does not render that nested operator bound (an SDK presentation gap only; the runtime and the overlay enforce it). (3) The clone's set_diameter uses 0.1 < val < 50.0 (interface.py:40), so real hardware rejects exactly 0.1 and 50.0; the declared envelope is the DIAMETER_RANGE constant [0.1, 50.0] (interface.py:10) and the fake reproduces the strict native check. (4) The clone's two default addresses adr1 and adr2 are served as one device at adr1 (0 by default). (5) cap.actuation.pump.v1 was not used: it requires flow_rate in uL/s and reports dispensed_volume, but the clone defines no rate-unit meaning and no volume feedback, so mapping it would invent both; the run action only starts the pump and returns the RUN reply, and the stop action is the safe-state action. (6) No hardware was attached; this is the fake backend and a model-authored, unreviewed package (reviewed_by is null). At R2 the loader refuses the hardware backend until a human sets reviewed_by. The gate ran with PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=MHS/sdk/src and wrote check-report.json.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

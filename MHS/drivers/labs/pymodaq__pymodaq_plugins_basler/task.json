@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pymodaq/pymodaq_plugins_basler",
+  "track": "labs",
+  "local_path": "labs/pymodaq/pymodaq_plugins_basler",
+  "driver_dir": "MHS/drivers/labs/pymodaq__pymodaq_plugins_basler",
+  "upstream": {
+    "repo_url": "https://github.com/pymodaq/pymodaq_plugins_basler",
+    "commit": "2bb80b0f2f1f904675065ff432302b885389ee99",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 30,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pymodaq_plugins_basler.hardware.basler:BaslerCamera",
+      "file": "src/pymodaq_plugins_basler/hardware/basler.py",
+      "line": 41,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_basler.daq_viewer_plugins.plugins_2D.daq_2Dviewer_Basler:DAQ_2DViewer_Basler",
+      "file": "src/pymodaq_plugins_basler/daq_viewer_plugins/plugins_2D/daq_2Dviewer_Basler.py",
+      "line": 22,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "BaslerCamera.get_attribute_value",
+      "BaslerCamera.get_attributes",
+      "BaslerCamera.get_detector_size",
+      "BaslerCamera.get_roi"
+    ],
+    "writes": [
+      "BaslerCamera.set_callback",
+      "BaslerCamera.set_roi"
+    ],
+    "actions": [
+      "BaslerCamera.start_grabbing",
+      "BaslerCamera.stop_grabbing"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymodaq__pymodaq_plugins_basler --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

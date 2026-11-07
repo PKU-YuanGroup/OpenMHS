@@ -1,0 +1,47 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Runze syringe pump, 25 mL syringe)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/runze-syringe-pump": {
+      "position": {
+        "min": 0.0,
+        "max": 25000.0,
+        "unit": "uL",
+        "source": "operator",
+        "reason": "example: a 25 mL syringe has 0 to 25 mL of plunger travel"
+      },
+      "max_velocity": {
+        "min": 0.001,
+        "max": 100.0,
+        "unit": "uL/s",
+        "source": "operator",
+        "reason": "example: this bench admits at most 100 uL/s for the installed syringe and tubing"
+      },
+      "cap.actuation.pump.v1": {
+        "flow_rate": {
+          "min": 0.001,
+          "max": 100.0,
+          "unit": "uL/s",
+          "source": "operator",
+          "reason": "example: this bench admits at most 100 uL/s for the installed syringe and tubing"
+        },
+        "volume": {
+          "min": 0.001,
+          "max": 25000.0,
+          "unit": "uL",
+          "source": "operator",
+          "reason": "example: one move is limited to the 25 mL syringe volume"
+        },
+        "duration_s": {
+          "min": 0.001,
+          "max": 3600.0,
+          "unit": "s",
+          "source": "operator",
+          "reason": "example: one converted move is limited to one hour"
+        }
+      }
+    }
+  }
+}

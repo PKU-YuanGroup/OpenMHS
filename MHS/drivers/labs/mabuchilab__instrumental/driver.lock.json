@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.mabuchilab/instrumental",
+  "upstream": {
+    "repo_url": "https://github.com/mabuchilab/instrumental",
+    "commit": "64272832594964a26ba05ee220a2b56042d04b62",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows",
+    "notes": "The module comment says Windows-only (src/instrumental/drivers/cameras/uc480.py:4-5); the UC480 page instructs installing the Thorlabs uc480 API DLL on PATH and running pip install pywin32 nicelib (docs/uc480-cameras.rst:14-27). The upstream package is imported by native.py only; the gate never installs or imports it."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeUC480Camera"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-187",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

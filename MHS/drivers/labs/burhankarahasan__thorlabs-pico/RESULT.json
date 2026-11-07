@@ -1,0 +1,30 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:a78fe55d7ed4e9d9ce41cf28dce6d0c40209e29058828b0b20d4b38f10061113",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.burhankarahasan.enable_motor.v1",
+      "reason": "No catalogue class covers enabling a stepper motor driver. The closest motion classes are position, velocity, home and stop; none expresses a power-enable command with a boolean acknowledgement, so the extension carries it.",
+      "verb": "invoke",
+      "summary": "Enable the stepper motor driver"
+    },
+    {
+      "capability_id": "x-cap.burhankarahasan.disable_motor.v1",
+      "reason": "No catalogue class covers disabling a stepper motor driver (cutting driver power). It is not a motion stop: the native DISABLE de-energizes the driver and zeros the speeds, so it is separate from cap.motion.stop.v1.",
+      "verb": "invoke",
+      "summary": "Disable the stepper motor driver"
+    },
+    {
+      "capability_id": "x-cap.burhankarahasan.set_ramp_rate.v1",
+      "reason": "No catalogue class carries a motor acceleration/deceleration setting. The ramp rate is in steps/second^2 (a frequency per second), which the position and velocity classes do not express, so the extension carries it with an inline schema.",
+      "verb": "invoke",
+      "summary": "Set the stepper ramp rate"
+    }
+  ],
+  "notes": "Covers stepper_controller:PicoStepperController (the card's first entry symbol): reads current_rps, target_rps and position_steps from the native STATUS reply; one write, target_rps, through SPEED_RPS; and the actions stop (cap.motion.stop.v1, the safe-state action), enable, disable and set_ramp_rate. The card's second entry symbol, lts_controller:ThorlabsLTSController, is a separate Thorlabs LTS linear stage and is NOT COVERED by this package, as is PicoStepperController.set_speed_steps (the driver uses RPS as the single speed unit so the write and the read name one physical quantity). No hardware was run: only the fake backend was checked and the hardware factory in native.py was never imported. The fake is an in-memory object with placeholder starting values, not a recording or a physics model; it does not model the firmware's ramp, inertia or serial transport. Both numeric inputs are Limit.operator_required because no text file of the clone states a safe speed or ramp range for an installed stepper/driver; site-limits.example.json is an example overlay, not a statement about any unit. cap.motion.stop.v1 accepts the class's optional deceleration field for schema compatibility, but the native STOP has no deceleration setting, so the driver does not apply it (the description says so). No G4.REF_VALUE or G4.REF_BINARY warnings were produced; all facts cite text lines of the clone. No catalogue class fits the motor enable/disable or ramp-rate controls, hence the extension ids above.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review."
+}

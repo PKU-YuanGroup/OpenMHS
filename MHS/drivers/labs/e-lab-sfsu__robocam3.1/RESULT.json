@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:f5314343217a7d7818db13a429cc7e677e9559ef30bdf090e19a7f9f4387e2d2",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.e-lab-sfsu.reset_capture_stats.v1",
+      "reason": "no catalogue class resets capture-failure counters; cap.sensing.read.v1 reports values but does not mutate a device counter",
+      "verb": "invoke",
+      "summary": "Reset the RoboCam capture failure counters and return the zeroed counts.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    }
+  ],
+  "notes": "Passed the fake backend only; evidence is contract_checked, never an MHS-Device level and never a hardware run. The package binds the camera resource of the upstream repository: the reads and scalar writes of robocam.camera:Camera, the native Camera.stop() as the e-stop, and the capture-counter reset as an x-cap action. The repository's three-axis motion system and laser output are separate upstream classes and are not part of this device manifest. NOT COVERED: the image and raw image arrays from Camera.get_frame() and Camera.get_raw_frame() (the standard's image form is an artifact reference and this package has no artifact store), and the application's motion and laser controls. Limits: usb_bandwidth_percent is bounded to 35 to 100 percent by robocam/camera.py:387 (setter clamp at line 399); no text states a bound for exposure_us, gain, offset or sensor_mode_index, so each is Limit.operator_required and every write is refused MHS.SAFETY.LIMITS_UNSET until site-limits.json supplies it. site-limits.example.json fills those four paths with placeholder example values only; it is not a measurement or a statement about any installed camera. DEVIATION FROM THE CARD: mock_strategy.preferred is upstream-sim, but the task forbids importing or running the clone, so fake.py is a package in-memory fake over the same method names; its starting values are test data marked placeholder, not facts. The package is model-authored and unreviewed (driver.lock.json reviewed_by is null), so it makes no claim of human review or testing.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (23 to 22); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

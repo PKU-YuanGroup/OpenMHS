@@ -1,0 +1,130 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.abduznik/instrumation",
+  "track": "labs",
+  "local_path": "labs/abduznik/instrumation",
+  "driver_dir": "MHS/drivers/labs/abduznik__instrumation",
+  "upstream": {
+    "repo_url": "https://github.com/abduznik/instrumation",
+    "commit": "483d6d5d0b6984f0e261e340363f784f6e2dd2f8",
+    "license_spdx": "AGPL-3.0",
+    "license_class": "network-copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 3,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "instrumation.drivers.rigol:RigolDS1054Z",
+      "file": "src/instrumation/drivers/rigol.py",
+      "line": 55,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instrumation.drivers.keysight:KeysightPXA",
+      "file": "src/instrumation/drivers/keysight.py",
+      "line": 69,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instrumation.drivers.bk_precision:BKPrecision9130B",
+      "file": "src/instrumation/drivers/bk_precision.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instrumation.drivers.bk_precision:BKPrecision8600",
+      "file": "src/instrumation/drivers/bk_precision.py",
+      "line": 127,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instrumation.drivers.rs_scope:RohdeSchwarzHMOCompact",
+      "file": "src/instrumation/drivers/rs_scope.py",
+      "line": 14,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "RigolDS1054Z.get_acquire_type",
+      "RigolDS1054Z.get_channel_bw_limit",
+      "RigolDS1054Z.get_channel_coupling",
+      "RigolDS1054Z.get_channel_display",
+      "RigolDS1054Z.get_channel_invert",
+      "RigolDS1054Z.get_channel_offset",
+      "RigolDS1054Z.get_channel_probe",
+      "RigolDS1054Z.get_channel_scale",
+      "RigolDS1054Z.get_edge_trigger_level",
+      "RigolDS1054Z.get_edge_trigger_slope",
+      "RigolDS1054Z.get_edge_trigger_source",
+      "RigolDS1054Z.get_id"
+    ],
+    "writes": [
+      "RigolDS1054Z.set_acquire_averages",
+      "RigolDS1054Z.set_acquire_memory_depth",
+      "RigolDS1054Z.set_acquire_type",
+      "RigolDS1054Z.set_channel_bw_limit",
+      "RigolDS1054Z.set_channel_coupling",
+      "RigolDS1054Z.set_channel_display",
+      "RigolDS1054Z.set_channel_invert",
+      "RigolDS1054Z.set_channel_offset",
+      "RigolDS1054Z.set_channel_probe",
+      "RigolDS1054Z.set_channel_scale",
+      "RigolDS1054Z.set_channel_units",
+      "RigolDS1054Z.set_edge_trigger_level"
+    ],
+    "actions": [
+      "RigolDS1054Z.force_trigger",
+      "RigolDS1054Z.run",
+      "RigolDS1054Z.stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.voltage.v1",
+      "cap.measure.current.v1",
+      "cap.measure.spectrum.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/abduznik__instrumation --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,127 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.alba-synchrotron/sls-detector",
+  "track": "labs",
+  "local_path": "labs/alba-synchrotron/sls-detector",
+  "driver_dir": "MHS/drivers/labs/alba-synchrotron__sls-detector",
+  "upstream": {
+    "repo_url": "https://github.com/alba-synchrotron/sls-detector",
+    "commit": "961d33152af298eb4cbd311d9d185683ba992199",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 73,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "sls.client:Detector",
+      "file": "sls/client.py",
+      "line": 142,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sls.lima.tango:MythenSLS",
+      "file": "sls/lima/tango.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sls.client:Acquisition",
+      "file": "sls/client.py",
+      "line": 501,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sls.client:Connection",
+      "file": "sls/client.py",
+      "line": 32,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.5",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "sls/simulator.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Detector.fetch_frame",
+      "Detector.get_energy_threshold",
+      "Detector.get_external_signal",
+      "Detector.get_id",
+      "Detector.get_lock_server",
+      "Detector.get_module",
+      "Detector.get_module_serial_number",
+      "Detector.get_nb_modules",
+      "Detector.get_settings",
+      "Detector.get_speed",
+      "Detector.get_time_left",
+      "Detector.get_timer"
+    ],
+    "writes": [
+      "Detector.set_energy_threshold",
+      "Detector.set_external_signal",
+      "Detector.set_lock_server",
+      "Detector.set_module",
+      "Detector.set_nb_modules",
+      "Detector.set_speed",
+      "Detector.set_timer"
+    ],
+    "actions": [
+      "Detector.acquire",
+      "Detector.delay_after_trigger",
+      "Detector.run_status",
+      "Detector.start_acquisition",
+      "Detector.stop_acquisition",
+      "Acquisition.run",
+      "Acquisition.stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "sls/shm.py:20 MAX_BADCHANS = 20000",
+      "sls/shm.py:21 MAX_MODS = 24",
+      "sls/shm.py:22 MAX_POS = 50",
+      "sls/shm.py:23 MAX_ROIS = 100",
+      "sls/shm.py:24 MAX_TIMERS = 11",
+      "sls/shm.py:25 MAX_ACTIONS = 8",
+      "sls/shm.py:27 MAX_SCAN_STEPS = 2000",
+      "sls/shm.py:28 MAX_DET = 100"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/alba-synchrotron__sls-detector --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

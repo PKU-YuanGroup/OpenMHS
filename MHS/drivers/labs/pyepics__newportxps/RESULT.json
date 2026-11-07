@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:cc921cd64770093d2d00d5c84635f3cb0f5a5166c4fc83fd63077ce06ad65c24",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.pyepics.move_stage.v1",
+      "reason": "no catalogue class moves one stage to an absolute position in controller user units: cap.motion.joint_position.v1 takes an array of joint positions in rad (a robot-arm interface), while an XPS position is a scalar in the stage-configured user units. The package uses an x-cap id with an inline scalar schema.",
+      "verb": "invoke",
+      "summary": "Move the bound Newport XPS stage to an absolute position in controller user units.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.pyepics.move_stage_relative.v1",
+      "reason": "no catalogue class commands a relative single-axis move; cap.motion.joint_position.v1 is an absolute array of joint positions in rad. The package uses an x-cap id with an inline scalar offset.",
+      "verb": "invoke",
+      "summary": "Move the bound Newport XPS stage by a relative offset in controller user units.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.pyepics.home_group.v1",
+      "reason": "cap.motion.home.v1 is close, but its optional inputs select axes and a speed scale and its optional output describes reached joint positions in rad; the XPS GroupHomeSearch takes no arguments and homes the bound group with its configured search. The package uses an x-cap id with no input.",
+      "verb": "invoke",
+      "summary": "Run the native home search of the bound Newport XPS group.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.pyepics.enable_group.v1",
+      "reason": "no catalogue class enables motion on a controller group; cap.device.configure.v1 writes named state parameters, not the controller's GroupMotionEnable call. The package uses an x-cap id.",
+      "verb": "invoke",
+      "summary": "Enable motion on the bound Newport XPS group (GroupMotionEnable)."
+    },
+    {
+      "capability_id": "x-cap.pyepics.disable_group.v1",
+      "reason": "no catalogue class disables motion on a controller group; cap.motion.stop.v1 is a stop of running motion and does not bind a group-disable operation. The package uses an x-cap id.",
+      "verb": "invoke",
+      "summary": "Disable motion on the bound Newport XPS group (GroupMotionDisable)."
+    },
+    {
+      "capability_id": "x-cap.pyepics.abort_group.v1",
+      "reason": "cap.motion.stop.v1 allows an optional deceleration profile in m/s2; the XPS GroupMoveAbort call takes no profile and would ignore it. The package uses an x-cap id with no profile, and the same native abort is the e-stop.",
+      "verb": "invoke",
+      "summary": "Abort the bound Newport XPS group's running move (GroupMoveAbort).",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check; the evidence is contract_checked, never an MHS-Device level. No hardware was attached and no human review or test is claimed: driver.lock.json reviewed_by is null and the package is model-authored by deepseek-v4.1-flash:1017 (run wB1-045). The driver is R1 and the loader's refusal of an unreviewed model-written hardware backend applies only at R2 and R3, so at R1 it does not protect this package; a human must review it and sign reviewed_by before any hardware use.\n\nDEVIATION FROM THE CARD: the card's helper hint is PythonObjectDriver, but the package uses a direct decorated Driver (the card's decision is direct-driver). The interface needs a per-endpoint stage/group binding chosen after the controller connection, a two-call native stop (abort_group then disable_group), and extension actions with inline output schemas; a config-only family could not express those.\n\nBinding: one stage of one group, selected by the backend options stage and group; with no option the driver takes the first stage the controller reports and the group part of its name. The clone states no physical unit for a position and the travel limits are read from the controller at connection time (newportxps/newportxps.py:250-253), so position is served with the UCUM unit 1 (dimensionless controller user units) and both move inputs are Limit.operator_required. Every move is refused MHS.SAFETY.LIMITS_UNSET until the operator supplies the travel range. site-limits.example.json supplies example-only bounds (-1000 to 1000) so the conformance run can exercise the moves; they are not a stage specification and an operator must replace them.\n\nSafety: @estop calls the native abort_group and disable_group on the bound group; the safe state is motion disabled on that group. cap.motion.stop.v1 was not bound because its optional deceleration is in m/s2 and GroupMoveAbort takes no profile. No text of the clone documents an independent hardware e-stop, so estop_physical_ref is not set; R1 does not require SAFE-045. The transport sets a 3600 s socket timeout (newportxps/XPS_C8_drivers.py:94), so a lost network path can still block a native call; a hardware deployment must supervise the link.\n\nNOT COVERED: trajectory definition, arming and running (define_line_trajectories, define_array_trajectory, arm_trajectory, run_trajectory, move_to_trajectory_start, run_line_trajectory_general); gathering reads and files (read_gathering, read_and_save); script and system.ini/stages.ini file operations; tuning and velocity writes (only the tuning dictionary is read); multi-axis group moves (only the single bound stage is moved); FTP upload/download and controller reboot/disconnect-time behaviour beyond the teardown hook; the read_systemini and read_script paths. These are configuration- or file-oriented operations; binding them needs site-specific trajectory files, numeric gain bounds and a larger fake, none of which a text file of the clone states. The position start value, group/stage names, status strings and tuning gains in fake.py are placeholders marked in that file; none was copied into a Fact, a Limit or the reference. The gate reported no G4.REF_VALUE or G4.REF_BINARY warnings. check-report.json is generated by the gate and is not part of the package.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (41 to 40); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

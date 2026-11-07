@@ -1,0 +1,114 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.bsh90/smarpod-ophyd",
+  "track": "labs",
+  "local_path": "labs/bsh90/smarpod-ophyd",
+  "driver_dir": "MHS/drivers/labs/bsh90__smarpod-ophyd",
+  "upstream": {
+    "repo_url": "https://github.com/bsh90/smarpod-ophyd",
+    "commit": "a3d50e67618b9a15527d54339a333f199f58681d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 45,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "OphydSmarPod:SmarSignal",
+      "file": "src/OphydSmarPod.py",
+      "line": 65,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "OphydSmarPod:SmarSignalXPosition",
+      "file": "src/OphydSmarPod.py",
+      "line": 117,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "OphydSmarPod:SmarSignalYPosition",
+      "file": "src/OphydSmarPod.py",
+      "line": 122,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "OphydSmarPod:SmarSignalZPosition",
+      "file": "src/OphydSmarPod.py",
+      "line": 127,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "OphydSmarPod:SmarSignalXRotation",
+      "file": "src/OphydSmarPod.py",
+      "line": 132,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "SmarSignal.get_status",
+      "SmarSignal.read_configuration",
+      "SmarSignalXPosition.read_configuration",
+      "SmarSignalYPosition.read_configuration"
+    ],
+    "writes": [
+      "SmarSignal.smarpod_object.set_speed_and_frequency_and_pivot_point_and_coordinate_system",
+      "SmarSignal.smarpod_object.set_up",
+      "SmarSignalXPosition.smarpod_object.set_speed_and_frequency_and_pivot_point_and_coordinate_system",
+      "SmarSignalXPosition.smarpod_object.set_up",
+      "SmarSignalYPosition.smarpod_object.set_speed_and_frequency_and_pivot_point_and_coordinate_system",
+      "SmarSignalYPosition.smarpod_object.set_up"
+    ],
+    "actions": [
+      "SmarSignal.trigger",
+      "SmarSignal.smarpod_object.move_sequence",
+      "SmarSignalXPosition.trigger",
+      "SmarSignalXPosition.smarpod_object.move_sequence",
+      "SmarSignalYPosition.trigger",
+      "SmarSignalYPosition.smarpod_object.move_sequence"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/bsh90__smarpod-ophyd --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

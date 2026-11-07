@@ -1,0 +1,104 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.dgretton/pyhamilton",
+  "track": "labs",
+  "local_path": "labs/dgretton/pyhamilton",
+  "driver_dir": "MHS/drivers/labs/dgretton__pyhamilton",
+  "upstream": {
+    "repo_url": "https://github.com/dgretton/pyhamilton",
+    "commit": "65938d05cc8f5a5a0d3186648add560439ab1cdd",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 4,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pyhamilton.interface:HamiltonInterface",
+      "file": "pyhamilton/interface.py",
+      "line": 501,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyhamilton.odtc.odtc_protocol:ThermalCyclerProtocol",
+      "file": "pyhamilton/odtc/odtc_protocol.py",
+      "line": 4,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "HamiltonInterface.get_plate_gripper_seq",
+      "HamiltonInterface.is_open",
+      "HamiltonInterface.server_thread.has_exited"
+    ],
+    "writes": [
+      "HamiltonInterface.set_labware_property",
+      "HamiltonInterface.set_log_dir",
+      "ThermalCyclerProtocol.set_pid_parameters",
+      "ThermalCyclerProtocol.set_pre_method"
+    ],
+    "actions": [
+      "HamiltonInterface.aspirate",
+      "HamiltonInterface.aspirate_384_quadrant",
+      "HamiltonInterface.aspirate_96",
+      "HamiltonInterface.dispense",
+      "HamiltonInterface.dispense_384_quadrant",
+      "HamiltonInterface.dispense_96",
+      "HamiltonInterface.move_by_seq",
+      "HamiltonInterface.move_plate",
+      "HamiltonInterface.move_plate_gripper",
+      "HamiltonInterface.move_plate_gripper_seq",
+      "HamiltonInterface.move_sequence",
+      "HamiltonInterface.start"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1",
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1",
+      "cap.manipulation.grasp.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/dgretton__pyhamilton --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:0d5cecbfca5d363e3edecbf13d913ed56d142b764ec4a2bc97cac65c9db1246f",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.laristizabal1.output_off.v1",
+      "reason": "No catalogue class binds the output-off/safe-state action of a programmable DC source with device_kind instrument. cap.motion.stop.v1 lists only robot.arm, robot.mobile_base and motion.axis, and cap.device.configure.v1 has minProperties 1, so neither can be the no-input safe-state action required at R2. The extension takes no input and writes OUTP OFF.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the family-config ScpiDriver helper is replaced by a direct Driver over comm.bridge:EAPowerSupply with native.py. The upstream interface is a Python object whose methods issue the SCPI commands and cache the V/I setpoints locally (comm/bridge.py:132-143, comm/bridge.py:299-305); a command table would bypass the native object and its cache. The wire commands are still the upstream's own (VOLT, CURR, OUTP, the MEAS queries through read_meas_fast, OUTP:STAT? and SYST:ERR?). What is covered: measured voltage, current and power; cached voltage and current setpoints; output state; SCPI error code; writes for the voltage setpoint, current setpoint and output relay; the @estop and the safe-state action both write OUTP OFF. R2 is declared because the source delivers 5 kW into the DUT; the independent stop is the x-cap.laristizabal1.output_off.v1 safe-state action because the clone has no vendor-text hardware e-stop. NOT COVERED: no power setpoint is exposed (the native EAPowerSupply has no power command; SCPIController.set_power_fast belongs to another upstream class and is not reachable through this native); no run_profile action (run_profile is on SCPIController, not EAPowerSupply); the DL3000 electronic load (comm/dl3000.py) is not exposed because this package models the source, and the load is a separate USB-TMC instrument. The measured fields come from the upstream MEAS reads; the setpoint fields come from the upstream local cache, not a device readback (the clone never queries the setpoints). The fake's initial values and replies are test data marked '# placeholder'; its measured values follow the cached setpoints only while the output is on. The gate ran the fake backend only: no hardware was attached, no hardware run was made, and no human reviewed or tested the package. reviewed_by is null and the package is model-authored. The last gate run passed G1-G9 with no warnings (evidence contract_checked; never an MHS-Device level).\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (34 to 33); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

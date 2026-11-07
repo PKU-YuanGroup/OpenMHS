@@ -1,0 +1,27 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Baumer VCXU-23C)",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "notes": "Illustrative operator overlay only. It narrows the exposure and gain ranges the driver cites from the clone; it is not a statement about any installed camera and it grants no hardware review.",
+  "devices": {
+    "mhs://localhost/baumer_camera": {
+      "exposure_time_us": {
+        "min": 28,
+        "max": 20000,
+        "unit": "us",
+        "source": "operator",
+        "reason": "example bench choice: 28 us to 20 ms, inside the camera-reported range but not a device specification"
+      },
+      "gain": {
+        "min": 1.0,
+        "max": 64.0,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example bench choice on the camera's own unitless gain scale, narrower than the driver limit"
+      }
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tektronix/curvequery",
+  "track": "labs",
+  "local_path": "labs/tektronix/curvequery",
+  "driver_dir": "MHS/drivers/labs/tektronix__curvequery",
+  "upstream": {
+    "repo_url": "https://github.com/tektronix/curvequery",
+    "commit": "57e59cc076eb41feaa3c606dcc5a68d447b44026",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 25,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": [
+      "curvequery/_tek_series_mso.py:8 MAX_EVENTS = 33"
+    ]
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "capabilities"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/tektronix__curvequery --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

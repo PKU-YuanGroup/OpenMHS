@@ -1,0 +1,36 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:197cb73b6a744259457d18f5d4f81f2ffc2bbebfc3dbabc70a19066d2e459698",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.phamdangnguyen.syringe.v1",
+      "reason": "No catalogue class selects a syringe. The pump's documented 'syr {channel} {code} {index}' line takes a channel, a manufacturer code and an index, while cap.actuation.pump.v1 is a run action taking flow_rate and direction and has no syringe-selection field.",
+      "verb": "invoke",
+      "similar": [
+        "cap.actuation.pump.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.phamdangnguyen.run.v1",
+      "reason": "cap.actuation.pump.v1 requires flow_rate and direction in one invoke. The pump's 'run {a|b|ab}' line takes only a channel and starts the program already configured by the separate 'irate', 'tvolume' and 'ttime' writes; the pump direction is set on the pump itself (README.md:5), so mapping forward/reverse to a channel would be invented.",
+      "verb": "invoke",
+      "similar": [
+        "cap.actuation.pump.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.phamdangnguyen.stop.v1",
+      "reason": "No catalogue stop class binds a fluid.pump: cap.motion.stop.v1 binds robot.arm, robot.mobile_base and motion.axis. The documented 'stop ab' line is write-only in the clone and is the driver's safe-state action and native stop path.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the family:serial / SerialDriver shape was replaced by a direct Driver with native.py. A pump run is not one line: the documented workflow sets 'irate', 'tvolume'/'ttime' and then sends 'run {a|b|ab}', the upstream transport is a shared 'input' buffer written by writeSerial.Write, and no text file states the status reply format, so a command table would bind one line per capability and could not carry a run. The package binds no cap.actuation.pump.v1 because that class requires flow_rate and direction in one invoke; 'run' takes only a channel and the pump direction is set on the pump (README.md:5). The x-cap actions for syr, run and stop are listed in catalogue_requests above.\n\nCovered on the fake backend only: the gate passed G1-G9 with no findings or warnings. No hardware was attached; the hardware backend was never imported or run. The card's mock_strategy prefers a transcript, but the clone contains no recorded exchange and no text file states the status reply format; the fake is therefore a hand-written pyserial-like stand-in, not a recording, and its status text and starting values are placeholders. The driver returns the 'status' reply as raw text (the clone does not state its format), and 'running' is the driver's last run/stop command state, not a parsed device field. Numeric ranges for syringe volume, diameter, target time, target volume, infusion rate and syringe index are operator_required because no text file of the clone states them; site-limits.example.json contains example operator bounds only, not device facts. The hardware serial line uses the upstream constructor defaults (9600 baud, odd parity, two stop bits, seven data bits; realSerial.py:6) and every line setting can be overridden. The G7 command-token transport check is not active for a direct driver; test_driver.py asserts the actual wire lines, and every command token and syntax is taken from tutorial_command_basic.txt and InfuseCode.py. The lock's install block is the card's upstream command; the hardware backend only needs pyserial (README.md:21). The package is model-authored and unreviewed (driver.lock.json reviewed_by is null).\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (227 to 228); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Copied the exact generated task.json after preserving the obsolete abstract Panda draft and recording the USB camera image-scope blocker; changed task.json and RESULT.json (card fields: rank). Package contracts, source pins, gate finding digests, author attribution and human signatures remain unchanged. This metadata synchronization is not a new complete gate collection.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

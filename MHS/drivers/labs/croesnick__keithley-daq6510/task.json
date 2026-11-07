@@ -1,0 +1,78 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.croesnick/keithley-daq6510",
+  "track": "labs",
+  "local_path": "labs/croesnick/keithley-daq6510",
+  "driver_dir": "MHS/drivers/labs/croesnick__keithley-daq6510",
+  "upstream": {
+    "repo_url": "https://github.com/croesnick/keithley-daq6510",
+    "commit": "4c800f325a14a1051819ad089e4b1fc918aab8d4",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 46,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "keithley_daq6510.instrument:Instrument",
+      "file": "src/keithley_daq6510/instrument.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "keithley_daq6510.visa_instrument:VisaInstrument",
+      "file": "src/keithley_daq6510/visa_instrument.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "tests/fixtures/devices.yml:1 pyvisa-sim device file"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Instrument.idn (attribute)"
+    ],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "capabilities"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/croesnick__keithley-daq6510 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

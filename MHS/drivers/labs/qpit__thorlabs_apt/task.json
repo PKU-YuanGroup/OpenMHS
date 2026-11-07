@@ -1,0 +1,107 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.qpit/thorlabs_apt",
+  "track": "labs",
+  "local_path": "labs/qpit/thorlabs_apt",
+  "driver_dir": "MHS/drivers/labs/qpit__thorlabs_apt",
+  "upstream": {
+    "repo_url": "https://github.com/qpit/thorlabs_apt",
+    "commit": "7b5c84607c22684cc896e3c337045b9358ee7c47",
+    "license_spdx": "GPL-2.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 23,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "thorlabs_apt.core:Motor",
+      "file": "thorlabs_apt/core.py",
+      "line": 135,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Motor.get_dc_current_loop_parameters",
+      "Motor.get_dc_joystick_parameters",
+      "Motor.get_dc_motor_output_parameters",
+      "Motor.get_dc_position_loop_parameters",
+      "Motor.get_dc_profile_mode_parameters",
+      "Motor.get_dc_settled_current_loop_parameters",
+      "Motor.get_dc_track_settle_parameters",
+      "Motor.get_hardware_limit_switches",
+      "Motor.get_motor_parameters",
+      "Motor.get_move_home_parameters",
+      "Motor.get_pid_parameters",
+      "Motor.get_stage_axis_info"
+    ],
+    "writes": [
+      "Motor.set_dc_current_loop_parameters",
+      "Motor.set_dc_joystick_parameters",
+      "Motor.set_dc_motor_output_parameters",
+      "Motor.set_dc_position_loop_parameters",
+      "Motor.set_dc_profile_mode_parameters",
+      "Motor.set_dc_settled_current_loop_parameters",
+      "Motor.set_dc_track_settle_parameters",
+      "Motor.set_hardware_limit_switches",
+      "Motor.set_motor_parameters",
+      "Motor.set_move_home_parameters",
+      "Motor.set_pid_parameters",
+      "Motor.set_stage_axis_info"
+    ],
+    "actions": [
+      "Motor.disable",
+      "Motor.enable",
+      "Motor.move_by",
+      "Motor.move_home",
+      "Motor.move_to",
+      "Motor.move_velocity",
+      "Motor.stop_profiled"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/qpit__thorlabs_apt --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

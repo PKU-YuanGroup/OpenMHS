@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.gridinwork/ai-oscilloscope-isds205b",
+  "track": "labs",
+  "local_path": "labs/gridinwork/ai-oscilloscope-isds205b",
+  "driver_dir": "MHS/drivers/labs/gridinwork__ai-oscilloscope-isds205b",
+  "upstream": {
+    "repo_url": "https://github.com/gridinwork/ai-oscilloscope-isds205b",
+    "commit": "cb1bdda97869e5c897d742d6008a8a359128a61a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 75,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "instrustar.device:Scope",
+      "file": "instrustar/device.py",
+      "line": 154,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Scope.get_coupling",
+      "Scope.get_sample_rate",
+      "Scope.get_voltage_resolution",
+      "Scope.has_dds",
+      "Scope.has_hard_trigger",
+      "Scope.has_io",
+      "Scope.has_pretrigger_percent",
+      "Scope.has_roll_mode",
+      "Scope.is_available",
+      "Scope.is_generator_enabled"
+    ],
+    "writes": [
+      "Scope.set_channel_range",
+      "Scope.set_coupling",
+      "Scope.set_generator",
+      "Scope.set_sample_rate",
+      "Scope.set_trigger"
+    ],
+    "actions": [
+      "Scope.capture",
+      "Scope.generator_enable"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.voltage.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/gridinwork__ai-oscilloscope-isds205b --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

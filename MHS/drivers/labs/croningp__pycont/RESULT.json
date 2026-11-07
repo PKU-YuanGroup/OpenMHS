@@ -1,0 +1,15 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:f65203998f3726c69833ed728f26bad8816e12392e7374c00483d5effcfde4a3",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.croningp.terminate.v1",
+      "reason": "the catalogue has no stop or terminate class; the upstream terminate() command stops the current action, and a safe-state extension action is the SAFE-045 independent-stop route this R2 driver uses",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "Not covered: the hardware path (native.py, the serial port, the real C3000 protocol and pacing) was never run; the fake is an in-memory stand-in, not a recording. The package binds the valve-position write, the cap.actuation.pump.v1 action and the x-cap terminate safe-state action; upstream transfer, go_to_volume and EEPROM writes are not exposed. flow_rate and volume are operator_required because the syringe volume and the microstep mode are per-pump configuration; site-limits.example.json is an example, not a statement about an installed pump. No upstream text documents an independent hardware e-stop, so SAFE-045 is met by the safe-state action, which is a software terminate, not a safety-rated stop. DEVIATION FROM THE CARD: the helper field names PythonObjectDriver, but the package uses a direct decorated Driver with a native.py factory (the card decision is still direct-driver) because the pump action needs uL-to-mL and uL/s-to-steps/s conversion, a state read-back and a native terminate safe-state action. The gate ran on the fake backend only; the hardware backend remains refused until a human signs reviewed_by, and nothing here is a hardware test.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (7 to 6); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (pymista Zaber stage)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example overlay only. The numbers are placeholders for one installed stage and are not a statement about any device; replace them with the measured travel (and any bench clearance) of the stage before hardware use. The driver declares both motion inputs operator_required, so without this file every move is refused MHS.SAFETY.LIMITS_UNSET.",
+  "devices": {
+    "mhs://localhost/pymista": {
+      "x-cap.wetenschaap.move_absolute.v1": {
+        "positions": {"min": -100000, "max": 100000, "unit": "um", "source": "operator",
+                      "reason": "example only: the measured travel of the stage at this bench; replace it with the travel and clearance of the installed stage"}
+      },
+      "x-cap.wetenschaap.move_relative.v1": {
+        "displacements": {"min": -100000, "max": 100000, "unit": "um", "source": "operator",
+                          "reason": "example only: the largest single displacement this bench permits per axis; replace it with the travel and clearance of the installed stage"}
+      }
+    }
+  }
+}

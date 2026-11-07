@@ -1,0 +1,124 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.thinksrs/srsinst.sr860",
+  "track": "labs",
+  "local_path": "labs/thinksrs/srsinst.sr860",
+  "driver_dir": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "upstream": {
+    "repo_url": "https://github.com/thinksrs/srsinst.sr860",
+    "commit": "c234ec204329c1682fcc5a77d28164e99cdd1f3e",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:exemplar",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 0,
+  "rank": 2,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "srsinst.sr860.instruments.sr860:SR860",
+      "file": "srsinst/sr860/instruments/sr860.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "srsinst.sr860.instruments.visainterface:VisaInterface",
+      "file": "srsinst/sr860/instruments/visainterface.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "srsinst.sr860.instruments.components:DataStream",
+      "file": "srsinst/sr860/instruments/components.py",
+      "line": 673,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "srsinst.sr860.instruments.vxi11interface:Vxi11Interface",
+      "file": "srsinst/sr860/instruments/vxi11interface.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "srsinst.sr860.instruments.components:Reference2M",
+      "file": "srsinst/sr860/instruments/components.py",
+      "line": 99,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "SR860.get_status",
+      "SR860.capture.get_all_data",
+      "SR860.capture.get_data",
+      "SR860.data.get_channel_values",
+      "SR860.data.get_values",
+      "SR860.display.get_screen",
+      "VisaInterface.get_info",
+      "VisaInterface.get_timeout",
+      "VisaInterface.get_visa_instrument",
+      "VisaInterface.query_text",
+      "VisaInterface.id_string (attribute)",
+      "VisaInterface.operation_complete (attribute)"
+    ],
+    "writes": [
+      "SR860.auto.set_phase",
+      "SR860.auto.set_range",
+      "SR860.auto.set_scale",
+      "VisaInterface.set_timeout"
+    ],
+    "actions": [
+      "SR860.reset",
+      "SR860.capture.start",
+      "SR860.capture.stop",
+      "SR860.scan.pause",
+      "SR860.scan.start",
+      "SR860.stream.start",
+      "SR860.stream.stop",
+      "DataStream.start",
+      "DataStream.stop",
+      "DataStream.data.reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/thinksrs__srsinst.sr860 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

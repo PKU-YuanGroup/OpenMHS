@@ -1,0 +1,49 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:62f65eb60c3026aa7a70d4cb9c7d5db85001226f6032a4394f36834acd9c6d90",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.festo-se.aspirate.v1",
+      "reason": "cap.fluid.aspirate.v1 requires a source {labware, well} object and optional flow_rate, liquid_level_offset and tip fields and its schema has additionalProperties false; the upstream aspirate interface addresses one VAEM valve channel with volume in uL and a configured liquid class and has no labware semantics. The extension binds that real channel-command interface instead of inventing a well the device does not know.",
+      "verb": "invoke",
+      "summary": "Aspirate a volume on one valve channel with a configured liquid class.",
+      "similar": [
+        "cap.fluid.aspirate.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.festo-se.dispense.v1",
+      "reason": "cap.fluid.dispense.v1 requires a target {labware, well} object and publishes blowout, flow_rate and mix_cycles fields that the upstream dispense cannot honor; its schema has additionalProperties false. The upstream dispense takes a VAEM valve channel, a volume in uL and a configured liquid class. The extension binds that real channel-command interface.",
+      "verb": "invoke",
+      "summary": "Dispense a volume on one valve channel with a configured liquid class.",
+      "similar": [
+        "cap.fluid.dispense.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.festo-se.mix.v1",
+      "reason": "cap.fluid.mix.v1 requires a target {labware, well} and a speed, while the upstream mix repeats an aspirate and a dispense on a VAEM valve channel with volume, liquid class and cycles; the class schema has additionalProperties false, so the real command cannot be expressed. The extension binds the channel-command interface.",
+      "verb": "invoke",
+      "summary": "Mix by repeating aspirate and dispense on one valve channel.",
+      "similar": [
+        "cap.fluid.mix.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.festo-se.deactivate.v1",
+      "reason": "No catalogue class expresses the instrument's safe state (release the PGVA pressure to 0 mbar, deselect every VAEM valve and clear the fluid-control status) as an input-free action. cap.motion.stop.v1 is a motion stop with an optional deceleration and does not touch the pressure and valve controllers; a stop-class binding would be a false claim. The extension is the safe-state action.",
+      "verb": "invoke",
+      "summary": "Return the instrument to its safe state.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed the acceptance gate on the fake backend (evidence contract_checked, never an MHS-Device level). No hardware was attached, no hardware backend was run, and no hardware test was performed. The package is model-authored and unreviewed: the loader refuses the R2 hardware backend until a human sets reviewed_by. DEVIATION FROM THE CARD: the card names PythonObjectDriver and expected the family helper; the package is a direct decorated Driver over the card entry symbol fluid_control.cli.session:FluidControlSession (decision direct-driver). A direct Driver is used because the actions take a channel, a volume in uL and a liquid-class key, call the native session, and return an output built from the input; the family's static result map cannot express that. COVERAGE: reads channels, liquid_classes, fluid_status and pressure; write pressure via cap.device.configure.v1 (operator_required, filled by site-limits.example.json); actions x-cap.festo-se.aspirate.v1, x-cap.festo-se.dispense.v1 and x-cap.festo-se.mix.v1; safe-state action x-cap.festo-se.deactivate.v1; @estop calls the session's set_pressure(0). NOT COVERED: tip handling (pickup_tips/eject_tips), raw direct_command/valve_timed calibration moves, the set_new_calibration write, multi-channel commands in one action call (the extension is single-channel), and gantry-dependent motion (move_axis/raise_arm/home/where) because it needs an externally supplied mounted gantry/axis and the clone states no travel bound. The fake has two active channels and two liquid classes and pressure 0 as test data only; every such value is marked placeholder and none is a Fact or a Limit. All numeric limits are operator_required: the clone documents units and the calibration model but never the pressure range, the configured channel set, a volume range or a cycle bound; site-limits.example.json is an example overlay only. SAFETY: the clone documents no independent hardware e-stop, so estop_physical_ref is absent and no safety-rated stop is claimed; the @estop and the safe-state action release the output pressure to the neutral 0 mbar and the safe-state action also deselects every valve. set_pressure issues the pressure command before polling, but it can wait up to the upstream 30 second timeout if the reading never reaches the target, and the synchronous upstream aspirate/dispense/mix calls share the same PGVA/VAEM controllers with no cancellation hook, so a running operation is not preempted by the e-stop and its controller call can contend with the e-stop; the e-stop path was never exercised on hardware. The hardware factory takes the instrument config and the concrete engine class and was never imported or run by the gate.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The card needs the owner's publication decision (publish_review required: the licence is proprietary); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (32 to 31); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

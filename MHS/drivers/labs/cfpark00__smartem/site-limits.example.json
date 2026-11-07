@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example site for the SmartEM Verios driver",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only: replace every bound with the envelope of the deployed column and stage. These values are illustrative and are not device facts or a statement about any instrument.",
+  "devices": {
+    "mhs://localhost/smartem-verios": {
+      "x-cap.cfpark00.acquire_image.v1": {
+        "width": {"min": 1, "max": 4096, "unit": "1", "source": "operator",
+                  "reason": "example scanning width of the deployed column"},
+        "height": {"min": 1, "max": 4096, "unit": "1", "source": "operator",
+                   "reason": "example scanning height of the deployed column"},
+        "dwell_time": {"min": 1e-9, "max": 1e-6, "unit": "s", "source": "operator",
+                       "reason": "example dwell-time envelope of the deployed detector"},
+        "pixel_size": {"min": 1e-12, "max": 1e-6, "unit": "1", "source": "operator",
+                       "reason": "example pixel-size envelope of the deployed column"}
+      },
+      "x-cap.cfpark00.move_stage.v1": {
+        "x": {"min": -1e-3, "max": 1e-3, "unit": "1", "source": "operator",
+              "reason": "example stage envelope in the native raw unit"},
+        "y": {"min": -1e-3, "max": 1e-3, "unit": "1", "source": "operator",
+              "reason": "example stage envelope in the native raw unit"},
+        "z": {"min": -1e-3, "max": 1e-3, "unit": "1", "source": "operator",
+              "reason": "example stage envelope in the native raw unit"},
+        "r": {"min": -1, "max": 1, "unit": "1", "source": "operator",
+              "reason": "example stage rotation envelope in the native raw unit"},
+        "t": {"min": -1, "max": 1, "unit": "1", "source": "operator",
+              "reason": "example stage tilt envelope in the native raw unit"}
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Ocean Optics spectrometer)",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "devices": {
+    "mhs://localhost/seabreeze-spectrometer": {
+      "cap.measure.intensity.v1": {
+        "wavelength_nm": {
+          "min": 200,
+          "max": 1100,
+          "unit": "nm",
+          "source": "operator",
+          "reason": "example: the samples on this bench emit between 200 and 1100 nm; the detector's calibrated range depends on its model"
+        },
+        "integration_ms": {
+          "min": 1,
+          "max": 65000,
+          "unit": "ms",
+          "source": "operator",
+          "reason": "example: this bench integrates for 1 to 65000 ms; the device's own range depends on its model and is read from the device, not stated in the clone"
+        }
+      },
+      "x-cap.ap.set_integration_time.v1": {
+        "integration_ms": {
+          "min": 1,
+          "max": 65000,
+          "unit": "ms",
+          "source": "operator",
+          "reason": "example: this bench integrates for 1 to 65000 ms; the device's own range depends on its model and is read from the device, not stated in the clone"
+        }
+      }
+    }
+  }
+}

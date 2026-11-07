@@ -1,0 +1,77 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tomwphillips/pumpy",
+  "track": "labs",
+  "local_path": "labs/tomwphillips/pumpy",
+  "driver_dir": "MHS/drivers/labs/tomwphillips__pumpy",
+  "upstream": {
+    "repo_url": "https://github.com/tomwphillips/pumpy",
+    "commit": "3e49d71a73d23ea6f16082109bd4fac90a69119b",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 58,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pumpy:PHD2000",
+      "file": "pumpy.py",
+      "line": 271,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pumpy:Pump",
+      "file": "pumpy.py",
+      "line": 38,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "PHD2000.stop",
+      "Pump.stop"
+    ],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "capabilities"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/tomwphillips__pumpy --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

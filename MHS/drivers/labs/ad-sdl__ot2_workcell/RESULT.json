@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "notes": "BLOCKED on HELPER_MISSING. The pinned OT2ProtocolManager exists at ot2_controller/ot2_controller/protocol_manager.py:50 but runs an external ot2_driver_pkg protocol engine through a blocking Python call. The selected task requires actual protocol transfer/execution and lifecycle ownership, not only status or health endpoints. The owned tree does not provide a source-complete transport, cancellation, independent stop or retained protocol ownership contract that the current helper can bind. No fabricated endpoint or Python wrapper is submitted. Only a missing-layout diagnostic gate is recorded. Native protocol execution, robot operation and the external engine remain untested.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Retain blocked; external protocol engine ownership and primary execution remain unresolved. Complete fake/diagnostic gate remains rejected at G1, G2, G3, G9. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: RESULT.json, check-report.json. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged.",
+  "gate": {
+    "digest": "sha256:b01cdc0c26acf527447b359db8ddd50a4c8e71237e5e7e7f0ce4163255402c4f",
+    "failed": [
+      "G1",
+      "G2",
+      "G3",
+      "G9"
+    ],
+    "report": "check-report.json"
+  }
+}

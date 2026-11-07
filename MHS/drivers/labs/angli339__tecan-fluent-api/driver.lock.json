@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.angli339/tecan-fluent-api",
+  "upstream": {
+    "repo_url": "https://github.com/angli339/tecan-fluent-api",
+    "commit": "d087edd9a4cd415961c8337fc82a300bf24fda11",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [],
+    "system_deps": ["pythonnet", "Tecan.VisionX.API.V2 .NET library and a running FluentControl (Windows)"],
+    "gpu": false,
+    "platform": "windows",
+    "notes": "README.md:26-36 names pythonnet as the only Python dependency and expects Tecan.VisionX.API.V2.dll under C:/Program Files (x86)/Tecan/FluentControl; the upstream imports clr at import time (tecan_fluent/tecan_ctrl.py:1-7). The upstream package is imported by native.py only; the gate never installs or imports it."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeTecan"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-183",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

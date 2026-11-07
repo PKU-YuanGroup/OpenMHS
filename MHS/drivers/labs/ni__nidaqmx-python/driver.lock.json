@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.ni/nidaqmx-python",
+  "upstream": {
+    "repo_url": "https://github.com/ni/nidaqmx-python",
+    "commit": "04211cd36322a1fa2269c7d6edd63b6051daf034",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.9,<4.0",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The card's install step is 'pip install .'. The upstream package is imported by native.py only and the clone is never installed here; the gate never imports it. Its hardware backend also needs the proprietary NI-DAQmx driver installed on the host, which is never present in this package's checks."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeTask"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "pilot2-003",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

@@ -1,0 +1,128 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.akperuht/pydaq",
+  "track": "labs",
+  "local_path": "labs/akperuht/pydaq",
+  "driver_dir": "MHS/drivers/labs/akperuht__pydaq",
+  "upstream": {
+    "repo_url": "https://github.com/akperuht/pydaq",
+    "commit": "edb7584d00891aa0f1a0ef483d12d1d59ab4f794",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 43,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "Control_lib.instrument_control:SR810_30_lockin",
+      "file": "Control_lib/instrument_control.py",
+      "line": 290,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Control_lib.instrument_control:PN300",
+      "file": "Control_lib/instrument_control.py",
+      "line": 1637,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Control_lib.instrument_control:AVS47",
+      "file": "Control_lib/instrument_control.py",
+      "line": 2074,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Control_lib.instrument_control:pynskabox",
+      "file": "Control_lib/instrument_control.py",
+      "line": 53,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Control_lib.instrument_control:Anritsu68367C",
+      "file": "Control_lib/instrument_control.py",
+      "line": 2396,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "SR810_30_lockin.get_display_output",
+      "SR810_30_lockin.get_freq_ampl",
+      "SR810_30_lockin.get_oexp",
+      "SR810_30_lockin.get_ref_source",
+      "SR810_30_lockin.get_sens",
+      "SR810_30_lockin.get_sens_voltage",
+      "SR810_30_lockin.get_tau_slope",
+      "SR810_30_lockin.read_output",
+      "SR810_30_lockin.read_settings",
+      "PN300.get_operating_mode",
+      "PN300.get_protection",
+      "PN300.get_source"
+    ],
+    "writes": [
+      "SR810_30_lockin.set_display_output",
+      "SR810_30_lockin.set_expand",
+      "SR810_30_lockin.set_freq_ampl",
+      "SR810_30_lockin.set_offset",
+      "SR810_30_lockin.set_ref_source",
+      "SR810_30_lockin.set_sens",
+      "SR810_30_lockin.set_tau_slope",
+      "PN300.set_current",
+      "PN300.set_operating_mode",
+      "PN300.set_protection",
+      "PN300.set_source",
+      "PN300.set_voltage"
+    ],
+    "actions": [
+      "PN300.disable_output",
+      "PN300.enable_output",
+      "PN300.reset",
+      "AVS47.disable_remote",
+      "AVS47.enable_remote",
+      "AVS47.measure"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.voltage.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/akperuht__pydaq --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

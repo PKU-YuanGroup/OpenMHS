@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:3df801ea63e15920b9a2bc500e6486bfff3b6d220d62efcd6f0ddcc1dbb26ec4",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.aics-int.live_mode_start.v1",
+      "reason": "The catalogue has no class for starting a ZEN live preview; cap.imaging.capture.v1 and cap.sensing.image.v1 describe a still-image artifact and its pixel dimensions, which this connector action does not produce.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.aics-int.live_mode_stop.v1",
+      "reason": "The catalogue has no class for stopping a live preview; the class is also the safe-state action that stops ZEN live acquisition.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.aics-int.snap_image.v1",
+      "reason": "cap.imaging.capture.v1 requires image_ref plus width and height. The upstream snap_image only stores the ZenImage in self.image; the connector exposes pixel dimensions only after saving and parsing a CZI, so this package reports the scalar acquisition result instead of inventing image fields.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: a direct Driver over microscope_automation.connectors.connect_zen_blue:ConnectMicroscope instead of the card's PythonObjectDriver helper. The card's Pump, Camera and Stage classes take a ZEN COM communication_object on every method; the connector is the object that owns the ZEN application and needs no injected communication object. The package binds only the observational part (stage x/y, objective name/position, microscope name, live state) and the live/snap actions. It does not bind move_stage_to, move_focus_to, switch_objective or trigger_pump: the clone states no stage/focus travel range and no pump duration bound, and the connector's stop() only logs, so those actuators would have no documented independent stop. R1 covers the bound capabilities only; the unbound actuators are not started by this package. The e-stop and the safe-state action both call the native live_mode_stop; no physical e-stop is documented in the clone, so estop_physical_ref is not set. NOT COVERED: the image array. The fake returns only an acquired flag and a stand-in ZEN image object; it is an in-memory fake, not a recording. The upstream image size and the CZI pixel data are not exposed. The hardware backend (native.py) was never run and no human reviewed or tested this package; reviewed_by is null in driver.lock.json. An unreviewed model-written R1 package is not protected by the R2/R3 hardware-backend refusal. The gate warning G8.SAFE014_NOT_APPLICABLE is expected: the driver declares no Limit because its only inputs are optional experiment names and it exposes no numeric write or invoke input.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

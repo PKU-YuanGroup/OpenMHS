@@ -1,0 +1,42 @@
+{
+  "status": "blocked",
+  "gate": {
+    "digest": "sha256:762413d082a37b7c63fb0415f033e84908e4c4956a60936ca022d274c1b9830b",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  },
+  "notes": "DEVIATION FROM THE CARD: a direct Driver, not PyLabRobotDriver. RemoteSTARBackend is a ConnectRPC client that acts as a drop-in replacement for a PyLabRobot STARBackend (src/client/py/pylabrobot_protobuf_client/star/__init__.py:21-31); the upstream holds no LiquidHandler, deck, tip tracking or volume tracking, so no PlrProfile can describe it. The card's helper documentation itself assigns a remote service without a PyLabRobot front end to a direct Driver. The fake is an in-process analytic stand-in, not a recording and not a transcript; every number and string in it is a placeholder and it models no motion, fluid, service, transport, timing or safety interlock. Hardware was not constructed or run: native.py imports pylabrobot_protobuf_client (which imports PyLabRobot) only inside connect, the card install block has no commands, and neither package is installed in this workspace; the package is model-authored, reviewed_by is null, and the loader refuses its hardware backend at R2 until a human signs. LIMITS: every numeric action input is Limit.operator_required because the pinned clone is a protocol layer and states no numeric range or unit for the raw low-level fields. site-limits.example.json is explicitly an example with wide placeholder bounds, not an instrument envelope; it must be replaced by the operator of the installed STAR. The 12 G8.NO_UNIT warnings are expected and not a claim: the clone states no unit for these raw integer fields, so this package does not invent one. SAFETY: @estop and the x-cap.koeng101.halt.v1 safe-state action both send RemoteSTARBackend.halt, which the service forwards to STARBackend.halt (src/service/py/pylabrobot_protobuf_service/star/_misc.py:177-179). The pinned clone does not document what halt does to a sequence already in process; no quiescence is claimed and the safe_state sentence says so. No independent physical e-stop line exists in the clone, so the safe-state action is the SAFE-045 route; the package does not claim a hardware e-stop. test_driver.py adds a failing-native-halt case and expects MHS.SAFETY.SAFE_STATE_UNREACHED. NOT COVERED: high-level PyLabRobot pick-up/drop and SingleChannelAspiration operations, 96-head and core-96 pipetting, iSWAP and CoRe gripper moves, autoload, the ResourceService deck/well model, well-level coordinates, multi-channel tip patterns (the low-level actions send one selected channel and mark the others False), flow/liquid classes and offsets, and any hardware validation. The actions expose only the low-level firmware aspirate_pip, dispense_pip, move_channel_x/y/z and move_all_channels_in_z_safety paths, which preserve the remote STAR's motion and fluid control but not the full STARService. Gate: backend fake; G1-G7 and G9 pass, G8 warns with 12 NO_UNIT warnings.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked the direct Driver over RemoteSTARBackend against the client and service sources and the readiness evidence (helpers-plr-mav-lerobot section 7: no deck in the clone; Halt through a synchronous client). The author's pass rests on the Halt RPC as e-stop and safe-state action, but the service forwards it to PyLabRobot's STARBackend.halt, which is not in the clone, and every RemoteSTARBackend method is an async def that calls the synchronous STARServiceClientSync (halt without a timeout_ms), so Halt cannot be sent while an aspirate, dispense or move RPC holds the driver's event loop; the non-blocking fake hid this (a probe with a blocking aspirate shows the e-stop answering unreached before Halt was sent). The reviewer made the e-stop send Halt and raise SAFE_STATE_UNREACHED with the latch held, removed safe_state=True from halt, added a block_s switch to the fake and a blocking-RPC test, widened two facts and added four, and changed driver.py, fake.py, test_driver.py and facts.md, regenerating reference.json, REFERENCE.md and check-report.json. The gate now fails G3 SAFE-045 at R2, the expected blocked state (stable digest sha256:762413d082a37b7c63fb0415f033e84908e4c4956a60936ca022d274c1b9830b). Matches the readiness prediction. For the human reviewer: A real Hamilton STAR (R2: pipetting and channel motion). The driver's setup runs the Setup RPC (STARBackend.setup, the instrument initialisation) when the backend is first used. The low-level aspirate_pip/dispense_pip calls send eight-element channel lists next to many one-element defaults. Unblocking needs a source-proven halt (PyLabRobot at a pinned commit, or a human-cited physical stop) sent from a client that does not block the event loop; the PyLabRobotDriver route also needs an operator-defined deck.",
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.koeng101.aspirate_pip.v1",
+      "reason": "No catalogue class carries the STAR low-level aspirate_pip parallel lists; cap.fluid.aspirate.v1 needs labware/well coordinates and a PyLabRobot LiquidHandler front end the card's entry class does not hold.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.koeng101.dispense_pip.v1",
+      "reason": "No catalogue class carries the STAR low-level dispense_pip parallel lists; cap.fluid.dispense.v1 needs labware/well coordinates and a PyLabRobot LiquidHandler front end the card's entry class does not hold.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.koeng101.move_channel.v1",
+      "reason": "The catalogue's cap.motion.joint_position.v1 is joint-space motion in rad; this is the STAR client's per-channel Cartesian axis move with a raw native position and no joint vector.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.koeng101.move_all_channels_in_z_safety.v1",
+      "reason": "The catalogue has no no-input all-channel Z-safety command; cap.motion.stop.v1 takes a deceleration and reports a stopped position, which this upstream command does not.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.koeng101.halt.v1",
+      "reason": "The only native stop route is the upstream Halt RPC, which takes no input and reports no stopped position; cap.motion.stop.v1 requires a deceleration and a stopped-state output the upstream does not provide.",
+      "verb": "invoke"
+    }
+  ],
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH",
+    "HELPER_MISSING"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (ZEUS module)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/zeus": {
+      "x-cap.nicholasmorrow.move_z.v1": {
+        "position": {"min": 0, "max": 1800, "source": "operator",
+                     "reason": "example: the Z-drive travel configured for this bench; the operator must confirm it"}
+      },
+      "x-cap.nicholasmorrow.pick_tip.v1": {
+        "tip_type": {"min": 0, "max": 15, "source": "operator",
+                     "reason": "example: the tip type table indices configured on this unit"},
+        "deck_geometry": {"min": 0, "max": 15, "source": "operator",
+                          "reason": "example: the deck geometry table indices configured on this unit"}
+      },
+      "x-cap.nicholasmorrow.discard_tip.v1": {
+        "deck_geometry": {"min": 0, "max": 15, "source": "operator",
+                          "reason": "example: the deck geometry table indices configured on this unit"}
+      },
+      "x-cap.nicholasmorrow.aspirate.v1": {
+        "volume": {"min": 1, "max": 1000, "source": "operator",
+                   "reason": "example: the volume range this bench's tips allow; the operator must confirm it"},
+        "container_geometry": {"min": 0, "max": 15, "source": "operator",
+                               "reason": "example: the container geometry table indices configured on this unit"},
+        "deck_geometry": {"min": 0, "max": 15, "source": "operator",
+                          "reason": "example: the deck geometry table indices configured on this unit"},
+        "liquid_class": {"min": 0, "max": 15, "source": "operator",
+                         "reason": "example: the liquid class table indices configured on this unit"}
+      },
+      "x-cap.nicholasmorrow.dispense.v1": {
+        "volume": {"min": 1, "max": 1000, "source": "operator",
+                   "reason": "example: the volume range this bench's tips allow; the operator must confirm it"},
+        "container_geometry": {"min": 0, "max": 15, "source": "operator",
+                               "reason": "example: the container geometry table indices configured on this unit"},
+        "deck_geometry": {"min": 0, "max": 15, "source": "operator",
+                          "reason": "example: the deck geometry table indices configured on this unit"},
+        "liquid_class": {"min": 0, "max": 15, "source": "operator",
+                         "reason": "example: the liquid class table indices configured on this unit"}
+      }
+    }
+  }
+}

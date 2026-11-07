@@ -1,0 +1,50 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:64f83ac5762fe501a07eaa5852b6c37f3860cf7838ecc7398be781e0a6f76a32",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.vadter.set_generator_waveform.v1",
+      "reason": "No catalogue class carries a waveform-generator byte pattern. cap.device.configure.v1 is the write class, but its binding is the resource-state patch of writable fields and cannot express a 62-byte maximum length with a per-element bound; this action sends the waveform through the upstream set_generator_waveform and reports the length and a checksum of the bytes sent.",
+      "verb": "invoke",
+      "summary": "Send a generator waveform (at most 62 bytes, each at most 0b1111_1111).",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.vadter.pause.v1",
+      "reason": "No catalogue class starts a keep-alive pause on a USB instrument. cap.motion.stop.v1 and cap.motion.estop.v1 are motion stops, not a keep-alive start; this extension starts the upstream pause thread and reports the paused state.",
+      "verb": "invoke",
+      "summary": "Start the upstream keep-alive pause thread.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.vadter.resume.v1",
+      "reason": "No catalogue class stops a keep-alive pause thread on an instrument; cap.motion.stop.v1 is a motion stop. This extension calls the upstream cancel_pause and reports the paused state.",
+      "verb": "invoke",
+      "summary": "Stop the upstream keep-alive pause thread.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.vadter.generator_off.v1",
+      "reason": "No catalogue stop class fits a waveform generator: cap.motion.stop.v1 is a motion stop and names motion resource kinds. This extension switches the generator outputs off, stops the keep-alive pause thread, and is the safe-state action for this R1 hardware driver.",
+      "verb": "invoke",
+      "summary": "Switch the generator off and stop the keep-alive pause thread (the safe state).",
+      "similar": [
+        "cap.motion.stop.v1",
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend with python3 -m mhs.driver check MHS/drivers/labs/vadter__hantek1008c --backend fake (exit 0, all gates G1 to G9, no findings or warnings; check-report.json). Evidence is contract_checked, never an MHS-Device level. Model-authored by deepseek-v4.1-flash:1017 (run wP-041) and unreviewed: driver.lock.json reviewed_by is null; no human reviewed or tested this package and no hardware run is claimed.\n\nDEVIATION FROM THE CARD: the package is a direct Driver over pyhantek1008C:Hantek1008 (the card's decision), not the PythonObjectDriver family helper named in the card's helper field, because the R1 hardware contract needs the decorated @estop and safe-state action. The entry symbols were confirmed in the clone: Hantek1008 at pyhantek1008C.py:782 and Hantek1008CRaw at pyhantek1008C.py:39.\n\nCovered: resource-state reads for active_channels (zero-based ids 0 to 7), time (the real 500-point time axis in seconds), vscales (one vertical scale factor per channel), generator_waveform_max_length (1440), paused, and the last commanded generator_on and generator_speed; cap.device.configure.v1 writes for generator_on and generator_speed, with generator_speed limited to 1 to 750000 rpm by the upstream assertion at pyhantek1008C.py:641; the extensions set_generator_waveform (at most 62 bytes, each at most 0b1111_1111), pause, resume and generator_off; the e-stop and the safe-state action both stop the keep-alive thread and call set_generator_on(False).\n\nThe generator_on and generator_speed reads report the last value this driver commanded, because the upstream class has no getter for either (pyhantek1008C.py:632-636); after construction the upstream init1 leaves the generator off at 300000 rpm (pyhantek1008C.py:332-333). The fake starts from those values and returns 500 time points, the same 500-point size as the real time axis; its other starting values and waveform bytes are placeholder test data, never Facts, Limits or references.\n\nNOT COVERED: the sample arrays of request_samples_burst_mode and request_samples_roll_mode. The clone returns per-channel sample lists (or a time axis plus samples); no catalogue class carries a trace array, so this package serves the settings and status scalars and does not transfer samples. Also not bound: get_vscale(channel_id), get_zero_offset(channel_id) and get_zero_offsets(), because a @read takes no input and the zero-offset table is keyed by float scale factors. The upstream README says the offset problem is not solved (README.md:6).\n\nnative.py imports the upstream only on the operator-enabled hardware backend and was never imported or run here; the acceptance gate and the fake use only the package fake. The upstream README lists pyusb, overrides, matplotlib and pyqtgraph as dependencies (README.md:1); nothing was installed. The e-stop is a software stop at R1: it switches the generator outputs off and stops the keep-alive pause thread. No line of the clone documents an independent hardware e-stop, so estop_physical_ref is not set and none is claimed. The loader refuses the hardware backend of a model-written package only at R2 and R3, so this R1 package is not protected by that rule; use its hardware backend only with a person at the device.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (362 to 363); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

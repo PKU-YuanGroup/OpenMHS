@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (pico-mcp)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/picoscope-5000a": {
+      "x-cap.schimmilab.set_signal_generator.v1": {
+        "frequency_hz": {"min": 1, "max": 1000000, "unit": "Hz", "source": "operator",
+                         "reason": "example: this bench drives the AWG from 1 Hz to 1 MHz"},
+        "amplitude_v": {"min": 0.001, "max": 5, "unit": "V", "source": "operator",
+                        "reason": "example: the device under test tolerates at most 5 V peak"}
+      },
+      "x-cap.schimmilab.capture_block.v1": {
+        "samples": {"min": 100, "max": 100000, "unit": "1", "source": "operator",
+                    "reason": "example: the bench captures between 100 and 100000 samples per block"},
+        "timebase": {"min": 1, "max": 1000, "unit": "1", "source": "operator",
+                     "reason": "example: the bench uses timebases 1 to 1000"},
+        "trigger_mv": {"min": -20000, "max": 20000, "unit": "mV", "source": "operator",
+                       "reason": "example: trigger levels stay within the +/-20 V input window of the scope"}
+      }
+    }
+  }
+}

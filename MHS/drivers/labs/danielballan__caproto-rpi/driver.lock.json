@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.danielballan/caproto-rpi",
+  "upstream": {
+    "repo_url": "https://github.com/danielballan/caproto-rpi",
+    "commit": "3642405070a513369de87c7c684962cbd148bcff",
+    "license_spdx": "NOASSERTION"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The fake backend needs only the SDK. The hardware backend imports caproto (the upstream requirements.txt) and needs the operator's state_prefix and color_prefix; it never starts before a human hardware review."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeCaprotoRpi"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "helper-wave-1-028",
+    "date": "2026-11-05"
+  },
+  "reviewed_by": null
+}

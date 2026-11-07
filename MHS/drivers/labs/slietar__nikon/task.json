@@ -1,0 +1,96 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.slietar/nikon",
+  "track": "labs",
+  "local_path": "labs/slietar/nikon",
+  "driver_dir": "MHS/drivers/labs/slietar__nikon",
+  "upstream": {
+    "repo_url": "https://github.com/slietar/nikon",
+    "commit": "d53b4e261ae487f237a65048cf1931a40e39794b",
+    "license_spdx": "EUPL-1.2",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 52,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "nikon.microscope:MicroscopeDevice",
+      "file": "nikon/microscope.py",
+      "line": 94,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "MicroscopeDevice.get_condenser_label",
+      "MicroscopeDevice.get_condenser_labels",
+      "MicroscopeDevice.get_event",
+      "MicroscopeDevice.get_filter_label",
+      "MicroscopeDevice.get_filter_labels",
+      "MicroscopeDevice.get_firmware_cpu_version",
+      "MicroscopeDevice.get_objective_info",
+      "MicroscopeDevice.get_objective_infos",
+      "MicroscopeDevice.get_optical_path_label",
+      "MicroscopeDevice.get_optical_path_labels",
+      "MicroscopeDevice.get_stable_status",
+      "MicroscopeDevice.get_status"
+    ],
+    "writes": [
+      "MicroscopeDevice.set_button_function",
+      "MicroscopeDevice.set_condenser",
+      "MicroscopeDevice.set_dia",
+      "MicroscopeDevice.set_filter",
+      "MicroscopeDevice.set_light",
+      "MicroscopeDevice.set_objective",
+      "MicroscopeDevice.set_optical_path",
+      "MicroscopeDevice.set_shutter",
+      "MicroscopeDevice.set_x",
+      "MicroscopeDevice.set_y",
+      "MicroscopeDevice.set_z"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/slietar__nikon --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

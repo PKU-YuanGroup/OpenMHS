@@ -1,0 +1,86 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.czbiohub-sf/reglo-icc-pump-control",
+  "track": "labs",
+  "local_path": "labs/czbiohub-sf/reglo-icc-pump-control",
+  "driver_dir": "MHS/drivers/labs/czbiohub-sf__reglo-icc-pump-control",
+  "upstream": {
+    "repo_url": "https://github.com/czbiohub-sf/reglo-icc-pump-control",
+    "commit": "af0f8648a56512cad67af26068830e65754ead5e",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 44,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "reglo_icc_pump._driver:RegloIccPump",
+      "file": "reglo_icc_pump/_driver.py",
+      "line": 17,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "RegloIccPump.get_max_flow_rate",
+      "RegloIccPump.is_running"
+    ],
+    "writes": [
+      "RegloIccPump.set_tubing_id"
+    ],
+    "actions": [
+      "RegloIccPump.aspirate_vol",
+      "RegloIccPump.dispense_vol",
+      "RegloIccPump.pump_addr",
+      "RegloIccPump.pump_vol",
+      "RegloIccPump.stop",
+      "RegloIccPump.wait_for_stop"
+    ],
+    "candidate_classes": [
+      "cap.actuation.pump.v1",
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/czbiohub-sf__reglo-icc-pump-control --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

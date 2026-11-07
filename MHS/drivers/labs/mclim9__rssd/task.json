@@ -1,0 +1,123 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mclim9/rssd",
+  "track": "labs",
+  "local_path": "labs/mclim9/rssd",
+  "driver_dir": "MHS/drivers/labs/mclim9__rssd",
+  "upstream": {
+    "repo_url": "https://github.com/mclim9/rssd",
+    "commit": "7b040ee12841e721953a1f737297586135c0c110",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 13,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "rssd.RSI.RSI_Memory:RSI",
+      "file": "rssd/RSI/RSI_Memory.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rssd.FileIO:FileIO",
+      "file": "rssd/FileIO.py",
+      "line": 5,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rssd.PNA.Common:PNA",
+      "file": "rssd/PNA/Common.py",
+      "line": 4,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rssd.VNA.Common:VNA",
+      "file": "rssd/VNA/Common.py",
+      "line": 5,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rssd.NRQ.Common:NRQ",
+      "file": "rssd/NRQ/Common.py",
+      "line": 4,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [
+      "RSI.Get_File",
+      "RSI.Get_dir",
+      "RSI.Get_dirInfo",
+      "PNA.Get_AttnMech",
+      "PNA.Get_Channels",
+      "PNA.Get_Freq",
+      "PNA.Get_FreqLock",
+      "PNA.Get_Harm_Values",
+      "PNA.Get_IFOvld",
+      "PNA.Get_Mkr_Freq",
+      "PNA.Get_Mkr_XY",
+      "PNA.Get_Mkr_Y"
+    ],
+    "writes": [
+      "RSI.Set_Copy",
+      "RSI.Set_Dir",
+      "RSI.Set_FileCreate",
+      "RSI.Set_FileDel",
+      "RSI.Set_FileWrite",
+      "RSI.Set_Filename",
+      "RSI.Set_Move",
+      "FileIO.set_filename",
+      "PNA.Set_AttnAuto",
+      "PNA.Set_AttnMech",
+      "PNA.Set_Autolevel",
+      "PNA.Set_Autolevel_Proto"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/mclim9__rssd --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

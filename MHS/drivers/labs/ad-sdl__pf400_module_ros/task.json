@@ -1,0 +1,105 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ad-sdl/pf400_module_ros",
+  "track": "labs",
+  "local_path": "labs/ad-sdl/pf400_module_ros",
+  "driver_dir": "MHS/drivers/labs/ad-sdl__pf400_module_ros",
+  "upstream": {
+    "repo_url": "https://github.com/ad-sdl/pf400_module_ros",
+    "commit": "dad325c4bf86efda3b81f98d33837ec5ce21fc0c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 29,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pf400_driver.pf400_driver.tcp_driver:PF400",
+      "file": "pf400_driver/pf400_driver/tcp_driver.py",
+      "line": 12,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pf400_client/TCP_client/dummy_server.py:1"
+    ],
+    "upstream_tests": "pf400_camera_client/test"
+  },
+  "hints": {
+    "reads": [
+      "PF400.get_cartesian_coordinates",
+      "PF400.get_gripper_lenght",
+      "PF400.get_gripper_state",
+      "PF400.get_joint_states",
+      "PF400.get_overall_state",
+      "PF400.get_robot_movement_state",
+      "PF400.commandLock (attribute)"
+    ],
+    "writes": [
+      "PF400.set_gripper_close",
+      "PF400.set_gripper_open",
+      "PF400.set_plate_rotation",
+      "PF400.set_profile",
+      "PF400.set_motion_blend_tolerance",
+      "PF400.set_move_command",
+      "PF400.set_robot_mode",
+      "PF400.set_speed"
+    ],
+    "actions": [
+      "PF400.disable_power",
+      "PF400.enable_power",
+      "PF400.home_robot",
+      "PF400.move_all_joints_neutral",
+      "PF400.move_arm_neutral",
+      "PF400.move_cartesian",
+      "PF400.move_gripper_neutral",
+      "PF400.move_gripper_safe_zone",
+      "PF400.move_in_one_axis",
+      "PF400.move_in_one_axis_from_target",
+      "PF400.move_joint",
+      "PF400.move_multiple_joint"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.manipulation.grasp.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ad-sdl__pf400_module_ros --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.dayr3n33/instruments",
+  "track": "labs",
+  "local_path": "labs/dayr3n33/instruments",
+  "driver_dir": "MHS/drivers/labs/dayr3n33__instruments",
+  "upstream": {
+    "repo_url": "https://github.com/dayr3n33/instruments",
+    "commit": "f7198e92172c7e069af7c79ebf7ed91c7fe25ef4",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 18,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "instruments.ismatec.ismatec:Ismatec",
+      "file": "src/instruments/ismatec/ismatec.py",
+      "line": 20,
+      "confidence": "override"
+    },
+    {
+      "symbol": "instruments.ika.ika:Ika",
+      "file": "src/instruments/ika/ika.py",
+      "line": 20,
+      "confidence": "override"
+    },
+    {
+      "symbol": "instruments.bronkhorst.bronkhorst:Bronkhorst",
+      "file": "src/instruments/bronkhorst/bronkhorst.py",
+      "line": 19,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "src/tests"
+  },
+  "hints": {
+    "reads": [
+      "Ika.get_rate_PV",
+      "Ika.get_rate_SP",
+      "Ismatec.get_flowrate"
+    ],
+    "writes": [
+      "Ika.set_rate",
+      "Ismatec.set_flowrate"
+    ],
+    "actions": [
+      "Ika.start",
+      "Ika.stop",
+      "Ismatec.start",
+      "Ismatec.stop"
+    ],
+    "candidate_classes": [
+      "cap.actuation.pump.v1",
+      "cap.fluid.dispense.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/dayr3n33__instruments --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,115 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.hslarson/speck-lab-goniometer",
+  "track": "labs",
+  "local_path": "labs/hslarson/speck-lab-goniometer",
+  "driver_dir": "MHS/drivers/labs/hslarson__speck-lab-goniometer",
+  "upstream": {
+    "repo_url": "https://github.com/hslarson/speck-lab-goniometer",
+    "commit": "9ca84d8c8c6c6ec9f9f3a3bd3cd968fc6657a803",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 24,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "components.motors:ZaberRotaryStage",
+      "file": "src/components/motors.py",
+      "line": 44,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "components.motors:ZaberLinearStage",
+      "file": "src/components/motors.py",
+      "line": 109,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "components.pyCCT.pyCCT:SpectrometerWrapper",
+      "file": "src/components/pyCCT/pyCCT.py",
+      "line": 222,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "components.pyCCT.pyCCT:PyCCT",
+      "file": "src/components/pyCCT/pyCCT.py",
+      "line": 16,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "ZaberRotaryStage.get_angle",
+      "ZaberLinearStage.get_position",
+      "SpectrometerWrapper.get_device_id",
+      "SpectrometerWrapper.get_hardware_average",
+      "SpectrometerWrapper.get_input_hw_trigger_state",
+      "SpectrometerWrapper.get_manual_exposure",
+      "SpectrometerWrapper.get_output_hw_trigger_delay",
+      "SpectrometerWrapper.get_use_amplitude_correction"
+    ],
+    "writes": [
+      "ZaberRotaryStage.set_angle",
+      "ZaberLinearStage.set_position",
+      "SpectrometerWrapper.set_hardware_average",
+      "SpectrometerWrapper.set_input_hw_trigger",
+      "SpectrometerWrapper.set_manual_exposure",
+      "SpectrometerWrapper.set_output_hw_trigger_delay",
+      "SpectrometerWrapper.set_shutter",
+      "SpectrometerWrapper.set_use_amplitude_correction"
+    ],
+    "actions": [
+      "ZaberRotaryStage.home",
+      "ZaberRotaryStage.move_by",
+      "ZaberLinearStage.home",
+      "ZaberLinearStage.move_by",
+      "SpectrometerWrapper.acquire_single_spectrum"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.measure.spectrum.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/hslarson__speck-lab-goniometer --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

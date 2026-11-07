@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sqlim/sr860-python",
+  "track": "labs",
+  "local_path": "labs/sqlim/sr860-python",
+  "driver_dir": "MHS/drivers/labs/sqlim__sr860-python",
+  "upstream": {
+    "repo_url": "https://github.com/sqlim/sr860-python",
+    "commit": "00fa066450759cfa994b1e999eeec7074bc5724c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 120,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "srs.sr860:SR860",
+      "file": "srs/sr860.py",
+      "line": 4,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "srs.instr:VisaDevice",
+      "file": "srs/instr.py",
+      "line": 4,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "SR860.R_offset_enable",
+      "SR860.X_offset_enable",
+      "SR860.Y_offset_enable",
+      "SR860.adv_filter_enable",
+      "SR860.external_reference_trigger",
+      "SR860.reset"
+    ],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "capabilities"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/sqlim__sr860-python --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

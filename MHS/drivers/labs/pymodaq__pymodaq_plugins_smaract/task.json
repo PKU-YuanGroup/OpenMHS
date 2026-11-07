@@ -1,0 +1,124 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pymodaq/pymodaq_plugins_smaract",
+  "track": "labs",
+  "local_path": "labs/pymodaq/pymodaq_plugins_smaract",
+  "driver_dir": "MHS/drivers/labs/pymodaq__pymodaq_plugins_smaract",
+  "upstream": {
+    "repo_url": "https://github.com/pymodaq/pymodaq_plugins_smaract",
+    "commit": "eeb3fa8ced4ce9eab102951a4ad482ee4152fe6c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 31,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pymodaq_plugins_smaract.hardware.mcs2.MCS2_wrapper:SmarActMCS2Wrapper",
+      "file": "src/pymodaq_plugins_smaract/hardware/mcs2/MCS2_wrapper.py",
+      "line": 39,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_smaract.hardware.scu.scu_wrapper:SCULinear",
+      "file": "src/pymodaq_plugins_smaract/hardware/scu/scu_wrapper.py",
+      "line": 215,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_smaract.hardware.scu.scu_wrapper:SCURotation",
+      "file": "src/pymodaq_plugins_smaract/hardware/scu/scu_wrapper.py",
+      "line": 287,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_smaract.hardware.mcs1.MCS1_wrapper:SmarActMCS1Wrapper",
+      "file": "src/pymodaq_plugins_smaract/hardware/mcs1/MCS1_wrapper.py",
+      "line": 45,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_smaract.daq_move_plugins.daq_move_SmarActMCS1:DAQ_Move_SmarActMCS1",
+      "file": "src/pymodaq_plugins_smaract/daq_move_plugins/daq_move_SmarActMCS1.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "SmarActMCS2Wrapper.get_base_resolution",
+      "SmarActMCS2Wrapper.get_device_name",
+      "SmarActMCS2Wrapper.get_number_of_channels",
+      "SmarActMCS2Wrapper.get_position",
+      "SmarActMCS2Wrapper.get_positionner_type",
+      "SmarActMCS2Wrapper.get_units",
+      "SCULinear.get_position",
+      "SCURotation.get_position"
+    ],
+    "writes": [],
+    "actions": [
+      "SmarActMCS2Wrapper.absolute_move",
+      "SmarActMCS2Wrapper.relative_move",
+      "SmarActMCS2Wrapper.stop",
+      "SCULinear.move_abs",
+      "SCULinear.move_home",
+      "SCULinear.move_rel",
+      "SCULinear.stop",
+      "SCURotation.move_abs",
+      "SCURotation.move_home",
+      "SCURotation.move_rel",
+      "SCURotation.stop"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/pymodaq_plugins_smaract/daq_move_plugins/daq_move_SmarActMCS1.py:25 min_bound = -61500",
+      "src/pymodaq_plugins_smaract/daq_move_plugins/daq_move_SmarActMCS1.py:26 max_bound = 61500",
+      "src/pymodaq_plugins_smaract/hardware/mcs1/MCS1_bindings.py:158 SA_PID_LIMIT = 16",
+      "src/pymodaq_plugins_smaract/hardware/mcs2/MCS2_bindings.py:1089 UNEXPECTED_SCAN_RANGE = 293",
+      "src/pymodaq_plugins_smaract/hardware/mcs2/MCS2_bindings.py:1195 MAX_CL_FREQUENCY = 50659375",
+      "src/pymodaq_plugins_smaract/hardware/mcs2/MCS2_bindings.py:1219 SCAN_VALUE_MIN = 50659360",
+      "src/pymodaq_plugins_smaract/hardware/mcs2/MCS2_bindings.py:1220 SCAN_VALUE_MAX = 50659361",
+      "src/pymodaq_plugins_smaract/hardware/mcs2/MCS2_bindings.py:1222 POSITION_VALUE_MIN = 50659559"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymodaq__pymodaq_plugins_smaract --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

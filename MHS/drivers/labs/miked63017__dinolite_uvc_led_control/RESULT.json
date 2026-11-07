@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:59aab9e2bff83d33674b48811516b01cc354de89441f4e2f00ad35e1d611a62e",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.miked63017.set_illumination.v1",
+      "reason": "cap.imaging.illumination.v1 requires a numeric intensity in percent and a channel string; the upstream exposes a main LED on/off and a separate FLC ring on/off, not a percent intensity, so the class cannot carry the command without inventing a level",
+      "verb": "invoke",
+      "summary": "Turn the main LED or the FLC illumination on or off.",
+      "similar": [
+        "cap.imaging.illumination.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.miked63017.set_flc_brightness.v1",
+      "reason": "the FLC brightness is a discrete level from 0 to 6 (dinoliteuvccontrol/devices/device0980.py:128-153); cap.imaging.illumination.v1 measures intensity in percent, so binding it would misstate the unit and the discrete range",
+      "verb": "invoke",
+      "summary": "Set the FLC brightness level from 0 to 6, switching FLC on first when needed.",
+      "similar": [
+        "cap.imaging.illumination.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.miked63017.toggle_flc_led.v1",
+      "reason": "no catalogue class toggles one of four named illumination LEDs; cap.imaging.illumination.v1 sets a channel and intensity, not a per-LED toggle",
+      "verb": "invoke",
+      "summary": "Toggle one of the four FLC LEDs, switching FLC on first when needed.",
+      "similar": [
+        "cap.imaging.illumination.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.miked63017.toggle_auto_exposure.v1",
+      "reason": "no catalogue class toggles camera auto exposure; cap.imaging.capture.v1 takes an exposure per capture and has no auto-exposure mode",
+      "verb": "invoke",
+      "summary": "Toggle automatic exposure on the microscope.",
+      "similar": [
+        "cap.imaging.capture.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.miked63017.step_exposure.v1",
+      "reason": "the upstream only steps one entry up or down in a fixed per-model exposure table; cap.imaging.capture.v1 takes an absolute exposure_ms, which would require mapping the table to milliseconds that no text of the clone states",
+      "verb": "invoke",
+      "summary": "Move one step in the device exposure table, switching auto exposure off first.",
+      "similar": [
+        "cap.imaging.capture.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.miked63017.illumination_off.v1",
+      "reason": "a safe-state action must take no input; cap.imaging.illumination.v1 requires channel and intensity, so it cannot express an input-free illumination-off action",
+      "verb": "invoke",
+      "summary": "Switch all illumination off (the safe state).",
+      "similar": [
+        "cap.imaging.illumination.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check MHS/drivers/labs/miked63017__dinolite_uvc_led_control --backend fake on 2026-10-30 07:55 PDT; evidence contract_checked, never an MHS-Device level. DEVIATION FROM THE CARD: the card names the PythonObjectDriver helper, but the LED, FLC and exposure methods are not on the worker DinoLiteUVCControl; the worker keeps the per-model device objects in ourDevices and the methods live there (dinoliteuvccontrol/dinoliteuvccontrol.py:24-41, README.md:19-25). A family config over the worker cannot reach them, so this package is a decorated direct Driver over the worker (the card decision is direct-driver). The driver reaches the selected device through self.native.ourDevices[0]; this is the only way to use the card's entry symbol, which G7 requires as native. The five G6.NO_NATIVE_CALL warnings are the consequence: the gate Recorder wraps only the worker, so calls on the nested device object are not recorded. The actions are not no-ops: fake.py mirrors the Device0980 object and the package tests show the fake state changes (flc_on, flc_brightness, auto_exposure, exposure_time, main_led_on). The generic UVC standard controls (Brightness, Contrast, Saturation, Hue, White Balance, Gamma, Power Line Frequency, Sharpness) are NOT COVERED: their ranges are loaded per model from device0980.json and device0890.json and the two tables differ; the upstream setter reports a rejected value only by printing, so the driver does not invent one range that covers both. The a168:0890 model is covered for the main LED, auto exposure and exposure steps; FLC is not available on that model, so the FLC reads return false or 0 and the FLC actions refuse MHS.DEVICE.PRECONDITION_UNMET. No image capture is exposed because the upstream has no capture API; the clone only controls illumination and exposure. SAFETY: risk R1 from LED illumination (MHS/spec/04-safety.md:67), above the card floor R0. The safe state is all illumination off. The upstream has no device stop: cleanup() is pass and display_shutdown_message() exits the interpreter (dinoliteuvccontrol/dinoliteuvccontrol.py:68-73); native.py's hardware adapter and fake.py implement cleanup() as the illumination-off stop, called by the @estop and by the safe-state action. No independent hardware e-stop is claimed, no hardware was attached, and the hardware path was never run. The 2 s sleep of the upstream toggle_auto_exposure is not reproduced in the fake. Model-authored and unreviewed: reviewed_by is null; no human reviewed or tested this package. The upstream licence is NOASSERTION with class unknown, so no publication is claimed. The clone at f70a4cedfa1f04fa15d5cdffe2d382851291248a was left unmodified. gate.digest is the digest the last check printed; check-report.json is regenerated by every gate run.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (292 to 293); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

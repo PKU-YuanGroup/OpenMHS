@@ -1,0 +1,85 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.alphatra/vacuum-instrument-monitor",
+  "track": "labs",
+  "local_path": "labs/alphatra/vacuum-instrument-monitor",
+  "driver_dir": "MHS/drivers/labs/alphatra__vacuum-instrument-monitor",
+  "upstream": {
+    "repo_url": "https://github.com/alphatra/vacuum-instrument-monitor",
+    "commit": "838275818a2f48b0fbb46ea5a35cbaa857396a7e",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 246,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "collectors.ads1115:ADS1115",
+      "file": "collectors/ads1115.py",
+      "line": 73,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "collectors.serial_client:SerialClient",
+      "file": "collectors/serial_client.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "simulators/enums.py:4 SimulationScenario",
+      "simulators/simulator.py:16 GP350Simulator",
+      "simulators/vgc402_simulator.py:25 VGC402Simulator",
+      "virtual_gp350.py:1",
+      "virtual_vgc402.py:1",
+      "simulators/simulator.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": [
+      "simulators/simulator.py:30 p_min = 1e-12",
+      "simulators/simulator.py:31 p_max = 0.001"
+    ]
+  },
+  "needs_recon": [
+    "capabilities",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/alphatra__vacuum-instrument-monitor --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

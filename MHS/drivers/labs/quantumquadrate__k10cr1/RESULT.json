@@ -1,0 +1,42 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.quantumquadrate.move_absolute.v1",
+      "reason": "no catalogue class carries an absolute angle of a single rotation stage in degrees; cap.motion.joint_position.v1 speaks robot joint positions in rad (a joint order and rad conversion this one-axis class does not define)",
+      "verb": "invoke",
+      "summary": "Move the stage to an absolute angle with the native moveabs()."
+    },
+    {
+      "capability_id": "x-cap.quantumquadrate.move_relative.v1",
+      "reason": "no catalogue class carries a relative angular step of a rotation stage in degrees",
+      "verb": "invoke",
+      "summary": "Move the stage by a relative angle with the native moverel()."
+    },
+    {
+      "capability_id": "x-cap.quantumquadrate.home_stage.v1",
+      "reason": "cap.motion.home.v1 speaks named robot axes and a speed scale; this class has no axis names and no speed argument, and its home() is a fixed frame",
+      "verb": "invoke",
+      "summary": "Home the stage with the native home()."
+    },
+    {
+      "capability_id": "x-cap.quantumquadrate.jog_stage.v1",
+      "reason": "no catalogue class carries the jog of a rotation stage; cap.motion.joint_velocity.v1 speaks joint velocities in rad/s, which this class cannot express",
+      "verb": "invoke",
+      "summary": "Start the native jog() of the stage."
+    }
+  ],
+  "notes": "BLOCKED on the stop path. Last gate run (python3 -m mhs.driver check MHS/drivers/labs/quantumquadrate__k10cr1 --backend fake) failed only on: G3 fail Strict resolve / error G3.NO_ESTOP: a hardware driver at R1 needs an @estop method (the native stop the runtime calls after it latches). G1, G2, G4 and G7 pass; G5, G6, G8 and G9 are NOT_RUN because G3 failed. Why no honest @estop exists: the upstream class K10CR1.k10cr1:K10CR1 (K10CR1/k10cr1.py:6-189, the whole module is 189 lines) defines exactly __init__, connect, angle_to_DU, DU_to_angle, dth, btd, htb, rd, write, identify, home, moverel, moveabs, zerobacklash, jog and getpos. There is no stop, abort, halt, disable, close or free-run method, and the class never reads the device status or moving state: a move that moverel() or moveabs() started cannot be cancelled through this library (moverel/moveabs only write the frame and do not even read a response, k10cr1.py:154-170). DRV-012 requires the @estop method to reach the real native stop, so any @estop here would either be a no-op or invent the Thorlabs APT stop frame, which the clone does not use and which would be invented wire syntax and an invented fact; both are excluded, so the package is reported blocked instead of faked. The blocked code chosen is HELPER_MISSING because neither the card's SerialDriver nor a direct Driver over the upstream class can express the driver the hardware contract requires; a maintainer decision is needed: skip the card, ask the upstream to add a stop command, or change the contract for devices whose library has no stop. DEVIATION FROM THE CARD: the card proposes a SerialDriver (family serial, family-config), but every command is a hex frame of the Thorlabs APT protocol and each move frame is assembled from a header, a channel word and a 4-byte encoder position (k10cr1.py:154-170), so a command table cannot reproduce it; this package is a direct Driver over the class, and its four move/home/jog capabilities are extension ids (listed in catalogue_requests). Other gaps: identify() only writes the information frame and returns the byte count of serial.write, not an identity (k10cr1.py:147-148), so the driver has no identity check; the clone states no travel limits, velocity or acceleration, so both move inputs are Limit.operator_required and site-limits.example.json supplies an example range; the fake is an in-memory stand-in with placeholder values, not a recording (the clone has no simulator and no hardware was available, so the card's preferred transcript could not be recorded). driver.lock.json reviewed_by is null: the package is model-authored and unreviewed, hardware was never attached, and nothing in it ran on a device.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-29; reviewed_by stays null): blocked accepted: the upstream class has no stop command, and the driver must not invent the APT stop frame; the card stays blocked until the upstream gains a stop or the project decides on devices without one. A registry override now makes the card a direct driver for a later run.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): gate digest recorded for the first time (the gate of the composed SDK, the same as under snapshot-2; it fails G3); status and blocked_on unchanged.",
+  "gate": {
+    "digest": "sha256:230cfb6e3c37c56fed0c718e9196b7b36ad4f0fa87f144671b6ecad7967497fa",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  }
+}

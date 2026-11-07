@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.kist-csrc/batchsynthesismodule",
+  "upstream": {
+    "repo_url": "https://github.com/kist-csrc/batchsynthesismodule",
+    "commit": "5d0e9bb2ae49758f478021be35d7e5f6c2deac8f",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux",
+    "notes": "The upstream SerialDevice raises OSError on a non-Windows system (Stirrer/serial_labware/serial_labware.py:104-108), so the hardware backend can only open a port on Windows; this package is checked on the fake backend."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeIKARETControlVisc"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wP-015",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

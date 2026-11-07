@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.alba-synchrotron/sls-detector",
+  "upstream": {
+    "repo_url": "https://github.com/alba-synchrotron/sls-detector",
+    "commit": "961d33152af298eb4cbd311d9d185683ba992199",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.5",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.py declares python_requires >=3.5 and install_requires numpy (setup.py:10, setup.py:64, setup.py:77). The upstream package is imported by native.py only; the acceptance gate never installs or imports it."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeDetector"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "helper-wave-1-015"
+  },
+  "reviewed_by": null
+}

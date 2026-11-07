@@ -1,0 +1,29 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (science-jubilee)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only, not a statement about any machine. The numbers follow the demo machine configuration docs/gcode/color_mixing_demo_config.g:132-133 (M208 axis limits) and the nominal tool offsets at lines 150, 163 and 171. Replace them with the envelope of your machine.",
+  "devices": {
+    "mhs://localhost/science-jubilee": {
+      "cap.motion.cartesian_pose.v1": {
+        "position.x": {"min": -13.75, "max": 313.75, "unit": "mm", "source": "operator",
+                       "reason": "example only: the demo config M208 X range"},
+        "position.y": {"min": -44, "max": 341, "unit": "mm", "source": "operator",
+                       "reason": "example only: the demo config M208 Y range"},
+        "position.z": {"min": 0, "max": 300, "unit": "mm", "source": "operator",
+                       "reason": "example only: the demo config M208 Z range"}
+      },
+      "x-cap.machineagency.set_tool_offset.v1": {
+        "tool_index": {"allowed": [0, 1, 2, 3], "unit": "1", "source": "operator",
+                       "reason": "example only: the demo config defines tools P0 to P3"},
+        "x": {"min": -1.4, "max": 2.56, "unit": "mm", "source": "operator",
+              "reason": "example only: the nominal X offsets at demo config lines 150, 163 and 171"},
+        "y": {"min": 26.4, "max": 49.88, "unit": "mm", "source": "operator",
+              "reason": "example only: the nominal Y offsets at demo config lines 150, 163 and 171"},
+        "z": {"min": -148, "max": -8.8, "unit": "mm", "source": "operator",
+              "reason": "example only: the nominal Z offsets at demo config lines 150, 163 and 171"}
+      }
+    }
+  }
+}

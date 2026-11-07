@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example ISEG HV bench",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/iseg-hv": {
+      "voltage_target": {"min": 0, "max": 1000, "unit": "V", "source": "operator",
+                         "reason": "example: the module on this bench feeds a detector that tolerates at most 1000 V"},
+      "channel": {"min": 1, "max": 4, "source": "operator",
+                  "reason": "example: the module on this bench has four output channels"},
+      "ramp_speed": {"min": 1, "max": 50, "unit": "V/s", "source": "operator",
+                     "reason": "example: this bench ramps at most 50 V/s"},
+      "answer_delay": {"min": 1, "max": 100, "unit": "ms", "source": "operator",
+                       "reason": "example: this bench keeps the delay at or below 100 ms"}
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:5fbd9d1dc8d4e132b27321943934be7e193f32cfca7ca791af4245d770c4fd81",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.ad-sdl.bmg_run_assay.v1",
+      "reason": "No catalogue class runs a prepared microplate-reader assay. Catalog search found no assay or plate-reader class; cap.measure.spectrum.v1, cap.measure.intensity.v1 and cap.sample.incubate.v1 do not carry the assay name, protocol database path, output directory and plate ids that BmgCom.run_assay passes to the native Run command. This extension has an inline input/output schema and is the primary control of the device.",
+      "verb": "invoke",
+      "summary": "Run a prepared BMG assay through the upstream Run command and report the output data file path.",
+      "similar": [
+        "cap.measure.spectrum.v1",
+        "cap.measure.intensity.v1",
+        "cap.sample.incubate.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ad-sdl.bmg_plate_out.v1",
+      "reason": "No catalogue class opens a plate tray that is built into an instrument. cap.sample.move.v1 needs a sample id and source and destination locations, which the native BmgCom.plate_out call does not take and the reader does not report. This extension has an inline output schema describing only the commanded position.",
+      "verb": "invoke",
+      "summary": "Open the built-in plate tray with the native PlateOut command.",
+      "similar": [
+        "cap.sample.move.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ad-sdl.bmg_plate_in.v1",
+      "reason": "No catalogue class closes a plate tray that is built into an instrument. cap.sample.move.v1 needs a sample id and source and destination locations, which the native BmgCom.plate_in call does not take and the reader does not report. This extension has an inline output schema describing only the commanded position.",
+      "verb": "invoke",
+      "summary": "Close the built-in plate tray with the native PlateIn command.",
+      "similar": [
+        "cap.sample.move.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ad-sdl.bmg_heater_off.v1",
+      "reason": "No catalogue class switches an incubator off without also setting a target temperature. cap.thermal.setpoint.v1 requires target_temperature, so it cannot be the input-free safe_state action that SAFE-045 asks of this R2 hardware driver. The extension has an empty input and an inline output, and it sends the upstream-documented Temp 0.0 off value.",
+      "verb": "invoke",
+      "summary": "Switch the incubator heating off with the native Temp 0.0 command; this is the declared safe-state action.",
+      "similar": [
+        "cap.thermal.setpoint.v1",
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). No hardware was attached and no hardware run is claimed. The package is model-authored and unreviewed (reviewed_by null): the loader refuses its R2 hardware backend until a human sets reviewed_by. Shape: a decorated direct Driver over sidecar.bmg_interface:BmgCom; the card's decision is direct-driver, and the PythonObjectDriver helper was not needed because the upstream exposes plain methods. task.json was not edited. Catalogue fit: device_kind is instrument. cap.sensing.read.v1 binds sensor, sensor.imu and sensor.force_torque; cap.thermal.setpoint.v1 binds thermal.zone, instrument.incubator and lab.thermal_block; neither binds this kind. The incubator setpoint is therefore a writable state parameter served through cap.device.configure.v1 with its risk elevated to R2, and run_assay, plate open/close and heater-off are x-cap.ad-sdl extensions requested above. Limits: the setpoint is Limit.operator_required because the native validator's range depends on the installed model and the extended_temperature_range_model option (25.0 to 45.0 Cel standard, 10.0 to 60.0 Cel extended, plus 0.0 off and 0.1 monitor only). Without site-limits.json every setpoint write is refused MHS.SAFETY.LIMITS_UNSET. site-limits.example.json is only an example for a standard-range unit, not a device fact, and an operator may narrow it. The safe-state action sends set_temp(0.0) with no input and is not blocked by the missing write bound. Safety limitation: BmgCom has no stop, abort or pause method; every command is ExecuteAndWait and blocks. The @estop and the safe-state action only send Temp 0.0 (heater off). An assay or tray move already in flight is not interrupted, and the fake completes instantly, so this package claims neither a proven stop nor safe-state quiescence. The upstream README documents no independent hardware e-stop, so estop_physical_ref is not set; SAFE-045 is met by safe_state.achieved_by. The hardware factory native.py was never executed; it expects 32-bit Windows Python with the clone's sidecar directory on sidecar_path or PYTHONPATH and control name CLARIOstar (README.md:15 and 50). This driver does not add COM serialization, so concurrent e-stop and an in-flight ExecuteAndWait remain a deployment risk for a human review. Not covered: no real assay data file was produced or read, no array or image output exists, no COM or hardware check was run, long-duration assay behavior was not exercised, and the fake temperatures, status strings, tray state and paths are placeholders, not device facts. Every Fact and Limit ref cites the pinned commit 22d55c6036e91f0af8d0c398727aef226208896d, and the clone stayed clean.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked the direct Driver over BmgCom against sidecar/bmg_interface.py, the sidecar server and README and the MADSci node at the pin, with the card's question (plate carrier motion and heating; a stop or abort in the COM API?): the clone has no stop, abort or pause for the plate tray (PlateIn/PlateOut), Init or the assay run (Run), and plate_in/plate_out discard the ExecuteAndWait response (bmg_interface.py:15-152, 64-70; sidecar/README.md:16-28), yet the author served run_assay, plate_out and plate_in at R2 behind a heater-off e-stop that stops none of them, while the one source-backed stop is set_temp(0.0), documented as off and raising unless ExecuteAndWait answers 0 (bmg_interface.py:72-90). Further defects: native.py built BmgCom on whichever runtime thread used it first and then called it from every operation, read and e-stop thread, although BmgCom initializes COM on the thread that constructs it and the upstream sidecar keeps it on one worker thread (bmg_sidecar_server.py:31-87); the fake accepted any temperature, never returned None or 'unknown' and ignored response codes; and facts carried a 'so ... Celsius' inference, a wrong Run argument list, a version wording from outside its cited lines, and omitted the 'unknown'/None returns and the unchecked tray responses. The reviewer narrowed the package to the reads, the operator_required set point and the heater-off safe-state action (tray, Init and assay NOT COVERED; R2 kept for heating) and changed driver.py (scope, docstring, safe_state, descriptions, nine facts corrected or made precise and four added, a teardown that closes the connection), native.py (one COM thread that initializes COM, constructs BmgCom and runs every call in order, as the sidecar does, with only the served calls reachable; exercised with stub modules on this host, never on Windows), fake.py (the upstream method bodies over an in-memory COM stand-in), test_driver.py (eleven cases: a refused Temp fails the write and leaves the e-stop SAFE_STATE_UNREACHED with the latch held, sensors without a number are left out, the model flag's validator, the tray and assay unserved, the hardware backend review-gated) and facts.md, added fixtures/conformance.json (a test set point the faithful validator accepts) and regenerated reference.json, REFERENCE.md and check-report.json. The gate and the strict collector pass with the digest unchanged (sha256:5fbd9d1dc8d4e132b27321943934be7e193f32cfca7ca791af4245d770c4fd81); RESULT.json is unchanged, so its notes and the catalogue requests for run_assay, plate_out and plate_in are stale author text. For the human reviewer: Heating (R2) only: the stop is heater off (Temp 0.0), acknowledged by the ExecuteAndWait response, not confirmed by a read (the clone reads no set point or heater state); temperatures fall passively, and the state's setpoint keeps the last written value after a stop. The tray, Init and assays are not served and nothing here stops them: one started from SMART Control or another client runs through an e-stop, and the clone documents no independent hardware e-stop. native.py (never run; 32-bit Windows Python with pywin32 and comtypes, sidecar_path at the clone's sidecar directory, control name CLARIOstar, extended_temperature_range_model matching the unit) queues the e-stop's Temp 0.0 behind any running COM call, so a hung call leaves the e-stop SAFE_STATE_UNREACHED with the latch held. Residual race: a set point write that passed the latch before an e-stop but reaches the COM queue after both Temp 0.0 commands would heat again (a direct driver without a declared re-enable runs its stop once). Upstream defects for whoever extends it: plate_in/plate_out ignore the response; the sidecar's ComWorker sets its ready event only after BmgCom constructs, so a failed OpenConnection hangs its start-up (bmg_sidecar_server.py:44-56).\n\nMODEL REVIEW (claude-sonnet-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Adversarial verification of the claude-opus-5-5 review (fix) by a different model (the user chose Claude Sonnet as the different model, 2026-11-04): the verifier agreed and found no blocker or major. No blocker or major found. I re-ran the strict collector (PASS, 0 warnings) and the package tests (12 OK). I checked all 14 cited refs against the clone at the pin with show_refs.py, and each fact matches its lines. The narrowing to reads, an operator_required set point and the heater-off safe-state action is sound. The remaining issues are minor and the reviewer already disclosed most of them. I did not run the gate separately; collect.py --strict is the only gate run I did."
+}

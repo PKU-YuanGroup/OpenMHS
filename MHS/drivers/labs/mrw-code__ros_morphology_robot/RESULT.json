@@ -1,0 +1,41 @@
+{
+  "status": "blocked",
+  "gate": {
+    "digest": "sha256:531668366d9bbb9ff82d18a2c21a0c78e1dcf13d07f87f8448fe2a61f731ae7b",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  },
+  "notes": "DEVIATION FROM THE CARD: the card requested RosDriver, but the pinned runtime's primary control is a PyQt5 ControlWindow over a pyserial G-code channel (v2_robot/src/robot_v2/scripts/src/control.py:296-302, 356-380, 384-388). The ROS 1 scripts are only an inference trigger (relative do_inference_topic String and ready_move Bool; subscriber.py:13-19, capture.py:41-51, exploration.py:55-57), so a RosDriver would replace the stage control with an auxiliary handshake. This package is a direct Driver over v2_robot.src.robot_v2.scripts.src.control:ControlWindow. SCOPE: manual single-axis relative moves, calibration, XY home, the GUI step-size field, and the native Exit path as the declared stop. NOT COVERED: camera/JPG capture, the exploration scan loop and the ROS inference handshake. The camera path saves a JPG and publishes its path, not a sensor_msgs Image; no image artifact binding is claimed. STOP LIMIT: the upstream has no acknowledged serial stop. explorationThread.stop() only clears a Qt flag and quits (exploration.py:151-155), and the inner waits at exploration.py:90-94 do not check it. The @estop and safe-state action call quitSystem(), which closes the serial command channel and stops the exploration thread; an already-buffered G-code move may continue. This is not sensed quiescence and the package claims no physical emergency stop. FAKE: F0, ROS-free, no Qt event loop, serial port, camera, G-code execution, ROS graph or hardware. Its starting connected/calibrated state, step value and G-code replies are placeholders, not facts. The fake records the same one-way G-code writes; it does not replay captured traffic. No hardware or live ROS run was made, and driver.lock.json keeps reviewed_by null. G1 and G4 are clean; the only warning in an earlier run was G1.BYTECODE, cleared by deleting __pycache__.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked the direct-Driver deviation (right: the v2 ControlWindow drives an Arduino G-code stage over pyserial and the ROS 1 scripts only carry an inference trigger), the step Limit (QDoubleSpinBox 0..100, control.py:152-153), all 12 facts, the fake and the stop. The @estop and safe-state action ran quitSystem(), which stops the exploration thread and closes the serial port and window but writes nothing to the controller (control.py:454-457), and returned normally, so the SDK reported a completed e-stop although moves already received may continue: closing a transport is not a stop. The fake diverged from the upstream (its quitSystem cleared portConnectStatus, its port toggle kept systemCalibrate, which upstream clears, 401-414), and four facts said more than their lines (the serial fact, F50 on 296-302, stop() 'only', capture 'publishes the saved path'). Reviewer made the @estop run the Exit path and then raise SAFE_STATE_UNREACHED, removed safe_state=True from close_command_channel, rewrote safe_state and the docstring, corrected those facts and added five (port-close calibration reset, speed string, quitSystem, final home write, constructor stdout) and three gaps (driver.py), made the fake follow the upstream quitSystem and port toggle (fake.py), changed the exit and e-stop cases and labelled the exact G-code strings fake-only (test_driver.py), updated facts.md and regenerated reference.json, REFERENCE.md and check-report.json. The gate now fails G6.ESTOP_FAILED and G8 SAFE-028 (stable digest sha256:6ed7bcf74efa81a4d9f1179da0bca864b38b1290686b1ed72df7296396aa043a); the ten package cases pass; the author's pass status and stop notes are superseded. The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it. For the human reviewer: Real hardware, not a simulator: an Arduino G-code stage ($J jogs, $X, G10 L20, G0 home) and a USB camera of a microscopy rig; the card and the registry record say simulated (record modes from a README-head scan). The upstream never sends a feed hold or reset, so nothing stops a move once received; the exploration thread busy-waits without checking its stop flag and ends with a G0 X0 Y0 home write; reopening the port clears the calibration flag. The window needs a Qt display and prints to stdout. Unblocking needs a stop command the clone sends and confirms, and a hardware review. Gate re-record (RUNTIME-AND-GATE-FIXES, claude-opus-5-5, 2026-11-05): the card has said expected_mode hardware since the wave C routing rebuild, and a reviewed modes override (MHS/registry/overrides/mode-corrections.json) now pins the record to hardware, so this simulated driver fails G3.MODE_MISMATCH until it is rebuilt as a hardware driver with a fake backend; no package file changed.",
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.mrw-code.connect.v1",
+      "reason": "No catalogue class models opening or ensuring the upstream one-way serial command channel; this is a lifecycle action, not a catalogue motion or imaging class.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.mrw-code.calibrate.v1",
+      "reason": "No catalogue class covers the upstream $X and G10 P0 L20 X0 Y0 Z0 calibration writes; cap.motion.home.v1 covers homing, not calibration.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.mrw-code.home.v1",
+      "reason": "cap.motion.home.v1 is restricted to resource kinds robot.arm and motion.axis; this device is instrument.microscope and the upstream home command only writes G90 G0 X0 Y0, so no catalogue class fits without changing the device kind.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.mrw-code.move_relative.v1",
+      "reason": "No catalogue class carries a relative single-axis GUI step value for instrument.microscope; cap.motion.cartesian_twist.v1 is experimental and expects a Cartesian twist, not the upstream manual G-code step.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.mrw-code.close_command_channel.v1",
+      "reason": "No catalogue class models closing a one-way serial command channel; the native Exit path is declared as the safe-state action and this extension is the only way to express it.",
+      "verb": "invoke"
+    }
+  ],
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ]
+}

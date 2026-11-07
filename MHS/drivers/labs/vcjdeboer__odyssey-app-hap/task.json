@@ -1,0 +1,121 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.vcjdeboer/odyssey-app-hap",
+  "track": "labs",
+  "local_path": "labs/vcjdeboer/odyssey-app-hap",
+  "driver_dir": "MHS/drivers/labs/vcjdeboer__odyssey-app-hap",
+  "upstream": {
+    "repo_url": "https://github.com/vcjdeboer/odyssey-app-hap",
+    "commit": "4dffe3a3ed0b32153c50b398ccac3fc7d30db7d1",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 78,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "plr_v4.odyssey.connection:OdysseyDriver",
+      "file": "plr_v4/odyssey/connection.py",
+      "line": 223,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "plr_v4.odyssey.device:OdysseyClassic",
+      "file": "plr_v4/odyssey/device.py",
+      "line": 64,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "plr_v4.capabilities.scanning.capability:Scanning",
+      "file": "plr_v4/capabilities/scanning/capability.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "odyssey_app.metadata:WesternBlotRecord",
+      "file": "odyssey_app/metadata.py",
+      "line": 73,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "plr_v4.odyssey.scan_backend:OdysseyScanBackend",
+      "file": "plr_v4/odyssey/scan_backend.py",
+      "line": 42,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "plr_v4/odyssey/simulated.py:56 OdysseyScanSimulated",
+      "plr_v4/odyssey/simulated.py:120 OdysseyImageSimulated",
+      "plr_v4/odyssey/simulated.py:141 OdysseyStatusSimulated",
+      "plr_v4/odyssey/simulated.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "OdysseyDriver.get_instrument_info",
+      "OdysseyDriver.get_jpeg_preview",
+      "OdysseyDriver.get_scan_progress",
+      "OdysseyDriver.get_status",
+      "Scanning.scan_action (attribute)"
+    ],
+    "writes": [
+      "OdysseyDriver.configure_scan"
+    ],
+    "actions": [
+      "OdysseyDriver.pause_scan",
+      "OdysseyDriver.start_scan",
+      "OdysseyDriver.stop",
+      "OdysseyDriver.stop_from_status",
+      "OdysseyDriver.stop_scan",
+      "OdysseyClassic.stop",
+      "OdysseyClassic.wait_until_done",
+      "OdysseyClassic.scanning.pause",
+      "OdysseyClassic.scanning.start",
+      "OdysseyClassic.scanning.stop_scan",
+      "Scanning.pause",
+      "Scanning.start"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/vcjdeboer__odyssey-app-hap --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

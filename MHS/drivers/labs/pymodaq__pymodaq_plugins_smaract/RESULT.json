@@ -1,0 +1,50 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:00788eeb055a9a030c5421a164d8f287868d9cf390449f721949a43ee3b91fa5",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.pymodaq.smaract_absolute_move.v1",
+      "reason": "no catalogue class moves one linear or rotary axis to an absolute position in controller base units: cap.motion.joint_position.v1 takes an array of joint positions in rad and cap.motion.cartesian_pose.v1 is a robot-arm pose in mm. The package uses an x-cap id with an inline integer schema in base units.",
+      "verb": "invoke",
+      "summary": "Move the bound MCS2 channel to an absolute position in controller base units.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.pymodaq.smaract_relative_move.v1",
+      "reason": "no catalogue class commands a relative single-axis move; cap.motion.joint_position.v1 and cap.motion.cartesian_pose.v1 are absolute arm targets. The package uses an x-cap id with an inline integer schema in base units.",
+      "verb": "invoke",
+      "summary": "Move the bound MCS2 channel by a relative offset in controller base units.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.pymodaq.smaract_find_reference.v1",
+      "reason": "cap.motion.home.v1 exists, but it takes axis names and a speed scale and its output describes reached joint positions in rad; the MCS2 find_reference takes only the channel and starts an asynchronous reference search, so the package uses an x-cap id that reports the command was issued.",
+      "verb": "invoke",
+      "summary": "Start the reference search of the bound MCS2 channel.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.pymodaq.smaract_stop.v1",
+      "reason": "cap.motion.stop.v1 allows an optional deceleration profile in m/s2; the MCS2 Stop call takes no profile and would ignore it, so the package uses an x-cap id with no profile (the same native stop is the e-stop).",
+      "verb": "invoke",
+      "summary": "Stop motion on the bound MCS2 channel with the native stop.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check; the evidence is contract_checked, never an MHS-Device level. No hardware was attached and no human review or test is claimed: driver.lock.json reviewed_by is null and the package is model-authored. The driver binds one MCS2 channel (backend option channel_index, 0 by default) of the upstream SmarActMCS2Wrapper and exposes the position in controller base units, the base unit, the base resolution, the positioner type, the controller name, the controller channel count and the bound channel. The actions are absolute and relative moves in base units, the reference-search start, and the native stop; the stop action and the @estop both call stop(channel). The position and offset inputs are Limit.operator_required because no text file of the clone states a travel range: the manuals are PDFs and the only numbers in the clone are the MCS1 plugin's -61500 to 61500 um for one SLC-24180, with that plugin noting the bounds depend on the plugged positioner. site-limits.example.json supplies example bounds only so the gate's conformance run can exercise the moves; an operator must replace them with the travel range of the installed positioner. The fake's channel count, unit, base resolution, positioner type and start position are placeholders marked in fake.py, not device facts. DEVIATION FROM THE CARD: the helper hint is PythonObjectDriver; the package uses a direct decorated Driver (the card's decision is direct-driver) because the native calls take a channel index and the package needs a backend factory that opens the controller by locator and a per-channel @estop. cap.motion.stop.v1 was not bound: its input schema allows an optional deceleration in m/s2 that the MCS2 Stop call cannot apply, so the stop action is an extension that takes no profile. At R1 the loader's unreviewed-model hardware refusal (R2 and R3 only) does not apply; a human review is still required before hardware use.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (29 to 28); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

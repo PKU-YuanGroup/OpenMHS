@@ -1,0 +1,17 @@
+{
+  "status": "skip-proposed",
+  "blocked_on": [
+    "NOT_A_DEVICE"
+  ],
+  "notes": "NOT_A_DEVICE: this repository is a ZMQ client/server middleware for user-supplied QCoDeS instruments, not a device. README.md:3 calls it 'a tool for managing qcodes in a server environment'; pyproject.toml:8 calls it 'Distributed instrument control server and client for QCoDeS.'; docs/index.md:10-11 says 'one server owns the hardware, many clients talk to it through proxies'; CONTEXT.md:54 says 'The Server owns instruments; Clients reach them only through Proxy Instruments built from Blueprints'. The card's entry symbols are that middleware: src/instrumentserver/client/proxy.py:797 ClientStation is 'A lightweight container for managing a collection of proxy instruments on the client side' (src/instrumentserver/client/proxy.py:809); src/instrumentserver/client/proxy.py:187 ProxyInstrumentModule is a proxy module; src/instrumentserver/blueprints.py:203 InstrumentModuleBluePrint is 'Spec necessary for creating instrument proxies' (src/instrumentserver/blueprints.py:204); src/instrumentserver/blueprints.py:516 ParameterSerializeSpec holds serialization options. The only shipped instrument classes are virtual or test doubles: src/instrumentserver/params.py:59 ParameterManager is 'A virtual instrument' (src/instrumentserver/params.py:61), and src/instrumentserver/testing/dummy_instruments/generic.py:56 DummyChannel is a hardware-free test instrument (CONTEXT.md:45-46). The only device-facing transport in src is the ZMQ server/client layer (src/instrumentserver/server/core.py:206-227); no serial, VISA, USB or vendor-SDK device path and no concrete hardware device is shipped. Building a driver would require inventing a device, its parameters and its safe state; this is bridge-runtime/SDK work, not a per-repository device driver.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Accepted the skip proposal NOT_A_DEVICE after reading every cited line, as the readiness evidence predicted (blocked: proxy framework): instrumentserver is a ZMQ client/server middleware for user-supplied QCoDeS instruments (README.md:3, pyproject.toml:8, docs/index.md:10-11, CONTEXT.md:54); the card's entry symbols are its client station, proxy module, client and blueprint classes (proxy.py:187, 447, 797; blueprints.py:203, 516); the only shipped instruments are the virtual ParameterManager (params.py:59-62) and test dummies (CONTEXT.md:45-46), and no VISA, serial or vendor transport occurs in src. The author wrote no package code; the only file the review added is the check-report.json of the reviewer's gate re-run (G1, G2, G3 and G9 fail because there is no package), which the export ignores.",
+  "gate": {
+    "digest": "sha256:21528f7904aca8720d8853e90f5eed9b6bdfa7bdc99b7f00962e23a31f7c826d",
+    "failed": [
+      "G1",
+      "G2",
+      "G3",
+      "G9"
+    ],
+    "report": "check-report.json"
+  }
+}

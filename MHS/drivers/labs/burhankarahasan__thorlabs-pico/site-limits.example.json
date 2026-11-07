@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (thorlabs-pico stepper)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/pico-stepper": {
+      "target_rps": {"min": -10, "max": 10, "unit": "Hz", "source": "operator",
+                     "reason": "example only: the rotation load on this bench tolerates -10 to 10 revolutions per second"},
+      "x-cap.burhankarahasan.set_ramp_rate.v1": {
+        "ramp_rate": {"min": 1, "max": 1000, "unit": "Hz/s", "source": "operator",
+                      "reason": "example only: the installed stepper/driver was commissioned for 1 to 1000 steps per second squared"}
+      }
+    }
+  }
+}

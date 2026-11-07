@@ -1,0 +1,30 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:cafd447c4cd059f13bb92692583b92aae4eb9e4d7ce1b5d806a4b0274652ba12",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.matteobroketa.run_pump.v1",
+      "reason": "No catalogue class starts a syringe pump in its configured continuous mode: cap.actuation.pump.v1 is a volume-or-duration dosing action that requires a dispensed_volume output, while the upstream PHD 2000 API exposes continuous start, pause, resume and stop plus rate and direction configuration, and no metered-volume command.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.matteobroketa.pause_pump.v1",
+      "reason": "No catalogue class pauses a continuous syringe pump. cap.motion.stop.v1 lists only robot.arm, robot.mobile_base and motion.axis as resource kinds, so it does not bind a fluid.pump.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.matteobroketa.resume_pump.v1",
+      "reason": "No catalogue class resumes a continuous syringe pump after a pause; the upstream resume is the native start and there is no dosing class for a continuous run.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.matteobroketa.stop_pump.v1",
+      "reason": "No catalogue class stops a fluid.pump: cap.motion.stop.v1 lists only robot.arm, robot.mobile_base and motion.axis, and cap.actuation.pump.v1 is a dosing action rather than a stop. This extension is the safe-state action required for this R2 hardware driver.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "Gate G1-G9 passed with no warnings on the fake backend; the digest above is from that last run. DEVIATION FROM THE CARD: a direct Driver with native.py rather than the PythonObjectDriver helper, because the upstream class owns the Model 44 address prefix and the terminal addressed-prompt framing; the package binds the card's HarvardPHD2000Driver entry symbol. The four actions use extension ids: cap.actuation.pump.v1 is a volume-or-duration dosing class with a required dispensed_volume output, while the upstream PHD 2000 API exposes continuous run, pause, resume and stop plus rate and direction configuration, so no catalogue class fits those controls; cap.motion.stop.v1 binds only robot.arm, robot.mobile_base and motion.axis. NOT COVERED: the upstream Ultra/Elite chain driver and the MultiPumpCoordinator (this package binds only HarvardPHD2000Driver); the hardware path in native.py was not run and no hardware was attached; the fake is an in-memory stand-in, not a recording, and its numbers are marked placeholders; the upstream set_diameter stop/restore sequence is not simulated in detail by the fake, which only stores the diameter. Limits: flow_rate and syringe_diameter_mm are Limit.operator_required because no text file of the clone states a numeric range; site-limits.example.json is an example overlay, not a statement about a pump. The package is model-authored and unreviewed; reviewed_by is null.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (26 to 25); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

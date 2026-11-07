@@ -1,0 +1,109 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.benpruitt/tecancavro",
+  "track": "labs",
+  "local_path": "labs/benpruitt/tecancavro",
+  "driver_dir": "MHS/drivers/labs/benpruitt__tecancavro",
+  "upstream": {
+    "repo_url": "https://github.com/benpruitt/tecancavro",
+    "commit": "5267fd2ed48b7e38d2261459cbf4a381e54c33c1",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:partner-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 2,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "tecancavro.models:XCaliburD",
+      "file": "tecancavro/models.py",
+      "line": 25,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "tecancavro.transport:TecanAPINode",
+      "file": "tecancavro/transport.py",
+      "line": 196,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "tecancavro.transport:TecanAPISerial",
+      "file": "tecancavro/transport.py",
+      "line": 75,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "XCaliburD.getBufferStatus",
+      "XCaliburD.getCurPort",
+      "XCaliburD.getCutoffSpeed",
+      "XCaliburD.getEncoderPos",
+      "XCaliburD.getPlungerPos",
+      "XCaliburD.getStartSpeed",
+      "XCaliburD.getTopSpeed"
+    ],
+    "writes": [
+      "XCaliburD.setCutoffSpeed",
+      "XCaliburD.setMicrostep",
+      "XCaliburD.setSlope",
+      "XCaliburD.setSpeed",
+      "XCaliburD.setStartSpeed",
+      "XCaliburD.setTopSpeed"
+    ],
+    "actions": [
+      "XCaliburD.dispense",
+      "XCaliburD.dispenseToWaste",
+      "XCaliburD.haltExec",
+      "XCaliburD.markRepeatStart",
+      "XCaliburD.movePlungerAbs",
+      "XCaliburD.movePlungerRel",
+      "XCaliburD.resetChain"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.fluid.dispense.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/benpruitt__tecancavro --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

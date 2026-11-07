@@ -1,0 +1,131 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.croningp/chemputersoftware",
+  "track": "labs",
+  "local_path": "labs/croningp/chemputersoftware",
+  "driver_dir": "MHS/drivers/labs/croningp__chemputersoftware",
+  "upstream": {
+    "repo_url": "https://github.com/croningp/chemputersoftware",
+    "commit": "0f249ce8f7c30e99bdf54f67cbd012d48e91dd3b",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "twin-candidate",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 22,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "platform_server.modules.pv_api.Chemputer_Device_API:ChemputerPump",
+      "file": "platform_server/modules/pv_api/Chemputer_Device_API.py",
+      "line": 608,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "platform_server.modules.serial_labware.IKA_RET_Stirrer.IKA_RET_Control_Visc:IKARETControlVisc",
+      "file": "platform_server/modules/serial_labware/IKA_RET_Stirrer/IKA_RET_Control_Visc.py",
+      "line": 38,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "platform_server.modules.serial_labware.IKA_RV.IKA_RV10:IKARV10",
+      "file": "platform_server/modules/serial_labware/IKA_RV/IKA_RV10.py",
+      "line": 40,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "platform_server.modules.serial_labware.Huber_Petite_Fleur.Huber_Petite_Fleur:Huber",
+      "file": "platform_server/modules/serial_labware/Huber_Petite_Fleur/Huber_Petite_Fleur.py",
+      "line": 35,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "platform_server.modules.serial_labware.JULABO_CF41.JULABO_CF41:JULABOCF41",
+      "file": "platform_server/modules/serial_labware/JULABO_CF41/JULABO_CF41.py",
+      "line": 34,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "ChemputerPump.read_ADC",
+      "ChemputerPump.read_device_configuration",
+      "ChemputerPump.read_errors",
+      "ChemputerPump.read_network_configuration",
+      "IKARETControlVisc.get_hot_plate_temp_current",
+      "IKARETControlVisc.get_ph",
+      "IKARETControlVisc.get_viscosity_trend",
+      "IKARETControlVisc.get_weight"
+    ],
+    "writes": [
+      "ChemputerPump.write_default_pump_configuration",
+      "ChemputerPump.write_network_configuration",
+      "IKARETControlVisc.set_watch_dog_stir_rate",
+      "IKARETControlVisc.set_watch_dog_temp",
+      "IKARV10.set_interval",
+      "IKARV10.set_interval_sp",
+      "IKARV10.set_timer"
+    ],
+    "actions": [
+      "ChemputerPump.construct_pump_config",
+      "ChemputerPump.hard_home",
+      "ChemputerPump.move_absolute",
+      "ChemputerPump.move_relative",
+      "ChemputerPump.move_to_home",
+      "IKARETControlVisc.reset_hot_plate",
+      "IKARETControlVisc.start_heater",
+      "IKARETControlVisc.start_ph_meter",
+      "IKARETControlVisc.start_stirrer",
+      "IKARETControlVisc.start_weighing",
+      "IKARETControlVisc.stop_heater",
+      "IKARETControlVisc.stop_ph_meter"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.actuation.pump.v1",
+      "cap.measure.mass.v1",
+      "cap.measure.temperature.v1",
+      "cap.motion.stop.v1",
+      "cap.thermal.setpoint.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/croningp__chemputersoftware --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

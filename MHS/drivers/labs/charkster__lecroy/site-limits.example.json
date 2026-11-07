@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (LeCroy oscilloscope)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/lecroy": {
+      "horizontal_scale": {"min": 1e-9, "max": 1, "unit": "s", "source": "operator",
+                           "reason": "example: the timebase of this bench stays between 1 ns/div and 1 s/div"},
+      "trigger_level": {"min": -5, "max": 5, "unit": "V", "source": "operator",
+                        "reason": "example: the probe input of this bench is used within plus or minus 5 V"},
+      "trigger_horizontal_offset": {"min": -1, "max": 1, "unit": "s", "source": "operator",
+                                    "reason": "example: the trigger window of this bench stays within plus or minus 1 s"},
+      "x-cap.charkster.trigger.v1": {
+        "trigger_level": {"min": -5, "max": 5, "unit": "V", "source": "operator",
+                          "reason": "example: the probe input of this bench is used within plus or minus 5 V"},
+        "trigger_horizontal_offset": {"min": -1, "max": 1, "unit": "s", "source": "operator",
+                                      "reason": "example: the trigger window of this bench stays within plus or minus 1 s"}
+      }
+    }
+  }
+}

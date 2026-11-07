@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Keithley 2230G)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example overlay only: it fills the operator-required bounds of this driver with a narrow bench envelope. Replace them with the bounds of the installed 2230G model and the load.",
+  "devices": {
+    "mhs://localhost/keithley-2230g": {
+      "voltage_setpoint_ch1": {"min": 0, "max": 5, "unit": "V", "source": "operator",
+                               "reason": "example: channel 1 drives a 5 V load"},
+      "voltage_setpoint_ch2": {"min": 0, "max": 5, "unit": "V", "source": "operator",
+                               "reason": "example: channel 2 drives a 5 V load"},
+      "voltage_setpoint_ch3": {"min": 0, "max": 5, "unit": "V", "source": "operator",
+                               "reason": "example: channel 3 is limited to its 5 V class"},
+      "current_limit_ch1": {"min": 0, "max": 1, "unit": "A", "source": "operator",
+                            "reason": "example: the channel 1 load draws at most 1 A"},
+      "current_limit_ch2": {"min": 0, "max": 1, "unit": "A", "source": "operator",
+                            "reason": "example: the channel 2 load draws at most 1 A"},
+      "current_limit_ch3": {"min": 0, "max": 1, "unit": "A", "source": "operator",
+                            "reason": "example: the channel 3 load draws at most 1 A"}
+    }
+  }
+}

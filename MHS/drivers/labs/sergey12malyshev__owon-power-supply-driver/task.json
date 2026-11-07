@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sergey12malyshev/owon-power-supply-driver",
+  "track": "labs",
+  "local_path": "labs/sergey12malyshev/owon-power-supply-driver",
+  "driver_dir": "MHS/drivers/labs/sergey12malyshev__owon-power-supply-driver",
+  "upstream": {
+    "repo_url": "https://github.com/sergey12malyshev/owon-power-supply-driver",
+    "commit": "37ec9d93df28640d7522162922472cc531be7758",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 119,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "owon_ps:OwonPowerSupply",
+      "file": "owon_ps.py",
+      "line": 16,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "OwonPowerSupply.get_all_parametrs",
+      "OwonPowerSupply.get_current",
+      "OwonPowerSupply.get_current_limit",
+      "OwonPowerSupply.get_identity",
+      "OwonPowerSupply.get_outputState",
+      "OwonPowerSupply.get_power",
+      "OwonPowerSupply.get_voltage",
+      "OwonPowerSupply.get_voltage_limit",
+      "OwonPowerSupply.measure_current",
+      "OwonPowerSupply.measure_voltage"
+    ],
+    "writes": [
+      "OwonPowerSupply.set_current",
+      "OwonPowerSupply.set_current_limit",
+      "OwonPowerSupply.set_voltage",
+      "OwonPowerSupply.set_voltage_limit"
+    ],
+    "actions": [
+      "OwonPowerSupply.reset_config"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.current.v1",
+      "cap.measure.voltage.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/sergey12malyshev__owon-power-supply-driver --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

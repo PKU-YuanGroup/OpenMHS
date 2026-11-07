@@ -1,0 +1,139 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mabuchilab/instrumental",
+  "track": "labs",
+  "local_path": "labs/mabuchilab/instrumental",
+  "driver_dir": "MHS/drivers/labs/mabuchilab__instrumental",
+  "upstream": {
+    "repo_url": "https://github.com/mabuchilab/instrumental",
+    "commit": "64272832594964a26ba05ee220a2b56042d04b62",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 5,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "instrumental.drivers.cameras.uc480:UC480_Camera",
+      "file": "src/instrumental/drivers/cameras/uc480.py",
+      "line": 573,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instrumental.drivers.cameras.pco:PCO_Camera",
+      "file": "src/instrumental/drivers/cameras/pco.py",
+      "line": 257,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instrumental.drivers.motion.ecc100:LinearStage",
+      "file": "src/instrumental/drivers/motion/ecc100.py",
+      "line": 280,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instrumental.drivers.motion.ecc100:Goniometer",
+      "file": "src/instrumental/drivers/motion/ecc100.py",
+      "line": 287,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instrumental.drivers.cameras.tsi:TSI_Camera",
+      "file": "src/instrumental/drivers/cameras/tsi.py",
+      "line": 366,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/instrumental/drivers/remote.py:34 FakeLock",
+      "src/instrumental/drivers/daq/ni.py:1363 VirtualDigitalChannel"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "UC480_Camera.get_captured_image",
+      "UC480_Camera.get_trigger_delay",
+      "UC480_Camera.get_trigger_level",
+      "UC480_Camera.auto_exposure (attribute)",
+      "UC480_Camera.auto_framerate (attribute)",
+      "UC480_Camera.auto_gain (attribute)",
+      "UC480_Camera.auto_sensor_exposure (attribute)",
+      "UC480_Camera.auto_sensor_framerate (attribute)",
+      "UC480_Camera.auto_sensor_gain (attribute)",
+      "UC480_Camera.auto_sensor_whitebalance (attribute)",
+      "UC480_Camera.auto_whitebalance (attribute)",
+      "UC480_Camera.bytes_per_line (attribute)"
+    ],
+    "writes": [
+      "UC480_Camera.set_auto_exposure",
+      "UC480_Camera.set_defaults",
+      "UC480_Camera.set_trigger",
+      "UC480_Camera.set_trigger_delay",
+      "PCO_Camera.set_defaults",
+      "PCO_Camera.set_trigger_mode",
+      "LinearStage.set_amplitude",
+      "LinearStage.set_frequency",
+      "LinearStage.set_target"
+    ],
+    "actions": [
+      "UC480_Camera.start_capture",
+      "UC480_Camera.start_live_video",
+      "UC480_Camera.stop_live_video",
+      "PCO_Camera.cancel_capture",
+      "PCO_Camera.start_capture",
+      "PCO_Camera.start_live_video",
+      "PCO_Camera.stop_live_video",
+      "LinearStage.disable",
+      "LinearStage.enable",
+      "LinearStage.enable_feedback",
+      "LinearStage.move_to",
+      "LinearStage.start_stepping"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.sensing.image.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/instrumental/drivers/powermeters/newport.py:53 _OUT_OF_RANGE = 8",
+      "src/instrumental/drivers/spectrometers/_bristol_types.py:23 RAW_DATA_MAX = 1024",
+      "src/instrumental/drivers/cameras/_pvcam/macros.py:16 MAX_CAM = 16"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/mabuchilab__instrumental --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

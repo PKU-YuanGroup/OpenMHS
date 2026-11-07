@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (keysight-dsox1200-control)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/keysight-dsox1200": {
+      "channel1_scale_v_per_div": {"min": 0.01, "max": 5, "unit": "V", "source": "operator",
+                                   "reason": "example: signals on this bench stay between 0.08 V and 40 V full scale"},
+      "channel1_offset_v": {"min": -5, "max": 5, "unit": "V", "source": "operator",
+                            "reason": "example: the probe and the vertical scale keep the offset within +/-5 V"},
+      "timebase_scale_s_per_div": {"min": 0.000001, "max": 1, "unit": "s", "source": "operator",
+                                   "reason": "example: the bench observes events from 1 us/div to 1 s/div"},
+      "trigger_level_v": {"min": -5, "max": 5, "unit": "V", "source": "operator",
+                          "reason": "example: trigger levels stay within the +/-5 V window of the probe"}
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Newport SMC100)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/smc100": {
+      "velocity": {"min": 0, "max": 10, "unit": "1", "source": "operator",
+                   "reason": "example only: this bench uses 0 to 10 native velocity units; a real site sets its own range"},
+      "x-cap.jieunboy0516.move_absolute.v1": {
+        "position": {"min": 0, "max": 10, "unit": "mm", "source": "operator",
+                     "reason": "example only: the example stage has 10 mm of usable travel; a real site sets its own travel"}
+      },
+      "x-cap.jieunboy0516.move_relative.v1": {
+        "offset": {"min": -10, "max": 10, "unit": "mm", "source": "operator",
+                   "reason": "example only: a relative move on the example stage is limited to 10 mm each way; a real site sets its own bound"}
+      }
+    }
+  }
+}

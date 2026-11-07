@@ -1,0 +1,28 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:4b0b3d1fe528688c363615021ecdeef5e71da57f6de8554c73a5a99a5aeb7d08",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.iridiumwastaken.start_pump.v1",
+      "reason": "No catalogue class starts an already configured syringe pump. cap.actuation.pump.v1 requires a flow_rate and direction input and a dispensed_volume output; the upstream PHD 2000 run/rev only starts the rate and target volume already set on the pump, and its only completion wait is unreliable (README.md:54), so this driver cannot honestly report a dispensed volume. This extension starts RUN or REV and reports the running state.",
+      "verb": "invoke",
+      "similar": [
+        "cap.actuation.pump.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.iridiumwastaken.stop_pump.v1",
+      "reason": "No catalogue class stops a fluid.pump: cap.motion.stop.v1 lists only robot.arm, robot.mobile_base and motion.axis as resource kinds, and cap.actuation.pump.v1 is a dosing action with a required dispensed_volume output. This extension is the no-input safe-state action required for this R2 hardware driver and calls the native STP.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Gate G1-G9 passed with no warnings on the fake backend; the digest above is from that last run. DEVIATION FROM THE CARD: a direct Driver with native.py rather than the PythonObjectDriver helper, because the upstream builds every command from the pump address, a command word and an argument (pump.py:159-164) and the PHD 2000 overrides the Ultra pump's stop, rate, target-volume and read methods (pump.py:606-714); the package binds the card's PHD 2000 entry symbol. Covered: the Harvard PHD 2000 through pump.Pump2000; reads of diameter, rate, target volume, infused volume and running state; writes of diameter (sourced 0.1-35 mm), rate (uL/min, written as ULM) and target volume (mL, written as MLT). The flow rate and target volume are Limit.operator_required; site-limits.example.json is an illustrative operator overlay, not a statement about a pump. The RUN/REV start and STP stop are extension actions; the native STP is both @estop and the safe-state action. NOT COVERED: the PHD Ultra Pump class of the clone (this package binds Pump2000 only); waiting for a target volume (README.md:54 says the PHD 2000 sometimes will not wait, so no action waits); the keypad volume-mode requirement (README.md:52-53); the other set_rate units (m/m, m/h, u/h), because the write is fixed to ULM/uL/min; the read of rate assumes the pump is in the ULM units the driver writes, because the clone's getrate does not convert the units fragment of the RNG reply (pump.py:680-692). The hardware path in native.py was never run and no hardware was attached; the fake is an in-memory stand-in for the upstream object, not a recording of the pump; its numbers are test data marked # placeholder, and it does not reproduce the serial protocol. The package is model-authored and unreviewed; reviewed_by is null; the loader refuses its R2 hardware backend until a human signs it. The native stop uses the upstream serial read (2 s timeout) and a 0.1 s pause (pump.py:96-104, 606-614), so the hardware e-stop latency was not measured.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Copied the exact generated task.json after preserving the obsolete abstract Panda draft and recording the USB camera image-scope blocker; changed task.json and RESULT.json (card fields: rank). Package contracts, source pins, gate finding digests, author attribution and human signatures remain unchanged. This metadata synchronization is not a new complete gate collection.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

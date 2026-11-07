@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.czbiohub-sf/copylot",
+  "upstream": {
+    "repo_url": "https://github.com/czbiohub-sf/copylot",
+    "commit": "eac4fdbf6ee49130d25764a486acb35a48d999db",
+    "license_spdx": "BSD-3-Clause"
+  },
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.cfg declares python_requires >=3.9 and installs pyserial>=3.5 (setup.cfg:26, 32), the serial package the upstream wrapper needs. The upstream package is imported by native.py only: the gate never installs or imports it, and the fake backend needs none of these dependencies."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeVortranLaser"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wA-s05-002",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

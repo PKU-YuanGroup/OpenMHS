@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Chilas laser)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example overlay only. The diode-current and TEC-target ranges are placeholders for the installed unit; an operator replaces them with the rated ranges before any hardware use.",
+  "devices": {
+    "mhs://localhost/chilas-laser": {
+      "x-cap.chilaslasers.set_diode_current.v1": {
+        "current_ma": {"min": 0, "max": 100, "unit": "mA", "source": "operator",
+                       "reason": "example: the rated diode current range of the installed laser"}
+      },
+      "x-cap.chilaslasers.set_tec_target.v1": {
+        "target_temp": {"min": 15, "max": 35, "unit": "Cel", "source": "operator",
+                        "reason": "example: the rated TEC target range of the installed laser"}
+      }
+    }
+  }
+}

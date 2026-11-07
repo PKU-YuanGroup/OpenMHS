@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ymzds/niscope-mcp",
+  "track": "labs",
+  "local_path": "labs/ymzds/niscope-mcp",
+  "driver_dir": "MHS/drivers/labs/ymzds__niscope-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/ymzds/niscope-mcp",
+    "commit": "75a3a09bb6eab9b1b0dd9e48ecdb30e93bbac6ed",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 125,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "niscope_mcp.backends.direct:DirectBackend",
+      "file": "niscope_mcp/backends/direct.py",
+      "line": 20,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "DirectBackend.get_current_config",
+      "DirectBackend.measure_waveform",
+      "DirectBackend.read_waveform"
+    ],
+    "writes": [
+      "DirectBackend.configure_channel",
+      "DirectBackend.configure_horizontal",
+      "DirectBackend.configure_trigger"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "niscope_mcp/backends/base.py:24 vertical_range = 5.0",
+      "niscope_mcp/backends/base.py:55 min_sample_rate = 1000000.0",
+      "niscope_mcp/backends/base.py:83 min_v = 0.0",
+      "niscope_mcp/backends/base.py:84 max_v = 0.0"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ymzds__niscope-mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

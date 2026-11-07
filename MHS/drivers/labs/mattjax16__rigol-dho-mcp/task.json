@@ -1,0 +1,70 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mattjax16/rigol-dho-mcp",
+  "track": "labs",
+  "local_path": "labs/mattjax16/rigol-dho-mcp",
+  "driver_dir": "MHS/drivers/labs/mattjax16__rigol-dho-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/mattjax16/rigol-dho-mcp",
+    "commit": "f9ac7191869845ae46ca714de69a877c388b2530",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mcp-client",
+  "role": "device-driver",
+  "family": "mcp-client",
+  "helper": "McpClientDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 64,
+  "exemplar": "MHS/drivers/labs/mattjax16__rigol-dho-mcp",
+  "entry_symbols": [
+    {
+      "symbol": "rigol_dho_mcp.scpi:ScpiClient",
+      "file": "rigol_dho_mcp/scpi.py",
+      "line": 60,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "ScpiClient.query_binary"
+    ],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/mattjax16__rigol-dho-mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

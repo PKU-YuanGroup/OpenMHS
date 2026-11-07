@@ -1,0 +1,118 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.davidlutton/labtoolkit",
+  "track": "labs",
+  "local_path": "labs/davidlutton/labtoolkit",
+  "driver_dir": "MHS/drivers/labs/davidlutton__labtoolkit",
+  "upstream": {
+    "repo_url": "https://github.com/davidlutton/labtoolkit",
+    "commit": "1c27b35490002822f9860f45a86235cce949c172",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 18,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "labtoolkit.SpectrumAnalyser.AgilentE44nn:AgilentE44nn",
+      "file": "src/labtoolkit/SpectrumAnalyser/AgilentE44nn.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "labtoolkit.Switch.HP3488A:HP3488A",
+      "file": "src/labtoolkit/Switch/HP3488A.py",
+      "line": 36,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "labtoolkit.NetworkAnalyser.KeysightFieldFox:KeysightFieldFox",
+      "file": "src/labtoolkit/NetworkAnalyser/KeysightFieldFox.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "labtoolkit.NetworkAnalyser.AgilentE8357A:AgilentE8357A",
+      "file": "src/labtoolkit/NetworkAnalyser/AgilentE8357A.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "labtoolkit.NetworkAnalyser.HP4395A:HP4395A",
+      "file": "src/labtoolkit/NetworkAnalyser/HP4395A.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "AgilentE44nn.IDN",
+      "AgilentE44nn.query_ascii_values",
+      "AgilentE44nn.query_binary_values",
+      "AgilentE44nn.query_bool",
+      "AgilentE44nn.query_float",
+      "AgilentE44nn.query_int",
+      "HP3488A.query_ascii_values",
+      "HP3488A.query_binary_values",
+      "HP3488A.query_bool",
+      "HP3488A.query_float",
+      "HP3488A.query_int",
+      "KeysightFieldFox.IDN"
+    ],
+    "writes": [
+      "AgilentE44nn.write_binary_values",
+      "HP3488A.write_binary_values",
+      "KeysightFieldFox.write_binary_values"
+    ],
+    "actions": [
+      "AgilentE44nn.frequency_start",
+      "AgilentE44nn.frequency_stop",
+      "KeysightFieldFox.start",
+      "KeysightFieldFox.stop",
+      "KeysightFieldFox.trigger"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/davidlutton__labtoolkit --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

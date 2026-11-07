@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.charkster/lecroy",
+  "upstream": {
+    "repo_url": "https://github.com/charkster/lecroy",
+    "commit": "da08c5168d8c63809d60b4c8b4b3529cbaf3de18",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The clone is a single module (lecroy.py) that does not import pyvisa itself; the hardware factory in native.py imports pyvisa and opens the VISA resource, then passes the instrument object to lecroy.lecroy. The clone is not installed and the fake backend never imports it."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeLecroy"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-109",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

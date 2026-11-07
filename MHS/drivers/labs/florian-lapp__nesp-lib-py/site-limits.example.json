@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (a New Era syringe pump)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "An example overlay, not a statement about any pump.  The driver refuses every write of the pumping volume and of the pumping rate (MHS.SAFETY.LIMITS_UNSET) until the operator states the range its syringe allows; this file shows the shape of that overlay.  The example ranges describe a bench with a 10 mL syringe used between 0.1 and 10 mL and between 0.1 and 25 mL/min.",
+  "devices": {
+    "mhs://localhost/nesp-pump": {
+      "pumping_volume_ml": {"min": 0.1, "max": 10, "unit": "mL", "source": "operator",
+                            "reason": "example: the syringe fitted on this bench holds 10 mL and volumes below 0.1 mL are not used"},
+      "pumping_rate_ml_per_min": {"min": 0.1, "max": 25, "unit": "mL/min", "source": "operator",
+                                  "reason": "example: this bench pumps between 0.1 and 25 mL/min"}
+    }
+  }
+}

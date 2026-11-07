@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.urmel79/jupyter_pyvisa_lab",
+  "track": "labs",
+  "local_path": "labs/urmel79/jupyter_pyvisa_lab",
+  "driver_dir": "MHS/drivers/labs/urmel79__jupyter_pyvisa_lab",
+  "upstream": {
+    "repo_url": "https://github.com/urmel79/jupyter_pyvisa_lab",
+    "commit": "418a7f6bbef16a7c30ece599f8367fe5585291d9",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 81,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "Benning_MM12_class:Benning_MM12_Serial",
+      "file": "Benning_MM12_class.py",
+      "line": 12,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Benning_MM12_Serial.getDeviceInfos",
+      "Benning_MM12_Serial.getMeasurement_baseUnits",
+      "Benning_MM12_Serial.getMeasurement_humanUnits"
+    ],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/urmel79__jupyter_pyvisa_lab --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

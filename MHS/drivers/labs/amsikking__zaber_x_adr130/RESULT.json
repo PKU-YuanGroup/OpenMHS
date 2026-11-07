@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:4dee116b07b19d5c21660fbcf40ffc6f809e87403ed88f402a46b80cc8224969",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.amsikking.move_xy.v1",
+      "reason": "cap.motion.joint_position.v1 publishes joint_positions in rad and has no absolute XY millimetre input, while the stage is addressed in millimetres (zaber_X_ADR130.py:161 and 213) and its travel is 0 to 130 mm in x and 0 to 100 mm in y (zaber_X_ADR130.py:21 and 24); the extension carries the native unit without inventing a radian conversion. cap.motion.cartesian_pose.v1 binds robot.arm only, not motion.axis.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    }
+  ],
+  "notes": "Checked on the fake backend only; no hardware was attached, the hardware backend was never opened, the upstream module and the serial port were never imported or touched, and no MHS-Device level is claimed (evidence contract_checked). The package is model-authored and unreviewed: driver.lock.json has reviewed_by null, and no human reviewed or tested anything here. DEVIATION FROM THE CARD: the card's family-config/SerialDriver shape would need a command table for lines the upstream assembles at run time ('/' + the device address read from the device at connect, plus an axis token such as '1 move abs'); the package is therefore a direct Driver over zaber_X_ADR130:Controller with a native.py factory, and no wire syntax was changed. Interface: reads x_mm, y_mm (mm) and x_maxspeed, y_maxspeed (mm/s); writes the two maximum speeds (0.01 to 750 mm/s, zaber_X_ADR130.py:277); the absolute XY move is the extension x-cap.amsikking.move_xy.v1 because cap.motion.joint_position.v1 fixes positions to radians while the stage is addressed in millimetres. The extension is listed in catalogue_requests. The e-stop calls the upstream _stop_x and _stop_y ('1 stop', line 171; '2 stop', line 223); there is no independent hardware e-stop in the text of the clone and this R1 package does not claim one. The upstream stop helpers assert a BUSY reply after sending the command (lines 171 and 223), and the upstream has no locking around the serial port; the driver sends the stop before that assertion and claims no thread-safe independent stop. Limits come from the asserts the upstream code enforces (zaber_X_ADR130.py:21, 24 and 277), not from the constructor defaults on lines 13-15. The setter rounds the maximum speed to the three decimals the upstream read-back publishes (lines 263-265), because the upstream set_maxspeed asserts equality after that rounding (line 280); facts.md states this. Mock: an in-memory fake at the level of the Controller methods (the clone has no simulator, mock or recorded session), with placeholder start state marked '# placeholder'; it opens no port. The fake surface was checked by G7 against the clone's AST. Not covered: the hardware path, the real serial protocol, homing (the upstream _home is not exposed), relative moves (only absolute moves are exposed), and the upstream device-id/homing handshake; the fake does not reproduce it. All package text is English; every Fact and Limit cites a text line of the clone, and the PDFs in the clone were not cited.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

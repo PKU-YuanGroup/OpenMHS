@@ -1,0 +1,85 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jasegehring/spamb",
+  "track": "labs",
+  "local_path": "labs/jasegehring/spamb",
+  "driver_dir": "MHS/drivers/labs/jasegehring__spamb",
+  "upstream": {
+    "repo_url": "https://github.com/jasegehring/spamb",
+    "commit": "06a404c1879d0d1f926ba59470f81f9b7e7987cb",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "driver-pack",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 48,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "hardware.pump:PumpController",
+      "file": "fluidics-control/hardware/pump.py",
+      "line": 786,
+      "confidence": "override"
+    },
+    {
+      "symbol": "hardware.valve:ValveController",
+      "file": "fluidics-control/hardware/valve.py",
+      "line": 118,
+      "confidence": "override"
+    },
+    {
+      "symbol": "hardware.solenoids:SolenoidController",
+      "file": "fluidics-control/hardware/solenoids.py",
+      "line": 160,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "fluidics-control/hardware/pump.py:21",
+      "fluidics-control/hardware/solenoids.py:17",
+      "fluidics-control/hardware/valve.py:15"
+    ],
+    "upstream_tests": "fluidics-control/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": [
+      "fluidics-control/core/async_hardware.py:62 max_age_ms = 2000"
+    ]
+  },
+  "needs_recon": [
+    "install",
+    "capabilities"
+  ],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/jasegehring__spamb --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

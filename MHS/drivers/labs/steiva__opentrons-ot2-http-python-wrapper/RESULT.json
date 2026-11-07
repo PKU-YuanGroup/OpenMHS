@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:ef5d80589fdf8592054276ee0989fd232b318df0d3666668384624f8222c45b1",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.steiva.create_run.v1",
+      "reason": "no catalogue class creates a run on a liquid handler; cap.process.run.v1 runs a recipe and needs a recipe reference, not an empty run with a server-assigned id",
+      "verb": "invoke",
+      "summary": "Create a run and return its server-assigned id.",
+      "similar": [
+        "cap.process.run.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.steiva.load_pipette.v1",
+      "reason": "no catalogue class loads a pipette; the cap.fluid.* classes assume a loaded pipette and carry no pipette-loading input",
+      "verb": "invoke",
+      "summary": "Load the configured pipette on the left or right mount."
+    },
+    {
+      "capability_id": "x-cap.steiva.load_labware.v1",
+      "reason": "no catalogue class loads a labware definition into a deck slot; cap.sample.move.v1 moves a sample or labware but does not load one",
+      "verb": "invoke",
+      "summary": "Load a labware definition into a deck slot and return its id.",
+      "similar": [
+        "cap.sample.move.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.steiva.home.v1",
+      "reason": "cap.motion.home.v1 binds robot.arm and motion.axis, not lab.liquid_handler, so this liquid-handler device cannot bind it; the wrapper's home_robot() homes the gantry",
+      "verb": "invoke",
+      "summary": "Home the robot gantry.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.steiva.control_run.v1",
+      "reason": "no catalogue class plays, pauses, stops or recovers a run; cap.process.run.v1 starts a recipe and has no play/pause/recover action",
+      "verb": "invoke",
+      "summary": "Send play, pause, stop or resume-from-recovery to the current run.",
+      "similar": [
+        "cap.process.run.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.steiva.stop_run.v1",
+      "reason": "no catalogue class stops a run and binds lab.liquid_handler; cap.motion.stop.v1 binds robot.arm, robot.mobile_base and motion.axis. This x-cap is also the declared safe-state action",
+      "verb": "invoke",
+      "summary": "Stop the current run (the safe-state action).",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). Model-authored and unreviewed: the R2 hardware backend is refused by the loader until reviewed_by is set; native.py was never imported or run. DEVIATION FROM THE CARD: the card's helper column names PythonObjectDriver, but the package is a direct decorated Driver (the card's decision is direct-driver) so each action can bind a catalogue class or an x-cap with an inline schema and the safe-state action can be declared. No command syntax was changed. The fake is an in-memory stand-in for ot2_api:OpentronsAPI, not a recording of a robot. The driver exposes the two catalogue fluid actions (cap.fluid.aspirate.v1 and cap.fluid.dispense.v1), two reads (robot_model from health() and run_count from get_run_info()), and the x-cap setup/run actions create_run, load_pipette, load_labware, home, control_run and stop_run. Not covered: move_to_coordinates, move_to_well, move_relative, pick_up_tip, drop_tip, blow_out, aspirate_in_place, dispense_in_place, move_labware, retract_axis, toggle_lights, upload_protocol and the labware-offset methods. The optional flow_rate input is omitted because the clone states no range for it; the upstream default of 25 uL/s then applies. The volume bound is the catalogue class envelope (0 to 1000 uL; class_default), not a driver-declared device bound, because the installed pipette is a configuration choice. The e-stop and the safe-state action x-cap.steiva.stop_run.v1 both send the run action stop through control_run('stop'). The clone documents no independent hardware e-stop, so estop_physical_ref is not set; control_run is decorated with require_ids(['run_id']) (ot2_api.py:360), so a real robot's run stop needs a run created first, and this wrapper cannot move or aspirate without a run (ot2_api.py:187-189). The 10 s HTTP timeout in native.py is a connection setting, not a device bound. License: the card and lock keep license_spdx NOASSERTION; the clone README says MIT and points at LICENSE.txt, but the clone has no LICENSE.txt, so the license remains unresolved (the card's needs_recon license).\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (359 to 360); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

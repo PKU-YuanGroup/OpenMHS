@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.sciencecorp/galago-tools",
+  "upstream": {
+    "repo_url": "https://github.com/sciencecorp/galago-tools",
+    "commit": "7ddf68c7bb7eda0243f6466cfbd6b97fdcfcf782",
+    "license_spdx": "Apache-2.0"
+  },
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install requests==2.29.0"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The hardware backend (native.py) is a bounded port of tools/opentrons2/driver.py and imports only requests, the upstream's HTTP library (requirements.txt:5); it does not import the galago-tools package, whose requirements include Windows-only and vendor packages (requirements.txt:1-17). The gate never installs or imports either."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeOt2Driver"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "claude-opus-5-5",
+    "run_id": "p3-reauthor-galago-tools",
+    "date": "2026-11-05"
+  },
+  "reviewed_by": null
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:ae19b0f07847f1397483068c007df0c9d35b2307d0dde5161cf936e5b660193c",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.pymodaq.smc100_move_abs.v1",
+      "reason": "No catalogue class moves a single linear or rotary axis to an absolute position in the stage's own units: cap.motion.joint_position.v1 publishes radians and cap.motion.cartesian_pose.v1 is for a robot tool pose, while the SMC100 clone states positions only in the stage's units.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.pymodaq.smc100_move_rel.v1",
+      "reason": "No catalogue class expresses a relative move in the stage's own units; the motion classes use absolute joint positions or a Cartesian pose.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.pymodaq.smc100_stop.v1",
+      "reason": "cap.motion.stop.v1 declares a deceleration input in m/s2, but the SMC100 clone has no deceleration command for stop: ST stops with the controller's configured AC setting, so that class input cannot be implemented.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the card's family-config/ScpiDriver decision cannot express this interface. The SMC100 class prefixes every command with the controller's device number and assembles mnemonics at run time (for example 1PA10 or 1ST), so the driver is a direct Driver over pymodaq_plugins_newport.hardware.smc100:SMC100 with native.py as the hardware factory. The package covers only the SMC100 entry symbol; the other devices in this multi-device repository (ESP100, AgilisSerial, SimpleXPS, Conex, Picomotor 8742) are not implemented. Reads are identity, position, is_moving, speed and acceleration; writes are absent because the clone states no speed or acceleration bound. Absolute and relative moves send PA and PR and return the commanded value; the controller moves asynchronously and the driver does not wait for completion. cap.motion.home.v1 is bound to SMC100.home(), which sends PA0 as the clone documents; the upstream homing() (OR) is not exposed because the clone says it works only in the NOT REFERENCED state. The stop is an x-cap action because cap.motion.stop.v1's only input is a deceleration in m/s2 that the SMC100 cannot receive. Position and distance inputs are operator_required: the clone gives only the stage's units and no travel range, so the operator must supply the axis envelope in site-limits.json (site-limits.example.json shows an example only). Every fake value is a placeholder and not a device fact. No hardware backend was run; this model-authored package is unreviewed and no instrument was tested.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review."
+}

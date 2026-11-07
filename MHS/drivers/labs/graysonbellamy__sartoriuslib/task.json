@@ -1,0 +1,126 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.graysonbellamy/sartoriuslib",
+  "track": "labs",
+  "local_path": "labs/graysonbellamy/sartoriuslib",
+  "driver_dir": "MHS/drivers/labs/graysonbellamy__sartoriuslib",
+  "upstream": {
+    "repo_url": "https://github.com/graysonbellamy/sartoriuslib",
+    "commit": "52f520767051ecee5af2ef5339e1cddc5c406a60",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 13,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "sartoriuslib.devices.balance:Balance",
+      "file": "src/sartoriuslib/devices/balance.py",
+      "line": 300,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sartoriuslib.sync.balance:SyncBalance",
+      "file": "src/sartoriuslib/sync/balance.py",
+      "line": 53,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sartoriuslib.sinks.csv:CsvSink",
+      "file": "src/sartoriuslib/sinks/csv.py",
+      "line": 36,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sartoriuslib.sinks.parquet:ParquetSink",
+      "file": "src/sartoriuslib/sinks/parquet.py",
+      "line": 88,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sartoriuslib.sinks.postgres:PostgresSink",
+      "file": "src/sartoriuslib/sinks/postgres.py",
+      "line": 226,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/sartoriuslib/transport/fake.py:43 FakeTransport",
+      "src/sartoriuslib/transport/fake.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Balance.get_auto_zero",
+      "Balance.get_display_unit",
+      "Balance.get_filter_mode",
+      "Balance.get_isocal_mode",
+      "Balance.get_menu_access",
+      "Balance.get_tare_behavior",
+      "Balance.identify",
+      "Balance.read_gross",
+      "Balance.read_net",
+      "Balance.read_parameter",
+      "Balance.read_tare_value",
+      "Balance.status"
+    ],
+    "writes": [
+      "Balance.configure_protocol",
+      "Balance.set_auto_zero",
+      "Balance.set_baud_rate",
+      "Balance.set_display_unit",
+      "Balance.set_filter_mode",
+      "Balance.set_isocal_mode",
+      "Balance.set_menu_access",
+      "Balance.set_tare_behavior",
+      "Balance.write_parameter",
+      "Balance.write_sbn_address",
+      "SyncBalance.configure_protocol",
+      "SyncBalance.set_auto_zero"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/sartoriuslib/registry/modes.py:69 MAX_ACCURACY = 1",
+      "src/sartoriuslib/registry/modes.py:74 MAX_FAST = 6",
+      "src/sartoriuslib/streaming/recorder.py:137 max_drift_ms = 0.0"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/graysonbellamy__sartoriuslib --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

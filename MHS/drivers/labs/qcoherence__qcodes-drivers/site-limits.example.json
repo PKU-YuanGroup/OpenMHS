@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example site (qcodes-drivers ADwin Gold II example overlay)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only (model review, 2026-11-05). The subsampling bound is operator_required: the upstream validator Numbers(0, 2**16) allows 0, which divides by zero in get_input_size, and the clone does not show what the real-time process accepts. A real site replaces this rule with the range its loaded process supports.",
+  "devices": {
+    "mhs://localhost/adwin-gold2": {
+      "subsampling": {
+        "min": 1,
+        "max": 65536,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example: the subsampling factors the loaded ADwin process accepts at this site"
+      }
+    }
+  }
+}

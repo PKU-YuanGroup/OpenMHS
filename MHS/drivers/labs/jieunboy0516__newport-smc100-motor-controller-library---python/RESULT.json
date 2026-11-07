@@ -1,0 +1,40 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:4ec3d1105c7570b6dd815fb9937a6a767f30a0682fd3b6eceae4acd5d458562d",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.jieunboy0516.move_absolute.v1",
+      "reason": "cap.motion.joint_position.v1 fixes joint_positions to radians and binds robot.arm and motion.axis, but the SMC100 position is addressed in millimetres (smc100_base.py:146) and the clone states no millimetre-to-radian conversion; the extension carries the native unit.",
+      "verb": "invoke",
+      "summary": "Move the axis to an absolute position in millimetres (the native PA command).",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.jieunboy0516.move_relative.v1",
+      "reason": "cap.motion.joint_position.v1 takes absolute joint positions in radians; the native PR command is a relative offset in millimetres (smc100_base.py:180-182, with the millimetre statement at 146) and no catalogue class has a relative millimetre input for motion.axis; the extension carries the native unit.",
+      "verb": "invoke",
+      "summary": "Move the axis by a relative offset in millimetres (the native PR command).",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.jieunboy0516.start_home.v1",
+      "reason": "cap.motion.home.v1 reports homed and takes speed_scale 0 to 1, but the upstream home(controller) only sends OR and returns without waiting and has no speed parameter (smc100_base.py:159-161); home_until_done polls the state in an unbounded loop (smc100_base.py:163-173). The extension reports command acceptance only, which that class cannot express.",
+      "verb": "invoke",
+      "summary": "Start the native home command and report that it was sent, not that homing finished.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check MHS/drivers/labs/jieunboy0516__newport-smc100-motor-controller-library---python --backend fake: all gates G1 to G9 pass and check-report.json holds no finding, warning or error. Evidence is contract_checked, never an MHS-Device level. No hardware was attached, the hardware backend native.py was never imported or run, the upstream clone and the serial port were never imported or touched, and nothing was installed. The package is model-authored (driver.lock.json authored_by kind model, model_id deepseek-v4.1-flash:1017, run_id wP-027); reviewed_by is null, no human reviewed or tested anything, and no hardware run is claimed. This is an R1 package, so the loader's review_required refusal for model-authored R2/R3 packages does not cover it and no SDK protection is claimed. DEVIATION FROM THE CARD: the PythonObjectDriver helper is not used; this is a direct Driver over smc100_base:smc100 with a native.py factory because the upstream assembles every serial command at run time from a controller address and a mnemonic (for example '%02dTP', '%02dPA%f', '%02dST') and owns the send_rcv transport, which a config-only object family cannot express. The card's decision direct-driver and entry symbol smc100_base:smc100 are unchanged. Interface: reads position in mm (the TP query, unit from smc100_base.py:146), state and errors (the TS query) and velocity in the controller's native units (the VA? query, unit '1' because the clone states no unit); writes velocity; actions x-cap.jieunboy0516.move_absolute.v1 (PA), x-cap.jieunboy0516.move_relative.v1 (PR), x-cap.jieunboy0516.start_home.v1 (OR) and cap.motion.stop.v1 (ST, also the safe-state action); the e-stop calls the native stop_motion and the accepted-reset recovery calls the native reset. Limits: the absolute position, the relative offset and the velocity are Limit.operator_required because no text file of the clone states the travel of the configured stage, a relative move bound or a velocity range with a unit; site-limits.example.json is only an example overlay and hardware use is refused MHS.SAFETY.LIMITS_UNSET until a site supplies site-limits.json. The README's 0-27 for the move position (README.md:28) is not used as a bound because it has no unit and is the library author's example. Safety: the safe state is motion stopped with the native ST command; no line of the clone documents an independent hardware e-stop, so estop_physical_ref is not set, and this R1 package claims none. Every Fact cites a text line of the clone at the pinned commit; no PDF page is cited, and README.md:14-15 is cited only as the link to the external manual. Mock: the clone has no simulator, mock or recorded transcript, so fake.py is an in-memory fake at the level of the upstream smc100 methods, uses only method names that exist on that class (gate G7), opens no port, and marks every start value and canned reply '# placeholder'. NOT COVERED: the upstream home_until_done and move busy-wait without a timeout (smc100_base.py:163-173, 184-200), so they are not exposed; start_home reports command acceptance and not completion; get_position, get_velocity and get_JOGGING_state parse but return None upstream, so the driver queries TP and VA? through send_rcv and parses the reply itself; the arbitrary send channel, the disable/enable MM0/MM1 commands and the jogging commands are not exposed; the upstream constructor's failed-open fallback only prints that it uses a dummy motor controller (smc100_base.py:89-95), so native.py lets the serial exception surface instead of pretending a connection exists. check-report.json is generated by the gate and is not authored content.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (322 to 323); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

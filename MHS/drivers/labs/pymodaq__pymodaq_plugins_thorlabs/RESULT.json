@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:bb621f26d6aa0ad9e7374cc761e064961e431a0b7f421ff0e2d47853a24f9047",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.pymodaq.thorlabs_move_abs.v1",
+      "reason": "No catalogue class moves one linear or rotary axis to an absolute position in the controller's own position unit: cap.motion.joint_position.v1 takes an array of joint positions in rad and cap.motion.cartesian_pose.v1 is a robot-arm pose in mm. The package uses an x-cap id with an inline scalar schema in the controller position unit.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.pymodaq.thorlabs_move_rel.v1",
+      "reason": "No catalogue class commands a relative single-axis move: cap.motion.joint_position.v1 and cap.motion.cartesian_pose.v1 are absolute targets. The package uses an x-cap id with an inline scalar offset schema in the controller position unit.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.pymodaq.thorlabs_home.v1",
+      "reason": "cap.motion.home.v1 takes axis names and a speed_scale and describes the result as joint positions in rad; the Kinesis home() takes only the channel index (no speed argument) and starts an asynchronous native move, so the package uses an x-cap id that reports the command was issued.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.pymodaq.thorlabs_stop.v1",
+      "reason": "cap.motion.stop.v1 allows an optional deceleration profile in m/s2; the Kinesis stop call is Stop(0) and takes no profile, so accepting one would mean ignoring a requested stop profile. The package uses an x-cap stop id with no profile, and the same native stop is the e-stop.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "Passed on the fake backend with the gate digest above; the evidence is contract_checked, never an MHS-Device level. The package is model-authored and unreviewed (driver.lock.json reviewed_by is null); no hardware was attached, no hardware run was made and no human review or test is claimed. The driver binds one channel of the upstream BrushlessDCMotor controller (native.py options: serial required, channel default 1) and exposes the channel position, target position, unit string, homed flag and bound channel index. The actions are an absolute move (native move_abs with the channel index), a relative move (target computed from the current position and issued through native move_abs, as the PyMoDAQ plugin does), a home command and the native stop (Stop(0)); the @estop calls the same native stop. No write is exposed: the wrapper's channel-parameter write, BrushlessMotorChannel.set_property, sets raw stage-axis parameters whose unit and range appear nowhere in the clone, so binding it would need an invented unit and an operator bound; the base class's backlash property setter is not exposed either. DEVIATION FROM THE CARD: the card's helper hint is PythonObjectDriver; the package uses a direct decorated Driver (the card's decision is direct-driver) because it needs a hardware factory that opens the controller by serial and one channel, a per-channel native stop as @estop, and operator_required action inputs. The absolute target and the relative offset are Limit.operator_required in the controller position unit: no text file of the clone states the travel of the stage attached to the controller, and the PyMoDAQ plugin applies its own user-configured bounds with check_bound before a move. Every move is refused MHS.SAFETY.LIMITS_UNSET until the operator's site overlay supplies the travel; site-limits.example.json carries example values only, not a statement about any stage, and must be replaced. The stop action is an x-cap because cap.motion.stop.v1's optional deceleration profile has no argument in the Kinesis stop; cap.motion.home.v1 was not bound because the native home takes no speed or axis selection. Risk is R1 (the card floor): the exposed interface is one low-energy motion axis and no text of the clone documents a higher hazard. estop_physical_ref is not set because no line of the clone documents an independent hardware e-stop; the independent stop requirement of SAFE-045 applies at R2 and R3 only. NOT COVERED: the hardware path (native.py, the pythonnet import of the Kinesis .NET assemblies, the serial connection, the asynchronous move completion and the controller unit converter) was never run. The fake is an in-memory object, not a recording: it moves instantly, has no polling or timing, and its start position, target, unit string, homed flag, home position and per-channel dictionary are placeholders marked in fake.py, not device facts. The position unit is read from the controller at run time; the action input unit is '1' (raw controller unit) because the clone does not state a physical unit for a configured stage.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review."
+}

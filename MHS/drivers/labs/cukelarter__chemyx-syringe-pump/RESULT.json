@@ -1,0 +1,40 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:0d797c9ba1adccff48c4305ae053b3da321cbe1bded04693a87856a170a4fd5e",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.cukelarter.start.v1",
+      "reason": "No catalogued class binds the raw start command of a fluid.pump. cap.actuation.pump.v1 requires flow_rate and direction and reports dispensed_volume, while the clone's startPump takes no run parameters; the configured rate and volume are written separately before start.",
+      "verb": "invoke",
+      "summary": "Start the configured syringe-pump run.",
+      "similar": [
+        "cap.actuation.pump.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.cukelarter.stop.v1",
+      "reason": "No catalogued stop class binds fluid.pump: cap.motion.stop.v1 lists only robot.arm, robot.mobile_base and motion.axis. The clone's stopPump sends the stop word and is the safe-state action.",
+      "verb": "invoke",
+      "summary": "Stop the pump and leave it stopped.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.cukelarter.pause.v1",
+      "reason": "No catalogued class binds pausing the run of a fluid.pump; the clone has only pausePump, which sends the pause word.",
+      "verb": "invoke",
+      "summary": "Pause the current syringe-pump run."
+    },
+    {
+      "capability_id": "x-cap.cukelarter.restart.v1",
+      "reason": "No catalogued class binds restarting the run of a fluid.pump; the clone has only restartPump, which sends the restart word.",
+      "verb": "invoke",
+      "summary": "Restart the syringe pump."
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the card's family-config/SerialDriver was replaced by a direct Driver over python_dist.CHEMYX_python.core.connect:Connection. The upstream interface is a Python object whose methods assemble a command and return a list of reply lines (connect.py:97-143), and the only parameter report is the multi-line 'view parameter' reply (connect.py:268-271); a one-command/one-reply command table cannot express that reply or keep a last-written value in the resource state. No wire syntax was changed: the driver calls the upstream methods and the fake implements only the upstream class's public methods. NOT COVERED: multi-pump mode (the setPump/addPump prefixing and the multipump constructor option), multi-step list writes for rate/volume/delay, startPump(multistep=True), and direct use of getResponse; the driver covers the single-pump, single-step commands. The raw reads pump_status, parameters and parameter_limits are the reply lines joined with a newline; the exact line layout and labels of the pump's replies are not modeled. The read-only displaced_volume and elapsed_time fields take the last number of their reply (the GUI reads the last token at CHEMYX_GUI.py:237); the clone states no unit for either, so both are published with the dimensionless UCUM unit 1. The rate, volume and time writes are sent verbatim in the unit selected by units, so their fields also carry unit 1. The diameter is mm and the delay is s (the GUI labels at CHEMYX_GUI.py:156,159). The five numeric writes are Limit.operator_required because no line of the clone states a range; site-limits.example.json is an example operator overlay, not a device fact. Risk is R2 above the card's R1 floor because the pump dispenses. The clone names no independent hardware emergency stop, so the R2 stop path (SAFE-045) is the safe-state action x-cap.cukelarter.stop.v1, which calls stopPump. The fake is an in-memory stand-in; its numbers are placeholders. The hardware backend imports core from the clone's python_dist/CHEMYX_python directory on PYTHONPATH and was never imported or run; no hardware was attached. The package is model-authored and unreviewed (driver.lock.json reviewed_by is null). The gate was run three times: the first failed G2.BACKENDS_DIFFER, the second and third passed with the digest above and no warnings.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (313 to 314); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

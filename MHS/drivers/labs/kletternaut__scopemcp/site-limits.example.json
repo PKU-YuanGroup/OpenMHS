@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (scopemcp)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/ds1102": {
+      "channel1_scale": {"allowed": ["1V", "500mV"], "source": "operator",
+                         "reason": "example: only the scale spellings shown in the clone; the site supplies the set its probe and scope accept"},
+      "horizontal_scale": {"allowed": ["1ms", "500us"], "source": "operator",
+                           "reason": "example: only the timebase spellings shown in the clone; the site supplies the set its unit accepts"},
+      "channel1_offset_v": {"min": -5, "max": 5, "unit": "V", "source": "operator",
+                            "reason": "example: a 0 V centered window; the site supplies the offset window of its unit"},
+      "trigger_level_mv": {"min": -5000, "max": 5000, "unit": "mV", "source": "operator",
+                           "reason": "example: a 0 V centered window; the site supplies the trigger level window of its unit"}
+    }
+  }
+}

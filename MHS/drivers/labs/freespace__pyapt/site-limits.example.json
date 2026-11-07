@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (pyapt)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/pyapt-stage": {
+      "position": {"min": 0, "max": 50, "unit": "1", "source": "operator",
+                   "reason": "example: travel range of the installed stage in its own unit (mm or degree)"},
+      "maximum_velocity": {"min": 0.1, "max": 5, "unit": "1", "source": "operator",
+                           "reason": "example: velocity ceiling of the installed stage in its own unit per second"},
+      "acceleration": {"min": 0.1, "max": 5, "unit": "1", "source": "operator",
+                       "reason": "example: acceleration ceiling of the installed stage in its own unit per second squared"},
+      "x-cap.freespace.move_relative.v1": {
+        "distance": {"min": -1, "max": 1, "unit": "1", "source": "operator",
+                     "reason": "example: relative travel this bench allows in one command, in the stage's own unit"}
+      },
+      "cap.motion.home.v1": {
+        "speed_scale": {"min": 0.1, "max": 1, "unit": "1", "source": "operator",
+                        "reason": "example: home at 10 to 100 percent of the controller's configured maximum velocity"}
+      }
+    }
+  }
+}

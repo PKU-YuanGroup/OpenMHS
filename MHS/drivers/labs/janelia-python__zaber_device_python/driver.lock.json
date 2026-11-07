@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.janelia-python/zaber_device_python",
+  "upstream": {
+    "repo_url": "https://github.com/janelia-python/zaber_device_python",
+    "commit": "2fec6746359b35acd4cf0c121cff03da8ae0a062",
+    "license_spdx": "BSD-3-Clause"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.py declares no python_requires and installs serial_interface (setup.py:29); the upstream module also imports pyserial. The upstream package is imported by native.py only; the gate never installs or imports it."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeZaberStage"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-021",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

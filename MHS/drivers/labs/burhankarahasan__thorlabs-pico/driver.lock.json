@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.burhankarahasan/thorlabs-pico",
+  "upstream": {
+    "repo_url": "https://github.com/burhankarahasan/thorlabs-pico",
+    "commit": "91898e3a55a925ca36ce24d53997351c1b947779",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows",
+    "notes": "The clone has no packaging metadata: stepper_controller.py is a standalone module that imports pyserial (stepper_controller.py:1). The card supplies no install command and this package runs none. The hardware factory imports stepper_controller from the clone root, so that root must be on PYTHONPATH; the acceptance gate uses the package's fake backend and never imports the upstream module."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakePicoStepperController"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-200",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:86ac14bd4ddc051d30709330f352d1a71653eea4232925412e5ec215a4261775",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.ymzds.measure_waveform.v1",
+      "reason": "no catalogue class acquires an oscilloscope waveform or returns its scalar measurements; cap.sensing.read.v1 binds sensor kinds and cap.measure.voltage.v1 binds instrument.dmm, instrument.smu and sensor, not an oscilloscope, so the package uses an x-cap id with an inline output schema",
+      "verb": "invoke",
+      "summary": "Acquire one channel through DirectBackend.measure_waveform and return its scalar measurements.",
+      "similar": [
+        "cap.sensing.read.v1",
+        "cap.measure.voltage.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ymzds.auto_setup.v1",
+      "reason": "no catalogue class runs an instrument's own auto setup; cap.device.configure.v1 requires a non-empty parameter patch and cannot express the upstream's empty-input auto_setup, so the package uses an x-cap id with an inline output schema",
+      "verb": "invoke",
+      "summary": "Run the native oscilloscope auto setup (Autoset).",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). Model-authored and unreviewed; R1, so the loader does not refuse the hardware backend on review grounds, and this package claims no such protection. No hardware was attached, imported or run. DEVIATION FROM THE CARD: the card suggested PythonObjectDriver with cap.device.configure.v1 and cap.sensing.read.v1; cap.sensing.read.v1 binds sensor, sensor.imu and sensor.force_torque, not an instrument, so the settings are @read/@write state with cap.device.configure.v1 as the only catalogue binding, and measurement and auto setup are x-cap extensions over the DirectBackend object. NOT COVERED: the time and voltage sample arrays of read_waveform and auto_measure; the 0.9 catalogue has no oscilloscope waveform class. The scalar measure_waveform result and every setting are covered. The fake's read_waveform returns 8 samples and measure_waveform reports num_samples 8, while the real fetch defaults to 100000 samples (niscope_mcp/backends/direct.py:166-191); the fake is an in-memory stand-in, not a recording. Operator-required vertical_offset, trigger_level and record_length have no source bound in the clone; site-limits.example.json fills them for one example bench and the fake conformance run applies it. The driver takes bandwidth_filter, num_records, ref_position, enforce_realtime, acquisition_type, trigger_coupling and trigger_holdoff from backend options because get_current_config does not report them; their defaults are the upstream dataclass values, not sourced device limits. The vertical_range, probe_attenuation, input_impedance and sample_rate limits cite the clone's help-text cheat sheet of common values (niscope_mcp/__main__.py:1208-1214), the only text that states numbers; they are not datasheet limits.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Copied the exact generated task.json after preserving the obsolete abstract Panda draft and recording the USB camera image-scope blocker; changed task.json and RESULT.json (card fields: rank). Package contracts, source pins, gate finding digests, author attribution and human signatures remain unchanged. This metadata synchronization is not a new complete gate collection.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

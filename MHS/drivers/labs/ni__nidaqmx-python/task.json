@@ -1,0 +1,126 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ni/nidaqmx-python",
+  "track": "labs",
+  "local_path": "labs/ni/nidaqmx-python",
+  "driver_dir": "MHS/drivers/labs/ni__nidaqmx-python",
+  "upstream": {
+    "repo_url": "https://github.com/ni/nidaqmx-python",
+    "commit": "04211cd36322a1fa2269c7d6edd63b6051daf034",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 6,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "nidaqmx.task._task:Task",
+      "file": "generated/nidaqmx/task/_task.py",
+      "line": 64,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "nidaqmx.task._in_stream:InStream",
+      "file": "generated/nidaqmx/task/_in_stream.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "nidaqmx.system.system:System",
+      "file": "generated/nidaqmx/system/system.py",
+      "line": 34,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "nidaqmx._library_interpreter:LibraryInterpreter",
+      "file": "generated/nidaqmx/_library_interpreter.py",
+      "line": 71,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "nidaqmx._grpc_interpreter:GrpcStubInterpreter",
+      "file": "generated/nidaqmx/_grpc_interpreter.py",
+      "line": 93,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9,<4.0",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Task.is_task_done",
+      "Task.read_waveform",
+      "InStream.get_channels_buffer_size",
+      "InStream.read_all",
+      "InStream.read_all_avail_samp",
+      "InStream.read_into",
+      "System.get_analog_power_up_states",
+      "System.get_analog_power_up_states_with_output_type",
+      "System.get_digital_logic_family_power_up_state",
+      "System.get_digital_power_up_states",
+      "System.get_digital_pull_up_pull_down_states"
+    ],
+    "writes": [
+      "Task.write_waveform",
+      "InStream.configure_logging",
+      "System.set_analog_power_up_states",
+      "System.set_analog_power_up_states_with_output_type",
+      "System.set_digital_logic_family_power_up_state",
+      "System.set_digital_power_up_states",
+      "System.set_digital_pull_up_pull_down_states"
+    ],
+    "actions": [
+      "Task.start",
+      "Task.stop",
+      "Task.wait_until_done",
+      "Task._export_signals.hshk_event_interlocked_assert_on_start",
+      "InStream.auto_start",
+      "InStream.logging_pause",
+      "InStream.start_new_file"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.actuation.gpio.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "generated/nidaqmx/constants.py:612 MAP_RANGES = 10448",
+      "generated/nidaqmx/constants.py:709 MAX_SHEAR_STRAIN = 15977",
+      "generated/nidaqmx/constants.py:710 MAX_SHEAR_STRAIN_ANGLE = 15978"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ni__nidaqmx-python --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

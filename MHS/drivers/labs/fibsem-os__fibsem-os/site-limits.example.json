@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example fluorescence microscope bench (fibsem-os driver example)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/fibsem-remote-fm": {
+      "exposure_time": {"min": 0.001, "max": 10.0, "unit": "s", "source": "operator",
+                         "reason": "example: the installed camera and the samples on this bench use 1 ms to 10 s"},
+      "binning": {"allowed": [1, 2, 4, 8], "unit": "1", "source": "operator",
+                  "reason": "example: the installed camera offers these binning factors"},
+      "gain": {"min": 0.0, "max": 1.0, "unit": "1", "source": "operator",
+               "reason": "example: the camera's gain is a fraction of its range; this bench uses the whole range"}
+    }
+  }
+}

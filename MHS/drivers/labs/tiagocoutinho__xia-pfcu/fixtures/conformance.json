@@ -1,0 +1,38 @@
+{
+  "capabilities": {
+    "cap.device.configure.v1": {
+      "valid": {
+        "decimation": 1,
+        "filter_a": "in",
+        "filter_b": "out",
+        "filter_c": "out",
+        "filter_d": "out",
+        "shutter_enabled": true,
+        "remote_control_only": false
+      },
+      "alternate": {
+        "decimation": 2,
+        "filter_a": "out",
+        "filter_b": "in",
+        "filter_c": "in",
+        "filter_d": "out",
+        "shutter_enabled": true,
+        "remote_control_only": false
+      },
+      "out_of_envelope": [
+        {"decimation": 0},
+        {"decimation": 65536},
+        {"filter_a": "half-in"},
+        {"filter_b": "half-out"}
+      ]
+    },
+    "cap.optics.shutter.v1": {
+      "valid": {"state": "open"},
+      "alternate": {"state": "closed"}
+    },
+    "x-cap.tiagocoutinho.start_exposure.v1": {
+      "valid": {"duration_s": 1.0},
+      "alternate": {"duration_s": 2.0}
+    }
+  }
+}

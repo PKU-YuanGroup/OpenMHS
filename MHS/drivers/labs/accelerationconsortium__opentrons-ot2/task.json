@@ -1,0 +1,125 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.accelerationconsortium/opentrons-ot2",
+  "track": "labs",
+  "local_path": "labs/accelerationconsortium/opentrons-ot2",
+  "driver_dir": "MHS/drivers/labs/accelerationconsortium__opentrons-ot2",
+  "upstream": {
+    "repo_url": "https://github.com/accelerationconsortium/opentrons-ot2",
+    "commit": "9ba663504dcf8b27eb1b9e777a84c01667202893",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 200,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "unitelabs.opentrons_ot2.io.motion:OT2MotionController",
+      "file": "src/unitelabs/opentrons_ot2/io/motion.py",
+      "line": 182,
+      "confidence": "override"
+    },
+    {
+      "symbol": "unitelabs.opentrons_ot2.io.heater_shaker:HeaterShakerController",
+      "file": "src/unitelabs/opentrons_ot2/io/heater_shaker.py",
+      "line": 14,
+      "confidence": "override"
+    },
+    {
+      "symbol": "unitelabs.opentrons_ot2.io.thermocycler:ThermocyclerController",
+      "file": "src/unitelabs/opentrons_ot2/io/thermocycler.py",
+      "line": 13,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10,<4.0",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "OT2MotionController.get_button_light",
+      "OT2MotionController.get_firmware_version",
+      "OT2MotionController.get_position",
+      "OT2MotionController.get_rail_lights",
+      "OT2MotionController.get_serial_number",
+      "OT2MotionController.is_connected",
+      "OT2MotionController.is_simulating",
+      "OT2MotionController.read_button",
+      "OT2MotionController.read_door_switch",
+      "OT2MotionController.read_pipette_id",
+      "OT2MotionController.read_pipette_model",
+      "HeaterShakerController.get_device_info"
+    ],
+    "writes": [
+      "OT2MotionController.set_active_current",
+      "OT2MotionController.set_button_light",
+      "OT2MotionController.set_dwelling_current",
+      "OT2MotionController.set_rail_lights",
+      "HeaterShakerController.set_rpm",
+      "HeaterShakerController.set_temperature",
+      "ThermocyclerController.set_lid_temperature",
+      "ThermocyclerController.set_plate_temperature"
+    ],
+    "actions": [
+      "OT2MotionController.aspirate",
+      "OT2MotionController.dispense",
+      "OT2MotionController.home",
+      "OT2MotionController.move",
+      "OT2MotionController.move_relative",
+      "OT2MotionController.move_through",
+      "OT2MotionController.pause",
+      "OT2MotionController.reset_from_error",
+      "OT2MotionController.resume",
+      "OT2MotionController.smoothie_reset",
+      "OT2MotionController.stop",
+      "HeaterShakerController.stop_shaking"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.temperature.v1",
+      "cap.motion.joint_position.v1",
+      "cap.thermal.setpoint.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/accelerationconsortium__opentrons-ot2 --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

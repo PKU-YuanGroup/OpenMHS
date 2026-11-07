@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (IKA RCT digital 5)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "An illustrative operator overlay, not a statement about any plate. It only supplies example ranges for the operator_required limits; replace them with the ranges of the installed plate and vessel.",
+  "devices": {
+    "mhs://localhost/ika-rct-digital-5": {
+      "temperature_setpoint": {"min": 0, "max": 120, "unit": "Cel", "source": "operator",
+                              "reason": "example: the plate and the sample in this bench allow 0 to 120 Cel"},
+      "stirring_speed_setpoint": {"min": 0, "max": 1200, "unit": "/min", "source": "operator",
+                                  "reason": "example: the vessel and stir bar on this bench allow 0 to 1200 rpm"},
+      "cap.thermal.setpoint.v1": {
+        "target_temperature": {"min": 0, "max": 120, "unit": "Cel", "source": "operator",
+                               "reason": "example: the plate and the sample in this bench allow 0 to 120 Cel"}
+      },
+      "x-cap.bamresearch.start_stirring.v1": {
+        "stirring_speed": {"min": 0, "max": 1200, "unit": "/min", "source": "operator",
+                           "reason": "example: the vessel and stir bar on this bench allow 0 to 1200 rpm"}
+      }
+    }
+  }
+}

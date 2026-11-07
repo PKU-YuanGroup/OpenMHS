@@ -1,0 +1,121 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.christofferkrook/laserphysics_devices",
+  "track": "labs",
+  "local_path": "labs/christofferkrook/laserphysics_devices",
+  "driver_dir": "MHS/drivers/labs/christofferkrook__laserphysics_devices",
+  "upstream": {
+    "repo_url": "https://github.com/christofferkrook/laserphysics_devices",
+    "commit": "7af657f90b192af988610525ead54bb2cc83a11d",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 84,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "OSA.new_yokogawa_aq6374.yokogawa_driver:OSA",
+      "file": "OSA/new_yokogawa_aq6374/yokogawa_driver.py",
+      "line": 11,
+      "confidence": "override"
+    },
+    {
+      "symbol": "OSA.old_osa.Ando:Ando",
+      "file": "OSA/old_osa/Ando.py",
+      "line": 10,
+      "confidence": "override"
+    },
+    {
+      "symbol": "translation_stages.conex.conexstage:CONEX",
+      "file": "translation_stages/conex/conexstage.py",
+      "line": 19,
+      "confidence": "override"
+    },
+    {
+      "symbol": "translation_stages.newport.esp300driver:esp300stage",
+      "file": "translation_stages/newport/esp300driver.py",
+      "line": 10,
+      "confidence": "override"
+    },
+    {
+      "symbol": "spectrometer.avaspec.Spectrometer:SPEC",
+      "file": "spectrometer/avaspec/Spectrometer.py",
+      "line": 11,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "OSA.get_averages",
+      "OSA.get_current_trace",
+      "OSA.get_resolution",
+      "OSA.get_scale",
+      "OSA.get_startwl",
+      "OSA.get_stopwl",
+      "Ando.get_averages",
+      "Ando.get_center_wl",
+      "Ando.get_current_trace",
+      "Ando.get_display_status",
+      "Ando.get_resolution",
+      "Ando.get_scale"
+    ],
+    "writes": [
+      "OSA.set_average",
+      "OSA.set_current_trace",
+      "OSA.set_resolution",
+      "OSA.set_scale",
+      "OSA.set_startwl",
+      "OSA.set_stopwl",
+      "Ando.set_averages",
+      "Ando.set_center_wl",
+      "Ando.set_current_trace",
+      "Ando.set_display_status",
+      "Ando.set_resolution",
+      "Ando.set_scale"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "spectrometer/avaspec/avaspec.py:25 MAX_NR_PIXELS = 4096"
+    ]
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/christofferkrook__laserphysics_devices --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (DHO804D oscilloscope driver)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/dho804d": {
+      "channel_scale": {"min": 0.001, "max": 10, "unit": "V", "source": "operator",
+                        "reason": "example: the probes on this bench measure signals of 1 mV/div to 10 V/div"},
+      "channel_offset": {"min": -10, "max": 10, "unit": "V", "source": "operator",
+                         "reason": "example: the probe and the input stage tolerate an offset of at most 10 V"},
+      "trigger_level": {"min": -10, "max": 10, "unit": "V", "source": "operator",
+                        "reason": "example: the trigger level follows the +-10 V input window of this bench"},
+      "timebase_scale": {"min": 1e-7, "max": 10, "unit": "s", "source": "operator",
+                         "reason": "example: this bench records events from 100 ns/div to 10 s/div"},
+      "timebase_offset": {"min": -50, "max": 50, "unit": "s", "source": "operator",
+                          "reason": "example: the recorded window stays within 50 s of the trigger"}
+    }
+  }
+}

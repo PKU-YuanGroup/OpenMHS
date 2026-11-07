@@ -1,0 +1,67 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:a54c9cffd29b84e3a57554192a59d94532310d5705c89ce0c1fc0347761e4665",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.angli339.liha_aspirate.v1",
+      "reason": "No catalogue class carries the FluentControl liquid class and the LiHa tip selection this command requires. cap.fluid.aspirate.v1 has a source object and an optional tip string but no liquid class; the upstream liha_aspirate needs volumes (eight entries), i_selected_tips, labware, i_selected_wells and liquid_class, so the exact interface is an extension.",
+      "verb": "invoke",
+      "summary": "Aspirate a volume through one LiHa tip from a 96-well labware well.",
+      "similar": [
+        "cap.fluid.aspirate.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.angli339.liha_dispense.v1",
+      "reason": "No catalogue class carries the FluentControl liquid class and the LiHa tip selection this command requires. cap.fluid.dispense.v1 has a target object and optional blowout/mix fields but no liquid class; the upstream liha_dispense needs volumes (eight entries), i_selected_tips, labware, i_selected_wells and liquid_class, so the exact interface is an extension.",
+      "verb": "invoke",
+      "summary": "Dispense a volume through one LiHa tip into a 96-well labware well.",
+      "similar": [
+        "cap.fluid.dispense.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.angli339.liha_mix.v1",
+      "reason": "No catalogue class mixes a well through one named LiHa tip with a FluentControl liquid class. cap.fluid.dispense.v1 has mix_cycles but it is a dispense option, not a mix command, and it has no tip list or liquid class; the upstream liha_mix needs n_cycles, eight volumes, selected tips, labware, selected wells and liquid_class.",
+      "verb": "invoke",
+      "summary": "Mix a volume in a 96-well labware well with one LiHa tip.",
+      "similar": [
+        "cap.fluid.dispense.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.angli339.mca_aspirate.v1",
+      "reason": "No catalogue class expresses a whole-plate MCA aspirate with a FluentControl liquid class. cap.fluid.aspirate.v1 takes one source well and an optional tip string; the upstream mca_aspirate takes one whole-plate volume, a labware and a liquid class, so the exact interface is an extension.",
+      "verb": "invoke",
+      "summary": "Aspirate a volume from a whole plate with the MCA head.",
+      "similar": [
+        "cap.fluid.aspirate.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.angli339.mca_dispense.v1",
+      "reason": "No catalogue class expresses a whole-plate MCA dispense with a FluentControl liquid class. cap.fluid.dispense.v1 takes one target well, an optional blowout and mix_cycles; the upstream mca_dispense takes one whole-plate volume, a labware and a liquid class, so the exact interface is an extension.",
+      "verb": "invoke",
+      "summary": "Dispense a volume into a whole plate with the MCA head.",
+      "similar": [
+        "cap.fluid.dispense.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.angli339.stop.v1",
+      "reason": "The R2 hardware driver needs a no-input safe-state action, and no catalogue class stops a FluentControl method. cap.motion.stop.v1 is a motion stop; this action calls RuntimeController.StopMethod() and detaches the API channel, and is the safe-state action the strict resolver accepts for SAFE-045.",
+      "verb": "invoke",
+      "summary": "Stop the FluentControl method and detach the API channel (the safe state).",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level); no hardware was attached or run. DEVIATION FROM THE CARD: the card names the python-object family and PythonObjectDriver, but this is a direct Driver. The upstream Tecan class builds an XML GenericCommand for every operation and sends it through the .NET Tecan.VisionX.API.V2 Execution Channel (tecan_fluent/tecan_ctrl.py:12-17,41-44), and its pipetting methods take volume lists, tip lists and well lists; a command table is not the right shape for a vendor SDK robot, and the guide's shape for one is a direct Driver with decorated methods, per-field limits and a safe-state action. A serial or SCPI shape would also have to invent a wire syntax the clone does not contain. The six actions are x-cap extension ids because the catalogue's cap.fluid.aspirate.v1 and cap.fluid.dispense.v1 have no liquid-class or LiHa-tip input; the exact upstream interface needs both, as the catalogue_requests explain. NOT COVERED: add_labware, liha_get_tips, liha_drop_tips, liha_set_tips_back, mca_get_head_adapter, mca_get_tips, mca_drop_tips, mca_drop_tips_back_to_source and run_command (it takes a .NET ICommand object), and the RuntimeController functions other than StopMethod and GetFluentStatus. The MCA partial-tip and offset features are not exposed because the clone says they are not implemented (README.md:147-151). The volume, tip-index and mix-cycle inputs are Limit.operator_required: no text file of the clone states those ranges, so every call is refused MHS.SAFETY.LIMITS_UNSET until the site supplies site-limits.json; site-limits.example.json is an illustrative overlay, not a device bound. No independent hardware e-stop is documented in the clone, so estop_physical_ref is not set; the safe-state action x-cap.angli339.stop.v1 satisfies SAFE-045, and the @estop calls RuntimeController.StopMethod() and then detaches the channel so run_command refuses further commands (tecan_fluent/tecan_ctrl.py:41-44). An accepted operator reset re-attaches the channel the e-stop detached; the upstream object has no reset call. The hardware backend (native.py) was never run: it imports tecan_fluent only on the hardware path, needs pythonnet and a Windows FluentControl installation, and the loader refuses this model-authored R2 package until a human sets reviewed_by. The fake is an in-memory object, not a recording; its status words, channel object and recorded calls are placeholders. check-report.json is regenerated by every gate run and is not part of the package.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

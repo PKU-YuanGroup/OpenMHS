@@ -1,0 +1,37 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:a341a520ebdbef56be55e407c6d763b47041c0bf1e33332cf4ebd2c1cb0e04d8",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.undalogic.usmu.configure.v1",
+      "reason": "cap.device.configure.v1 derives its effective input schema from writable resource state, but USMU has no query that reads the oversample rate or the current range back, so the settings cannot be honest state fields; an invoke action that applies them and returns the applied values is the truthful shape.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.undalogic.usmu.iv_point.v1",
+      "reason": "No catalogue class carries an output-voltage input together with a voltage/current measurement output. cap.measure.voltage.v1 and cap.measure.current.v1 are read classes with no source-voltage input, and the device's measurement command CH1:MEA:VOL also sets the output voltage, so the I-V point is an invoke action.",
+      "verb": "invoke",
+      "similar": [
+        "cap.measure.voltage.v1",
+        "cap.measure.current.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.undalogic.usmu.output.v1",
+      "reason": "cap.actuation.gpio.v1 binds io.digital and io.gpio resources only; no catalogue class switches the output of an instrument.smu on or off, so the CH1:ENA/CH1:DIS pair is an extension action.",
+      "verb": "invoke",
+      "similar": [
+        "cap.actuation.gpio.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend with one gate run (evidence contract_checked, never a hardware run). The package is model-authored and unreviewed; hardware was never attached and native.py was never imported or run. DEVIATION FROM THE CARD: the PythonObjectDriver helper was not used; a direct decorated Driver over usmu_py.smu:USMU is used, which is the card's direct-driver decision and the guide's shape for a class with methods, because the package needs explicit operator_required limits and an @estop. NOT COVERED: set_dac and set_current_limit_dac are not exposed; enable_voltage_calibration_mode is not exposed because the upstream class has no command to leave calibration mode; the standalone set_voltage is not separately exposed because the device's measurement command CH1:MEA:VOL both sets the voltage and measures it; read_adc is exposed only as the differential pair 0/1 read, and the other ADC channels are not offered. The card's candidate classes cap.sensing.read.v1 and cap.device.calibrate.v1 do not bind instrument.smu (their resource_kinds are sensor/sensor.imu/sensor.force_torque and robot.arm/instrument/sensor/optics.laser), which is why the operations above use the extension ids listed in catalogue_requests. No text of the clone states the output-voltage range, the current-limit range or the oversample range, so those inputs are Limit.operator_required; site-limits.example.json is an example operator policy, not a device rating, and every call that sets an unfilled bound is refused MHS.SAFETY.LIMITS_UNSET. The current range 1 to 4 is the sourced limit at usmu_py/smu.py:156. The fake keeps placeholder values and models an ideal resistive load only so the comma-separated reply is exercised; it is not a recording of a device. The R1 package claims no independent hardware stop; its @estop calls USMU.disable_output (CH1:DIS, high impedance).\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (52 to 51); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

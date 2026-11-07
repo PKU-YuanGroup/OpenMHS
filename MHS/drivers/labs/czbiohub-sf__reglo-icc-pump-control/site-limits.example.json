@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (reglo-icc-pump)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/reglo-icc-pump": {
+      "cap.actuation.pump.v1": {
+        "flow_rate": {"min": 1, "max": 100, "unit": "uL/s", "source": "operator",
+                      "reason": "example: flow-rate envelope of the tubing and pump head on this bench"},
+        "volume": {"min": 1, "max": 5000, "unit": "uL", "source": "operator",
+                   "reason": "example: volumes this bench moves in one command"}
+      },
+      "tubing_id": {"allowed": [1.52], "unit": "mm", "source": "operator",
+                    "reason": "example: the tubing installed on the driven channel"}
+    }
+  }
+}

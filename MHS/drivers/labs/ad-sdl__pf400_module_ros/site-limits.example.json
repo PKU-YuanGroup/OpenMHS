@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (PF400 through ad-sdl pf400_module_ros)",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "notes": "Example overlay only. The numbers are placeholders an operator would replace. They are not joint limits, a speed range, or a profile range of the controller.",
+  "devices": {
+    "mhs://localhost/pf400": {
+      "x-cap.ad-sdl.move_joints.v1": {
+        "profile": {
+          "min": 1,
+          "max": 1,
+          "source": "operator",
+          "reason": "example only: one profile index this bench's operator allows"
+        },
+        "joints[*]": {
+          "min": -1,
+          "max": 1,
+          "source": "operator",
+          "reason": "example only: not a measured joint envelope"
+        },
+        "speed": {
+          "min": 1,
+          "max": 1,
+          "source": "operator",
+          "reason": "example only: not the controller's speed range"
+        }
+      }
+    }
+  }
+}

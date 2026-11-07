@@ -1,0 +1,96 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.unine-chyn/thorpy",
+  "track": "labs",
+  "local_path": "labs/unine-chyn/thorpy",
+  "driver_dir": "MHS/drivers/labs/unine-chyn__thorpy",
+  "upstream": {
+    "repo_url": "https://github.com/unine-chyn/thorpy",
+    "commit": "e8f000bd8a5bcc5a11b52f59742024d929751827",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 242,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "thorpy.comm.port:CardSlotPort",
+      "file": "thorpy/comm/port.py",
+      "line": 196,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "thorpy.comm.port:SingleControllerPort",
+      "file": "thorpy/comm/port.py",
+      "line": 200,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "thorpy.comm.port:Port",
+      "file": "thorpy/comm/port.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "CardSlotPort.get_stages",
+      "CardSlotPort.static_port_list (attribute)",
+      "CardSlotPort.static_port_list_lock (attribute)",
+      "SingleControllerPort.get_stages",
+      "SingleControllerPort.static_port_list (attribute)",
+      "SingleControllerPort.static_port_list_lock (attribute)",
+      "Port.get_stages",
+      "Port.static_port_list (attribute)",
+      "Port.static_port_list_lock (attribute)"
+    ],
+    "writes": [],
+    "actions": [
+      "CardSlotPort.run",
+      "SingleControllerPort.run",
+      "Port.run"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/unine-chyn__thorpy --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

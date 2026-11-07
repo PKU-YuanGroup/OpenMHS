@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (NEJE laser 2 controller)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only. The driver bounds x, y, power and idle with operator_required because the upstream clone states only the byte width of each field, not the travel or the laser settings of the machine. Replace these example values with the values measured for the installed hardware.",
+  "devices": {
+    "mhs://localhost/neje-laser2": {
+      "x-cap.beniroquai.move_xy.v1": {
+        "x": {"min": 0, "max": 65535, "unit": "1", "source": "operator",
+              "reason": "example: the move frame carries x in two bytes; the site replaces this with the travel of its stage"},
+        "y": {"min": 0, "max": 65535, "unit": "1", "source": "operator",
+              "reason": "example: the move frame carries y in two bytes; the site replaces this with the travel of its stage"}
+      },
+      "x-cap.beniroquai.set_laser.v1": {
+        "power": {"min": 0, "max": 255, "unit": "1", "source": "operator",
+                  "reason": "example: the setPWD frame carries power in one byte; the site replaces this with the laser settings it permits"},
+        "idle": {"min": 0, "max": 255, "unit": "1", "source": "operator",
+                 "reason": "example: the setPWD frame carries idle in one byte; the site replaces this with the laser settings it permits"}
+      }
+    }
+  }
+}

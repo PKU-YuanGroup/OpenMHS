@@ -1,0 +1,92 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cfpark00/smartem",
+  "track": "labs",
+  "local_path": "labs/cfpark00/smartem",
+  "driver_dir": "MHS/drivers/labs/cfpark00__smartem",
+  "upstream": {
+    "repo_url": "https://github.com/cfpark00/smartem",
+    "commit": "bbabd6ac4dcdc4b77a46c0f0e21e056c82f193aa",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 13,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "smartem.online.microscope:ThermoFisherVerios",
+      "file": "smartem/online/microscope.py",
+      "line": 167,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">3.7.0",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "smartem/online/microscope.py:43 FakeRandomMicroscope",
+      "smartem/online/microscope.py:102 FakeDataMicroscope"
+    ],
+    "upstream_tests": "smartem/tests"
+  },
+  "hints": {
+    "reads": [
+      "ThermoFisherVerios.get_image"
+    ],
+    "writes": [],
+    "actions": [
+      "SmartEMParQ.acquire_grid",
+      "SmartEMParQ.acquire_grid_fast",
+      "SmartEMParQ.acquire_grid_rescan",
+      "SmartEMParQ.acquire_many_grids",
+      "SmartEMParQ.acquire_many_grids_from_mat",
+      "SmartEMParQ.acquire_to",
+      "ThermoFisherVerios.auto_focus",
+      "ThermoFisherVerios.move",
+      "SmartEM.acquire",
+      "SmartEM.acquire_grid",
+      "SmartEM.acquire_many_grids",
+      "SmartEM.acquire_many_grids_from_mat"
+    ],
+    "candidate_classes": [
+      "cap.imaging.focus.v1",
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/cfpark00__smartem --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

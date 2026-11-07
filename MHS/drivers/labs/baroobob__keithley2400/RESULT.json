@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:20acddbd81ff93061fbe5bd6c5f24a127f023fee97f79a7b3c03e4b58f29a3ea",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.baroobob.measure_current.v1",
+      "reason": "No catalogue class expresses one current sample on an instrument.smu with the upstream trigger settings: cap.measure.current.v1 is a read state of a DMM/SMU/sensor and carries no trigger-delay input or measurement-mode setup, while the upstream read function sends ARM:COUN, TRIG:COUN and TRIG:DEL before READ? (keithley2400.py:114-121).",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.baroobob.measure_voltage.v1",
+      "reason": "cap.measure.voltage.v1 is a read class for instrument.dmm/instrument.smu/sensor; it has no trigger-delay input and no place for the upstream voltage-mode setup (SOUR:FUNC CURR, SOUR:CURR 0, CONF:VOLT, FORM:ELEM VOLT), so the one-sample action cannot be bound to it without dropping inputs the clone states.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.baroobob.measure_resistance.v1",
+      "reason": "cap.measure.resistance.v1 binds instrument.dmm and sensor only, not instrument.smu; its inputs (channel, four_wire) and output do not carry the upstream trigger delay or the CONF:RES/FORM:ELEM RES setup, so no catalogue class fits this source-measure unit measurement.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.baroobob.safe_state.v1",
+      "reason": "No catalogue class expresses the composite safe state of this source-measure unit (source output disabled and both source quantities zeroed); a safe_state=True action must take no input and run during an e-stop, which is the independent stop SAFE-045 requires when the clone documents no physical e-stop.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). The upstream clone is a Python 2 module of module-level functions over prologixGPIBUSB and has no class (keithley2400.py:28-39, 44-46); this is a ScpiDriver command map as the card's family and helper say. native names the card's open_connection entry function for traceability only: the SCPI bridge opens the transport, and neither the upstream module nor prologixGPIBUSB is imported. The model-authored package is unreviewed (reviewed_by stays null); no hardware backend was run and no human reviewed or tested it. Covered: the source-voltage setpoint SOUR:VOLT, with an operator_required limit because the clone states only a 5 uV resolution and no range (keithley2400.py:152-156); the output OUTP ON/OFF with OUTP? readback; one-sample current, voltage and resistance measurement actions that use the clone's mode commands and read sequence (lines 64-68, 114-121, 146-148, 160-164), with the 0 through 99 s one-sample interval bound (lines 248-250); the read-only trigger_delay state so a measurement action shows its applied TRIG:DEL; and a safe_state=True action plus e-stop writing OUTP OFF;SOUR:VOLT 0;SOUR:CURR 0. DEVIATION FROM THE UPSTREAM: the current measurement action keeps the source voltage at its setpoint, while the clone's current_mode sets SOUR:VOLT 0 first; the setpoint is the operator-bounded state and the safe state zeroes it. NOT COVERED: multi-sample read arrays (samples > 1 returns the Time and Data lists, lines 139-142), live readings (lines 86-90), and the Prologix adapter setup (GPIB address 24 and clear, lines 74-77); the hardware backend expects a preconfigured raw-SCPI TCP endpoint or VISA resource and never opens the Prologix adapter. The fake is an in-memory stand-in; its identity, states and readings are placeholders, not a recording of an instrument. Risk R3 is set because the source-measure unit can source a voltage and the clone states no maximum; no line of the clone documents an independent hardware e-stop, so the independent stop is the safe_state=True action.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Copied the exact generated task.json after preserving the obsolete abstract Panda draft and recording the USB camera image-scope blocker; changed task.json and RESULT.json (card fields: rank). Package contracts, source pins, gate finding digests, author attribution and human signatures remain unchanged. This metadata synchronization is not a new complete gate collection.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

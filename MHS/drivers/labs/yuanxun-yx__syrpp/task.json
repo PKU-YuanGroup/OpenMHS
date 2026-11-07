@@ -1,0 +1,101 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.yuanxun-yx/syrpp",
+  "track": "labs",
+  "local_path": "labs/yuanxun-yx/syrpp",
+  "driver_dir": "MHS/drivers/labs/yuanxun-yx__syrpp",
+  "upstream": {
+    "repo_url": "https://github.com/yuanxun-yx/syrpp",
+    "commit": "ae784882903cd9d1b72162835902dca0074b2e14",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 42,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "syrpp.pump_conn:SyrPump",
+      "file": "src/syrpp/pump_conn.py",
+      "line": 13,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [
+      "SyrPump.get_alarm",
+      "SyrPump.get_avail_address",
+      "SyrPump.get_buzzer",
+      "SyrPump.get_com_mode",
+      "SyrPump.get_config",
+      "SyrPump.get_diameter",
+      "SyrPump.get_direction",
+      "SyrPump.get_firmware_version",
+      "SyrPump.get_function",
+      "SyrPump.get_key_beep",
+      "SyrPump.get_phase",
+      "SyrPump.get_power_fail"
+    ],
+    "writes": [
+      "SyrPump.set_alarm",
+      "SyrPump.set_buzzer",
+      "SyrPump.set_com_mode",
+      "SyrPump.set_config",
+      "SyrPump.set_diameter",
+      "SyrPump.set_direction",
+      "SyrPump.set_function",
+      "SyrPump.set_key_beep",
+      "SyrPump.set_phase",
+      "SyrPump.set_power_fail",
+      "SyrPump.set_rate",
+      "SyrPump.set_timeout"
+    ],
+    "actions": [
+      "SyrPump.start_program",
+      "SyrPump.stop_program"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.actuation.gpio.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/yuanxun-yx__syrpp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

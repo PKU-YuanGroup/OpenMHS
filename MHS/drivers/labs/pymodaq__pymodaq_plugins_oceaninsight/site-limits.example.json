@@ -1,0 +1,26 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Ocean Insight OmniDriver spectrometer)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/oceaninsight-omnidriver": {
+      "integration_time_ms": {
+        "min": 1,
+        "max": 1000,
+        "unit": "ms",
+        "source": "operator",
+        "reason": "example: this bench integrates for 1 to 1000 ms; the device's own range is read from the controller at initialization and is not stated in the clone"
+      },
+      "cap.measure.intensity.v1": {
+        "wavelength_nm": {
+          "min": 400,
+          "max": 800,
+          "unit": "nm",
+          "source": "operator",
+          "reason": "example: the samples on this bench emit between 400 and 800 nm; the detector's calibrated range depends on its model and is read from the device at runtime"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.e-lab-sfsu/robocam3.1",
+  "track": "labs",
+  "local_path": "labs/e-lab-sfsu/robocam3.1",
+  "driver_dir": "MHS/drivers/labs/e-lab-sfsu__robocam3.1",
+  "upstream": {
+    "repo_url": "https://github.com/e-lab-sfsu/robocam3.1",
+    "commit": "cc402f32f7b781c550a94dc9f78e54df3de7fd53",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 24,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "robocam.camera:Camera",
+      "file": "robocam/camera.py",
+      "line": 112,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robocam.motion:MotionController",
+      "file": "robocam/motion.py",
+      "line": 513,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robocam.motion:MarlinBackend",
+      "file": "robocam/motion.py",
+      "line": 41,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robocam.motion:KlipperBackend",
+      "file": "robocam/motion.py",
+      "line": 364,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robocam.motion:SimulationBackend",
+      "file": "robocam/motion.py",
+      "line": 459,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robocam/motion.py:459 SimulationBackend"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Camera.get_ae_enabled",
+      "Camera.get_camera_meta",
+      "Camera.get_capture_stats",
+      "Camera.get_dropped_frames_count",
+      "Camera.get_exposure",
+      "Camera.get_frame",
+      "Camera.get_gain",
+      "Camera.get_hqi",
+      "Camera.get_offset",
+      "Camera.get_raw_frame",
+      "Camera.get_sensor_mode_index",
+      "Camera.get_supported_resolutions"
+    ],
+    "writes": [
+      "Camera.set_ae_enabled",
+      "Camera.set_exposure",
+      "Camera.set_gain",
+      "Camera.set_hqi",
+      "Camera.set_offset",
+      "Camera.set_resolution",
+      "Camera.set_sensor_mode",
+      "Camera.set_target_fps",
+      "Camera.set_usb_bandwidth"
+    ],
+    "actions": [
+      "Camera.reset_capture_stats",
+      "Camera.stop",
+      "MotionController.home",
+      "MotionController.move_absolute",
+      "MotionController.move_relative",
+      "MarlinBackend.home",
+      "MarlinBackend.move_absolute",
+      "MarlinBackend.move_relative"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/e-lab-sfsu__robocam3.1 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.mclim9/rssd",
+  "upstream": {
+    "repo_url": "https://github.com/mclim9/rssd",
+    "commit": "7b040ee12841e721953a1f737297586135c0c110",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "This driver needs no upstream package: the ScpiDriver bridge opens the socket (host/port) or VISA resource itself and imports neither rssd nor pyvisa. The upstream library pins PyVISA and numpy (requirements.txt:4-6) for its own VISA access; install it only for the upstream examples, not to serve this driver."
+  },
+  "backends": {
+    "fake": ".fake:FakeRssd"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wA-s05-001",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

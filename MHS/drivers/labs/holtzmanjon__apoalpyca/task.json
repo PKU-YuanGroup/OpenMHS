@@ -1,0 +1,129 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.holtzmanjon/apoalpyca",
+  "track": "labs",
+  "local_path": "labs/holtzmanjon/apoalpyca",
+  "driver_dir": "MHS/drivers/labs/holtzmanjon__apoalpyca",
+  "upstream": {
+    "repo_url": "https://github.com/holtzmanjon/apoalpyca",
+    "commit": "3d4c48ec092c7dfd095f47b30efe9eb29ca2d031",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "family:tag-bridge",
+  "role": "device-driver",
+  "family": "tag-bridge",
+  "helper": "TagDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 76,
+  "exemplar": "MHS/drivers/labs/josuablejeru__labmastro",
+  "entry_symbols": [
+    {
+      "symbol": "device.APOAshDome:APOAshDome",
+      "file": "device/APOAshDome.py",
+      "line": 57,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "device.tcube:TCube",
+      "file": "device/tcube.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "device.eshel:K8056",
+      "file": "device/eshel.py",
+      "line": 30,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "device.tc300:TC300",
+      "file": "device/tc300.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "device.lts150:LTS150",
+      "file": "device/lts150.py",
+      "line": 24,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "APOAshDome.get_azimuth",
+      "TCube.get_description",
+      "TCube.get_fault",
+      "TCube.get_maxvalue",
+      "TCube.get_minvalue",
+      "TCube.get_name",
+      "TCube.get_step",
+      "TCube.get_tact",
+      "TCube.get_tset",
+      "TCube.get_value",
+      "TCube.read_status",
+      "TCube.status"
+    ],
+    "writes": [
+      "APOAshDome.set_lower",
+      "APOAshDome.set_lower_closed",
+      "APOAshDome.set_lower_open",
+      "APOAshDome.set_lower_time",
+      "APOAshDome.set_park",
+      "APOAshDome.set_upper_closed",
+      "APOAshDome.set_upper_open",
+      "APOAshDome.set_upper_time",
+      "TCube.set_value",
+      "K8056.set_address",
+      "K8056.set_state"
+    ],
+    "actions": [
+      "APOAshDome.abort_slew",
+      "APOAshDome.home",
+      "APOAshDome.reset_watchdog",
+      "APOAshDome.start_watchdog",
+      "APOAshDome.start_weather",
+      "APOAshDome.stop",
+      "APOAshDome.enc.reset",
+      "K8056.emergency_stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/holtzmanjon__apoalpyca --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,101 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.michel4j/aunt-isara",
+  "track": "labs",
+  "local_path": "labs/michel4j/aunt-isara",
+  "driver_dir": "MHS/drivers/labs/michel4j__aunt-isara",
+  "upstream": {
+    "repo_url": "https://github.com/michel4j/aunt-isara",
+    "commit": "f95cff5e6cec38e0b9945ae5673251fa5d11466f",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 67,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "auntisara.ioc:AuntISARAApp",
+      "file": "auntisara/ioc.py",
+      "line": 560,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "auntisara.ioc:AuntISARA",
+      "file": "auntisara/ioc.py",
+      "line": 207,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11,<4.0",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "AuntISARAApp.positions.is_ready",
+      "AuntISARA.abort_cmd (attribute)",
+      "AuntISARA.action (attribute)",
+      "AuntISARA.air_wipe_enable (attribute)",
+      "AuntISARA.approach_enable (attribute)",
+      "AuntISARA.approach_fbk (attribute)",
+      "AuntISARA.autofill_enable (attribute)",
+      "AuntISARA.autofill_fbk (attribute)",
+      "AuntISARA.back_cmd (attribute)",
+      "AuntISARA.barcode_cmd (attribute)",
+      "AuntISARA.barcode_fbk (attribute)",
+      "AuntISARA.barcode_param (attribute)"
+    ],
+    "writes": [
+      "AuntISARAApp.set_mount_params"
+    ],
+    "actions": [
+      "AuntISARAApp.abort_operation",
+      "AuntISARAApp.abort_to_home",
+      "AuntISARAApp.do_abort_cmd",
+      "AuntISARAApp.do_autofill_enable",
+      "AuntISARAApp.do_heater_enable",
+      "AuntISARAApp.do_home_cmd",
+      "AuntISARAApp.do_magnet_enable"
+    ],
+    "candidate_classes": [
+      "cap.measure.temperature.v1",
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/michel4j__aunt-isara --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

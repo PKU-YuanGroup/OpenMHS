@@ -1,0 +1,96 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.wetenschaap/pycrofluidics",
+  "track": "labs",
+  "local_path": "labs/wetenschaap/pycrofluidics",
+  "driver_dir": "MHS/drivers/labs/wetenschaap__pycrofluidics",
+  "upstream": {
+    "repo_url": "https://github.com/wetenschaap/pycrofluidics",
+    "commit": "319de9d08c1a5f39ddd5030c98d8c356fbfb0f9c",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 54,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pycrofluidics.elvemux:MUXelve",
+      "file": "pycrofluidics/elvemux.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pycrofluidics.elveob:OB1elve",
+      "file": "pycrofluidics/elveob.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "MUXelve.get_valve",
+      "OB1elve.getFlowUniversal",
+      "OB1elve.getPressure",
+      "OB1elve.getPressureUniversal",
+      "OB1elve.getSensorData"
+    ],
+    "writes": [
+      "MUXelve.set_valve",
+      "OB1elve.setPressure"
+    ],
+    "actions": [
+      "MUXelve.home",
+      "OB1elve.remotePausePID",
+      "OB1elve.remoteResetPID",
+      "OB1elve.remoteStartPID",
+      "OB1elve.startRemote",
+      "OB1elve.stopRemote"
+    ],
+    "candidate_classes": [
+      "cap.measure.pressure.v1",
+      "cap.sensing.read.v1",
+      "cap.actuation.valve.v1",
+      "cap.device.configure.v1",
+      "cap.measure.flow.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/wetenschaap__pycrofluidics --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

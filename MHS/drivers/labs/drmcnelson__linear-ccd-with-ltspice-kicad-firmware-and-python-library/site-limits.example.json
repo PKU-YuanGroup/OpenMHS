@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (TCD1304 linear CCD)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/tcd1304-linear-ccd": {
+      "cap.measure.intensity.v1": {
+        "integration_ms": {"min": 1, "max": 65000, "unit": "ms", "source": "operator",
+                           "reason": "example: this bench integrates for 1 to 65000 ms; the detector's own minimum and maximum depend on its clocking and are not stated in the clone"},
+        "wavelength_nm": {"min": 200, "max": 1100, "unit": "nm", "source": "operator",
+                          "reason": "example: this bench is calibrated for 200 to 1100 nm; the clone reads the calibration coefficients from the device and states no range"}
+      },
+      "x-cap.drmcnelson.set_holdoff.v1": {
+        "holdoff_us": {"min": 0, "max": 1000000, "unit": "us", "source": "operator",
+                       "reason": "example: this bench allows a holdoff up to one second; the clone states the command unit but no range"}
+      }
+    }
+  }
+}

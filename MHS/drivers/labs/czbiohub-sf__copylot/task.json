@@ -1,0 +1,118 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.czbiohub-sf/copylot",
+  "track": "labs",
+  "local_path": "labs/czbiohub-sf/copylot",
+  "driver_dir": "MHS/drivers/labs/czbiohub-sf__copylot",
+  "upstream": {
+    "repo_url": "https://github.com/czbiohub-sf/copylot",
+    "commit": "eac4fdbf6ee49130d25764a486acb35a48d999db",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 27,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "copylot.hardware.lasers.vortran.vortran:VortranLaser",
+      "file": "copylot/hardware/lasers/vortran/vortran.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "copylot.hardware.stages.asi.stage:ASIStage",
+      "file": "copylot/hardware/stages/asi/stage.py",
+      "line": 20,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "copylot.hardware.cameras.flir.flir_camera:FlirCamera",
+      "file": "copylot/hardware/cameras/flir/flir_camera.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "copylot.hardware.pumps.bartels_ux7.bartels_ux7:BartelsUX7",
+      "file": "copylot/hardware/pumps/bartels_ux7/bartels_ux7.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "copylot.hardware.daqs.ni.legacy_daxi_nidaq:NIDaq",
+      "file": "copylot/hardware/daqs/ni/legacy_daxi_nidaq.py",
+      "line": 23,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "copylot/microscope_config/test"
+  },
+  "hints": {
+    "reads": [
+      "VortranLaser.get_lasers",
+      "VortranLaser.is_connected",
+      "VortranLaser.status"
+    ],
+    "writes": [
+      "ASIStage.set_backlash",
+      "ASIStage.set_default_speed_xy",
+      "ASIStage.set_scan_mode",
+      "ASIStage.set_speed_x",
+      "ASIStage.set_speed_y"
+    ],
+    "actions": [
+      "VortranLaser.turn_off",
+      "VortranLaser.turn_on",
+      "ASIStage.start_scan",
+      "FlirCamera.acquire_images",
+      "FlirCamera.snap"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "copylot/hardware/cameras/orca/dcamapi4.py:197 INITOPTION_COLLISION_MAX = -1543372801",
+      "copylot/hardware/cameras/orca/dcamapi4.py:382 SENSORTEMPERATURE_MIN = 2098032",
+      "copylot/hardware/cameras/orca/dcamapi4.py:383 SENSORTEMPERATURE_MAX = 2098048",
+      "copylot/hardware/daqs/ni/legacy_daxi_nidaq.py:102 MAX_VOL = 10",
+      "copylot/hardware/daqs/ni/legacy_daxi_nidaq.py:103 MIN_VOL = -10",
+      "copylot/hardware/daqs/ni/legacy_daxi_nidaq.py:104 MIN_VOL_O3 = -10",
+      "copylot/hardware/daqs/ni/legacy_daxi_nidaq.py:115 MAX_VERTICAL_PIXELS = 2048"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/czbiohub-sf__copylot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:82330ca5701ed7fdfd7089939962dabb7c72feb5d5c2ca5821d77ff64217c089",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.allenneuraldynamics.runze_move_to_percent.v1",
+      "reason": "no catalogue class commands a syringe plunger by percent of travel; cap.motion.joint_position.v1 binds robot.arm/motion.axis and uses radians. The package uses an x-cap id with an inline schema.",
+      "verb": "invoke",
+      "summary": "Move the syringe plunger to an absolute position in percent of full travel.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.allenneuraldynamics.runze_aspirate.v1",
+      "reason": "cap.fluid.aspirate.v1 binds lab.liquid_handler/lab.pipette and requires source labware and well; this pump has no labware model. cap.actuation.pump.v1 requires a flow rate in uL/s, which the clone cannot derive from speed percent and steps. The package uses an x-cap id with an inline schema.",
+      "verb": "invoke",
+      "summary": "Withdraw a volume from the current liquid path by moving the plunger.",
+      "similar": [
+        "cap.fluid.aspirate.v1",
+        "cap.actuation.pump.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.allenneuraldynamics.runze_dispense.v1",
+      "reason": "cap.fluid.dispense.v1 binds lab.liquid_handler/lab.pipette and requires target labware and well; this pump has no labware model. cap.actuation.pump.v1 requires a flow rate in uL/s, which the clone cannot derive from speed percent and steps. The package uses an x-cap id with an inline schema.",
+      "verb": "invoke",
+      "summary": "Dispense a volume into the current liquid path by moving the plunger.",
+      "similar": [
+        "cap.fluid.dispense.v1",
+        "cap.actuation.pump.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.allenneuraldynamics.runze_select_valve_port.v1",
+      "reason": "cap.actuation.valve.v1 is a write-verb class over a percent position and binds actuation.valve/fluid.valve; this device kind is actuation.pump and the upstream takes a discrete valve port number. The package uses an x-cap id with an inline schema.",
+      "verb": "invoke",
+      "summary": "Move the integrated rotary valve to one port.",
+      "similar": [
+        "cap.actuation.valve.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.allenneuraldynamics.runze_reset_syringe.v1",
+      "reason": "no stable catalogue class homes a syringe; cap.motion.home.v1 is experimental and binds motion axes. The package uses an x-cap id with an inline schema.",
+      "verb": "invoke",
+      "summary": "Home the syringe at the optocoupler position and synchronize the step count to zero.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.allenneuraldynamics.runze_set_speed.v1",
+      "reason": "no catalogue class sets a pump speed as a percent of its maximum; cap.actuation.pump.v1 requires a flow rate in uL/s and a direction. The package uses an x-cap id with an inline schema.",
+      "verb": "invoke",
+      "summary": "Set the plunger speed as a percentage of the maximum speed for the fitted syringe.",
+      "similar": [
+        "cap.actuation.pump.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). DEVIATION FROM THE CARD: a direct Driver with native.py, not the PythonObjectDriver helper, because the upstream assembles every command as a binary Runze frame (address, command byte, two parameter bytes, checksum) and the helper cannot express that framing. The catalogue classes named in the card's hints do not bind this device: cap.fluid.aspirate.v1 and cap.fluid.dispense.v1 bind lab.liquid_handler/lab.pipette and need labware wells; cap.actuation.pump.v1 needs a flow rate in uL/s, while the clone exposes speed percent and step counts but no steps-per-second or gearing; cap.actuation.valve.v1 binds actuation.valve/fluid.valve and is a percent write; cap.motion.* binds robots or motion axes. The package therefore uses x-cap ids for move, aspirate, dispense, valve port, reset and speed. There is no cap.device.configure write: the only writable setting, speed, is stored locally by the upstream and is None until a set, so the package cannot expose a hardware state read that is valid before the first set; speed is an invoke instead. Hardware was never run and the hardware path was never imported: this package is model-authored and unreviewed, and the R2 hardware backend is refused by the loader until reviewed_by is set. native.py requires the serial port and the fitted syringe volume (a deployment setting); the fake is an in-memory object with placeholder values, not a recording, and does not describe any pump. The valve achieved position is NOT COVERED because the upstream has no getter for it; the select action reports the requested port only. No line of the clone documents an independent hardware e-stop, so the e-stop is the native ForceStop and the safe-state action x-cap.allenneuraldynamics.runze_stop.v1; force_stop waits for the device reply and then for a position query, and after connecting the upstream timeout is 60 s, so the hardware stop latency is not characterized. site-limits.example.json is an example operator overlay, not a statement about any pump. gate.digest is the digest the check printed; check-report.json is regenerated by every gate run and is not part of the package.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (12 to 11); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

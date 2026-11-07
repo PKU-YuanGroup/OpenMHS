@@ -1,0 +1,115 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.maxiv-kitscontrols/sardana-albaem",
+  "track": "labs",
+  "local_path": "labs/maxiv-kitscontrols/sardana-albaem",
+  "driver_dir": "MHS/drivers/labs/maxiv-kitscontrols__sardana-albaem",
+  "upstream": {
+    "repo_url": "https://github.com/maxiv-kitscontrols/sardana-albaem",
+    "commit": "99e701a5101781fbd7855a03b5ec3a755e8c6d46",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 37,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "sardana_albaem.ctrl.Albaem2OneDCtrl:Albaem2OneDCtrl",
+      "file": "sardana_albaem/ctrl/Albaem2OneDCtrl.py",
+      "line": 48,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sardana_albaem.ctrl.em2:Em2",
+      "file": "sardana_albaem/ctrl/em2.py",
+      "line": 126,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sardana_albaem.ctrl.em2:ZmqStreamReceiver",
+      "file": "sardana_albaem/ctrl/em2.py",
+      "line": 343,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=2.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "sardana_albaem/ctrl/tests"
+  },
+  "hints": {
+    "reads": [
+      "Albaem2OneDCtrl.ReadAll",
+      "Albaem2OneDCtrl.ReadOne",
+      "Albaem2OneDCtrl.get_AcquisitionMode",
+      "Albaem2OneDCtrl.get_InstantCurrent",
+      "Albaem2OneDCtrl.get_Inversion",
+      "Albaem2OneDCtrl.get_PointsPerStep",
+      "Albaem2OneDCtrl.get_Range",
+      "Em2.idn",
+      "Em2.read_index_bug"
+    ],
+    "writes": [
+      "Albaem2OneDCtrl.set_AcquisitionMode",
+      "Albaem2OneDCtrl.set_Inversion",
+      "Albaem2OneDCtrl.set_PointsPerStep",
+      "Albaem2OneDCtrl.set_Range"
+    ],
+    "actions": [
+      "Albaem2OneDCtrl.AbortOne",
+      "Albaem2OneDCtrl.PreStartOne",
+      "Albaem2OneDCtrl.StartAll",
+      "Albaem2OneDCtrl.StartOne",
+      "Em2.software_trigger",
+      "Em2.start_acquisition",
+      "Em2.stop_acquisition",
+      "Em2.trigger_delay",
+      "Em2.trigger_input",
+      "Em2.trigger_mode",
+      "Em2.trigger_polarity",
+      "Em2.trigger_precision"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.current.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "sardana_albaem/ctrl/Albaem2OneDCtrl.py:17 MINIMUM_INTEGRATION_TIME_MS = 0.1",
+      "sardana_albaem/ctrl/Albaem2OneDCtrl.py:20 MAXIMUM_INTEGRATION_TIME_WITHOUT_OVERFLOW_MS = 2621.0",
+      "sardana_albaem/ctrl/em2.py:35 CHANNEL_MIN = 1",
+      "sardana_albaem/ctrl/em2.py:36 CHANNEL_MAX = 4"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/maxiv-kitscontrols__sardana-albaem --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

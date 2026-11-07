@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (sr860 exemplar)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/sr860": {
+      "frequency": {"min": 1, "max": 100000, "unit": "Hz", "source": "operator",
+                    "reason": "example: the sample cell is only characterised from 1 Hz to 100 kHz"},
+      "amplitude": {"max": 0.1, "unit": "V", "source": "operator",
+                    "reason": "example: the sample tolerates at most 100 mV of excitation"},
+      "time_constant": {"allowed": [0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1.0, 3.0], "source": "operator",
+                        "reason": "example: only the filter settings from 1 ms to 3 s are used on this bench"}
+    }
+  }
+}

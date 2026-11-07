@@ -1,0 +1,86 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.dennis-van-gils/dvg_arduino_lock-in_amp",
+  "track": "labs",
+  "local_path": "labs/dennis-van-gils/dvg_arduino_lock-in_amp",
+  "driver_dir": "MHS/drivers/labs/dennis-van-gils__dvg_arduino_lock-in_amp",
+  "upstream": {
+    "repo_url": "https://github.com/dennis-van-gils/dvg_arduino_lock-in_amp",
+    "commit": "64c0f18f9111eef2fc4feb10466c4dd9a39fb516",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 43,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "Alia_protocol_serial:Alia",
+      "file": "Alia_protocol_serial.py",
+      "line": 51,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Alia_qdev:Alia_qdev",
+      "file": "Alia_qdev.py",
+      "line": 31,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Alia.query_ADC_autocalibration",
+      "Alia.query_ref",
+      "Alia.read_until_EOM"
+    ],
+    "writes": [
+      "Alia.set_ref"
+    ],
+    "actions": [
+      "Alia.turn_off",
+      "Alia.turn_on"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/dennis-van-gils__dvg_arduino_lock-in_amp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

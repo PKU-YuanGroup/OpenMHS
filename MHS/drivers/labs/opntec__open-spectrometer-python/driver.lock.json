@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.opntec/open-spectrometer-python",
+  "upstream": {
+    "repo_url": "https://github.com/opntec/open-spectrometer-python",
+    "commit": "a15b67d9afb48713baeb748000433554adf26980",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The clone has no setup.py, pyproject.toml or requirements.txt; .travis.yml:3-7 lists Python 3.5 to 3.8 and .travis.yml:14-19 names a requirements.txt and a Makefile that are absent from the tree. TCD1304.py:15-18 imports the external pslab SDK, which the clone does not vendor; the fake backend needs neither, and the hardware path was never run. The >=3.10 line is the scaffold's SDK requirement, not an upstream claim."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeTCD1304"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-004",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

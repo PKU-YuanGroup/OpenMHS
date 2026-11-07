@@ -1,0 +1,77 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.angli339/tecan-fluent-api",
+  "track": "labs",
+  "local_path": "labs/angli339/tecan-fluent-api",
+  "driver_dir": "MHS/drivers/labs/angli339__tecan-fluent-api",
+  "upstream": {
+    "repo_url": "https://github.com/angli339/tecan-fluent-api",
+    "commit": "d087edd9a4cd415961c8337fc82a300bf24fda11",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:partner-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 1,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "tecan_fluent.tecan_ctrl:Tecan",
+      "file": "tecan_fluent/tecan_ctrl.py",
+      "line": 19,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "Tecan.liha_aspirate",
+      "Tecan.liha_dispense",
+      "Tecan.liha_mix",
+      "Tecan.mca_aspirate",
+      "Tecan.mca_dispense",
+      "Tecan.run_command"
+    ],
+    "candidate_classes": [
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/angli339__tecan-fluent-api --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

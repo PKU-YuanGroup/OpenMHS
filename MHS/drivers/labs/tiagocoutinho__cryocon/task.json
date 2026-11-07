@@ -1,0 +1,103 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tiagocoutinho/cryocon",
+  "track": "labs",
+  "local_path": "labs/tiagocoutinho/cryocon",
+  "driver_dir": "MHS/drivers/labs/tiagocoutinho__cryocon",
+  "upstream": {
+    "repo_url": "https://github.com/tiagocoutinho/cryocon",
+    "commit": "a60636963d001e407c534494443b772742f6f545",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 57,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "cryocon.cryocon:CryoCon",
+      "file": "cryocon/cryocon.py",
+      "line": 209,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "cryocon.tango.server.cryocon:CryoCon",
+      "file": "cryocon/tango/server/cryocon.py",
+      "line": 98,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "cryocon.cryocon:Channel",
+      "file": "cryocon/cryocon.py",
+      "line": 131,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "cryocon.cryocon:Loop",
+      "file": "cryocon/cryocon.py",
+      "line": 151,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.5",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "cryocon/simulator.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "CryoCon.date (attribute)",
+      "CryoCon.display_filter_time (attribute)",
+      "CryoCon.fw_revision (attribute)",
+      "CryoCon.hw_revision (attribute)",
+      "CryoCon.idn (attribute)",
+      "CryoCon.led (attribute)",
+      "CryoCon.lockout (attribute)",
+      "CryoCon.name (attribute)",
+      "CryoCon.time (attribute)",
+      "Channel.alarm (attribute)",
+      "Channel.maximum (attribute)",
+      "Channel.minimum (attribute)"
+    ],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.measure.temperature.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": [
+      "cryocon/simulator.py:109 MIN_TIME = 0.1"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/tiagocoutinho__cryocon --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

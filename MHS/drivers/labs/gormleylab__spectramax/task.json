@@ -1,0 +1,77 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.gormleylab/spectramax",
+  "track": "labs",
+  "local_path": "labs/gormleylab/spectramax",
+  "driver_dir": "MHS/drivers/labs/gormleylab__spectramax",
+  "upstream": {
+    "repo_url": "https://github.com/gormleylab/spectramax",
+    "commit": "7940d4064663d576cbe8b1200e529f3acc1ef924",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 20,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "spectramax:Spectramax",
+      "file": "spectramax.py",
+      "line": 41,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Spectramax.get_data",
+      "Spectramax.get_instrument_status",
+      "Spectramax.read_UVVis"
+    ],
+    "writes": [
+      "Spectramax.set_temperature"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.thermal.setpoint.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/gormleylab__spectramax --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

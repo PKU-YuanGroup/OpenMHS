@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (SMC100)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example operator overlay only. Replace the axis envelope with the travel measured on the installed stage; the driver's move inputs are operator_required until this file (or the site's site-limits.json) supplies them.",
+  "devices": {
+    "mhs://localhost/smc100": {
+      "x-cap.pymodaq.smc100_move_abs.v1": {
+        "position": {"min": -100, "max": 100, "unit": "1", "source": "operator",
+                     "reason": "example: measured travel of the installed stage in the controller's units"}
+      },
+      "x-cap.pymodaq.smc100_move_rel.v1": {
+        "distance": {"min": -100, "max": 100, "unit": "1", "source": "operator",
+                     "reason": "example: largest relative move allowed on the installed stage"}
+      }
+    }
+  }
+}

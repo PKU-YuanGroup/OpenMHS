@@ -1,0 +1,28 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:3dfb913d236ccdda3ca294265db1d6f3e92f7d77c4c2a4960f08a7e154fd0c6a",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.simonmeersschaut.start_rotation.v1",
+      "reason": "No catalogue class expresses a continuous-rotation start with no axis, speed, duration or numeric input; the upstream XL+ command (stage.py:99) takes no argument. The action starts the rotation and returns a boolean.",
+      "verb": "invoke",
+      "summary": "Start the continuous rotation of the stepper."
+    },
+    {
+      "capability_id": "x-cap.simonmeersschaut.stop_rotation.v1",
+      "reason": "cap.motion.stop.v1 is the only stop class but it exposes an optional deceleration input in m/s2 that the upstream XS command (stage.py:94) cannot accept; this driver must not accept a value it cannot send. The x-cap stop action takes no input, returns stopped, and is the safe-state action.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.stop.v1"
+      ],
+      "summary": "Stop the stepper with the upstream XS command; also the safe-state action."
+    }
+  ],
+  "notes": "Pass on the fake backend only: `python3 -m mhs.driver check ... --backend fake` exited 0 on run 3 (G1-G7 and G9 pass, G8 warn). Evidence is contract_checked, never an MHS-Device level; no controller was attached and no hardware backend was run. The package is model-authored and unreviewed (driver.lock.json reviewed_by is null).\n\nDEVIATION FROM THE CARD: the family-config card names SerialDriver, but the upstream transport frames each request as STX (0x02), the address byte '0', the ASCII command and ETX (0x03), and the command words are written in the script's __main__ block (stage.py:73-75, 82-99). A line-oriented SerialDriver cannot reproduce the frame or the address byte, so this package is a direct Driver over stage:Serial with a native.py factory; the bare commands XL+ and XS go through the upstream send, which owns the framing. No wire syntax was changed. A maintainer may want an override for this card.\n\nNo catalogue class fits. The two capabilities are x-cap extensions (catalogue_requests above). cap.motion.stop.v1 was rejected because its optional deceleration input would be accepted by the binding while the upstream XS command cannot take it; the driver does not accept a value it cannot send.\n\nThe only warning is G8.SAFE014_NOT_APPLICABLE: the driver declares no Limit because it has no numeric input, so the conformance suite has nothing to probe for SAFE-014 and awards CL2; the gate exempts that skip and every other CL3 test passed. There is no G4.REF_VALUE or G4.REF_BINARY warning; all nine Facts cite text lines of the pinned clone. The fake has no numbers; its recorded command list and empty reply are marked # placeholder.\n\nNot covered: there is no read capability (the upstream Serial class has no getter and the clone has no position, speed or status query); X0- is not exposed because neither README.md nor stage.py states its effect; the serial port is fixed at /dev/ttyUSB0 (stage.py:25-31) and native.py passes no option; the upstream constructor blocks until the port opens (stage.py:21-42), which a hardware operator must account for.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (357 to 358); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

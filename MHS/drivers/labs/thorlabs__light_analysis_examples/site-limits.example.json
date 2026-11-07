@@ -1,0 +1,47 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Thorlabs beam profiler)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/tlbc2": {
+      "exposure_time": {
+        "min": 0.001,
+        "max": 10000,
+        "unit": "ms",
+        "source": "operator",
+        "reason": "example: this bench uses exposures from 1 us to 10 s and supplies the range the driver leaves to the operator"
+      },
+      "wavelength": {
+        "min": 190,
+        "max": 1100,
+        "unit": "nm",
+        "source": "operator",
+        "reason": "example: this bench works between the UV and VIS wavelengths and supplies the range the driver leaves to the operator"
+      },
+      "cap.sensing.image.v1": {
+        "width": {
+          "min": 32,
+          "max": 2048,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example: this bench captures ROIs between 32 and 2048 columns and supplies the range the driver leaves to the operator"
+        },
+        "height": {
+          "min": 32,
+          "max": 1496,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example: this bench captures ROIs between 32 and 1496 rows and supplies the range the driver leaves to the operator"
+        },
+        "exposure_ms": {
+          "min": 0.001,
+          "max": 10000,
+          "unit": "ms",
+          "source": "operator",
+          "reason": "example: this bench captures with exposures from 1 us to 10 s and supplies the range the driver leaves to the operator"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.idc-milab/openlh",
+  "track": "labs",
+  "local_path": "labs/idc-milab/openlh",
+  "driver_dir": "MHS/drivers/labs/idc-milab__openlh",
+  "upstream": {
+    "repo_url": "https://github.com/idc-milab/openlh",
+    "commit": "6a7562c61656362bc70ce58b7f685090cceebda4",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 167,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "pyuf.uf.wrapper.swift_with_ultrasonic:SwiftWithUltrasonic",
+      "file": "pyuf/uf/wrapper/swift_with_ultrasonic.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyuf.uf.wrapper.uarm_api:UarmAPI",
+      "file": "pyuf/uf/wrapper/uarm_api.py",
+      "line": 28,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyuf.uf.swift.gripper:Gripper",
+      "file": "pyuf/uf/swift/gripper.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyuf.uf.swift.pump:Pump",
+      "file": "pyuf/uf/swift/pump.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyuf.uf.comm.serial_ascii:SerialAscii",
+      "file": "pyuf/uf/comm/serial_ascii.py",
+      "line": 16,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "SwiftWithUltrasonic.get_analog",
+      "SwiftWithUltrasonic.get_device_info",
+      "SwiftWithUltrasonic.get_digital",
+      "SwiftWithUltrasonic.get_is_moving",
+      "SwiftWithUltrasonic.get_limit_switch",
+      "SwiftWithUltrasonic.get_polar",
+      "SwiftWithUltrasonic.get_position",
+      "SwiftWithUltrasonic.get_rom_data",
+      "SwiftWithUltrasonic.get_servo_angle",
+      "SwiftWithUltrasonic.get_servo_attach",
+      "SwiftWithUltrasonic.get_ultrasonic",
+      "UarmAPI.get_analog"
+    ],
+    "writes": [
+      "SwiftWithUltrasonic.set_buzzer",
+      "SwiftWithUltrasonic.set_gripper",
+      "SwiftWithUltrasonic.set_polar",
+      "SwiftWithUltrasonic.set_position",
+      "SwiftWithUltrasonic.set_pump",
+      "SwiftWithUltrasonic.set_report_keys",
+      "SwiftWithUltrasonic.set_report_position",
+      "SwiftWithUltrasonic.set_report_ultrasonic",
+      "SwiftWithUltrasonic.set_rom_data",
+      "SwiftWithUltrasonic.set_servo_angle",
+      "SwiftWithUltrasonic.set_servo_attach",
+      "SwiftWithUltrasonic.set_servo_detach"
+    ],
+    "actions": [
+      "SwiftWithUltrasonic.reset",
+      "UarmAPI.reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.manipulation.grasp.v1",
+      "cap.actuation.pump.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/idc-milab__openlh --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

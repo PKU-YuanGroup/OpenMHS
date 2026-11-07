@@ -1,0 +1,113 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.squad-lab/qcdrivers",
+  "track": "labs",
+  "local_path": "labs/squad-lab/qcdrivers",
+  "driver_dir": "MHS/drivers/labs/squad-lab__qcdrivers",
+  "upstream": {
+    "repo_url": "https://github.com/squad-lab/qcdrivers",
+    "commit": "6704e1c1794eff30811b8db62593673b2e39b6b4",
+    "license_spdx": "AGPL-3.0",
+    "license_class": "network-copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 52,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "qcdrivers.squad.mux.mux:Muxi",
+      "file": "src/qcdrivers/squad/mux/mux.py",
+      "line": 29,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.13,<4",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/qcdrivers/basel/amplifiers/dummy.py:19 DummyBaselSP1004a",
+      "src/qcdrivers/basel/amplifiers/dummy.py:79 DummyBaselSP983a",
+      "src/qcdrivers/basel/amplifiers/dummy.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "BaselDac2.get_firmware",
+      "BaselDac2.get_health",
+      "BaselDac2.get_help_commands",
+      "BaselDac2.get_help_control",
+      "BaselDac2.get_idn",
+      "BaselDac2.get_ip",
+      "BaselDac2.get_serial",
+      "BaselDac2.__controller.get_adaptive_shift_voltage",
+      "BaselDac2.__controller.get_all_bandwidth",
+      "BaselDac2.__controller.get_all_dacvalue",
+      "BaselDac2.__controller.get_all_dacvalue_registered",
+      "BaselDac2.__controller.get_all_mode"
+    ],
+    "writes": [
+      "BaselDac2.set_bandwidth_safely",
+      "BaselDac2.__controller.set_adaptive_shift_voltage",
+      "BaselDac2.__controller.set_all_bandwidth",
+      "BaselDac2.__controller.set_all_dacvalue",
+      "BaselDac2.__controller.set_all_status",
+      "BaselDac2.__controller.set_apply_polynomial",
+      "BaselDac2.__controller.set_awg_board_mode",
+      "BaselDac2.__controller.set_awg_channel",
+      "BaselDac2.__controller.set_awg_clock_period",
+      "BaselDac2.__controller.set_awg_cycles",
+      "BaselDac2.__controller.set_awg_memory_all",
+      "BaselDac2.__controller.set_awg_memory_size"
+    ],
+    "actions": [
+      "BaselDac2.run_awg_sweep",
+      "QDac2.allocate_trigger",
+      "QDac2.connect_external_trigger",
+      "QDac2.free_trigger",
+      "QDac2.reset",
+      "QDac2.start_all",
+      "QDac2.start_recording_scpi",
+      "Decadac.run_script",
+      "Decadac.start_script",
+      "Decadac.trigger"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.voltage.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/squad-lab__qcdrivers --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

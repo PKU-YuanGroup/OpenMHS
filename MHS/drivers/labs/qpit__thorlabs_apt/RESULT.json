@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:798116f3b8b9fa104bfc2213deedc54ffd3a17aabcf8b9ca0c5be879c556a988",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.qpit.move_to.v1",
+      "reason": "cap.motion.joint_position.v1 publishes joint_positions in rad, but an APT stage is configured in mm or degrees (STAGE_UNITS_MM = 1, STAGE_UNITS_DEG = 2; thorlabs_apt/core.py:22-26). The driver must not invent a unit conversion, so the extension carries the native stage position.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.qpit.move_by.v1",
+      "reason": "cap.motion.joint_position.v1 has no relative-distance field and fixes positions to rad, while an APT stage is configured in mm or degrees (thorlabs_apt/core.py:22-26); the extension carries the native relative move.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.qpit.move_home.v1",
+      "reason": "cap.motion.home.v1 takes axes and speed_scale; MOT_MoveHome takes only a blocking flag and uses the controller's configured homing parameters (thorlabs_apt/core.py:817-830), so the class cannot be bound without ignoring inputs.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.qpit.move_velocity.v1",
+      "reason": "No catalogue class binds a constant-velocity jog; cap.motion.joint_position.v1 takes target positions, not a direction.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.qpit.enable.v1",
+      "reason": "No catalogue class enables a motor channel; the motion classes are position or stop commands and would misstate the effect.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.qpit.disable.v1",
+      "reason": "No catalogue class disables a motor channel; the motion classes are position or stop commands and would misstate the effect.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.qpit.stop.v1",
+      "reason": "cap.motion.stop.v1 declares an optional deceleration input in m/s2; MOT_StopProfiled takes no argument and decelerates with the controller's configured profile (thorlabs_apt/core.py:845-852), so binding the class would accept an input the driver cannot honor.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Checked on the fake backend only; the gate digest above is from the last run (all gates pass, no warnings). The upstream thorlabs_apt package was never installed, imported or run: it loads APT.dll at import time and is Windows-only (README.md:7, thorlabs_apt/core.py:1346-1376), and no hardware was attached. The package is a direct Driver over thorlabs_apt.core:Motor rather than the card's PythonObjectDriver config-only helper: the object exposes status-bit properties, tuple getters and actuator methods, and each writable field needs its own limit. No hardware run and no MHS-Device level is claimed; the evidence is contract_checked on the fake. The fake is an in-memory object with placeholder values, not a recording of a device. Limits: velocity_maximum, acceleration, move_to.position and move_by.distance are Limit.operator_required; the clone reads the velocity and acceleration bounds and the stage travel range from the controller at run time (thorlabs_apt/core.py:395-418, 574-597). site-limits.example.json is an example overlay only, not device data. The hardware limit-switch modes, homing direction and homing limit switch are closed sets cited from the module constants (thorlabs_apt/core.py:9-41). Catalogue classes: cap.motion.joint_position.v1 fixes positions to rad while an APT stage is configured in mm or degrees (STAGE_UNITS_MM = 1, STAGE_UNITS_DEG = 2; thorlabs_apt/core.py:22-26); cap.motion.home.v1 takes axes and speed_scale, which MOT_MoveHome does not accept; cap.motion.stop.v1 declares a deceleration input, which MOT_StopProfiled does not take (thorlabs_apt/core.py:845-852). The extension ids carry these native calls exactly and are listed in catalogue_requests. Safety: the only stop is the native software profiled stop (MOT_StopProfiled); the clone documents no independent hardware e-stop, so estop_physical_ref is not set. The package is R1 and the loader does not refuse an unreviewed R1 hardware backend, so an operator must review it before hardware use. Not covered: the hardware path (native.py, APT.dll and the Windows runtime) was never executed; the fake is not a recording. The fake covers the scalar state and the motion/config commands; no array payload is exposed. The stage range, units and velocity bounds are read from the controller and are not asserted here as device facts.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (22 to 21); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

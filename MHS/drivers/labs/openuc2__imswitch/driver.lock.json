@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.openuc2/imswitch",
+  "upstream": {
+    "repo_url": "https://github.com/openuc2/imswitch",
+    "commit": "e5db60f1021b0d7b72f171069258768127880ac5",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.py declares python_requires >=3.11 and lists UC2-REST (uc2rest) among its install_requires (setup.py:30-80); the upstream package and uc2rest are imported by native.py only, and the gate never installs or imports them."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeESP32StageManager"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "helper-wave-2-002",
+    "date": "2026-11-05"
+  },
+  "reviewed_by": null
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.schimmilab/pico-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/schimmilab/pico-mcp",
+    "commit": "08fd81ee1c1e79b4d82e0997ca840b46adeef811",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "pyproject.toml requires Python 3.11 or later and lists numpy>=2.0 and picosdk>=1.1 as runtime dependencies (pyproject.toml:6, 13-14); only native.py imports pico_mcp, inside the hardware factory, and the gate never installs or imports the upstream package."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeScope"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-026",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

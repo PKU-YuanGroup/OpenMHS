@@ -1,0 +1,104 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.qcodes/qcodes_contrib_drivers",
+  "track": "labs",
+  "local_path": "labs/qcodes/qcodes_contrib_drivers",
+  "driver_dir": "MHS/drivers/labs/qcodes__qcodes_contrib_drivers",
+  "upstream": {
+    "repo_url": "https://github.com/qcodes/qcodes_contrib_drivers",
+    "commit": "187164d608ed3a281fccdf3f68693d29b2d46a62",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:qcodes",
+  "role": "driver-pack",
+  "family": "qcodes",
+  "helper": "QcodesDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 17,
+  "exemplar": "MHS/drivers/labs/qcodes__qcodes_contrib_drivers",
+  "entry_symbols": [
+    {
+      "symbol": "qcodes_contrib_drivers.drivers.Thorlabs.PM100D:Thorlab_PM100D",
+      "file": "src/qcodes_contrib_drivers/drivers/Thorlabs/PM100D.py",
+      "line": 20,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "TimeTagger.get_configuration",
+      "TimeTagger.get_idn",
+      "TimeTagger.get_input_delay",
+      "TimeTagger.get_test_signal",
+      "TimeTagger.get_trigger_level",
+      "ERASynth.get_configuration",
+      "ERASynth.get_diagnostic_status",
+      "ERASynth.get_idn",
+      "ERASynthPlus.get_configuration",
+      "ERASynthPlus.get_diagnostic_status",
+      "ERASynthPlus.get_idn"
+    ],
+    "writes": [
+      "TimeTagger.set_input_delay",
+      "TimeTagger.set_test_signal",
+      "TimeTagger.set_trigger_level"
+    ],
+    "actions": [
+      "ERASynth.factory_reset",
+      "ERASynth.off",
+      "ERASynth.on",
+      "ERASynth.run_self_test",
+      "ERASynthPlus.factory_reset",
+      "ERASynthPlus.off",
+      "ERASynthPlus.on",
+      "ERASynthPlus.run_self_test"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.device.self_test.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/qcodes_contrib_drivers/drivers/Andor/post_processing.py:36 interquartile_range = 3",
+      "src/qcodes_contrib_drivers/drivers/Cryogenic/CryogenicSMS120C.py:37 default_current_ramp_limit = 0.0506",
+      "src/qcodes_contrib_drivers/drivers/Cryogenic/CryogenicSMS120C.py:38 default_max_current_ramp_limit = 0.12",
+      "src/qcodes_contrib_drivers/drivers/QDevil/QDAC1.py:207 max_status_age = 1",
+      "src/qcodes_contrib_drivers/drivers/QuTech/IVVI.py:32 full_range = 4000.0",
+      "src/qcodes_contrib_drivers/drivers/Spectrum/py_header/regs.py:1029 SPC_AVAILPOSTTRIGGER_MIN = 10204",
+      "src/qcodes_contrib_drivers/drivers/Spectrum/py_header/regs.py:1030 SPC_AVAILPOSTTRIGGER_MAX = 10205",
+      "src/qcodes_contrib_drivers/drivers/Spectrum/py_header/regs.py:1032 SPC_AVAILABADIVIDER_MIN = 10207"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/qcodes__qcodes_contrib_drivers --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example SR865 bench",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/sr865": {
+      "phase": {"min": -90, "max": 90, "unit": "deg", "source": "operator",
+                "reason": "example: this bench only uses phase references within 90 degrees"},
+      "time_constant": {"allowed": [0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, 3], "source": "operator",
+                        "reason": "example: only filter settings from 1 ms to 3 s are used on this bench"},
+      "sensitivity": {"allowed": [1, 0.5, 0.2, 0.1], "source": "operator",
+                      "reason": "example: the cell is measured only at the four least sensitive ranges"}
+    }
+  }
+}

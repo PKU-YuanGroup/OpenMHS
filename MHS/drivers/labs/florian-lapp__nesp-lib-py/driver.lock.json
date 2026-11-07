@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.florian-lapp/nesp-lib-py",
+  "upstream": {
+    "repo_url": "https://github.com/florian-lapp/nesp-lib-py",
+    "commit": "c16abc82c9feb7c356f06c30b0dff0d4d421cfe3",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.cfg declares no python_requires and installs the single dependency pyserial (setup.cfg:24-25); the Pipfile pins python_version 3.7 (Pipfile:12). The upstream package is imported by native.py only; the gate never installs or imports it."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeNespPump"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wA-s10-002",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

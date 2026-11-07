@@ -1,0 +1,40 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:2e104319ce7fe1838966a82449354b829f3f6af486b6ad3a8048888be50d3a95",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.helixworks-technologies.open_lid.v1",
+      "reason": "no catalogue class describes opening or closing a thermocycler lid; the native lid commands M126/M127 (tc_send_code.py:11-12) are exposed as extension actions with an inline output schema",
+      "verb": "invoke",
+      "summary": "Open the thermocycler lid (native open_lid, M126).",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.helixworks-technologies.close_lid.v1",
+      "reason": "no catalogue class describes opening or closing a thermocycler lid; the native lid commands M126/M127 (tc_send_code.py:11-12) are exposed as extension actions with an inline output schema",
+      "verb": "invoke",
+      "summary": "Close the thermocycler lid (native close_lid, M127).",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.helixworks-technologies.deactivate_all.v1",
+      "reason": "no catalogue class turns a thermal device off; cap.motion.stop.v1 is for motion. The package uses an x-cap id with an inline output schema, also as its safe-state action (native deactivate_shaker then deactivate_all)",
+      "verb": "invoke",
+      "summary": "Stop the shaker and turn off plate and lid heating/cooling (native deactivate_shaker G28/M106, then deactivate_all M18), the safe state.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed with python3 -m mhs.driver check on the fake backend; evidence is contract_checked, never an MHS-Device level, and no hardware was attached. DEVIATION FROM THE CARD: the card names the python-object family and PythonObjectDriver, but this package is a direct Driver over the card's entry class tc_send_code:HardwareController. The upstream builds each command from parts (a command letter plus S target, optional H hold time and V well volume, tc_send_code.py:139-146) and frames it with CRLF (tc_send_code.py:63-64), so a config-only command table would duplicate the wire syntax; the native class is still the card's confirmed entry symbol. The card's other entry symbols are GUI windows (helixcycler:App, helixshaker:App) that import customtkinter and are not used. Not covered: the CSV protocol runner (protocol_manager.run_protocol), the GUI callbacks (App.start_run_thread, App.emergency_stop, App.run_ready_check), and the optional hold-time and well-volume arguments of set_plate_temperature are not exposed; the driver gives direct lid/plate control, the catalogue thermal-setpoint action and lid open/close, not multi-step PCR protocol execution or timed holds. The fake reports a set temperature as reached at once, a fake simplification; the fake's numbers are placeholders. The lid and plate target setpoints and the shake speed are write-only in the upstream, so their state reports the last value written, not a device readback. The shake speed range is operator_required: every write is refused MHS.SAFETY.LIMITS_UNSET until site-limits.json supplies a range (site-limits.example.json is only an example). The clone documents no independent hardware e-stop, so estop_physical_ref is not set; the e-stop and the safe-state action x-cap.helixworks-technologies.deactivate_all.v1 call the native deactivate_shaker (G28/M106) and then deactivate_all (M18), satisfying SAFE-045. authored_by is model (deepseek-v4.1-flash:1017, run wP-026) and reviewed_by is null: the loader refuses the R2 hardware backend until a human signs it.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (321 to 322); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

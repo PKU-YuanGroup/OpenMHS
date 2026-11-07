@@ -1,0 +1,132 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.fretchen/synqs_devices",
+  "track": "labs",
+  "local_path": "labs/fretchen/synqs_devices",
+  "driver_dir": "MHS/drivers/labs/fretchen__synqs_devices",
+  "upstream": {
+    "repo_url": "https://github.com/fretchen/synqs_devices",
+    "commit": "ec4bb24639e9d0d4cb707e1c2a6296a47dfe9f02",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 45,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "AndorSolis.blacs_workers:AndorCamera",
+      "file": "AndorSolis/blacs_workers.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "MakoCamera.blacs_workers:Mako_Camera",
+      "file": "MakoCamera/blacs_workers.py",
+      "line": 26,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "CustomArduinoDevice.labscript_devices:CustomArduinoDevice",
+      "file": "CustomArduinoDevice/labscript_devices.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "SynthHDDevice.labscript_devices:SynthHDDevice",
+      "file": "SynthHDDevice/labscript_devices.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "AndorSolis.andor_sdk.andor_utils:AndorCam",
+      "file": "AndorSolis/andor_sdk/andor_utils.py",
+      "line": 11,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "DummyIntermediateDevices/blacs_tabs.py:7 DummyIntermediateDeviceTab",
+      "DummyIntermediateDevices/blacs_workers.py:8 DummyIntermediateDeviceWorker",
+      "DummyIntermediateDevices/labscript_devices.py:19 DummyIntermediateDevice",
+      "DummyIntermediateDevices/runviewer_parsers.py:9 DummyIntermediateDeviceParser",
+      "dummy_device/blacs_tabs.py:7 DummyDeviceTab",
+      "dummy_device/blacs_workers.py:9 DummyDeviceWorker"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "AndorCamera.get_attribute",
+      "AndorCamera.get_attribute_names",
+      "Mako_Camera.get_attribute",
+      "Mako_Camera.get_attributes"
+    ],
+    "writes": [
+      "AndorCamera.configure_acquisition",
+      "AndorCamera.set_attribute",
+      "AndorCamera.set_attributes",
+      "AndorCamera.camera.configure_accumulate",
+      "AndorCamera.camera.configure_fast_kinetics",
+      "AndorCamera.camera.configure_kinetic_series",
+      "AndorCamera.camera.configure_run_till_abort",
+      "Mako_Camera.configure_acquisition",
+      "Mako_Camera.set_attribute",
+      "Mako_Camera.set_attributes"
+    ],
+    "actions": [
+      "AndorCamera.abort_acquisition",
+      "AndorCamera.grab",
+      "AndorCamera.snap",
+      "AndorCamera.stop_acquisition",
+      "AndorCamera.camera.acquire",
+      "AndorCamera.camera.enable_cooldown",
+      "AndorCamera.camera.enable_emccd",
+      "AndorCamera.camera.enable_preamp",
+      "AndorCamera.camera.setup_trigger",
+      "Mako_Camera.abort_acquisition",
+      "Mako_Camera.grab",
+      "Mako_Camera.snap"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.image.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "DummyIntermediateDevices/labscript_devices.py:22 clock_limit = 1000000.0"
+    ]
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/fretchen__synqs_devices --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

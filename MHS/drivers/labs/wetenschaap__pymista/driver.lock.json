@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.wetenschaap/pymista",
+  "upstream": {
+    "repo_url": "https://github.com/wetenschaap/pymista",
+    "commit": "b30040a192c329b6144a120f0dfea2ca68060760",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The upstream package is imported by native.py only; the gate never installs or imports it. pyproject.toml declares pyserial and makes zaber-motion an optional 'zaber' extra; a bare `pip install .` does not install zaber-motion, so the installed environment needs that extra for the ZaberStage hardware path."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeZaberStage"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB1-036",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

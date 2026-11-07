@@ -1,0 +1,30 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:c2e305399b5d36ea0327d35e300fa32f9a84bf0cd7334f94cf3284100df22c82",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.lando1784.jog.v1",
+      "reason": "No catalogue class moves a motion.axis by relative step counts. cap.motion.joint_position.v1 is an absolute position in radians, and the clone gives no steps-to-radians calibration for the installed stage.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.lando1784.go_to_zero.v1",
+      "reason": "cap.motion.home.v1 is homing to a declared home position or reference switch. AGUC2.goToZero only reads the step counters and jogs each axis back by its counter; it does not query a reference switch.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.lando1784.set_zero.v1",
+      "reason": "No catalogue class resets a position counter. This is bookkeeping without motion, so a motion capability would misstate the effect.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.lando1784.stop.v1",
+      "reason": "cap.motion.stop.v1 carries an optional deceleration input. The upstream stop command ST has no deceleration parameter, so using that class would accept an input the device cannot honor.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the card's serial family/SerialDriver cannot express the upstream command assembly (AGUC2 builds '<axis>PR<n>', '<axis>ST' and the query strings from parts), so this is a direct Driver over pyagilis.controller:AGUC2 with native.py as the hardware factory. The fake is a stateful in-memory fake, not a transcript: the clone has no upstream simulator or recorded session. NOT COVERED: no hardware run and no human review; because the driver is R1, the loader does not itself refuse an unreviewed hardware backend (that refusal exists only at R2 and R3), so the hardware path is unverified. The clone states no travel or step range, so both jog inputs are Limit.operator_required and every jog is refused with MHS.SAFETY.LIMITS_UNSET until the operator supplies site-limits.json; site-limits.example.json uses illustrative values only. The fake's counters (0), step amplitudes (50), limit-switch replies and last-operation strings are placeholders, not facts. The hardware factory wraps the controller so stop sends ST to each axis without the removed Thread.isAlive API (the upstream AGUC2.stop uses it at pyagilis/controller.py:100). No G4.REF_VALUE or G4.REF_BINARY warnings were reported; all Facts cite lines of the pinned clone.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Copied the exact generated task.json after preserving the obsolete abstract Panda draft and recording the USB camera image-scope blocker; changed task.json and RESULT.json (card fields: rank). Package contracts, source pins, gate finding digests, author attribution and human signatures remain unchanged. This metadata synchronization is not a new complete gate collection.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

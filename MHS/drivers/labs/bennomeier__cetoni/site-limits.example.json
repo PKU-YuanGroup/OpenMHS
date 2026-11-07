@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (cetoni syringe pump)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/cetoni": {
+      "velocity": {"min": 1, "max": 1000000, "unit": "1", "source": "operator",
+                   "reason": "example: velocity-register range for this syringe and mechanics"},
+      "flow_rate": {"min": 5, "max": 50, "unit": "uL/s", "source": "operator",
+                    "reason": "example: flow range this tubing and syringe tolerate"},
+      "target_position": {"min": -1000000, "max": 1000000, "unit": "1", "source": "operator",
+                          "reason": "example: travel range of this syringe"},
+      "valve_position": {"allowed": ["input", "output"], "source": "operator",
+                         "reason": "example: only the two valve ports are plumbed"},
+      "cap.actuation.pump.v1": {
+        "flow_rate": {"min": 5, "max": 50, "unit": "uL/s", "source": "operator",
+                      "reason": "example: flow range this tubing and syringe tolerate"},
+        "volume": {"min": 5, "max": 500, "unit": "uL", "source": "operator",
+                   "reason": "example: usable volume of the installed syringe"}
+      }
+    }
+  }
+}

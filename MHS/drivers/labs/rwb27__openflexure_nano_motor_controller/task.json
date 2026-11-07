@@ -1,0 +1,105 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.rwb27/openflexure_nano_motor_controller",
+  "track": "labs",
+  "local_path": "labs/rwb27/openflexure_nano_motor_controller",
+  "driver_dir": "MHS/drivers/labs/rwb27__openflexure_nano_motor_controller",
+  "upstream": {
+    "repo_url": "https://github.com/rwb27/openflexure_nano_motor_controller",
+    "commit": "18a19977dde0cd78f14154c41073a857e2332e54",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 48,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "openflexure_stage.stage:OpenFlexureStage",
+      "file": "openflexure_stage/stage.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "openflexure_stage.basic_serial_instrument:BasicSerialInstrument",
+      "file": "openflexure_stage/basic_serial_instrument.py",
+      "line": 29,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "openflexure_stage.stage:Endstops",
+      "file": "openflexure_stage/stage.py",
+      "line": 379,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "openflexure_stage.stage:LightSensor",
+      "file": "openflexure_stage/stage.py",
+      "line": 317,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "OpenFlexureStage.read_multiline",
+      "OpenFlexureStage.position (attribute)",
+      "OpenFlexureStage.ramp_time (attribute)",
+      "OpenFlexureStage.step_time (attribute)",
+      "BasicSerialInstrument.read_multiline",
+      "Endstops.maxima (attribute)",
+      "Endstops.status (attribute)"
+    ],
+    "writes": [],
+    "actions": [
+      "OpenFlexureStage.focus_rel",
+      "OpenFlexureStage.move_abs",
+      "OpenFlexureStage.move_rel",
+      "OpenFlexureStage.release_motors",
+      "OpenFlexureStage.endstops.home",
+      "Endstops.home"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1",
+      "cap.imaging.focus.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/rwb27__openflexure_nano_motor_controller --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

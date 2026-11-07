@@ -1,0 +1,27 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (PAL3 robot arm; example-only values, not device facts)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only: the clone states no rail or tool travel, so these ranges stand for the workspace of one installed PAL3. Replace them with the envelope of the deployed rail, trays and workcell.",
+  "devices": {
+    "mhs://localhost/pal": {
+      "cap.motion.cartesian_pose.v1": {
+        "position.x": {"min": 0.0, "max": 600.0, "unit": "mm", "source": "operator",
+                       "reason": "example only: replace with the X travel of the deployed PAL3 rail"},
+        "position.y": {"min": 0.0, "max": 600.0, "unit": "mm", "source": "operator",
+                       "reason": "example only: replace with the Y travel of the deployed PAL3 tool"},
+        "position.z": {"min": 0.0, "max": 300.0, "unit": "mm", "source": "operator",
+                       "reason": "example only: replace with the Z travel of the deployed PAL3 tool"}
+      },
+      "x-cap.ad-sdl.move_relative.v1": {
+        "dx": {"min": -100.0, "max": 100.0, "unit": "mm", "source": "operator",
+               "reason": "example only: replace with the allowed relative X travel of the deployed PAL3"},
+        "dy": {"min": -100.0, "max": 100.0, "unit": "mm", "source": "operator",
+               "reason": "example only: replace with the allowed relative Y travel of the deployed PAL3"},
+        "dz": {"min": -100.0, "max": 100.0, "unit": "mm", "source": "operator",
+               "reason": "example only: replace with the allowed relative Z travel of the deployed PAL3"}
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (labpy lantz U12)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/labjack-u12": {
+      "local_id": {"min": 0, "max": 255, "unit": "1", "source": "operator",
+                   "reason": "example: local IDs used on this bench"},
+      "x-cap.labpy.set_analog_outputs.v1": {
+        "analog_output_0": {"min": 0, "max": 5, "unit": "V", "source": "operator",
+                            "reason": "example: the signal this output drives accepts 0 to 5 V"},
+        "analog_output_1": {"min": 0, "max": 5, "unit": "V", "source": "operator",
+                            "reason": "example: the signal this output drives accepts 0 to 5 V"}
+      },
+      "x-cap.labpy.pulse_out.v1": {
+        "bit_select": {"min": 0, "max": 255, "unit": "1", "source": "operator",
+                       "reason": "example: D0-D7 bit mask used on this bench"},
+        "num_pulses": {"min": 1, "max": 1000, "unit": "1", "source": "operator",
+                       "reason": "example: pulse count this load tolerates"},
+        "time_b1": {"min": 1, "max": 1000, "unit": "1", "source": "operator",
+                    "reason": "example: cycle time range for this signal"},
+        "time_c1": {"min": 1, "max": 1000, "unit": "1", "source": "operator",
+                    "reason": "example: cycle time range for this signal"},
+        "time_b2": {"min": 1, "max": 1000, "unit": "1", "source": "operator",
+                    "reason": "example: cycle time range for this signal"},
+        "time_c2": {"min": 1, "max": 1000, "unit": "1", "source": "operator",
+                    "reason": "example: cycle time range for this signal"}
+      }
+    }
+  }
+}

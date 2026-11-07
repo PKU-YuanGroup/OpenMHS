@@ -1,0 +1,80 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.norlovs/ot2-robotics-cv-control",
+  "track": "labs",
+  "local_path": "labs/norlovs/ot2-robotics-cv-control",
+  "driver_dir": "MHS/drivers/labs/norlovs__ot2-robotics-cv-control",
+  "upstream": {
+    "repo_url": "https://github.com/norlovs/ot2-robotics-cv-control",
+    "commit": "a0a621e5a79c32e70c8c97864d256693d3b3eac0",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 389,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "src.ot2.ot2_gym_wrapper:OT2Env",
+      "file": "src/ot2/ot2_gym_wrapper.py",
+      "line": 7,
+      "confidence": "override"
+    },
+    {
+      "symbol": "src.ot2.sim_class:Simulation",
+      "file": "src/ot2/sim_class.py",
+      "line": 12,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/ot2/ot2_gym_wrapper.py:7 OT2Env environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/norlovs__ot2-robotics-cv-control --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

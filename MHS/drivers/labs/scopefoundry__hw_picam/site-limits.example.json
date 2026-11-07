@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (PICam camera)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/hw-picam": {
+      "exposure_time": {
+        "min": 0.001,
+        "max": 10000,
+        "unit": "ms",
+        "source": "operator",
+        "reason": "example: this bench uses exposures from 1 us to 10 s and supplies the range the driver leaves to the operator"
+      },
+      "roi_x": {
+        "min": 0,
+        "max": 2048,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example: the ROI of this bench stays inside the left half of the sensor; the site supplies the range"
+      },
+      "roi_width": {
+        "min": 1,
+        "max": 2048,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example: this bench reads at most 2048 columns per ROI; the site supplies the range"
+      },
+      "roi_x_binning": {
+        "min": 1,
+        "max": 8,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example: this bench bins by at most 8 columns; the site supplies the range"
+      },
+      "roi_y": {
+        "min": 0,
+        "max": 2048,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example: the ROI of this bench stays inside the top half of the sensor; the site supplies the range"
+      },
+      "roi_height": {
+        "min": 1,
+        "max": 2048,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example: this bench reads at most 2048 rows per ROI; the site supplies the range"
+      },
+      "roi_y_binning": {
+        "min": 1,
+        "max": 8,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example: this bench bins by at most 8 rows; the site supplies the range"
+      },
+      "cap.sensing.image.v1": {
+        "exposure_ms": {
+          "min": 0.001,
+          "max": 10000,
+          "unit": "ms",
+          "source": "operator",
+          "reason": "example: the capture exposure of this bench stays between 1 us and 10 s"
+        },
+        "width": {
+          "min": 1,
+          "max": 2048,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example: this bench captures at most 2048 columns"
+        },
+        "height": {
+          "min": 1,
+          "max": 2048,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example: this bench captures at most 2048 rows"
+        }
+      }
+    }
+  }
+}

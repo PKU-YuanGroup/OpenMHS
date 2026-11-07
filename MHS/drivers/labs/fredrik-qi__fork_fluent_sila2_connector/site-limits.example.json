@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Tecan Fluent example overlay)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only: every rule below supplies an operator_required bound for the gate's conformance run. None of these numbers is a statement about a worktable, a liquid class or a tip; a site replaces them with the bounds of its own instrument.",
+  "devices": {
+    "mhs://localhost/tecan-fluent": {
+      "x-cap.fredrik-qi.aspirate.v1": {
+        "volume": {"min": 1, "max": 1000, "source": "operator",
+                   "reason": "example only: the site supplies the aspirate volume its liquid classes allow"},
+        "well_offset": {"min": 0, "max": 7, "source": "operator",
+                        "reason": "example only: the site supplies the well offsets its labware allows"}
+      },
+      "x-cap.fredrik-qi.dispense.v1": {
+        "volume": {"min": 1, "max": 1000, "source": "operator",
+                   "reason": "example only: the site supplies the dispense volume its liquid classes allow"},
+        "well_offset": {"min": 0, "max": 7, "source": "operator",
+                        "reason": "example only: the site supplies the well offsets its labware allows"}
+      },
+      "x-cap.fredrik-qi.set_location.v1": {
+        "rotation": {"min": 0, "max": 270, "source": "operator",
+                     "reason": "example only: the site supplies the rotations its labware permits"},
+        "target_site": {"min": 0, "max": 99, "source": "operator",
+                        "reason": "example only: the site supplies the site indexes of its worktable"}
+      },
+      "x-cap.fredrik-qi.transfer_labware.v1": {
+        "target_position": {"min": 0, "max": 99, "source": "operator",
+                            "reason": "example only: the site supplies the positions of its worktable"}
+      }
+    }
+  }
+}

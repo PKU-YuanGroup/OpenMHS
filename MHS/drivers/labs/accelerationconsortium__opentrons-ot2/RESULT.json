@@ -1,0 +1,69 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:d11476b3b5a59109523f4dac6b6d384f9fb82231d3c52a735b83b9f0d1435f05",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.accelerationconsortium.move_axes.v1",
+      "reason": "cap.motion.cartesian_pose.v1 moves only X/Y/Z and cannot command the mount A or the plungers B/C; cap.motion.joint_position.v1 uses radians and a joint order that the native axis-letter millimetre API does not define. The extension exposes the native six-axis target exactly and keeps every axis under its own operator-required bound.",
+      "verb": "invoke",
+      "summary": "Move all six OT-2 axes to absolute positions in millimetres with OT2MotionController.move().",
+      "similar": [
+        "cap.motion.cartesian_pose.v1",
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.accelerationconsortium.home_all.v1",
+      "reason": "cap.motion.home.v1 is the closest class, but its optional speed_scale has no counterpart in the native full home() and its output joint_positions are in radians, while the OT-2 reports axis positions in millimetres. The input-free extension is the exact full home and the first motion after an operator reset.",
+      "verb": "invoke",
+      "summary": "Home all six OT-2 axes with the native home(axes='XYZABC').",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.accelerationconsortium.aspirate.v1",
+      "reason": "cap.fluid.aspirate.v1 takes a source labware/well that the native motion controller cannot resolve and does not carry the installed pipette's ul_per_mm conversion; the clone's feature layer takes that conversion from the caller. The extension exposes the native primitive with the caller-owned conversion and an operator-required volume, factor and flow rate.",
+      "verb": "invoke",
+      "summary": "Draw liquid with the native aspirate(axis, volume_ul, ul_per_mm, flow_rate_ul_s).",
+      "similar": [
+        "cap.fluid.aspirate.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.accelerationconsortium.dispense.v1",
+      "reason": "cap.fluid.dispense.v1 takes a target labware/well that the native motion controller cannot resolve and does not carry the installed pipette's ul_per_mm conversion; the clone's feature layer takes that conversion from the caller. The extension exposes the native primitive with the caller-owned conversion and an operator-required volume, factor and flow rate.",
+      "verb": "invoke",
+      "summary": "Expel liquid with the native dispense(axis, volume_ul, ul_per_mm, flow_rate_ul_s).",
+      "similar": [
+        "cap.fluid.dispense.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.accelerationconsortium.halt_motion.v1",
+      "reason": "cap.motion.stop.v1 declares an optional deceleration profile, but OT2MotionController.stop() takes no argument and calls SmoothieDriver.hard_halt(). The input-free extension is the exact native halt and is the declared safe-state action.",
+      "verb": "invoke",
+      "summary": "Halt all OT-2 motion with the native stop() (SmoothieDriver.hard_halt).",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.accelerationconsortium.reenable.v1",
+      "reason": "No catalogue class clears a device fault and re-homes the axes. The clone's own plan says reset_from_error leaves the homed flags false and the operator must re-home before moving, so this input-free extension is the explicit re-enable after an operator reset, marked reenable=True and refused while latched.",
+      "verb": "invoke",
+      "summary": "Clear the Smoothie alarm lock with reset_from_error() and re-home all axes.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    }
+  ],
+  "notes": "PASS on the fake backend only: python3 -m mhs.driver check MHS/drivers/labs/accelerationconsortium__opentrons-ot2 --backend fake exited 0 with all nine gates passing and no findings or warnings (evidence contract_checked, never an MHS-Device level). The package is model-authored and unreviewed: driver.lock.json authored_by is {\"kind\": \"model\", \"model_id\": \"deepseek-v4.1-flash:1017\", \"run_id\": \"helper-wave-2-redo-002\"} and reviewed_by stays null. No hardware was attached, no hardware backend was run and no human review or hardware run is claimed; the loader refuses this R2 package's hardware backend until a human signs reviewed_by.\n\nENTRY AND SHAPE: the card lists three override-confirmed entry symbols. This package binds the first, unitelabs.opentrons_ot2.io.motion:OT2MotionController (motion.py:182), the asynchronous motion/GPIO controller; HeaterShakerController and ThermocyclerController are separate module devices and are NOT COVERED (one package serves one device). DEVIATION FROM THE CARD: the card's helper is PythonObjectDriver. A direct Driver is used instead because the native API is asynchronous, takes axis-letter mappings and caller-owned pipette conversions, and returns class output schemas that the family's static method/result tables cannot express; this matches the card's own decision value direct-driver. native.py is the production factory: it calls OT2MotionController.build(port=..., simulate=False), which builds the real GPIO and Smoothie stack. No adapter is needed because the driver binds the upstream method signatures directly; the fake mirrors the same API. native.py is not imported by the gate and was not run.\n\nCOVERAGE: reads simulating (is_simulating), position (get_position), firmware_version, serial_number, the left/right pipette model and id, button_light, rail_lights, button_pressed and door_closed; writes button_light (all three channels together) and rail_lights; actions cap.motion.cartesian_pose.v1 (X/Y/Z of the left pipette mount), the six-axis extension move_axes, the full-home extension home_all, the aspirate and dispense primitives, the halt extension (safe-state action) and the re-enable extension. NOT COVERED: move_relative, move_through, probe_axis, pause/resume (the native pause is a software flag with no sensed state, so it is not reported as quiescence), smoothie_reset (the more drastic GPIO reset), update_steps_per_mm, update_pipette_config, play_tone, the current setters, disengage_axes, the Heater-Shaker, Thermocycler, Temperature and Magnetic Module controllers, the embedded robot-server HTTP API and the SiLA2 feature layer. cap.fluid.aspirate.v1 and cap.fluid.dispense.v1 are not bound because the native class cannot resolve the labware/well names they require and does not own the pipette's ul_per_mm conversion. The position read is the cached Smoothie position; it is not an independent physical-position measurement.\n\nLIMITS: no text file of the clone states the deck or axis travel of a configured OT-2, the usable volume of the installed tip and pipette, the volume-to-plunger conversion or a flow-rate range. Every numeric action input is Limit.operator_required: without an operator overlay a call is refused MHS.SAFETY.LIMITS_UNSET before any native call, and site-limits.example.json supplies example-only values (not device facts) so the conformance run can exercise the actions. fixtures/conformance.json contains placeholder inputs only. No G4 REF_VALUE, REF_BINARY, REF_MISSING or REF_FORMAT warning was reported.\n\nSAFETY: risk is R2 from the card floor and from the moving gantry, pipettes and possible contact hazards (MHS/spec/04-safety.md); the catalogue [...]\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Re-ran the gate and the strict collector (pass, no warnings) and read every file against motion.py, the SiLA motion feature, alarm_reset_plan.md and the upstream tests at the pin: the stop is source-backed (stop(), documented as an emergency stop, calls SmoothieDriver.hard_halt(), motion.py:775-778), the inputs are rightly operator_required, the re-enable without an @reset fits SAFE-042, and R2 fits the hazard table. Corrected: stop() waits for the lock a running move holds (motion.py:223-226, 467-468), which the lock-free fake hid; a probe and two new cases show the halt going out once the runtime's cancellation frees the lock, else SAFE_STATE_UNREACHED with the latch held. safe_state claimed a stopped robot and an alarm lock only the re-enable clears, but nothing senses standstill and the clone shows post-halt replies raised as errors and the dependency's alarm path resetting and homing (motion.py:82-103, 537-543): the driver now refuses motion and omits the Smoothie reads after any halt until the re-enable (M999, full home) completes, and reports an action overlapped by a halt as unknown; the Cartesian inputs are machine positions, not deck coordinates; seven facts said more than their lines and eight were added; the fake homed to zero. Changed: driver.py, fake.py (upstream lock, test knobs, homed position), native.py (docstring), test_driver.py (five new or rewritten cases), facts.md and the regenerated reference.json, REFERENCE.md and check-report.json; the digest is unchanged; the author's notes on the safe state, the deck coordinates and the recovery are superseded. The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it. For the human reviewer: OT-2 gantry and pipettes, R2 (modules NOT COVERED). hard_halt() is Opentrons code outside the clone (8.8.1 below Python 3.12, else 9.0.0): its effect, duration and the Smoothie's state afterwards are not shown, nothing senses standstill and no physical stop is cited, so test with the power switch in reach. The halt waits for the controller lock and goes out only after the runtime's cancellation ends the running move inside the SmoothieDriver; a wait that ignores cancellation leaves the e-stop unreached while the move finishes. One e-stop may send hard_halt five times. After any halt, cancel or deadline the driver sends only the re-enable (M999 and a home of all six axes: clear the deck; it may fail once on the halt alarm). The guard is per process: a restarted endpoint or another client on the port (stop opentrons-robot-server) bypasses it, and the dependency's alarm path itself resets and homes (motion.py:537-543). Moves are machine positions bounded only by the operator overlay (no axis_bounds check, no Z/A floor). The clone states no licence.\n\nMODEL REVIEW (claude-sonnet-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Adversarial verification of the claude-opus-5-5 review (fix) by a different model (the user chose Claude Sonnet as the different model, 2026-11-04): the verifier agreed and found no blocker or major. I found no blocker and no major issue. Gate and strict collector both pass, and all 28 citations check out against the clone at the pin. I did not run the package tests separately; I only saw the gate report them passing (G9). - Gate and collector: `collect.py --strict` reports PASS with 0 warnings, and RESULT.json is consistent with the gate run. `mhs.driver check --backend fake` reports passed: true, with G9 passing. - Citations: `show_refs.py` reports 0 bad citations. I read every cited line and each says what the Fact claims. That covers the stop at motion.py:775-778, the lock at 223-226 and 467-468, the `_RaisingSmoothieDriver` handling at 82-103, the alarm comment at 537-543, the feature-layer axis, floor and bounds comments, the simulation test's `emergency_stop` note, and the pyproject pins. The fake's homed position matches the upstream simulation test. The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it."
+}

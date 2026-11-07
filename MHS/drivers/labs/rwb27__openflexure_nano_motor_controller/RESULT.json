@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:ffd37f365e18b099ba31a4a2c4598967e9075d96786a44f5532f2d7114811573",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.rwb27.move_relative.v1",
+      "reason": "no catalogue motion class takes a relative displacement in integer motor steps; cap.motion.joint_position.v1 takes absolute joint positions in rad and binds robot.arm/motion.axis, not optics.stage, and the clone states no step-to-rad conversion",
+      "verb": "invoke",
+      "summary": "Move the stage by a relative displacement (x, y, z) in motor steps.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.rwb27.move_absolute.v1",
+      "reason": "cap.motion.joint_position.v1 is the closest class, but it takes rad and binds robot.arm/motion.axis; this stage reports integer motor steps and the clone states no conversion to rad, so binding it would invent a unit",
+      "verb": "invoke",
+      "summary": "Move the stage to an absolute position (x, y, z) in motor steps.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.rwb27.focus_relative.v1",
+      "reason": "cap.imaging.focus.v1 takes a target_z or search_range in um and a method enum; focus_rel() takes a relative displacement in integer motor steps and the clone states no um conversion",
+      "verb": "invoke",
+      "summary": "Move the focus axis (Z) by a relative displacement in motor steps.",
+      "similar": [
+        "cap.imaging.focus.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.rwb27.home.v1",
+      "reason": "cap.motion.home.v1 binds robot.arm/motion.axis and reports joint_positions in rad; the stage homes axes selected by name and reports integer motor steps, with no rad conversion in the clone",
+      "verb": "invoke",
+      "summary": "Home the selected axes to their minimum, maximum or both endstops.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.rwb27.release_motors.v1",
+      "reason": "no catalogue class de-energises stepper coils; cap.motion.stop.v1 is a motion stop with a stopped_position object and would imply a stop the firmware does not implement",
+      "verb": "invoke",
+      "summary": "De-energise the stepper motor coils (firmware release); this is also the safe-state action.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend only (evidence contract_checked); no hardware was attached, imported or claimed. Model-authored and unreviewed: driver.lock.json reviewed_by is null. G6.NO_NATIVE_CALL for x-cap.rwb27.home.v1 is expected: the action calls the upstream optional-module method native.endstops.home() (openflexure_stage/stage.py:401-424); the Recorder wraps only top-level backend attributes, so the nested module call is not recorded, although the action does reach the device. The action raises MHS.DEVICE.PRECONDITION_UNMET when the board reports no endstop module. No text file of the clone states a travel range, a minimum step delay or a ramp time, so move_relative.displacement, move_absolute.target_position and focus_relative.z are Limit.operator_required; site-limits.example.json supplies example-only bounds and the operator must supply the real envelope. The firmware has no separate stop command; the @estop and the safe_state action both call release_motors() (release), which de-energises the coils. No independent hardware e-stop is documented in the clone, so estop_physical_ref is not set; risk stays R1 per the card floor and the low-energy microscope-stage class. NOT COVERED: the optional LightSensor module (light_sensor_intensity, integration time, gain; arbitrary units, compile-time optional) is not exposed; the endstop reads return null when the module is absent. BasicSerialInstrument is the serial transport base of the native class, Endstops is used through native.endstops, and OpenFlexureStage is the native class. The fake's start values and canned replies are placeholders, not facts.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. G6.NO_NATIVE_CALL is a false alarm: homing calls the native endstops sub-object, which the recorder does not see. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (45 to 44); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): refreshed the passing fake gate after nested Recorder support. Changed check-report.json and RESULT.json only. The prior G6.NO_NATIVE_CALL warning is now absent because the recorder observes the actual nested endstops.home call; the normalized report differs only by removing that warning and changing G6 from warn to pass. The new stable digest is from this fresh gate run. This is stronger fake-path instrumentation, not new hardware or safety validation. Originals are preserved in work/handoff-runs/mhs-build-20261102/originals/nested-evidence-refresh/. Authorship and the null human signature are unchanged."
+}

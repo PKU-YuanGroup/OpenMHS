@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.pymodaq/pymodaq_plugins_thorlabs",
+  "upstream": {
+    "repo_url": "https://github.com/pymodaq/pymodaq_plugins_thorlabs",
+    "commit": "4aaf06acf6ea46b93fb900b76701f077dee44e28",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows",
+    "notes": "The package declares pythonnet and pywin32 (pyproject.toml:16-17); the Kinesis wrapper appends 'C:\\Program Files\\Thorlabs\\Kinesis' to sys.path (src/pymodaq_plugins_thorlabs/hardware/kinesis.py:12-13), so the hardware backend is Windows-only. The upstream package is imported by native.py only; the gate never installs or imports it."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeBrushlessDCMotor"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-198",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:be171e704dac689b5a636bc5d643e4d31f85e09baca3aeb262d8ef086faa0a81",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.tiagocoutinho.switch_on.v1",
+      "reason": "The catalogue has no class for entering the controller's remote-control mode. cap.device.configure.v1 writes named resource state fields, and the clone has no remote-mode read to expose as such a field.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.tiagocoutinho.switch_off.v1",
+      "reason": "The catalogue has no class for releasing the controller's remote control (REMOTE -). The clone has no remote-mode read and cap.device.configure.v1 cannot bind a command that changes no state field.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.tiagocoutinho.open_venting_valve.v1",
+      "reason": "cap.actuation.valve.v1 binds only actuation.valve and fluid.valve resource kinds, not the instrument.gauge resource of this controller; the venting valve is internal to the controller and has no position readback.",
+      "verb": "invoke",
+      "similar": [
+        "cap.actuation.valve.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.tiagocoutinho.close_venting_valve.v1",
+      "reason": "cap.actuation.valve.v1 binds only actuation.valve and fluid.valve resource kinds, not the instrument.gauge resource of this controller; the venting valve is internal to the controller and has no position readback.",
+      "verb": "invoke",
+      "similar": [
+        "cap.actuation.valve.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.tiagocoutinho.vent.v1",
+      "reason": "cap.actuation.valve.v1 binds only actuation.valve and fluid.valve resource kinds, not the instrument.gauge resource of this controller; venting until atmospheric pressure is a controller command, not a valve position, and has no readback.",
+      "verb": "invoke",
+      "similar": [
+        "cap.actuation.valve.v1"
+      ]
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the card's helper is PythonObjectDriver, but the upstream builds every request from parts (IN_PV_S<channel>, OUT_SP_<on|off><channel> <value> mbar, REMOTE 1, OUT_VENT 0), so this package is a direct Driver with native.py; the card's decision is already direct-driver. The gate was run on the fake backend only. native.py and the real connio/DCP3000 path were never run and no hardware was attached; the fake is an in-memory stand-in with values marked placeholder from the upstream sinstruments simulator, not a recording. No page of docs/dcp_3000.pdf was read, so no PDF page is cited. The event interval and the eight on/off set points are Limit.operator_required: no text file of the clone states their ranges, and every write is refused MHS.SAFETY.LIMITS_UNSET until the site supplies them. site-limits.example.json is an example, not a statement about any unit. recording_time_interval is read-only because the upstream async setter calls self.write(...) without awaiting the coroutine (vacuubrand/dcp3000/dcp3000.py:46-50), so its write would never reach the device. The pressure read and cap.measure.pressure.v1 publish Pa: upstream decode_pressure converts Torr to mbar and hPa is numerically equal to mbar. NOT COVERED: the recording interval write (broken upstream on asyncio) and a configuration write (the clone has only IN_CFG). The pump state is not observable in the clone, so the safe state only claims the commands REMOTE - and OUT_VENT 0, not a pump stop. Risk R1; no independent hardware e-stop is cited and none is claimed. The package is model-authored, reviewed_by is null, and no human review or hardware run is claimed; the loader's unreviewed-hardware refusal applies only at R2 and R3, so this R1 package does not rely on it.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Copied the exact generated task.json after preserving the obsolete abstract Panda draft and recording the USB camera image-scope blocker; changed task.json and RESULT.json (card fields: rank). Package contracts, source pins, gate finding digests, author attribution and human signatures remain unchanged. This metadata synchronization is not a new complete gate collection.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

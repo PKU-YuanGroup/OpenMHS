@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:b26ea08fdc555f40c7118c8f7b7f808a21005b307d618a80f92ce1909c64f2e6",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.josuablejeru.output_on.v1",
+      "reason": "No catalogue class enables the output of a bench power supply. cap.actuation.gpio.v1 drives a digital or analog output line, not a supply output with its own state register; the package uses an x-cap id with an inline output schema that reports the read-back of register 0x0001.",
+      "verb": "invoke",
+      "summary": "Enable a programmable supply's output and confirm it by reading the output state back.",
+      "similar": [
+        "cap.actuation.gpio.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.josuablejeru.output_off.v1",
+      "reason": "No catalogue class disables a supply output as a confirmed safe-state action; the package uses an x-cap id, also its input-free safe-state action and its e-stop route (register 0x0001 written 0 and read back 0).",
+      "verb": "invoke",
+      "summary": "Disable a programmable supply's output and confirm it by reading the output state back.",
+      "similar": [
+        "cap.actuation.gpio.v1"
+      ]
+    }
+  ],
+  "notes": "Tag-bridge family exemplar, written by a model (claude-opus-5-5) together with the TagDriver helper and revised after a different-model review (Claude Sonnet, findings F1-F15); reviewed_by stays null and the evidence is contract_checked on the fake only. No serial port, Modbus slave or supply was contacted, and native.py (minimalmodbus RTU transport) was never imported or run; the TagDriver refuses the hardware backend until a human signs reviewed_by with scope hardware. Scope: output state (0x0001, read-write), displayed voltage (0x0010) and current (0x0011), and the write-only voltage and current setpoints (0x0030, 0x0031) and protection limits (0x0020, 0x0021), with output on/off commands confirmed by reading 0x0001 back, as the upstream power_on/power_off return get_power_status. Risk R2: a programmable supply can destroy a connected load; the output-off write confirmed by read-back is the stop and the safe-state action; it leaves setpoints unchanged and proves what the supply reports, not that a load is de-energized. RESIDUAL HAZARD FOR THE HUMAN REVIEWER: output_on energises the load at the setpoints the supply holds at that moment (front panel, an earlier session or this endpoint); the setpoint registers are only written upstream, so the package can neither read nor bound the live setpoints, and the operator limits bound only values this endpoint writes. The operator sets and verifies the setpoints on the supply before enabling the output. Every setpoint and protection limit is Limit.operator_required: the class serves every HM model and the clone states no range. Outcomes: an output command whose read-back does not confirm the write, and any write whose acknowledgement is lost, are unknown outcomes that refuse further writes and commands until a confirmed stop; a setpoint write with an unknown outcome keeps commands, including output_on, refused until the setpoint is written again. native.py maps only minimalmodbus IllegalRequestError (Modbus exception codes 1-3, request not executed) to no effect; that class name is not verified in this workspace (no minimalmodbus source; the upstream pins 2.1.1 in poetry.lock lines 403-404) and every other exception is an unknown outcome. NOT COVERED: power display (0x0012/0x0013), because get_power combines the words with a comparison (high_power < 16) and the intended encoding is not established; over-power protection (0x0022/0x0023), because the upstream writes one value as two separate non-atomic single-register writes. Deviations from the upstream methods, by design: get_current divides the three-decimal register value by 1000 again (control.py:19-20); the package reports the register with its three decimals only. The upstream truncates with int(), which turns some values into the step below (int(2.3 * 100) is 229); the package converts exactly by the value's decimal representation and refuses a value that is not a multiple of the register resolution, never rounding it. The upstream treats any non-zero 0x0001 as on; the package accepts only 0 or 1 and fails the read otherwise. The setpoint registers are only written upstream, so the state shows the last value this endpoint wrote and the supply acknowledged (function 6 echo), never a read-back. Unit id and port are backend options (upstream default slave address 1, 9600 8N1). LICENCE, OWNER DECISION NEEDED BEFORE PUBLICATION: pyproject.toml line 6 says MIT while the repository LICENSE file is the GPL version 3; the card and lock record GPL-3.0 and the integrator is correcting the card to publish_review required. The fake is a register store with placeholder values whose displayed words follow the setpoints through a placeholder load while the output is on; it models no regulation, slew, protection trip or Modbus exception response.\n\nMODEL REVIEW (claude-sonnet-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Different-model review of a package authored by claude-opus-5-5 (the user chose Claude Sonnet as the different model, 2026-11-04): MODEL REVIEW (claude-sonnet-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): checked the gate and collect --strict (pass, 0 warnings), show_refs for all seven Facts and every point citation, the operator_required limits, the 0x0001 output-off stop with read-back and R2 against the hazard table, the fake, provenance, and native.py line by line; after the fix run the bus-lock leak, exception mapping, live-setpoint disclosure and note example are corrected. Open for the human: minimalmodbus IllegalRequestError name unverified, MIT/GPL-3.0 licence decision before publication, and the usual supervised hardware run before signing reviewed_by. The card needs the owner's publication decision (publish_review required; licence GPL-3.0); the package may not be published or merged into a published tree before it."
+}

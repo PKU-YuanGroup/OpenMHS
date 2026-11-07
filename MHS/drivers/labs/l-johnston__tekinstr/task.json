@@ -1,0 +1,99 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.l-johnston/tekinstr",
+  "track": "labs",
+  "local_path": "labs/l-johnston/tekinstr",
+  "driver_dir": "MHS/drivers/labs/l-johnston__tekinstr",
+  "upstream": {
+    "repo_url": "https://github.com/l-johnston/tekinstr",
+    "commit": "7949430c1a6818d30aec152663c18dde85f2a7d7",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 27,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "tekinstr:CommChannel",
+      "file": "tekinstr/__init__.py",
+      "line": 33,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "tekinstr.mdo3000.oscilloscope:Oscilloscope",
+      "file": "tekinstr/mdo3000/oscilloscope.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "tekinstr.tds3000.oscilloscope:Oscilloscope",
+      "file": "tekinstr/tds3000/oscilloscope.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "tekinstr.mdo3000.oscilloscope:Channel",
+      "file": "tekinstr/mdo3000/oscilloscope.py",
+      "line": 95,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "tekinstr.tds3000.oscilloscope:Channel",
+      "file": "tekinstr/tds3000/oscilloscope.py",
+      "line": 20,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "tests/test_sim/sim_hw.yml:1 pyvisa-sim device file"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "CommChannel.get_instrument"
+    ],
+    "writes": [],
+    "actions": [
+      "Oscilloscope.force_trigger",
+      "Oscilloscope.trigger_state"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/l-johnston__tekinstr --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:11b51681a1e6752b4256c702838c014fb284ea770bfc84991104291cef0db54e",
+    "failed": []
+  },
+  "notes": "Direct Driver over auntisara.ioc:AuntISARAApp (the card's decision is direct-driver; the helper label PythonObjectDriver was not used because the interface is the nested self.ioc process-variable model plus methods such as send_command and set_mount_params, not a flat object command table). The package exposes scalar reads (status, action bitmask, position, tool, emergency_ok, collision_ok, lid_open, mounted_sample, next_port, dewar_temperature_1/2), the x-cap.michel4j.select_mount_port.v1 action (passes a PUCK_LIST port with a pin 1 to 16 through the upstream do_next_port check, then converts it into PAR:tool/PAR:puck/PAR:smpl with set_mount_params), the x-cap.michel4j.home.v1 action (native home with the current tool, waits for HOME and idle, max 120 s), and the safe-state x-cap.michel4j.panic.v1 plus @estop stop (both queue the native panic command; no independent hardware e-stop is documented in the clone, so estop_physical_ref is not set). The mount-port pattern spells out the 29 PUCK_LIST prefixes and pins 1 to 16. No numeric write or invoke input is exposed, so the driver declares no Limit and no site-limits.example.json; G8 warns G8.SAFE014_NOT_APPLICABLE because SAFE-014 has no limited actuating binding to probe, while every other CL3 test passed (the gate treats this as an exemption for a driver that limits nothing). NOT COVERED: the upstream mount_operation, dismount_operation and prefetch_operation are @async_operation functions that return a Future and report success only through the warning/log PVs (auntisara/ioc.py:1476-1655), so they are not exposed as actions; the Cartesian coordinate PVs are not exposed because the clone states no unit; no array data is involved. The fake starts from placeholders (marked in fake.py) and is an in-memory stand-in, not a recording; the hardware backend (native.py) was never run. The package is model-authored, reviewed_by is null, and the loader will refuse the hardware backend at R2 until a human signs it.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (63 to 62); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.",
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.michel4j.select_mount_port.v1",
+      "reason": "No catalogue class binds the robot.arm dewar-port configuration: cap.device.configure.v1 is a generic state patch, while the upstream set_mount_params writes PAR:tool, PAR:puck and PAR:smpl from a port string (auntisara/ioc.py:1160-1170, 356-369).",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.michel4j.home.v1",
+      "reason": "cap.motion.home.v1 models optional axes and speed_scale inputs, but the native home command takes only the current tool (auntisara/ioc.py:1821-1823); binding the class would expose numeric inputs the controller does not accept.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.michel4j.panic.v1",
+      "reason": "cap.motion.stop.v1 models a deceleration input that the native panic command does not accept (auntisara/ioc.py:1753-1755); the upstream safe-state command is panic.",
+      "verb": "invoke"
+    }
+  ]
+}

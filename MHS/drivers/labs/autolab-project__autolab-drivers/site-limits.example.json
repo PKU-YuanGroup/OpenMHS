@@ -1,0 +1,25 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Anritsu MS2830A)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "An example overlay, not a statement about any analyser. The driver refuses every numeric write (MHS.SAFETY.LIMITS_UNSET) until the operator states the ranges of the unit at this site; this file shows the shape of that overlay. The example ranges describe a bench that uses the analyser over 0.9 to 1.1 GHz with spans of 1 MHz to 200 MHz, a center step of 1 kHz to 1 MHz, 101 to 10001 sweep points and a 1 to 60 s timeout.",
+  "devices": {
+    "mhs://localhost/anritsu-ms2830a": {
+      "frequency_start": {"min": 0.9, "max": 1.1, "unit": "GHz", "source": "operator",
+                          "reason": "example: this bench observes 0.9 to 1.1 GHz"},
+      "frequency_stop": {"min": 0.9, "max": 1.1, "unit": "GHz", "source": "operator",
+                         "reason": "example: this bench observes 0.9 to 1.1 GHz"},
+      "frequency_span": {"min": 0.001, "max": 0.2, "unit": "GHz", "source": "operator",
+                         "reason": "example: the spans of this bench are 1 MHz to 200 MHz"},
+      "frequency_center": {"min": 0.9, "max": 1.1, "unit": "GHz", "source": "operator",
+                           "reason": "example: this bench observes 0.9 to 1.1 GHz"},
+      "frequency_step": {"min": 1000, "max": 1000000, "unit": "Hz", "source": "operator",
+                         "reason": "example: this bench uses a center step of 1 kHz to 1 MHz"},
+      "sweep_points": {"min": 101, "max": 10001, "unit": "1", "source": "operator",
+                       "reason": "example: this bench uses 101 to 10001 sweep points"},
+      "timeout": {"min": 1, "max": 60, "unit": "s", "source": "operator",
+                  "reason": "example: this bench allows a 1 to 60 s pyvisa timeout"}
+    }
+  }
+}

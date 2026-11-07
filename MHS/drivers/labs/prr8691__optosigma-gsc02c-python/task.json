@@ -1,0 +1,95 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.prr8691/optosigma-gsc02c-python",
+  "track": "labs",
+  "local_path": "labs/prr8691/optosigma-gsc02c-python",
+  "driver_dir": "MHS/drivers/labs/prr8691__optosigma-gsc02c-python",
+  "upstream": {
+    "repo_url": "https://github.com/prr8691/optosigma-gsc02c-python",
+    "commit": "d3403dc83f62fd39a3b437c13076ee676122e760",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 265,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "optosigma_gsc02c.controller:GSC02C",
+      "file": "optosigma_gsc02c/controller.py",
+      "line": 43,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11,<3.14",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "optosigma_gsc02c/simulated.py:10 SimulatedMotion",
+      "optosigma_gsc02c/simulated.py:18 SimulatedGSC02C",
+      "optosigma_gsc02c/simulated.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "GSC02C.get_position_mm",
+      "GSC02C.get_position_pulses",
+      "GSC02C.is_busy"
+    ],
+    "writes": [
+      "GSC02C.set_max_speed_mm_s",
+      "GSC02C.set_motion"
+    ],
+    "actions": [
+      "GSC02C.home",
+      "GSC02C.move_absolute_mm",
+      "GSC02C.move_absolute_pulses",
+      "GSC02C.move_relative_mm",
+      "GSC02C.move_relative_pulses",
+      "GSC02C.stop"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "optosigma_gsc02c/controller.py:39 min_position_mm = 0.0",
+      "optosigma_gsc02c/controller.py:40 max_position_mm = 85.0",
+      "optosigma_gsc02c/simulated.py:14 max_speed_mm_s = 10.0"
+    ]
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/prr8691__optosigma-gsc02c-python --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

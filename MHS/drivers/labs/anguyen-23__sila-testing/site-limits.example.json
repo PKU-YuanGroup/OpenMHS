@@ -1,0 +1,65 @@
+{
+  "openmhs": "0.9",
+  "site": "example-phenix-bench",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "issued_at": "2026-11-05T00:00:00Z",
+  "devices": {
+    "mhs://localhost/phenix_imager": {
+      "x-cap.anguyen-23.connect.v1": {
+        "PhenixHost": {
+          "allowed": [
+            "phenix-controlled.invalid",
+            "phenix-unreachable.invalid"
+          ],
+          "source": "operator"
+        }
+      },
+      "x-cap.anguyen-23.stagein.v1": {
+        "PlateBarcode": {
+          "allowed": [
+            "PLATE-0001"
+          ],
+          "source": "operator"
+        }
+      },
+      "x-cap.anguyen-23.stageout.v1": {
+        "PlateBarcode": {
+          "allowed": [
+            "PLATE-0001"
+          ],
+          "source": "operator"
+        }
+      },
+      "x-cap.anguyen-23.gostandby.v1": {
+        "DurationSeconds": {
+          "min": 60,
+          "max": 60,
+          "source": "operator",
+          "unit": "s"
+        }
+      },
+      "x-cap.anguyen-23.runacquisitionprotocol.v1": {
+        "ProtocolName": {
+          "allowed": [
+            "BrightField_10x"
+          ],
+          "source": "operator"
+        },
+        "PlateBarcode": {
+          "allowed": [
+            "PLATE-0001"
+          ],
+          "source": "operator"
+        },
+        "TimeoutMinutes": {
+          "min": 1,
+          "max": 1,
+          "source": "operator",
+          "unit": "min"
+        }
+      }
+    }
+  }
+}

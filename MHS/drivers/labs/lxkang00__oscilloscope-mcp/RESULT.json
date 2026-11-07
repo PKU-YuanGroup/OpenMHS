@@ -1,0 +1,188 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:fc25419bc1fd560248f9aad229b678cd30cea24ba17ed21350cbe8f90f49781c",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.lxkang00.acquisition_control.v1",
+      "reason": "Send run, stop, autoset, force trigger, clear statistics or factory reset; the catalogue has no oscilloscope acquisition-control class.",
+      "verb": "invoke",
+      "similar": []
+    },
+    {
+      "capability_id": "x-cap.lxkang00.configure_channel.v1",
+      "reason": "Set analog channel display, scale, offset, coupling, bandwidth limit, probe, invert, label, unit and deskew in one handler; cap.device.configure.v1 is a resource write and has no such typed oscilloscope fields.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.get_channel.v1",
+      "reason": "Read the eight analog-channel settings; no catalogue class has this oscilloscope-specific output.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.configure_timebase.v1",
+      "reason": "Set main timebase scale, delay and mode with the handler's summary reply; cap.device.configure.v1 cannot carry this tool contract.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.get_timebase.v1",
+      "reason": "Read timebase scale, delay and mode; no catalogue class has this oscilloscope-specific output.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.configure_trigger.v1",
+      "reason": "Set trigger sweep, type, source, level, slope, coupling and holdoff in the pinned subsystem order; cap.device.configure.v1 cannot carry this tool contract.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.get_trigger.v1",
+      "reason": "Read trigger type, sweep, source, level and slope; no catalogue class has this oscilloscope-specific output.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.configure_acquisition.v1",
+      "reason": "Set acquisition mode, memory depth, interpolation and average count; cap.device.configure.v1 cannot carry this tool contract.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.get_acquisition.v1",
+      "reason": "Read acquisition mode, memory depth, sample rate and interpolation; no catalogue class has this oscilloscope-specific output.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.measure.v1",
+      "reason": "Select and read one of the pinned 50+ automatic measurement items; cap.measure.voltage.v1 is voltage-only and has a different input and output.",
+      "verb": "invoke",
+      "similar": [
+        "cap.measure.voltage.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.get_measure_stats.v1",
+      "reason": "Read count, mean, minimum, maximum and standard deviation of the measurement statistics; no catalogue class has this output.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.get_waveform_preamble.v1",
+      "reason": "Read and parse the waveform preamble metadata; the catalogue has no oscilloscope waveform class and the sample array is not carried.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.configure_display.v1",
+      "reason": "Set display grid, persistence, intensity, grid style and axis mode; cap.device.configure.v1 cannot carry this tool contract.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.configure_cursors.v1",
+      "reason": "Set cursor mode, sources and manual cursor type; cap.device.configure.v1 cannot carry this tool contract.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.get_cursor_values.v1",
+      "reason": "Read cursor mode and delta X and delta Y; no catalogue class has this oscilloscope-specific output.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.configure_math.v1",
+      "reason": "Set math display, function, sources, scale, offset and FFT options; cap.device.configure.v1 cannot carry this tool contract.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.configure_digital.v1",
+      "reason": "Set digital-bus display, position, height, label and threshold; cap.device.configure.v1 cannot carry this tool contract.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.save_setup.v1",
+      "reason": "Save the current setup to internal memory or USB through the pinned filename validation and SCPI path.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.recall_setup.v1",
+      "reason": "Recall a saved setup from internal memory or USB through the pinned filename validation and SCPI path.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.get_frequency_counter.v1",
+      "reason": "Read the hardware frequency counter mode, source and current frequency; no catalogue class has this output.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.get_status.v1",
+      "reason": "Read acquisition state, trigger state, operation complete and event status register; no catalogue class has this output.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.lxkang00.get_next_error.v1",
+      "reason": "Read and clear the next device error-queue entry; no catalogue class has this output.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    }
+  ],
+  "notes": "PASS on the fake backend by `python3 -m mhs.driver check MHS/drivers/labs/lxkang00__oscilloscope-mcp --backend fake` (evidence contract_checked; never a hardware or MHS-Device level). Model-authored by deepseek-v4.1-flash:1017 (helper-wave-1-031); reviewed_by stays null, and no human review, hardware run, real MCP server run or SCPI socket is claimed. DEVIATION FROM THE CARD: the card says family-config/McpClientDriver, but server.py publishes a TOOLS list (server.py:237-603) and one generic call_tool dispatch (server.py:1327-1352); it has no per-tool @app.tool() function, and McpClientDriver's G7 source proof requires a unique top-level function with a literal @<receiver>.tool() decorator for every selected tool. The helper therefore cannot express this pin. This package is a direct Driver over the confirmed card entry server:OscilloscopeConnection (server.py:99-225) and sends the same SCPI commands the handlers send. task.json is unchanged. SCOPE: 22 x-cap actions and 3 read-only state values cover identity, acquisition control, channel, timebase, trigger, acquisition settings, automatic measurement and statistics, waveform preamble metadata, display, cursors, math, digital, setup save/recall, frequency counter, status and error queue. NOT COVERED: get_waveform_data's sample array (the pinned handler returns only a text summary, server.py:889-941), get_screenshot's PNG (the pinned handler writes a local file and returns a 200-character base64 prefix, server.py:943-1047), the arbitrary SCPI send_command escape (server.py:647-648), and connect/disconnect (the backend factory owns the connection). The scalar measurements and settings are carried; the waveform array and screenshot are not. FAKE: fake.py is a local analytic SCPI emulator, not a recording and not the upstream simulator. It implements only the public surface of OscilloscopeConnection (connected, host, connect, disconnect, send, query, safe_query); G7 passes. Every number in fake.py is placeholder test data (# placeholder), not a Siglent measurement, range, calibration or timing fact. It returns a 1000-point preamble (placeholder) and no sample array; a real SDS2000X Plus can return a much larger record. The fake is served under the SDK's fixed fake fidelity (F0, transport replaced by the fake backend); this hardware-mode driver declares no fidelity. RISK: R0, checked against MHS/spec/04-safety.md section 2.1. Every exposed write changes scope acquisition, trigger, display or measurement state; none sources a signal or has a physical effect. The worst outcomes are a wrong configuration and loss of an unsaved acquisition (run, autoset, reset). The raw SCPI escape is not bound. STOP: the @estop sends :STOP and then requires a fresh :TRIGger:STATus? of STOP; it passes on the fake and reports MHS.SAFETY.SAFE_STATE_UNREACHED when the fake ignores :STOP (test_driver.py). It is a recovery path, not a safety-rated interlock: it does not abort an in-flight SCPI command, a pending front-panel operation or an autoset started earlier, and the fresh status is the fake's state. No estop_physical_ref exists at R0. NATIVE: native.py refuses before importing the clone, opening a socket or writing the clone's log file; no live backend was run. A live backend needs a human-reviewed import and process-ownership decision (server.py configures a file logger and creates a module-level conn at import), a reviewed SCPI transport and stop readback, and the NOASSERTION licence resolved. The loader refuses a model-written hardware backend at R2/R3; this package also refuses it at R0 by construction. The install block is only the card's requirements.txt (mcp>=1.0.0); nothing was installed, imported or downloaded. LIMITS: channel 1-4 (server.py:295, 316) and display intensity 0-100 (server.py:482) are sourced. All other numeric inputs are Limit.operator_required and refuse with MHS.SAFETY.LIMITS_UNSET until an operator overlay fills them; site-limits.example.json is an example bench choice, not a Siglent range. The average-count description says 4-1024 (server.py:382) but the schema enforces no bound, so it is not used as a limit. WIRE: the pinned query() appends a question mark whenever the string does not end with one, so measure() sends a source-bearing query with a trailing question mark after the source (for example :MEASure:VPP? C1?). The driver preserves this pinned quirk rather than changing the wire syntax. WARNINGS: G6 reports eight NO_NATIVE_CALL warnings for configure_* actions invoked with empty/default input; those inputs request no setting, so the driver (like the pinned handlers) sends nothing. No G4 warnings remain. G9 runs the gate plus the repository cases; all pass. FAKE TIMING: the fake answers synchronously; this is not a timing claim about a scope or a recording. The real server's socket timeout defaults to 10.0 s (server.py:106) and reset/autoset use 3 s/2 s sleeps (server.py:657, 1153); the driver does not reproduce those sleeps.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked the direct-Driver deviation against the readiness evidence (McpClientDriver cannot prove the TOOLS/HANDLERS table, server.py:237-248, 1327-1352): the package drives the card's own entry class OscilloscopeConnection (99-225) with the SCPI the handlers send, keeps R0 (an oscilloscope; nothing exposed sources a signal), binds neither the raw send_command escape nor the waveform array or screenshot, and native.py refuses before any import, so it is a fake-only contract like the MCP exemplar. The stop is the handler's :STOP plus a fresh :TRIGger:STATus? that must read STOP (the query get_status uses, 1205), an R0 recovery path. Defects fixed: the trigger_status and acquisition_state reads used safe_query, which returns 'N/A' on any error (165-170), so a failed read was published as a state value; they now use query, as the get_* actions already did; a fact added a 'so ...' clause about measure to the query() lines (159-163) and is now the line-844 fact it relied on; the send_command fact claimed package scope and now states what 647-648 does; a fact on the socket reader's timeout behaviour (185-205) was added. The reviewer changed driver.py, test_driver.py (a case that a failed status query fails the read) and facts.md, and regenerated reference.json, REFERENCE.md and check-report.json; the gate and collect.py --strict pass with the digest unchanged (sha256:fc25419bc1fd560248f9aad229b678cd30cea24ba17ed21350cbe8f90f49781c). Override proposal: direct-driver python-object. The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it. For the human reviewer: Fake-only: native.py refuses; a live backend needs its own reviewed transport, since importing server.py configures a log file in the clone and a module-level connection (33-43, 229). The upstream reader swallows socket timeouts (200-201), so an empty reply can arrive as data; the e-stop treats anything but STOP as unreached. Measurement queries keep the pinned trailing question mark (:MEASure:VPP? C1?), unverified on a Siglent.",
+  "blocked_on": []
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.giansimone/ctrl-syringe-pumps",
+  "track": "labs",
+  "local_path": "labs/giansimone/ctrl-syringe-pumps",
+  "driver_dir": "MHS/drivers/labs/giansimone__ctrl-syringe-pumps",
+  "upstream": {
+    "repo_url": "https://github.com/giansimone/ctrl-syringe-pumps",
+    "commit": "3b0d3154003498f65150d8f04905f3a27cdd9017",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 51,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "ctrl_syringe_pumps.control:Control",
+      "file": "ctrl_syringe_pumps/control.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ctrl_syringe_pumps.interface:Interface",
+      "file": "ctrl_syringe_pumps/interface.py",
+      "line": 24,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [
+      "Control.set_diameter",
+      "Control.set_direction_infuse",
+      "Control.set_direction_reverse",
+      "Control.set_direction_withdraw",
+      "Control.set_pumping_rate",
+      "Interface.set_diameter",
+      "Interface.set_direction_infuse",
+      "Interface.set_direction_reverse",
+      "Interface.set_direction_withdraw",
+      "Interface.set_pumping_rate"
+    ],
+    "actions": [
+      "Control.run_pump",
+      "Control.stop_pump",
+      "Control.test_pump",
+      "Interface.run_pump",
+      "Interface.stop_pump",
+      "Interface.test_pump"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.actuation.pump.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "ctrl_syringe_pumps/interface.py:10 DIAMETER_RANGE = [0.1, 50.0]"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/giansimone__ctrl-syringe-pumps --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

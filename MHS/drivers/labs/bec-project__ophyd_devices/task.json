@@ -1,0 +1,133 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.bec-project/ophyd_devices",
+  "track": "labs",
+  "local_path": "labs/bec-project/ophyd_devices",
+  "driver_dir": "MHS/drivers/labs/bec-project__ophyd_devices",
+  "upstream": {
+    "repo_url": "https://github.com/bec-project/ophyd_devices",
+    "commit": "2141d541b915562deb9d530d6d41ebb8e4585b1d",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ophyd",
+  "role": "device-driver",
+  "family": "ophyd",
+  "helper": "OphydDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 15,
+  "exemplar": "MHS/drivers/labs/bcda-aps__apstools",
+  "entry_symbols": [
+    {
+      "symbol": "ophyd_devices.devices.psi_motor:EpicsMotorEC",
+      "file": "ophyd_devices/devices/psi_motor.py",
+      "line": 288,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd_devices.devices.psi_motor:EpicsUserMotorVME",
+      "file": "ophyd_devices/devices/psi_motor.py",
+      "line": 256,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd_devices.devices.simple_positioner:PSISimplePositioner",
+      "file": "ophyd_devices/devices/simple_positioner.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd_devices.devices.delay_generator_645:DelayGenerator",
+      "file": "ophyd_devices/devices/delay_generator_645.py",
+      "line": 133,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd_devices.devices.sls_devices:SLSInfo",
+      "file": "ophyd_devices/devices/sls_devices.py",
+      "line": 24,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ophyd_devices/devices/SpmBase.py:27 SpmSim",
+      "ophyd_devices/devices/XbpmBase.py:34 XbpmSim",
+      "ophyd_devices/devices/delay_generator_645.py:83 DummyPositioner",
+      "ophyd_devices/devices/virtual_slit.py:27 VirtualSlitCenter",
+      "ophyd_devices/devices/virtual_slit.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "EpicsMotorEC.error (attribute)",
+      "EpicsMotorEC.error_reset (attribute)",
+      "EpicsMotorEC.high_interlock (attribute)",
+      "EpicsMotorEC.high_limit_travel (attribute)",
+      "EpicsMotorEC.homed (attribute)",
+      "EpicsMotorEC.low_interlock (attribute)",
+      "EpicsMotorEC.low_limit_travel (attribute)",
+      "EpicsMotorEC.message_text (attribute)",
+      "EpicsMotorEC.motor_deadband (attribute)",
+      "EpicsMotorEC.motor_enable (attribute)",
+      "EpicsMotorEC.motor_enabled (attribute)",
+      "EpicsMotorEC.motor_mode (attribute)"
+    ],
+    "writes": [
+      "PSISimplePositioner._move_completion_status.set_finished"
+    ],
+    "actions": [
+      "EpicsMotorEC.move",
+      "EpicsMotorEC.reset_error",
+      "EpicsUserMotorVME.cancel_on_stop",
+      "EpicsUserMotorVME.move",
+      "EpicsUserMotorVME.on_stop",
+      "EpicsUserMotorVME.on_trigger",
+      "EpicsUserMotorVME.stop",
+      "EpicsUserMotorVME.trigger",
+      "EpicsUserMotorVME.task_handler.start_task",
+      "PSISimplePositioner.cancel_on_stop",
+      "PSISimplePositioner.move",
+      "PSISimplePositioner.on_stop"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/bec-project__ophyd_devices --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

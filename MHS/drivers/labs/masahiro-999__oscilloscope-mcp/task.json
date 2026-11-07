@@ -1,0 +1,111 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.masahiro-999/oscilloscope-mcp",
+  "track": "labs",
+  "local_path": "labs/masahiro-999/oscilloscope-mcp",
+  "driver_dir": "MHS/drivers/labs/masahiro-999__oscilloscope-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/masahiro-999/oscilloscope-mcp",
+    "commit": "e45773551e2b956e1fb086ad99cbfec546eaad4b",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 15,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "oscilloscope_mcp.instruments.rigol_ds1000z:RigolDs1000z",
+      "file": "src/oscilloscope_mcp/instruments/rigol_ds1000z.py",
+      "line": 54,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "oscilloscope_mcp.instruments._base:Scope",
+      "file": "src/oscilloscope_mcp/instruments/_base.py",
+      "line": 260,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "oscilloscope_mcp.transport.scpi_lan:ScpiLan",
+      "file": "src/oscilloscope_mcp/transport/scpi_lan.py",
+      "line": 44,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "RigolDs1000z.get_acquire",
+      "RigolDs1000z.get_channel",
+      "RigolDs1000z.get_timebase",
+      "RigolDs1000z.get_trigger",
+      "RigolDs1000z.idn",
+      "RigolDs1000z.measure_statistics",
+      "RigolDs1000z.read_waveform",
+      "Scope.get_acquire",
+      "Scope.get_channel",
+      "Scope.get_timebase",
+      "Scope.get_trigger",
+      "Scope.idn"
+    ],
+    "writes": [
+      "RigolDs1000z.set_acquire",
+      "RigolDs1000z.set_channel",
+      "RigolDs1000z.set_timebase",
+      "RigolDs1000z.set_trigger",
+      "Scope.set_acquire",
+      "Scope.set_channel",
+      "Scope.set_timebase",
+      "Scope.set_trigger",
+      "ScpiLan.write_many"
+    ],
+    "actions": [
+      "RigolDs1000z.measure",
+      "RigolDs1000z.run_control",
+      "Scope.measure",
+      "Scope.run_control"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/masahiro-999__oscilloscope-mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

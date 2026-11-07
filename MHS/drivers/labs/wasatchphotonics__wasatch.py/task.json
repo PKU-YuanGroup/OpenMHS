@@ -1,0 +1,150 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.wasatchphotonics/wasatch.py",
+  "track": "labs",
+  "local_path": "labs/wasatchphotonics/wasatch.py",
+  "driver_dir": "MHS/drivers/labs/wasatchphotonics__wasatch.py",
+  "upstream": {
+    "repo_url": "https://github.com/wasatchphotonics/wasatch.py",
+    "commit": "c3ea52bde83d9d004d0b97850f09515dfc42f741",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 7,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "wasatch.FeatureIdentificationDevice:FeatureIdentificationDevice",
+      "file": "wasatch/FeatureIdentificationDevice.py",
+      "line": 41,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "wasatch.IDSDevice:IDSDevice",
+      "file": "wasatch/IDSDevice.py",
+      "line": 21,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "wasatch.BLEDevice:BLEDevice",
+      "file": "wasatch/BLEDevice.py",
+      "line": 215,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "wasatch.TCPDevice:TCPDevice",
+      "file": "wasatch/TCPDevice.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "wasatch.AndorDevice:AndorDevice",
+      "file": "wasatch/AndorDevice.py",
+      "line": 41,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "wasatch/MockUSBDevice.py:17 MockUSBDevice",
+      "wasatch/MockUSBDevice.py:1",
+      "wasatch/simulation_protocol.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "FeatureIdentificationDevice.get_acc_state",
+      "FeatureIdentificationDevice.get_actual_frames",
+      "FeatureIdentificationDevice.get_actual_integration_time_us",
+      "FeatureIdentificationDevice.get_ambient_temperature_degC",
+      "FeatureIdentificationDevice.get_ambient_temperature_degC_arm",
+      "FeatureIdentificationDevice.get_ambient_temperature_degC_gen15",
+      "FeatureIdentificationDevice.get_analog_input_value",
+      "FeatureIdentificationDevice.get_analog_output_state",
+      "FeatureIdentificationDevice.get_area_scan",
+      "FeatureIdentificationDevice.get_area_scan_hamamatsu",
+      "FeatureIdentificationDevice.get_area_scan_xs",
+      "FeatureIdentificationDevice.get_battery_charging"
+    ],
+    "writes": [
+      "FeatureIdentificationDevice.set_acc_state",
+      "FeatureIdentificationDevice.set_accessory_enable",
+      "FeatureIdentificationDevice.set_analog_output_mode",
+      "FeatureIdentificationDevice.set_analog_output_value",
+      "FeatureIdentificationDevice.set_area_scan_enable",
+      "FeatureIdentificationDevice.set_area_scan_line_count",
+      "FeatureIdentificationDevice.set_area_scan_line_interval",
+      "FeatureIdentificationDevice.set_area_scan_line_step",
+      "FeatureIdentificationDevice.set_cont_strobe_delay_us",
+      "FeatureIdentificationDevice.set_cont_strobe_period_us",
+      "FeatureIdentificationDevice.set_cont_strobe_repeat_count",
+      "FeatureIdentificationDevice.set_cont_strobe_settings"
+    ],
+    "actions": [
+      "FeatureIdentificationDevice.can_laser_fire",
+      "FeatureIdentificationDevice.reset",
+      "FeatureIdentificationDevice.device_type.cmd_get_tec_enable",
+      "FeatureIdentificationDevice.device_type.cmd_set_detector_tec_enable",
+      "FeatureIdentificationDevice.device_type.cmd_set_laser_enable",
+      "FeatureIdentificationDevice.device_type.ctrl_transfer",
+      "FeatureIdentificationDevice.device_type.release_interface",
+      "FeatureIdentificationDevice.settings.post_interpolation_reset",
+      "IDSDevice.acquire_data",
+      "IDSDevice.acquire_spectrum_auto_collection",
+      "IDSDevice.acquire_spectrum_standard",
+      "IDSDevice.can_laser_fire"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.temperature.v1",
+      "cap.measure.spectrum.v1",
+      "cap.thermal.setpoint.v1",
+      "cap.actuation.gpio.v1",
+      "cap.imaging.illumination.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": [
+      "WasatchShell/load-test.py:33 max_failures = 10",
+      "wasatch/AutoRamanRequest.py:3 MAX_MS = 10000",
+      "wasatch/AutoRamanRequest.py:6 MAX_INTEG_MS = 2000",
+      "wasatch/AutoRamanRequest.py:7 MIN_INTEG_MS = 10",
+      "wasatch/AutoRamanRequest.py:8 MAX_GAIN_DB = 30",
+      "wasatch/AutoRamanRequest.py:9 MIN_GAIN_DB = 0",
+      "wasatch/AutoRamanRequest.py:13 MAX_FACTOR = 5",
+      "wasatch/AutoRamanRequest.py:16 MAX_AVG = 100"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/wasatchphotonics__wasatch.py --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

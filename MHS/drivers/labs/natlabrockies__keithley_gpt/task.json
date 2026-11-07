@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.natlabrockies/keithley_gpt",
+  "track": "labs",
+  "local_path": "labs/natlabrockies/keithley_gpt",
+  "driver_dir": "MHS/drivers/labs/natlabrockies__keithley_gpt",
+  "upstream": {
+    "repo_url": "https://github.com/natlabrockies/keithley_gpt",
+    "commit": "4cad464fd26eac9684d3b2df8ed88c17a6dff972",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 312,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "Keithley2400GPT:Keithley2400Controller",
+      "file": "Keithley2400GPT.py",
+      "line": 3,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Keithley2400Controller.identify"
+    ],
+    "writes": [
+      "Keithley2400Controller.set_current_compliance",
+      "Keithley2400Controller.set_measure_current_range",
+      "Keithley2400Controller.set_measure_voltage_range",
+      "Keithley2400Controller.set_measurement_mode",
+      "Keithley2400Controller.set_nplc",
+      "Keithley2400Controller.set_source_current_range",
+      "Keithley2400Controller.set_source_voltage_range"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/natlabrockies__keithley_gpt --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

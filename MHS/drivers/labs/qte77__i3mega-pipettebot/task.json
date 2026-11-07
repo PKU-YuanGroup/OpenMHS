@@ -1,0 +1,84 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.qte77/i3mega-pipettebot",
+  "track": "labs",
+  "local_path": "labs/qte77/i3mega-pipettebot",
+  "driver_dir": "MHS/drivers/labs/qte77__i3mega-pipettebot",
+  "upstream": {
+    "repo_url": "https://github.com/qte77/i3mega-pipettebot",
+    "commit": "99dc2e0a8c15067f3d994e6484507fa2be2301d7",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 40,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pipettebot.gantry:GcodeGantry",
+      "file": "src/pipettebot/gantry.py",
+      "line": 147,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pipettebot.bot:PipetteBot",
+      "file": "src/pipettebot/bot.py",
+      "line": 26,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11,<3.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "GcodeGantry.home",
+      "GcodeGantry.move_to",
+      "PipetteBot.aspirate_at",
+      "PipetteBot.dispense_at",
+      "PipetteBot.home"
+    ],
+    "candidate_classes": [
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1",
+      "cap.motion.joint_position.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": [
+      "src/pipettebot/gantry.py:144 feedrate_mm_per_min = 3000"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/qte77__i3mega-pipettebot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

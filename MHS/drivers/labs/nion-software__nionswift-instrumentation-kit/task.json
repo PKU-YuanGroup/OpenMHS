@@ -1,0 +1,137 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nion-software/nionswift-instrumentation-kit",
+  "track": "labs",
+  "local_path": "labs/nion-software/nionswift-instrumentation-kit",
+  "driver_dir": "MHS/drivers/labs/nion-software__nionswift-instrumentation-kit",
+  "upstream": {
+    "repo_url": "https://github.com/nion-software/nionswift-instrumentation-kit",
+    "commit": "4db575faa502752dc5018754006391c4850a604b",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 29,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "nion.device_kit.InstrumentDevice:Instrument",
+      "file": "nion/device_kit/InstrumentDevice.py",
+      "line": 55,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "nion.instrumentation.MultiAcquire:MultiAcquireController",
+      "file": "nion/instrumentation/MultiAcquire.py",
+      "line": 702,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "nion.instrumentation.camera_base:ChannelDataStream",
+      "file": "nion/instrumentation/camera_base.py",
+      "line": 3378,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "nion.instrumentation.Acquisition:FramedDataStream",
+      "file": "nion/instrumentation/Acquisition.py",
+      "line": 1906,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "nion.instrumentation.Acquisition:MakerDataStream",
+      "file": "nion/instrumentation/Acquisition.py",
+      "line": 2992,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "nion/device_kit/CameraDevice.py:37 CameraSimulatorLike",
+      "nion/device_kit/ScanDevice.py:54 ScanSimulatorLike"
+    ],
+    "upstream_tests": "nion/instrumentation/test"
+  },
+  "hints": {
+    "reads": [
+      "Instrument.GetDriveStrength",
+      "Instrument.GetNthControlInGroup",
+      "Instrument.GetNumControlsInGroup",
+      "Instrument.GetVal",
+      "Instrument.GetVal2D",
+      "Instrument.HasValError",
+      "Instrument.get_autostem_properties",
+      "Instrument.get_control_output",
+      "Instrument.get_control_state",
+      "Instrument.get_control_try_value_stream",
+      "Instrument.get_control_value_stream",
+      "Instrument.get_electrons_per_pixel"
+    ],
+    "writes": [
+      "Instrument.SetDriveStrength",
+      "Instrument.SetVal",
+      "Instrument.SetVal2D",
+      "Instrument.SetVal2DAndConfirm",
+      "Instrument.SetVal2DDelta",
+      "Instrument.SetVal2DDeltaAndConfirm",
+      "Instrument.SetValAndConfirm",
+      "Instrument.SetValDelta",
+      "Instrument.SetValDeltaAndConfirm",
+      "Instrument.SetValWait",
+      "Instrument.set_control_output",
+      "Instrument.set_eels_camera"
+    ],
+    "actions": [
+      "MultiAcquireController.acquire_multi_eels_spectrum",
+      "MultiAcquireController.adjust_focus",
+      "MultiAcquireController.reset_progress_counter",
+      "MultiAcquireController.start_multi_acquire_spectrum_image",
+      "MultiAcquireController.settings.focus",
+      "MultiAcquireController.settings.focus_delay",
+      "ChannelDataStream.abort_stream",
+      "ChannelDataStream.start_stream"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.imaging.focus.v1",
+      "cap.measure.spectrum.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/nion-software__nionswift-instrumentation-kit --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

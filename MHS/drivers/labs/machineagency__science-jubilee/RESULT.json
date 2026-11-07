@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:29b50a1ab9a71a3acc56b0f84bae45952a27ac29b9bd23653fee7ad8ef94aae5",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.machineagency.set_tool_offset.v1",
+      "reason": "No catalogue class expresses a tool-offset write for a motion platform. cap.device.configure.v1 covers writable resource state, but the upstream set_tool_offset() is a G10 command for a configured tool index and returns no state field; the class is left unbound and this extension carries the inline schema.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: wrote a direct Driver over science_jubilee.Machine:Machine instead of the PythonObjectDriver helper, because the motion actions bind catalogue classes with nested object inputs and class outputs and the stop path is the G-code M112 command. The card's read get_position, move_to, home_all and set_tool_offset are covered. NOT COVERED: the tool changer, deck/labware, syringe and pipette tool modules, the crash-detection handler and Machine.reset() (M999 board reset); the U axis is not exposed as a read or a Cartesian action, and Z is homed only through home_all because home_z() prompts on stdin. The harness path (native.py) was never run and the fake is an in-memory stand-in, not a recording; the package was never run on hardware and no human review is claimed. Travel and tool-offset bounds are Limit.operator_required because the clone reads min/max from each machine's config (Machine.py:397-426) and tool offsets shift the coordinates (docs/getting_started/primer.md:72); site-limits.example.json is an illustrative overlay built from docs/gcode/color_mixing_demo_config.g:132-133 and the nominal offsets at lines 150, 163 and 171, not a statement about any unit. The fake start and home positions are placeholders. estop_physical_ref points at the documented tool-ball trigger configuration, not at a verified installation; stop() sends M112, the Duet emergency stop.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged."
+}

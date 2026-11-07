@@ -1,0 +1,133 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.silab-bonn/basil",
+  "track": "labs",
+  "local_path": "labs/silab-bonn/basil",
+  "driver_dir": "MHS/drivers/labs/silab-bonn__basil",
+  "upstream": {
+    "repo_url": "https://github.com/silab-bonn/basil",
+    "commit": "0630d8fd717fed83cb036b0c1b6015bdd7b25547",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 14,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "basil.HL.tektronix_tds3034b:TektronixOscilloscope",
+      "file": "basil/HL/tektronix_tds3034b.py",
+      "line": 51,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "basil.HL.tektronix_oscilloscope:TektronixOscilloscope",
+      "file": "basil/HL/tektronix_oscilloscope.py",
+      "line": 50,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "basil.HL.iseg_hv:IsegHV",
+      "file": "basil/HL/iseg_hv.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "basil.HL.seq_gen:seq_gen",
+      "file": "basil/HL/seq_gen.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "basil.HL.cmd_seq:cmd_seq",
+      "file": "basil/HL/cmd_seq.py",
+      "line": 18,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10,<3.15",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "tests/formatting.yaml:1 pyvisa-sim device file"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "TektronixOscilloscope.get_configuration",
+      "TektronixOscilloscope.get_waveform",
+      "TektronixOscilloscope.get_y_info",
+      "TektronixOscilloscope.has_formatting",
+      "TektronixOscilloscope.is_initialized",
+      "TektronixOscilloscope.is_ready",
+      "IsegHV.get_answer_delay",
+      "IsegHV.get_autostart",
+      "IsegHV.get_configuration",
+      "IsegHV.get_current",
+      "IsegHV.get_current_channel",
+      "IsegHV.get_current_limit"
+    ],
+    "writes": [
+      "TektronixOscilloscope.set_configuration",
+      "IsegHV.set_answer_delay",
+      "IsegHV.set_autostart",
+      "IsegHV.set_configuration",
+      "IsegHV.set_current",
+      "IsegHV.set_current_channel",
+      "IsegHV.set_current_trip",
+      "IsegHV.set_high_voltage",
+      "IsegHV.set_ramp_speed",
+      "IsegHV.set_voltage",
+      "IsegHV.set_voltage_limit",
+      "IsegHV.set_voltage_range"
+    ],
+    "actions": [
+      "TektronixOscilloscope.disable_formatting",
+      "TektronixOscilloscope.enable_formatting",
+      "IsegHV.off",
+      "IsegHV.on",
+      "IsegHV.start_voltage_ramp"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.voltage.v1",
+      "cap.measure.current.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "basil/HL/FEI4AdapterCard.py:26 MAX_1239_ADD = 106",
+      "basil/HL/FEI4AdapterCard.py:77 MAX_520_ADD = 88",
+      "basil/HL/FEI4QuadModuleAdapterCard.py:27 MAX_5380_ADD = 96"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/silab-bonn__basil --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

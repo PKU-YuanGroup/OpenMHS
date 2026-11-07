@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:ca3ab2c8c012fca04f9f872ea69ba94e597496a47237e9fe9323069ce90b5ad9",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.pymodaq.keithley2100_reset.v1",
+      "reason": "No stable catalogue class describes resetting a bench instrument; cap.world.reset.v1 is only for simulated worlds. The action calls the upstream native reset (*CLS, *RST) and reports that it was sent.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: set_mode builds ':CONF:' plus the measurement function from parts (keithley2100_VISADriver.py:97-119), so a ScpiDriver command table cannot reproduce the wire lines. This is a direct Driver over Keithley2100VISADriver with native.py. The package covers the self-contained 2100 class only; NOT COVERED: the clone's 2110, 2700, 2701 and 2750 classes, whose constructors or configuration readers depend on the PyMoDAQ configuration file. No numeric range or resolution write is exposed because no text file of the clone states a bound; the mode write is limited to the six modes at line 87. The mode read is the last mode this driver applied ('unknown' before the first write); the upstream class has no mode query. The e-stop is the native reset (*CLS, *RST); no hardware backend or instrument was run. The fake's identity, option card, error and reading are placeholders, not recorded data.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (71 to 70); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/."
+}

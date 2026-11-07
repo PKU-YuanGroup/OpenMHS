@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (oscilloscope_mcp driver)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/oscilloscope": {
+      "x-cap.manasp21.setup_trigger.v1": {
+        "level": {"min": -5.0, "max": 5.0, "unit": "V", "source": "operator",
+                  "reason": "example: this bench triggers within the +-5 V input window of its instrument"},
+        "holdoff": {"min": 0.0, "max": 1.0, "unit": "s", "source": "operator",
+                    "reason": "example: this bench uses a trigger holdoff of at most one second"}
+      },
+      "x-cap.manasp21.acquire_waveform.v1": {
+        "timeout": {"min": 0.001, "max": 10.0, "unit": "s", "source": "operator",
+                    "reason": "example: this bench waits at most ten seconds for an acquisition"}
+      }
+    }
+  }
+}

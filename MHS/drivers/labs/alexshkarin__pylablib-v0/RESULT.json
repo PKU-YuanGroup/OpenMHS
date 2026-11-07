@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:56dfdef4245fe2fdf6acf21fdae4a17b81e0ca78ac4e52c84806d88168898543",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.alexshkarin.output_off.v1",
+      "reason": "No catalogue class switches a signal generator output off with an empty input; cap.device.configure.v1 can write output=false, but a safe_state action must take no input, so an extension action is used.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "Gate passed on the fake backend (contract_checked; no hardware was attached or run). DEVIATION FROM THE CARD: the card proposes family-config/ScpiDriver, but AWG33220A applies transforms a command table cannot express: set_amplitude sends amplitude*2 in Vpp while get_amplitude halves the Vpp reply (pylablib/aux_libs/devices/AgilentElectronics.py:100-107), get_frequency parses a value with a unit (145-148), and get_phase selects degrees before querying (153-156). The driver is therefore a direct Driver over the upstream class; no wire syntax was changed. NOT COVERED: load impedance, output polarity, ramp symmetry, trigger source/slope, SYNC and trigger outputs, gate polarity and burst cycle count are not exposed. The numeric ranges are Limit.operator_required because no text in the clone states them; site-limits.example.json is an example bench policy, not a device rating. The fake is an in-memory stand-in for AWG33220A; its starting values are placeholders, not facts. The package is model-authored and unreviewed, and its hardware backend has never been run.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

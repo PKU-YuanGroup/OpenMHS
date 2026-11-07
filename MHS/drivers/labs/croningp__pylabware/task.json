@@ -1,0 +1,140 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.croningp/pylabware",
+  "track": "labs",
+  "local_path": "labs/croningp/pylabware",
+  "driver_dir": "MHS/drivers/labs/croningp__pylabware",
+  "upstream": {
+    "repo_url": "https://github.com/croningp/pylabware",
+    "commit": "fbf287c7866ad3ac1e1a3bc44845035b8ae4a7b9",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:driver-pack",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 47,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "PyLabware.devices.tricontinent_c3000:C3000SyringePump",
+      "file": "PyLabware/devices/tricontinent_c3000.py",
+      "line": 289,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PyLabware.devices.ika_ret_control_visc:RETControlViscHotplate",
+      "file": "PyLabware/devices/ika_ret_control_visc.py",
+      "line": 103,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PyLabware.devices.vacuubrand_cvc_3000:CVC3000VacuumPump",
+      "file": "PyLabware/devices/vacuubrand_cvc_3000.py",
+      "line": 195,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PyLabware.devices.julabo_cf41:CF41Chiller",
+      "file": "PyLabware/devices/julabo_cf41.py",
+      "line": 235,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PyLabware.devices.ika_rct_digital:RCTDigitalHotplate",
+      "file": "PyLabware/devices/ika_rct_digital.py",
+      "line": 63,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "C3000SyringePump.get_all_tasks",
+      "C3000SyringePump.get_plunger_position",
+      "C3000SyringePump.get_pump_configuration",
+      "C3000SyringePump.get_speed",
+      "C3000SyringePump.get_status",
+      "C3000SyringePump.get_valve_position",
+      "C3000SyringePump.is_connected",
+      "C3000SyringePump.is_idle",
+      "C3000SyringePump.is_initialized",
+      "C3000SyringePump.connection.is_connection_open",
+      "RETControlViscHotplate.get_all_tasks",
+      "RETControlViscHotplate.get_ph"
+    ],
+    "writes": [
+      "C3000SyringePump.set_predefined_speed",
+      "C3000SyringePump.set_ramp_slope",
+      "C3000SyringePump.set_resolution_mode",
+      "C3000SyringePump.set_speed",
+      "C3000SyringePump.set_start_velocity",
+      "C3000SyringePump.set_stop_velocity",
+      "C3000SyringePump.set_valve_position",
+      "C3000SyringePump.set_valve_type",
+      "RETControlViscHotplate.set_speed",
+      "RETControlViscHotplate.set_temperature",
+      "CVC3000VacuumPump.set_echo",
+      "CVC3000VacuumPump.set_end_pressure"
+    ],
+    "actions": [
+      "C3000SyringePump.dispense",
+      "C3000SyringePump.move_home",
+      "C3000SyringePump.move_plunger_absolute",
+      "C3000SyringePump.move_plunger_relative",
+      "C3000SyringePump.start",
+      "C3000SyringePump.start_task",
+      "C3000SyringePump.stop",
+      "C3000SyringePump.stop_all_tasks",
+      "C3000SyringePump.stop_task",
+      "RETControlViscHotplate.start",
+      "RETControlViscHotplate.start_stirring",
+      "RETControlViscHotplate.start_task"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.actuation.valve.v1",
+      "cap.measure.temperature.v1",
+      "cap.actuation.pump.v1",
+      "cap.fluid.dispense.v1",
+      "cap.measure.mass.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/croningp__pylabware --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

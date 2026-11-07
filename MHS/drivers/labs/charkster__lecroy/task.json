@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.charkster/lecroy",
+  "track": "labs",
+  "local_path": "labs/charkster/lecroy",
+  "driver_dir": "MHS/drivers/labs/charkster__lecroy",
+  "upstream": {
+    "repo_url": "https://github.com/charkster/lecroy",
+    "commit": "da08c5168d8c63809d60b4c8b4b3529cbaf3de18",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 31,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "lecroy:lecroy",
+      "file": "lecroy.py",
+      "line": 4,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "lecroy.getValueOnChannel",
+      "lecroy.get_analog_channel_setup",
+      "lecroy.get_channel_from_tuple_signal_name",
+      "lecroy.get_digital_channel_setup",
+      "lecroy.get_horizontal_scale",
+      "lecroy.get_measurement_setup",
+      "lecroy.get_screen_image",
+      "lecroy.get_trigger_setup"
+    ],
+    "writes": [
+      "lecroy.setGrid",
+      "lecroy.setHorizontal_delay",
+      "lecroy.set_date_and_time",
+      "lecroy.set_intensity",
+      "lecroy.set_memory_size"
+    ],
+    "actions": [
+      "lecroy.reset_scope",
+      "lecroy.trigger_force",
+      "lecroy.trigger_setup",
+      "lecroy.trigger_setup_dict"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/charkster__lecroy --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

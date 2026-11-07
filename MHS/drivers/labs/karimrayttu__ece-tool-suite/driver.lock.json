@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.karimrayttu/ece-tool-suite",
+  "upstream": {
+    "repo_url": "https://github.com/karimrayttu/ece-tool-suite",
+    "commit": "13f7962a674ebc998a2ad2a31eb8592df65ad022",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install -e backend"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows",
+    "notes": "backend/pyproject.toml requires Python >=3.12 (line 5), and the runtime dependencies include numpy>=1.26, pyvisa>=1.14 and pyvisa-py>=0.7 (lines 19-25). scripts/setup.ps1:55 installs the backend with pip install -e backend[extras]; the optional hw extra adds psutil, pyusb, libusb-package, pyserial and zeroconf (pyproject.toml:30-38). Only native.py imports ece_suite, inside the hardware factory; the gate never installs or imports the upstream package."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeKeysightScope"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-106",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

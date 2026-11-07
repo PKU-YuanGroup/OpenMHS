@@ -1,0 +1,77 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ledger-donjon/pypdm",
+  "track": "labs",
+  "local_path": "labs/ledger-donjon/pypdm",
+  "driver_dir": "MHS/drivers/labs/ledger-donjon__pypdm",
+  "upstream": {
+    "repo_url": "https://github.com/ledger-donjon/pypdm",
+    "commit": "a059c30e5054a9e1276769c18c4f13e56a404a6a",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 22,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pypdm.pdm:PDM",
+      "file": "pypdm/pdm.py",
+      "line": 250,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "PDM.read_address",
+      "PDM.read_protocol_version"
+    ],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": [
+      "pypdm/pdm.py:121 MAXIMUM_MEAN_CURRENT = 19",
+      "pypdm/pdm.py:122 MAXIMUM_PULSE_CURRENT = 20",
+      "pypdm/pdm.py:256 MAX_DELAY = 15000",
+      "pypdm/pdm.py:258 MAX_PULSE_WIDTH = 1275000",
+      "pypdm/pdm.py:260 MAX_FREQUENCY = 250000000"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ledger-donjon__pypdm --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

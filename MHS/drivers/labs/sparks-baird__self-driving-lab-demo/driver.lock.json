@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.sparks-baird/self-driving-lab-demo",
+  "upstream": {
+    "repo_url": "https://github.com/sparks-baird/self-driving-lab-demo",
+    "commit": "051e91e34b63e5ce357df3db7e7425186c5c635c",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.cfg:44 has the python_requires line commented as >=3.8; src/self_driving_lab_demo/__init__.py:3-9 keeps an importlib_metadata fallback for Python below 3.8. The upstream is imported by native.py only; the gate never installs or imports it."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeTalker"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-106",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

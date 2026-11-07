@@ -1,0 +1,77 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:7b63a4c91669056032cd92e9b911dc4f740b200a9128d0f9b0453a86c442d677",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.karimrayttu.measure.v1",
+      "reason": "No catalogue class binds one scalar automatic measurement of an oscilloscope. cap.measure.voltage.v1 declares only instrument.dmm, instrument.smu and sensor; cap.sensing.read.v1 declares sensor, sensor.imu and sensor.force_torque, not instrument. The action reads one of the 16 :MEAS:* values of the scope.",
+      "verb": "invoke",
+      "summary": "Read one scalar InfiniiVision automatic measurement from the scope.",
+      "similar": [
+        "cap.measure.voltage.v1",
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.karimrayttu.measure_vpp.v1",
+      "reason": "No catalogue class binds a peak-to-peak voltage measurement on an oscilloscope channel. cap.measure.voltage.v1 is a DC or RMS voltage read bound to instrument.dmm, instrument.smu and sensor, and it does not carry a channel or a peak-to-peak result.",
+      "verb": "invoke",
+      "summary": "Measure channel 1 peak-to-peak voltage (:MEAS:VPP?).",
+      "similar": [
+        "cap.measure.voltage.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.karimrayttu.capture.v1",
+      "reason": "No catalogue class binds an oscilloscope waveform capture. cap.sensing.image.v1 is a camera image with width and height, and there is no catalogue class for a trace array; the standard cannot carry the :WAV:DATA? record yet, so the action returns only its scalar summary (points, vpp, duration).",
+      "verb": "invoke",
+      "summary": "Capture channel 1 and report a scalar summary of the record.",
+      "similar": [
+        "cap.sensing.image.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.karimrayttu.run.v1",
+      "reason": "No catalogue class starts continuous acquisition on an instrument. cap.process.run.v1 is a process recipe and cap.device.self_test.v1 runs a self-test; neither sends the oscilloscope :RUN.",
+      "verb": "invoke",
+      "summary": "Start continuous acquisition (:RUN).",
+      "similar": [
+        "cap.process.run.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.karimrayttu.single.v1",
+      "reason": "No catalogue class arms one acquisition on an instrument. cap.measure.spectrum.v1 is a spectrum sweep for an analyzer, not a single-shot oscilloscope acquisition, and the catalogue has no single-acquisition class.",
+      "verb": "invoke",
+      "summary": "Arm one acquisition (:SINGle).",
+      "similar": [
+        "cap.measure.spectrum.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.karimrayttu.reset.v1",
+      "reason": "No catalogue class returns an instrument to its default setup. cap.device.self_test.v1 runs a self-test, cap.device.calibrate.v1 calibrates a device, and cap.world.reset.v1 resets a simulated world; none sends the oscilloscope *RST and *CLS.",
+      "verb": "invoke",
+      "summary": "Reset the scope to its default setup (*RST and *CLS).",
+      "similar": [
+        "cap.device.self_test.v1",
+        "cap.device.calibrate.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.karimrayttu.stop_acquisition.v1",
+      "reason": "No catalogue class stops an oscilloscope acquisition. cap.motion.stop.v1 is motion-specific and cap.compute.cancel.v1 cancels a compute job; neither sends the oscilloscope :STOP. The action is also the safe-state action for this R1 hardware driver.",
+      "verb": "invoke",
+      "summary": "Stop acquisition (:STOP), the safe state.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check MHS/drivers/labs/karimrayttu__ece-tool-suite --backend fake; evidence is contract_checked, never an MHS-Device level. DEVIATION FROM THE CARD: the card proposes a python-object/PythonObjectDriver package, but this is a direct Driver over ece_suite.instruments.keysight:KeysightScope with a native.py factory. The upstream class wraps a VISA transport and assembles the channel, timebase, trigger, acquisition and waveform commands at run time (backend/ece_suite/instruments/keysight.py:49-161), so a config-only family class cannot express the object interface; the guide's object-with-methods row applies. Covered: identity; the light six-measurement state; one of the 16 automatic measurements; peak-to-peak voltage; a scalar capture summary; run, single, reset; and a safe-state stop. NOT COVERED: the waveform array (capture transfers the :WAV:DATA? IEEE block as time and voltage arrays, keysight.py:151-161), the PNG screenshot, and the FFT; the standard has no trace-array class yet, so capture reports only points, vpp and duration. The fake is an in-memory stand-in for KeysightScope, not a transcript; every number in fake.py is marked as a placeholder, and its capture returns a 5-point stand-in rather than the real record length. No writable state is served: the upstream class writes the channel, timebase, trigger and acquisition settings but has no query method for them (keysight.py:49-108), so a write would not change any state the driver can read; no Limits are declared and site-limits.example.json is absent. G8 reports the expected warning G8.SAFE014_NOT_APPLICABLE because SAFE-014 has no limit to probe; every other CL3 test passed and the gate exits 0. Install metadata: backend/pyproject.toml requires Python >=3.12 (line 5) and lists numpy, pyvisa and pyvisa-py (lines 19-25); scripts/setup.ps1:55 installs pip install -e backend[extras]. The package is model-authored and unreviewed (reviewed_by null), the hardware backend was never started, and nothing here ran on an instrument. R1 does not trigger the loader's reviewed_by refusal, which applies to model-authored R2 and R3 packages; this driver claims no such protection. gate.digest is the digest the check printed (the report without its clock); check-report.json is regenerated by every gate run and is not part of the package.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

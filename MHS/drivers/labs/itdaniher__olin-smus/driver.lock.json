@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.itdaniher/olin-smus",
+  "upstream": {
+    "repo_url": "https://github.com/itdaniher/olin-smus",
+    "commit": "3bddec37c09a408493dab0bf899080670e8807fe",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The upstream is a pure-Python pyusb driver (README.mkd:7) whose module imports usb.core (modconsmu/modconsmu.py:4), so pyusb must be installed. The gate never installs or imports the clone. The hardware factory imports modconsmu.modconsmu, so the clone root labs/itdaniher/olin-smus must be on PYTHONPATH or the package installed. The upstream constructor calls sys.exit when no USB device 0x6666:0x0005 is found (modconsmu/modconsmu.py:39-40)."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeOlinSmus"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-083",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

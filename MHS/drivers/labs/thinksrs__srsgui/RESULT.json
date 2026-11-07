@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "skip-proposed",
+  "blocked_on": [
+    "NOT_A_DEVICE"
+  ],
+  "notes": "The repository is not a device. It is the srsgui framework for organizing user-written instrument-control scripts as a GUI application: readme.md:3 (\"Srsgui is a simple framework\"), readme.md:5-7 (\"To define instrument classes for instruments that use remote communication, based on the Instrument class\"), readme.md:73-75 (\"Srsgui is a framework to help you to write your own instrument-controlling Python scripts and run them from a GUI application\"), pyproject.toml:11 (\"Framework to run instrument-controlling Python scripts in GUI\"), docs/index.rst:10, and docs/define-instrument.rst:5-8 (\"An instrument class is a subclass derived from the Instrument class. The _IdString must be defined.\").\n\nAll five card entry symbols were confirmed, but each is a framework base class or transport, not a device model: srsgui/inst/instrument.py:17 (\"Base class for derived instrument classes\", _IdString = \"Not Available\" at line 23; reset() raises NotImplementedError at line 282 and get_status() says \"Not implemented: Override Instrument.get_status()\" at line 263), srsgui/inst/component.py:24 (\"Class used to build hierarchical structure in an instrument\"), srsgui/task/task.py:37-39 (\"Base class for derived Task subclasses\"), srsgui/inst/communications/tcpipinterface.py:17 (class TcpipInterface(Interface)), and srsgui/inst/communications/serialinterface.py:22 (class SerialInterface(Interface)). The card's models list is empty.\n\nThe only concrete instrument classes in the clone are example subclasses of the framework: srsgui/examples/oscilloscope example/instruments/cg635.py:14 (class CG635(Instrument)) and srsgui/examples/oscilloscope example/instruments/sds1202.py:14 (class SDS1202(Instrument)). They are examples for the GUI tutorial, not the card's entry symbols and not the package's device; the docs direct each user to define such classes for their own instrument. The clone contains no single device model, command set, unit range or safety limit that could be sourced for an OpenMHS driver; writing one would require inventing a device and its bounds. The card's decision \"direct-driver\" comes from a name scan (PY_SDK_WITH_ENTRY) and does not make the framework a device. No gate was run and no package code was written; task.json is unchanged.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): skip accepted: a framework for user-written instrument scripts, not a device. A registry override now skips the card.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.",
+  "gate": {
+    "digest": "sha256:5f64e7f462ace7ae9a5b51507ed9ee50b7df1065008ca679cd8cb1fade3258d0",
+    "failed": [
+      "G1",
+      "G2",
+      "G3",
+      "G9"
+    ],
+    "report": "check-report.json"
+  }
+}

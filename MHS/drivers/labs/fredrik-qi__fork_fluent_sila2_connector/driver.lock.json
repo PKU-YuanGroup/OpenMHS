@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.fredrik-qi/fork_fluent_sila2_connector",
+  "upstream": {
+    "repo_url": "https://github.com/fredrik-qi/fork_fluent_sila2_connector",
+    "commit": "4a2f857c619c5bcead352b52622a72cc2d356ffe",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ./Python"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The Python wrapper's pyproject.toml declares requires-python >=3.7 and depends on sila2==0.1.0 (Python/pyproject.toml). The C# SilaFluentServer is a Windows installer under Binaries/ and is not installed by this package. native.py imports the wrapper only on the hardware backend; the gate never installs or imports it."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeFluent"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "helper-wave-2-001",
+    "date": "2026-11-05"
+  },
+  "reviewed_by": null
+}

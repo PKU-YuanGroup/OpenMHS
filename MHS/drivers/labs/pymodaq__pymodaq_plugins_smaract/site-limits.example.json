@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (SmarAct MCS2, example overlay only)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example values only, not a device specification: the MCS2 travel range comes from the positioner that is plugged. Replace the bounds with the travel range of the installed positioner in controller base units (the read 'position' value, before the 10**base_resolution conversion).",
+  "devices": {
+    "mhs://localhost/smaract-mcs2": {
+      "x-cap.pymodaq.smaract_absolute_move.v1": {
+        "position": {"min": -1000000, "max": 1000000, "unit": "1", "source": "operator",
+                     "reason": "example only: replace with the absolute travel range of the installed positioner in base units"}
+      },
+      "x-cap.pymodaq.smaract_relative_move.v1": {
+        "offset": {"min": -1000000, "max": 1000000, "unit": "1", "source": "operator",
+                   "reason": "example only: replace with the largest permitted relative step of the installed positioner in base units"}
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "notes": "Placeholder test inputs only; none is a device fact, a limit or an operator envelope. They fit the example-only overlay in site-limits.example.json.",
+  "capabilities": {
+    "cap.motion.cartesian_pose.v1": {
+      "valid": {"position": {"x": 100, "y": 100, "z": 100}},
+      "alternate": {"position": {"x": 110, "y": 90, "z": 120}},
+      "out_of_envelope": [
+        {"position": {"x": -0.5, "y": 100, "z": 100}},
+        {"position": {"x": 100, "y": 300.5, "z": 100}},
+        {"position": {"x": 100, "y": 100, "z": -50.5}},
+        {"position": {"x": 100, "y": 100, "z": 300.5}}
+      ]
+    },
+    "cap.device.configure.v1": {
+      "valid": {"button_light": {"red": false, "green": false, "blue": false}},
+      "alternate": {"button_light": {"red": true, "green": false, "blue": true}}
+    },
+    "x-cap.accelerationconsortium.move_axes.v1": {
+      "valid": {"x": 100, "y": 100, "z": 100, "a": 100, "b": 0, "c": 0},
+      "alternate": {"x": 110, "y": 90, "z": 120, "a": 110, "b": 5, "c": -5},
+      "out_of_envelope": [
+        {"x": -0.5, "y": 100, "z": 100, "a": 100, "b": 0, "c": 0},
+        {"x": 100, "y": 300.5, "z": 100, "a": 100, "b": 0, "c": 0},
+        {"x": 100, "y": 100, "z": -50.5, "a": 100, "b": 0, "c": 0},
+        {"x": 100, "y": 100, "z": 100, "a": 300.5, "b": 0, "c": 0},
+        {"x": 100, "y": 100, "z": 100, "a": 100, "b": 50.5, "c": 0},
+        {"x": 100, "y": 100, "z": 100, "a": 100, "b": 0, "c": -50.5}
+      ]
+    },
+    "x-cap.accelerationconsortium.aspirate.v1": {
+      "valid": {"axis": "B", "volume_ul": 100, "ul_per_mm": 10, "flow_rate_ul_s": 100},
+      "alternate": {"axis": "C", "volume_ul": 200, "ul_per_mm": 20, "flow_rate_ul_s": 200},
+      "out_of_envelope": [
+        {"axis": "B", "volume_ul": -0.5, "ul_per_mm": 10, "flow_rate_ul_s": 100},
+        {"axis": "B", "volume_ul": 100, "ul_per_mm": 0, "flow_rate_ul_s": 100},
+        {"axis": "B", "volume_ul": 100, "ul_per_mm": 10, "flow_rate_ul_s": -0.5}
+      ]
+    },
+    "x-cap.accelerationconsortium.dispense.v1": {
+      "valid": {"axis": "B", "volume_ul": 100, "ul_per_mm": 10, "flow_rate_ul_s": 100},
+      "alternate": {"axis": "C", "volume_ul": 200, "ul_per_mm": 20, "flow_rate_ul_s": 200},
+      "out_of_envelope": [
+        {"axis": "B", "volume_ul": -0.5, "ul_per_mm": 10, "flow_rate_ul_s": 100},
+        {"axis": "B", "volume_ul": 100, "ul_per_mm": 0, "flow_rate_ul_s": 100},
+        {"axis": "B", "volume_ul": 100, "ul_per_mm": 10, "flow_rate_ul_s": -0.5}
+      ]
+    }
+  }
+}

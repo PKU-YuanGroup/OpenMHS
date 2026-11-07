@@ -1,0 +1,83 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jonathanvanschenck/sr830-python",
+  "track": "labs",
+  "local_path": "labs/jonathanvanschenck/sr830-python",
+  "driver_dir": "MHS/drivers/labs/jonathanvanschenck__sr830-python",
+  "upstream": {
+    "repo_url": "https://github.com/jonathanvanschenck/sr830-python",
+    "commit": "fdce76ec409d2fd768a87719854deb2395152026",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 322,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "sr830:SR830",
+      "file": "sr830.py",
+      "line": 5,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "SR830.getFreq",
+      "SR830.getIT",
+      "SR830.getOut",
+      "SR830.getRTh",
+      "SR830.getSens",
+      "SR830.getSync",
+      "SR830.getXY"
+    ],
+    "writes": [
+      "SR830.setIT",
+      "SR830.setSens",
+      "SR830.setSync"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/jonathanvanschenck__sr830-python --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

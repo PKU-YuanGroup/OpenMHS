@@ -1,0 +1,30 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:98315c3b97249d662865e634936324039877d6e2ff67a3ddc16798df53bd4c48",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.cetuspcr.run_protocol.v1",
+      "reason": "No catalogue class binds a Peltier PCR experiment loop: cap.thermal.setpoint.v1 is a setpoint write without a duration or cycles, cap.sample.incubate.v1 is an incubator hold with sample_ids, and cap.measure.temperature.v1 is a read. The device runs a repeated temperature hold through the upstream PID experiment loop, so the package uses an extension with an inline schema.",
+      "verb": "invoke",
+      "similar": [
+        "cap.thermal.setpoint.v1",
+        "cap.sample.incubate.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.cetuspcr.stop_peltier.v1",
+      "reason": "No catalogue stop class fits a thermal Peltier drive: cap.motion.stop.v1 is a motion stop, and SAFE-045 needs a no-input safe_state action for this R2 hardware package. The action clears the experiment flag and writes the zero-PWM command.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). DEVIATION FROM THE CARD: the card named SerialDriver, but the upstream interface is a framed <...> protocol with unsolicited multi-line replies (Heat/tempSample/tempLid/nextpls) and an experiment loop method on ArduinoPCR, so a SerialDriver command table cannot express it; this is a direct Driver over the card entry symbol functions:ArduinoPCR with native.py opening the upstream class. The fake is an in-memory stand-in with the upstream public methods (initialize_connection, serial_monitor, run_experiment) and a pyserial-like serial_device, not a transcript; the transcript strategy cannot replay the unsolicited multi-line session. Every Fact cites a text line of the clone at bbed1fd; G4 passed with no REF_VALUE or REF_BINARY warnings. The action exposes one temperature hold step repeated cycles times through ArduinoPCR.run_experiment; temperature, duration_s and cycles are Limit.operator_required because no text states a safe temperature range, a maximum hold or a maximum cycle count, so the call is refused MHS.SAFETY.LIMITS_UNSET until the operator supplies site-limits.json; site-limits.example.json is an example overlay only (0..100 Cel, 0..86400 s, 1..1000 cycles) and is not a statement about any machine. The 24 h max_duration_ms is the runtime bound of the long-running call, not a device limit. R2 is from the Peltier heating; the clone documents no independent hardware e-stop, so no estop_physical_ref is set and the no-input safe_state action x-cap.cetuspcr.stop_peltier.v1 (plus @estop) clears is_running, sets is_waiting so the upstream loop takes its cancellation branch, and writes <peltier 0 0>; the same zero command is written when a protocol call returns. The hardware path was never run and no hardware run is claimed; this package is model-authored and reviewed_by is null, so the loader refuses its R2 hardware backend until a human signs. NOT COVERED: the multi-step experiment editor/protocol programs (the action is a single repeated hold step), the cooling button routine, the raw heating/cooling PWM interface, the lid heater (the reviewed firmware text does not drive it), the other arduino/Cetus PCR LM35 variant and its <cooling> command, the pickle experiment store and the GUI. The hardware path calls the upstream run_experiment, which writes experiment logs/<name>-<timestamp>.csv relative to the current working directory and shows tkinter messageboxes; a hardware deployment must run from the clone root with a display (or the upstream GUI calls fail), and this was not tried. The hardware factory needs the clone root on sys.path because functions.py imports constants, which opens settings.json relative to the cwd. The fake's start temperatures and constructor values are test data, marked # placeholder. Catalogue requests: the two x-cap ids below; no catalogue class fits a Peltier PCR protocol or a thermal stop.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged."
+}

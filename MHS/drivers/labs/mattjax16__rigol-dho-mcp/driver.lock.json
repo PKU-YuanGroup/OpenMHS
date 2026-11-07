@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.mattjax16/rigol-dho-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/mattjax16/rigol-dho-mcp",
+    "commit": "f9ac7191869845ae46ca714de69a877c388b2530",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "pyproject.toml:10-13 declares mcp>=1.29.0,<2.0.0 and uvicorn; requirements.lock pins mcp==1.29.0 for the container. Nothing was installed or imported for this package: McpClientDriver refuses every non-fake backend before any import, spawn or connection, and the gate parses the clone with ast only."
+  },
+  "backends": {
+    "fake": ".fake:connect",
+    "hardware": ".native:connect"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "claude-opus-5-5",
+    "run_id": "exemplars-service-mcp-rigol-20261104",
+    "date": "2026-11-04"
+  },
+  "reviewed_by": null
+}

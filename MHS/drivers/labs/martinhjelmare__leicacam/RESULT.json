@@ -1,0 +1,85 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:93cb0efb6fc61c0cc783309242247819e458807504ebf7119485b7158d55c892",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.martinhjelmare.start_matrix_scan.v1",
+      "reason": "no catalogue class starts the matrix scan of a microscope; the imaging classes cover capture, focus and illumination only, and cap.imaging.focus.v1 requires focused and z_um outputs that a start command cannot report. The package uses an x-cap id with an inline output schema.",
+      "verb": "invoke",
+      "summary": "Start the matrix scan (the CAM startscan command).",
+      "similar": [
+        "cap.imaging.capture.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.martinhjelmare.stop_matrix_scan.v1",
+      "reason": "no catalogue class stops a microscope scan: cap.motion.stop.v1 binds robot.arm, robot.mobile_base and motion.axis kinds and asks for a stopping position, which the CAM stopscan command does not report. The package uses an x-cap id with an inline output schema, also as its safe-state action.",
+      "verb": "invoke",
+      "summary": "Stop the matrix scan (the CAM stopscan command), the safe state of the scan.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.martinhjelmare.pause_matrix_scan.v1",
+      "reason": "no catalogue class pauses or resumes a running acquisition; cap.imaging.* has no pause verb. The package uses an x-cap id with an inline output schema.",
+      "verb": "invoke",
+      "summary": "Toggle the pause of the matrix scan (the CAM pausescan command).",
+      "similar": [
+        "cap.imaging.capture.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.martinhjelmare.autofocus_scan.v1",
+      "reason": "cap.imaging.focus.v1 requires the outputs focused and z_um and takes method, search_range and target_z; the CAM autofocusscan command only starts a matrix focus scan and its reply carries no focus position or score, so binding the class would mean inventing an output value. The package uses an x-cap id with an inline output schema.",
+      "verb": "invoke",
+      "summary": "Start the matrix focus scan (the CAM autofocusscan command).",
+      "similar": [
+        "cap.imaging.focus.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.martinhjelmare.enable_scan_field.v1",
+      "reason": "no catalogue class enables one field of an experiment scan matrix (a slide/well/field selection); cap.device.configure.v1 covers writable state, not a positional selection. The package uses an x-cap id with an inline input and output schema.",
+      "verb": "invoke",
+      "summary": "Enable one scan field of the experiment matrix (the CAM enable command with value true).",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.martinhjelmare.disable_scan_field.v1",
+      "reason": "no catalogue class disables one field of an experiment scan matrix, for the same reason as enable_scan_field. The package uses an x-cap id with an inline input and output schema.",
+      "verb": "invoke",
+      "summary": "Disable one scan field of the experiment matrix (the CAM enable command with value false).",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.martinhjelmare.enable_all_scan_fields.v1",
+      "reason": "no catalogue class enables every field of an experiment scan matrix; it is a bulk selection, not a writable state field. The package uses an x-cap id with an inline output schema.",
+      "verb": "invoke",
+      "summary": "Enable every scan field of the experiment matrix (the CAM enableall command with value true).",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.martinhjelmare.disable_all_scan_fields.v1",
+      "reason": "no catalogue class disables every field of an experiment scan matrix, for the same reason as enable_all_scan_fields. The package uses an x-cap id with an inline output schema.",
+      "verb": "invoke",
+      "summary": "Disable every scan field of the experiment matrix (the CAM enableall command with value false).",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend with python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). Model-authored and unreviewed: driver.lock.json reviewed_by is null, native.py (a CAM socket at host:port) was never opened and no instrument was attached. Covered: one read, the getinfo reply about the stage returned as /key:value text because no text of the clone names the fields of a reply; eight actions, one per upstream convenience method of the matrix scan (start, stop, pause, autofocus, enable and disable one scan field, enable and disable all scan fields), each reporting the CAM reply as acknowledged (a message carrying the command arrived within the wait timeout) and reply (that message as /key:value text). The e-stop sends cmd=stopscan without waiting for the acknowledgement; the safe-state action stop_matrix_scan uses the upstream stop_scan, which waits up to the 60-minute wait_for default. Not covered: save_template and load_template (CAM save/load of XML templates and their file-name syntax), the CAM-list, settings, position, job-assignment and mark-and-find command families listed in COMMANDS.md, the AsyncCAM class, and any real reply text: the fake reproduces the upstream's own EchoSocket mock (tests/test_cam.py), so every reply is the echoed command message and the driver has never seen what LASAF actually sends. The five scan-field indices of enable_scan_field and disable_scan_field are operator_required (no text states a range, and the upstream defaults are not bounds), so both actions are refused MHS.SAFETY.LIMITS_UNSET until a site-limits.json supplies them; site-limits.example.json is an example overlay, not a statement about any instrument. The gate report carries no warnings. The card's candidate cap.imaging.focus.v1 and cap.sensing.read.v1 were not bound: the first cannot report the required focused/z_um output of a start command, and the second targets sensor kinds while this device is an instrument.microscope, so the eight actions use x-cap ids and are listed in catalogue_requests. The card's helper field names PythonObjectDriver, but the card's decision is direct-driver and the package is a direct Driver: the family grammar cannot turn an OrderedDict reply into the acknowledged/reply output fields, and its reads take no argument while get_information does.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-29; reviewed_by stays null): accepted after reviewer edits. The safe-state action called CAM.stop_scan, which waits up to 60 minutes for the reply and also runs inside an e-stop; it now sends stopscan and waits at most 6 s (STOP_REPLY_WAIT_MIN), the fake gained CAM.wait_for and test_driver.py a case for it. native.py no longer says that the loader refuses this R1 hardware backend until reviewed_by is signed (the loader refuses only R2 and above). After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

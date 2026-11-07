@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:5ea85572ba83f8822e2a357668a371a94bc9f18804d303e4d21e9b9899344abf",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). Model-authored and unreviewed (driver.lock.json reviewed_by is null); no hardware run is claimed and no protection beyond the SDK is claimed. The driver targets the card's primary entry symbol pyinsts.instrument_drivers.rohde_schwarz.fsv3030:FSV3030Sp and covers the center frequency, span, marker 1 and delta marker 1. NOT COVERED: the trace arrays returned by query_trace_x/query_trace_y (the family bridge serves no array capability for this analyzer); markers 2 to 7 and delta markers 2 to 7 (a fixed command map cannot vary the marker index inside the command word); the parameterless operations (all markers off, peak search, full span, auto search off, clear status); and the other entry symbols FswpSp, Rsa6000Sp, KeysightN9020B and KeysightN9030A. The fake is a state machine built from the replies of the clone's own FSV3030 simulator file, not a recording of a hardware session; its numbers are placeholders. The three numeric writes are Limit.operator_required because no text of the clone states a frequency range, and site-limits.example.json shows the operator overlay that fills them; until an operator supplies that overlay every numeric write is refused MHS.SAFETY.LIMITS_UNSET. span, error_display and continuous_peak are write-only: the clone has no query for them, so the generated reference's generic sentence that every adjust is readable does not apply to those three. The e-stop writes ABOR (measurement abort); this receive-only analyzer has no output this driver energizes, and no independent hardware e-stop is cited or claimed. The wire syntax uses the clone's command words and ten significant digits for numbers; it was not tried on an instrument. No x-cap extension was used.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:79b4cdf3dfd099d11b46ab0b439dc3ca180985f7a37719b1ff8ff374315d3803",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.asvela.read_error.v1",
+      "reason": "No stable catalogue class binds an instrument's error queue: cap.sensing.read.v1 lists resource kinds sensor, sensor.imu and sensor.force_torque, so it does not bind a device_kind instrument, and cap.device.configure.v1 is the write class. The action reads and removes the oldest entry of the SCPI error queue (:SYSTem:ERRor?) and returns it as one string; a catalogue read class for an instrument status/error register would replace it.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check MHS/drivers/labs/asvela__keyoscacquire --backend fake; every gate (G1 to G9) passed and the run printed no warning. Evidence is contract_checked, never an MHS-Device level. What the package covers: the acquisition settings of the clone's Oscilloscope as resource state (acq_type, num_averages, p_mode, num_points, wav_format, each read back from the instrument), the operation condition register (:OPERegister:CONDition?, read-only; bit 3 is the running bit the clone's is_running() tests), the oldest entry of the error queue through x-cap.asvela.read_error.v1, and an e-stop that writes the clone's stop command :STOP. NOT COVERED: the trace array. The clone's capture_and_read/get_trace/set_options_get_trace/set_options_get_trace_save transfer the waveform as an IEEE binary block (query_binary_values) on :WAVeform:DATA?, and no catalogue class carries a trace or array artifact yet, so this package serves the settings and status of the instrument, not the waveform; the per-channel display settings (active_channels, :CHAN<n>:DISP) and the run() action are also not exposed because their commands are assembled from parts at run time (the SCPI command table cannot reproduce :CHAN<number>:DISP faithfully), and the only acquisition-control command this driver sends is the e-stop :STOP. The timeout property, the file export (save_trace/save_trace_npy) and the matplotlib plotting of the clone are not exposed either. The fake is a stateful stand-in for the instrument (canned identity and starting settings, writes change the answers of their own queries), not a recording of a session; every number in fake.py is marked as a placeholder and none is used as a Fact or a Limit. The wire commands are the ones the clone writes, but the package is model-authored and unreviewed and nothing here ran on hardware: no VISA address, instrument or hardware backend was configured or tried. The identity check accepts an AGILENT or KEYSIGHT IDN string as the clone documents; an instrument that answers another identity is refused at connect.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-29; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

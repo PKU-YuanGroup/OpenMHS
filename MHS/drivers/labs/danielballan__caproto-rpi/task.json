@@ -1,0 +1,83 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.danielballan/caproto-rpi",
+  "track": "labs",
+  "local_path": "labs/danielballan/caproto-rpi",
+  "driver_dir": "MHS/drivers/labs/danielballan__caproto-rpi",
+  "upstream": {
+    "repo_url": "https://github.com/danielballan/caproto-rpi",
+    "commit": "3642405070a513369de87c7c684962cbd148bcff",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:tag-bridge",
+  "role": "device-driver",
+  "family": "tag-bridge",
+  "helper": "TagDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 320,
+  "exemplar": "MHS/drivers/labs/josuablejeru__labmastro",
+  "entry_symbols": [
+    {
+      "symbol": "iocs.hat:IOC",
+      "file": "iocs/hat.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "iocs.rgb:IOC",
+      "file": "iocs/rgb.py",
+      "line": 39,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "IOC.state (attribute)",
+      "IOC.color (attribute)"
+    ],
+    "writes": [
+      "IOC.write_state",
+      "IOC.write_color"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/danielballan__caproto-rpi --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

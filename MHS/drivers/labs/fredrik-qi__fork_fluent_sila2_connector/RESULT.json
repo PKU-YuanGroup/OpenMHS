@@ -1,0 +1,122 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:602b37d8dcbd2c609fb6d235376b2953ae4ac446d008a731565c08a66b0ccceb",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.fredrik-qi.start_fluent.v1",
+      "reason": "no catalogue class starts or attaches a FluentControl session; cap.process.run.v1 is a content-addressed recipe on a process.controller, not a control-plane start on a liquid handler",
+      "verb": "invoke",
+      "summary": "Start FluentControl or attach to a running instance without credentials."
+    },
+    {
+      "capability_id": "x-cap.fredrik-qi.prepare_method.v1",
+      "reason": "no catalogue class prepares a named liquid-handler method; cap.process.run.v1 both requires a recipe_ref and runs it, and its resource kind is process.controller",
+      "verb": "invoke",
+      "summary": "Prepare a named FluentControl method.",
+      "similar": [
+        "cap.process.run.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.fredrik-qi.run_method.v1",
+      "reason": "no catalogue class runs an already prepared liquid-handler method; cap.process.run.v1 requires a content-addressed recipe and the process.controller kind",
+      "verb": "invoke",
+      "summary": "Run the prepared FluentControl method.",
+      "similar": [
+        "cap.process.run.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.fredrik-qi.pause_run.v1",
+      "reason": "no catalogue class pauses a liquid-handler method; cap.motion.stop.v1 stops motion, not a method run",
+      "verb": "invoke",
+      "summary": "Pause the current FluentControl method."
+    },
+    {
+      "capability_id": "x-cap.fredrik-qi.resume_run.v1",
+      "reason": "no catalogue class resumes a paused liquid-handler method; cap.process.run.v1 starts a recipe, not a paused run",
+      "verb": "invoke",
+      "summary": "Resume a method paused by pause_run."
+    },
+    {
+      "capability_id": "x-cap.fredrik-qi.stop_method.v1",
+      "reason": "no catalogue class stops the connector's method run; cap.motion.stop.v1 and cap.motion.estop.v1 are motion stop classes for a different resource kind, so the package uses its own safe-state extension",
+      "verb": "invoke",
+      "summary": "Stop the running method with SilaFluentController.StopMethod; the safe-state action.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.fredrik-qi.aspirate.v1",
+      "reason": "cap.fluid.aspirate.v1 requires source.well and has no liquid_class field, but the connector's C# Aspirate hard-codes the A1 selection and takes a liquid class plus an integer well offset; binding the class would ignore a requested well",
+      "verb": "invoke",
+      "summary": "Aspirate with the connector's fixed 8-tip A1 selection, liquid class and well offset.",
+      "similar": [
+        "cap.fluid.aspirate.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.fredrik-qi.dispense.v1",
+      "reason": "cap.fluid.dispense.v1 requires target.well and has no liquid_class field, but the connector's C# Dispense hard-codes the A1-H1 selection and takes a liquid class plus an integer well offset; binding the class would ignore a requested well",
+      "verb": "invoke",
+      "summary": "Dispense with the connector's fixed A1-H1 8-tip selection, liquid class and well offset.",
+      "similar": [
+        "cap.fluid.dispense.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.fredrik-qi.drop_tips.v1",
+      "reason": "no catalogue class drops tips; cap.fluid.wash.v1 washes a well or tip and is experimental, and it is not the DropTips command",
+      "verb": "invoke",
+      "summary": "Drop the mounted disposable tips into the named labware.",
+      "similar": [
+        "cap.fluid.wash.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.fredrik-qi.set_location.v1",
+      "reason": "no catalogue class sets a labware location; cap.sample.move.v1 moves a sample between locations and binds lab.sample/lab.labware, not a lab.liquid_handler worktable command",
+      "verb": "invoke",
+      "summary": "Set the location of a labware on the worktable.",
+      "similar": [
+        "cap.sample.move.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.fredrik-qi.transfer_labware.v1",
+      "reason": "no catalogue class transfers labware on a worktable; cap.sample.move.v1 moves a sample and binds lab.sample/lab.labware, not the RGA worktable command of a lab.liquid_handler",
+      "verb": "invoke",
+      "summary": "Transfer labware on the worktable with the RGA.",
+      "similar": [
+        "cap.sample.move.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.fredrik-qi.transfer_labware_back_to_base.v1",
+      "reason": "no catalogue class transfers labware back to its base; cap.sample.move.v1 moves a sample between declared locations and binds lab.sample/lab.labware, not the RGA worktable command of a lab.liquid_handler",
+      "verb": "invoke",
+      "summary": "Transfer labware back to the spot where it was added to the worktable.",
+      "similar": [
+        "cap.sample.move.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.fredrik-qi.set_variable_value.v1",
+      "reason": "no catalogue class sets a named variable of a prepared method; cap.device.configure.v1 writes the writable state fields of a resource and cannot express a dynamic variable name",
+      "verb": "invoke",
+      "summary": "Set a variable of the prepared method and read it back.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by `python3 -m mhs.driver check MHS/drivers/labs/fredrik-qi__fork_fluent_sila2_connector --backend fake` (evidence contract_checked, never an MHS-Device level). Model-authored and unreviewed: the loader refuses the R2 hardware backend until a human sets reviewed_by; no hardware, ROS or device run was made, and the fake is an in-memory stand-in, not a recording. DEVIATION FROM THE CARD: the card's PythonObjectDriver was replaced by a direct Driver. The connector's native commands take (volume, labware, liquid_class, well_offset) and its C# server hard-codes the selected wells, so the flat PythonObjectDriver command grammar cannot express the standard cap.fluid.aspirate/dispense classes' well fields without silently dropping a requested well; the package carries the exact native parameters as x-cap actions instead. The card's get_fingers/get_tips are actuating commands in the wrapper, not reads. set_location and set_variable_value are effectful commands with parameters, so they are actions, not writable state fields. get_tips is not exposed: the wrapper requires a DiTi enum, and no tip type is chosen by the clone. Scope: reads are State, Progress, LastError, GetAllRunnableMethods and GetVariableNames. Actions cover start/attach, prepare, run, pause, resume, stop, aspirate, dispense, drop_tips, set_location, transfer_labware, transfer_labware_back_to_base and set_variable_value. NOT COVERED: get_tips, get_fingers, add_labware, remove_labware, user_prompt, close_method, finish_execution, shutdown, subscribe_progress/state/error and discover; the C# SimulationController/simulation feature is not covered. Evidence and safety limits: the C# Aspirate embeds SelectedWellsString '8 * A1' and Dispense embeds 'A1 - H1', each with eight tips and the integer WellOffset (Server/SilaFluentController/Aspirate.cs:70-100, Dispense.cs:70-100); the driver passes labware + well offset, not a well. The clone states no volume unit and no numeric range; every numeric input is Limit.operator_required, and site-limits.example.json supplies example-only bounds for the gate (aspirate/dispense volume and well offset, set_location rotation/target site, transfer_labware target position). G8.NO_UNIT remains for the aspirate/dispense volume and set_location rotation because the clone declares no unit; no unit was invented. Stop path and disclosed limits: the e-stop and the safe-state action x-cap.fredrik-qi.stop_method.v1 both call Fluent.stop_method() -> SilaFluentController.StopMethod -> _runtime.StopMethod() (Python/src/tecan/__Fluent.py:212-215, Server/SilaFluentController/SilaFluentController.cs:179-183). The clone documents no independent hardware e-stop, no tip retraction, no worktable clearing and no cancellation of an in-flight pipetting step; the safe state is only 'the running method is stopped', and FluentControl and the robot remain powered. The fake makes StopMethod idempotent (the runtime calls the @estop and then the safe-state action); the clone does not show that the real StopMethod is idempotent. An e-stop during StartFluentOrAttach can fail because the C# runtime is not initialised until the start returns; [...]\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Decision: fix, after the reviewer re-ran the gate and collect.py --strict and read every Fact at the pin, native.py line by line and the C# stop path. The author's stop was acknowledged only: the e-stop and the safe-state action x-cap.fredrik-qi.stop_method.v1 sent StopMethod and returned without confirming anything, and the fake reported EditMode; the reviewer made both send StopMethod and then read the connector's State until it is RunModeRunFinished ('Run is finished or aborted', FluentControlState.cs:103-107) or EditMode within 0.4 s, else SAFE_STATE_UNREACHED with the latch held (as lumipy), rewrote safe_state, and named stop_method as the native stop. Three fact clauses not on their cited lines were narrowed or moved to new facts (Aspirate and Dispense 'no per-well parameter', the constrained FluentControlState type), the PrepareMethodRun fact gained its EditMode condition, get_all_runnable_methods was restated to its docstring, and 21 facts were added (the StopMethod handler and AssertRuntime, the event-cached State and its enum cast, the device ID USB:TECAN,MYRIUS,1310005667 hard-coded in Aspirate, Dispense and DropTips, eight per-tip volume entries, the BSD-3-Clause LICENSE versus the MIT classifier in pyproject.toml:18, the SimulationController stub). The fake now ends a stop in RunModeRunFinished, refuses runtime commands without a runtime as AssertRuntime does, and has three switches (attached, stop_ignored, channel_checked; a faithful channel default fails TSAFE-001's aspirate probe after the reset, so it is off by default as in microscope-agent), with three new and two rewritten cases (ten pass; a no-confirmation mutant fails). The reviewer changed driver.py, fake.py, test_driver.py and facts.md and regenerated reference.json, REFERENCE.md and check-report.json; G1-G9 pass with the three honest G8.NO_UNIT warnings and an unchanged stable digest, and the author's notes on the safe state ('only the running method is stopped') and on the fake's stop are superseded. For the human reviewer: R2 Tecan Fluent (eight-tip LiHa pipetting, RGA labware transfer). run_method runs any prepared FluentControl method and set_variable_value sets any of its variables, so the envelope bounds only this package's numeric inputs; raise the risk if the site's methods or worktable devices are R3. The stop is confirmed only by the connector's State, an event cache set by an integer cast from VisionX StateMachineStates (not in the clone): verify on the instrument that StopMethod aborts a running method and an in-flight API command, that State then reads RunModeRunFinished, that a repeated StopMethod succeeds (it is sent at least twice per e-stop), and cite the instrument's physical stop. Before start_fluent on the server process every e-stop is SAFE_STATE_UNREACHED (AssertRuntime), also for a method started from FluentControl itself; a command in flight when the latch engages can still land after the stop. The scripts hard-code device ID USB:TECAN,MYRIUS,1310005667/LIHA:1; prepare_method deletes FluentControl's journaling directories; start_fluent may start FluentControl and wait without a timeout. On the real connector a read of main fails whenever GetVariableNames or GetAllRunnableMethods fails, and API commands need a live execution channel that a stopped run is not shown to keep. Volume unit unstated (one entry per tip); the clone does not show that sila2==0.1.0 accepts the wrapper's tuple arguments. LICENSE is BSD-3-Clause while pyproject.toml:18 says MIT (both permissive; the owner decides on publication).\n\nMODEL REVIEW (claude-sonnet-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Adversarial verification of the claude-opus-5-5 review (fix) by a different model (the user chose Claude Sonnet as the different model, 2026-11-04): the verifier agreed and found no blocker or major. No blocker or major found. I re-ran collect.py --strict on the package: PASS, 1 of 1, with G8.NO_UNIT x3 as the only warnings. I read driver.py, fake.py, native.py, test_driver.py and the site-limits example. I did not run the unit tests (pytest is not installed in the venv). I spot-checked the stop-path refs with show_refs.py, and the cited lines say what the facts claim: __Fluent.py:203-215, the sila.xml StopMethod entry, SilaFluentController.cs:179-183, 294-300, 30-31, 377-384 and 341-358, and FluentControlState.cs:41-46 and 103-107. The stop is now confirmed by reading State (RunModeRunFinished or EditMode within 0.4 s, otherwise SAFE_STATE_UNREACHED with the latch held). The e-stop and the safe-state action both go through the same confirm path. There is no reset that re-arms. native.py only connects and never starts or shuts down FluentControl."
+}

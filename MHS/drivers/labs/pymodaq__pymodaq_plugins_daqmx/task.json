@@ -1,0 +1,128 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pymodaq/pymodaq_plugins_daqmx",
+  "track": "labs",
+  "local_path": "labs/pymodaq/pymodaq_plugins_daqmx",
+  "driver_dir": "MHS/drivers/labs/pymodaq__pymodaq_plugins_daqmx",
+  "upstream": {
+    "repo_url": "https://github.com/pymodaq/pymodaq_plugins_daqmx",
+    "commit": "f2129a920a64338b2ca3b0e06614680b30385072",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 65,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pymodaq_plugins_daqmx.hardware.national_instruments.daq_NIDAQmx:DAQ_NIDAQmx_Actuator",
+      "file": "src/pymodaq_plugins_daqmx/hardware/national_instruments/daq_NIDAQmx.py",
+      "line": 624,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_daqmx.daq_move_plugins.daq_move_DAQmx:DAQ_Move_DAQmx",
+      "file": "src/pymodaq_plugins_daqmx/daq_move_plugins/daq_move_DAQmx.py",
+      "line": 4,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_daqmx.hardware.national_instruments.daqmxni:NIDAQmx",
+      "file": "src/pymodaq_plugins_daqmx/hardware/national_instruments/daqmxni.py",
+      "line": 142,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_daqmx.hardware.national_instruments.daq_NIDAQmx:DAQ_NIDAQmx_base",
+      "file": "src/pymodaq_plugins_daqmx/hardware/national_instruments/daq_NIDAQmx.py",
+      "line": 243,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_daqmx.daq_move_plugins.daq_move_DAQmx_MultipleScannerControl:DAQ_Move_DAQmx_MultipleScannerControl",
+      "file": "src/pymodaq_plugins_daqmx/daq_move_plugins/daq_move_DAQmx_MultipleScannerControl.py",
+      "line": 15,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "DAQ_NIDAQmx_Actuator.getAIMaxRate",
+      "DAQ_NIDAQmx_Actuator.getAIVoltageRange",
+      "DAQ_NIDAQmx_Actuator.getAOMaxRate",
+      "DAQ_NIDAQmx_Actuator.getAOVoltageRange",
+      "DAQ_NIDAQmx_Actuator.getTriggeringSources",
+      "DAQ_NIDAQmx_Actuator.get_NIDAQ_channels",
+      "DAQ_NIDAQmx_Actuator.get_NIDAQ_devices",
+      "DAQ_NIDAQmx_Actuator.get_actuator_value",
+      "DAQ_NIDAQmx_Actuator.get_channels_from_settings",
+      "DAQ_NIDAQmx_Actuator.get_last_write",
+      "DAQ_NIDAQmx_Actuator.get_last_write_index",
+      "DAQ_NIDAQmx_Actuator.isAnalogTriggeringSupported"
+    ],
+    "writes": [
+      "DAQ_NIDAQmx_Actuator.writeAnalog",
+      "DAQ_NIDAQmx_Actuator.writeDigital",
+      "DAQ_NIDAQmx_base.writeAnalog",
+      "DAQ_NIDAQmx_base.writeDigital"
+    ],
+    "actions": [
+      "DAQ_NIDAQmx_Actuator.move_Abs",
+      "DAQ_NIDAQmx_Actuator.move_Home",
+      "DAQ_NIDAQmx_Actuator.move_Rel",
+      "DAQ_NIDAQmx_Actuator.move_done_callback",
+      "DAQ_NIDAQmx_Actuator.start",
+      "DAQ_NIDAQmx_Actuator.stop",
+      "DAQ_NIDAQmx_Actuator.stop_motion",
+      "NIDAQmx.start",
+      "NIDAQmx.stop",
+      "DAQ_NIDAQmx_base.start",
+      "DAQ_NIDAQmx_base.stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.actuation.gpio.v1",
+      "cap.device.configure.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymodaq__pymodaq_plugins_daqmx --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

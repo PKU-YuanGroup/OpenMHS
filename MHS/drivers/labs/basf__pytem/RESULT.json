@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:f7396d1581af99b0d064d383da2b11519edc83a047556dc1005715c978cc9b4f",
+    "failed": []
+  },
+  "notes": "Model-authored and unreviewed; no hardware was attached or run, and the R3 hardware backend is refused by the loader while driver.lock.json reviewed_by is null. The fake backend is served as simulated with contract_checked evidence. Gate G7: the fake defines only methods of pyTEM.Interface:Interface, inherited from StageMixin, BeamBlankerMixin, ScreenMixin, VacuumMixin and ModeMixin. G4.REF_VALUE warnings x2 (stage_x and stage_y min=-1000): the clone writes the x and y ranges as '-1,000' on StageMixin.py:142,156, and the gate's number reader splits that token, so the cited code lines 141,155 show only the positive 1000 bound; no line of the clone states -1000 without the thousands comma. NOT COVERED: the acquisition image arrays (AcquisitionMixin.acquisition()/acquisition_series()) and the available-camera list are not exposed; this package covers stage position, vacuum, beam blanker, screen and mode scalar state. SHAPE: a direct Driver was used rather than the PythonObjectDriver family helper; the card's decision is direct-driver, and the decorated form carries the per-axis stage limits and the safe-state action. The x-cap extensions are used because cap.motion.home.v1 and cap.motion.stop.v1 bind only robot.arm/motion.axis, not instrument.microscope, and no catalogue class binds the native make_safe safe state.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. Its two UNSOURCED_LIMIT_GATE_WARNING lines (the -1000 um floors of stage x and y) are gone with the G4 fix of this review (MHS/changes/WAVE-B2.md): the cited line is abs(x) > 1000 (pyTEM/lib/mixins/StageMixin.py:141 and 155). After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.",
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.basf.reset_stage_position.v1",
+      "reason": "cap.motion.home.v1 binds only robot.arm and motion.axis; this native reset belongs to an instrument.microscope and sets five axes in one call",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.basf.enter_safe_state.v1",
+      "reason": "no catalogue class binds the native Interface.make_safe safe state (column valve closed, beam blanked, screen inserted) on an instrument.microscope",
+      "verb": "invoke"
+    }
+  ]
+}

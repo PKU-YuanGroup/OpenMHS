@@ -1,0 +1,26 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Thorlabs TPZ001 piezo controller)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only: the driver marks the controller value and the calibrated reader position operator_required because no text file of the clone states a travel or voltage range for an installed stage. Replace these numbers with the limits of the installed stage before any use; they are not a statement about any device. The value unit changes with the loop mode: in closed loop it is percentage travel and in open loop it is output voltage.",
+  "devices": {
+    "mhs://localhost/kinesis-piezo": {
+      "value": {
+        "min": 0,
+        "max": 75,
+        "source": "operator",
+        "reason": "example only: the operator supplies the permitted percentage travel or output voltage of the installed stage in the mode in use"
+      },
+      "x-cap.azdagkas.kinesis_piezo.move_to_position.v1": {
+        "position": {
+          "min": 0,
+          "max": 20,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example only: the operator supplies the permitted strain gauge reading in the reader display unit"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (thorlabs_apt driver)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/thorlabs-apt-motor": {
+      "velocity_maximum": {"min": 0.002, "max": 7.5, "unit": "1", "source": "operator",
+                           "reason": "example only: the site caps the stage velocity; it is not a datasheet bound"},
+      "acceleration": {"min": 0.01, "max": 42.0, "unit": "1", "source": "operator",
+                       "reason": "example only: the site caps the stage acceleration; it is not a datasheet bound"},
+      "x-cap.qpit.move_to.v1": {
+        "position": {"min": -25.0, "max": 25.0, "unit": "1", "source": "operator",
+                     "reason": "example only: the installed stage travel assumed by this bench overlay"}
+      },
+      "x-cap.qpit.move_by.v1": {
+        "distance": {"min": -25.0, "max": 25.0, "unit": "1", "source": "operator",
+                     "reason": "example only: the largest relative move assumed by this bench overlay"}
+      }
+    }
+  }
+}

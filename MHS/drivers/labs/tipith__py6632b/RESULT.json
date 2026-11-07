@@ -1,0 +1,40 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:f74058b1911fe4aa8d5ce1d9e87cae8e9a1f8356dddd68b5d4cf6953c36661e2",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.tipith.set_source.v1",
+      "reason": "no catalogue class sets a DC source voltage and current limit in one command; cap.device.configure.v1 is generated from separate writable state fields and cannot reproduce the upstream's combined SOUR:VOLT ...; CURR ... MA call",
+      "verb": "invoke",
+      "summary": "Set the output voltage and current limit together; the site fixes the allowed range.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.tipith.set_output.v1",
+      "reason": "no catalogue class enables or disables a DC source output; cap.actuation.gpio.v1 is for a digital or analog I/O pin, not a source output",
+      "verb": "invoke",
+      "summary": "Enable or disable the source output (OUTP:STAT 1 or 0).",
+      "similar": [
+        "cap.actuation.gpio.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.tipith.stop_output.v1",
+      "reason": "no catalogue class disables a DC source output; cap.motion.stop.v1 is for motion, not for a source; this action is also the SAFE-045 safe-state action",
+      "verb": "invoke",
+      "summary": "Disable the source output (OUTP:STAT 0), the safe state.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). DEVIATION FROM THE CARD: the card's helper is PythonObjectDriver, but the upstream entry is a threading.Thread with a combined SOUR:VOLT/CURR setter and a native stop; the package uses a decorated direct Driver with a native.py factory, which the card's decision (direct-driver) already names. The card's hints are names from a static scan, not a specification: run() is the CSV logging loop and reset_device() is called by the constructor, so neither is exposed; write_dev()/write_and_read_dev() are raw transport and set_cb() is a logging callback. Exposed are the measured voltage/current, output state and *IDN? identity, the combined source set (operator-required limits), output enable, the safe-state output-off action and the native stop. The hardware path was never run; the upstream is Python 2-era code (xrange, isAlive, implicit relative import) and the loader refuses this unreviewed R2 package's hardware backend until reviewed_by is set. The fake is an in-memory object, not a recording; it keeps set points as measured values (only true in constant-voltage operation). No array or waveform exists: NOT COVERED: none, the device reports scalar measurements. site-limits.example.json is an example (5 V, 100 mA), not a device rating; without an operator overlay every set_source call is refused MHS.SAFETY.LIMITS_UNSET. The e-stop is the device's software stop, not a certified protective function; no physical e-stop is documented in the clone.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (361 to 362); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

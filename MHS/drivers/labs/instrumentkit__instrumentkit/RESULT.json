@@ -1,0 +1,54 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:19c069fa8aa63a831c982e10e71f77019d0d9de3c09360b44e7f632bae40dd80",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.instrumentkit.acquisition_run.v1",
+      "reason": "no catalogue class enables acquisition on an oscilloscope; cap.sensing.read.v1 is a read class and binds sensor resource kinds only",
+      "verb": "invoke",
+      "summary": "Enable the trigger and start acquisition (the native run, :RUN).",
+      "similar": []
+    },
+    {
+      "capability_id": "x-cap.instrumentkit.acquisition_stop.v1",
+      "reason": "no catalogue class stops oscilloscope acquisition; cap.motion.stop.v1 is for motion and cap.world.reset.v1 is for a simulated world",
+      "verb": "invoke",
+      "summary": "Disable the trigger and stop acquisition (the native stop, :STOP), also used as the safe-state action.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.instrumentkit.force_trigger.v1",
+      "reason": "no catalogue class forces a trigger event on an oscilloscope",
+      "verb": "invoke",
+      "summary": "Force a trigger event (the native force_trigger, TRIG FORC).",
+      "similar": []
+    },
+    {
+      "capability_id": "x-cap.instrumentkit.software_trigger.v1",
+      "reason": "no catalogue class sends a SCPI software trigger to an oscilloscope; cap.actuation.gpio.v1 drives a digital output, not a trigger event",
+      "verb": "invoke",
+      "summary": "Send a software trigger event (the inherited native trigger, *TRG).",
+      "similar": [
+        "cap.actuation.gpio.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.instrumentkit.reset.v1",
+      "reason": "no catalogue class resets an instrument to its defaults; cap.device.configure.v1 writes named parameters and cap.world.reset.v1 resets a simulated world only",
+      "verb": "invoke",
+      "summary": "Reset the instrument (the inherited native reset, *RST).",
+      "similar": [
+        "cap.world.reset.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check --backend fake (evidence contract_checked, never an MHS-Device level; no hardware was attached and the hardware backend was never run). Model-authored and unreviewed (reviewed_by is null). Scope: the package drives instruments.tektronix.tekdpo70000:TekDPO70000; the card's other entry classes (APTPiezoInertiaActuator, APTPiezoStage, HP6632b, SRS830) are other devices and are not bound. NOT COVERED: the oscilloscope waveform array (the catalogue has no array measurement class for it here); the driver exposes scalar acquisition settings, counters and state, plus acquisition, trigger and reset actions. No Limit is declared because the package has no numeric write and no numeric action input; G8 warns SAFE014_NOT_APPLICABLE because SAFE-014 has no limit to probe, and every other CL3 test passed. The card's candidate cap.sensing.read.v1 binds sensor resource kinds, not an instrument kind, so the package uses x-cap ids for acquisition control. The driver is R0 (observational settings and acquisition control only), so it does not declare estop_physical_ref; the native :STOP is the software e-stop and the safe-state action, not a safety-rated independent stop. The fake values are placeholders, not device defaults. No G4 REF_VALUE or REF_BINARY warning was reported.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The card needs the owner's publication decision (publish_review required: the licence is AGPL-3.0); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

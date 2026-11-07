@@ -1,0 +1,95 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.trash-hold/oscilloscope_dimserver",
+  "track": "labs",
+  "local_path": "labs/trash-hold/oscilloscope_dimserver",
+  "driver_dir": "MHS/drivers/labs/trash-hold__oscilloscope_dimserver",
+  "upstream": {
+    "repo_url": "https://github.com/trash-hold/oscilloscope_dimserver",
+    "commit": "6a34db58756fc0ac7ef8d4021bc290973d5cb65f",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 333,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "zmq_server.drivers.TDS3054C:TDS3054C",
+      "file": "zmq_server/drivers/TDS3054C.py",
+      "line": 89,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "TDS3054C.get_horizontal_increment",
+      "TDS3054C.get_waveform",
+      "DeviceManager.get_horizontal_increment",
+      "DeviceManager.get_waveform",
+      "Oscilloscope.get_horizontal_increment",
+      "Oscilloscope.get_waveform"
+    ],
+    "writes": [
+      "TDS3054C.set_channel",
+      "TDS3054C.set_channel_state",
+      "TDS3054C.set_horizontal_position",
+      "TDS3054C.set_horizontal_scale",
+      "TDS3054C.set_trigger_channel",
+      "TDS3054C.set_trigger_level",
+      "TDS3054C.set_trigger_slope",
+      "TDS3054C.set_vertical_position",
+      "TDS3054C.set_vertical_scale",
+      "DeviceManager.set_channel_state",
+      "DeviceManager.set_horizontal_scale",
+      "DeviceManager.set_trigger_channel"
+    ],
+    "actions": [
+      "DeviceManager.start_connection"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/trash-hold__oscilloscope_dimserver --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

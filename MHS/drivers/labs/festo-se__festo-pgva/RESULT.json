@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "notes": "BLOCKED before driver implementation: no package was authored. This directory holds only the regenerated task card and this record (no driver.py, fake, facts, tests or driver.lock.json). WHAT THE UPSTREAM IS: a Python client for the Festo PGVA-1 pressure and vacuum generator over Modbus TCP or serial (pymodbus, src/pgva/pgva_communication.py:14, 700) that dispenses by opening a valve for a timed pulse. WHY NO STOP ROUTE (the evidence of the tag-bridge helper preflight, work/handoff-runs/claude-20261104/development/helper-tag-bridge/proposals/tag-bridge-preflight.md, section 'gh.festo-se/festo-pgva: do not dispatch' (lines 87-117 on 2026-11-05), re-read against the clone at the pinned commit): a dispensing pulse of 5 to 65534 ms starts as soon as VALVE_ACTUATION_TIME is written (pgva_communication.py:177-179) and nothing in the clone aborts or shortens a running pulse; toggle_manual_trigger always raises NotImplementedError (pgva_communication.py:188-206); disabling the pump (PUMP_ENABLE 0, toggle_pump(False), pgva_communication.py:319-333) neither closes the valve nor vents the chambers and is skipped on firmware 2.1.3; writing output pressure 0 mbar (set_output_pressure(0), pgva_communication.py:143-162) is a regulation setpoint whose only read-back is the analog output-pressure sensor (pgva_communication.py:256-272), and the internal pressure and vacuum chambers keep their stored energy (pgva_communication.py:274-317); _set_data logs and swallows ModbusException and TypeError (pgva_communication.py:138-141), so the clone shows no acknowledged write path either. A dispensing pressure source is R2 under the hazard table (MHS/spec/04-safety.md) and needs an independent stop (SAFE-045), and the user decided on 2026-11-04 that actuators without a source-backed stop stay blocked; an observation-only package would drop the device's primary function and was not authored. WHAT WOULD UNBLOCK IT: a human-cited PGVA-1 manual section that gives the physical stop (estop_physical_ref) together with a register write that closes the dispensing valve or aborts a pulse and whose effect can be read back and confirmed, after which the card can be dispatched to the TagDriver helper (modbus profile). Only the missing-layout diagnostic gate ran (the gate fields below); no Modbus connection, upstream import or hardware operation occurred, and no hardware run or human review is claimed.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by not applicable: no package and no driver.lock.json exist): blocked on NO_HARDWARE_FREE_PATH. This record is the orchestrator team's model review of the tag-bridge preflight, written by the helper-integration agent when the tag-bridge family was enabled, so that this card does not become dispatchable. Files written: task.json (the regenerated card), RESULT.json; the gate run also wrote check-report.json. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted.",
+  "gate": {
+    "digest": "sha256:b3c37dd9b8d657bd6b20a75e8fe56f0c7b297af232123ce16a0f93d80b0b357c",
+    "failed": [
+      "G1",
+      "G2",
+      "G3",
+      "G9"
+    ],
+    "report": "check-report.json"
+  }
+}

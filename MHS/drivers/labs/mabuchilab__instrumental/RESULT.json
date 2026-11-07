@@ -1,0 +1,46 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:4049bdc7f3c523d5c072cb98a3d93013ae212ef9db8456e92cfbbffa9725f32f",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.mabuchilab.configure_trigger.v1",
+      "reason": "No catalogue class binds the camera trigger mode and edge pair; the upstream set_trigger(mode, edge) takes both values at once, and cap.device.configure.v1 can only write named state fields.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mabuchilab.capture.v1",
+      "reason": "cap.sensing.image.v1 requires an image_ref artifact, and this driver does not create one; the standard has no pixel-array carrier, so the action reports the frame width, height and count only.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.image.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mabuchilab.start_live_video.v1",
+      "reason": "No catalogue class starts continuous camera acquisition and reports the resulting trigger mode.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.mabuchilab.stop_live_video.v1",
+      "reason": "No catalogue class stops continuous camera acquisition and reports the resulting trigger mode.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.mabuchilab.close_camera.v1",
+      "reason": "No catalogue class closes a camera and releases its image memory as a safe-state action; cap.device.configure.v1 writes named state but does not close a device.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the card's helper is PythonObjectDriver (python-object family); this package is a direct Driver, following the card's direct-driver decision, because decorated methods express the scalar state fields, the two-input trigger action, the capture action and the safe-state close directly. No native method or interface shape changed. The card lists five entry symbols for this multi-driver repository (UC480_Camera, PCO_Camera, LinearStage, Goniometer, TSI_Camera); this package binds the first, instrumental.drivers.cameras.uc480:UC480_Camera. NOT COVERED: the image array itself. The capture action calls grab_image and reports width, height and frame count; cap.sensing.image.v1 is not bound because returning an image_ref would need an image artifact path the driver does not create. The fake returns a 3 x 2 placeholder frame, while the real frame size follows the configured AOI (src/instrumental/drivers/cameras/uc480.py:921-923); the fake numbers are test data, not facts. trigger_delay and exposure_time are Limit.operator_required because the clone states only microsecond resolution for the trigger delay and queries the exposure range from the camera at run time (src/instrumental/drivers/cameras/uc480.py:943-946); site-limits.example.json is an example overlay, not a statement about any unit. The e-stop and the safe-state action x-cap.mabuchilab.close_camera.v1 both call the native close() (src/instrumental/drivers/cameras/uc480.py:732-752), and @reset reopens with open(). No independent hardware e-stop is cited in the clone; this is an R1 camera, so estop_physical_ref is not claimed and the loader's R2/R3 refusal of an unreviewed model-written hardware backend does not apply. The card's mock hints (remote.py:34 FakeLock, daq/ni.py:1363 VirtualDigitalChannel) are stand-ins for other driver modules, not a UC480 camera simulator; the package fake is an in-memory scalar stand-in and never loads the uc480 DLL. The package is model-authored and unreviewed, and nothing ran on hardware: the upstream module is Windows-only and needs the Thorlabs uc480 API DLL on PATH, pywin32 and nicelib (docs/uc480-cameras.rst:14-27). The final gate run had no warnings.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

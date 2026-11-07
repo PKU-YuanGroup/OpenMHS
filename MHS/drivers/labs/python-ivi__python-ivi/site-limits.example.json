@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (python-ivi WR104MXi-A example)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/lecroy-wr104mxia": {
+      "trigger_mode": {"allowed": ["auto", "norm"], "source": "operator",
+                       "reason": "example: this bench triggers free-running or on the first edge only"},
+      "acquisition_averages": {"max": 1024, "unit": "1", "source": "operator",
+                               "reason": "example: averaging above 1024 records slows the acquisition loop too much"},
+      "timebase_reference": {"allowed": ["left", "cent"], "source": "operator",
+                             "reason": "example: only the left and centre references are used on this bench"}
+    }
+  }
+}

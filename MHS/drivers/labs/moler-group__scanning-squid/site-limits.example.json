@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (scanning SQUID microscope, Attocube coarse positioning)",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "notes": "Example overlay only. It lets a model request at most 20 Attocube steps per command on any axis in either direction. The limit bounds the count requested, not the steps made: the upstream writes each step command twice (atto.py:109-124, 169) and the source does not show what the ANC300 does with the second copy, so a deployment measures the steps one command makes on its bench before it sets this limit, and sets it from that, its mounting, the sample and the known touchdown height; it may forbid one direction of z by a one-sided range.",
+  "devices": {
+    "mhs://localhost/scanning-squid-microscope": {
+      "x-cap.moler-group.atto_step.v1": {
+        "steps": {"min": -20, "max": 20, "source": "operator", "reason": "example only: at most 20 requested Attocube steps per command on this bench (the steps made per command are measured on the bench: the upstream writes the step command twice)"}
+      }
+    }
+  }
+}

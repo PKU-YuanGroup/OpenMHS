@@ -1,0 +1,69 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:62051493f0e0cd25674d6f9b27664c9608c76299b1c07e6e20aeb7e152390f07",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.nicholasmorrow.initialize.v1",
+      "reason": "no catalogue class initializes the Z-drive and the dosing drive of a liquid handler; the package uses an x-cap id with an inline output schema",
+      "verb": "invoke",
+      "summary": "Initialize the native Z-drive and dosing drive (ZI and DI)."
+    },
+    {
+      "capability_id": "x-cap.nicholasmorrow.move_z.v1",
+      "reason": "no catalogue class moves the single Z-drive of a liquid handler; the motion classes address robot joints or Cartesian poses and their units and fields do not match the native unitless GZ position and slow/fast word",
+      "verb": "invoke",
+      "summary": "Move the native Z-drive to a position at slow or fast speed.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.nicholasmorrow.pick_tip.v1",
+      "reason": "no catalogue class picks up a pipette tip from a tip type and deck geometry table entry; cap.manipulation.pick.v1 addresses object picking, not this native GT command",
+      "verb": "invoke",
+      "summary": "Pick up a tip with the native GT command.",
+      "similar": [
+        "cap.manipulation.pick.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.nicholasmorrow.discard_tip.v1",
+      "reason": "no catalogue class discards a pipette tip; the catalogue has no pipette-tip counterpart for the native GU command",
+      "verb": "invoke",
+      "summary": "Discard the tip with the native GU command."
+    },
+    {
+      "capability_id": "x-cap.nicholasmorrow.aspirate.v1",
+      "reason": "cap.fluid.aspirate.v1 requires a source labware and well and declares uL, while the native GA command takes container geometry, deck geometry and liquid-class table indices and states no unit; an extension keeps the native parameters honest instead of inventing a labware mapping or a unit",
+      "verb": "invoke",
+      "summary": "Aspirate a native volume with the GA command.",
+      "similar": [
+        "cap.fluid.aspirate.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.nicholasmorrow.dispense.v1",
+      "reason": "cap.fluid.dispense.v1 requires a target labware and well and declares uL, while the native GD command takes container geometry, deck geometry and liquid-class table indices and states no unit; an extension keeps the native parameters honest instead of inventing a labware mapping or a unit",
+      "verb": "invoke",
+      "summary": "Dispense a native volume with the GD command.",
+      "similar": [
+        "cap.fluid.dispense.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.nicholasmorrow.emergency_stop.v1",
+      "reason": "no catalogue class stops a liquid handler; cap.motion.stop.v1 stops motion, not the module's native emergency stop. The package uses an x-cap id with an inline output schema and also declares it as the safe-state action",
+      "verb": "invoke",
+      "summary": "Engage the native emergency stop (AB), the declared safe state.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). Model-authored and unreviewed: the loader refuses the R2 hardware backend until reviewed_by is set. DEVIATION FROM THE CARD: the card's helper is PythonObjectDriver; this package uses a decorated direct Driver over zeus:ZeusModule (the card's decision is direct-driver) because the driver needs a native factory, typed action inputs and a safe-state action. Covered: the z_position read from the native pos attribute and the actions initialize, move_z, pick_tip, discard_tip, aspirate, dispense and emergency_stop. The upstream reply getters (getAbsoluteZPosition, getTipPresenceStatus, getInstrumentStatus, getFirmwareVersion, getErrorCode and the other get* methods) send a command and return None; the replies are assembled by the Notifier listener, so the driver does not expose firmware, status, error or tip-presence values. NOT COVERED: CAN frame assembly, kick/remote frames, error-string parsing, real replies and the hardware path; the fake records command effects in memory only and is not a recording or a transcript. The hardware path was never run. The clone is Python 2-era in places: sendDataObject calls data.encode('hex') (zeus.py:468) and constructs can.Message(extended_id=False, ...) (zeus.py:469-472), which modern Python 3/python-can no longer accept; the clone's setup.py and requirements.txt are empty, so pip install . alone installs nothing, and the operator must provide python-can and a configured can0. The off branch of setEmergencyStop references the undefined name seld (zeus.py:686), so the driver only sends the on command AB. Volumes are native counts and the clone states no unit; every numeric input is operator_required, and site-limits.example.json supplies example ranges only, not facts about a unit. The GA/GD optional fields qpm, lld, lldSearchPosition, liquidSurface, searchBottomMode and the mix fields are left at the upstream method defaults. The upstream LICENSE file is empty and the card records NOASSERTION/unknown, so no licence text of the clone grants rights. gate.digest is the digest the check printed (report without its clock); check-report.json is regenerated by every gate run and is not part of the package.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The card needs the owner's publication decision (publish_review required: the licence is not stated (NOASSERTION)); the package may not be published before it. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (202 to 203); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Copied the exact generated task.json after preserving the obsolete abstract Panda draft and recording the USB camera image-scope blocker; changed task.json and RESULT.json (card fields: rank). Package contracts, source pins, gate finding digests, author attribution and human signatures remain unchanged. This metadata synchronization is not a new complete gate collection.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

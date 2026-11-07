@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.iherrbenza/ad9959_python",
+  "track": "labs",
+  "local_path": "labs/iherrbenza/ad9959_python",
+  "driver_dir": "MHS/drivers/labs/iherrbenza__ad9959_python",
+  "upstream": {
+    "repo_url": "https://github.com/iherrbenza/ad9959_python",
+    "commit": "cd5298ec17fe7994a2c07ce9783ac88a3d194f8c",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 74,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "DDS_ESP32_lab.labscript_devices:DDS_ESP32",
+      "file": "DDS_ESP32_lab/labscript_devices.py",
+      "line": 20,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "DDS_ESP32_lab.DDS_ESP32:DDS_ESP32",
+      "file": "DDS_ESP32_lab/DDS_ESP32.py",
+      "line": 32,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [
+      "DDS_ESP32.set_2mod_amplitude",
+      "DDS_ESP32.set_2mod_frequency",
+      "DDS_ESP32.set_2mod_phase",
+      "DDS_ESP32.set_amplitude",
+      "DDS_ESP32.set_frequency",
+      "DDS_ESP32.set_phase"
+    ],
+    "actions": [
+      "DDS_ESP32.list_reset",
+      "DDS_ESP32.reset",
+      "DDS_ESP32.to_start",
+      "DDS_ESP32.transfer_ESP32"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/iherrbenza__ad9959_python --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

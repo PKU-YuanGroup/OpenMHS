@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.knerlab/sim_control_software",
+  "upstream": {
+    "repo_url": "https://github.com/knerlab/sim_control_software",
+    "commit": "4abc7e9ddafa89bc0ab0fc8f6e25321fe676d95c",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows",
+    "notes": "The upstream repository is a script bundle with no install metadata. The hardware backend imports the clone's motorized_pol_v2.py, which loads USMCDLL.dll (motorized_pol_v2.py:20) and imports the external pol_rotator_p35.Mot_pol_params structures (motorized_pol_v2.py:16); neither the external package nor a Windows DLL search path is provided by the clone. The fake backend and the gate need neither."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeA8MRU"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-123",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}
