@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.zitongbai/legged_lab",
+  "track": "robots",
+  "local_path": "robots/zitongbai/legged_lab",
+  "driver_dir": "MHS/drivers/robots/zitongbai__legged_lab",
+  "upstream": {
+    "repo_url": "https://github.com/zitongbai/legged_lab",
+    "commit": "69b7f73d912a9d5695a60b5bed41d0785c8b302e",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 44,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "legged_lab.envs:ManagerBasedAnimationEnv",
+      "file": "source/legged_lab/legged_lab/envs/manager_based_animation_env.py",
+      "line": 13,
+      "confidence": "override"
+    },
+    {
+      "symbol": "legged_lab.envs:ManagerBasedAmpEnv",
+      "file": "source/legged_lab/legged_lab/envs/manager_based_amp_env.py",
+      "line": 21,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/legged_lab/legged_lab/tasks/locomotion/amp/config/g1/__init__.py:7 gym env LeggedLab-Isaac-AMP-G1-v0",
+      "source/legged_lab/legged_lab/tasks/locomotion/amp/config/g1/__init__.py:17 gym env LeggedLab-Isaac-AMP-G1-Play-v0",
+      "source/legged_lab/legged_lab/tasks/locomotion/deepmimic/config/g1/__init__.py:5 gym env LeggedLab-Isaac--Deepmimic-G1-v0",
+      "source/legged_lab/legged_lab/tasks/locomotion/deepmimic/config/g1/__init__.py:15 gym env LeggedLab-Isaac--Deepmimic-G1-Play-v0"
+    ],
+    "upstream_tests": "source/legged_lab/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env LeggedLab-Isaac-AMP-G1-v0 registered at source/legged_lab/legged_lab/tasks/locomotion/amp/config/g1/__init__.py:7",
+      "gym env LeggedLab-Isaac-AMP-G1-Play-v0 registered at source/legged_lab/legged_lab/tasks/locomotion/amp/config/g1/__init__.py:17",
+      "gym env LeggedLab-Isaac--Deepmimic-G1-v0 registered at source/legged_lab/legged_lab/tasks/locomotion/deepmimic/config/g1/__init__.py:5",
+      "gym env LeggedLab-Isaac--Deepmimic-G1-Play-v0 registered at source/legged_lab/legged_lab/tasks/locomotion/deepmimic/config/g1/__init__.py:15",
+      "gym env LeggedLab-Isaac--Deepmimic-G1-Debug-v0 registered at source/legged_lab/legged_lab/tasks/locomotion/deepmimic/config/g1/__init__.py:25",
+      "gym env LeggedLab-Isaac-Velocity-Flat-Unitree-G1-v0 registered at source/legged_lab/legged_lab/tasks/locomotion/velocity/config/g1/__init__.py:9",
+      "gym env LeggedLab-Isaac-Velocity-Flat-Unitree-G1-Play-v0 registered at source/legged_lab/legged_lab/tasks/locomotion/velocity/config/g1/__init__.py:19",
+      "gym env LeggedLab-Isaac-Velocity-Flat-Unitree-Go2-v0 registered at source/legged_lab/legged_lab/tasks/locomotion/velocity/config/go2/__init__.py:9",
+      "gym env LeggedLab-Isaac-Velocity-Flat-Unitree-Go2-Play-v0 registered at source/legged_lab/legged_lab/tasks/locomotion/velocity/config/go2/__init__.py:19"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/zitongbai__legged_lab --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

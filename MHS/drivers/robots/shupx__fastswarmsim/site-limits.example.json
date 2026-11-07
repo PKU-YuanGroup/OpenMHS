@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example FastSwarmSim time-coordinator bench",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example-only operator envelope. It fills the operator_required resume factor and does not claim a device limit; pause is input-free and does not use this overlay.",
+  "devices": {
+    "mhs://localhost/fastswarmsim": {
+      "x-cap.shupx.resume.v1": {
+        "max_real_time_factor": {
+          "min": 0.01,
+          "max": 100.0,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example only: the simulation-time to wall-time ratio this site allows; the coordinator accepts a configured factor and the clone states no numeric maximum"
+        }
+      }
+    }
+  }
+}

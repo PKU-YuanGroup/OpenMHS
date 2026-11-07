@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ian-chuang/manipulator-mujoco",
+  "track": "robots",
+  "local_path": "robots/ian-chuang/manipulator-mujoco",
+  "driver_dir": "MHS/drivers/robots/ian-chuang__manipulator-mujoco",
+  "upstream": {
+    "repo_url": "https://github.com/ian-chuang/manipulator-mujoco",
+    "commit": "f2d7d776a74034387e825dec6a13a91b1e1f493e",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 112,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "manipulator_mujoco.envs:AuboI5Env",
+      "file": "manipulator_mujoco/envs/aubo_i5_env.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "manipulator_mujoco.envs:UR5eEnv",
+      "file": "manipulator_mujoco/envs/ur5e_env.py",
+      "line": 13,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "manipulator_mujoco/assets/robots/ag95/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "manipulator_mujoco/assets/robots/ag95/ag95.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "manipulator_mujoco/__init__.py:4 gym env manipulator_mujoco/AuboI5Env-v0",
+      "manipulator_mujoco/__init__.py:12 gym env manipulator_mujoco/UR5eEnv-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env manipulator_mujoco/AuboI5Env-v0 registered at manipulator_mujoco/__init__.py:4",
+      "gym env manipulator_mujoco/UR5eEnv-v0 registered at manipulator_mujoco/__init__.py:12"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ian-chuang__manipulator-mujoco --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.zzy5510/ur5-grasp-and-kinect-demo-on-gazebo",
+  "track": "robots",
+  "local_path": "robots/zzy5510/ur5-grasp-and-kinect-demo-on-gazebo",
+  "driver_dir": "MHS/drivers/robots/zzy5510__ur5-grasp-and-kinect-demo-on-gazebo",
+  "upstream": {
+    "repo_url": "https://github.com/zzy5510/ur5-grasp-and-kinect-demo-on-gazebo",
+    "commit": "a5b25d72fe7637ebfad26a60c4bc57c1a8b418c4",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 364,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "src/realsense_gazebo_plugin/test"
+  },
+  "hints": {
+    "reads": [
+      "Robotiq85Gripper.get_current",
+      "Robotiq85Gripper.get_fault_status",
+      "Robotiq85Gripper.get_pos",
+      "Robotiq85Gripper.get_req_pos",
+      "Robotiq85Gripper.is_moving",
+      "Robotiq85Gripper.is_ready",
+      "Robotiq85Gripper.is_reset",
+      "Robotiq85Gripper.is_stopped",
+      "GripperIO.get_current",
+      "GripperIO.get_fault_status",
+      "GripperIO.get_pos",
+      "GripperIO.get_req_pos"
+    ],
+    "writes": [],
+    "actions": [
+      "Robotiq85Gripper.activate_emergency_release",
+      "Robotiq85Gripper.deactivate_emergency_release",
+      "Robotiq85Gripper.goto",
+      "Robotiq85Gripper.stop",
+      "GripperIO.activate_emergency_release",
+      "GripperIO.deactivate_emergency_release",
+      "GripperIO.goto",
+      "GripperIO.stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.measure.current.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/zzy5510__ur5-grasp-and-kinect-demo-on-gazebo --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

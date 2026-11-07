@@ -1,0 +1,43 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example flight site (this file is an operator example, not a flight approval)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example bounds only. The clone states no flight envelope; a real site must replace these with its own assessed limits. The values are not device facts or a recommendation.",
+  "devices": {
+    "mhs://localhost/ardupilot_copter": {
+      "x-cap.sidharthmohannair.takeoff.v1": {
+        "altitude": {
+          "min": 0,
+          "max": 120,
+          "unit": "m",
+          "source": "operator",
+          "reason": "example site bound for the requested takeoff altitude"
+        }
+      },
+      "x-cap.sidharthmohannair.setpoint_position.v1": {
+        "x": {
+          "min": -1000,
+          "max": 1000,
+          "unit": "m",
+          "source": "operator",
+          "reason": "example site bound for the forward target"
+        },
+        "y": {
+          "min": -1000,
+          "max": 1000,
+          "unit": "m",
+          "source": "operator",
+          "reason": "example site bound for the lateral target"
+        },
+        "z": {
+          "min": 0,
+          "max": 120,
+          "unit": "m",
+          "source": "operator",
+          "reason": "example site bound for the altitude target"
+        }
+      }
+    }
+  }
+}

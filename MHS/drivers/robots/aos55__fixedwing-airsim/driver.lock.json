@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.aos55/fixedwing-airsim",
+  "upstream": {
+    "repo_url": "https://github.com/aos55/fixedwing-airsim",
+    "commit": "c5054486fb05dc67668b123c7789e399c8d4ce02",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The clone needs the separate AirSim and JSBSim installs and a local JSBSim aircraft directory (README.md:6-10); its Simulation root is the hardcoded Windows path of src/jsbsim_simulator.py:76. setup.py:23 uses a set literal for package_dir, so pip install . is not relied on to expose src/envs. The fake backend needs none of this, and the gate never installs or imports the upstream package."
+  },
+  "backends": {
+    "fake": ".fake:FakeSingleObservation"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wD-005",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

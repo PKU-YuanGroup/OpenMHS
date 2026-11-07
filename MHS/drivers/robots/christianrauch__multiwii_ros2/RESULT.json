@@ -1,0 +1,58 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "gate": {
+    "digest": "sha256:c48d3c0172ee1a2bc3fada14227f5e058a23919d3d2aef64c28560a9a640090c",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.christianrauch.flight_state.v1",
+      "reason": "No catalogue class observes mavros_msgs/msg/State or a flight-controller armed flag. The device resource kind is robot.mobile_base and cap.sensing.imu.v1 requires sensor.imu. The state callback publishes only state.armed (MultiWiiNode.cpp:221-225).",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.christianrauch.rc_input.v1",
+      "reason": "No catalogue class observes mavros_msgs/msg/RCIn or a raw RC channel vector. cap.motion.mobile_base.v1 is a velocity command with distance and heading outputs, not an observation. The node copies rc.channels unchanged (MultiWiiNode.cpp:163-170).",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.christianrauch.motor_outputs.v1",
+      "reason": "No catalogue class observes mavros_msgs/msg/RCOut or raw motor channels. cap.motion.mobile_base.v1 is a velocity command, not a motor observation. The node copies motor.motor values into the RCOut channels (MultiWiiNode.cpp:172-180).",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.christianrauch.attitude.v1",
+      "reason": "No catalogue class observes a geometry_msgs/msg/PoseStamped attitude quaternion for a flight controller. cap.motion.cartesian_pose.v1 is a robot.arm millimetre pose command with a reached output. This node publishes only the orientation and leaves the position at its defaults (MultiWiiNode.cpp:137-160).",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.christianrauch.altitude.v1",
+      "reason": "No catalogue class observes std_msgs/msg/Float64 relative altitude. cap.motion.cartesian_pose.v1 is a robot.arm command in millimetres and does not match a scalar altitude observation (MultiWiiNode.cpp:192-204).",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.christianrauch.imu.v1",
+      "reason": "No catalogue class observes the sensor_msgs/msg/Imu linear_acceleration and angular_velocity for this robot.mobile_base resource. cap.sensing.imu.v1 requires a sensor.imu resource kind and includes an orientation in its contract; the node publishes the two vectors and leaves orientation unset (MultiWiiNode.cpp:110-126).",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.christianrauch.rc_override.v1",
+      "reason": "No catalogue class publishes raw RC override channels. cap.motion.mobile_base.v1 requires linear_velocity, angular_velocity and duration_s plus measured distance and heading outputs; the node forwards eight AERT1234 channels to setRc and returns no motion measurement (MultiWiiNode.cpp:227-233).",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.christianrauch.rc_override_raw.v1",
+      "reason": "No catalogue class publishes a raw RC channel vector. cap.motion.mobile_base.v1 is a bounded velocity command with motion outputs; the raw callback forwards an arbitrary vector to setRc(vector<uint16_t>) (MultiWiiNode.cpp:235-239).",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "BLOCKED: the pinned MultiWiiNode is a publish-only ROS 2 command surface at R2 because the two callbacks command a multirotor's flight-controller channels; the card's R0 floor is only a minimum. It subscribes to rc/override and rc/override/raw with mavros_msgs/msg/OverrideRCIn and forwards the channel values through fcu->setRc (MultiWiiNode.cpp:40-45,227-239). The constructor block that registers those subscriptions creates no service server (MultiWiiNode.cpp:38-47); the Send/ReceiveMSPRawMessage service definitions in multiwii_msgs/CMakeLists.txt:21-26 have no server in this node. There is no arm, disarm, stop, reset or safe-state endpoint, and no vendor text states a physical stop, so estop_physical_ref has no source. A ROS topic publication acknowledges only transmission, and the SDK refuses a topic as an input-free safe-state stop; therefore no safe_state=True action or safety_bindings.estop can be declared honestly. The stock e-stop reports software_only/failed with safe_state_achieved=false and sends no unproven stop request. This is the last gate output: G1 pass, G2 pass, G3 fail [G3.STRICT SAFE-045, G3.NO_ESTOP], G4 pass, G5/G6/G8/G9 NOT_RUN, G7 warn [G7.ROS_NO_MESSAGES]. The driver still preserves the primary control (both RC override publications) and the six observation topics it exposes; no observation-only substitute is accepted, and the two omitted telemetry topics are named below. The two override inputs are operator-required because the clone states no channel range. The example site overlay uses 1000-2000 as operator example bounds only, not device facts; without an overlay every override call is refused. Not covered: /imu/mag and /battery observations, because the clone does not state the unit of imu_si.mag or the external msp::msg::Analog values; no live ROS graph, hardware, arming, flight or stop test was run; no ROS or hardware validation is claimed. The fake is a ROS-free event-driven RecordingRosTransport (F0): no ROS graph, wall-clock timer, flight dynamics or pacing; every canned value and the test input values are placeholders. Its motor and RC-input vector sizes (4 and 8) are placeholders because the clone states neither the frame's motor count nor the RCIn channel count; the AERT override input is fixed at eight by the 0..7 index. Its negative switches (silent topic, unrelated event id, broken publication link) are tested and are not safety evidence. The upstream clone was not modified (G1 pass). No deviation from the card: RosDriver with the fake backend; no Python native class was invented for the C++ node. This package is model-authored; driver.lock.json reviewed_by stays null, and no human has reviewed or tested it.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Confirmed the author's block: MultiWiiNode (multiwii2_node/src/MultiWiiNode.cpp) creates eight publishers, two OverrideRCIn subscriptions (40-45) and a 100 ms state timer, and no service, action or arming endpoint anywhere in the file; arming and stopping happen only through RC channel values on a topic, which acknowledges transmission only, so a multirotor flight controller at R2 has no acknowledged stop and G3 fails SAFE-045. The R0-to-R2 raise for a flight controller is right, the six publisher bindings and two subscription bindings the package declares match their lines, the RC channel inputs are operator_required, and the omitted mag and battery topics are named. The reviewer changed no authored file; the gate re-run rewrote check-report.json with the same findings. For the next author: mavros_msgs is not in the clone, and upstream mavros defines OverrideRCIn without a header and with a fixed uint16[18] channels array, while both publish bindings send a header and a variable-length channels list; rosbridge would refuse those messages, so verify the message definition before any unblocking. For the human reviewer: A MultiWii/MSP flight controller driving propellers: the node offers no disarm or stop endpoint; any future package needs a physical kill switch reference or an acknowledged MSP disarm path."
+}

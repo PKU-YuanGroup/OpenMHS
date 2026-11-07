@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.adyansh04/grove-g1",
+  "track": "robots",
+  "local_path": "robots/adyansh04/grove-g1",
+  "driver_dir": "MHS/drivers/robots/adyansh04__grove-g1",
+  "upstream": {
+    "repo_url": "https://github.com/adyansh04/grove-g1",
+    "commit": "63f89b38910fdf11df70ce566440ca1d4bb4e730",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "SDK_BUG"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 35,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "workspace/src/g1_bringup/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/adyansh04__grove-g1 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:c28c71a3a1aa7665d4b945fea059591557594e90f48e44c13267795cf6944ae3",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.cpezzato.joint_state.v1",
+      "reason": "No catalogue class carries a raw sensor_msgs/JointState sample for a robot.arm resource. cap.sensing.read.v1 binds only sensor, sensor.imu and sensor.force_torque resources and takes a fields selection, not the native parallel name/position/velocity/effort arrays. The extension preserves the published message without relabelling the arm as a sensor.",
+      "verb": "read",
+      "summary": "Read one sensor_msgs/JointState sample on /robot1/joint_states.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.cpezzato.free_energy.v1",
+      "reason": "No catalogue class exposes a controller's scalar free-energy objective. cap.sensing.read.v1 does not bind robot.arm and the value is not a physical sensor measurement. The extension preserves the AIC's std_msgs/Float64 output.",
+      "verb": "read",
+      "summary": "Read the AIC free-energy scalar on /panda_free_energy.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.cpezzato.joint1_effort.v1",
+      "reason": "cap.motion.joint_torque.v1 takes a joint_torques array plus duration_s and returns applied/joint_torques. The pinned AIC publishes one absolute std_msgs/Float64 topic per joint with no duration, acknowledgement or applied-value return, so the class cannot bind this single publication truthfully. The extension preserves one native joint topic and reports the sent effort, not an applied torque.",
+      "verb": "invoke",
+      "summary": "Publish one effort command for panda_joint1 on /robot1/panda_joint1_controller/command.",
+      "similar": [
+        "cap.motion.joint_torque.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.cpezzato.joint2_effort.v1",
+      "reason": "cap.motion.joint_torque.v1 takes a joint_torques array plus duration_s and returns applied/joint_torques. The pinned AIC publishes one absolute std_msgs/Float64 topic per joint with no duration, acknowledgement or applied-value return, so the class cannot bind this single publication truthfully. The extension preserves one native joint topic and reports the sent effort, not an applied torque.",
+      "verb": "invoke",
+      "summary": "Publish one effort command for panda_joint2 on /robot1/panda_joint2_controller/command.",
+      "similar": [
+        "cap.motion.joint_torque.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.cpezzato.joint3_effort.v1",
+      "reason": "cap.motion.joint_torque.v1 takes a joint_torques array plus duration_s and returns applied/joint_torques. The pinned AIC publishes one absolute std_msgs/Float64 topic per joint with no duration, acknowledgement or applied-value return, so the class cannot bind this single publication truthfully. The extension preserves one native joint topic and reports the sent effort, not an applied torque.",
+      "verb": "invoke",
+      "summary": "Publish one effort command for panda_joint3 on /robot1/panda_joint3_controller/command.",
+      "similar": [
+        "cap.motion.joint_torque.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.cpezzato.joint4_effort.v1",
+      "reason": "cap.motion.joint_torque.v1 takes a joint_torques array plus duration_s and returns applied/joint_torques. The pinned AIC publishes one absolute std_msgs/Float64 topic per joint with no duration, acknowledgement or applied-value return, so the class cannot bind this single publication truthfully. The extension preserves one native joint topic and reports the sent effort, not an applied torque.",
+      "verb": "invoke",
+      "summary": "Publish one effort command for panda_joint4 on /robot1/panda_joint4_controller/command.",
+      "similar": [
+        "cap.motion.joint_torque.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.cpezzato.joint5_effort.v1",
+      "reason": "cap.motion.joint_torque.v1 takes a joint_torques array plus duration_s and returns applied/joint_torques. The pinned AIC publishes one absolute std_msgs/Float64 topic per joint with no duration, acknowledgement or applied-value return, so the class cannot bind this single publication truthfully. The extension preserves one native joint topic and reports the sent effort, not an applied torque.",
+      "verb": "invoke",
+      "summary": "Publish one effort command for panda_joint5 on /robot1/panda_joint5_controller/command.",
+      "similar": [
+        "cap.motion.joint_torque.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.cpezzato.joint6_effort.v1",
+      "reason": "cap.motion.joint_torque.v1 takes a joint_torques array plus duration_s and returns applied/joint_torques. The pinned AIC publishes one absolute std_msgs/Float64 topic per joint with no duration, acknowledgement or applied-value return, so the class cannot bind this single publication truthfully. The extension preserves one native joint topic and reports the sent effort, not an applied torque.",
+      "verb": "invoke",
+      "summary": "Publish one effort command for panda_joint6 on /robot1/panda_joint6_controller/command.",
+      "similar": [
+        "cap.motion.joint_torque.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.cpezzato.joint7_effort.v1",
+      "reason": "cap.motion.joint_torque.v1 takes a joint_torques array plus duration_s and returns applied/joint_torques. The pinned AIC publishes one absolute std_msgs/Float64 topic per joint with no duration, acknowledgement or applied-value return, so the class cannot bind this single publication truthfully. The extension preserves one native joint topic and reports the sent effort, not an applied torque.",
+      "verb": "invoke",
+      "summary": "Publish one effort command for panda_joint7 on /robot1/panda_joint7_controller/command.",
+      "similar": [
+        "cap.motion.joint_torque.v1"
+      ]
+    }
+  ],
+  "notes": "BLOCKED (HELPER_MISSING): the RosDriver can bind the pinned topic surface, but the stock helper cannot express an acknowledged stop for the only actuation path and this package does not claim one. Last gate run (2026-11-05T08:00:09Z, backend fake): G1 pass, G2 pass, G3 pass, G4 warn with G4.REF_VALUE x7, G5 pass, G6 fail with G6.ESTOP_FAILED (status failed, MHS.SAFETY.SAFE_STATE_UNREACHED; the latch stays engaged), G7 pass, G8 fail with G8.CONFORMANCE (MHS-Sim CL1; failing TCAP-003 and SAFE-028) and G8.TEST for both, G9 NOT_RUN. Report digest sha256:2710a216a425841a89c6f11929fd9838c2162ea0aa84ad35552567deb288d99d.\n\nThe source evidence: the AIC constructor creates only the seven absolute /robot1/panda_joint<N>_controller/command publishers, the /robot1/joint_states subscriber and the controller output publishers (panda_control/src/classes/AIC.cpp:15-42); the main loop runs at ros::Rate(1000), calls minimiseF, and cycles between hardcoded desired positions, with no service, action, cancellation or reset path (panda_control/src/AIC_controller.cpp:61-92 and 29-59); computeActions publishes all seven torques at 1 kHz (panda_control/src/classes/AIC.cpp:152-162); and the launch starts the AIC node by default (panda_simulation/launch/simulation.launch:49-51). A search of the clone finds no advertiseService or service server. A single driver publication on an effort topic is overwritten by the AIC's next cycle, and a zero-torque publication is transmission-only, not an acknowledged stop. The Gazebo pause/play control the README describes (README.md:66) is a GUI action through gazebo_ros, whose service is outside the pinned clone and therefore cannot be cited as a stop binding.\n\nWhat is implemented and checked: /robot1/joint_states as an explicit subscribe action with the native name/position/velocity/effort arrays (source_ref panda_control/src/classes/AIC.cpp:25, type_ref panda_control/include/AIC.h:23); /panda_free_energy as an explicit subscribe action (panda_control/src/classes/AIC.cpp:27); and one publication action per absolute effort topic (panda_control/src/classes/AIC.cpp:18-24). Every effort input has the joint model's URDF effort bound: 87 N.m for joints 1-4 (franka_description/robots/panda_arm.xacro:103, 129, 155, 181) and 12 N.m for joints 5-7 (207, 233, 259). The G4.REF_VALUE x7 warnings are the signed lower bounds (-87 and -12): those lines state the effort magnitude (87 and 12) but no clone line writes the negative numbers, so the warnings cannot be cleared by a different citation. The signed range is the symmetric interpretation of a magnitude; the package does not claim it is a measured delivered-arm bound.\n\nG6.ESTOP_FAILED and SAFE-028 are the no-stop blocker. TCAP-003 additionally fails because a rosbridge topic publication returns only {published: true, confirmed: false}, which is identical for different effort inputs, and the package deliberately exposes no fake-only resource state to pretend that the arm moved. The AIC owns [...]\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked every endpoint and type (the seven absolute /robot1/panda_joint<N>_controller/command publishers, /robot1/joint_states and the relative panda_free_energy at panda_control/src/classes/AIC.cpp:18-27), all 16 facts and the stop: the AIC loop republishes all seven torques at ros::Rate(1000) (AIC_controller.cpp:61-92, AIC.cpp:137-162) and the clone has no service, action or reset to stop it, so the author's HELPER_MISSING block is confirmed. Three defects were fixed: the seven effort Limits (-87..87 and -12..12 N.m) cited xacro lines that state only an unsigned effort attribute and drew seven UNSOURCED_LIMIT_GATE_WARNINGs, so the inputs are now Limit.operator_required with a new site-limits.example.json (-1..1 N.m example); the joint_state output schema omitted the ROS 1 std_msgs/Header and, being closed, refused every real sensor_msgs/JointState as OUTPUT_INVALID (reviewer probe), so header (seq, stamp secs/nsecs, frame_id) was added to the schema and the fake; and three facts said more than their lines (the paused fact cited only line 5, the minimiseF fact only line 141, the callback 'ignores any further names'), now narrowed or widened (simulation.launch:5-19, AIC.cpp:137-149). Reviewer changed driver.py, fake.py, test_driver.py (a LIMITS_UNSET case, overlay-based envelope cases, a header assertion) and facts.md, added site-limits.example.json, and regenerated reference.json, REFERENCE.md and check-report.json. The gate fails G6.ESTOP_FAILED and G8 (SAFE-028, and TCAP-003 because an effort publication the AIC overwrites at 1 kHz has no observable effect in the fake), as the author's block states, now without G4 warnings; all nine package cases pass and collect.py --strict prints no warning. RESULT.json text that uses the URDF effort values as the input envelope is superseded. For the human reviewer: No stop exists: panda_control_AIC republishes all seven joint torques at 1 kHz from hardcoded goals that change every 6000 cycles and offers no service, action or reset; a driver effort publication is overwritten within one cycle and a zero-torque publication is not a stop. The launch starts Gazebo paused (the README says to press play); while paused, both observations fail at the 2 s wire default. The xacro effort attributes (87 N.m for joints 1-4, 12 N.m for joints 5-7) are unsigned model values, not a reviewed command envelope. Unblocking needs an acknowledged stop for the AIC loop or an SDK profile for it.\n\nMODEL REVIEW (grok-4.7, a model and not a human, 2026-11-05; reviewed_by stays null): Pins gazebo_ros 2.5.21 (98bb3d0a0afc) and Gazebo 7.16.1 (6fea5977c451). estop SetPaused(true) at gazebo_ros_api_plugin.cpp:1694; pause read back at line 1460. World::Step still updates when a step is pending or a reset is due (World.cc:615-617). No unpause (SAFE-042). u updates at AIC.cpp:154, publishes at AIC.cpp:157-162, ros::Rate(1000) at AIC_controller.cpp:62. AIC.cpp:43 and AIC_controller.cpp:93 clear nothing; default_robot_hw_sim.cpp:315-316 reapplies joint_effort_command_. The world stays paused until an operator-reviewed procedure has verified those retained commands cleared or reinitialized. This package does not provide that procedure. safety_status returns the cached confirmation and does not call get_physics_properties again. Only the joint-state read fails NOT_READY while paused. The fake still answers free energy; a live free-energy read while /clock is silent is unverified. panda_arm.xacro:269 still declares joint8. Risk R2. ODE-only success (1489-1499). README.md:73 Melodic is not served. Gate sha256:c28c71a3a1aa7665d4b945fea059591557594e90f48e44c13267795cf6944ae3; evidence contract_checked on the fake; reviewed_by stays null.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-05; reviewed_by stays null): Different-model review by Codex (gpt-6.1-sol) of the work of Grok (grok-4.7), unit p5-gz-pause--cpezzato__panda_simulation, round 2: All round-1 high findings are resolved: recovery instructions require verified clearing or reinitialization of retained commands, safety_status is documented as cached, and paused free-energy behavior and AIC citations are corrected. Traced the companion pause and fresh read-back through the pinned sources; independent probes confirmed latch-before-I/O, malformed read-back rejection, stop reachability during a blocked observation, and reset without ROS commands. G1–G9, strict collection, registry validation, and 56 citations passed. Risk remains R2 and evidence remains contract_checked on the fake. For the human reviewer: Merge only the two reviewed needed_by additions for gh.cpezzato/panda_simulation into the current companion LOCK.json, preserving newer entries; do not replace it with the author's older copy. Deployment evidence covers Kinetic, gazebo_ros 2.5.21, Gazebo 7.16.1 and ODE. reviewed_by remains null; no simulator or hardware run was performed."
+}

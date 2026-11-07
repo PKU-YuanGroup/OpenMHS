@@ -1,0 +1,25 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example Unity UR3 pick-and-place planning bench (unity-technologies__robotics-object-pose-estimation); not a deployment approval",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "notes": "Example operator overlay. It fills the operator_required bounds of the planning command so the fake can be exercised; each range is one bench's choice, not a Unity or Universal Robots specification. The UR3 URDF of the clone states -3.14159265359 to 3.14159265359 rad for each arm joint (ROS/src/ur3_moveit/URDF/ur3_with_gripper.urdf:361), which this example states in degrees.",
+  "devices": {
+    "mhs://localhost/unity-ur3-pick-place-planner": {
+      "x-cap.unity-technologies.pick_place_plan.v1": {
+        "start_joints_deg[*]": {"min": -180, "max": 180, "unit": "deg", "source": "operator",
+                                "reason": "example: the clone's URDF joint limits of +-pi rad, stated in degrees"},
+        "pick_position[*]": {"min": -1.5, "max": 1.5, "unit": "m", "source": "operator",
+                             "reason": "example scene envelope around the table, not a UR3 reach specification"},
+        "place_position[*]": {"min": -1.5, "max": 1.5, "unit": "m", "source": "operator",
+                              "reason": "example scene envelope around the table, not a UR3 reach specification"},
+        "pick_orientation[*]": {"min": -1, "max": 1, "unit": "1", "source": "operator",
+                                "reason": "example: the components of a unit quaternion"},
+        "place_orientation[*]": {"min": -1, "max": 1, "unit": "1", "source": "operator",
+                                 "reason": "example: the components of a unit quaternion"}
+      }
+    }
+  }
+}

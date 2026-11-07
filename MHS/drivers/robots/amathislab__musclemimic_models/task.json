@@ -1,0 +1,79 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.amathislab/musclemimic_models",
+  "track": "robots",
+  "local_path": "robots/amathislab/musclemimic_models",
+  "driver_dir": "MHS/drivers/robots/amathislab__musclemimic_models",
+  "upstream": {
+    "repo_url": "https://github.com/amathislab/musclemimic_models",
+    "commit": "001b723e1be89a055a4cf79d23e2e7aaf968fb40",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 92,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "musclemimic_models/model/arm/myoarm_bimanual.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "musclemimic_models/model/body/myofullbody.xml",
+      "line": 2,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "musclemimic_models/model/arm/myoarm_bimanual.xml:2 MJCF scene model",
+      "musclemimic_models/model/body/myofullbody.xml:2 MJCF scene model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model musclemimic_models/model/arm/myoarm_bimanual.xml:2",
+      "MJCF scene model musclemimic_models/model/body/myofullbody.xml:2"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/amathislab__musclemimic_models --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

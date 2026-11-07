@@ -1,0 +1,78 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.greg-lund/gym-social-navigation",
+  "track": "robots",
+  "local_path": "robots/greg-lund/gym-social-navigation",
+  "driver_dir": "MHS/drivers/robots/greg-lund__gym-social-navigation",
+  "upstream": {
+    "repo_url": "https://github.com/greg-lund/gym-social-navigation",
+    "commit": "bdc8e72c0f7f738ebe99b6966b1c37af26a342af",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 415,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_social_navigation.envs:SocialNavEnv",
+      "file": "gym_social_navigation/envs/social_nav_env.py",
+      "line": 6,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_social_navigation/__init__.py:3 gym env social-nav-train-env-v0",
+      "gym_social_navigation/__init__.py:8 gym env social-nav-test-env-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env social-nav-train-env-v0 registered at gym_social_navigation/__init__.py:3",
+      "gym env social-nav-test-env-v0 registered at gym_social_navigation/__init__.py:8"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/greg-lund__gym-social-navigation --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

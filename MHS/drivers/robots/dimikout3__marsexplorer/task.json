@@ -1,0 +1,83 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.dimikout3/marsexplorer",
+  "track": "robots",
+  "local_path": "robots/dimikout3/marsexplorer",
+  "driver_dir": "MHS/drivers/robots/dimikout3__marsexplorer",
+  "upstream": {
+    "repo_url": "https://github.com/dimikout3/marsexplorer",
+    "commit": "6533a9a05bde1050bc639ee40096240680ad6f2d",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 399,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "mars_explorer.envs:Explorer",
+      "file": "mars-explorer/mars_explorer/__init__.py",
+      "line": 3,
+      "confidence": "recon"
+    },
+    {
+      "symbol": "mars_explorer.envs:ExplorerConf",
+      "file": "mars-explorer/mars_explorer/__init__.py",
+      "line": 8,
+      "confidence": "recon"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "mars-explorer/mars_explorer/__init__.py:3 gym env explorer-v01",
+      "mars-explorer/mars_explorer/__init__.py:8 gym env exploConf-v01"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env explorer-v01 registered at mars-explorer/mars_explorer/__init__.py:3",
+      "gym env exploConf-v01 registered at mars-explorer/mars_explorer/__init__.py:8"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/dimikout3__marsexplorer --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

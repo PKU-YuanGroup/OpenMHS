@@ -1,0 +1,135 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.chauncygu/safe-multi-agent-robosuite",
+  "track": "robots",
+  "local_path": "robots/chauncygu/safe-multi-agent-robosuite",
+  "driver_dir": "MHS/drivers/robots/chauncygu__safe-multi-agent-robosuite",
+  "upstream": {
+    "repo_url": "https://github.com/chauncygu/safe-multi-agent-robosuite",
+    "commit": "df9ade0fa8df984bfe6853fda7604edf10440b65",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 168,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robosuite.multi_agent.multi_robot_panda:MujocoMulti",
+      "file": "robosuite/multi_agent/multi_robot_panda.py",
+      "line": 126,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robosuite.environments.manipulation.door:Door",
+      "file": "robosuite/environments/manipulation/door.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robosuite.environments.manipulation.lift:Lift",
+      "file": "robosuite/environments/manipulation/lift.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robosuite.environments.manipulation.lift_without_smoothness_constraints:Lift",
+      "file": "robosuite/environments/manipulation/lift_without_smoothness_constraints.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robosuite.environments.manipulation.nut_assembly:NutAssemblySingle",
+      "file": "robosuite/environments/manipulation/nut_assembly.py",
+      "line": 687,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "robosuite/models/assets/robots/baxter/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "robosuite/models/assets/robots/iiwa/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "robosuite/models/assets/robots/jaco/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "robosuite/models/assets/robots/kinova3/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "robosuite/models/assets/robots/panda/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robosuite/models/assets/robots/baxter/robot.xml:1 MJCF robot model",
+      "robosuite/models/assets/robots/iiwa/robot.xml:1 MJCF robot model",
+      "robosuite/models/assets/robots/jaco/robot.xml:1 MJCF robot model",
+      "robosuite/models/assets/robots/kinova3/robot.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model robosuite/models/assets/robots/baxter/robot.xml:1",
+      "MJCF robot model robosuite/models/assets/robots/iiwa/robot.xml:1",
+      "MJCF robot model robosuite/models/assets/robots/jaco/robot.xml:1",
+      "MJCF robot model robosuite/models/assets/robots/kinova3/robot.xml:1",
+      "MJCF robot model robosuite/models/assets/robots/panda/robot.xml:1",
+      "MJCF robot model robosuite/models/assets/robots/sawyer/robot.xml:1",
+      "MJCF robot model robosuite/models/assets/robots/ur5e/robot.xml:1",
+      "MJCF robot model robosuite/models/assets/demonstrations/wipe/panda/models/model_1.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/chauncygu__safe-multi-agent-robosuite --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

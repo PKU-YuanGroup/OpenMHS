@@ -1,0 +1,104 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.robotis-git/robotis_mujoco_menagerie",
+  "track": "robots",
+  "local_path": "robots/robotis-git/robotis_mujoco_menagerie",
+  "driver_dir": "MHS/drivers/robots/robotis-git__robotis_mujoco_menagerie",
+  "upstream": {
+    "repo_url": "https://github.com/robotis-git/robotis_mujoco_menagerie",
+    "commit": "d8344c0dbe7a00208d0301111523dde65efc174a",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 235,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "robotis_ffw/scene_ffw_bg2.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "robotis_ffw/scene_ffw_sg2.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "robotis_ffw/scene_ffw_sh5.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "robotis_omx/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "robotis_omy/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robotis_ffw/scene_ffw_bg2.xml:1 MJCF scene model",
+      "robotis_ffw/scene_ffw_sg2.xml:1 MJCF scene model",
+      "robotis_ffw/scene_ffw_sh5.xml:1 MJCF scene model",
+      "robotis_omx/scene.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model robotis_ffw/scene_ffw_bg2.xml:1",
+      "MJCF scene model robotis_ffw/scene_ffw_sg2.xml:1",
+      "MJCF scene model robotis_ffw/scene_ffw_sh5.xml:1",
+      "MJCF scene model robotis_omx/scene.xml:1",
+      "MJCF scene model robotis_omy/scene.xml:1",
+      "MJCF scene model robotis_op3/scene.xml:1",
+      "MJCF scene model robotis_open_manipulator_x/scene.xml:1",
+      "MJCF scene model robotis_tb3/scene_turtlebot3_burger.xml:1",
+      "MJCF scene model robotis_tb3/scene_turtlebot3_waffle_pi.xml:1",
+      "MJCF robot model robotis_op3/op3.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/robotis-git__robotis_mujoco_menagerie --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

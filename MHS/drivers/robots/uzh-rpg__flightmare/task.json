@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.uzh-rpg/flightmare",
+  "track": "robots",
+  "local_path": "robots/uzh-rpg/flightmare",
+  "driver_dir": "MHS/drivers/robots/uzh-rpg__flightmare",
+  "upstream": {
+    "repo_url": "https://github.com/uzh-rpg/flightmare",
+    "commit": "d4218aedac18cbe9364a0a0df10ab992c4b65e4f",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:wave-b-sim-env",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 78,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "flightrl.rpg_baselines.envs.vec_env_wrapper:FlightEnvVec",
+      "file": "flightrl/rpg_baselines/envs/vec_env_wrapper.py",
+      "line": 6,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "flightrl/rpg_baselines/envs/vec_env_wrapper.py:6 FlightEnvVec environment class"
+    ],
+    "upstream_tests": "flightlib/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/uzh-rpg__flightmare --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

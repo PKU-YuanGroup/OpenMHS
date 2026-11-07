@@ -1,0 +1,96 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.dh-ng/tacex",
+  "track": "robots",
+  "local_path": "robots/dh-ng/tacex",
+  "driver_dir": "MHS/drivers/robots/dh-ng__tacex",
+  "upstream": {
+    "repo_url": "https://github.com/dh-ng/tacex",
+    "commit": "adceed41afb7cb48f9ec1f66a662fb8e5a06627f",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 106,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "tacex_tasks.ball_rolling_privileged.base_env:BallRollingEnv",
+      "file": "source/tacex_tasks/tacex_tasks/ball_rolling_privileged/base_env.py",
+      "line": 235,
+      "confidence": "override"
+    },
+    {
+      "symbol": "tacex_tasks.ball_rolling_tactile.ball_rolling_tactile_rgb:BallRollingTactileRGBEnv",
+      "file": "source/tacex_tasks/tacex_tasks/ball_rolling_tactile/ball_rolling_tactile_rgb.py",
+      "line": 433,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/tacex_tasks/tacex_tasks/ball_rolling_privileged/__init__.py:20 gym env TacEx-Ball-Rolling-Privileged-v0",
+      "source/tacex_tasks/tacex_tasks/ball_rolling_privileged/__init__.py:39 gym env TacEx-Ball-Rolling-Privileged-Reset-with-IK-solver_v0",
+      "source/tacex_tasks/tacex_tasks/ball_rolling_privileged/__init__.py:58 gym env TacEx-Ball-Rolling-Privileged-Without-Reaching_v0",
+      "source/tacex_tasks/tacex_tasks/ball_rolling_tactile/__init__.py:19 gym env TacEx-Ball-Rolling-Tactile-Depth-v1"
+    ],
+    "upstream_tests": "source/tacex/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env TacEx-Ball-Rolling-Privileged-v0 registered at source/tacex_tasks/tacex_tasks/ball_rolling_privileged/__init__.py:20",
+      "gym env TacEx-Ball-Rolling-Privileged-Reset-with-IK-solver_v0 registered at source/tacex_tasks/tacex_tasks/ball_rolling_privileged/__init__.py:39",
+      "gym env TacEx-Ball-Rolling-Privileged-Without-Reaching_v0 registered at source/tacex_tasks/tacex_tasks/ball_rolling_privileged/__init__.py:58",
+      "gym env TacEx-Ball-Rolling-Tactile-Depth-v1 registered at source/tacex_tasks/tacex_tasks/ball_rolling_tactile/__init__.py:19",
+      "gym env TacEx-Ball-Rolling-Tactile-RGB-v0 registered at source/tacex_tasks/tacex_tasks/ball_rolling_tactile/__init__.py:35",
+      "gym env TacEx-Ball-Rolling-Taxim-Fots-v0 registered at source/tacex_tasks/tacex_tasks/ball_rolling_tactile/__init__.py:50",
+      "gym env TacEx-Ball-Rolling-Tactile-RGB-Uipc-v0 registered at source/tacex_tasks/tacex_tasks/ball_rolling_tactile/__init__.py:66",
+      "gym env TacEx-Factory-PegInsert-Direct-v0 registered at source/tacex_tasks/tacex_tasks/factory/__init__.py:17",
+      "gym env TacEx-Factory-GearMesh-Direct-v0 registered at source/tacex_tasks/tacex_tasks/factory/__init__.py:28",
+      "gym env TacEx-Factory-NutThread-Direct-v0 registered at source/tacex_tasks/tacex_tasks/factory/__init__.py:39",
+      "gym env TacEx-Pole-Balancing-Base-v0 registered at source/tacex_tasks/tacex_tasks/pole_balancing/__init__.py:20",
+      "gym env TacEx-Repose-Cube-Allegro-v0 registered at source/tacex_tasks/tacex_tasks/inhand/config/allegro_hand/__init__.py:18"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license",
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/dh-ng__tacex --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

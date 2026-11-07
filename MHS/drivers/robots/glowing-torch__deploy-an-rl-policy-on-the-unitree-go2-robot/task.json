@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.glowing-torch/deploy-an-rl-policy-on-the-unitree-go2-robot",
+  "track": "robots",
+  "local_path": "robots/glowing-torch/deploy-an-rl-policy-on-the-unitree-go2-robot",
+  "driver_dir": "MHS/drivers/robots/glowing-torch__deploy-an-rl-policy-on-the-unitree-go2-robot",
+  "upstream": {
+    "repo_url": "https://github.com/glowing-torch/deploy-an-rl-policy-on-the-unitree-go2-robot",
+    "commit": "dbb7b3112cef08ffc9f6f2c63412144d20341222",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "SDK_BUG"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 46,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "resources/go2/scene_terrain.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "resources/go2/go2.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "resources/go2/scene_terrain.xml:1 MJCF scene model",
+      "resources/go2/go2.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model resources/go2/scene_terrain.xml:1",
+      "MJCF robot model resources/go2/go2.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/glowing-torch__deploy-an-rl-policy-on-the-unitree-go2-robot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

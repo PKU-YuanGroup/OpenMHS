@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.pufferai/pokegym",
+  "upstream": {
+    "repo_url": "https://github.com/pufferai/pokegym",
+    "commit": "9050f7ae43e21b9337ac5ae407d37e6eb34ca03f",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.py:11-15 requires pyboy<2.0.0, gymnasium>=0.29 and numpy; the upstream environment also imports skimage, mediapy and matplotlib (environment.py:5-16,24) and reads a Pokemon Red ROM (pyboy_binding.py:43). The gate and the fake backend need none of them: fake.py is pure Python, and package code never imports the clone. Install and supply the ROM only to serve the real environment, which was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakePokeGymEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-061",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

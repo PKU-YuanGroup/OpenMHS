@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.oceanworldlabs/oceanscale",
+  "upstream": {
+    "repo_url": "https://github.com/oceanworldlabs/oceanscale",
+    "commit": "84f6cc4ce3dcf7cb4a53e2e9d2e81f541b0c63f2",
+    "license_spdx": "Apache-2.0"
+  },
+  "install": {
+    "python": ">=3.12,<3.14",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any",
+    "notes": "The upstream simulator requires Linux x86_64 and an NVIDIA GPU with CUDA 12.8+ (README.md:14-20) and pulls CUDA-enabled wheels of warp-lang, newton and torch (pyproject.toml:27-30, ~10 GB). The gate and the fake backend need none of it: fake.py is pure Python and package code never imports the clone. Install the upstream only to serve a real environment, which was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeROVEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wD-050",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

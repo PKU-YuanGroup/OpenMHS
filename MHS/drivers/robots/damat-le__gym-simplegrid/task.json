@@ -1,0 +1,78 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.damat-le/gym-simplegrid",
+  "track": "robots",
+  "local_path": "robots/damat-le/gym-simplegrid",
+  "driver_dir": "MHS/drivers/robots/damat-le__gym-simplegrid",
+  "upstream": {
+    "repo_url": "https://github.com/damat-le/gym-simplegrid",
+    "commit": "6ded2fcf684727b27b5569688cad6f92bc3bc52b",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 89,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_simplegrid.envs:SimpleGridEnv",
+      "file": "gym_simplegrid/envs/simple_grid.py",
+      "line": 12,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_simplegrid/__init__.py:21 gym env SimpleGrid-v0",
+      "gym_simplegrid/__init__.py:28 gym env SimpleGrid-4x4-v0",
+      "gym_simplegrid/__init__.py:36 gym env SimpleGrid-8x8-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env SimpleGrid-v0 registered at gym_simplegrid/__init__.py:21",
+      "gym env SimpleGrid-4x4-v0 registered at gym_simplegrid/__init__.py:28",
+      "gym env SimpleGrid-8x8-v0 registered at gym_simplegrid/__init__.py:36"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/damat-le__gym-simplegrid --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

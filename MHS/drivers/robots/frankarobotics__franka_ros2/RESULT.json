@@ -1,0 +1,71 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:ac2616df9ac90d9d7989c50feefd504010dadac7ca59d3ee333bcfc21f7b90ae",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.frankarobotics.spine_move.v1",
+      "reason": "The upstream MoveAbsolute action commands one linear spine axis in metres; cap.motion.joint_position.v1 requires radians and a joint_positions array, so binding it would change the device's unit and shape.",
+      "verb": "invoke",
+      "summary": "Move the Franka Spine to an absolute linear position in metres with a velocity, acceleration and deceleration.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.frankarobotics.spine_halt.v1",
+      "reason": "cap.motion.stop.v1 exposes an optional deceleration input; the upstream Halt service has a fixed empty request, so that class would advertise a control the service cannot apply. The upstream halt also re-arms to SwitchedOn and is not the safe state.",
+      "verb": "invoke",
+      "summary": "Halt an ongoing spine motion through the acknowledged Halt service; the upstream quick-stops and then re-arms.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.frankarobotics.spine_switch_off.v1",
+      "reason": "No catalogue class describes an input-free drive switch-off that transitions a motion axis to SwitchedOff and serves as the safe state; cap.motion.estop.v1 is the runtime latch, not this acknowledged service.",
+      "verb": "invoke",
+      "summary": "Switch the spine drive off through the acknowledged SwitchOff service; this is the input-free safe state.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.frankarobotics.battery_state.v1",
+      "reason": "cap.sensing.read.v1 is restricted to the sensor, sensor.imu and sensor.force_torque resource kinds; this device is motion.axis, and the upstream observation is the sensor_msgs/BatteryState message with battery-specific charge, temperature, status and location fields.",
+      "verb": "read",
+      "summary": "Read one sensor_msgs/BatteryState sample from the battery node's private topic.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.frankarobotics.wireless_charge_stop.v1",
+      "reason": "No catalogue class covers wireless-charging stop; the upstream interface is a fixed-request std_srvs/Trigger service whose success is an application acknowledgement, not a measured charging state.",
+      "verb": "invoke",
+      "summary": "Stop wireless charging through the acknowledged Trigger service.",
+      "similar": []
+    },
+    {
+      "capability_id": "x-cap.frankarobotics.wireless_charge_start.v1",
+      "reason": "No catalogue class covers an attempt to start wireless charging; the upstream interface is a fixed-request std_srvs/Trigger service whose success is an application acknowledgement, not a measured charging state.",
+      "verb": "invoke",
+      "summary": "Attempt to start wireless charging through the acknowledged Trigger service.",
+      "similar": []
+    },
+    {
+      "capability_id": "x-cap.frankarobotics.spine_switch_on.v1",
+      "reason": "No catalogue class describes an input-free drive switch-on that transitions a motion axis to SwitchedOn and serves as the declared re-enable after a safety reset (CORE-086); the cap.motion classes command motion or stop it, not drive enablement.",
+      "verb": "invoke",
+      "summary": "Switch the spine drive on through the acknowledged SwitchOn service; the declared re-enable after a safety reset.",
+      "similar": []
+    }
+  ],
+  "notes": "PASS on the fake backend only (evidence contract_checked); no hardware, live ROS graph, rosbridge connection or upstream simulator run is claimed. The package is model-authored and unreviewed: driver.lock.json reviewed_by stays null, so the RosDriver hardware backend is refused until a human signs it. The card's entry symbols were confirmed in the clone: BatteryController (franka_mobile/franka_mobile/battery_controller.py:86), SpineController (franka_spine/franka_spine_server/franka_spine_server/spine_controller.py:222), BatteryApiClient (franka_mobile/franka_mobile/battery_api_client.py:22) and SpineApiClient (franka_spine/franka_spine_server/franka_spine_server/spine_api_client.py:27). The card's RosDriver/ros helper is correct: the driver binds the concrete ROS 2 spine and battery nodes that wrap those controllers; there is no fabricated Python native and no native.py. No DEVIATION FROM THE CARD is needed. The card's candidate classes were not usable as-is: cap.motion.joint_position.v1 is radians and a joint array, cap.motion.stop.v1 carries a deceleration input the fixed Halt request cannot apply, and cap.sensing.read.v1 is restricted to sensor kinds; the extension ids and reasons are in catalogue_requests. Scope: the private MoveAbsolute action, the private Halt and SwitchOff services, the private position and state topics, the private battery-state topic and the two private Trigger charging services. The resource snapshot uses the position and state topics, as the upstream documentation recommends, rather than polling the services. NOT COVERED: the spine get_state and get_position services are not separately bound (the topics are used); get_parameters_spine, fault_reset and switch_on are not exposed; the swerve mobile base, arm joint control, gripper, MoveIt and camera paths are out of scope; the battery message's voltage, current, charge, capacity, design_capacity, technology and health fields are not exposed; the charging services' actual electrical effect is not sensed; the installed spine's GetParameters user limits are not read by this driver. Every move input is Limit.operator_required because the repository states no numeric travel range or maximum and the 0.0 UserLimitsData values are dataclass defaults, not device bounds. site-limits.example.json is only an example operator overlay; its 0.0-0.5 m position, 0.01-0.2 m/s velocity and 0.05-1.0 m/s2 acceleration/deceleration ranges are deployment placeholders, not upstream facts, and an operator must replace them with the installed spine's limits. Without an overlay every move is refused MHS.SAFETY.LIMITS_UNSET. Safety: the device is R2 (powered linear axis on the TMR mobile manipulator). No physical e-stop is documented in the clone, so estop_physical_ref is not claimed; the independent stop is the input-free Action(safe_state=True) x-cap.frankarobotics.spine_switch_off.v1, also bound as the native estop service. The runtime latches in software before calling it. switch_off acknowledges the REST transition to SwitchedOff, which disables motion, but it does not sense position, velocity or quiescence; normal safe-state invocation alone does not engage the e-stop latch. The upstream halt service is exposed but is deliberately not the safe state: it quick-stops, waits for SwitchedOff and re-arms to SwitchedOn. During an e-stop the runtime calls switch_off as the native stop, runs the safe-state action and cancels a running MoveAbsolute goal; ordinary motion and the halt extension are refused while latched, while the safe-state switch_off remains callable and observational extension actions remain latched even with verb read. Fake and fidelity: fake.py is a ROS-free RecordingRosTransport, not a simulator; it answers the declared subscribe, call_service, send_action_goal and cancel_action_goal messages synchronously with canned events and runs no ROS node, physics, wall-clock pacing, reset or snapshot/restore. Its action result is immediate, so the fake does not demonstrate real stop latency [...]\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Blocked pending ROS safety freshness repair. Preserved the author fake-gate result and digest; its immediate fake action did not exercise pending cancellation. Pinned upstream cancellation quick-stops and re-arms the spine to SwitchedOn. Event-driven stock-path reproduction shows a completed achieved=true stop receipt escaping before that re-arm, and cached safety remains true in the re-armed/pre-terminal window; a later stop does repair final state. A separate ordinary halt service can also re-arm while retaining the earlier safe acknowledgement. The helper must retain unresolved action/service execution and require a fresh acknowledged stop after completion. Changed RESULT.json only. Source pin, author identity, driver.lock.json and null reviewed_by are unchanged. No live ROS graph or hardware safety is validated; private source evidence and reproductions are in completion-audit/franka-ros-wave under the active build run.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Accepted source corrections; still blocked on SDK_BUG. Actual core passes 93 tests and package passes 20 behavioral cases. G1-G7 pass; G8 TSAFE-001 fails because reset leaves the drive SwitchedOff; G9 skips. Explicit recovery needs review; do not auto-rearm. Changed driver.py, fake.py, facts.md, reference.json, REFERENCE.md, RESULT.json, check-report.json; added test_safety_freshness.py, test_source_contract.py, fixtures/battery-wire.json. Positive input domains preserve site limits; invalid observations are null with paired validity. Pending callbacks require terminal plus fresh stop before achieved safety. All 25 Facts match 11 pinned blobs. Controlled ROS2 BatteryState NaNs become JSON null; this is not physical battery evidence. Source pin, DeepSeek authorship and driver.lock.json are unchanged. Current gate digest/report supersede historical author evidence. No hardware or native deployment validation is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: synced task.json and RESULT.json metadata.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): PASS after repair; supersedes the SDK_BUG block. With the SDK's declared re-enable (CORE-086, SAFE-042; MHS/changes/RE-ENABLE-AND-TERMINAL-STOP.md), ~/switch_on (spine_action_server.py:90-95, :242-248) is x-cap.frankarobotics.spine_switch_on.v1, Action(reenable=True): refused while latched, never run by the reset, named in the reset receipt; TSAFE-001 sends it before its recovery move. Five Facts; switch_on is no longer NOT COVERED. The notes say that ~/halt (spine_controller.py:318-334) and a cancelled move (:404-434) re-arm too. An e-stop during a move now answers only after the move settled and the stop ran again (command_in_flight); two cases show it, the stock e-stop case runs from a thread. G1-G9 pass, no finding; 27 cases. Changed driver.py, fake.py, facts.md, test_driver.py, test_safety_freshness.py, reference.json, REFERENCE.md, RESULT.json, check-report.json. Pin, DeepSeek authorship, driver.lock.json unchanged. No ROS graph, hardware or human review.\n\nMODEL REVIEW (claude-sonnet-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Different-model review of the repair by claude-opus-5-5 with the SDK change RE-ENABLE-AND-TERMINAL-STOP (the user chose Claude Sonnet as the different model, 2026-11-04): MODEL REVIEW (claude-sonnet-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): ~/switch_on is the upstream's switch-on and nothing more, it has no reset binding, and the halt and cancel re-arm paths are now disclosed (S7-08); the command_in_flight cases cover the cancelled-move re-arm. Gate and --strict pass."
+}

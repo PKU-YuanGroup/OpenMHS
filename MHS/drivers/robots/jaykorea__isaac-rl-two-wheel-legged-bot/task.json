@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jaykorea/isaac-rl-two-wheel-legged-bot",
+  "track": "robots",
+  "local_path": "robots/jaykorea/isaac-rl-two-wheel-legged-bot",
+  "driver_dir": "MHS/drivers/robots/jaykorea__isaac-rl-two-wheel-legged-bot",
+  "upstream": {
+    "repo_url": "https://github.com/jaykorea/isaac-rl-two-wheel-legged-bot",
+    "commit": "d922cce9e07a8877c37e12b2cb39dfdcf34b9d40",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 47,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "lab.flamingo.isaaclab.isaaclab.envs:ManagerBasedConstraintRLEnv",
+      "file": "lab/flamingo/isaaclab/isaaclab/envs/manager_based_constraint_rl_env.py",
+      "line": 29,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "lab/flamingo/tasks/constraint_based/locomotion/velocity/flamingo_edu_env/__init__.py:22 gym env Isaac-Velocity-Flat-Flamingo-Edu-v1-ppo-constraint",
+      "lab/flamingo/tasks/constraint_based/locomotion/velocity/flamingo_edu_env/__init__.py:32 gym env Isaac-Velocity-Flat-Flamingo-Edu-Play-v1-ppo-constraint",
+      "lab/flamingo/tasks/constraint_based/locomotion/velocity/flamingo_env/__init__.py:22 gym env Isaac-Velocity-Flat-Flamingo-v1-ppo-constraint",
+      "lab/flamingo/tasks/constraint_based/locomotion/velocity/flamingo_env/__init__.py:32 gym env Isaac-Velocity-Flat-Flamingo-Play-v1-ppo-constraint"
+    ],
+    "upstream_tests": "lab/flamingo/tasks/manager_based/manipulation/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Isaac-Velocity-Flat-Flamingo-Edu-v1-ppo-constraint registered at lab/flamingo/tasks/constraint_based/locomotion/velocity/flamingo_edu_env/__init__.py:22",
+      "gym env Isaac-Velocity-Flat-Flamingo-Edu-Play-v1-ppo-constraint registered at lab/flamingo/tasks/constraint_based/locomotion/velocity/flamingo_edu_env/__init__.py:32",
+      "gym env Isaac-Velocity-Flat-Flamingo-v1-ppo-constraint registered at lab/flamingo/tasks/constraint_based/locomotion/velocity/flamingo_env/__init__.py:22",
+      "gym env Isaac-Velocity-Flat-Flamingo-Play-v1-ppo-constraint registered at lab/flamingo/tasks/constraint_based/locomotion/velocity/flamingo_env/__init__.py:32",
+      "gym env Isaac-Backflip-Flat-Flamingo-v1-ppo-constraint registered at lab/flamingo/tasks/constraint_based/locomotion/velocity/flamingo_env/__init__.py:45",
+      "gym env Isaac-Backflip-Flat-Flamingo-Play-v1-ppo-constraint registered at lab/flamingo/tasks/constraint_based/locomotion/velocity/flamingo_env/__init__.py:55",
+      "gym env Isaac-Position-Flat-Flamingo-v1-ppo registered at lab/flamingo/tasks/manager_based/locomotion/position/flamingo_env/__init__.py:21",
+      "gym env Isaac-Position-Flat-Flamingo-v1-ppo-Play registered at lab/flamingo/tasks/manager_based/locomotion/position/flamingo_env/__init__.py:31",
+      "gym env Isaac-Position-Rough-Flamingo-v1-ppo registered at lab/flamingo/tasks/manager_based/locomotion/position/flamingo_env/__init__.py:42",
+      "gym env Isaac-Position-Rough-Flamingo-v1-ppo-Play registered at lab/flamingo/tasks/manager_based/locomotion/position/flamingo_env/__init__.py:52",
+      "gym env Isaac-Velocity-Rough-4w4l-ppo registered at lab/flamingo/tasks/manager_based/locomotion/velocity/flamingo_4w4l_env/__init__.py:19",
+      "gym env Isaac-Velocity-Rough-4w4l-ppo-Play registered at lab/flamingo/tasks/manager_based/locomotion/velocity/flamingo_4w4l_env/__init__.py:29"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jaykorea__isaac-rl-two-wheel-legged-bot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

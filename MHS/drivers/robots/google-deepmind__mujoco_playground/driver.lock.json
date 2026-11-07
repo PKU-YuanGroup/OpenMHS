@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.google-deepmind/mujoco_playground",
+  "upstream": {
+    "repo_url": "https://github.com/google-deepmind/mujoco_playground",
+    "commit": "d59156e099a8785dd58fbce2e25a6ee1f7b5800c",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any",
+    "notes": "pyproject.toml:12 requires Python 3.11 or newer; pyproject.toml:24-38 lists mujoco and mujoco-mjx 3.6.0 or newer together with jax, flax, brax and warp-lang. The acceptance gate and fake.py need none of them: fake.py is pure Python and reads the MJCF text, and the gate never installs or imports the upstream package or MuJoCo. Install the upstream stack only to serve the model with the real engine (backend sim), which was not run here."
+  },
+  "backends": {
+    "fake": ".fake:FakeMujoco"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-214",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

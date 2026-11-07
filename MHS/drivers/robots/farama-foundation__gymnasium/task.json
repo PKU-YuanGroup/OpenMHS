@@ -1,0 +1,138 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.farama-foundation/gymnasium",
+  "track": "robots",
+  "local_path": "robots/farama-foundation/gymnasium",
+  "driver_dir": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "upstream": {
+    "repo_url": "https://github.com/farama-foundation/gymnasium",
+    "commit": "d77197c284406e6094c9d1a74d4988a8749ce849",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:exemplar",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 0,
+  "rank": 1,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gymnasium.envs.classic_control.cartpole:CartPoleEnv",
+      "file": "gymnasium/envs/classic_control/cartpole.py",
+      "line": 21,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gymnasium.envs.classic_control.mountain_car:MountainCarEnv",
+      "file": "gymnasium/envs/classic_control/mountain_car.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gymnasium.envs.classic_control.continuous_mountain_car:Continuous_MountainCarEnv",
+      "file": "gymnasium/envs/classic_control/continuous_mountain_car.py",
+      "line": 26,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gymnasium.envs.classic_control.pendulum:PendulumEnv",
+      "file": "gymnasium/envs/classic_control/pendulum.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gymnasium.envs.classic_control.acrobot:AcrobotEnv",
+      "file": "gymnasium/envs/classic_control/acrobot.py",
+      "line": 26,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "gymnasium/envs/mujoco/assets/ant.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "gymnasium/envs/mujoco/assets/half_cheetah.xml",
+      "line": 35,
+      "kind": "robot"
+    },
+    {
+      "file": "gymnasium/envs/mujoco/assets/hopper.xml",
+      "line": 6,
+      "kind": "robot"
+    },
+    {
+      "file": "gymnasium/envs/mujoco/assets/humanoid.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "gymnasium/envs/mujoco/assets/humanoidstandup.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gymnasium/envs/__init__.py:18 gym env CartPole-v0",
+      "gymnasium/envs/__init__.py:26 gym env CartPole-v1",
+      "gymnasium/envs/__init__.py:34 gym env MountainCar-v0",
+      "gymnasium/envs/__init__.py:41 gym env MountainCarContinuous-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env CartPole-v0 registered at gymnasium/envs/__init__.py:18",
+      "gym env CartPole-v1 registered at gymnasium/envs/__init__.py:26",
+      "gym env MountainCar-v0 registered at gymnasium/envs/__init__.py:34",
+      "gym env MountainCarContinuous-v0 registered at gymnasium/envs/__init__.py:41",
+      "gym env Pendulum-v1 registered at gymnasium/envs/__init__.py:48",
+      "gym env Acrobot-v1 registered at gymnasium/envs/__init__.py:54",
+      "gym env phys2d/CartPole-v0 registered at gymnasium/envs/__init__.py:65",
+      "gym env phys2d/CartPole-v1 registered at gymnasium/envs/__init__.py:74",
+      "gym env phys2d/Pendulum-v0 registered at gymnasium/envs/__init__.py:83",
+      "gym env LunarLander-v3 registered at gymnasium/envs/__init__.py:94",
+      "gym env LunarLanderContinuous-v3 registered at gymnasium/envs/__init__.py:101",
+      "gym env BipedalWalker-v3 registered at gymnasium/envs/__init__.py:109"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/farama-foundation__gymnasium --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example UR10e fake-hardware site (test data only)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example operator overlay only. The ur10e joint_limits.yaml writes position bounds with the !degrees tag, so those literals are degrees and are not copied here as radians. The clone states no trajectory Duration bound. Every number below is test data for the fake harness, not a Universal Robots limit and not a conversion of the degree tags. A deployment replaces this file with its own envelope.",
+  "devices": {
+    "mhs://localhost/ur10e_arm": {
+      "x-cap.qdeyna.arm_trajectory.v1": {
+        "points[*].positions": {
+          "min": -1.0,
+          "max": 1.0,
+          "unit": "rad",
+          "source": "operator",
+          "reason": "example joint-position envelope for the test harness; the deployed site supplies its own radian bounds"
+        },
+        "points[*].time_from_start.sec": {
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "source": "operator",
+          "reason": "example trajectory time envelope for the test harness; the deployed site supplies its own bound"
+        },
+        "points[*].time_from_start.nanosec": {
+          "min": 0,
+          "max": 999999999,
+          "unit": "ns",
+          "source": "operator",
+          "reason": "example nanosecond range for the test harness; the deployed site supplies its own bound"
+        }
+      }
+    }
+  }
+}

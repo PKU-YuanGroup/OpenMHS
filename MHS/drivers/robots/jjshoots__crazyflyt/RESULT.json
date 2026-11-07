@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:ebb4c32dde651a4ac64e5544effff2cc8185132c30d894d957dec0801112f31a",
+    "failed": []
+  },
+  "notes": "DEVIATION FROM THE CARD: the card names the PythonObjectDriver family helper (family python-object); this package is a direct Driver because the upstream interface is a stateful object with a background control thread, a four-number setpoint, a position/velocity mode flag and read state. The writable pos_control flag is served by cap.device.configure.v1; the two setpoint motion actions and the halt are extensions. The card's mock_strategy prefers the upstream Simulator, but that class imports PyFlyt/pybullet and the task forbids importing the clone, so fake.py is a package fake that implements only DroneController members. NOT COVERED: flight dynamics and the radio link; the fake stores setpoints and flags and leaves position_estimate at the constructor's zero array (the real estimate is the same four-number array, x, y, z, yaw, read in full). The clone states no numeric setpoint envelope, so every motion input is Limit.operator_required and hardware use refuses it with MHS.SAFETY.LIMITS_UNSET until a site overlay is installed; site-limits.example.json is an example site choice, not a device limit. The clone states no unit for vx, vy and vz, so those fields use UCUM '1' and the raw values passed to send_velocity_world_setpoint; yaw and yaw_rate are rad and rad/s because the code converts the fourth value from radians to degrees. The clone documents no independent hardware e-stop, so estop_physical_ref is not set; SAFE-045 is met by the safe-state action x-cap.jjshoots.halt.v1, and both the e-stop and that action are the software stop() path (running false, then send_stop_setpoint every period), which does not cut power and leaves the link open. Nothing ran on hardware or on the upstream simulator; the evidence is contract_checked on the fake backend.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata synchronization only; preserve the prior result decision. Copied task.json from the regenerated registry after a rank-only change (42 to 41); changed RESULT.json to record this synchronization. No source entry, contract, safety decision, attribution or human signature changed. Originals are preserved under work/handoff-runs/mhs-build-20261102/originals/rank-only-card-sync/.",
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.jjshoots.position_setpoint.v1",
+      "reason": "No catalogue class carries a flying base's world-frame (x, y, z, yaw) position setpoint in m and rad. cap.motion.cartesian_pose.v1 is bound to robot.arm and takes a base-frame tool pose in mm with roll, pitch and yaw; cap.motion.mobile_base.v1 carries a planar scalar linear velocity, an angular velocity and a duration, with no z or world yaw target.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.jjshoots.velocity_setpoint.v1",
+      "reason": "No catalogue class carries a 3-D world-frame velocity (vx, vy, vz) with a yaw rate. cap.motion.mobile_base.v1 has a scalar linear_velocity, an angular_velocity and a duration_s, and binding it would change the four-value setpoint semantics of DroneController.set_setpoint.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.jjshoots.halt.v1",
+      "reason": "cap.motion.stop.v1 declares a deceleration input and a stopping position; the upstream stop() only clears running so the control thread sends the firmware stop setpoint, with no deceleration control and no observable stopping position. The safe-state extension reports only stop_requested and does not claim a physical stop.",
+      "verb": "invoke"
+    }
+  ]
+}

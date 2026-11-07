@@ -1,0 +1,106 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.svengronauer/phoenix-drone-simulation",
+  "track": "robots",
+  "local_path": "robots/svengronauer/phoenix-drone-simulation",
+  "driver_dir": "MHS/drivers/robots/svengronauer__phoenix-drone-simulation",
+  "upstream": {
+    "repo_url": "https://github.com/svengronauer/phoenix-drone-simulation",
+    "commit": "c5d690732976351f5bbea4161913d98c376a4f04",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 95,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "phoenix_drone_simulation.envs.hover:DroneHoverSimpleEnv",
+      "file": "phoenix_drone_simulation/envs/hover.py",
+      "line": 253,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "phoenix_drone_simulation.envs.hover:DroneHoverBulletEnv",
+      "file": "phoenix_drone_simulation/envs/hover.py",
+      "line": 269,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "phoenix_drone_simulation.envs.takeoff:DroneTakeOffSimpleEnv",
+      "file": "phoenix_drone_simulation/envs/takeoff.py",
+      "line": 221,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "phoenix_drone_simulation.envs.takeoff:DroneTakeOffBulletEnv",
+      "file": "phoenix_drone_simulation/envs/takeoff.py",
+      "line": 234,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "phoenix_drone_simulation.envs.circle:DroneCircleSimpleEnv",
+      "file": "phoenix_drone_simulation/envs/circle.py",
+      "line": 286,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "phoenix_drone_simulation/__init__.py:8 gym env DroneHoverSimpleEnv-v0",
+      "phoenix_drone_simulation/__init__.py:14 gym env DroneHoverBulletEnv-v0",
+      "phoenix_drone_simulation/__init__.py:24 gym env DroneTakeOffSimpleEnv-v0",
+      "phoenix_drone_simulation/__init__.py:30 gym env DroneTakeOffBulletEnv-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env DroneHoverSimpleEnv-v0 registered at phoenix_drone_simulation/__init__.py:8",
+      "gym env DroneHoverBulletEnv-v0 registered at phoenix_drone_simulation/__init__.py:14",
+      "gym env DroneTakeOffSimpleEnv-v0 registered at phoenix_drone_simulation/__init__.py:24",
+      "gym env DroneTakeOffBulletEnv-v0 registered at phoenix_drone_simulation/__init__.py:30",
+      "gym env DroneCircleSimpleEnv-v0 registered at phoenix_drone_simulation/__init__.py:40",
+      "gym env DroneCircleBulletEnv-v0 registered at phoenix_drone_simulation/__init__.py:46"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/svengronauer__phoenix-drone-simulation --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

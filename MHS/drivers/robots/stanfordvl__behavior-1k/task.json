@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.stanfordvl/behavior-1k",
+  "track": "robots",
+  "local_path": "robots/stanfordvl/behavior-1k",
+  "driver_dir": "MHS/drivers/robots/stanfordvl__behavior-1k",
+  "upstream": {
+    "repo_url": "https://github.com/stanfordvl/behavior-1k",
+    "commit": "cd484e0477e79bf1f17d373af232c53431ccc660",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 31,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "omnigibson.envs.env_base:Environment",
+      "file": "OmniGibson/omnigibson/envs/env_base.py",
+      "line": 38,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "OmniGibson/omnigibson/envs/env_base.py:38 Environment environment class"
+    ],
+    "upstream_tests": "OmniGibson/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/stanfordvl__behavior-1k --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

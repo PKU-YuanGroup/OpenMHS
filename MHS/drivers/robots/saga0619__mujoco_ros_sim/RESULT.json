@@ -1,0 +1,56 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "gate": {
+    "digest": "sha256:701b91f2fe2c7bcb7ae37aed17db4aa137865d2a293254a37a9370998177e745",
+    "failed": [
+      "G6",
+      "G8"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.saga0619.joint_position_command.v1",
+      "reason": "No catalogue class binds a fire-and-forget mujoco_ros_msgs/JointSet publication on /mujoco_ros_interface/joint_set. cap.motion.joint_position.v1 binds robot.arm or motion.axis and requires reached/joint_positions output; the upstream callback only copies msg->position into command[] and publishes no acknowledgement, reached state or tolerance.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.saga0619.joint_torque_command.v1",
+      "reason": "No catalogue class binds a fire-and-forget mujoco_ros_msgs/JointSet torque publication. cap.motion.joint_torque.v1 binds robot.arm or motion.axis and reports applied torques; the upstream callback copies msg->torque into command[] with no acknowledgement, and the loaded model's actuator count is not a catalogue fact.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.joint_torque.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.saga0619.joint_states.v1",
+      "reason": "No catalogue class carries one sensor_msgs/JointState document: names, position, velocity and the upstream's qacc-in-effort field. cap.sensing.read.v1 is a named-channel scalar read with an open values object, not this message vector.",
+      "verb": "read",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.saga0619.sensor_states.v1",
+      "reason": "No catalogue class carries a mujoco_ros_msgs/SensorState document of SensorBase entries, each with a model-defined name and a variable-length data array. cap.sensing.read.v1 is a scalar named-channel read, not this model-sized sensor document.",
+      "verb": "read",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.saga0619.sim_time.v1",
+      "reason": "No catalogue class observes a bare std_msgs/Float32 simulation-time sample. cap.world.step.v1 and cap.world.reset.v1 are effectful simulation controls, not a raw simulation-clock observation.",
+      "verb": "read"
+    }
+  ],
+  "notes": "BLOCKED (HELPER_MISSING): the pinned upstream is a ROS 1 topic-only bridge. Its primary control is a fire-and-forget mujoco_ros_msgs/JointSet publication; the repository contains no ROS service or action. The only stop-like ROS inputs are std_msgs/String payloads on /mujoco_ros_interface/sim_command_con2sim: 'pause' toggles settings.run (a second message resumes) and 'mjreset' sets reset_request, which rosPollEvents consumes with c_reset and which then reruns a RESET/INIT controller handshake with up to 1.0 s waits (mujoco_ros/src/mjros.cpp:98-129, 146-153, 5-43, 442-498). Neither payload is acknowledged, and no mujoco_ros node publishes a pause acknowledgement. RosDriver accepts a safe-state action or e-stop binding only as an acknowledged service or action, so a genuine stop cannot be declared. The package was not reduced to observation-only metadata: the joint command is declared and exercised against the fake. A zero JointSet publication is transmission-only and is not offered as a stop.\n\nLast gate run 2026-11-05T09:05:39Z, backend fake, report digest sha256:fef2c4b4ff2f0ca4aaea9ad57bb3e4e97348204d3a6d4f59876281de5f899f83. G1 pass Layout and isolation; G2 pass Lock; G3 pass Strict resolve; G4 pass Provenance; G5 pass Reference; G6 fail Behaviour with G6.ESTOP_FAILED (mhs.safety.estop status failed, MHS.SAFETY.SAFE_STATE_UNREACHED, estop 'engaged', latch stays engaged; RosBridge reports safe_state achieved false because the effectful ROS control surface has no acknowledged stop); G7 pass Native surface; G8 fail Protocol and surface with G8.CONFORMANCE and G8.TEST TCAP-003 (two JointSet publications return the same transmission-only output and the empty resource snapshot is unchanged, so the gate cannot observe a reached command); G9 NOT_RUN because G6 and G8 failed. There were no G4.REF_VALUE or G4.REF_BINARY warnings.\n\nWHAT WAS AUTHORED: a configuration-only RosDriver for ROS 1. Primary control is x-cap.saga0619.joint_position_command.v1 and x-cap.saga0619.joint_torque_command.v1, each one mujoco_ros_msgs/JointSet publication on /mujoco_ros_interface/joint_set with MODE 0 or MODE 1 and a caller-supplied body time (README.md:38; mujoco_ros_msgs/msg/JointSet.msg:1-10; mujoco_ros/src/main.cpp:164-172; mujoco_ros/src/mjros.cpp:47-96). Observations are one fresh sensor_msgs/JointState sample from /mujoco_ros_interface/joint_states, one fresh mujoco_ros_msgs/SensorState sample from /mujoco_ros_interface/sensor_states, and one fresh std_msgs/Float32 sample from /mujoco_ros_interface/sim_time (README.md:32-34; mujoco_ros/src/mjros.cpp:270-336). The resource snapshot is deliberately empty: state_publisher runs only while settings.run is true (mujoco_ros/src/mjros.cpp:504-508), so the three topics are explicit observations and a paused simulator waits for the observation deadline instead of returning a cached sample. The package declares no numeric Limit: the clone states no joint travel, velocity, torque or sensor range, and the array lengths are properties of the operator's MJCF model (m->nu, m->njnt, m->nsensor, m->sensor_dim), not numbers the clone states.\n\nFAKE AND FIDELITY: fake.py is a ROS-free analytic contract fake implemented with the SDK's RecordingRosTransport; it does not replay captured traffic and it is not an upstream simulator run. It answers the three subscriptions with fixed placeholder samples (smaller than the real model-sized arrays, disclosed in the fidelity gaps) and records JointSet publications. Fidelity is F0, engine 'analytic:ROS contract fake (no physics)', determinism none, timestep_ms 0, realtime_factor 0, reset none, snapshot_restore false. It runs no MuJoCo, mj_step, controller, actuator, contact or sensor model. Every numeric canned value is marked placeholder.\n\nTESTS: test_driver.py keeps the required check_driver(HERE, backend='fake') call and adds eleven repository cases: position-mode publication shape, torque-mode publication shape, refusal of a command without sim_time with no publication sent, the JointState and SensorState observation shapes including the user-information entry, the sim_time sample, a malformed JointState reply as a failed receipt, a silent JointState subscription as a timeout/not-ready receipt, a transport failure as a failed or unknown receipt, the absent acknowledged stop with the latch refusal, and a direct call with a short deadline. The non-gate cases pass locally. The gate case remains the unmodified empty-failed assertion and fails only because of the upstream stop gap and the publication-only TCAP-003 effect.\n\nNOT COVERED: /mujoco_ros_interface/sim_command_con2sim, /mujoco_ros_interface/sim_command_sim2con, /mujoco_ros_interface/applied_ext_force, the SimStatus aggregate pub_mode, the shared-memory transport, the graphical UI, the loaded MJCF model and its actuator/sensor dimensions, endpoint namespace/remapping, rosbridge deployment, live ROS compatibility and any hardware. No hardware was attached, no --backend hardware or --allow-hardware was used, and no upstream simulator or live ROS run is claimed. This package is model-authored; driver.lock.json authored_by is deepseek-v4.1-flash:1017 run ros-wave-c-132 and reviewed_by remains null. RosDriver additionally refuses every hardware backend without a human hardware review. The pinned clone at dcdfd09ac6a4f5fc03c4a0b1a83b3faaf41f94bd was not modified (git status --porcelain empty), and task.json was not edited. The main package manifest leaves its license as TODO (mujoco_ros/package.xml:16), matching the card's NOASSERTION class; publication review remains required.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Confirmed the author's HELPER_MISSING block: the clone has no ROS service or action, and 'pause' and 'mjreset' on sim_command_con2sim are unacknowledged (mjros.cpp:98-129, 146-153). Endpoints, types and message definitions match the pin. Defects: the docstring and both command inputs said the callback ignores an array of the wrong length, but its size check compares the node's own joint_set_msg_.torque buffer, resized to m->nu (mjros.cpp:71-94, 160-161), so a shorter received array is read past its end; a command older than 0.01 s is only logged while cmd_rcv stays set, so the previous command keeps being applied (50-66); outputs claimed unit '1' for values whose units the clone does not state; one fact tied the TODO licence to the card; the fake's ROS 1 headers lacked seq and frame_id. Reviewer corrected the docstring, inputs and licence fact, added three facts and two gaps, dropped the unit claims (driver.py), completed the headers (fake.py), updated facts.md and regenerated reference.json, REFERENCE.md and check-report.json. The gate still fails G6.ESTOP_FAILED and G8 TCAP-003, now with two G8.NO_UNIT warnings (stable digest sha256:701b91f2fe2c7bcb7ae37aed17db4aa137865d2a293254a37a9370998177e745); the eleven package cases pass. The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it. For the human reviewer: Simulation only. Upstream defects for whoever unblocks it: the unchecked JointSet length and the stale command branch above; 'pause' is a toggle, so a repeated pause resumes; mjreset waits up to 2 s for a controller handshake."
+}

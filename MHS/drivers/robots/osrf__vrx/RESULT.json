@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:4f2c65f6dc3388c03def9485be7cc5b9cf3dc6bdf64fd9ec853c11001c75f3a2",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.osrf.clock.v1",
+      "reason": "No catalogue class reads a raw simulation clock. cap.sensing.read.v1 binds sensor, sensor.imu and sensor.force_torque resources, not world.sim, and cap.world.step.v1 is an invoke that advances a world rather than a read of its rosgraph_msgs/Clock publication.",
+      "verb": "read",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.osrf.task-info.v1",
+      "reason": "No catalogue class binds the competition scoring plugin's ros_gz_interfaces/ParamVec task-state publication. cap.sensing.read.v1 does not bind world.sim, and the ParamVec carries task state/score parameters rather than an IMU or force/torque measurement.",
+      "verb": "read",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.osrf.left-thrust.v1",
+      "reason": "No catalogue class binds an unacknowledged std_msgs/Float64 thruster-topic publication. cap.motion.mobile_base.v1 requires linear_velocity, angular_velocity and duration_s and reports measured distance/heading/stopped; the upstream bridge merely forwards the Float64 and acknowledges nothing.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.mobile_base.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.osrf.right-thrust.v1",
+      "reason": "No catalogue class binds an unacknowledged std_msgs/Float64 thruster-topic publication. cap.motion.mobile_base.v1 requires linear_velocity, angular_velocity and duration_s and reports measured distance/heading/stopped; the upstream bridge merely forwards the Float64 and acknowledges nothing.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.mobile_base.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.osrf.left-thrust-position.v1",
+      "reason": "No catalogue class binds a single std_msgs/Float64 joint-position-controller publication. cap.motion.joint_position.v1 binds robot.arm or motion.axis and requires a joint_positions array plus duration_s and a reached result; this is one WAM-V thruster joint command forwarded through the simulator bridge.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.osrf.right-thrust-position.v1",
+      "reason": "No catalogue class binds a single std_msgs/Float64 joint-position-controller publication. cap.motion.joint_position.v1 binds robot.arm or motion.axis and requires a joint_positions array plus duration_s and a reached result; this is one WAM-V thruster joint command forwarded through the simulator bridge.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    }
+  ],
+  "notes": "BLOCKED (HELPER_MISSING) on the missing acknowledged stop for the only effectful ROS surface. Last gate run (2026-11-05T07:40:19Z, backend fake, report digest sha256:a2448865c9c44e90c3108b79a5ccc4063d5eadbe64acc6a8942b98c56583d784): G1 pass Layout and isolation; G2 pass Lock; G3 pass Strict resolve; G4 pass Provenance; G5 pass Reference; G6 fail Behaviour with G6.ESTOP_FAILED ('mhs.safety.estop: status failed, MHS.SAFETY.SAFE_STATE_UNREACHED: the device reports that its safe state was not reached; the latch stays engaged; retrying in the background'); G7 pass Native surface; G8 fail Protocol and surface with G8.CONFORMANCE (MHS-Sim CL3 not achieved, level CL2, failing required test SAFE-028) and G8.TEST SAFE-028 (e-stop receipt failed, safe_state_achieved=False); G9 skip G9.NOT_RUN. G6 and G8 report the same missing stop; no other gate finding was emitted and G4 had no REF_VALUE or REF_BINARY warning.\n\nWHAT WAS AUTHORED: a configuration-only RosDriver for the ROS 2 VRX competition bridge. It exposes /clock (rosgraph_msgs/msg/Clock) and /vrx/task/info (ros_gz_interfaces/msg/ParamVec) as explicit read capabilities, the default WAM-V command topics /wamv/thrusters/{left,right}/{thrust,pos} (std_msgs/msg/Float64) as four effectful x-cap publication actions, and the last Float64 observed on each command topic as four read-only resource fields. The reads are command echoes, not thruster/joint feedback; the package does not use them as stopped-state evidence. The fake is a ROS-free canned RecordingRosTransport (engine 'canned:ROS fake (no physics)', F0, timestep 0, realtime factor 0, no reset/snapshot) and all clock, task-state and echo values are placeholders. The four actions are R2 because they command a simulated mobile vessel; the driver is simulated at R2 and the task risk floor R1 is respected.\n\nWHY THE HELPER CANNOT COMPLETE THIS SURFACE: competition_bridges builds only a ros_gz_bridge parameter_bridge Node (vrx_gz/src/vrx_gz/launch.py:311-318). The clock and task-info bridges are GZ_TO_ROS topics (vrx_gz/src/vrx_gz/bridges.py:88-102); the thruster bridges are ROS_TO_GZ Float64 publications (vrx_gz/src/vrx_gz/payload_bridges.py:152-172); the teleop config names the resolved topics (vrx_gz/config/wamv.yaml:80-81, 91-92, 102-103, 113-114); and the namespace comes from PushRosNamespace(model.model_name) with the default name wamv (vrx_gz/src/vrx_gz/launch.py:384-387, vrx_gz/launch/competition.launch.py:112-115). The pinned clone registers no ROS stop service or action. The world controls are Gazebo Transport: launch.simulation starts ros_gz_sim's gz_sim launch and the paused launch argument only selects -r at process start (vrx_gz/src/vrx_gz/launch.py:214-230), while ScoringPlugin publishes task state on a Gazebo msgs::Param topic (vrx_gz/src/ScoringPlugin.cc:80, 441-442). A zero-thrust publication is transmission-only and is not accepted as an acknowledged stop, so the stock e-stop keeps the software latch engaged and reports [...]\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Confirmed the author's block: the pinned clone creates no ROS service or action (vrx_gz, vrx_ros and the launch files contain no create_service, service bridge or world-control call); competition_bridges and spawn start only ros_gz_bridge topic bridges (launch.py:255-319, 336-387), world pause, step and reset are Gazebo Transport operations, and the four /wamv thruster Float64 publications are unacknowledged, so the stock e-stop fails G6.ESTOP_FAILED and G8 SAFE-028 with the latch held, which is the honest outcome (HELPER_MISSING, the stdr and mvsim precedent). Every endpoint, type, the /wamv namespace (the payload bridges join the PushRosNamespace group, launch.py:345-387) and the operator_required bounds match the source. Left for whoever unblocks it: the clock output schema, fake and test use the ROS 1 Time fields secs/nsecs, but ROS 2 rosgraph_msgs/msg/Clock carries sec/nanosec; the fake's ParamVec value types (string 1, bool 2, integer 4) differ from rcl_interfaces ParameterType (bool 1, integer 2, double 3, string 4) and it omits the header; the four command-echo resource reads subscribe to command topics nobody publishes on a schedule, and a probe with them silent showed mhs.resource.read failing NOT_READY after 2 s and each thruster command waiting 2 s, which the fake hides by answering every subscription at once; the fact citing launch.py:311-318 adds 'returns it' (line 319) and a clone-wide 'no ROS service or action server' claim, and the PushRosNamespace fact adds a 'so ...' inference. The reviewer changed no authored file; the gate re-run rewrote check-report.json with the same findings (stable digest unchanged). For the human reviewer: Simulation only (Gazebo Harmonic, ROS 2 Jazzy). Thruster commands are unacknowledged Float64 topics bridged to the gz thruster and joint-position systems; nothing in the clone confirms a stop. The shipped usv_joy_teleop.py launch starts joy_node and joy_teleop, which publish on the same four /wamv topics (thrust axis scale 1000.0, deadman button 4; wamv.yaml:75-119), so an MHS deployment should not start it. Unblocking needs an acknowledged stop exposed to ROS (for example a world-control service bridged by the operator, which the clone does not configure) or an SDK helper for Gazebo Transport.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Repaired from blocked (HELPER_MISSING) to pass under the user's decision of 2026-11-05 (a stop may cite a locally cloned companion repository at a pinned commit; triage option GZ-TRANSPORT) and the user's authorisation of 2026-11-05 (shallow clones under work/companions, LOCK.json), with the new SDK fresh-sample topic read-back (E2) and operator-run bridges (E3). The card declares the lock companions gazebosim__gz-sim@gz-sim8_8.15.0 (446a4433), gazebosim__ros_gz@1.0.25 (b87d7523) and gazebosim__gz-transport@gz-transport13_13.6.0 (35fef7ea), profile ros2-jazzy-gzsim8 (README.md:7 Harmonic and Jazzy, vrx_gz/CMakeLists.txt:16 gz-sim8). The e-stop is the WorldControl pause on /world/sydney_regatta/control (SimulationRunner.cc:325, 1375-1377, 1443; ros_gz_interfaces.cpp:43-52); it is confirmed only when two fresh /world/sydney_regatta/stats samples, 40 ms or more apart after a discarded first one, report paused true within 600 ms (534, 806-808); estop_latency_ms 1500; both endpoints exist only through the two parameter_bridge arguments of operator_bridges. No unpause is offered (SAFE-042): the Thruster system stores the last thrust (Thruster.cc:517-526) and the joint position controllers the last angle target (JointPositionController.cc:489-492), which cannot be cleared without a joint reading, and waves and wind act on resume; the operator recovers outside MHS. The previous review's open defects are fixed: the clock output is the ROS 2 sec/nanosec, the fake's ParamVec carries a header and the rcl_interfaces parameter types, the four command-echo resource reads are gone (each thruster receipt reports the value sent), and two facts were narrowed to their lines. Files: driver.py, fake.py, test_driver.py, facts.md, driver.lock.json (companions), reference.json, REFERENCE.md, RESULT.json; task.json from the registry.\n\nMODEL REVIEW (claude-sonnet-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Different-model review of the p3-companion-3 work by claude-opus-5-5 (the user chose Claude Sonnet as the different model, 2026-11-04): the same companion pause on /world/sydney_regatta, confirmed by the E2 read-back with operator-run bridges, was checked against the pinned gz-sim, ros_gz and gz-transport lines. The choice to offer no unpause (stored thrust and joint targets, waves and wind act on resume) matches SAFE-042 and is disclosed. The thrust and position Limits remain operator_required. Evidence is fake-backend contract_checked only; collect --strict passes with no digest drift."
+}

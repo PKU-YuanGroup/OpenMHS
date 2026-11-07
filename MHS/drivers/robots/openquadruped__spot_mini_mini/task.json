@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.openquadruped/spot_mini_mini",
+  "track": "robots",
+  "local_path": "robots/openquadruped/spot_mini_mini",
+  "driver_dir": "MHS/drivers/robots/openquadruped__spot_mini_mini",
+  "upstream": {
+    "repo_url": "https://github.com/openquadruped/spot_mini_mini",
+    "commit": "c7e4905be176c63fa0e68a09c177b937e916fa60",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 87,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "spotmicro.spot_gym_env:spotGymEnv",
+      "file": "spotmicro/spot_gym_env.py",
+      "line": 62,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "spotmicro.GymEnvs.spot_bezier_env:spotBezierEnv",
+      "file": "spotmicro/GymEnvs/spot_bezier_env.py",
+      "line": 30,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "mini_bullet.minitaur_gym_env:MinitaurBulletEnv",
+      "file": "spot_bullet/src/mini_bullet/minitaur_gym_env.py",
+      "line": 44,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "spotmicro/spot_gym_env.py:47 gym env SpotMicroEnv-v0",
+      "spotmicro/GymEnvs/spot_bezier_env.py:23 gym env SpotMicroEnv-v1",
+      "spot_bullet/src/mini_bullet/minitaur_gym_env.py:37 gym env MinitaurBulletEnv-v999"
+    ],
+    "upstream_tests": "spot_real/Control/Teensy/SpotMiniMini/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env SpotMicroEnv-v0 registered at spotmicro/spot_gym_env.py:47",
+      "gym env SpotMicroEnv-v1 registered at spotmicro/GymEnvs/spot_bezier_env.py:23",
+      "gym env MinitaurBulletEnv-v999 registered at spot_bullet/src/mini_bullet/minitaur_gym_env.py:37"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/openquadruped__spot_mini_mini --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,96 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.boosterrobotics/booster_train",
+  "track": "robots",
+  "local_path": "robots/boosterrobotics/booster_train",
+  "driver_dir": "MHS/drivers/robots/boosterrobotics__booster_train",
+  "upstream": {
+    "repo_url": "https://github.com/boosterrobotics/booster_train",
+    "commit": "8bb5b53824e0fbcfe69a5cb78a81f4bddb3e2a6e",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 89,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "booster_train.tasks.manager_based.beyond_mimic.robots.t1.motion_tracking.env_cfg:RoughWoStateEstimationEnvCfg",
+      "file": "source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/t1/motion_tracking/env_cfg.py",
+      "line": 50,
+      "confidence": "override"
+    },
+    {
+      "symbol": "booster_train.tasks.manager_based.beyond_mimic.robots.k1.mj_dance_002.env_cfg:RoughWoStateEstimationEnvCfg",
+      "file": "source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/k1/mj_dance_002/env_cfg.py",
+      "line": 46,
+      "confidence": "override"
+    },
+    {
+      "symbol": "booster_train.tasks.manager_based.beyond_mimic.robots.t2.motion_tracking.env_cfg:FlatWoStateEstimationEnvCfg",
+      "file": "source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/t2/motion_tracking/env_cfg.py",
+      "line": 51,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/k1/mj_dance_002/__init__.py:12 gym env Booster-K1-MJ_Dance_002-v0",
+      "source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/k1/mj_dance_002/__init__.py:22 gym env Booster-K1-MJ_Dance_002-v0-Play",
+      "source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/t1/motion_tracking/__init__.py:13 gym env Booster-T1-MotionTracking-v0",
+      "source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/t1/motion_tracking/__init__.py:23 gym env Booster-T1-MotionTracking-v0-Play"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Booster-K1-MJ_Dance_002-v0 registered at source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/k1/mj_dance_002/__init__.py:12",
+      "gym env Booster-K1-MJ_Dance_002-v0-Play registered at source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/k1/mj_dance_002/__init__.py:22",
+      "gym env Booster-T1-MotionTracking-v0 registered at source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/t1/motion_tracking/__init__.py:13",
+      "gym env Booster-T1-MotionTracking-v0-Play registered at source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/t1/motion_tracking/__init__.py:23",
+      "gym env Booster-T2-MotionTracking-v0 registered at source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/t2/motion_tracking/__init__.py:8",
+      "gym env Booster-T2-MotionTracking-v0-Play registered at source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/t2/motion_tracking/__init__.py:18",
+      "gym env Booster-T2-MotionTracking-Rough-v0 registered at source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/t2/motion_tracking/__init__.py:28",
+      "gym env Booster-T2-MotionTracking-Rough-v0-Play registered at source/booster_train/booster_train/tasks/manager_based/beyond_mimic/robots/t2/motion_tracking/__init__.py:38"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/boosterrobotics__booster_train --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

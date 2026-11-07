@@ -1,0 +1,34 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:3c8a3f8c6304959225b620f357a948a3b97336a2dd3eb965c70d5108c5ffd1b3",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.centre-for-biorobotics.fin_oscillation.v1",
+      "reason": "No catalogue class binds the four-fin eeuv_sim_interfaces/Flippers oscillation publication. cap.motion.joint_velocity.v1 is a bounded-duration joint-velocity invoke that returns applied/velocities and binds robot.arm or motion.axis; Flippers is a fire-and-forget ROS topic publication with four per-fin amplitude, frequency, zero-direction and phase-offset fields and no acknowledgement. The extension preserves the upstream message shape and makes the publication-only contract explicit.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.centre-for-biorobotics.auv_state.v1",
+      "reason": "No catalogue class observes a gazebo_msgs/EntityState sample. cap.sensing.read.v1 is a named-channel read with an open values object, not the EntityState name/pose/twist/reference_frame document; cap.world.reset.v1 and cap.world.step.v1 act on a world and do not carry this observation.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.centre-for-biorobotics.fin_feedback.v1",
+      "reason": "No catalogue class carries eeuv_sim_interfaces/FlippersFeedbacks. cap.motion.joint_velocity.v1 is an actuation command, not a passive four-named-fin position, velocity and acceleration observation.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.centre-for-biorobotics.reset.v1",
+      "reason": "No catalogue class binds an unacknowledged std_msgs/Bool reset publication. cap.world.reset.v1 is a seeded scenario reset with an observation/seed output, while /ucat/reset carries only data=true and returns no observation or acknowledgement.",
+      "verb": "invoke"
+    }
+  ],
+  "blocked_on": [],
+  "notes": "PASS on the fake backend only (evidence contract_checked, never an MHS-Device level). Authored by grok-4.7 (a model and not a human; run ext-p5-sdk-stampless--all-20261105); reviewed_by stays null. This re-authors the blocked record (HELPER_MISSING, gate digest sha256:a52b792dcbf9dd7cb5c2fc40681a8ff137b0d1a374c44ce9fa8f756ab76698cc, failed G6 only). The previous package tree is kept under the development moved-aside directory. No ROS graph, rosbridge, Gazebo, Fossen integration or hardware was run. Licence NOASSERTION; publish_review stays required, and this record does not publish the package.\n\nSTOP (SAFE-049, simulated only). The request is one eeuv_sim_interfaces/msg/Flippers on /hw/flippers_cmd, timeout_ms 1000, four flippers with amplitude 0 (moveFins.py:139 subscribes that topic; flippersCallback stores amplitude, frequency, zero_direction and phase_offset at moveFins.py:163-169). /ucat/reset is omitted from the request. reset() zeroes pos, vel, acc and U and sets position z to 5 (AUVMotion.py:423-429) and does not clear the Flippers command moveFins stored, so a reset would resume that stored motion (SAFE-042). The fin timer keeps running (moveFins.py:137). Gazebo is a visualiser here; pausing it would not stop the free-running Python timer at AUVMotion.py:97.\n\nSOURCE. /ucat/state is gazebo_msgs/msg/EntityState and the published document has no header. The publisher is create_publisher(EntityState, \"/ucat/state\", 10) at AUVMotion.py:113, so freshness is arrival, history durability volatile cited at that line, min_interval_ms 5. Twist is filled at AUVMotion.py:398-403. Predicate: norm_max body_linear (m/s) and body_angular (rad/s), both Limit.operator_required. consecutive 3, min_span_ms 19, max_gap_ms 500, confirm_within_ms 1500, estop_latency_ms 2500. fixtures/estop-confirmation.json holds fake placeholders only. The shipped timer is dt/fast_forward with dt 0.01 (AUVMotion.py:75) and fast_forward 1.0 (eeuv_sim/data/rl_setting/rl_setting.yaml:2), so the period is 10 ms. Three counted samples span two periods, and that span in milliseconds lands just under 20, so min_span_ms is 19. A bound of 20 rejects the shipped period. A fast_forward above 1 shortens the span below 19 ms and the stop fails closed unless the operator lowers min_span_ms. A fast_forward above 2 also publishes faster than min_interval_ms 5 and fails closed. A replay spaced at or above 5 ms is not distinguished from live samples.\n\nRISK is R2. The card floor was R0. REVIEW.md item 12 keeps R2 for a fin command a physical vehicle could also consume. connect_microCAT.launch.py:13-19 starts the executable microcatHardwareInterface.py with serial_port /dev/ttyACM0. That script is not in the clone, and the clone shows no subscriber inside it. The only /hw/flippers_cmd subscriber in the clone is moveFins.py:139. Whether a real micro-CAT subscribes to that topic is for the human reviewer. That launch is not a binding of this package. The reset capability remains a declared invoke; it is not a sensed-stop request step.\n\nGATE (python3 -m mhs.driver check --backend fake): G1 through G9 pass. gate.digest sha256:3c8a3f8c6304959225b620f357a948a3b97336a2dd3eb965c70d5108c5ffd1b3. Catalogue requests are the same four as the blocked record.\n\nFAKE. RecordingRosTransport. The first /ucat/state sample is the stored twist (zeros). Later samples are fed one at a time, 20 ms apart, with linear.x 0.4 until the flipper amplitudes are zero and the stored zeros after that. No human reviewed this package.\n\nMODEL REVIEW (grok-4.7, a model and not a human, 2026-11-05; reviewed_by stays null): Round 1 repair. min_span_ms is 19 because the counted span of the shipped 10 ms period lands just under 20. The R2 note no longer says the cited launch shows a micro-CAT subscription. Gate digest unchanged at sha256:3c8a3f8c6304959225b620f357a948a3b97336a2dd3eb965c70d5108c5ffd1b3. Evidence remains fake contract_checked. No Gazebo or hardware run.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-06; reviewed_by stays null): Different-model review by Codex (gpt-6.1-sol) of the work of Grok (grok-4.7), unit p5-sdk-stampless--all, round 5: Traced zero-amplitude fin commands and fresh body-twist confirmation into the upstream implementation. Device reset remains outside the stop path; gates, package tests, and the recorded digest pass at R2. The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it."
+}

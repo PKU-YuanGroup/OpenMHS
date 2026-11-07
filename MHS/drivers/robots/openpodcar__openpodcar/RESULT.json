@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "notes": "BLOCKED before a driver implementation: the required OpenPodcar speed/steering control is topic-only. cmd_velHandler.py forwards linear.x as speed and angular.z as steering angle, not yaw rate. The serial speed bridge can discard a new zero command while the previous reply is pending. The source contains no acknowledged independent ROS stop service or action. README.md:456,474-482 describes a physical deadman/relay, which is not a callable native stop binding. A status-only substitute would omit the required primary control. This mobile platform requires R2 or higher assessment. Only a missing-layout diagnostic gate is recorded; it is not executable driver evidence. No source, task or lock was invented.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Retain blocked; no acknowledged primary-control stop exists in the selected source. Complete fake/diagnostic gate remains rejected at G1, G2, G3, G9. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: RESULT.json, check-report.json. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged.",
+  "gate": {
+    "digest": "sha256:2fc43e3ef340caccdf67234f5cc49189c928eee5fd7131fae96ecd1ad1099993",
+    "failed": [
+      "G1",
+      "G2",
+      "G3",
+      "G9"
+    ],
+    "report": "check-report.json"
+  }
+}

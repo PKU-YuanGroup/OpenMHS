@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.generalroboticslab/dukehumanoidhardwarecontrol",
+  "track": "robots",
+  "local_path": "robots/generalroboticslab/dukehumanoidhardwarecontrol",
+  "driver_dir": "MHS/drivers/robots/generalroboticslab__dukehumanoidhardwarecontrol",
+  "upstream": {
+    "repo_url": "https://github.com/generalroboticslab/dukehumanoidhardwarecontrol",
+    "commit": "3a9c3cd4c8daf6b3ffe2e41768360d0515f2df55",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 255,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "biped_controller:BipedController",
+      "file": "biped_controller.py",
+      "line": 29,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "ext/SOEM/test"
+  },
+  "hints": {
+    "reads": [
+      "SensorController.get_latest_data",
+      "SensorController.get_samples_per_second",
+      "SensorController.data_collector.read_loop",
+      "SerialDataCollector.get_latest_data",
+      "SerialDataCollector.read_loop"
+    ],
+    "writes": [
+      "MotorController.set_motor_pos",
+      "MotorController.set_motor_pos_from_dof_pos_safe",
+      "MotorController.set_motor_pos_offset",
+      "MotorController.set_motor_pos_without_offset"
+    ],
+    "actions": [
+      "SensorController.start",
+      "SensorController.stop",
+      "SerialDataCollector.start",
+      "SerialDataCollector.stop",
+      "SerialDataCollector.sample_timestamps.reset",
+      "MotorController.run"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "gamepad.py:6 lin_vel_x_max = 0.3",
+      "gamepad.py:7 lin_vel_y_max = 0.25",
+      "gamepad.py:8 ang_vel_z_max = 0.2"
+    ]
+  },
+  "needs_recon": [
+    "install",
+    "license",
+    "motion"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/generalroboticslab__dukehumanoidhardwarecontrol --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

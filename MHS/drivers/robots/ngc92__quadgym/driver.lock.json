@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.ngc92/quadgym",
+  "upstream": {
+    "repo_url": "https://github.com/ngc92/quadgym",
+    "commit": "f7eb2fecaad5fcfbf2b8a5b9ef3062b809b64b99",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.py:5 requires the legacy gym package and numpy for the upstream environment. The gate and the fake backend need neither: fake.py is pure Python. Install the upstream package only to serve the driver on the real environment (backend sim, gym.make after gym_quadrotor registers the id), which was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeCopterStabilizeAttitudeEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-055",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

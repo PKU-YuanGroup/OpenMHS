@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.geo-jtao/unitree_robot_sim",
+  "track": "robots",
+  "local_path": "robots/geo-jtao/unitree_robot_sim",
+  "driver_dir": "MHS/drivers/robots/geo-jtao__unitree_robot_sim",
+  "upstream": {
+    "repo_url": "https://github.com/geo-jtao/unitree_robot_sim",
+    "commit": "49fb7fa50e0c3b65dd2a07ac4df370ba781858b8",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 411,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "src/unitree_ros/robots/h1_description/mjcf/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "src/unitree_ros/robots/g1_description/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "src/unitree_ros/robots/b2_description_mujoco/xml/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "src/unitree_ros/robots/g1_description/g1.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "src/unitree_ros/robots/b2_description_mujoco/xml/b2.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/unitree_ros/robots/h1_description/mjcf/scene.xml:1 MJCF scene model",
+      "src/unitree_ros/robots/g1_description/scene.xml:1 MJCF scene model",
+      "src/unitree_ros/robots/b2_description_mujoco/xml/scene.xml:1 MJCF scene model",
+      "src/unitree_ros/robots/g1_description/g1.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model src/unitree_ros/robots/h1_description/mjcf/scene.xml:1",
+      "MJCF scene model src/unitree_ros/robots/g1_description/scene.xml:1",
+      "MJCF scene model src/unitree_ros/robots/b2_description_mujoco/xml/scene.xml:1",
+      "MJCF robot model src/unitree_ros/robots/g1_description/g1.xml:1",
+      "MJCF robot model src/unitree_ros/robots/b2_description_mujoco/xml/b2.xml:1",
+      "MJCF robot model src/unitree_ros/robots/h1_description/mjcf/h1.xml:1",
+      "MJCF robot model src/unitree_ros/robots/h1_description/mjcf/h1_with_hand.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/geo-jtao__unitree_robot_sim --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

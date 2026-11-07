@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.hewlettpackard/dc-rl",
+  "upstream": {
+    "repo_url": "https://github.com/hewlettpackard/dc-rl",
+    "commit": "a92b4755aca560e34a98d14028dda629eb968482",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The upstream package needs gymnasium, numpy, pandas, torch and the workload, weather and carbon-intensity data files. The gate and the fake backend need none of them: fake.py is pure Python and neither installs nor imports the upstream package. Install it only to serve the driver on the real environment (a path that was not run)."
+  },
+  "backends": {
+    "fake": ".fake:FakeSustainDC"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-054",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

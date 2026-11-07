@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.enac-drones/dronesim",
+  "upstream": {
+    "repo_url": "https://github.com/enac-drones/dronesim",
+    "commit": "158e40f4631e64d731f16f81641f629fa7b2a986",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.py:5-15 installs only the top-level dronesim package and requires numpy, scipy, Pillow, matplotlib, cycler, gym and pybullet. The gate and the fake backend need none of them: fake.py is pure Python, and package code never imports the clone. Install the upstream only to serve the real PyBullet environment, which this package does not offer (no registered gym id; backends serve fake only)."
+  },
+  "backends": {
+    "fake": ".fake:FakeCtrlAviary"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-076",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

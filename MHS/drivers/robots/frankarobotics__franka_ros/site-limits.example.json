@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (franka_ros gripper driver)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only, not a statement about any Franka Hand. The clone states no width, force or speed bound; each site must replace these values with the range of its own gripper and site. Until site-limits.json supplies them, every call carrying these fields is refused with MHS.SAFETY.LIMITS_UNSET.",
+  "devices": {
+    "mhs://localhost/franka_gripper": {
+      "cap.manipulation.grasp.v1": {
+        "width": {"min": 0, "max": 80, "unit": "mm", "source": "operator",
+                  "reason": "example: replace with the total opening range of the deployed gripper"},
+        "force": {"min": 0, "max": 20, "unit": "N", "source": "operator",
+                  "reason": "example: replace with the grasp-force range the site permits"}
+      },
+      "x-cap.frankarobotics.move.v1": {
+        "width": {"min": 0, "max": 80, "unit": "mm", "source": "operator",
+                  "reason": "example: replace with the total opening range of the deployed gripper"},
+        "speed": {"min": 0.01, "max": 0.1, "unit": "m/s", "source": "operator",
+                    "reason": "example: replace with the finger-speed range the site permits"}
+      }
+    }
+  }
+}

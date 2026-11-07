@@ -1,0 +1,111 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.erfanmhi/deep-reinforcement-learning-cs285-pytorch",
+  "track": "robots",
+  "local_path": "robots/erfanmhi/deep-reinforcement-learning-cs285-pytorch",
+  "driver_dir": "MHS/drivers/robots/erfanmhi__deep-reinforcement-learning-cs285-pytorch",
+  "upstream": {
+    "repo_url": "https://github.com/erfanmhi/deep-reinforcement-learning-cs285-pytorch",
+    "commit": "6da04f367e52a451c202ae7e5477994c1d149baf",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 214,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "cs285.envs.ant:AntEnv",
+      "file": "hw4/cs285/envs/ant/ant.py",
+      "line": 62,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "cs285.envs.cheetah:HalfCheetahEnv",
+      "file": "hw4/cs285/envs/cheetah/cheetah.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "cs285.envs.obstacles:Obstacles",
+      "file": "hw4/cs285/envs/obstacles/obstacles_env.py",
+      "line": 5,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "cs285.envs.reacher:Reacher7DOFEnv",
+      "file": "hw4/cs285/envs/reacher/reacher_env.py",
+      "line": 7,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "mujoco/mjpro150/model/humanoid.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "hw4/cs285/envs/reacher/assets/sawyer.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "hw4/cs285/envs/ant/__init__.py:3 gym env ant-cs285-v0",
+      "hw4/cs285/envs/cheetah/__init__.py:3 gym env cheetah-cs285-v0",
+      "hw4/cs285/envs/obstacles/__init__.py:3 gym env obstacles-cs285-v0",
+      "hw4/cs285/envs/reacher/__init__.py:3 gym env reacher-cs285-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env ant-cs285-v0 registered at hw4/cs285/envs/ant/__init__.py:3",
+      "gym env cheetah-cs285-v0 registered at hw4/cs285/envs/cheetah/__init__.py:3",
+      "gym env obstacles-cs285-v0 registered at hw4/cs285/envs/obstacles/__init__.py:3",
+      "gym env reacher-cs285-v0 registered at hw4/cs285/envs/reacher/__init__.py:3"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/erfanmhi__deep-reinforcement-learning-cs285-pytorch --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,126 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ardupilot/ardupilot",
+  "track": "robots",
+  "local_path": "robots/ardupilot/ardupilot",
+  "driver_dir": "MHS/drivers/robots/ardupilot__ardupilot",
+  "upstream": {
+    "repo_url": "https://github.com/ardupilot/ardupilot",
+    "commit": "113108bd69954dfe9faed49f025601ffcaff2886",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "override:flagship-driver",
+  "role": "device-driver",
+  "family": "mavlink",
+  "helper": null,
+  "helper_status": "blocked",
+  "blocked_on": [
+    "HELPER_MISSING",
+    "helper:mavlink"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 2,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "modules.DroneCAN.pydronecan.dronecan.driver.mcast:mcast",
+      "file": "modules/DroneCAN/pydronecan/dronecan/driver/mcast.py",
+      "line": 168,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "modules.DroneCAN.pydronecan.dronecan.driver.file:file",
+      "file": "modules/DroneCAN/pydronecan/dronecan/driver/file.py",
+      "line": 29,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "modules.DroneCAN.pydronecan.dronecan.driver.slcan:SLCAN",
+      "file": "modules/DroneCAN/pydronecan/dronecan/driver/slcan.py",
+      "line": 677,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "modules.DroneCAN.pydronecan.dronecan.driver.mavcan:MAVCAN",
+      "file": "modules/DroneCAN/pydronecan/dronecan/driver/mavcan.py",
+      "line": 197,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "modules.DroneCAN.pydronecan.dronecan.driver.socketcan:SocketCAN",
+      "file": "modules/DroneCAN/pydronecan/dronecan/driver/socketcan.py",
+      "line": 178,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "Tools/autotest/pysim/util.py:481 FakeMacOSXSpawn",
+      "Tools/ros2/ardupilot_sitl/src/ardupilot_sitl/launch.py:41 VirtualPortsLaunch",
+      "Tools/autotest/fakepos.py:1",
+      "Tools/autotest/sim_vehicle.py:1",
+      "Tools/renode/device_emulator.py:1",
+      "Tools/ros2/ardupilot_sitl/launch/virtual_ports.launch.py:1"
+    ],
+    "upstream_tests": "Tools/debug/tests"
+  },
+  "hints": {
+    "reads": [
+      "mcast.get_bus",
+      "mcast.get_filter_list",
+      "file.get_bus",
+      "file.get_filter_list",
+      "file.get_last_timestamp",
+      "file.get_start_timestamp",
+      "SLCAN.get_bus",
+      "SLCAN.get_filter_list"
+    ],
+    "writes": [
+      "mcast.set_bus",
+      "mcast.set_filter_list",
+      "mcast.set_signing_passphrase",
+      "file.set_bus",
+      "file.set_filter_list",
+      "file.set_first_and_last_timestamp",
+      "file.set_signing_passphrase",
+      "file.set_start_timestamp",
+      "SLCAN.set_bus",
+      "SLCAN.set_filter_list",
+      "SLCAN.set_signing_passphrase"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "motion"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ardupilot__ardupilot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

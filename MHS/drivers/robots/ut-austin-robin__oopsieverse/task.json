@@ -1,0 +1,99 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ut-austin-robin/oopsieverse",
+  "track": "robots",
+  "local_path": "robots/ut-austin-robin/oopsieverse",
+  "driver_dir": "MHS/drivers/robots/ut-austin-robin__oopsieverse",
+  "upstream": {
+    "repo_url": "https://github.com/ut-austin-robin/oopsieverse",
+    "commit": "a739f99e94f32c3229ae6932299e2e0e8c065480",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 98,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "damagesim.omnigibson.damageable_env:OGDamageableEnvironment",
+      "file": "damagesim/omnigibson/damageable_env.py",
+      "line": 106,
+      "confidence": "override"
+    },
+    {
+      "symbol": "oopsiebench.envs.robocasa.close_drawer:DamageableCloseDrawer",
+      "file": "oopsiebench/envs/robocasa/close_drawer.py",
+      "line": 152,
+      "confidence": "override"
+    },
+    {
+      "symbol": "oopsiebench.envs.robocasa.counter_to_microwave:DamageableCounterToMicrowave",
+      "file": "oopsiebench/envs/robocasa/counter_to_microwave.py",
+      "line": 101,
+      "confidence": "override"
+    },
+    {
+      "symbol": "oopsiebench.envs.robocasa.dishes_to_sink:DamageableDishesToSink",
+      "file": "oopsiebench/envs/robocasa/dishes_to_sink.py",
+      "line": 226,
+      "confidence": "override"
+    },
+    {
+      "symbol": "oopsiebench.envs.robocasa.nav_lift_bowl:DamageableNavLiftBowl",
+      "file": "oopsiebench/envs/robocasa/nav_lift_bowl.py",
+      "line": 158,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "damagesim/omnigibson/damageable_env.py:106 OGDamageableEnvironment environment class",
+      "oopsiebench/envs/robocasa/close_drawer.py:152 DamageableCloseDrawer environment class",
+      "oopsiebench/envs/robocasa/counter_to_microwave.py:101 DamageableCounterToMicrowave environment class",
+      "oopsiebench/envs/robocasa/dishes_to_sink.py:226 DamageableDishesToSink environment class"
+    ],
+    "upstream_tests": "scripts/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ut-austin-robin__oopsieverse --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

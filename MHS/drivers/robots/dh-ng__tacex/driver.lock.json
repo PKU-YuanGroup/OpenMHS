@@ -1,0 +1,30 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.dh-ng/tacex",
+  "upstream": {
+    "repo_url": "https://github.com/dh-ng/tacex",
+    "commit": "adceed41afb7cb48f9ec1f66a662fb8e5a06627f",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "install": {
+    "python": "3.10",
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux",
+    "notes": "Upstream stack only: Isaac Sim 4.5 and Isaac Lab 2.1.1 on Ubuntu 22.04 with an NVIDIA GPU (README.md:40-41 and docs/source/installation/Local-Installation.md:2-6); no command is recorded or run here. The gate and the package fake need neither: fake.py is pure Python and the gate never imports the clone. The sim backend would call gymnasium.make(env_id), but the upstream tasks are constructed with gym.make(task_name, cfg=env_cfg) and the cfg exists only inside the Isaac Lab stack, so only the package fake backend is provided."
+  },
+  "backends": {
+    "fake": ".fake:FakeBallRollingEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wD-085",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

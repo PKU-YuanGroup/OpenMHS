@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.openai/mujoco-worldgen",
+  "track": "robots",
+  "local_path": "robots/openai/mujoco-worldgen",
+  "driver_dir": "MHS/drivers/robots/openai__mujoco-worldgen",
+  "upstream": {
+    "repo_url": "https://github.com/openai/mujoco-worldgen",
+    "commit": "39f52b1b47aed499925a6a214b58bdbdb4e2f75e",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 183,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "assets/xmls/particle/main.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "assets/xmls/particle_hinge/main.xml",
+      "line": 2,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "assets/xmls/particle/main.xml:2 MJCF robot model",
+      "assets/xmls/particle_hinge/main.xml:2 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model assets/xmls/particle/main.xml:2",
+      "MJCF robot model assets/xmls/particle_hinge/main.xml:2"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/openai__mujoco-worldgen --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,105 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.linqi-ye/robot-universe",
+  "track": "robots",
+  "local_path": "robots/linqi-ye/robot-universe",
+  "driver_dir": "MHS/drivers/robots/linqi-ye__robot-universe",
+  "upstream": {
+    "repo_url": "https://github.com/linqi-ye/robot-universe",
+    "commit": "3f2de2ab27f18cd677cf159afe1992a42daa24d8",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 365,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "go_bdx/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "birdy_v1/mujoco/scene_birdy_v1.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "birdy_v1/mujoco/scene_birdy_v1_L.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "PF_P441A/xml/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "PF_TRON1A/xml/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "go_bdx/scene.xml:1 MJCF scene model",
+      "birdy_v1/mujoco/scene_birdy_v1.xml:1 MJCF scene model",
+      "birdy_v1/mujoco/scene_birdy_v1_L.xml:1 MJCF scene model",
+      "PF_P441A/xml/robot.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "DigitRobot.jl-main/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model go_bdx/scene.xml:1",
+      "MJCF scene model birdy_v1/mujoco/scene_birdy_v1.xml:1",
+      "MJCF scene model birdy_v1/mujoco/scene_birdy_v1_L.xml:1",
+      "MJCF robot model PF_P441A/xml/robot.xml:1",
+      "MJCF robot model PF_TRON1A/xml/robot.xml:1",
+      "MJCF robot model SF_TRON1A/xml/robot.xml:1",
+      "MJCF robot model g1_description/g1_23dof.xml:1",
+      "MJCF robot model g1_description/g1_23dof_rev_1_0.xml:1",
+      "MJCF robot model g1_description/g1_29dof.xml:1",
+      "MJCF robot model g1_description/g1_29dof_lock_waist.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/linqi-ye__robot-universe --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

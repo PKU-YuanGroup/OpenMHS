@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.openai/safety-gym",
+  "upstream": {
+    "repo_url": "https://github.com/openai/safety-gym",
+    "commit": "f31042f2f9ee61b9034dd6a416955972911544f5",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The install block is the upstream package's (setup.py: mujoco_py 2.0.2.7, gym 0.15.3; MuJoCo 2.1 binaries and a C compiler). The fake backend, the reference and the gate need none of it: fake.py is pure Python and parses the MJCF text. The driver's sim path (a backend name backends does not list) imports the modern mujoco package and loads the same model file; that install was not run here."
+  },
+  "backends": {
+    "fake": ".fake:FakeMujoco"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-175",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

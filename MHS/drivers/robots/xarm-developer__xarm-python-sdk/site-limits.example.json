@@ -1,0 +1,38 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (xArm exemplar)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/xarm7": {
+      "cap.motion.joint_position.v1": {
+        "joint_positions": {
+          "min": [-6.283185307179586, -2.042035, -6.283185307179586, -0.10472, -6.283185307179586, -1.692969, -6.283185307179586],
+          "max": [6.283185307179586, 2.024581, 6.283185307179586, 3.92699, 6.283185307179586, 3.141592653589793, 6.283185307179586],
+          "unit": "rad", "source": "operator",
+          "reason": "example: the SDK's 1305 joint table (x_config.py:138-146)"
+        }
+      },
+      "cap.motion.cartesian_pose.v1": {
+        "position.x": {"min": -400, "max": 400, "unit": "mm", "source": "operator",
+                       "reason": "example: clear of the cell walls"},
+        "position.y": {"min": -400, "max": 400, "unit": "mm", "source": "operator",
+                       "reason": "example: clear of the cell walls"},
+        "position.z": {"min": 50, "max": 600, "unit": "mm", "source": "operator",
+                       "reason": "example: above the table"},
+        "orientation.roll": {"min": 3.0, "max": 3.1416, "unit": "rad", "source": "operator",
+                             "reason": "example: tool points down"},
+        "orientation.pitch": {"min": -0.2, "max": 0.2, "unit": "rad", "source": "operator",
+                              "reason": "example: tool points down"},
+        "orientation.yaw": {"min": -1.6, "max": 1.6, "unit": "rad", "source": "operator",
+                            "reason": "example: about a quarter turn"}
+      },
+      "cap.motion.joint_velocity.v1": {
+        "joint_velocities": {"min": -0.5, "max": 0.5, "unit": "rad/s", "source": "operator",
+                             "reason": "example: slow jogging"},
+        "duration_s": {"min": 0.1, "max": 2, "unit": "s", "source": "operator",
+                       "reason": "example: stops within 2 s"}
+      }
+    }
+  }
+}

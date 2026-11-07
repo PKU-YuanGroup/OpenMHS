@@ -1,0 +1,89 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ros-naoqi/nao_robot",
+  "track": "robots",
+  "local_path": "robots/ros-naoqi/nao_robot",
+  "driver_dir": "MHS/drivers/robots/ros-naoqi__nao_robot",
+  "upstream": {
+    "repo_url": "https://github.com/ros-naoqi/nao_robot",
+    "commit": "67476469a1371b00b17538eb6ea336367ece7d44",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "device-driver",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 21,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [
+    {
+      "symbol": "nao_apps.nao_footstep_clipping:Params",
+      "file": "nao_apps/src/nao_apps/nao_footstep_clipping.py",
+      "line": 7,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "nao_apps/nodes/nao_speech.py:81 DummyAudioDevice"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Params.foot_box_l (attribute)",
+      "Params.foot_box_l_fl (attribute)",
+      "Params.foot_box_l_fr (attribute)",
+      "Params.foot_box_l_rl (attribute)",
+      "Params.foot_box_l_rr (attribute)",
+      "Params.foot_box_r (attribute)",
+      "Params.foot_box_r_fl (attribute)",
+      "Params.foot_box_r_fr (attribute)",
+      "Params.foot_box_r_rl (attribute)",
+      "Params.foot_box_r_rr (attribute)"
+    ],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": [
+      "nao_apps/src/nao_apps/nao_footstep_clipping.py:9 min_step_x = -0.04",
+      "nao_apps/src/nao_apps/nao_footstep_clipping.py:10 min_step_y = 0.088",
+      "nao_apps/src/nao_apps/nao_footstep_clipping.py:11 max_step_x = 0.08",
+      "nao_apps/src/nao_apps/nao_footstep_clipping.py:12 max_step_y = 0.16",
+      "nao_apps/src/nao_apps/nao_footstep_clipping.py:13 max_step_theta = 0.5"
+    ]
+  },
+  "needs_recon": [
+    "install",
+    "capabilities",
+    "motion"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ros-naoqi__nao_robot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

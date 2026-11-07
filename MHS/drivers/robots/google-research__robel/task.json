@@ -1,0 +1,140 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.google-research/robel",
+  "track": "robots",
+  "local_path": "robots/google-research/robel",
+  "driver_dir": "MHS/drivers/robots/google-research__robel",
+  "upstream": {
+    "repo_url": "https://github.com/google-research/robel",
+    "commit": "5b0fd3704629931712c6e0f7268ace1c2154dc83",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 212,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robel.dclaw.pose:DClawPoseFixed",
+      "file": "robel/dclaw/pose.py",
+      "line": 165,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robel.dclaw.pose:DClawPoseRandomDynamics",
+      "file": "robel/dclaw/pose.py",
+      "line": 212,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robel.dclaw.screw:DClawScrewFixed",
+      "file": "robel/dclaw/screw.py",
+      "line": 61,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robel.dclaw.turn:DClawTurnFixed",
+      "file": "robel/dclaw/turn.py",
+      "line": 200,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robel.dclaw.turn:DClawTurnRandomDynamics",
+      "file": "robel/dclaw/turn.py",
+      "line": 225,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "robel/dclaw/assets/dclaw3xh_valve3_v0.xml",
+      "line": 18,
+      "kind": "scene"
+    },
+    {
+      "file": "robel/dkitty/assets/dkitty_avoid-v0.xml",
+      "line": 18,
+      "kind": "scene"
+    },
+    {
+      "file": "robel/dkitty/assets/dkitty_orient-v0.xml",
+      "line": 18,
+      "kind": "scene"
+    },
+    {
+      "file": "robel/dkitty/assets/dkitty_play-v0.xml",
+      "line": 18,
+      "kind": "scene"
+    },
+    {
+      "file": "robel/dkitty/assets/dkitty_push-v0.xml",
+      "line": 18,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.5.3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robel/dclaw/__init__.py:26 gym env DClawPoseFixed-v0",
+      "robel/dclaw/__init__.py:31 gym env DClawPoseRandom-v0",
+      "robel/dclaw/__init__.py:36 gym env DClawPoseRandomDynamics-v0",
+      "robel/dclaw/__init__.py:48 gym env DClawTurnFixed-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env DClawPoseFixed-v0 registered at robel/dclaw/__init__.py:26",
+      "gym env DClawPoseRandom-v0 registered at robel/dclaw/__init__.py:31",
+      "gym env DClawPoseRandomDynamics-v0 registered at robel/dclaw/__init__.py:36",
+      "gym env DClawTurnFixed-v0 registered at robel/dclaw/__init__.py:48",
+      "gym env DClawTurnRandom-v0 registered at robel/dclaw/__init__.py:53",
+      "gym env DClawTurnRandomDynamics-v0 registered at robel/dclaw/__init__.py:58",
+      "gym env DClawScrewFixed-v0 registered at robel/dclaw/__init__.py:71",
+      "gym env DClawScrewRandom-v0 registered at robel/dclaw/__init__.py:76",
+      "gym env DClawScrewRandomDynamics-v0 registered at robel/dclaw/__init__.py:81",
+      "gym env DKittyStandFixed-v0 registered at robel/dkitty/__init__.py:26",
+      "gym env DKittyStandRandom-v0 registered at robel/dkitty/__init__.py:31",
+      "gym env DKittyStandRandomDynamics-v0 registered at robel/dkitty/__init__.py:36"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/google-research__robel --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.erlerobot/gym-gazebo",
+  "track": "robots",
+  "local_path": "robots/erlerobot/gym-gazebo",
+  "driver_dir": "MHS/drivers/robots/erlerobot__gym-gazebo",
+  "upstream": {
+    "repo_url": "https://github.com/erlerobot/gym-gazebo",
+    "commit": "ade82b627839f816c1f4be6cea77b56eb21abc81",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 253,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_gazebo.envs.turtlebot:GazeboCircuitTurtlebotLidarEnv",
+      "file": "gym_gazebo/envs/turtlebot/gazebo_circuit_turtlebot_lidar.py",
+      "line": 16,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_gazebo/__init__.py:10 gym env GazeboMazeTurtlebotLidar-v0",
+      "gym_gazebo/__init__.py:15 gym env GazeboCircuitTurtlebotLidar-v0",
+      "gym_gazebo/__init__.py:20 gym env GazeboCircuit2TurtlebotLidar-v0",
+      "gym_gazebo/__init__.py:25 gym env GazeboCircuit2TurtlebotLidarNn-v0"
+    ],
+    "upstream_tests": "gym_gazebo/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env GazeboMazeTurtlebotLidar-v0 registered at gym_gazebo/__init__.py:10",
+      "gym env GazeboCircuitTurtlebotLidar-v0 registered at gym_gazebo/__init__.py:15",
+      "gym env GazeboCircuit2TurtlebotLidar-v0 registered at gym_gazebo/__init__.py:20",
+      "gym env GazeboCircuit2TurtlebotLidarNn-v0 registered at gym_gazebo/__init__.py:25",
+      "gym env GazeboCircuit2cTurtlebotCameraNnEnv-v0 registered at gym_gazebo/__init__.py:31",
+      "gym env GazeboRoundTurtlebotLidar-v0 registered at gym_gazebo/__init__.py:36",
+      "gym env GazeboErleCopterHover-v0 registered at gym_gazebo/__init__.py:43",
+      "gym env GazeboMazeErleRoverLidar-v0 registered at gym_gazebo/__init__.py:49",
+      "gym env GazeboModularScara3DOF-v0 registered at gym_gazebo/__init__.py:55",
+      "gym env GazeboModularScara3DOF-v1 registered at gym_gazebo/__init__.py:59",
+      "gym env GazeboModularScara3DOF-v2 registered at gym_gazebo/__init__.py:63",
+      "gym env GazeboModularScara3DOF-v3 registered at gym_gazebo/__init__.py:67"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/erlerobot__gym-gazebo --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

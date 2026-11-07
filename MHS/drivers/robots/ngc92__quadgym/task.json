@@ -1,0 +1,98 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ngc92/quadgym",
+  "track": "robots",
+  "local_path": "robots/ngc92/quadgym",
+  "driver_dir": "MHS/drivers/robots/ngc92__quadgym",
+  "upstream": {
+    "repo_url": "https://github.com/ngc92/quadgym",
+    "commit": "f7eb2fecaad5fcfbf2b8a5b9ef3062b809b64b99",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 100,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_quadrotor.envs:CopterStabilizeAttitudeEnv",
+      "file": "gym_quadrotor/envs/attitude_env.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_quadrotor.envs:CopterStabilizeAttitude2DEnv",
+      "file": "gym_quadrotor/envs/minimal.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_quadrotor.envs:CopterStabilizeAttitude2DMarkovianEnv",
+      "file": "gym_quadrotor/envs/minimal.py",
+      "line": 73,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_quadrotor.envs:CopterStabilizeAttitudeEnvAngular",
+      "file": "gym_quadrotor/__init__.py",
+      "line": 25,
+      "confidence": "recon"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_quadrotor/__init__.py:19 gym env QuadrotorStabilizeAttitude-MotorCommands-v0",
+      "gym_quadrotor/__init__.py:25 gym env QuadrotorStabilizeAttitude-Angular-v0",
+      "gym_quadrotor/__init__.py:31 gym env QuadrotorStabilizeAttitude2D-v0",
+      "gym_quadrotor/__init__.py:37 gym env QuadrotorStabilizeAttitude2D-Markovian-v0"
+    ],
+    "upstream_tests": "gym_quadrotor/control/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env QuadrotorStabilizeAttitude-MotorCommands-v0 registered at gym_quadrotor/__init__.py:19",
+      "gym env QuadrotorStabilizeAttitude-Angular-v0 registered at gym_quadrotor/__init__.py:25",
+      "gym env QuadrotorStabilizeAttitude2D-v0 registered at gym_quadrotor/__init__.py:31",
+      "gym env QuadrotorStabilizeAttitude2D-Markovian-v0 registered at gym_quadrotor/__init__.py:37"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ngc92__quadgym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

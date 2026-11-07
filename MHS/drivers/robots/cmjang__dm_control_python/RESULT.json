@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:8a4a2d3a2f41bd60ad64246d732ae0df099cdd1542a5bf2a2df032c14c1bb989",
+    "failed": []
+  },
+  "notes": "One DaMiao CAN motor driven through DM_CAN:MotorControl; checked on the fake backend only, model-authored and unreviewed, nothing ran on a motor. NOT COVERED: the second and further motors of one CAN bus: one package instance registers the identity of one motor (backend options slave_id, master_id, motor_type; the module defaults are the README example motor, README.md:55, and native.py refuses to open a serial line without explicit values). NOT COVERED: the internal register read and write functions (read_motor_param, change_motor_param), the MIT mode (controlMIT), the force-position mode (control_pos_force) and the zero-position, save and parameter routines; only position-velocity and velocity motions, the enable/disable write and the three feedback reads are exposed. NOT COVERED: the motor's own protection registers (MAX_SPD, OT_Value, OC_Value) are neither read nor configured; the joint envelope, the jog velocity and the jog duration are Limit.operator_required and site-limits.example.json carries example values. The safe state is a disabled drive (0xFD), not a brake: a vertical axis needs a mechanical brake of its own, and there is no hardware e-stop reference in the clone (R1, the card's floor). The fake has no CAN bus, no 16-byte serial framing and no control loop: a position command arrives at once and a velocity command does not integrate into an angle, so the fake only stands in for the register and command surface.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-29; reviewed_by stays null): accepted; the reviewer changed no file of the package. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

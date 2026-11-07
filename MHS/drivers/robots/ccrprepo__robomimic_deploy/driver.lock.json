@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.ccrprepo/robomimic_deploy",
+  "upstream": {
+    "repo_url": "https://github.com/ccrprepo/robomimic_deploy",
+    "commit": "3a72ec1a55dcf155be88c9dcc4a32ecb5c11e313",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install numpy==1.20.0",
+      "pip install onnx onnxruntime"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "README.md:32 creates the environment with Python 3.8, README.md:65-66 installs numpy==1.20.0, onnx and onnxruntime, and README.md:69-75 installs the unitree_sdk2_python package. deploy_mujoco/deploy_mujoco.py:8-9 imports mujoco, so the MuJoCo engine is also needed to run the upstream simulator, but the README gives no install command for it and no network was used here. The acceptance gate and fake.py need none of these: fake.py is pure Python and the gate never installs or imports the upstream package or MuJoCo. Install the upstream stack only to serve the scene with the real engine (backend sim), which was not run."
+  },
+  "backends": {
+    "fake": ".fake:fake_mujoco"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wP-046",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.klintan/ros2_video_streamer",
+  "track": "robots",
+  "local_path": "robots/klintan/ros2_video_streamer",
+  "driver_dir": "MHS/drivers/robots/klintan__ros2_video_streamer",
+  "upstream": {
+    "repo_url": "https://github.com/klintan/ros2_video_streamer",
+    "commit": "4fc6d858d748322250cb0dc5a7864ac2576d148f",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 165,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "colcon build"
+    ],
+    "system_deps": [
+      "ament/colcon workspace and the ROS dependencies declared in package.xml"
+    ],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "CameraSimulator.get_camera_info",
+      "CameraSimulator.get_compressed_msg",
+      "CameraSimulator.get_image_msg",
+      "CameraSimulator.get_time_msg"
+    ],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/klintan__ros2_video_streamer --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

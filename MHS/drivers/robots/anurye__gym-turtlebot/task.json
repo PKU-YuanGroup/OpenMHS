@@ -1,0 +1,74 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.anurye/gym-turtlebot",
+  "track": "robots",
+  "local_path": "robots/anurye/gym-turtlebot",
+  "driver_dir": "MHS/drivers/robots/anurye__gym-turtlebot",
+  "upstream": {
+    "repo_url": "https://github.com/anurye/gym-turtlebot",
+    "commit": "c1e8b72a1081b92821dc14320fc7105b10423c54",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:source-review",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 188,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "tb4_drl_navigation.envs.diffdrive.turtlebot4:Turtlebot4Env",
+      "file": "src/tb4_drl_navigation/tb4_drl_navigation/envs/diffdrive/turtlebot4.py",
+      "line": 37,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/tb4_drl_navigation/tb4_drl_navigation/envs/__init__.py:3 gym env Turtlebot4Env-v0"
+    ],
+    "upstream_tests": "src/tb4_drl_navigation/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Turtlebot4Env-v0 registered at src/tb4_drl_navigation/tb4_drl_navigation/envs/__init__.py:3"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/anurye__gym-turtlebot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

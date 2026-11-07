@@ -1,0 +1,41 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:e1ab793c041e37e31ab23d63fb44747239652c70f4c1d2ee28a4d82786f3184e",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.avidbots.clock.v1",
+      "reason": "No catalogue class observes a simulated ROS clock. cap.world.step.v1 advances a world and cap.world.reset.v1 resets one, but neither subscribes to /clock; the package uses an x-cap id with an inline output schema carrying the rosgraph_msgs/Clock sample.",
+      "verb": "read",
+      "summary": "Read one simulated clock sample from the Flatland /clock topic.",
+      "similar": [
+        "cap.world.step.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.avidbots.pause.v1",
+      "reason": "No catalogue class controls a simulator's pause flag. cap.motion.stop.v1 is a motion stop, not simulation control; the package uses an x-cap id with an inline output schema, also as its input-free safe-state action and its acknowledged simulator stop.",
+      "verb": "invoke",
+      "summary": "Pause the simulated world with the upstream std_srvs/Empty pause service.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.avidbots.resume.v1",
+      "reason": "No catalogue class resumes a paused simulator; this is the counterpart of the upstream resume service and has no motion or world-advance semantics in the catalogue.",
+      "verb": "invoke",
+      "summary": "Resume the simulated world with the upstream std_srvs/Empty resume service.",
+      "similar": [
+        "cap.world.step.v1"
+      ]
+    }
+  ],
+  "notes": "PASS on the fake backend only (evidence contract_checked, never an MHS-Device level); this package is model-authored and unreviewed (driver.lock.json reviewed_by is null), no hardware was attached, and no ROS graph, Flatland process, simulator run or hardware run is claimed. At the original bootstrap run the card showed helper: null and blocked_on [helper:ros]; the orchestrator's explicit bootstrap instruction says to use RosDriver here, so the package was scaffolded with --kind ros and task.json was not edited. It is a configuration-only ROS 1 RosDriver over rosbridge, mode simulated, risk R0, device_kind world.sim; there is no Python native class and no native.py. The card's entry_symbols list is empty, so there was no entry symbol to verify; the pinned endpoints and types were read directly from the clone: /clock with rosgraph_msgs/Clock (flatland_server/src/timekeeper.cpp:53-54), the relative pause service with std_srvs/Empty (flatland_server/src/service_manager.cpp:63 and flatland_server/include/flatland_server/service_manager.h:53) and the relative resume service (flatland_server/src/service_manager.cpp:65). Both Empty services are acknowledged with success={\"path\": \"$\", \"equals\": {}}. The pause action is input-free with safe_state=True and the same /pause service is bound as the simulator stop; the runtime latches in software first, and the described safe state is paused physics (World::Update skips the plugin before-step hook, the Box2D step and Timekeeper::StepTime while IsPaused is true, flatland_server/src/world.cpp:101-110), not a zero-velocity command and not a physical emergency stop. World::IsPaused is also true while the internal marker manager manipulates (flatland_server/src/world.cpp:333-340), so a held clock sample alone does not prove the pause flag. A namespaced deployment must expose the resolved /pause and /resume endpoints; the upstream names are recorded as source_name. Scope and not covered: only /clock observation and pause/resume are served; world stepping, reset, rendering, TF, poses, laser/odometry and every other Flatland plugin or topic are NOT COVERED. The package does not start or validate a ROS graph, and rosbridge parameter access, actions, QoS, authentication and reconnection are outside the helper. The fake is a ROS-free RecordingRosTransport: it answers the declared subscribe and call_service messages with placeholder clock samples and placeholder service acknowledgements, and it models an application-predicate failure through fail_pause_application. Its numbers are test data (# placeholder), not facts. Fidelity is F0 for the deployed event-driven recording fake: engine analytic:ROS recording fake (no physics), determinism none, timestep_ms 0, realtime_factor 0 (no pacing), reset none, no snapshot/restore or advancing clock. Upstream timing defaults are source facts only. No Limit is declared because no action has a numeric input and the clone states no numeric bound for the clock or the Empty services; consequently site-limits.example.json is not needed. Warnings kept from the last gate run: G8.SAFE014_NOT_APPLICABLE is expected because no actuating capability declares a limit, so there is nothing for the out-of-limit probe to test; the message says every other CL3 test passed. There are no G4.REF_VALUE or G4.REF_BINARY warnings. test_driver.py runs eight cases including the gate, clock observation, stock pause/resume, no fresh paused clock before deadline, service wire calls, application failure, ROS service failure and the e-stop latch. The clone was left unmodified (G1 passed); no network, pip install or upstream execution was used.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): FIX then ACCEPT for contract_checked fake evidence only. Independently checked pinned endpoint/type/stop facts and corrected paused-clock fidelity: /clock is an explicit observation, the resource snapshot is empty, and the recording fake emits no clock while paused. Deployed F0 now describes event-driven fake state transitions without physics or pacing. Corrected the ninth source fact and latching prose, added negative service and deadline tests, and added the non-affiliation opening and exemplar README. Reviewer changed driver.py, fake.py, facts.md, test_driver.py, README.md, generated reference.json and REFERENCE.md, check-report.json, and RESULT.json. All gates pass; SAFE014_NOT_APPLICABLE remains an informational warning because no numeric actuation limits exist. No real ROS graph, Flatland execution or hardware run, no human signature, no publication. Original author files were preserved in the private review archive. Follow-up review clarified facts.md: observational extension capabilities remain latched despite verb read; resource.read, catalogue-confirmed reads and declared safe-state actions retain their existing exemptions. The orchestrator also regenerated task.json through prepare.py --sync after the registry build; it was not edited by hand.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Copied the exact generated task.json after preserving the obsolete abstract Panda draft and recording the USB camera image-scope blocker; changed task.json and RESULT.json (card fields: rank). Package contracts, source pins, gate finding digests, author attribution and human signatures remain unchanged. This metadata synchronization is not a new complete gate collection.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

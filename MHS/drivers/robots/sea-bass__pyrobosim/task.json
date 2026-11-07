@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sea-bass/pyrobosim",
+  "track": "robots",
+  "local_path": "robots/sea-bass/pyrobosim",
+  "driver_dir": "MHS/drivers/robots/sea-bass__pyrobosim",
+  "upstream": {
+    "repo_url": "https://github.com/sea-bass/pyrobosim",
+    "commit": "d33280a4de8fc423662fdbe12f43b3bb1a3bf66d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "sim-env",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 111,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "pyrobosim.core.world:World",
+      "file": "pyrobosim/pyrobosim/core/world.py",
+      "line": 26,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [
+      "World.get_entity_by_name",
+      "World.get_hallway_by_name",
+      "World.get_hallway_names",
+      "World.get_hallways_attached_to_room",
+      "World.get_hallways_from_rooms",
+      "World.get_location_by_name",
+      "World.get_location_from_pose",
+      "World.get_location_in_hallway",
+      "World.get_location_in_room",
+      "World.get_location_metadata",
+      "World.get_location_names",
+      "World.get_locations"
+    ],
+    "writes": [
+      "World.set_inflation_radius",
+      "World.set_metadata",
+      "Robot.set_open",
+      "Robot.set_path_executor",
+      "Robot.set_path_planner",
+      "Robot.set_pose",
+      "Robot.set_sensors",
+      "Object.set_open",
+      "Object.set_pose"
+    ],
+    "actions": [
+      "World.reset",
+      "Robot.do_start_sensor_threads",
+      "Robot.reset_path_planner",
+      "Robot.stop_sensor_threads",
+      "Robot.dynamics.reset",
+      "Object.create_grasp_cuboid"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.cartesian_pose.v1",
+      "cap.manipulation.grasp.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/sea-bass__pyrobosim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

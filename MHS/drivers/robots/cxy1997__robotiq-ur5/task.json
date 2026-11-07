@@ -1,0 +1,75 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cxy1997/robotiq-ur5",
+  "track": "robots",
+  "local_path": "robots/cxy1997/robotiq-ur5",
+  "driver_dir": "MHS/drivers/robots/cxy1997__robotiq-ur5",
+  "upstream": {
+    "repo_url": "https://github.com/cxy1997/robotiq-ur5",
+    "commit": "6c6d53f6a7d525f83e103ce594f166520d9390ee",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 386,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "xmls/lab_env.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "xmls/lab_env.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model xmls/lab_env.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cxy1997__robotiq-ur5 --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

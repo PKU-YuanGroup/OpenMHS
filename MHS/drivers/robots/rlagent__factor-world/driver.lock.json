@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.rlagent/factor-world",
+  "upstream": {
+    "repo_url": "https://github.com/rlagent/factor-world",
+    "commit": "01df1f18f7e532afda0a38169356fa637d24e432",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any",
+    "notes": "conda_env.yml:19 pins python 3.8, :42 mujoco_py <2.2,>=2.1 and :46 gym 0.25.1. The acceptance gate and fake.py need none of them: fake.py is pure Python and the gate never installs or imports the upstream package. The package declares only the fake backend and never ran the upstream MuJoCo stack."
+  },
+  "backends": {
+    "fake": ".fake:FakeSawyerNutAssemblyEnvV2"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-062",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

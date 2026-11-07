@@ -1,0 +1,64 @@
+# Facts and tags for gh.liorbenhorin/lerobot_so101_teleop
+
+Every fact cites its source at commit `9ea18b2c77df29e05c1c45bb1915dfd95514c470`: `vendor_doc` (a text file of the
+clone such as README.md or pyproject.toml) or `upstream_code` (`path/in/clone.py:LINE`). The same facts are written
+into `driver.py` (`facts = [...]`); the reference file is generated from the driver, not from this page.
+
+| fact | source | ref |
+|---|---|---|
+| Lerobot-So101-Teleop-Rock-A-Stack-Simple is registered with gymnasium, with entry point isaaclab.envs:ManagerBasedRLEnv and env_cfg_entry_point rock_a_stack_env_cfg:RockAStackSimpleEnvCfg | upstream_code | source/lerobot_so101_teleop/tasks/rock_a_stack/__init__.py:9-16 |
+| RockAStackSimpleEnvCfg extends BaseEnvCfg | upstream_code | source/lerobot_so101_teleop/tasks/rock_a_stack/rock_a_stack_env_cfg.py:119 |
+| BaseEnvCfg extends Isaac Lab's ManagerBasedRLEnvCfg | upstream_code | source/lerobot_so101_teleop/tasks/base/base_env_cfg.py:280 |
+| The action term is a JointPositionActionCfg over the six joints Rotation, Pitch, Elbow, Wrist_Pitch, Wrist_Roll and Jaw, with scale 1 and use_default_offset False | upstream_code | source/lerobot_so101_teleop/tasks/base/base_env_cfg.py:141-146 |
+| The policy observation group has one term, joint_pos, with corruption disabled | upstream_code | source/lerobot_so101_teleop/tasks/base/base_env_cfg.py:154-161 |
+| The visual observation group has camera_ego and camera_external RGB terms, with corruption disabled and concatenate_terms False | upstream_code | source/lerobot_so101_teleop/tasks/base/base_env_cfg.py:163-186 |
+| camera_ego is a 480 x 640 RGB camera | upstream_code | source/lerobot_so101_teleop/tasks/base/base_env_cfg.py:75-80 |
+| camera_external is a 480 x 640 RGB camera | upstream_code | source/lerobot_so101_teleop/tasks/base/base_env_cfg.py:105-110 |
+| The environment uses decimation 2 and a simulation timestep of 1/120 s, so one policy step is 1/60 s | upstream_code | source/lerobot_so101_teleop/tasks/base/base_env_cfg.py:294-305 |
+| The configured episode length is 5 s | upstream_code | source/lerobot_so101_teleop/tasks/base/base_env_cfg.py:298 |
+| The base environment declares rewards and terminations as None for teleoperation | upstream_code | source/lerobot_so101_teleop/tasks/base/base_env_cfg.py:290-291 |
+| The scene is configured with one environment (num_envs = 1) | upstream_code | source/lerobot_so101_teleop/tasks/base/base_env_cfg.py:300 |
+| The Rock-A-Stack Simple scene adds a rock-a-stack asset, a base plate and five rings named Ring01 to Ring05 | upstream_code | source/lerobot_so101_teleop/tasks/rock_a_stack/rock_a_stack_env_cfg.py:26-59 |
+| The reset event randomizes the base plate pose with the ranges written as x (0.15 - 0.2, 0.3 - 0.2), y (0.0, -0.15), z (0.04, 0.04) and yaw (-0.5, 0.5), and the five rings' offsets as x (-0.1, 0.1) and y (0.25, 0.1) | upstream_code | source/lerobot_so101_teleop/tasks/rock_a_stack/rock_a_stack_env_cfg.py:82-115 |
+| The task creates a physics material with static friction 0.5, dynamic friction 0.5 and restitution 0.5 | upstream_code | source/lerobot_so101_teleop/tasks/rock_a_stack/rock_a_stack_env_cfg.py:129-134 |
+| The SO-101 robot asset spawns the USD file usd/SO-ARM101-USD.usd | upstream_code | source/lerobot_so101_teleop/assets/so101.py:9-11 |
+| The SO-101 asset's initial joint positions are Rotation -0.2736, Pitch -0.6109, Elbow -0.0745, Wrist_Pitch 1.5148, Wrist_Roll -1.6034 and Jaw -0.1465 | upstream_code | source/lerobot_so101_teleop/assets/so101.py:23-31 |
+| The agent script creates the environment with gym.make(task, cfg=env_cfg) | upstream_code | source/lerobot_so101_teleop/scripts/lerobot_agent.py:77 |
+| The agent script passes obs['policy'][0] and obs['visual'] to the dataset processor | upstream_code | source/lerobot_so101_teleop/scripts/lerobot_agent.py:154-158 |
+| The teleop agent drives the simulation from a real leader arm on /dev/ttyACM0 with kind leader | upstream_code | source/lerobot_so101_teleop/scripts/lerobot_agent.py:100-107 |
+| The README badges pin Isaac Sim 5.1.0 and Isaac Lab 2.3.0 | vendor_doc | README.md:4-5 |
+| The README installs Isaac Sim 5.1.0 and Isaac Lab v2.3.0 before this repository | vendor_doc | README.md:38-47 |
+| The README installs this repository with uv pip install -e source/lerobot_so101_teleop | vendor_doc | README.md:54 |
+| The README describes a sample environment for the LeRobot SO-101 robot in Isaac Lab to collect demonstrations in simulation | vendor_doc | README.md:17 |
+| The README's run example is lerobot_agent --task Lerobot-So101-Teleop-Rock-A-Stack-Simple | vendor_doc | README.md:72-75 |
+| The package requires Python 3.11 or newer | vendor_doc | source/lerobot_so101_teleop/pyproject.toml:12 |
+
+## Limits
+
+The driver declares no numeric bound of its own. The clone configures a joint-position action over six named joints
+with scale 1 and `use_default_offset=False` (`base_env_cfg.py:141-146`) but states no numeric action bound, so the
+fake publishes an unbounded six-element Box and the bridge derives no action limit; no bound was invented. The
+catalogued `cap.world.step.v1` schema bounds `ticks` (1 to the bridge's `max_ticks`, 10000) and
+`cap.world.seed.v1` bounds `seed` to a non-negative integer; the runtime enforces both. No field is
+`operator_required`: the device is simulated R0 and the operator has no device bound to supply. There is no
+`site-limits.example.json` because no limit exists that an operator could narrow.
+
+## Fidelity
+
+The deployed model is F0 (kinematic/analytic): engine `isaaclab:Lerobot-So101-Teleop-Rock-A-Stack-Simple`,
+determinism `seeded` with `seed_control` `parameter`, timestep 16.67 ms (decimation 2 at a 1/120 s simulation
+timestep, `base_env_cfg.py:294-305`), `realtime_factor` 0, clock `lockstep`, reset `full`, `snapshot_restore`
+false. The gaps in `driver.py` state what is not modelled, including the missing rigid-body dynamics, the smaller
+fake camera arrays (18 flat values instead of 480 x 640 x 3 RGB), the vectorised-to-single-environment reduction,
+the unmodelled Rock-A-Stack reset randomisation, the 300-step truncation derived from the configured 5 s episode, and
+that the upstream stack was never run.
+
+## Safety
+
+Simulated R0 device. The e-stop is the runtime's software latch: after it, no step or reset is accepted until
+`mhs.safety.reset` clears the latch, the simulation is not advanced, and the last observation stays readable. The
+upstream teleop script drives the simulation from a real leader arm (`lerobot_agent.py:100-107`), but this driver
+serves the simulation only and never commands the real arm. No physical stop exists and none is claimed.
+
+Tags: lerobot, so-101, robot-arm, teleoperation, rock-a-stack, isaac-sim, isaac-lab, reinforcement-learning,
+simulation, gymnasium

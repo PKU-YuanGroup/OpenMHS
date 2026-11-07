@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (CrazyFlie driver)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only: these bounds are a site choice, not a limit the upstream clone states. Replace them with the envelope of the flight space at deployment.",
+  "devices": {
+    "mhs://localhost/crazyflie": {
+      "x-cap.jjshoots.position_setpoint.v1": {
+        "x": {"min": -0.5, "max": 0.5, "unit": "m", "source": "operator",
+              "reason": "example: keep the drone inside a 1 m wide box"},
+        "y": {"min": -0.5, "max": 0.5, "unit": "m", "source": "operator",
+              "reason": "example: keep the drone inside a 1 m wide box"},
+        "z": {"min": 0.0, "max": 1.5, "unit": "m", "source": "operator",
+              "reason": "example: below 1.5 m and not below the floor"},
+        "yaw": {"min": -0.5, "max": 0.5, "unit": "rad", "source": "operator",
+                "reason": "example: keep the heading near the start heading"}
+      },
+      "x-cap.jjshoots.velocity_setpoint.v1": {
+        "vx": {"min": -0.5, "max": 0.5, "unit": "1", "source": "operator",
+               "reason": "example: slow translational velocity in the upstream value"},
+        "vy": {"min": -0.5, "max": 0.5, "unit": "1", "source": "operator",
+               "reason": "example: slow translational velocity in the upstream value"},
+        "vz": {"min": -0.2, "max": 0.2, "unit": "1", "source": "operator",
+               "reason": "example: slow vertical velocity in the upstream value"},
+        "yaw_rate": {"min": -1.0, "max": 1.0, "unit": "rad/s", "source": "operator",
+                     "reason": "example: at most one radian per second of yaw"}
+      }
+    }
+  }
+}

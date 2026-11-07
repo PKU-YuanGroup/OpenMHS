@@ -1,0 +1,89 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.hogunkee/robocasa_g1",
+  "track": "robots",
+  "local_path": "robots/hogunkee/robocasa_g1",
+  "driver_dir": "MHS/drivers/robots/hogunkee__robocasa_g1",
+  "upstream": {
+    "repo_url": "https://github.com/hogunkee/robocasa_g1",
+    "commit": "6796d20bbee3fbe49e8f80a08f04bece07f481fd",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 219,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robocasa.utils.gym_utils.gymnasium_groot:GrootRoboCasaEnv",
+      "file": "robocasa/utils/gym_utils/gymnasium_groot.py",
+      "line": 23,
+      "confidence": "override"
+    },
+    {
+      "symbol": "robocasa.utils.gym_utils.gymnasium_basic:RoboCasaEnv",
+      "file": "robocasa/utils/gym_utils/gymnasium_basic.py",
+      "line": 82,
+      "confidence": "override"
+    },
+    {
+      "symbol": "robocasa.environments.tabletop.tabletop:Tabletop",
+      "file": "robocasa/environments/tabletop/tabletop.py",
+      "line": 106,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robocasa/utils/gym_utils/gymnasium_groot.py:23 GrootRoboCasaEnv environment class",
+      "robocasa/environments/tabletop/tabletop_cabinet_door.py:172 TabletopOpenCabinetDoor environment class",
+      "robocasa/environments/tabletop/tabletop_cabinet_door.py:177 TabletopCloseCabinetDoor environment class",
+      "robocasa/environments/tabletop/tabletop_cabinet_pnp.py:224 PnPCupToCabinetClose environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/hogunkee__robocasa_g1 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

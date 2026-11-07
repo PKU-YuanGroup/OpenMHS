@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "gate": {
+    "digest": "sha256:df792a6c0f78a532029f30a44647384cac54df9d034f7f326d74c15d620e72f4",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.athackst.cmd_vel.v1",
+      "reason": "No catalogue class fits a raw geometry_msgs/Twist publication. cap.motion.mobile_base.v1 requires duration_s and returns measured distance_m, heading_rad and stopped, while the upstream callback only forwards atan2(linear.x, linear.y) and hypot(linear.x, linear.y) to the native roll command and publishes no motion or completion acknowledgement. A rosbridge publish receipt is transmission evidence only.",
+      "verb": "invoke",
+      "summary": "Publish the two Twist components the Sphero cmd_vel callback consumes.",
+      "similar": [
+        "cap.motion.mobile_base.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.athackst.set_color.v1",
+      "reason": "cap.imaging.illumination.v1 is restricted to instrument.microscope and light.source and takes channel plus intensity, not a std_msgs/ColorRGBA. The Sphero node is a robot.mobile_base and its LED handler takes r, g and b. The publication carries no execution acknowledgement.",
+      "verb": "invoke",
+      "summary": "Publish a ColorRGBA on the set_color topic.",
+      "similar": [
+        "cap.imaging.illumination.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.athackst.set_back_led.v1",
+      "reason": "cap.imaging.illumination.v1 binds instrument.microscope and light.source with channel and percentage intensity; the Sphero node is a robot.mobile_base and its back-LED handler takes one native 0..255 brightness value. The publication has no execution acknowledgement.",
+      "verb": "invoke",
+      "summary": "Publish a Float32 back-LED brightness on set_back_led.",
+      "similar": [
+        "cap.imaging.illumination.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.athackst.disable_stabilization.v1",
+      "reason": "No catalogue class expresses the upstream Bool stabilization switch. It is a ROS topic publication, not a service-backed cap.device.configure.v1 write, and the node publishes no resulting state on which a configure receipt could be based.",
+      "verb": "invoke",
+      "summary": "Publish the Bool that disables or enables native stabilization.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.athackst.set_heading.v1",
+      "reason": "No catalogue class fits a raw std_msgs/Float32 heading-reference publication. The callback normalizes the radians and converts to whole degrees before sending the native set_heading command, and publishes no acknowledgement of the new reference.",
+      "verb": "invoke",
+      "summary": "Publish a heading reference in radians on set_heading.",
+      "similar": [
+        "cap.motion.mobile_base.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.athackst.set_angular_velocity.v1",
+      "reason": "No catalogue class fits a raw std_msgs/Float32 rotation-rate publication. The callback converts radians per second to native 0.784 degree/s counts for set_rotation_rate and publishes no acknowledgement.",
+      "verb": "invoke",
+      "summary": "Publish an angular velocity in radians per second on set_angular_velocity.",
+      "similar": [
+        "cap.motion.mobile_base.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.athackst.stop.v1",
+      "reason": "cap.motion.stop.v1 requires a measured stopped boolean and optional stopped_at or stopped_position. The upstream node has no acknowledged stop endpoint and no measured stopped-state topic; a fixed zero Twist publication proves only that rosbridge accepted the message, so it is exposed as an ordinary x-cap action and is not a safe-state or e-stop binding.",
+      "verb": "invoke",
+      "summary": "Publish a fixed zero Twist as an ordinary stop request.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "BLOCKED (NO_HARDWARE_FREE_PATH): the pinned sphero_node creates four publishers and six subscriptions but no ROS service or action (sphero_node/sphero.py:65-75). Its only stop paths are a zero cmd_vel publication, a 0.6 s no-command timer that calls robot.roll(0, 0) (sphero_node/sphero.py:81,115-126), and a shutdown-only stop() that rolls zero, disconnects and joins (sphero_node/sphero.py:128-134). None is a ROS-accessible acknowledged safe state, and the clone documents no independent hardware e-stop or power-isolation control. A zero-velocity Twist publication is transmission-only; the driver therefore declares no safety_bindings and claims no stopped state. G3 reports G3.STRICT (SAFE-045) and G3.NO_ESTOP, exactly the missing independent stop; G1, G2 and G4 pass, and G5/G6/G7/G8/G9 were skipped after G3. Last gate output: 'G3 fail Strict resolve: hardware view: mhs://localhost/sphero_ros2 (safety.estop): a hardware device at R2 needs an independent hardware e-stop ... [SAFE-045]; G3.NO_ESTOP: a hardware driver at R2 needs an @estop method'. Scope covered: reads from /odom, /imu, /collision and /diagnostics; publications on /cmd_vel, /set_color, /set_back_led, /disable_stabilization, /set_heading and /set_angular_velocity; the cmd_vel callback consumes only linear.x and linear.y (atan2/hypot), ignores angular.z, truncates to int and sends native counts, so the inputs are described as raw counts rather than inventing m/s. The fake is an analytic ROS-free F0 contract stand-in, not a recording of captured traffic, with all state numbers marked as placeholders; it models no BLE link, firmware, physics, cmd_vel timeout or shutdown stop. Limits: the ROS Twist components, ColorRGBA components, heading radians and angular-velocity radians per second are operator_required because the clone states no site bound; only the native back-LED 0..255 docstring is a sourced limit. site-limits.example.json supplies example narrow bounds and is not a device fact. Risk is R2 (mobile-base transit per MHS/spec/04-safety.md), above the card floor R1. No hardware or live ROS backend exists or was run; driver.lock.json keeps reviewed_by null and is authored by the model. No human review or hardware test is claimed. This package is a model-authored partial declaration retained so a maintainer can see the exact upstream stop gap; a future upstream acknowledged stop service or a documented independent e-stop is required before this device can be served at R2.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Confirmed the author's block: the pinned SpheroNode creates four publishers and six subscriptions and no service or action (sphero.py:65-75); its only stop paths are a zero cmd_vel publication, the 0.6 s no-command roll(0, 0) of the 0.1 s timer (81, 112, 115-126) and the shutdown-only stop() (128-134), so an R2 mobile base has no acknowledged stop and G3 fails G3.STRICT (SAFE-045) and G3.NO_ESTOP. Every endpoint and type and all but one fact match their lines, the R1-to-R2 raise for a mobile base is right, and the Twist, colour, heading and rotation inputs are operator_required. For the next author: the set_back_led callback calls robot.set_back (sphero.py:222), which the native Sphero class does not define (it has set_back_led, sphero_driver.py:656), so the sourced 0..255 back-LED limit and that action's text describe a method the ROS path never reaches; parse_data_strm builds std_msgs.Header although only names from std_msgs.msg are imported (178, 195; import on 19), so /imu and /odom would not publish as written; the timer fact's 'once per second' is on line 82, outside its range 115-126; and the fake echoes the commanded linear.y into the odometry twist although the node publishes Vector3(VELOCITY_X/1000.0, 0, 0) (199). The reviewer changed no authored file; the gate re-run rewrote check-report.json with the same findings (stable digest unchanged). For the human reviewer: A Bluetooth Sphero ball (mobile base). The node offers no stop endpoint, and at the pin the native Sphero.send serializes str(<generator>) instead of the packet bytes (sphero_driver.py:753), so no command, including the zero roll of the cmd_vel timeout and of stop(), reaches the ball as a valid packet; its receive loop uses Python 2 idioms (ord() on received elements, 815 and 825; range() over a float, 893). Unblocking needs a working native driver plus an acknowledged stop or a physical stop reference."
+}

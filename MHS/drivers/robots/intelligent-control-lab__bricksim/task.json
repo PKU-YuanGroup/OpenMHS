@@ -1,0 +1,116 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.intelligent-control-lab/bricksim",
+  "track": "robots",
+  "local_path": "robots/intelligent-control-lab/bricksim",
+  "driver_dir": "MHS/drivers/robots/intelligent-control-lab__bricksim",
+  "upstream": {
+    "repo_url": "https://github.com/intelligent-control-lab/bricksim",
+    "commit": "cbd5de3238e6ac12f44ef699e1507a9f16bdafc3",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 96,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "bricksim.envs.assemble_brick.env:AssembleBrickEnvCfg",
+      "file": "python/bricksim/envs/assemble_brick/env.py",
+      "line": 506,
+      "confidence": "override"
+    },
+    {
+      "symbol": "bricksim.envs.assemble_brick.env:AssembleBrickRGBEnvCfg",
+      "file": "python/bricksim/envs/assemble_brick/env.py",
+      "line": 527,
+      "confidence": "override"
+    },
+    {
+      "symbol": "bricksim.envs.assemble_brick.env:AssembleBrickRGBDEnvCfg",
+      "file": "python/bricksim/envs/assemble_brick/env.py",
+      "line": 520,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "resources/robots/r1lite/r1lite_dual_arm.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "resources/robots/r1lite/r1lite_mobile_base.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "resources/robots/r1lite/r1lite_upper_body.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "resources/robots/r1lite/robot_mjcf.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "resources/robots/r1lite/test.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.11,<3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "python/bricksim/envs/assemble_brick/__init__.py:7 gym env Lego-AssembleBrick-v0",
+      "python/bricksim/envs/assemble_brick/__init__.py:16 gym env Lego-AssembleBrick-RGB-v0",
+      "python/bricksim/envs/assemble_brick/__init__.py:25 gym env Lego-AssembleBrick-RGBD-v0"
+    ],
+    "upstream_tests": "native/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Lego-AssembleBrick-v0 registered at python/bricksim/envs/assemble_brick/__init__.py:7",
+      "gym env Lego-AssembleBrick-RGB-v0 registered at python/bricksim/envs/assemble_brick/__init__.py:16",
+      "gym env Lego-AssembleBrick-RGBD-v0 registered at python/bricksim/envs/assemble_brick/__init__.py:25"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/intelligent-control-lab__bricksim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

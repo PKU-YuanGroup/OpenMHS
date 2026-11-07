@@ -1,0 +1,104 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tenfoldpaper/multipanda_ros2",
+  "track": "robots",
+  "local_path": "robots/tenfoldpaper/multipanda_ros2",
+  "driver_dir": "MHS/drivers/robots/tenfoldpaper__multipanda_ros2",
+  "upstream": {
+    "repo_url": "https://github.com/tenfoldpaper/multipanda_ros2",
+    "commit": "9a30ca04b4d72e832934f19b35f540931874ec7e",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 268,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "franka_description/mujoco/franka/dual_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "franka_description/mujoco/franka/dual_scene_ng.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "franka_description/mujoco/franka/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "franka_description/mujoco/franka/scene_ng.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "franka_description/mujoco/franka/TEMPLATE_panda.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "franka_description/mujoco/franka/dual_scene.xml:1 MJCF scene model",
+      "franka_description/mujoco/franka/dual_scene_ng.xml:1 MJCF scene model",
+      "franka_description/mujoco/franka/scene.xml:1 MJCF scene model",
+      "franka_description/mujoco/franka/scene_ng.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "franka_description/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model franka_description/mujoco/franka/dual_scene.xml:1",
+      "MJCF scene model franka_description/mujoco/franka/dual_scene_ng.xml:1",
+      "MJCF scene model franka_description/mujoco/franka/scene.xml:1",
+      "MJCF scene model franka_description/mujoco/franka/scene_ng.xml:1",
+      "MJCF robot model franka_description/mujoco/franka/TEMPLATE_panda.xml:1",
+      "MJCF robot model franka_description/mujoco/franka/mj_dual.xml:1",
+      "MJCF robot model franka_description/mujoco/franka/mj_dual_ng.xml:1",
+      "MJCF robot model franka_description/mujoco/franka/panda.xml:1",
+      "MJCF robot model franka_description/mujoco/franka/panda_ng.xml:1",
+      "MJCF robot model mujoco_ros_pkgs/mujoco_ros2_dummy_plugin/launch/pendulum.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/tenfoldpaper__multipanda_ros2 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

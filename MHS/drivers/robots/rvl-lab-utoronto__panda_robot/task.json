@@ -1,0 +1,63 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.rvl-lab-utoronto/panda_robot",
+  "track": "robots",
+  "local_path": "robots/rvl-lab-utoronto/panda_robot",
+  "driver_dir": "MHS/drivers/robots/rvl-lab-utoronto__panda_robot",
+  "upstream": {
+    "repo_url": "https://github.com/rvl-lab-utoronto/panda_robot",
+    "commit": "494e9db28a8b38290a3339fea3644379f3d5b9ad",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "prior-art",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 9,
+  "rank": 1864,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "catkin_make"
+    ],
+    "system_deps": [
+      "Catkin workspace with this package in src; run catkin_make from the workspace root"
+    ],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rvl-lab-utoronto__panda_robot --backend fake",
+  "skip_reason": "override (ros-wave-c-routing.json): Model review of wave C: skip, prior art: Gym envs for a real Franka Panda over franka_ros with no simulator; gym_panda_robot.envs imports a missing panda_reacher_manga (envs/__init__.py:1-2), so no env loads as shipped.",
+  "publish_review": "required"
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.stanfordvl/gibsonenv",
+  "upstream": {
+    "repo_url": "https://github.com/stanfordvl/gibsonenv",
+    "commit": "f474d9efd5b5ef703e3bf630a6f7448b54875d0c",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux",
+    "notes": "Upstream setup.py:26-30 pins gym==0.9.4 and pybullet==1.9.4; README.md:67-69 requires an Nvidia GPU with CUDA/CuDNN and the scene assets are downloaded separately. The gate installs and imports nothing: fake.py is pure Python and needs neither the GPU nor the assets. The sim backend was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeAntNavigateEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-107",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

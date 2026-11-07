@@ -1,0 +1,43 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example site (multi-robot TurtleBot3 Gazebo/Nav stack)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Illustrative only. The driver declares both velocity bounds operator_required because the pinned clone states no signed cmd_vel envelope. Replace these example numbers with the bounds of the deployed simulated site.",
+  "devices": {
+    "mhs://localhost/turtlebot3-multi": {
+      "x-cap.mortezaaliyari.tb3-0-cmd-vel.v1": {
+        "linear_velocity": {
+          "min": -0.2,
+          "max": 0.2,
+          "unit": "m/s",
+          "source": "operator",
+          "reason": "example: the simulated tb3_0 base is limited to this forward and reverse speed"
+        },
+        "angular_velocity": {
+          "min": -1.0,
+          "max": 1.0,
+          "unit": "rad/s",
+          "source": "operator",
+          "reason": "example: the simulated tb3_0 base is limited to this yaw rate"
+        }
+      },
+      "x-cap.mortezaaliyari.tb3-1-cmd-vel.v1": {
+        "linear_velocity": {
+          "min": -0.2,
+          "max": 0.2,
+          "unit": "m/s",
+          "source": "operator",
+          "reason": "example: the simulated tb3_1 base is limited to this forward and reverse speed"
+        },
+        "angular_velocity": {
+          "min": -1.0,
+          "max": 1.0,
+          "unit": "rad/s",
+          "source": "operator",
+          "reason": "example: the simulated tb3_1 base is limited to this yaw rate"
+        }
+      }
+    }
+  }
+}

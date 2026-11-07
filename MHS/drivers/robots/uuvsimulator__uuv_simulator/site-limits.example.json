@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example deployment (UUV Simulator underwater current)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example values only. Replace them with the velocity and angle ranges configured in the deployment's constant_current SDF block; the upstream repository states no fixed ranges.",
+  "devices": {
+    "mhs://localhost/uuv-current": {
+      "x-cap.uuvsimulator.set_current_velocity.v1": {
+        "velocity": {"min": 0.0, "max": 5.0, "unit": "m/s", "source": "operator",
+                     "reason": "example: the shipped world configures 0 to 5 m/s; replace with this world's range"},
+        "horizontal_angle": {"min": -3.141592653589793, "max": 3.141592653589793, "unit": "rad",
+                             "source": "operator",
+                             "reason": "example: the shipped world configures a full horizontal turn"},
+        "vertical_angle": {"min": -3.141592653589793, "max": 3.141592653589793, "unit": "rad",
+                           "source": "operator",
+                           "reason": "example: the shipped world configures a full vertical turn"}
+      },
+      "x-cap.uuvsimulator.set_horizontal_angle.v1": {
+        "angle": {"min": -3.141592653589793, "max": 3.141592653589793, "unit": "rad",
+                  "source": "operator",
+                  "reason": "example: the shipped world configures a full horizontal turn"}
+      },
+      "x-cap.uuvsimulator.set_vertical_angle.v1": {
+        "angle": {"min": -3.141592653589793, "max": 3.141592653589793, "unit": "rad",
+                  "source": "operator",
+                  "reason": "example: the shipped world configures a full vertical turn"}
+      }
+    }
+  }
+}

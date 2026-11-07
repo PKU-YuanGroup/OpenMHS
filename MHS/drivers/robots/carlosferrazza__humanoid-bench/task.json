@@ -1,0 +1,126 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.carlosferrazza/humanoid-bench",
+  "track": "robots",
+  "local_path": "robots/carlosferrazza/humanoid-bench",
+  "driver_dir": "MHS/drivers/robots/carlosferrazza__humanoid-bench",
+  "upstream": {
+    "repo_url": "https://github.com/carlosferrazza/humanoid-bench",
+    "commit": "cb1189039151c8aadaaa987b442da54383c87fab",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 63,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "humanoid_bench.env:HumanoidEnv",
+      "file": "humanoid_bench/env.py",
+      "line": 103,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "adept_envs.franka.kitchen_multitask_v0:KitchenTaskRelaxV1",
+      "file": "humanoid_bench/assets/kitchen/adept_envs/franka/kitchen_multitask_v0.py",
+      "line": 177,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "d4rl.kitchen:KitchenMicrowaveKettleLightSliderV0",
+      "file": "humanoid_bench/assets/kitchen/__init__.py",
+      "line": 5,
+      "confidence": "recon"
+    },
+    {
+      "symbol": "d4rl.kitchen:KitchenMicrowaveKettleBottomBurnerLightV0",
+      "file": "humanoid_bench/assets/kitchen/__init__.py",
+      "line": 32,
+      "confidence": "recon"
+    }
+  ],
+  "models": [
+    {
+      "file": "humanoid_bench/assets/envs/g1_torque_balance_hard.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "humanoid_bench/assets/envs/g1_torque_balance_simple.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "humanoid_bench/assets/envs/g1_torque_basketball.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "humanoid_bench/assets/envs/g1_torque_bookshelf_hard.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "humanoid_bench/assets/envs/g1_torque_bookshelf_simple.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "humanoid_bench/__init__.py:16 gym env {}-{}-v0",
+      "humanoid_bench/env.py:252 gym env temp-v0",
+      "humanoid_bench/assets/kitchen/__init__.py:5 gym env kitchen-complete-v0",
+      "humanoid_bench/assets/kitchen/__init__.py:18 gym env kitchen-partial-v0"
+    ],
+    "upstream_tests": "dreamerv3/embodied/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env {}-{}-v0 (id template, built at run time) registered at humanoid_bench/__init__.py:16",
+      "gym env temp-v0 registered at humanoid_bench/env.py:252",
+      "gym env kitchen-complete-v0 registered at humanoid_bench/assets/kitchen/__init__.py:5",
+      "gym env kitchen-partial-v0 registered at humanoid_bench/assets/kitchen/__init__.py:18",
+      "gym env kitchen-mixed-v0 registered at humanoid_bench/assets/kitchen/__init__.py:32",
+      "gym env kitchen_relax-v1 registered at humanoid_bench/assets/kitchen/adept_envs/franka/__init__.py:20"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/carlosferrazza__humanoid-bench --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

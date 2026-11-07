@@ -1,0 +1,41 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.agilexrobotics/ugv_gazebo_sim",
+  "upstream": {
+    "repo_url": "https://github.com/agilexrobotics/ugv_gazebo_sim",
+    "commit": "27633a956c845903ee630538afeb17fe70afdd84",
+    "license_spdx": "NOASSERTION"
+  },
+  "companions": [
+    {
+      "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+      "commit": "0667c5e52e8afa1f478955d8a2569b473a5acdf1",
+      "lock": "ros-simulation__gazebo_ros_pkgs@2.8.7"
+    },
+    {
+      "package_id": "gh.gazebosim/gazebo-classic",
+      "commit": "e4400ae7e04e4859eec392ac67b813402703bab0",
+      "lock": "gazebosim__gazebo-classic@gazebo9_9.19.0"
+    }
+  ],
+  "install": {
+    "python": ">=3.10",
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux",
+    "notes": "Nothing to install for the fake backend. A live deployment (never run for this package) is the operator starting scout/scout_gazebo_sim/launch/scout_empty_world.launch under ROS 1 Melodic. This package does not launch ROS or Gazebo. That launch file's world_name default has no slash between $(find scout_gazebo_sim) and worlds/weston_robot_empty.world (scout_empty_world.launch:6). The velocity controllers named in scout_v2_control.yaml come from apt package ros-melodic-ros-controllers (scout/README.md:36), which is not in this clone. The driver binds /cmd_vel, the literal suffix at scout_skid_steer.cpp:22. The launch default robot_namespace is / (scout_empty_world.launch:3), so the C++ concatenation is the string //cmd_vel. This package does not cite a ROS name-cleaning function."
+  },
+  "backends": {
+    "fake": ".fake:FakeScoutV2EmptyWorld"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "grok-4.7",
+    "run_id": "ext-p5-reauthor--agilexrobotics__ugv_gazebo_sim-20261105",
+    "date": "2026-11-05"
+  },
+  "reviewed_by": null
+}

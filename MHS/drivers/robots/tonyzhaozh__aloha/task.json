@@ -1,0 +1,89 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tonyzhaozh/aloha",
+  "track": "robots",
+  "local_path": "robots/tonyzhaozh/aloha",
+  "driver_dir": "MHS/drivers/robots/tonyzhaozh__aloha",
+  "upstream": {
+    "repo_url": "https://github.com/tonyzhaozh/aloha",
+    "commit": "06369f03cd8e0a47e16d3a90167853fd33af7557",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:flagship-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING",
+    "NEEDS_ARTIFACTS"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 4,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "aloha_scripts.real_env:RealEnv",
+      "file": "aloha_scripts/real_env.py",
+      "line": 18,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "catkin_make"
+    ],
+    "system_deps": [
+      "Catkin workspace with this package in src; run catkin_make from the workspace root"
+    ],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "RealEnv.get_effort",
+      "RealEnv.get_images",
+      "RealEnv.get_observation",
+      "RealEnv.get_qpos",
+      "RealEnv.get_qvel",
+      "RealEnv.get_reward"
+    ],
+    "writes": [
+      "RealEnv.set_gripper_pose"
+    ],
+    "actions": [
+      "RealEnv.reset",
+      "RealEnv.recorder_left.puppet_arm_commands_cb"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.manipulation.grasp.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "motion"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/tonyzhaozh__aloha --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

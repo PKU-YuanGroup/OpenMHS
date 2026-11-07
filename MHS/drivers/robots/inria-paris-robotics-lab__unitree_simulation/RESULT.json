@@ -1,0 +1,34 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:3656b103ba5c2273c3b53bafff1fe223ab00f2e7cf4de75ef9cade959d6919ae",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.inria-paris-robotics-lab.lowcmd.v1",
+      "reason": "No catalogue class carries one unitree_go/msg/LowCmd publication with 12 motor_cmd entries of q, dq, tau, kp and kd. cap.motion.joint_torque.v1 is torque-only, requires a duration and its resource kind is robot.arm; cap.motion.joint_position.v1 is a target-pose action; cap.motion.mobile_base.v1 is a velocity command. The pinned node consumes the joint-level LowCmd fields directly, so the extension preserves its primary control interface.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.inria-paris-robotics-lab.lowstate.v1",
+      "reason": "No catalogue class observes the raw unitree_go/msg/LowState. cap.sensing.imu.v1 covers only orientation, angular velocity and linear acceleration and requires resource kind sensor.imu, while this device is world.sim and the node's LowState also publishes motor mode/q/dq and foot_force.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.inria-paris-robotics-lab.reset.v1",
+      "reason": "cap.world.reset.v1 is an acknowledged invoke with seed/options and an observation+seed output. The pinned /reset is an unacknowledged std_msgs/msg/Empty topic subscription whose callback only calls simulator.reset() and returns nothing.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.inria-paris-robotics-lab.unlock_base.v1",
+      "reason": "No catalogue class releases a simulator's fixed base. The pinned /unlock_base is an unacknowledged std_msgs/msg/Empty topic subscription whose callback calls simulator.unlock_base() and returns nothing.",
+      "verb": "invoke"
+    }
+  ],
+  "blocked_on": [],
+  "notes": "PASS on the fake backend only (evidence contract_checked, never an MHS-Device level). Authored by grok-4.7 (a model and not a human; run ext-p5-sdk-stampless--all-20261105); reviewed_by stays null. This re-authors the blocked record (HELPER_MISSING, gate digest sha256:83f82b0de944846a3fe2f89e5c82233e9d29131f1d2e7877781f0c95dd1fd26d). The previous package tree is kept under the development moved-aside directory. No ROS graph, rosbridge, pybullet, simulator or hardware was run. Licence NOASSERTION; publish_review stays required, and this record does not publish the package.\n\nSTOP (SAFE-049, simulated only). The request is one unitree_go/msg/LowCmd on /lowcmd, timeout_ms 1000, with twenty MotorCmd entries whose q, dq, tau, kp and kd are 0 (driver.py sensed_stop request). The timer at simulation_node.py:77 calls update, which applies tau_cmd = tau_des - kp*(q - q_des) - kd*(v - v_des) (simulation_node.py:89-93) from last_cmd_msg. That torque is zero when kp, kd and tau are zero. reset() calls simulator.reset() and does not assign last_cmd_msg (simulation_node.py:180-183), so /reset and /unlock_base stay ordinary commands and are not request steps. The launch default is unlock_base False (launch/launch_sim.launch.py:15-18), so a still base can hang while the legs move; the predicate therefore includes the twelve joint velocities. Go2 high_level_period is 1/500 s (robots_configuration.py:170-171).\n\nSOURCES. /lowstate is unitree_go/msg/LowState. The motor fill at simulation_node.py:104-108 assigns mode, q and dq and does not assign a stamp. The LowState definition is outside the clone (robots_configuration.py:3 imports unitree_go.msg). The publisher is create_publisher(..., 10) at simulation_node.py:56, so freshness is arrival, history durability volatile cited at that line, min_interval_ms 1. /odometry/filtered is nav_msgs/msg/Odometry, header.stamp assigned at simulation_node.py:139, publisher at :57, stamp_path header.stamp, history volatile cited at :57. Predicate: motor_state.0.dq through motor_state.11.dq as abs_max joint_dq_0..11 (rad/s), plus norm_max base_linear (twist.twist.linear, m/s) and base_angular (twist.twist.angular, rad/s). Every threshold is Limit.operator_required. consecutive 3, min_span_ms 4, max_gap_ms 500, confirm_within_ms 1500, estop_latency_ms 2500. fixtures/estop-confirmation.json holds fake placeholders only. Three counted samples at the 500 Hz period span 4 ms, which equals min_span_ms, so do not raise that bound. A stream closer than min_interval_ms 1 restarts the arrival count. A slower stream still confirms while the gap stays under max_gap_ms 500. A replay spaced at or above that interval is not distinguished from live samples (the same residual as a fresh topic read-back).\n\nRISK stays R2. The node publishes and subscribes the real Go2 topic names /lowstate and /lowcmd (simulation_node.py:56, :61). A graph that also carries a real Go2 bridge would deliver this package's /lowcmd to that robot. The request sends 20 MotorCmd entries; this clone shows n_dof 12 (simulation_node.py:81), and the unitree_go array length is outside the clone.\n\nGATE (python3 -m mhs.driver check --backend fake): G1 through G9 pass. gate.digest sha256:3656b103ba5c2273c3b53bafff1fe223ab00f2e7cf4de75ef9cade959d6919ae. Catalogue requests are the same four as the blocked record.\n\nFAKE. RecordingRosTransport. The first /lowstate sample echoes the last command so a publication still changes the observation. Later /lowstate samples are fed one at a time, 50 ms apart, with joint dq 0.4 until kp, kd and tau are zero and 0 after that. /odometry/filtered is an immediate stamp burst; its first stamp is non-zero and is the discarded sample. No human reviewed this package.\n\nMODEL REVIEW (grok-4.7, a model and not a human, 2026-11-05; reviewed_by stays null): Round 1 repair. min_span_ms is 4 so three counted samples at the cited 500 Hz period meet the window. The lowstate note now says the node fill does not assign a stamp and that the message definition is outside the clone. The stop still sends twenty MotorCmd slots; the node applies n_dof 12. Gate digest unchanged at sha256:3656b103ba5c2273c3b53bafff1fe223ab00f2e7cf4de75ef9cade959d6919ae. Evidence remains fake contract_checked. No simulator or hardware run.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-06; reviewed_by stays null): Different-model review by Codex (gpt-6.1-sol) of the work of Grok (grok-4.7), unit p5-sdk-stampless--all, round 5: Traced the zero-torque request, twelve joint-velocity observations, stamped odometry, volatile publishers, and reset separation. Gates, package tests, and the recorded digest pass; acceptance is an R2 fake contract. The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it."
+}

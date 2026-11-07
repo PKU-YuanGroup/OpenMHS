@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.suhrudhsarathy/drone_sim",
+  "upstream": {
+    "repo_url": "https://github.com/suhrudhsarathy/drone_sim",
+    "commit": "1a324f178a5719676bdb0caaa2a2d545a7158fdd",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "requirements.txt:1-2 lists matplotlib and numpy, and simple_drone_env.py:1 imports the legacy gym package, which requirements.txt does not list. The gate and the fake backend need none of them: fake.py is pure Python. Install the upstream only to run the real environment, which was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeSimpleDroneEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-075",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

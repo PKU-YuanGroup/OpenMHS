@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.enactic/openarm_mujoco",
+  "upstream": {
+    "repo_url": "https://github.com/enactic/openarm_mujoco",
+    "commit": "0e050bb5d3472b75c6bfa00b310a77c7c2c5be79",
+    "license_spdx": "Apache-2.0"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "pyproject.toml:27-30 requires Python 3.10 or newer and mujoco 3.6.0 or newer plus numpy for the engine and the launcher. The gate and fake.py need neither: fake.py is pure Python and the gate never installs or imports the upstream package or the engine. Install the upstream stack only to serve the model with the real MuJoCo engine (backend sim), which was not run; the clone's v1/meshes must stay beside the model."
+  },
+  "backends": {
+    "fake": ".fake:fake_mujoco"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-045",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

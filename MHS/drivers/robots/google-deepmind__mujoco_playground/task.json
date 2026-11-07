@@ -1,0 +1,135 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.google-deepmind/mujoco_playground",
+  "track": "robots",
+  "local_path": "robots/google-deepmind/mujoco_playground",
+  "driver_dir": "MHS/drivers/robots/google-deepmind__mujoco_playground",
+  "upstream": {
+    "repo_url": "https://github.com/google-deepmind/mujoco_playground",
+    "commit": "d59156e099a8785dd58fbce2e25a6ee1f7b5800c",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 67,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "mujoco_playground._src.dm_control_suite.acrobot:Balance",
+      "file": "mujoco_playground/_src/dm_control_suite/acrobot.py",
+      "line": 45,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "mujoco_playground._src.dm_control_suite.ball_in_cup:BallInCup",
+      "file": "mujoco_playground/_src/dm_control_suite/ball_in_cup.py",
+      "line": 44,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "mujoco_playground._src.dm_control_suite.cartpole:Balance",
+      "file": "mujoco_playground/_src/dm_control_suite/cartpole.py",
+      "line": 59,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "mujoco_playground._src.dm_control_suite.cheetah:Run",
+      "file": "mujoco_playground/_src/dm_control_suite/cheetah.py",
+      "line": 47,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "mujoco_playground._src.dm_control_suite.finger:Spin",
+      "file": "mujoco_playground/_src/dm_control_suite/finger.py",
+      "line": 81,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "mujoco_playground/_src/dm_control_suite/xmls/acrobot.xml",
+      "line": 8,
+      "kind": "scene"
+    },
+    {
+      "file": "mujoco_playground/_src/dm_control_suite/xmls/ball_in_cup.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "mujoco_playground/_src/dm_control_suite/xmls/cartpole.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "mujoco_playground/_src/dm_control_suite/xmls/cheetah.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "mujoco_playground/_src/dm_control_suite/xmls/finger.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "mujoco_playground/_src/dm_control_suite/xmls/acrobot.xml:8 MJCF scene model",
+      "mujoco_playground/_src/dm_control_suite/xmls/ball_in_cup.xml:1 MJCF scene model",
+      "mujoco_playground/_src/dm_control_suite/xmls/cartpole.xml:1 MJCF scene model",
+      "mujoco_playground/_src/dm_control_suite/xmls/cheetah.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model mujoco_playground/_src/dm_control_suite/xmls/acrobot.xml:8",
+      "MJCF scene model mujoco_playground/_src/dm_control_suite/xmls/ball_in_cup.xml:1",
+      "MJCF scene model mujoco_playground/_src/dm_control_suite/xmls/cartpole.xml:1",
+      "MJCF scene model mujoco_playground/_src/dm_control_suite/xmls/cheetah.xml:1",
+      "MJCF scene model mujoco_playground/_src/dm_control_suite/xmls/finger.xml:1",
+      "MJCF scene model mujoco_playground/_src/dm_control_suite/xmls/fish.xml:1",
+      "MJCF scene model mujoco_playground/_src/dm_control_suite/xmls/hopper.xml:1",
+      "MJCF scene model mujoco_playground/_src/dm_control_suite/xmls/humanoid.xml:1",
+      "MJCF scene model mujoco_playground/_src/dm_control_suite/xmls/manipulator.xml:1",
+      "MJCF scene model mujoco_playground/_src/dm_control_suite/xmls/pendulum.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/google-deepmind__mujoco_playground --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

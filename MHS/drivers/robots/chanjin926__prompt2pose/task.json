@@ -1,0 +1,91 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.chanjin926/prompt2pose",
+  "track": "robots",
+  "local_path": "robots/chanjin926/prompt2pose",
+  "driver_dir": "MHS/drivers/robots/chanjin926__prompt2pose",
+  "upstream": {
+    "repo_url": "https://github.com/chanjin926/prompt2pose",
+    "commit": "615098ccc37f2af4e7e1a1ed2d705c5fef279c23",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 420,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "envs.array_can:ArrayCanEnv",
+      "file": "envs/array_can.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "envs.array_can_v2:ArrayCanEnv2",
+      "file": "envs/array_can_v2.py",
+      "line": 26,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "envs.empty_tabletop:EmptyTabletopEnv",
+      "file": "envs/empty_tabletop.py",
+      "line": 25,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "envs/array_can.py:22 gym env ArrayCan-v1",
+      "envs/array_can_v2.py:26 gym env ArrayCan-v2",
+      "envs/empty_tabletop.py:25 gym env EmptyTabletop-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env ArrayCan-v1 registered at envs/array_can.py:22",
+      "gym env ArrayCan-v2 registered at envs/array_can_v2.py:26",
+      "gym env EmptyTabletop-v1 registered at envs/empty_tabletop.py:25"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/chanjin926__prompt2pose --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,101 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.dfki-ni/mobipick_labs",
+  "track": "robots",
+  "local_path": "robots/dfki-ni/mobipick_labs",
+  "driver_dir": "MHS/drivers/robots/dfki-ni__mobipick_labs",
+  "upstream": {
+    "repo_url": "https://github.com/dfki-ni/mobipick_labs",
+    "commit": "adbfa53af2f6221501215bfb18d2d108225bc04f",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 194,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "experiment_camera_recorder/test"
+  },
+  "hints": {
+    "reads": [
+      "Simulation.domain.get_pose_at",
+      "Simulation.env.get_believe_item_at",
+      "Simulation.env.get_believe_item_in",
+      "Simulation.env.get_item_offered",
+      "Simulation.env.get_robot_arm_at",
+      "Simulation.env.get_robot_at",
+      "Simulation.env.get_robot_has",
+      "Simulation.env.get_searched_at",
+      "TablesDemoAPI.get_robot_arm_at",
+      "TablesDemoAPI.get_robot_at",
+      "TablesDemoAPI.domain.get_pose_at",
+      "TablesDemoAPI.env.get_believe_item_at"
+    ],
+    "writes": [
+      "Simulation.domain.set_goals",
+      "Simulation.domain.set_goals_by_strs",
+      "Simulation.domain.set_search_goals",
+      "Simulation.visualization.set_plan",
+      "Simulation.visualization.set_subplan",
+      "TablesDemoAPI.domain.set_goals",
+      "TablesDemoAPI.domain.set_goals_by_strs",
+      "TablesDemoAPI.domain.set_search_goals",
+      "TablesDemoAPI.visualization.set_plan",
+      "TablesDemoAPI.visualization.set_subplan"
+    ],
+    "actions": [
+      "Simulation.run",
+      "Simulation.env.check_reset_search",
+      "Simulation.env.move_arm",
+      "Simulation.env.move_base",
+      "Simulation.env.move_base_with_item",
+      "Simulation.mobipick.move_arm",
+      "Simulation.mobipick.move_base",
+      "Simulation.mobipick.move_base_with_item",
+      "TablesDemoAPI.move_arm",
+      "TablesDemoAPI.move_base",
+      "TablesDemoAPI.move_base_with_item",
+      "TablesDemoAPI.run"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/dfki-ni__mobipick_labs --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

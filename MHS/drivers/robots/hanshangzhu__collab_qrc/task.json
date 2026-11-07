@@ -1,0 +1,105 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.hanshangzhu/collab_qrc",
+  "track": "robots",
+  "local_path": "robots/hanshangzhu/collab_qrc",
+  "driver_dir": "MHS/drivers/robots/hanshangzhu__collab_qrc",
+  "upstream": {
+    "repo_url": "https://github.com/hanshangzhu/collab_qrc",
+    "commit": "f9e6998d2f7b086f60810b35683791c8c6a41d87",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 379,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "src/vlm_explorer/worlds/vlm_exploration_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "src/go2w/go2_gazebo_sim/mujoco/scene_unitree_official.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "src/go2w/go2_gazebo_sim/mujoco/two_rooms_door_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "src/go2w/go2_gazebo_sim/mujoco/vlm_exploration_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "src/go2w/go2_gazebo_sim/mujoco/vlm_exploration_scene_L1.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/vlm_explorer/worlds/vlm_exploration_scene.xml:1 MJCF scene model",
+      "src/go2w/go2_gazebo_sim/mujoco/scene_unitree_official.xml:1 MJCF scene model",
+      "src/go2w/go2_gazebo_sim/mujoco/two_rooms_door_scene.xml:1 MJCF scene model",
+      "src/go2w/go2_gazebo_sim/mujoco/vlm_exploration_scene.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "scripts/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model src/vlm_explorer/worlds/vlm_exploration_scene.xml:1",
+      "MJCF scene model src/go2w/go2_gazebo_sim/mujoco/scene_unitree_official.xml:1",
+      "MJCF scene model src/go2w/go2_gazebo_sim/mujoco/two_rooms_door_scene.xml:1",
+      "MJCF scene model src/go2w/go2_gazebo_sim/mujoco/vlm_exploration_scene.xml:1",
+      "MJCF scene model src/go2w/go2_gazebo_sim/mujoco/vlm_exploration_scene_L1.xml:1",
+      "MJCF scene model src/go2w/go2_gazebo_sim/mujoco/vlm_exploration_scene_no_artifacts.xml:1",
+      "MJCF scene model src/go2w/go2_gazebo_sim/mujoco/vlm_exploration_scene_original.xml:1",
+      "MJCF robot model src/go2w/go2_gazebo_sim/mujoco/demo1.xml:1",
+      "MJCF robot model src/go2w/go2_gazebo_sim/mujoco/demo1_go2.xml:1",
+      "MJCF robot model src/go2w/go2_gazebo_sim/mujoco/demo1_go2_real.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/hanshangzhu__collab_qrc --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

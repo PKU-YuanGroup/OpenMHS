@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.xarm-developer/xarm-python-sdk",
+  "upstream": {
+    "repo_url": "https://github.com/xarm-developer/xarm-python-sdk",
+    "commit": "d911319cebc45142613e18086aabb8067b18ab7f",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.5",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "README.md:14 says only Python 3 is supported. The SDK is imported by native.py only (from xarm.wrapper import XArmAPI); the gate never installs or imports it. Connecting to an arm needs its controller's IP address and a network the sandbox does not have."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeXArmAPI"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "claude-sonnet-5-5",
+    "run_id": "wp11b-xarm",
+    "date": "2026-10-27"
+  },
+  "reviewed_by": null
+}

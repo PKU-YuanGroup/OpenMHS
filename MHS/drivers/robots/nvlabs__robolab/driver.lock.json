@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.nvlabs/robolab",
+  "upstream": {
+    "repo_url": "https://github.com/nvlabs/robolab",
+    "commit": "ad45d4f974725d020f82c2b0d77d78533aeba2b3",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any",
+    "notes": "README.md:162-174 requires Isaac Sim 5.0 or 5.1, Isaac Lab 2.2.0 or 2.3.2.post1, Python 3.11, Linux Ubuntu 22.04+ and an NVIDIA RTX GPU. The gate and the fake backend need none of that: fake.py is pure Python, and the gate never installs or imports the upstream stack. The sim backend (gymnasium.make of a registered RoboLab environment) needs the upstream install and the built-in registration, and was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeRobolabEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wD-036",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

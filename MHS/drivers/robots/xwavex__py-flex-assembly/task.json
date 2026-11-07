@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.xwavex/py-flex-assembly",
+  "track": "robots",
+  "local_path": "robots/xwavex/py-flex-assembly",
+  "driver_dir": "MHS/drivers/robots/xwavex__py-flex-assembly",
+  "upstream": {
+    "repo_url": "https://github.com/xwavex/py-flex-assembly",
+    "commit": "bd8dca2d21dc0e41265f1ec783ce02418c834142",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 9,
+  "rank": 696,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "catkin_make"
+    ],
+    "system_deps": [
+      "Catkin workspace with this package in src; run catkin_make from the workspace root"
+    ],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_flexassembly/envs/flex_assembly_env.py:41 FlexAssemblyEnv environment class",
+      "gym_flexassembly/envs/env_interface.py:40 EnvInterface environment class"
+    ],
+    "upstream_tests": "gym_flexassembly/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/xwavex__py-flex-assembly --backend fake",
+  "skip_reason": "override (ros-wave-c-routing.json): Model review of wave C: skip: FlexAssemblyEnv is an unfinished PyBullet gym scaffold whose constructor never returns (flex_assembly_env.py:76, env_interface.py:125-139), with no action or observation space and its registration disabled.",
+  "publish_review": "not_required"
+}

@@ -1,0 +1,107 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ritalaezza/gym-agx",
+  "track": "robots",
+  "local_path": "robots/ritalaezza/gym-agx",
+  "driver_dir": "MHS/drivers/robots/ritalaezza__gym-agx",
+  "upstream": {
+    "repo_url": "https://github.com/ritalaezza/gym-agx",
+    "commit": "1773c4aa3ecc2e509623ff3d14163f9d5721f227",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 176,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_agx.envs:BendWireEnv",
+      "file": "gym_agx/envs/explicit/bend_wire_env.py",
+      "line": 47,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gym_agx.envs:BendWireObstacleEnv",
+      "file": "gym_agx/envs/explicit/bend_wire_obstacle_env.py",
+      "line": 58,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gym_agx.envs:PushRopeEnv",
+      "file": "gym_agx/envs/explicit/push_rope_env.py",
+      "line": 44,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gym_agx.envs:PegInHoleEnv",
+      "file": "gym_agx/envs/implicit/peg_in_hole_env.py",
+      "line": 30,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gym_agx.envs:RubberBandEnv",
+      "file": "gym_agx/envs/implicit/rubber_band_env.py",
+      "line": 32,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_agx/__init__.py:30 gym env BendWire-v0",
+      "gym_agx/__init__.py:37 gym env BendWireObstacle-v0",
+      "gym_agx/__init__.py:44 gym env PushRope-v0",
+      "gym_agx/__init__.py:51 gym env InsertORing-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env BendWire-v0 registered at gym_agx/__init__.py:30",
+      "gym env BendWireObstacle-v0 registered at gym_agx/__init__.py:37",
+      "gym env PushRope-v0 registered at gym_agx/__init__.py:44",
+      "gym env InsertORing-v0 registered at gym_agx/__init__.py:51",
+      "gym env PegInHole-v0 registered at gym_agx/__init__.py:58",
+      "gym env RubberBand-v0 registered at gym_agx/__init__.py:65",
+      "gym env CableClosing-v0 registered at gym_agx/__init__.py:72"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ritalaezza__gym-agx --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

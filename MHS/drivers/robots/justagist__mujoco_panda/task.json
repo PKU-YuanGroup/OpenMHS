@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.justagist/mujoco_panda",
+  "track": "robots",
+  "local_path": "robots/justagist/mujoco_panda",
+  "driver_dir": "MHS/drivers/robots/justagist__mujoco_panda",
+  "upstream": {
+    "repo_url": "https://github.com/justagist/mujoco_panda",
+    "commit": "207938fbc99bd3f8a4b05d35c18dd999b7a8dd7f",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 392,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "mujoco_panda/models/franka_panda.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "mujoco_panda/models/franka_panda_no_gripper.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "mujoco_panda/models/franka_panda_pos.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "mujoco_panda/models/franka_panda_pos_no_gripper.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "mujoco_panda/models/panda_block_table.xml",
+      "line": 2,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "mujoco_panda/models/franka_panda.xml:2 MJCF scene model",
+      "mujoco_panda/models/franka_panda_no_gripper.xml:2 MJCF scene model",
+      "mujoco_panda/models/franka_panda_pos.xml:2 MJCF scene model",
+      "mujoco_panda/models/franka_panda_pos_no_gripper.xml:2 MJCF scene model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model mujoco_panda/models/franka_panda.xml:2",
+      "MJCF scene model mujoco_panda/models/franka_panda_no_gripper.xml:2",
+      "MJCF scene model mujoco_panda/models/franka_panda_pos.xml:2",
+      "MJCF scene model mujoco_panda/models/franka_panda_pos_no_gripper.xml:2",
+      "MJCF scene model mujoco_panda/models/panda_block_table.xml:2"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/justagist__mujoco_panda --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

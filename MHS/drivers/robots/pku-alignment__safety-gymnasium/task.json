@@ -1,0 +1,118 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pku-alignment/safety-gymnasium",
+  "track": "robots",
+  "local_path": "robots/pku-alignment/safety-gymnasium",
+  "driver_dir": "MHS/drivers/robots/pku-alignment__safety-gymnasium",
+  "upstream": {
+    "repo_url": "https://github.com/pku-alignment/safety-gymnasium",
+    "commit": "ae966e511b9927f06b39c727ca5c650136a4e696",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 40,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "safety_gymnasium.builder:Builder",
+      "file": "safety_gymnasium/builder.py",
+      "line": 55,
+      "confidence": "override"
+    },
+    {
+      "symbol": "safety_gymnasium.utils.registration:make",
+      "file": "safety_gymnasium/utils/registration.py",
+      "line": 44,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "safety_gymnasium/tasks/safe_isaac_gym/envs/assets/mjcf/shadow_hand_description/pen.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "safety_gymnasium/tasks/safe_isaac_gym/envs/assets/mjcf/shadow_hand_description/shadow_hand.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "safety_gymnasium/tasks/safe_isaac_gym/envs/assets/mjcf/shadow_hand_description/shadow_hand1.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "safety_gymnasium/assets/xmls/ant.xml",
+      "line": 17,
+      "kind": "robot"
+    },
+    {
+      "file": "safety_gymnasium/assets/xmls/car.xml",
+      "line": 17,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "safety_gymnasium/tasks/safe_isaac_gym/envs/assets/mjcf/shadow_hand_description/pen.xml:2 MJCF scene model",
+      "safety_gymnasium/tasks/safe_isaac_gym/envs/assets/mjcf/shadow_hand_description/shadow_hand.xml:2 MJCF scene model",
+      "safety_gymnasium/tasks/safe_isaac_gym/envs/assets/mjcf/shadow_hand_description/shadow_hand1.xml:2 MJCF scene model",
+      "safety_gymnasium/assets/xmls/ant.xml:17 MJCF robot model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model safety_gymnasium/tasks/safe_isaac_gym/envs/assets/mjcf/shadow_hand_description/pen.xml:2",
+      "MJCF scene model safety_gymnasium/tasks/safe_isaac_gym/envs/assets/mjcf/shadow_hand_description/shadow_hand.xml:2",
+      "MJCF scene model safety_gymnasium/tasks/safe_isaac_gym/envs/assets/mjcf/shadow_hand_description/shadow_hand1.xml:2",
+      "MJCF robot model safety_gymnasium/assets/xmls/ant.xml:17",
+      "MJCF robot model safety_gymnasium/assets/xmls/car.xml:17",
+      "MJCF robot model safety_gymnasium/assets/xmls/doggo.xml:17",
+      "MJCF robot model safety_gymnasium/assets/xmls/point.xml:17",
+      "MJCF robot model safety_gymnasium/assets/xmls/racecar.xml:17",
+      "MJCF robot model safety_gymnasium/tasks/safe_multi_agent/assets/xmls/multi_ant.xml:17",
+      "MJCF robot model safety_gymnasium/tasks/safe_multi_agent/assets/xmls/multi_point.xml:17"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/pku-alignment__safety-gymnasium --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

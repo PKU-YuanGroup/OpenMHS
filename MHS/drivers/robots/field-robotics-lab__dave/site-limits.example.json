@@ -1,0 +1,36 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example DAVE ocean-current bench",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "notes": "Example-only operator envelope. It fills the operator_required set-current inputs and does not claim a device limit; the upstream plugin reads these ranges from the deployed world SDF, so a real site must issue its own document.",
+  "devices": {
+    "mhs://localhost/dave": {
+      "x-cap.field-robotics-lab.set_current.v1": {
+        "velocity": {
+          "min": 0.0,
+          "max": 5.0,
+          "unit": "m/s",
+          "source": "operator",
+          "reason": "example only: the current-speed envelope this site allows; the clone reads the actual range from the world SDF"
+        },
+        "horizontal_angle": {
+          "min": -3.141592653589793,
+          "max": 3.141592653589793,
+          "unit": "rad",
+          "source": "operator",
+          "reason": "example only: the horizontal-angle envelope this site allows; the clone reads the actual range from the world SDF"
+        },
+        "vertical_angle": {
+          "min": -3.141592653589793,
+          "max": 3.141592653589793,
+          "unit": "rad",
+          "source": "operator",
+          "reason": "example only: the vertical-angle envelope this site allows; the clone reads the actual range from the world SDF"
+        }
+      }
+    }
+  }
+}

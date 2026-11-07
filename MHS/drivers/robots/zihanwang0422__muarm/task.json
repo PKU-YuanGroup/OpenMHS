@@ -1,0 +1,137 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.zihanwang0422/muarm",
+  "track": "robots",
+  "local_path": "robots/zihanwang0422/muarm",
+  "driver_dir": "MHS/drivers/robots/zihanwang0422__muarm",
+  "upstream": {
+    "repo_url": "https://github.com/zihanwang0422/muarm",
+    "commit": "9d328f16df05b5a6199ebd0c59048d58c6cd6326",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 380,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "learning.robots.panda:FrankaPandaEnv",
+      "file": "learning/robots/panda.py",
+      "line": 82,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "learning.robots.so_arm:SoArm100Env",
+      "file": "learning/robots/so_arm.py",
+      "line": 29,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "panda_mujoco_gym.panda_mujoco_gym.envs.pick_and_place:FrankaPickAndPlaceEnv",
+      "file": "panda_mujoco_gym/panda_mujoco_gym/envs/pick_and_place.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "panda_mujoco_gym.panda_mujoco_gym.envs.push:FrankaPushEnv",
+      "file": "panda_mujoco_gym/panda_mujoco_gym/envs/push.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "panda_mujoco_gym.panda_mujoco_gym.envs.slide:FrankaSlideEnv",
+      "file": "panda_mujoco_gym/panda_mujoco_gym/envs/slide.py",
+      "line": 7,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "learning/assets/panda_pick_place.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "learning/assets/panda_push.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "learning/assets/panda_reach.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/franka_emika_panda/mjx_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/franka_emika_panda/mjx_single_cube.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "learning/assets/panda_pick_place.xml:1 MJCF scene model",
+      "learning/assets/panda_push.xml:1 MJCF scene model",
+      "learning/assets/panda_reach.xml:1 MJCF scene model",
+      "models/franka_emika_panda/mjx_scene.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "panda_mujoco_gym/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model learning/assets/panda_pick_place.xml:1",
+      "MJCF scene model learning/assets/panda_push.xml:1",
+      "MJCF scene model learning/assets/panda_reach.xml:1",
+      "MJCF scene model models/franka_emika_panda/mjx_scene.xml:1",
+      "MJCF scene model models/franka_emika_panda/mjx_single_cube.xml:1",
+      "MJCF scene model models/franka_emika_panda/scene.xml:1",
+      "MJCF scene model models/franka_emika_panda/scene_torque.xml:1",
+      "MJCF scene model models/trs_so_arm100/scene.xml:1",
+      "MJCF scene model models/trs_so_arm100/scene_sim.xml:6",
+      "MJCF scene model .history/learning/assets/panda_pick_place_20260322215842.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/zihanwang0422__muarm --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

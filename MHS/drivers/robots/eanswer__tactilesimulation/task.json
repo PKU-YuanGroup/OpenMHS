@@ -1,0 +1,99 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.eanswer/tactilesimulation",
+  "track": "robots",
+  "local_path": "robots/eanswer/tactilesimulation",
+  "driver_dir": "MHS/drivers/robots/eanswer__tactilesimulation",
+  "upstream": {
+    "repo_url": "https://github.com/eanswer/tactilesimulation",
+    "commit": "0c42783a8b5cc7abe1a9fa3e6aa65e4aeb8eb670",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 401,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "envs.stable_grasp_env:StableGraspEnv",
+      "file": "envs/stable_grasp_env.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "envs.tactile_push_env:TactilePushEnv",
+      "file": "envs/tactile_push_env.py",
+      "line": 20,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "envs.dclaw_rotate_env:DClawRotateEnv",
+      "file": "envs/dclaw_rotate_env.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "envs.tactile_insertion_env:TactileInsertionEnv",
+      "file": "envs/tactile_insertion_env.py",
+      "line": 20,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "envs/__init__.py:3 gym env StableGrasp-v1",
+      "envs/__init__.py:9 gym env TactilePush-v1",
+      "envs/__init__.py:15 gym env TactileRotation-v1",
+      "envs/__init__.py:21 gym env Insertion-v3"
+    ],
+    "upstream_tests": "externals/DiffHand/core/externals/eigen/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env StableGrasp-v1 registered at envs/__init__.py:3",
+      "gym env TactilePush-v1 registered at envs/__init__.py:9",
+      "gym env TactileRotation-v1 registered at envs/__init__.py:15",
+      "gym env Insertion-v3 registered at envs/__init__.py:21"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/eanswer__tactilesimulation --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

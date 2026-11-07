@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.physical-superintelligence-lab/simple",
+  "track": "robots",
+  "local_path": "robots/physical-superintelligence-lab/simple",
+  "driver_dir": "MHS/drivers/robots/physical-superintelligence-lab__simple",
+  "upstream": {
+    "repo_url": "https://github.com/physical-superintelligence-lab/simple",
+    "commit": "6d10628794d9c7de4596b4f2afb2c054a637c2bc",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 48,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "simple.envs.tabletop_grasp:TabletopGraspEnv",
+      "file": "src/simple/envs/tabletop_grasp.py",
+      "line": 51,
+      "confidence": "override"
+    },
+    {
+      "symbol": "simple.envs.loco_manipulation:LocoManipulationEnv",
+      "file": "src/simple/envs/loco_manipulation.py",
+      "line": 21,
+      "confidence": "override"
+    },
+    {
+      "symbol": "simple.envs.sonic_loco_manip:SonicLocoManipEnv",
+      "file": "src/simple/envs/sonic_loco_manip.py",
+      "line": 17,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": "==3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/simple/envs/__init__.py:12 gym env simple/FrankaTabletopGraspMP-v0",
+      "src/simple/envs/__init__.py:17 gym env simple/FrankaTabletopPickNPlaceMP-v0",
+      "src/simple/envs/__init__.py:22 gym env simple/AlohaTabletopGraspMP-v0",
+      "src/simple/envs/__init__.py:27 gym env simple/AlohaTabletopHandoverMP-v0"
+    ],
+    "upstream_tests": "scripts/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env simple/FrankaTabletopGraspMP-v0 registered at src/simple/envs/__init__.py:12",
+      "gym env simple/FrankaTabletopPickNPlaceMP-v0 registered at src/simple/envs/__init__.py:17",
+      "gym env simple/AlohaTabletopGraspMP-v0 registered at src/simple/envs/__init__.py:22",
+      "gym env simple/AlohaTabletopHandoverMP-v0 registered at src/simple/envs/__init__.py:27",
+      "gym env simple/VegaTabletopGraspMP-v0 registered at src/simple/envs/__init__.py:32",
+      "gym env simple/AlohaTabletopFindNGraspMP-v0 registered at src/simple/envs/__init__.py:37",
+      "gym env simple/VegaTabletopFindNGraspMP-v0 registered at src/simple/envs/__init__.py:42",
+      "gym env simple/G1TabletopGraspMP-v0 registered at src/simple/envs/__init__.py:48",
+      "gym env simple/G1TabletopPickNPlaceMP-v0 registered at src/simple/envs/__init__.py:53",
+      "gym env simple/G1InspireTabletopGraspMP-v0 registered at src/simple/envs/__init__.py:60",
+      "gym env simple/G1TabletopHandoverMP-v0 registered at src/simple/envs/__init__.py:65",
+      "gym env simple/G1WholebodyBendPickMP-v0 registered at src/simple/envs/__init__.py:72"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/physical-superintelligence-lab__simple --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

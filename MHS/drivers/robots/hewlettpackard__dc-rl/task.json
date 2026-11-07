@@ -1,0 +1,75 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.hewlettpackard/dc-rl",
+  "track": "robots",
+  "local_path": "robots/hewlettpackard/dc-rl",
+  "driver_dir": "MHS/drivers/robots/hewlettpackard__dc-rl",
+  "upstream": {
+    "repo_url": "https://github.com/hewlettpackard/dc-rl",
+    "commit": "a92b4755aca560e34a98d14028dda629eb968482",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 216,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "sustaindc_env:SustainDC",
+      "file": "sustaindc_env.py",
+      "line": 90,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "sustaindc_env.py:90 SustainDC environment class",
+      "envs/bat_env_fwd_view.py:8 BatteryEnvFwd environment class",
+      "envs/carbon_ls.py:8 CarbonLoadEnv environment class",
+      "envs/dc_gym.py:11 dc_gymenv environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/hewlettpackard__dc-rl --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

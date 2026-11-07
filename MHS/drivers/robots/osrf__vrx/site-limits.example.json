@@ -1,0 +1,49 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example VRX bench (not a device fact)",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "notes": "Example only. The pinned clone states no numeric range or unit for the Float64 thruster and joint-position commands, so the driver declares them operator_required. An operator must replace these example bounds with the deployment envelope in site-limits.json; this file does not make the simulation controllable or safe, and it does not supply the missing acknowledged stop.",
+  "devices": {
+    "mhs://localhost/vrx": {
+      "x-cap.osrf.left-thrust.v1": {
+        "thrust": {
+          "min": -1000.0,
+          "max": 1000.0,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example deployment envelope for the left thruster command"
+        }
+      },
+      "x-cap.osrf.right-thrust.v1": {
+        "thrust": {
+          "min": -1000.0,
+          "max": 1000.0,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example deployment envelope for the right thruster command"
+        }
+      },
+      "x-cap.osrf.left-thrust-position.v1": {
+        "position": {
+          "min": -1.0,
+          "max": 1.0,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example deployment envelope for the left joint-position command"
+        }
+      },
+      "x-cap.osrf.right-thrust-position.v1": {
+        "position": {
+          "min": -1.0,
+          "max": 1.0,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example deployment envelope for the right joint-position command"
+        }
+      }
+    }
+  }
+}

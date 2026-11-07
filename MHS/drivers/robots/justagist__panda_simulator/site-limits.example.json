@@ -1,0 +1,42 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (panda_simulator simulated hand)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/panda-gripper": {
+      "x-cap.justagist.move.v1": {
+        "width": {
+          "min": 0.0,
+          "max": 0.04,
+          "unit": "m",
+          "source": "operator",
+          "reason": "example: the installed hand's opening range; the clone reads it from the URDF and states no value"
+        },
+        "speed": {
+          "min": 0.0,
+          "max": 0.1,
+          "unit": "m/s",
+          "source": "operator",
+          "reason": "example: the site's finger speed bound; the clone's 0.1 m/s default_speed is a parameter"
+        }
+      },
+      "x-cap.justagist.grasp.v1": {
+        "width": {
+          "min": 0.0,
+          "max": 0.04,
+          "unit": "m",
+          "source": "operator",
+          "reason": "example: the installed hand's opening range; the clone reads it from the URDF and states no value"
+        },
+        "speed": {
+          "min": 0.0,
+          "max": 0.1,
+          "unit": "m/s",
+          "source": "operator",
+          "reason": "example: the site's finger speed bound; the clone's 0.1 m/s default_speed is a parameter"
+        }
+      }
+    }
+  }
+}

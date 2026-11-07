@@ -1,0 +1,36 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (glowing-torch Unitree Go2 MuJoCo simulator driver)",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "notes": "Example only, not a statement about any Unitree Go2 deployment and not a device limit. The pinned simulator reads motor_cmd q, kp and kd and states no numeric bound for them, so the driver declares each operator_required and refuses every /mujoco/lowcmd publication with MHS.SAFETY.LIMITS_UNSET until the operator supplies this reviewed envelope. Replace every value below with the deployment's reviewed joint envelope; the overlay may only narrow the driver's limit.",
+  "devices": {
+    "mhs://localhost/go2-mujoco-sim": {
+      "x-cap.glowing-torch.lowcmd.v1": {
+        "motor_cmd[*].q": {
+          "min": -1.0,
+          "max": 1.0,
+          "unit": "rad",
+          "source": "operator",
+          "reason": "example: replace with the reviewed joint position envelope"
+        },
+        "motor_cmd[*].kp": {
+          "min": 0.0,
+          "max": 40.0,
+          "unit": "N.m/rad",
+          "source": "operator",
+          "reason": "example: replace with the reviewed joint stiffness envelope"
+        },
+        "motor_cmd[*].kd": {
+          "min": 0.0,
+          "max": 2.0,
+          "unit": "N.m.s/rad",
+          "source": "operator",
+          "reason": "example: replace with the reviewed joint damping envelope"
+        }
+      }
+    }
+  }
+}

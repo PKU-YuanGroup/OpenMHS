@@ -1,0 +1,34 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:a2a5bf44bb813000764199a1cf39d45dc1f57f10a43aa69729c44a78abed0814",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.rgnc.enps_dwa_odometry.v1",
+      "reason": "No catalogue class observes mobile-robot odometry from a ROS topic. cap.world.state.v1 is the deprecated complete-world-state read for world.sim and its output requires state_hash and revision; cap.sensing.read.v1 binds sensor resource kinds and generic values, not nav_msgs/Odometry. This package uses an x-cap id with an inline pose, twist, frame and stamp schema.",
+      "verb": "read",
+      "summary": "Read one simulated robot odometry sample from the ENPS-DWA /odom topic.",
+      "similar": [
+        "cap.world.state.v1",
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.rgnc.enps_dwa_scan.v1",
+      "reason": "No catalogue class carries a ROS sensor_msgs/LaserScan. cap.sensing.point_cloud.v1 captures a 3-D point cloud, not a planar 360-degree range scan; cap.sensing.read.v1 binds sensor resource kinds and generic values. This package uses an x-cap id with an inline LaserScan output schema under the scan field.",
+      "verb": "read",
+      "summary": "Read one simulated 360-degree laser scan from the ENPS-DWA /scan360 topic.",
+      "similar": [
+        "cap.sensing.point_cloud.v1",
+        "cap.sensing.read.v1"
+      ]
+    }
+  ],
+  "notes": "PASS on the fake backend only (evidence contract_checked, never an MHS-Device level). The package is model-authored and unreviewed: driver.lock.json keeps reviewed_by null, no human reviewed or tested it, no hardware was attached, and no ROS graph, ENPS-DWA process, simulator run or hardware run is claimed. The card's entry_symbols list is empty, so there was no Python entry symbol to verify; this is a configuration-only ROS 1 RosDriver over rosbridge with no Python native class. Recon read the pinned C++ node: it reads private parameters and advertises only six publishers; it registers no subscriber, service server or action server. The package therefore exposes the two primary robot observations as read-only x-cap subscriptions: /odom with nav_msgs/Odometry (endpoint ref src/enps_dwa_node.cpp:545, type ref :553) and /scan360 with sensor_msgs/LaserScan (endpoint ref :549, type ref :556). Odometry returns pose, twist, frame_id, child_frame_id and header stamp; the scan capability returns the LaserScan message under scan, including header, geometry, range limits, ranges and the empty intensities array. Both actions have empty input, so no Limit, operator bound or site-limits overlay is declared; numbers in the clone's parameter declarations are configurable defaults, not caller bounds. The action max_duration_ms values are client execution bounds, not device limits. The upstream node has no command, step, pause, reset or stop service, so the driver cannot step or reset the simulation and has no native stop; the runtime e-stop is software_only and the test asserts that an extension observation remains latched after it. A deployment that remaps /odom or /scan360 must expose the resolved endpoints to rosbridge. NOT COVERED: /people, /detections, /trajectories and /forces MarkerArray topics, TF broadcasts, metrics.txt, all private ROS parameters, odometry covariances and the odometry header seq, and the simulation, social-force, ENPS, DWA, ray-casting and transform-failure internals. The only backend factory is the ROS-free transport fake .fake:FakeEnpsDwa; a live deployment would use the operator's RosDriver simulation_deployment and rosbridge and was not tested. The fake is F0: engine analytic ROS-free transport fake (no physics, no planner), determinism none, timestep_ms 0, realtime_factor 0, reset none, snapshot_restore false. Its samples and eight scan ranges are placeholders, not captured traffic; the upstream default scan360_readings is 1440 and overridable, so the deployed array length is not fixed by this package. The fake models failed subscriptions, silence, wrong event ids, malformed messages and the map-to-odom publication gap through negative switches. The gate warning is G8.SAFE014_NOT_APPLICABLE, expected because no capability declares a numeric actuating limit, so SAFE-014 has nothing to probe; every other CL3 test passed. No G4.REF_VALUE or G4.REF_BINARY warnings. The clone was left unmodified (G1 passed). No network, pip install or upstream execution was used. Last gate run (run 4 of at most 6) passed with digest sha256:a2a5bf44bb813000764199a1cf39d45dc1f57f10a43aa69729c44a78abed0814; test_driver.py keeps check_driver and adds eight repository cases.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked both observation bindings against the pinned node (absolute /odom and /scan360 defaults of the private odom_id and scan360_id parameters and their nav_msgs/Odometry and sensor_msgs/LaserScan publishers, src/enps_dwa_node.cpp:545-556), the output schemas and the fake against the ROS 1 message fields the node fills (odom frame odom, child base_link, no intensities, header seq and secs/nsecs), every fact and the absent stop: the node registers no subscriber, service server or action server, so an observation-only package with a software-only e-stop is correct. Defects were textual: one fact ended in a 'so ...' inference, two facts claimed clauses that are not on their lines (the transform failure and 'selected' velocities on 204-221, the freq rate and sleep outside 582-614), and safe_state said only that the package commands no motion, although after an MHS e-stop the simulation keeps running with its robot driving under the ENPS/DWA planner; the start-up abort when map_server's static_map is not yet served (include/lightsfm/rosmap.hpp:102-121) was undisclosed. The reviewer rewrote safe_state, corrected those facts, added eight source facts, three fidelity gaps and a docstring note (driver.py), updated facts.md and regenerated reference.json, REFERENCE.md and check-report.json. The gate and collect.py --strict pass with the digest unchanged (sha256:a2a5bf44bb813000764199a1cf39d45dc1f57f10a43aa69729c44a78abed0814). For the human reviewer: Simulator only, observation only: no command, stop or reset endpoint exists, so the MHS e-stop latches this package's reads while the simulated robot keeps driving itself and the pedestrians keep walking. The node aborts at start-up if map_server's static_map is not served within its 0.5 s delay, writes metrics.txt into its working directory, and the launch file also starts RViz. GPL-3.0 (LICENSE, package.xml GPLv3 and GPL headers agree)."
+}

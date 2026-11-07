@@ -1,0 +1,107 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tudelft-cns-atm/bluesky-gym",
+  "track": "robots",
+  "local_path": "robots/tudelft-cns-atm/bluesky-gym",
+  "driver_dir": "MHS/drivers/robots/tudelft-cns-atm__bluesky-gym",
+  "upstream": {
+    "repo_url": "https://github.com/tudelft-cns-atm/bluesky-gym",
+    "commit": "8d7d79c63a3dab5de0e7bd8c2afb74737377f2e5",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 120,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "bluesky_gym.envs.descent_env:DescentEnv",
+      "file": "bluesky_gym/envs/descent_env.py",
+      "line": 31,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "bluesky_gym.envs.plan_waypoint_env:PlanWaypointEnv",
+      "file": "bluesky_gym/envs/plan_waypoint_env.py",
+      "line": 23,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "bluesky_gym.envs.horizontal_cr_env:HorizontalCREnv",
+      "file": "bluesky_gym/envs/horizontal_cr_env.py",
+      "line": 31,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "bluesky_gym.envs.vertical_cr_env:VerticalCREnv",
+      "file": "bluesky_gym/envs/vertical_cr_env.py",
+      "line": 46,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "bluesky_gym.envs.sector_cr_env:SectorCREnv",
+      "file": "bluesky_gym/envs/sector_cr_env.py",
+      "line": 38,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "bluesky_gym/__init__.py:6 gym env DescentEnv-v0",
+      "bluesky_gym/__init__.py:12 gym env PlanWaypointEnv-v0",
+      "bluesky_gym/__init__.py:18 gym env HorizontalCREnv-v0",
+      "bluesky_gym/__init__.py:24 gym env VerticalCREnv-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env DescentEnv-v0 registered at bluesky_gym/__init__.py:6",
+      "gym env PlanWaypointEnv-v0 registered at bluesky_gym/__init__.py:12",
+      "gym env HorizontalCREnv-v0 registered at bluesky_gym/__init__.py:18",
+      "gym env VerticalCREnv-v0 registered at bluesky_gym/__init__.py:24",
+      "gym env SectorCREnv-v0 registered at bluesky_gym/__init__.py:30",
+      "gym env StaticObstacleEnv-v0 registered at bluesky_gym/__init__.py:36",
+      "gym env MergeEnv-v0 registered at bluesky_gym/__init__.py:42"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/tudelft-cns-atm__bluesky-gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

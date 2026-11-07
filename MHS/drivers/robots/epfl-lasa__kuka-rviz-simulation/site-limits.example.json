@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (EPFL-LASA KUKA LWR simulation driver)",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "notes": "Example only, not a statement about any KUKA LWR deployment. The pinned clone states unsigned URDF arm-velocity magnitudes and no signed command envelope for /r_arm_vel/command. Replace this example with the reviewed per-joint velocity envelope of the deployment. Until site-limits.json supplies it, every velocity publication is refused with MHS.SAFETY.LIMITS_UNSET.",
+  "devices": {
+    "mhs://localhost/kuka-rviz-simulation": {
+      "x-cap.epfl-lasa.joint_velocity.v1": {
+        "joint_velocities": {
+          "min": -0.25,
+          "max": 0.25,
+          "unit": "rad/s",
+          "source": "operator",
+          "reason": "example: replace with the reviewed per-joint velocity envelope"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.henrycharlesworth/dexterous-gym",
+  "track": "robots",
+  "local_path": "robots/henrycharlesworth/dexterous-gym",
+  "driver_dir": "MHS/drivers/robots/henrycharlesworth__dexterous-gym",
+  "upstream": {
+    "repo_url": "https://github.com/henrycharlesworth/dexterous-gym",
+    "commit": "dd047ad7f47ba78e2a4e2642e39bc0c0b778e594",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 403,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "dexterous_gym.envs.egg_hand_over:EggHandOver",
+      "file": "dexterous_gym/envs/egg_hand_over.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dexterous_gym.envs.block_hand_over:BlockHandOver",
+      "file": "dexterous_gym/envs/block_hand_over.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dexterous_gym.envs.pen_hand_over:PenHandOver",
+      "file": "dexterous_gym/envs/pen_hand_over.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dexterous_gym.envs.egg_catch_underarm:EggCatchUnderarm",
+      "file": "dexterous_gym/envs/egg_catch_underarm.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dexterous_gym.envs.block_catch_underarm:BlockCatchUnderarm",
+      "file": "dexterous_gym/envs/block_catch_underarm.py",
+      "line": 11,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "dexterous_gym/envs/hand/block_catch_overarm.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "dexterous_gym/envs/hand/block_catch_underarm.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "dexterous_gym/envs/hand/block_catch_underarm_hard.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "dexterous_gym/envs/hand/block_handover.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "dexterous_gym/envs/hand/egg_catch_overarm.xml",
+      "line": 2,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "dexterous_gym/__init__.py:6 gym env EggHandOver-v0",
+      "dexterous_gym/__init__.py:13 gym env BlockHandOver-v0",
+      "dexterous_gym/__init__.py:20 gym env PenHandOver-v0",
+      "dexterous_gym/__init__.py:27 gym env EggHandOverSparse-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env EggHandOver-v0 registered at dexterous_gym/__init__.py:6",
+      "gym env BlockHandOver-v0 registered at dexterous_gym/__init__.py:13",
+      "gym env PenHandOver-v0 registered at dexterous_gym/__init__.py:20",
+      "gym env EggHandOverSparse-v0 registered at dexterous_gym/__init__.py:27",
+      "gym env BlockHandOverSparse-v0 registered at dexterous_gym/__init__.py:34",
+      "gym env PenHandOverSparse-v0 registered at dexterous_gym/__init__.py:41",
+      "gym env EggCatchUnderarm-v0 registered at dexterous_gym/__init__.py:53",
+      "gym env BlockCatchUnderarm-v0 registered at dexterous_gym/__init__.py:60",
+      "gym env PenCatchUnderarm-v0 registered at dexterous_gym/__init__.py:67",
+      "gym env EggCatchUnderarmHard-v0 registered at dexterous_gym/__init__.py:74",
+      "gym env BlockCatchUnderarmHard-v0 registered at dexterous_gym/__init__.py:81",
+      "gym env PenCatchUnderarmHard-v0 registered at dexterous_gym/__init__.py:88"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/henrycharlesworth__dexterous-gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

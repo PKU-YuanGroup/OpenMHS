@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.hello-robot/stretch_mujoco",
+  "upstream": {
+    "repo_url": "https://github.com/hello-robot/stretch_mujoco",
+    "commit": "c78d6a1cd79bb5ead1b679610299563c1a91124a",
+    "license_spdx": "BSD-3-Clause-Clear"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "pyproject.toml requires Python 3.10 or newer and mujoco; the upstream stack also needs the stretch_urdf assets and the third-party robocasa/robosuite submodules for its full simulator. Neither the gate nor the fake backend needs any of them: fake.py is pure Python and reads the MJCF text from the read-only clone, and the gate never installs or imports the upstream package or the MuJoCo engine. Install the upstream stack only to serve the model with the real MuJoCo engine (backend sim), which was not run here."
+  },
+  "backends": {
+    "fake": ".fake:FakeMujoco"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-147",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

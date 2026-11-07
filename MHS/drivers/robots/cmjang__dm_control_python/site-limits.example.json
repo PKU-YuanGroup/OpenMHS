@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (DaMiao motor)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/dm-motor": {
+      "cap.motion.joint_position.v1": {
+        "joint_positions": {"min": -2.0, "max": 2.0, "unit": "rad", "source": "operator",
+                            "reason": "example: the joint of this bench travels between -2 and 2 rad"}
+      },
+      "cap.motion.joint_velocity.v1": {
+        "joint_velocities": {"min": -1.0, "max": 1.0, "unit": "rad/s", "source": "operator",
+                             "reason": "example: this bench jogs at no more than 1 rad/s"},
+        "duration_s": {"min": 0.05, "max": 2, "unit": "s", "source": "operator",
+                       "reason": "example: a jog lasts at most 2 s"}
+      }
+    }
+  }
+}

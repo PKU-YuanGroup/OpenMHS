@@ -1,0 +1,34 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.mrpt/mvsim",
+  "upstream": {
+    "repo_url": "https://github.com/mrpt/mvsim",
+    "commit": "cfaf9f28f57fe5798a6b1defa65a435402bd38d0",
+    "license_spdx": "BSD-3-Clause"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install pyzmq"
+    ],
+    "system_deps": [
+      "A running MVSim simulator (mvsim launch <world>.world.xml) on the host and port the sim backend names"
+    ],
+    "gpu": false,
+    "platform": "linux",
+    "notes": "The sim backend (sim.py) is the package's own MVSim client and needs only pyzmq, a dependency of this package and never of the SDK; it encodes MVSim's protobuf messages itself (mvsim_wire.py, standard library), so neither protobuf nor the upstream python3-mvsim bindings are imported. The fake backend needs nothing beyond the SDK. Nothing was installed or run for this package."
+  },
+  "backends": {
+    "fake": ".fake:FakeMvsimClient",
+    "sim": ".sim:connect"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "claude-opus-5-5",
+    "run_id": "p3-sdk-gaps-b-mvsim-20261105",
+    "date": "2026-11-05"
+  },
+  "reviewed_by": null
+}

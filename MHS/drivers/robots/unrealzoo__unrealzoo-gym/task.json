@@ -1,0 +1,80 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.unrealzoo/unrealzoo-gym",
+  "track": "robots",
+  "local_path": "robots/unrealzoo/unrealzoo-gym",
+  "driver_dir": "MHS/drivers/robots/unrealzoo__unrealzoo-gym",
+  "upstream": {
+    "repo_url": "https://github.com/unrealzoo/unrealzoo-gym",
+    "commit": "85f4b72e0ecd3c77f17fab161c3c8bdfdd86cf7c",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 270,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_unrealcv.envs.mujoco:UnrealCvMujocoEnv",
+      "file": "gym_unrealcv/envs/mujoco.py",
+      "line": 51,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_unrealcv/__init__.py:15 gym env UnrealMujoco-{}-v0",
+      "gym_unrealcv/__init__.py:53 gym env UnrealArm-{}{}-v{}",
+      "gym_unrealcv/__init__.py:74 gym env UnrealTrack-{}{}{}-{}{}-v{}"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env UnrealMujoco-{}-v0 (id template, built at run time) registered at gym_unrealcv/__init__.py:15",
+      "gym env UnrealArm-{}{}-v{} (id template, built at run time) registered at gym_unrealcv/__init__.py:53",
+      "gym env UnrealTrack-{}{}{}-{}{}-v{} (id template, built at run time) registered at gym_unrealcv/__init__.py:74"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/unrealzoo__unrealzoo-gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

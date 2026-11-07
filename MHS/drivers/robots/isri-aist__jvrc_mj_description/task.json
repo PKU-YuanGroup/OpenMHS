@@ -1,0 +1,79 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.isri-aist/jvrc_mj_description",
+  "track": "robots",
+  "local_path": "robots/isri-aist/jvrc_mj_description",
+  "driver_dir": "MHS/drivers/robots/isri-aist__jvrc_mj_description",
+  "upstream": {
+    "repo_url": "https://github.com/isri-aist/jvrc_mj_description",
+    "commit": "8cfc65f5c5793582b55e0d5eb4726dfb3094a224",
+    "license_spdx": "BSD-2-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 342,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "xml/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "xml/jvrc1.xml",
+      "line": 2,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "xml/scene.xml:1 MJCF scene model",
+      "xml/jvrc1.xml:2 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model xml/scene.xml:1",
+      "MJCF robot model xml/jvrc1.xml:2"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/isri-aist__jvrc_mj_description --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

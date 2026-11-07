@@ -1,0 +1,86 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nely-epfl/flygym",
+  "track": "robots",
+  "local_path": "robots/nely-epfl/flygym",
+  "driver_dir": "MHS/drivers/robots/nely-epfl__flygym",
+  "upstream": {
+    "repo_url": "https://github.com/nely-epfl/flygym",
+    "commit": "38c8ec61034cd59bc5ba0de20688d4a3c0000d60",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 46,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "flygym_demo.muscle_imitation.env:ImitationEnv",
+      "file": "src/flygym_demo/muscle_imitation/env.py",
+      "line": 83,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "src/flygym/assets/model/flybody/fruitfly.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "src/flygym/assets/model/musculoskeletal/best_combined_arm_damping_stiff_cvt3.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.12,<3.15",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/flygym/assets/model/flybody/fruitfly.xml:1 MJCF robot model",
+      "src/flygym/assets/model/musculoskeletal/best_combined_arm_damping_stiff_cvt3.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model src/flygym/assets/model/flybody/fruitfly.xml:1",
+      "MJCF robot model src/flygym/assets/model/musculoskeletal/best_combined_arm_damping_stiff_cvt3.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nely-epfl__flygym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

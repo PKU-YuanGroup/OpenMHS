@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.qiangwang-academic/ur5e_robot_gym_env_real_and_sim",
+  "track": "robots",
+  "local_path": "robots/qiangwang-academic/ur5e_robot_gym_env_real_and_sim",
+  "driver_dir": "MHS/drivers/robots/qiangwang-academic__ur5e_robot_gym_env_real_and_sim",
+  "upstream": {
+    "repo_url": "https://github.com/qiangwang-academic/ur5e_robot_gym_env_real_and_sim",
+    "commit": "513acb7e235ab940fd03c3038208678e285690f3",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 286,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "CoppeliaSim_UR5_gym_v3:CoppeliaSim_UR5_gym_v3",
+      "file": "Simulation/CoppeliaSim_UR5_gym_v3.py",
+      "line": 54,
+      "confidence": "override"
+    },
+    {
+      "symbol": "CoppeliaSim_UR5_gym_v0:CoppeliaSim_UR5_gym_v0",
+      "file": "Simulation/CoppeliaSim_UR5_gym_v0.py",
+      "line": 56,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "Simulation/CoppeliaSim_UR5_gym_v0.py:56 CoppeliaSim_UR5_gym_v0 environment class",
+      "Simulation/CoppeliaSim_UR5_gym_v3.py:54 CoppeliaSim_UR5_gym_v3 environment class",
+      "Simulation/Reaching_task/UR5_get_env.py:45 ReacherEnv environment class",
+      "Simulation/reaching_gym/UR5_get_env.py:45 ReacherEnv environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/qiangwang-academic__ur5e_robot_gym_env_real_and_sim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

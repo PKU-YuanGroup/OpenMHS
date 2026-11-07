@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.axelbr/racecar_gym",
+  "track": "robots",
+  "local_path": "robots/axelbr/racecar_gym",
+  "driver_dir": "MHS/drivers/robots/axelbr__racecar_gym",
+  "upstream": {
+    "repo_url": "https://github.com/axelbr/racecar_gym",
+    "commit": "70496767d80397010ac9b5ba722647ca67e3f85c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 79,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "racecar_gym.envs.gym_api:MultiAgentRaceEnv",
+      "file": "racecar_gym/envs/gym_api/multi_agent_race.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "racecar_gym.envs.gym_api:SingleAgentRaceEnv",
+      "file": "racecar_gym/envs/gym_api/single_agent_race.py",
+      "line": 9,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "racecar_gym/envs/gym_api/__init__.py:31 gym env MultiAgentRaceEnv-v0",
+      "racecar_gym/envs/gym_api/__init__.py:37 gym env SingleAgentRaceEnv-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env MultiAgentRaceEnv-v0 registered at racecar_gym/envs/gym_api/__init__.py:31",
+      "gym env SingleAgentRaceEnv-v0 registered at racecar_gym/envs/gym_api/__init__.py:37"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/axelbr__racecar_gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

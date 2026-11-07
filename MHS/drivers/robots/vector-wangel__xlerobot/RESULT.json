@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "notes": "BLOCKED before driver implementation: no package was authored. This directory holds only the regenerated task card and this record (no driver.py, fake, facts, tests or driver.lock.json). WHAT THE UPSTREAM IS: XLeRobot, a low-cost dual-arm mobile manipulator built on the LeRobot Robot API, routed by its flagship override to the planned LeRobot family; the card's entry symbol is a ManiSkill scene environment (simulation/Maniskill/envs/scenes/base_env.py:20), while the hardware class is XLerobot (software/src/robots/xlerobot/xlerobot.py:40). WHY NO STOP ROUTE (the LeRobot helper design review, work/handoff-runs/claude-20261104/development/helpers-plr-mav-lerobot/DESIGN-lerobot.md, section 3, re-read against the clone at the pinned commit): two six-servo arms, two head servos and three omni wheels sit on two Feetech buses (xlerobot.py:77-123); send_action writes Goal_Position for the arms and head and Goal_Velocity for the wheels and returns without completion or motion feedback (xlerobot.py:567-632, sync writes 619-626). The only stop is stop_base, a zero wheel velocity with five retries (xlerobot.py:634-636); nothing stops or holds the arms or the head. disconnect stops the base and then disconnects both buses with disable_torque_on_disconnect (xlerobot.py:638-648), which defaults to true (software/src/robots/xlerobot/config_xlerobot.py:56), so gravity-loaded joints lose torque; max_relative_target defaults to None (config_xlerobot.py:61). connect prompts on standard input when a calibration file exists (xlerobot.py:184-186), so a hardware backend cannot start unattended. The LeRobot Robot API itself defines connect, calibrate, configure, get_observation, send_action and disconnect and no stop (robots/huggingface/lerobot, a different clone read for context, src/lerobot/robots/robot.py:30-211). An arm plus a mobile base is R2 under the hazard table (MHS/spec/04-safety.md); torque-off is not a safe state for a joint that gravity loads, a hold re-sent from cached joint targets is not fresh stopped-state evidence (MHS/handoff/PROMPT.md), and the user decided on 2026-11-04 that actuators without a source-backed stop stay blocked. WHAT WOULD UNBLOCK IT: a documented independent stop for the whole robot (a power switch or hardware e-stop in the XLeRobot hardware documentation) that a human cites as estop_physical_ref, or an upstream arm stop with sensed confirmation (Feetech Moving or Present_Velocity reads after a hold, within the e-stop budget); a non-interactive connect path; an override that names XLerobot (xlerobot.py:40) as the entry; then a reviewed LeRobot helper. Only the missing-layout diagnostic gate ran (the gate fields below); no upstream code, simulator, connection or device ran, and no hardware run or human review is claimed.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by not applicable: no package and no driver.lock.json exist): blocked on HELPER_MISSING. This record is the orchestrator team's model review of the waiting LeRobot card (development/w1-waiting-routing), written so that the card no longer waits for a helper that the source's stop evidence and the user's decision of 2026-11-04 rule out; the card's override is unchanged. Files written: task.json (the regenerated card), RESULT.json; the gate run also wrote check-report.json. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted.",
+  "gate": {
+    "digest": "sha256:c0a8f5dfc368365dd6593a24f244073647a8549120f5af8d2823471b96486b7c",
+    "failed": [
+      "G1",
+      "G2",
+      "G3",
+      "G9"
+    ],
+    "report": "check-report.json"
+  }
+}

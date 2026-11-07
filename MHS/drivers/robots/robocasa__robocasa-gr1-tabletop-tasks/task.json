@@ -1,0 +1,89 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.robocasa/robocasa-gr1-tabletop-tasks",
+  "track": "robots",
+  "local_path": "robots/robocasa/robocasa-gr1-tabletop-tasks",
+  "driver_dir": "MHS/drivers/robots/robocasa__robocasa-gr1-tabletop-tasks",
+  "upstream": {
+    "repo_url": "https://github.com/robocasa/robocasa-gr1-tabletop-tasks",
+    "commit": "4840e671596f93ca03651524b9f72ffb1aadfeff",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 208,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robocasa.utils.gym_utils.gymnasium_groot:GrootRoboCasaEnv",
+      "file": "robocasa/utils/gym_utils/gymnasium_groot.py",
+      "line": 22,
+      "confidence": "override"
+    },
+    {
+      "symbol": "robocasa.utils.gym_utils.gymnasium_basic:RoboCasaEnv",
+      "file": "robocasa/utils/gym_utils/gymnasium_basic.py",
+      "line": 77,
+      "confidence": "override"
+    },
+    {
+      "symbol": "robocasa.environments.tabletop.tabletop:Tabletop",
+      "file": "robocasa/environments/tabletop/tabletop.py",
+      "line": 90,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robocasa/utils/gym_utils/gymnasium_groot.py:22 GrootRoboCasaEnv environment class",
+      "robocasa/environments/tabletop/tabletop_cabinet_door.py:172 TabletopOpenCabinetDoor environment class",
+      "robocasa/environments/tabletop/tabletop_cabinet_door.py:177 TabletopCloseCabinetDoor environment class",
+      "robocasa/environments/tabletop/tabletop_cabinet_pnp.py:224 PnPCupToCabinetClose environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/robocasa__robocasa-gr1-tabletop-tasks --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

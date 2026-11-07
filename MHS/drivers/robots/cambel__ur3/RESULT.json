@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:ee9747232bb25c2314e366d1fea27f47e211f97666ebdc98543597988fb04b99",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.cambel.joint-states.v1",
+      "reason": "No catalogue class binds a raw sensor_msgs/JointState subscription on robot.arm. cap.sensing.read.v1 binds sensor, sensor.imu and sensor.force_torque. cap.motion.joint_position.v1 is an invoke that requires joint_positions plus duration_s and a reached result.",
+      "verb": "read",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    }
+  ],
+  "notes": "PASS on the fake backend only (evidence contract_checked, never an MHS-Device level). Re-authored simulated RosDriver for gh.cambel/ur3. The previous blocked hardware package was moved aside. reviewed_by stays null. No hardware was attached and no simulator was run. The served surface is ur_gz_control.launch.py (Hand-E, Jazzy, Harmonic): one joint_states read and the gz-sim world pause on /world/empty/control confirmed by WorldStatistics.paused. The hardware path exists (ur_services.py, README.md:211) and is not served. Risk is R2 because the served device is an arm. The assembled joint_trajectory topic is not published. Gate G8 warns SAFE014_NOT_APPLICABLE because the driver declares no limit on an actuating capability. The gate digest is sha256:ee9747232bb25c2314e366d1fea27f47e211f97666ebdc98543597988fb04b99.\n\nMODEL REVIEW (grok-4.7, a model and not a human, 2026-11-05; reviewed_by stays null): Round 1 repair. The Codex authorship finding is disputed. logs/impl.prompt.md lines 5-7 say to read Claude authors as Grok authors, and user-decisions-20261105b.json line 7 is the sentence that instruction reinterprets. authored_by stays grok-4.7 and was not relabelled. safe_state now says the paused flag holds only for the confirmation window, the pause retains trajectory targets, UserCommands executes queued world edits, a multi_step control or the GUI or another client can resume the world, and recovery outside MHS follows after pending motion is cleared. test_driver.py reads MHS_DRIVER_GATE_COMPANIONS when set and otherwise uses the project work/companions corpus. It does not overwrite that variable. The joint-list fact cites ur_gz_controllers.yaml:45-55. force_torque_sensor_broadcaster is a separate fact on ur_gz_control.launch.py:124. The gate was re-run and the stable digest did not change, because the check report does not embed that prose. reviewed_by stays null. No Gazebo, ROS graph, or hardware run is claimed.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-05; reviewed_by stays null): Different-model review by Codex (gpt-6.1-sol) of the work of Grok (grok-4.7), unit p5b-dualmode--cambel__ur3, round 2: Rechecked every round 1 finding: the authorship dispute is supported by logs/impl.prompt.md:5-7, and both requested fixes are complete. Traced the pause and sampled read-back through the pinned companions; verified latch-before-transmission, failure handling, reset without resume, hardware exclusion, and R2 classification. The package gate, 9 acceptance tests, strict collection, reference checks, 367 registry tests with the proposed lock, and both registry mutants passed. No new high or medium finding remains; evidence is fake-only contract_checked. For the human reviewer: Integrate the three needed_by additions from the author's companions-root/LOCK.json before default-root validation. Keep reviewed_by null; no live ROS, Gazebo, or hardware validation is established."
+}

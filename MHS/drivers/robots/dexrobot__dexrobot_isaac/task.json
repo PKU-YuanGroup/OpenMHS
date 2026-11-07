@@ -1,0 +1,118 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.dexrobot/dexrobot_isaac",
+  "track": "robots",
+  "local_path": "robots/dexrobot/dexrobot_isaac",
+  "driver_dir": "MHS/drivers/robots/dexrobot__dexrobot_isaac",
+  "upstream": {
+    "repo_url": "https://github.com/dexrobot/dexrobot_isaac",
+    "commit": "dc85a0b54a7051470f0162c7df22a2a1c69cfaf1",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 71,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "dexhand_env.tasks.dexhand_base:DexHandBase",
+      "file": "dexhand_env/tasks/dexhand_base.py",
+      "line": 61,
+      "confidence": "override"
+    },
+    {
+      "symbol": "dexhand_env.factory:make_env",
+      "file": "dexhand_env/factory.py",
+      "line": 93,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "assets/dexrobot_mujoco/dexrobot_mujoco/scenes/ball_catching.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/dexrobot_mujoco/dexrobot_mujoco/scenes/box.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/mjcf/open_ai_assets/fetch/pick_and_place.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/mjcf/open_ai_assets/hand/manipulate_block.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/mjcf/open_ai_assets/hand/manipulate_block_touch_sensors.xml",
+      "line": 2,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "assets/dexrobot_mujoco/dexrobot_mujoco/scenes/ball_catching.xml:2 MJCF scene model",
+      "assets/dexrobot_mujoco/dexrobot_mujoco/scenes/box.xml:2 MJCF scene model",
+      "assets/mjcf/open_ai_assets/fetch/pick_and_place.xml:2 MJCF scene model",
+      "assets/mjcf/open_ai_assets/hand/manipulate_block.xml:2 MJCF scene model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model assets/dexrobot_mujoco/dexrobot_mujoco/scenes/ball_catching.xml:2",
+      "MJCF scene model assets/dexrobot_mujoco/dexrobot_mujoco/scenes/box.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/fetch/pick_and_place.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/manipulate_block.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/manipulate_block_touch_sensors.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/manipulate_egg.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/manipulate_egg_touch_sensors.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/manipulate_pen.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/manipulate_pen_touch_sensors.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/pen.xml:2"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/dexrobot__dexrobot_isaac --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

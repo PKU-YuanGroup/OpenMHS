@@ -1,0 +1,63 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ardupilot/ardupilot_gazebo",
+  "track": "robots",
+  "local_path": "robots/ardupilot/ardupilot_gazebo",
+  "driver_dir": "MHS/drivers/robots/ardupilot__ardupilot_gazebo",
+  "upstream": {
+    "repo_url": "https://github.com/ardupilot/ardupilot_gazebo",
+    "commit": "082a0fe231f6e63bc8d1598f1cba461d9e2ea7f5",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 9,
+  "rank": 303,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "colcon build"
+    ],
+    "system_deps": [
+      "ament/colcon workspace and the ROS dependencies declared in package.xml"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ardupilot__ardupilot_gazebo --backend fake",
+  "skip_reason": "override (ros-wave-c-routing.json): Model review of wave C: skip, as gh.khancyr/ardupilot_gazebo, which this plugin replaces (README.md:7-9): a C++ Gazebo Sim plugin library for ArduPilot SITL over UDP with no ROS or Python API.",
+  "publish_review": "not_required"
+}

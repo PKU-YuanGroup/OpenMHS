@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tobirohrer/building-energy-storage-simulation",
+  "track": "robots",
+  "local_path": "robots/tobirohrer/building-energy-storage-simulation",
+  "driver_dir": "MHS/drivers/robots/tobirohrer__building-energy-storage-simulation",
+  "upstream": {
+    "repo_url": "https://github.com/tobirohrer/building-energy-storage-simulation",
+    "commit": "05b9197c8d6f600bed2a5b092db6de6f07bf3c65",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 147,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "building_energy_storage_simulation.environment:Environment",
+      "file": "building_energy_storage_simulation/environment.py",
+      "line": 10,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "building_energy_storage_simulation/environment.py:10 Environment environment class"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/tobirohrer__building-energy-storage-simulation --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

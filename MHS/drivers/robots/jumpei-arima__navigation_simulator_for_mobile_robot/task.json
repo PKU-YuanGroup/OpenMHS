@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jumpei-arima/navigation_simulator_for_mobile_robot",
+  "track": "robots",
+  "local_path": "robots/jumpei-arima/navigation_simulator_for_mobile_robot",
+  "driver_dir": "MHS/drivers/robots/jumpei-arima__navigation_simulator_for_mobile_robot",
+  "upstream": {
+    "repo_url": "https://github.com/jumpei-arima/navigation_simulator_for_mobile_robot",
+    "commit": "4727fa696f363e88d757c0896f1c3f0dacc83af3",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 111,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "nsmr.envs.NsmrGymEnv:NsmrGymEnv",
+      "file": "nsmr/envs/NsmrGymEnv.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "nsmr.envs.NsmrMinPoolingGymEnv:NsmrMinPoolingGymEnv",
+      "file": "nsmr/envs/NsmrMinPoolingGymEnv.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "nsmr.envs.NsmrSimpleGymEnv:NsmrSimpleGymEnv",
+      "file": "nsmr/envs/NsmrSimpleGymEnv.py",
+      "line": 9,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">3.5.0",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "nsmr/envs/__init__.py:7 gym env Nsmr-v1",
+      "nsmr/envs/__init__.py:13 gym env NsmrMinPooling-v1",
+      "nsmr/envs/__init__.py:19 gym env NsmrSimple-v1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Nsmr-v1 registered at nsmr/envs/__init__.py:7",
+      "gym env NsmrMinPooling-v1 registered at nsmr/envs/__init__.py:13",
+      "gym env NsmrSimple-v1 registered at nsmr/envs/__init__.py:19"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jumpei-arima__navigation_simulator_for_mobile_robot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

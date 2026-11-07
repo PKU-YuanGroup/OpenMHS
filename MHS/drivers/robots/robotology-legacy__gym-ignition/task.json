@@ -1,0 +1,104 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.robotology-legacy/gym-ignition",
+  "track": "robots",
+  "local_path": "robots/robotology-legacy/gym-ignition",
+  "driver_dir": "MHS/drivers/robots/robotology-legacy__gym-ignition",
+  "upstream": {
+    "repo_url": "https://github.com/robotology-legacy/gym-ignition",
+    "commit": "4bc8e0465eed68911434485ba0b9c0a6740d516e",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 114,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_ignition.runtimes.gazebo_runtime:GazeboRuntime",
+      "file": "python/gym_ignition/runtimes/gazebo_runtime.py",
+      "line": 16,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gym_ignition_environments.tasks.pendulum_swingup:PendulumSwingUp",
+      "file": "python/gym_ignition_environments/tasks/pendulum_swingup.py",
+      "line": 22,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gym_ignition_environments.tasks.cartpole_discrete_balancing:CartPoleDiscreteBalancing",
+      "file": "python/gym_ignition_environments/tasks/cartpole_discrete_balancing.py",
+      "line": 22,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gym_ignition_environments.tasks.cartpole_continuous_balancing:CartPoleContinuousBalancing",
+      "file": "python/gym_ignition_environments/tasks/cartpole_continuous_balancing.py",
+      "line": 22,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gym_ignition_environments.tasks.cartpole_continuous_swingup:CartPoleContinuousSwingup",
+      "file": "python/gym_ignition_environments/tasks/cartpole_continuous_swingup.py",
+      "line": 22,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "python/gym_ignition_environments/__init__.py:12 gym env Pendulum-Gazebo-v0",
+      "python/gym_ignition_environments/__init__.py:24 gym env CartPoleDiscreteBalancing-Gazebo-v0",
+      "python/gym_ignition_environments/__init__.py:36 gym env CartPoleContinuousBalancing-Gazebo-v0",
+      "python/gym_ignition_environments/__init__.py:48 gym env CartPoleContinuousSwingup-Gazebo-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Pendulum-Gazebo-v0 registered at python/gym_ignition_environments/__init__.py:12",
+      "gym env CartPoleDiscreteBalancing-Gazebo-v0 registered at python/gym_ignition_environments/__init__.py:24",
+      "gym env CartPoleContinuousBalancing-Gazebo-v0 registered at python/gym_ignition_environments/__init__.py:36",
+      "gym env CartPoleContinuousSwingup-Gazebo-v0 registered at python/gym_ignition_environments/__init__.py:48"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/robotology-legacy__gym-ignition --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

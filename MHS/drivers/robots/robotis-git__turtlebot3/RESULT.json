@@ -1,0 +1,29 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:97af9a75b06f5c7079e3f95f70b99b26638b95078b62decbe124b07b7f6ff30b",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.robotis-git.cmd_vel.v1",
+      "reason": "No catalogue class fits a single rosbridge publication of a TwistStamped velocity setpoint: cap.motion.mobile_base.v1 requires a bounded duration plus distance and heading output, while the upstream callback consumes only twist.linear.x and twist.angular.z and publishes no motion acknowledgement. A rosbridge publish receipt is transmission evidence only.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.robotis-git.motor_power.v1",
+      "reason": "No catalogue class fits the upstream std_srvs/SetBool motor-torque service. cap.motion.stop.v1 requires a stopped-state report that the motor_torque_enable register write does not provide; claiming stopped=true would be invented.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.robotis-git.disable_torque.v1",
+      "reason": "The fixed, input-free torque-disable safe-state action has no catalogue class. cap.motion.stop.v1 would require inventing a stopped-state measurement from a torque-enable register acknowledgement.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "The selected TurtleBot3 ROS 2 profile retains TwistStamped cmd_vel, motor-power service, fixed torque-disable action and battery/odometry/wheel observations. Signed linear and angular velocity bounds are operator-required; the teleoperation constants are positive client caps, not a sourced signed installed envelope. site-limits.example.json is explicitly illustrative. This profile requires enable_stamped_cmd_vel=true; Humble/default or operator deployments using plain Twist are not covered. A publication proves transmission only. The torque-disable SetBool response acknowledges the motor register write, not measured braking, zero velocity or physical cessation; external publishers and coast distance remain unverified. The reset service, sound and other upstream surfaces are outside scope. The event-driven fake uses placeholder odometry/telemetry and no physics. Endpoint namespace, ROS version, QoS and deployed hardware remain unverified.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Accept the selected stamped-velocity fake contract after replacing uncited signed envelopes with operator-required limits. Complete fake gate passes; evidence is contract_checked only. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: REFERENCE.md, RESULT.json, check-report.json, driver.py, facts.md, reference.json, site-limits.example.json, test_driver.py. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. Catalogue rationale corrected: deceleration is optional; the required stopped output is the unresolved semantic difference. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged.",
+  "blocked_on": []
+}

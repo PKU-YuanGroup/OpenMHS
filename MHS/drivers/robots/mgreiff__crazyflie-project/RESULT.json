@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "gate": {
+    "digest": "sha256:fc27602e66c3ac141920dacd64504c00ff71280a8bbebf46752664f6b37f5904",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.mgreiff.cmd_vel.v1",
+      "reason": "No catalogue class binds one geometry_msgs/Twist publication to a UAV. cap.motion.cartesian_twist.v1 is robot.arm-only, requires duration_s and reports a stopped pose; the upstream publication has no duration and a rosbridge publication carries no execution acknowledgement.",
+      "verb": "invoke",
+      "summary": "Publish one geometry_msgs/Twist on /crazyflie/cmd_vel; transmission only.",
+      "similar": [
+        "cap.motion.cartesian_twist.v1",
+        "cap.motion.mobile_base.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mgreiff.trajectory_packet.v1",
+      "reason": "No catalogue class binds a crazyflie_trajectory/TrajectoryPacket publication. The motion classes are higher-level commands with different inputs and outputs; this extension reports transmission only and one packet is not a complete trajectory.",
+      "verb": "invoke",
+      "summary": "Publish one TrajectoryPacket on /crazyflie/trajectory_packet; transmission only.",
+      "similar": [
+        "cap.motion.cartesian_pose.v1",
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mgreiff.synchronization_packet.v1",
+      "reason": "No catalogue class binds a SynchronizationPacket start-delay publication; no catalogue class models a multi-vehicle trajectory synchronization message.",
+      "verb": "invoke",
+      "summary": "Publish one SynchronizationPacket on /crazyflie/synchronization_packet; transmission only.",
+      "similar": [
+        "cap.world.step.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mgreiff.update_params.v1",
+      "reason": "No catalogue class calls a ROS parameter-update service with a list of parameter names. cap.device.configure.v1 configures declared writable state fields, not an arbitrary string[] parameter list.",
+      "verb": "invoke",
+      "summary": "Call the acknowledged /crazyflie/update_params service with parameter names.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.mgreiff.emergency.v1",
+      "reason": "No catalogue class binds an acknowledged std_srvs/Empty emergency service. cap.motion.stop.v1 is robot.arm/mobile_base/motion.axis, takes a deceleration and reports a stopped position; the Empty service has no such fields and its callback is external.",
+      "verb": "invoke",
+      "summary": "Call the acknowledged /crazyflie/emergency Empty service; the callback is external.",
+      "similar": [
+        "cap.motion.stop.v1",
+        "cap.motion.estop.v1"
+      ]
+    }
+  ],
+  "notes": "[Superseded 2026-11-05: the gate now fails G3 (re-record at the end).] PASS on the fake backend only (evidence contract_checked, never an MHS-Device level). The package is model-authored and unreviewed: driver.lock.json authored_by is the model entry and reviewed_by stays null; no hardware was attached and no --backend hardware or --allow-hardware was run. This is a configuration-only ROS 1 RosDriver over rosbridge; it declares no Python native class, imports nothing from the clone, starts no ROS node, and runs neither the upstream Simulink models nor a UAV. The card's entry_symbols list is empty, so there was no entry symbol to verify; the pinned endpoints and types were read from the clone: /crazyflie/cmd_vel with geometry_msgs/Twist (crazyflie_trajectory/scripts/master.py:29), /crazyflie/trajectory_packet with crazyflie_trajectory/TrajectoryPacket (master.py:30), /crazyflie/synchronization_packet with crazyflie_trajectory/SynchronizationPacket (master.py:32), /crazyflie/update_params with crazyflie_trajectory/UpdateParams (master.py:35), /crazyflie/emergency with std_srvs/Empty (master.py:36), and the converter's /crazyflie/log_ref with crazyflie_trajectory/GenericLogData (converter.py:24). The message/service definitions are cited from msg/TrajectoryPacket.msg:1-6, msg/SynchronizationPacket.msg:1-4 and srv/UpdateParams.srv:1-2. The imports at master.py:9-15 and converter.py:11 are the type_refs. No native class or entry symbol was invented.\n\nSCOPE: three ROS 1 topic publications (Twist, TrajectoryPacket, SynchronizationPacket), the acknowledged /crazyflie/update_params service, the acknowledged /crazyflie/emergency Empty service, and a read-only log_ref resource state from /crazyflie/log_ref GenericLogData. One action publishes one message. The upstream transfer_trajectory path sends a synchronization packet and republishes every packet twenty times with a 5 ms sleep (master.py:103-120); that loop and a complete trajectory upload are NOT COVERED. The converter's /crazyflie/log_pos observation and file output are NOT COVERED. The clone imports geometry_msgs/Twist but does not define its fields; the standard linear/angular Vector3 layout is a message convention, not an upstream numeric Fact.\n\nLIMITS: the clone states no numeric operating envelope for the trajectory coefficients, durations, selectors, synchronization metadata or velocity components. Every physical quantity and packet selector is Limit.operator_required, so without an operator overlay every call is refused MHS.SAFETY.LIMITS_UNSET. site-limits.example.json is an illustrative operator overlay only, not a device fact, flight envelope or recommendation; a real site must replace it. fixtures/conformance.json supplies valid, alternate and out-of-envelope inputs. No bound was copied from a catalogue class default or an upstream constructor default.\n\nSAFETY: mode simulated, device kind device, risk R2 because the command surface publishes trajectory and velocity messages to a UAV and a mobile-base transit is at least R2 even in simulation; the card floor is R0. request_emergency_stop is an input-free Action(safe_state=True) and the same /crazyflie/emergency Empty service is safety_bindings.estop. The acknowledged Empty response proves the callback returned, not rotor stop, disarm, landing or physical quiescence. The callback implementation is in the external crazyflie_ros repository, not in this clone; no physical e-stop or independent hardware stop is documented in the clone and estop_physical_ref is not set. The driver is simulated only, so no hardware backend exists.\n\nFAKE AND FIDELITY: fake.py is a ROS-free RecordingRosTransport contract stand-in, not a recording of captured traffic and not the upstream simulator. It answers the declared publications, the two services and the /crazyflie/log_ref subscription; it runs no crazyflie_ros node, controller, Simulink model, Gazebo world or UAV. It is F0, engine analytic, determinism none, timestep_ms 0, realtime_factor 0, reset none, no snapshot/restore. All state and reply values are placeholders. The fake copies the six trajectory-packet coefficients into the placeholder log_ref values so the resource has an observable effect for TCAP-003; that is not dynamics, a measured pose or a reference-pose model. It reproduces neither the upstream 20-times packet loop nor the 5 ms pacing.\n\nTESTS: test_driver.py keeps check_driver(HERE, backend='fake') and adds 9 repository cases: the three publications, the update_params service, the emergency acknowledgement, the LIMITS_UNSET refusal without an overlay, the example-overlay valid call and ENVELOPE_VIOLATION refusal, a failed emergency service, a malformed emergency response (OutcomeUnknown), the e-stop reaching the service and latching, and the input-free safe_state declaration. All pass. The gate ran three times; the first run failed G8.CONFORMANCE/G8.TEST TCAP-003 because the publish output was identical for two inputs and the resource state was empty; the fix was the read-only /crazyflie/log_ref resource state with a disclosed placeholder effect, and the second run passed. The third run followed a wording-only change from 'recording fake' to 'contract fake' and passed with the same digest. The last run passed G1-G9 with no G4.REF_VALUE, G4.REF_BINARY, G8 or other warnings. The clone was left unmodified (G1 passed); no network, pip install, upstream execution or hardware [...]\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked every endpoint and type (absolute names, master.py:29-36; the msg and srv definitions), all facts, the operator_required limits and the stop. The ROS surface is not a simulator: the clone's launch files start the external, modified crazyflie_ros driver (crazyflie_server.launch and crazyflie_add with the Crazyradio URI radio://0/35/2M, trajectoryExample.launch:7-19) for a real Crazyflie, the README lists that driver and a modified firmware, and the only simulation is MATLAB/Simulink. The e-stop and safe-state action were /crazyflie/emergency, whose callback lives in that external driver (the clone holds only the proxy, master.py:36), so nothing shows what the vehicle is left in; and the cmd_vel inputs claimed m/s and rad/s although the clone never publishes on that topic. The reviewer removed the e-stop binding and safe_state=True, rewrote safe_state, the docstring and the gaps, removed the unsourced units and added five source facts (driver.py); dropped the cmd_vel units from site-limits.example.json; replaced the e-stop cases with one expecting SAFE_STATE_UNREACHED, no service call and the latch held (test_driver.py); updated facts.md; and regenerated reference.json, REFERENCE.md and check-report.json. The gate now fails G6.ESTOP_FAILED and G8 SAFE-028 (stable digest sha256:adef2997dcab6e26f3d322dab6d7195f59930bbea6a74340d62237bc0c35d099), the nine package cases pass, and the author's notes on the emergency e-stop are superseded. The registry record's mode simulated does not fit this hardware route; an override cannot change it. The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it. For the human reviewer: Real hardware: every bound topic and service reaches the external crazyflie_ros driver of a real Crazyflie. What /crazyflie/emergency does is outside the clone (the original crazyflie_ros sends zero setpoints, so a flying vehicle would fall; unverified for this fork), and the original driver reads cmd_vel as attitude and thrust setpoints, not velocities. The external driver publishes log_ref with its own GenericLogData type, which rosbridge may refuse under the crazyflie_trajectory type name. Licence: package.xml TODO, no LICENSE file. Re-record (2026-11-05): the reviewed mode is hardware (overrides/mode-corrections.json), so this simulated driver fails G3.MODE_MISMATCH; no package file changed."
+}

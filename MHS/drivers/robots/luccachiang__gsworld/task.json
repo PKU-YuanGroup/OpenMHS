@@ -1,0 +1,112 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.luccachiang/gsworld",
+  "track": "robots",
+  "local_path": "robots/luccachiang/gsworld",
+  "driver_dir": "MHS/drivers/robots/luccachiang__gsworld",
+  "upstream": {
+    "repo_url": "https://github.com/luccachiang/gsworld",
+    "commit": "532950475cc80a97c7050fd94858a1a8841dbf2c",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 404,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gsworld.mani_skill.envs.tasks.real_fr3_env:RealFr3",
+      "file": "gsworld/mani_skill/envs/tasks/real_fr3_env.py",
+      "line": 23,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gsworld.mani_skill.envs.tasks.real_xarm_env:RealXArm6",
+      "file": "gsworld/mani_skill/envs/tasks/real_xarm_env.py",
+      "line": 54,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gsworld.mani_skill.envs.tasks.tabletop.franka.align:AlignFr3Env",
+      "file": "gsworld/mani_skill/envs/tasks/tabletop/franka/align.py",
+      "line": 28,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gsworld.mani_skill.envs.tasks.tabletop.franka.pnp_box:PnpBoxFr3Env",
+      "file": "gsworld/mani_skill/envs/tasks/tabletop/franka/pnp_box.py",
+      "line": 31,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gsworld.mani_skill.envs.tasks.tabletop.franka.pour_mustard:PourMustardFr3Env",
+      "file": "gsworld/mani_skill/envs/tasks/tabletop/franka/pour_mustard.py",
+      "line": 30,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gsworld/mani_skill/envs/tasks/real_fr3_env.py:23 gym env RealFr3-v1",
+      "gsworld/mani_skill/envs/tasks/real_xarm_env.py:54 gym env RealXArm6-v1",
+      "gsworld/mani_skill/envs/tasks/tabletop/franka/align.py:28 gym env AlignFr3Env-v1",
+      "gsworld/mani_skill/envs/tasks/tabletop/franka/pnp_box.py:31 gym env PnpBoxFr3Env-v1"
+    ],
+    "upstream_tests": "submodules/gaussian-splatting/submodules/fused-ssim/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env RealFr3-v1 registered at gsworld/mani_skill/envs/tasks/real_fr3_env.py:23",
+      "gym env RealXArm6-v1 registered at gsworld/mani_skill/envs/tasks/real_xarm_env.py:54",
+      "gym env AlignFr3Env-v1 registered at gsworld/mani_skill/envs/tasks/tabletop/franka/align.py:28",
+      "gym env PnpBoxFr3Env-v1 registered at gsworld/mani_skill/envs/tasks/tabletop/franka/pnp_box.py:31",
+      "gym env PourMustardFr3Env-v1 registered at gsworld/mani_skill/envs/tasks/tabletop/franka/pour_mustard.py:30",
+      "gym env StackFr3Env-v1 registered at gsworld/mani_skill/envs/tasks/tabletop/franka/stack.py:31",
+      "gym env AlignXArmEnv-v1 registered at gsworld/mani_skill/envs/tasks/tabletop/xarm6/align.py:30",
+      "gym env BananaRotationXArmEnv-v1 registered at gsworld/mani_skill/envs/tasks/tabletop/xarm6/rotate_banana.py:26",
+      "gym env SpoonOnBoardXArmEnv-v1 registered at gsworld/mani_skill/envs/tasks/tabletop/xarm6/spoon_on_board.py:27"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license",
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/luccachiang__gsworld --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

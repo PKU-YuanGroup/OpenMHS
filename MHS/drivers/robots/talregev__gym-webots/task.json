@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.talregev/gym-webots",
+  "track": "robots",
+  "local_path": "robots/talregev/gym-webots",
+  "driver_dir": "MHS/drivers/robots/talregev__gym-webots",
+  "upstream": {
+    "repo_url": "https://github.com/talregev/gym-webots",
+    "commit": "023ae0bebd8067ea8c7fbb4b84b31ae29a9fb9f3",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "override:source-review",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 41,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_webots.envs.pioneer:WebotsCircuit2cPionner3atCameraNnEnv",
+      "file": "gym_webots/envs/pioneer/webots_circuit2c_pioneer_camera_nn.py",
+      "line": 28,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_webots/__init__.py:10 gym env WebotsCircuit2cPioneerCameraNnEnv-v0"
+    ],
+    "upstream_tests": "gym_webots/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env WebotsCircuit2cPioneerCameraNnEnv-v0 registered at gym_webots/__init__.py:10"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/talregev__gym-webots --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

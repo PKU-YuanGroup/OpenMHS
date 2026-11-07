@@ -1,0 +1,79 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.telehuman/humanoidgen",
+  "track": "robots",
+  "local_path": "robots/telehuman/humanoidgen",
+  "driver_dir": "MHS/drivers/robots/telehuman__humanoidgen",
+  "upstream": {
+    "repo_url": "https://github.com/telehuman/humanoidgen",
+    "commit": "015b808fd316629f499a903b5968f5b37fcd7573",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 424,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "humanoidgen.envs.example.table_scene:TableSetting",
+      "file": "humanoidgen/envs/example/table_scene.py",
+      "line": 392,
+      "confidence": "override"
+    },
+    {
+      "symbol": "humanoidgen.envs.example.blocks_stack_easy:BlocksStackEasyEnv",
+      "file": "humanoidgen/envs/example/blocks_stack_easy.py",
+      "line": 4,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license",
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/telehuman__humanoidgen --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.angelomorgado/carla-gymdrive",
+  "upstream": {
+    "repo_url": "https://github.com/angelomorgado/carla-gymdrive",
+    "commit": "7d950f9d90d20b7dfbc17fa5b77e67437bde2d29",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "requirements.txt lists carla and gymnasium; the upstream environment also needs a CARLA server at localhost:2000 (src/config/configuration.py:17-19). The gate and the fake backend need neither: fake.py is pure Python and the gate never installs or imports the upstream package. Install the clone only to serve the sim backend, which was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeCarlaEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wD-007",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

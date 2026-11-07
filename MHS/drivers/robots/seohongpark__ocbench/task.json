@@ -1,0 +1,133 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.seohongpark/ocbench",
+  "track": "robots",
+  "local_path": "robots/seohongpark/ocbench",
+  "driver_dir": "MHS/drivers/robots/seohongpark__ocbench",
+  "upstream": {
+    "repo_url": "https://github.com/seohongpark/ocbench",
+    "commit": "6939a1e84f7ce9dbdd20c9f80d4cf335e8f83b49",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 119,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "ocbench.envs.block_env:BlockEnv",
+      "file": "ocbench/envs/block_env.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ocbench.envs.chamber_env:ChamberEnv",
+      "file": "ocbench/envs/chamber_env.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ocbench.envs.switch_env:SwitchEnv",
+      "file": "ocbench/envs/switch_env.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ocbench.envs.hanoi_env:HanoiEnv",
+      "file": "ocbench/envs/hanoi_env.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ocbench.envs.bowling_env:BowlingEnv",
+      "file": "ocbench/envs/bowling_env.py",
+      "line": 9,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "ocbench/descriptions/robotiq_2f85/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ocbench/descriptions/universal_robots_ur5e/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ocbench/descriptions/robotiq_2f85/2f85.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "ocbench/descriptions/universal_robots_ur5e/ur5e.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ocbench/__init__.py:74 gym env block-cpu-single-task1-v0",
+      "ocbench/__init__.py:80 gym env block-cpu-double-task1-v0",
+      "ocbench/__init__.py:86 gym env block-cpu-double-task2-v0",
+      "ocbench/__init__.py:92 gym env block-cpu-triple-task1-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env block-cpu-single-task1-v0 registered at ocbench/__init__.py:74",
+      "gym env block-cpu-double-task1-v0 registered at ocbench/__init__.py:80",
+      "gym env block-cpu-double-task2-v0 registered at ocbench/__init__.py:86",
+      "gym env block-cpu-triple-task1-v0 registered at ocbench/__init__.py:92",
+      "gym env block-cpu-triple-task2-v0 registered at ocbench/__init__.py:98",
+      "gym env block-cpu-quadruple-task1-v0 registered at ocbench/__init__.py:104",
+      "gym env block-cpu-quadruple-task2-v0 registered at ocbench/__init__.py:110",
+      "gym env block-cpu-quadruple-task3-v0 registered at ocbench/__init__.py:116",
+      "gym env chamber-cpu-easy-task1-v0 registered at ocbench/__init__.py:124",
+      "gym env chamber-cpu-easy-task2-v0 registered at ocbench/__init__.py:130",
+      "gym env chamber-cpu-easy-task3-v0 registered at ocbench/__init__.py:136",
+      "gym env chamber-cpu-medium-task1-v0 registered at ocbench/__init__.py:142"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/seohongpark__ocbench --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

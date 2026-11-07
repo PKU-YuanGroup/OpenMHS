@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.avslab/bsk_rl",
+  "track": "robots",
+  "local_path": "robots/avslab/bsk_rl",
+  "driver_dir": "MHS/drivers/robots/avslab__bsk_rl",
+  "upstream": {
+    "repo_url": "https://github.com/avslab/bsk_rl",
+    "commit": "e307f335a3f133ef6dc528a9bb3b2ceb06329605",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 85,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "bsk_rl.gym:GeneralSatelliteTasking",
+      "file": "src/bsk_rl/gym.py",
+      "line": 71,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "bsk_rl.gym:SatelliteTasking",
+      "file": "src/bsk_rl/gym.py",
+      "line": 582,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "bsk_rl.gym:ConstellationTasking",
+      "file": "src/bsk_rl/gym.py",
+      "line": 632,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10.0",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/bsk_rl/__init__.py:17 gym env GeneralSatelliteTasking-v1",
+      "src/bsk_rl/__init__.py:22 gym env SatelliteTasking-v1",
+      "src/bsk_rl/__init__.py:27 gym env ConstellationTasking-v1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env GeneralSatelliteTasking-v1 registered at src/bsk_rl/__init__.py:17",
+      "gym env SatelliteTasking-v1 registered at src/bsk_rl/__init__.py:22",
+      "gym env ConstellationTasking-v1 registered at src/bsk_rl/__init__.py:27"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/avslab__bsk_rl --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

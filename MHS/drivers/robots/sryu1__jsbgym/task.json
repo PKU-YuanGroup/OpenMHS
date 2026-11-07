@@ -1,0 +1,79 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sryu1/jsbgym",
+  "track": "robots",
+  "local_path": "robots/sryu1/jsbgym",
+  "driver_dir": "MHS/drivers/robots/sryu1__jsbgym",
+  "upstream": {
+    "repo_url": "https://github.com/sryu1/jsbgym",
+    "commit": "80adc75514ac2cf2d7120cc436a1cbfa49ba0bc8",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 156,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "jsbgym.environment:JsbSimEnv",
+      "file": "jsbgym/environment.py",
+      "line": 11,
+      "confidence": "override"
+    },
+    {
+      "symbol": "jsbgym.environment:NoFGJsbSimEnv",
+      "file": "jsbgym/environment.py",
+      "line": 225,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "jsbgym/environment.py:225 NoFGJsbSimEnv environment class",
+      "jsbgym/environment.py:11 JsbSimEnv environment class"
+    ],
+    "upstream_tests": "jsbgym/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/sryu1__jsbgym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

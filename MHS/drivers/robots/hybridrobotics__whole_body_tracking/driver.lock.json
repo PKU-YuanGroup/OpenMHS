@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.hybridrobotics/whole_body_tracking",
+  "upstream": {
+    "repo_url": "https://github.com/hybridrobotics/whole_body_tracking",
+    "commit": "cd65172032893724b445448818c34165846d847d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any",
+    "notes": "setup.py declares python_requires >=3.10 and installs psutil, onnxscript and wandb>=0.19 (setup.py:12-19 and :39). The environment itself needs an Isaac Sim 4.5.0 / Isaac Lab 2.1.0 Linux install (README.md:3-6 and :32-34), the Unitree description archive fetched from GCS (README.md:46-55) and a motion NPZ assigned to the command term (commands.py:357-361); the gate and the fake backend need none of them, and the upstream package was not installed or imported here."
+  },
+  "backends": {
+    "fake": ".fake:FakeTrackingEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wD-054",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

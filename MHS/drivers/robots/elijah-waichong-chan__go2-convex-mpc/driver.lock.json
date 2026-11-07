@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.elijah-waichong-chan/go2-convex-mpc",
+  "upstream": {
+    "repo_url": "https://github.com/elijah-waichong-chan/go2-convex-mpc",
+    "commit": "1c63c6a762779887ab0431fd60db681dede6cb32",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.10,<3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "pyproject.toml:8 requires Python 3.10 or newer below 3.11. The gate and fake.py need neither the upstream package nor the MuJoCo engine: fake.py is pure Python and the gate never installs or imports the clone. Install the upstream stack only to serve the model with the real MuJoCo engine (backend sim), which was not run; the clone's models/MJCF/go2 assets must stay beside scene.xml."
+  },
+  "backends": {
+    "fake": ".fake:fake_mujoco"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-070",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

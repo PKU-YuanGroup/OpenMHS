@@ -1,0 +1,58 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "gate": {
+    "digest": "sha256:9a946e5762c8a742f6fe67a7e378dacd26e71433a602000e726722da72e597e1",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.sidharthmohannair.state.v1",
+      "reason": "No catalogue class observes a mavros_msgs/State topic. The motion classes are commands, not observations, and a resource read is not a capability. The package uses an x-cap read with an inline output schema for the connected, armed and mode fields.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.sidharthmohannair.pose.v1",
+      "reason": "No catalogue class observes a geometry_msgs/PoseStamped local-position topic. cap.motion.cartesian_pose.v1 is a robot.arm command in millimetres with a reached output, not a MAVROS observation, so an x-cap read with an inline position schema is used.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.sidharthmohannair.guided.v1",
+      "reason": "No catalogue class requests a MAVROS flight mode. cap.motion.mobile_base.v1 is a bounded linear/angular velocity command and does not map to a SetMode custom_mode value, so the fixed GUIDED request uses an x-cap invoke.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.sidharthmohannair.arm.v1",
+      "reason": "No catalogue class arms a flight controller. cap.device.configure.v1 writes named resource-state parameters, not a CommandBool service request, so the fixed value=true arm request uses an x-cap invoke.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.sidharthmohannair.takeoff.v1",
+      "reason": "No catalogue class commands a takeoff altitude. cap.motion.cartesian_pose.v1 is only for robot.arm and uses millimetres and inverse kinematics; cap.motion.mobile_base.v1 is a velocity command. The MAVROS CommandTOL takeoff has an altitude and a success flag, so an x-cap with an operator-required altitude is used.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.sidharthmohannair.setpoint_position.v1",
+      "reason": "No catalogue class publishes a PoseStamped position setpoint. cap.motion.mobile_base.v1 is a velocity command; cap.motion.cartesian_pose.v1 is robot.arm-only in millimetres and reports a reached position. The rosbridge publication is one message, so the x-cap reports published/confirmed and never claims final-position attainment.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.sidharthmohannair.rtl.v1",
+      "reason": "No catalogue class requests a return-to-launch flight mode; the fixed SetMode custom_mode RTL request has no catalogue equivalent, so an x-cap invoke is used.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.sidharthmohannair.land.v1",
+      "reason": "The ordinary LAND SetMode request returns mode_sent, not touchdown or cessation. It remains an ordinary latched action and is not an estop or safe-state binding.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "BLOCKED: the ArduPilot/MAVROS client profile preserves state/pose reads, GUIDED, arm, takeoff, position, RTL and ordinary LAND requests, but the selected external graph provides no proven independent stop. LAND mode_sent is request acknowledgement; a controlled reply can arrive while state still reports an armed flying vehicle. LAND is no longer an estop binding, safe-state action or latch exemption. The stock stop receipt is failed with safe_state_achieved=false. ROS 2 PoseStamped uses sec/nanosec; pose fields are not mislabeled as north/east axes without deployed MAVROS-frame proof. Position and altitude are operator-required and the example values are not device limits. One published setpoint is not the mission's repeated stream or arrival. The zero timestamp remains a wire placeholder. The repository supplies clients and launch configuration, not the external controller implementation. R2 risk is retained; the documented RC procedure does not establish a tested independent physical stop. No disarm, RC override, mission upload or flight-state safety certification is added.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Retain blocked; LAND acknowledgement is not safe cessation, and external flight ownership remains unproven. Complete fake/diagnostic gate remains rejected at G3. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: REFERENCE.md, RESULT.json, check-report.json, driver.py, facts.md, fake.py, reference.json, test_driver.py. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged."
+}

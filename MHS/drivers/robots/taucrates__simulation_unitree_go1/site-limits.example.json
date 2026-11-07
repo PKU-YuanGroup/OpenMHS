@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "EXAMPLE ONLY: illustrative test values, not installed Go1 limits",
+  "issued_by": {"id": "operator:example"},
+  "notes": "The pinned clone states CHAMP gait maxima (0.5 m/s forward, 0.25 m/s lateral, 1.0 rad/s yaw) but no signed /cmd_vel acceptance envelope. The operator must replace these illustrative values with the site's own bounds before enabling the velocity command.",
+  "devices": {
+    "mhs://localhost/taucrates-go1-sim": {
+      "x-cap.taucrates.cmd_vel.v1": {
+        "linear_x": {
+          "min": -0.5,
+          "max": 0.5,
+          "source": "operator",
+          "reason": "example only; operator supplies the installed forward-velocity envelope"
+        },
+        "linear_y": {
+          "min": -0.25,
+          "max": 0.25,
+          "source": "operator",
+          "reason": "example only; operator supplies the installed lateral-velocity envelope"
+        },
+        "angular_z": {
+          "min": -1.0,
+          "max": 1.0,
+          "source": "operator",
+          "reason": "example only; operator supplies the installed yaw-rate envelope"
+        }
+      }
+    }
+  }
+}

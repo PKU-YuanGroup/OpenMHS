@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.noetix-robotics/noetix_n2_gym",
+  "upstream": {
+    "repo_url": "https://github.com/noetix-robotics/noetix_n2_gym",
+    "commit": "153aad12dcc44aeafe378efe2f652873b02e0d89",
+    "license_spdx": "BSD-3-Clause"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any",
+    "notes": "setup.py:12-24 declares isaacgym (preview 4), mujoco==2.3.6, mujoco-python-viewer, numpy, pybullet, opencv-python, matplotlib, wandb, tensorboard, tqdm, onnx and pynput. The acceptance gate and fake.py need none of them: fake.py is pure Python, the gate never installs or imports the upstream package or the MuJoCo engine, and this package is checked on the fake backend only. Install the upstream stack only to serve the model with the real MuJoCo engine (backend sim), which was not run here."
+  },
+  "backends": {
+    "fake": ".fake:FakeMujoco"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wD-079",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

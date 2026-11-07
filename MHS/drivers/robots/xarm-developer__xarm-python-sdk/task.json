@@ -1,0 +1,140 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.xarm-developer/xarm-python-sdk",
+  "track": "robots",
+  "local_path": "robots/xarm-developer/xarm-python-sdk",
+  "driver_dir": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "upstream": {
+    "repo_url": "https://github.com/xarm-developer/xarm-python-sdk",
+    "commit": "d911319cebc45142613e18086aabb8067b18ab7f",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:exemplar",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 0,
+  "rank": 4,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "xarm.wrapper.xarm_api:XArmAPI",
+      "file": "xarm/wrapper/xarm_api.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "xarm.x3.xarm:XArm",
+      "file": "xarm/x3/xarm.py",
+      "line": 43,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "xarm.x3.gripper:Gripper",
+      "file": "xarm/x3/gripper.py",
+      "line": 64,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "xarm.x3.linear_motor:LinearMotor",
+      "file": "xarm/x3/linear_motor.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "xarm.x3.servo:Servo",
+      "file": "xarm/x3/servo.py",
+      "line": 16,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.5",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "XArmAPI.get_allow_approx_motion",
+      "XArmAPI.get_base_board_version",
+      "XArmAPI.get_bio_gripper_error",
+      "XArmAPI.get_bio_gripper_g2_position",
+      "XArmAPI.get_bio_gripper_status",
+      "XArmAPI.get_c23_error_info",
+      "XArmAPI.get_c24_error_info",
+      "XArmAPI.get_c31_error_info",
+      "XArmAPI.get_c37_error_info",
+      "XArmAPI.get_c38_error_info",
+      "XArmAPI.get_c54_error_info",
+      "XArmAPI.get_c60_error_info"
+    ],
+    "writes": [
+      "XArmAPI.config_cgpio_reset_when_stop",
+      "XArmAPI.config_tgpio_reset_when_stop",
+      "XArmAPI.set_allow_approx_motion",
+      "XArmAPI.set_baud_checkset_enable",
+      "XArmAPI.set_bio_gripper_control_mode",
+      "XArmAPI.set_bio_gripper_enable",
+      "XArmAPI.set_bio_gripper_force",
+      "XArmAPI.set_bio_gripper_g2_position",
+      "XArmAPI.set_bio_gripper_speed",
+      "XArmAPI.set_cartesian_velo_continuous",
+      "XArmAPI.set_cgpio_analog",
+      "XArmAPI.set_cgpio_analog_with_xyz"
+    ],
+    "actions": [
+      "XArmAPI.arm",
+      "XArmAPI.calibrate_tcp_coordinate_offset",
+      "XArmAPI.calibrate_tcp_orientation_offset",
+      "XArmAPI.calibrate_user_coordinate_offset",
+      "XArmAPI.calibrate_user_orientation_offset",
+      "XArmAPI.emergency_stop",
+      "XArmAPI.move_arc_lines",
+      "XArmAPI.move_circle",
+      "XArmAPI.move_gohome",
+      "XArmAPI.reset",
+      "XArmAPI._arm.run_blockly_app",
+      "XArmAPI._arm.run_gcode_app"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.manipulation.grasp.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.cartesian_pose.v1",
+      "cap.actuation.gpio.v1",
+      "cap.device.calibrate.v1",
+      "cap.measure.current.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/xarm-developer__xarm-python-sdk --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

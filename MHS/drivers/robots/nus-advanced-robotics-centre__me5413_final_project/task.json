@@ -1,0 +1,147 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nus-advanced-robotics-centre/me5413_final_project",
+  "track": "robots",
+  "local_path": "robots/nus-advanced-robotics-centre/me5413_final_project",
+  "driver_dir": "MHS/drivers/robots/nus-advanced-robotics-centre__me5413_final_project",
+  "upstream": {
+    "repo_url": "https://github.com/nus-advanced-robotics-centre/me5413_final_project",
+    "commit": "9fd6ce2643f7dc9ed6e074ea559d3af29ef4968b",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 224,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install",
+    "capabilities"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nus-advanced-robotics-centre__me5413_final_project --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required",
+  "companions": [
+    {
+      "alias": "gazebo_ros_pkgs",
+      "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+      "commit": "cd9cc952402375be5f274f39b29399c4087aa839",
+      "profile": "ros1-noetic-gazebo11",
+      "reason": "pause_physics, its get_physics_properties read-back and unpause_physics are served by gazebo_ros 2.9.3 (ROS 1 Noetic), whose empty_world.launch the clone's launch includes.",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:17-19",
+          "token": "ROS Noetic"
+        },
+        {
+          "side": "package",
+          "ref": "src/me5413_world/package.xml:51",
+          "token": "catkin"
+        },
+        {
+          "side": "package",
+          "ref": "src/me5413_world/launch/world.launch:6-13",
+          "token": "$(find gazebo_ros)/launch/empty_world.launch"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+          "token": "Noetic"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/package.xml:4",
+          "token": "2.9.3"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/package.xml:23",
+          "token": "catkin"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_dev/package.xml:23-24",
+          "token": "gazebo11"
+        }
+      ],
+      "local_path": "robots/ros-simulation/gazebo_ros_pkgs",
+      "repo_url": "https://github.com/ros-simulation/gazebo_ros_pkgs",
+      "license_spdx": "NOASSERTION"
+    },
+    {
+      "alias": "gazebo_classic",
+      "package_id": "gh.gazebosim/gazebo-classic",
+      "commit": "b22c6e15e52299865b31093b8feebc9ca19e26e8",
+      "profile": "ros1-noetic-gazebo11",
+      "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (facts only).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:17-19",
+          "token": "ROS Noetic"
+        },
+        {
+          "side": "companion:gazebo_ros_pkgs",
+          "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+          "token": "Noetic"
+        },
+        {
+          "side": "companion:gazebo_ros_pkgs",
+          "ref": "gazebo_dev/package.xml:23-24",
+          "token": "gazebo11"
+        },
+        {
+          "side": "companion",
+          "ref": "CMakeLists.txt:20",
+          "token": "GAZEBO_MAJOR_VERSION 11"
+        },
+        {
+          "side": "companion",
+          "ref": "Changelog.md:3",
+          "token": "Gazebo 11.15.1"
+        }
+      ],
+      "local_path": "robots/gazebosim/gazebo-classic",
+      "repo_url": "https://github.com/gazebosim/gazebo-classic",
+      "license_spdx": "Apache-2.0"
+    }
+  ]
+}

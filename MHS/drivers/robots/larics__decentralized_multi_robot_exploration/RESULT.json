@@ -1,0 +1,67 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "SDK_BUG"
+  ],
+  "gate": {
+    "digest": "sha256:6dd06961062226b7b2d60b9393a480187568514f66df482b3f1ad374c8fa32a4",
+    "failed": [
+      "G6",
+      "G8"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.larics.sim_clock.v1",
+      "reason": "No catalogue class observes a ROS simulated clock. cap.world.step.v1 advances a world and cap.world.reset.v1 resets one, but neither subscribes to /clock or carries a rosgraph_msgs/Clock sample.",
+      "verb": "read",
+      "summary": "Read one simulated clock sample from the Stage /clock topic."
+    },
+    {
+      "capability_id": "x-cap.larics.scan_robot0.v1",
+      "reason": "No catalogue class carries a 2-D sensor_msgs/LaserScan observation. cap.sensing.point_cloud.v1 is a 3-D artifact-producing point-cloud capture, not a range/intensity array with angle metadata.",
+      "verb": "read",
+      "summary": "Read one LaserScan from /robot_0/base_scan."
+    },
+    {
+      "capability_id": "x-cap.larics.scan_robot1.v1",
+      "reason": "No catalogue class carries a 2-D sensor_msgs/LaserScan observation. cap.sensing.point_cloud.v1 is a 3-D artifact-producing point-cloud capture, not a range/intensity array with angle metadata.",
+      "verb": "read",
+      "summary": "Read one LaserScan from /robot_1/base_scan."
+    },
+    {
+      "capability_id": "x-cap.larics.odom_robot0.v1",
+      "reason": "No catalogue class carries a passive nav_msgs/Odometry observation. cap.motion.mobile_base.v1 is an invoke motion command that requires a duration and returns distance, heading and a stopped state, not an odometry sample.",
+      "verb": "read",
+      "summary": "Read one odometry sample from /robot_0/odom."
+    },
+    {
+      "capability_id": "x-cap.larics.odom_robot1.v1",
+      "reason": "No catalogue class carries a passive nav_msgs/Odometry observation. cap.motion.mobile_base.v1 is an invoke motion command that requires a duration and returns distance, heading and a stopped state, not an odometry sample.",
+      "verb": "read",
+      "summary": "Read one odometry sample from /robot_1/odom."
+    },
+    {
+      "capability_id": "x-cap.larics.frontiers.v1",
+      "reason": "No catalogue class carries the exploration stack's frontier_exploration/PointArray output. cap.world.step.v1 and cap.world.reset.v1 act on a simulator world, not on an application-defined frontier list.",
+      "verb": "read",
+      "summary": "Read the filtered frontier centroids from /filtered_frontiers."
+    },
+    {
+      "capability_id": "x-cap.larics.cmd_vel_robot0.v1",
+      "reason": "No catalogue class fits one raw geometry_msgs/Twist publication. cap.motion.mobile_base.v1 requires duration_s and returns measured distance, heading and stopped, while the Stage cmd_vel subscriber forwards the Twist to ModelPosition::SetSpeed and publishes no acknowledgement. A rosbridge publication receipt is transmission evidence only.",
+      "verb": "invoke",
+      "summary": "Publish one Twist on /robot_0/cmd_vel."
+    },
+    {
+      "capability_id": "x-cap.larics.cmd_vel_robot1.v1",
+      "reason": "No catalogue class fits one raw geometry_msgs/Twist publication. cap.motion.mobile_base.v1 requires duration_s and returns measured distance, heading and stopped, while the Stage cmd_vel subscriber forwards the Twist to ModelPosition::SetSpeed and publishes no acknowledgement. A rosbridge publication receipt is transmission evidence only.",
+      "verb": "invoke",
+      "summary": "Publish one Twist on /robot_1/cmd_vel."
+    }
+  ],
+  "notes": "BLOCKED (HELPER_MISSING): the pinned clone exposes the Stage simulation's primary Twist input and reset service but no acknowledged stop, pause or brake endpoint, so the RosDriver cannot prove a safe state. Last gate run [...]\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Confirmed the author's block (HELPER_MISSING) after reading every endpoint, type and fact against stageros.cpp, the Stage world, the launch files and the vendored move_base at the pin: the private stageros advertises only reset_positions (std_srvs/Empty), whose callback restores the initial poses and clears stall but leaves the commanded speed (260-268); cmd_vel goes straight to ModelPosition::SetSpeed (273-280); the only stop-like code is the base_watchdog_timeout clamp (443-448), a node parameter, not an acknowledged endpoint; and the clone's other services (the assigners' startmission position query, move_base and Cartographer navigation and mapping) stop no Stage model. Defects, corrected although the package stays blocked: one fact cited robot_assigner.launch:10 for robot indices that are in multi_robot_assigner.launch; the mapName fact added a 'so ... root-namespace' inference and omitted the use_model_names branch; two world facts stated units and a model kind the lines do not show; and the competing velocity source was undisclosed: the frontier_exploration README's multi_robot_navigation.launch starts move_base in each robot namespace (navigation.launch:3-6), and move_base advertises cmd_vel (move_base.cpp:91-92). The reviewer changed driver.py (four facts narrowed, three added, one gap) and facts.md, and regenerated reference.json, REFERENCE.md and check-report.json. The gate fails only G6.ESTOP_FAILED, as before (stable digest sha256:31ea4480f079ed3ff2e5c12d311a2d0828913addcbf11c21d1dcd225230c1d71); the eight package cases pass, and collect.py reports the expected failure. The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it. For the human reviewer: Stage keeps applying the last cmd_vel until base_watchdog_timeout (0.2 s of simulated time by default) zeroes every model, unless a publisher refreshes it; with the navigation and assigner launches running, move_base keeps commanding the same /robot_<i>/cmd_vel topics, and an MHS e-stop stops none of that. Unblocking needs an acknowledged stop or pause endpoint, which this clone does not have.\n\nMODEL REVIEW (grok-4.7, a model and not a human, 2026-11-05; reviewed_by stays null): Repair to a sensed-confirmation stop (SAFE-049, CORE-088), simulated only. The orchestrator assigned this unit, which is the coverage of decision 2 of 2026-11-05. authored_by stays deepseek-v4.1-flash:1017 (run ros-wave-c-114). reviewed_by stays null. Evidence is fake contract_checked only. No ROS graph, Stage process, simulator or hardware was run. Nothing was taken from the stopped p5-sensed or ext-p5-sensed.fast-stopped trees. The stop publishes a fixed zero Twist on /robot_0/cmd_vel and /robot_1/cmd_vel (stageros.cpp:68, :373; SetSpeed at :273-280) and is achieved only when both odom streams (stageros.cpp:65; advertise queue length 10 and no latch argument at :371) stay at rest for three fresh samples. ROS 1 declares no history, and the bridge discards the first sample. The predicate is abs_max of twist.twist.linear.x, linear.y and angular.z and span_max of pose.pose.position.x and position.y (filled at stageros.cpp:539-545). All ten thresholds are Limit.operator_required. fixtures/estop-confirmation.json holds placeholders (0.05 and 0.02), not device facts. Client bounds consecutive 3, min_span_ms 200, max_gap_ms 500 and confirm_within_ms 1500 are a package choice for the fake. interval_sim 100 is at pioneer3dx-sick.world:321; willow-erratic.world:61 comments that this is milliseconds, so a slower-than-realtime run fails closed until the operator raises max_gap_ms. estop_latency_ms is 3500. Nothing is watched after the window. The zero Twist proves nothing. WorldCallback zeroes every position model, including unsensed pioneer2 (pioneer3dx-sick.world:296-319), only when base_watchdog_timeout is greater than 0 and that time has elapsed (stageros.cpp:443-448; default 0.2 s at :288-291; 0 disables the clamp), so the confirmation can succeed without the request having been applied. move_base advertises cmd_vel (move_base.cpp:91-92); the assigners call sendGoal (decent_robot_assigner.py:246) and do not publish cmd_vel. A competing publisher fails the confirmation closed. cb_reset_srv teleports and leaves the last speed (stageros.cpp:260-268), so safety_bindings.reset was dropped (SAFE-042). fidelity.reset is none. The MHS reset re-confirms read-only and does not resume a stored speed. reset_positions is not a command and not a re-enable. Risk is R2 on the device and both cmd_vel actions (REVIEW.md item 12: cmd_vel that a physical mobile base would consume). The card floor stays R0. This unit does not edit the registry card or task.json, so the card still says blocked until the integrator rebuilds it. publish_review is required and the licence is NOASSERTION (task.json); the owner decides publication. The served manifest mode is what grants the stop (server.py:9692); the SDK does not prove a live graph is simulated. A package call() is not the SDK ROS route (server.py:9692), so the earlier echo of linear_velocity and angular_velocity was removed. The SDK publish result is {published: true, confirmed: false} (ros.py:1344) and the result map cannot read the input. TCAP-003 sees the effect in the resource state: robot_0_twist and robot_1_twist are twist.twist of the first sample of a new odom subscription, and the fake stores the last accepted Twist there. That echo is not GetVelocity and not a Stage measurement. G1-G9 passed with no findings. The gate's withhold, frozen and null filters (behaviour.py:737-739) are the fail-closed cases of that G6 pass. Gate digest sha256:31ea4480f079ed3ff2e5c12d311a2d0828913addcbf11c21d1dcd225230c1d71 -> sha256:0d1ee551989c0fae173005fd77e14934b0873a7c41376c746c4e22566d7bc1db. Files: driver.py, fake.py, facts.md, test_driver.py, fixtures/estop-confirmation.json, reference.json, REFERENCE.md, check-report.json, RESULT.json.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-05; reviewed_by stays null): Different-model review by Codex (gpt-6.1-sol) of the work of Grok (grok-4.7), unit p5-sensed--larics__decentralized_multi_robot_exploration, round 1: Checked both zero-Twist requests, odometry producer citations, ROS 1 replay handling, latch timing, failure paths, reset behavior, R2 classification and provenance. All 21 package tests, 15 independent safety probes and package-only strict collection passed with zero warnings. No high or medium finding remains; acceptance is fake contract_checked only. The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it. For the human reviewer: reviewed_by remains null. No hardware or simulator run is claimed. The integrator must rebuild/sync the currently blocked registry card. Publication requires the owner's decision because the licence is NOASSERTION.\n\nORCHESTRATOR DECISION (claude-opus-5-5, a model and not a human, 2026-11-06, following the user's choice for the same failure in three other ROS 1 records; reviewed_by stays null): Blocked on SDK_BUG by the BL-17 fix that landed on 2026-11-06 (P5-SDK-STAMPLESS-ALL.md): every ROS 1 stamp sample is now discarded, so this package's ROS 1 sensed confirmation cannot confirm its stop; the gate fails G6 and G8 and the recorded digest is that gate's. Evidence state none; every earlier pass and contract_checked statement in this note is historical. Codex (gpt-6.1-sol) found this in its review of the orchestrator's composition."
+}

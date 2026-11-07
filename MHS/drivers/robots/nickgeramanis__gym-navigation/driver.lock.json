@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.nickgeramanis/gym-navigation",
+  "upstream": {
+    "repo_url": "https://github.com/nickgeramanis/gym-navigation",
+    "commit": "98be757c6aa2b2834cecbb7dde3c2c05e5f1b57b",
+    "license_spdx": "GPL-3.0"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "requirements.txt:1-3 pins gymnasium, numpy and pygame; setup.py declares no python_requires, so the lock keeps the SDK's Python floor. The gate and the fake backend need none of the three: fake.py is pure Python. Install the upstream only to serve the driver's sim backend (gymnasium.make), which was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeNavigationTrack"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-054",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

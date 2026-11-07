@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.navneet-nmk/hierarchical-meta-reinforcement-learning",
+  "upstream": {
+    "repo_url": "https://github.com/navneet-nmk/hierarchical-meta-reinforcement-learning",
+    "commit": "4ef92cebfa11760d9de55d54fc8e827271982a63",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any",
+    "notes": "requirements.txt asks for numpy>=1.14.0, torch>=0.4.0, gym[mujoco]>=0.10.5 and tensorboardX>=1.2. Neither gym nor gymnasium is installed where the gate runs and package code never imports the clone; the fake backend is pure Python and needs no upstream dependency. The MuJoCo system dependency belongs to this repository's MuJoCo environments, not to TabularMDPEnv."
+  },
+  "backends": {
+    "fake": ".fake:FakeTabularMDPEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-148",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

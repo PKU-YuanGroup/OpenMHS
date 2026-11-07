@@ -1,0 +1,92 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.robotcontrolstack/duobench",
+  "track": "robots",
+  "local_path": "robots/robotcontrolstack/duobench",
+  "driver_dir": "MHS/drivers/robots/robotcontrolstack__duobench",
+  "upstream": {
+    "repo_url": "https://github.com/robotcontrolstack/duobench",
+    "commit": "29e09f916d68539d454c93266c195d2abb8a8253",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 173,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "assets/robots/fr3/fr3_complete.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/robots/fr3/fr3.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/duobench/tasks/ball_maze.py:251 gym env duobench/ball_maze",
+      "src/duobench/tasks/bin_sort.py:276 gym env duobench/bin_sort",
+      "src/duobench/tasks/block_balance.py:265 gym env duobench/block_balance",
+      "src/duobench/tasks/carry_pot.py:264 gym env duobench/carry_pot"
+    ],
+    "upstream_tests": "src/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env duobench/ball_maze registered at src/duobench/tasks/ball_maze.py:251",
+      "gym env duobench/bin_sort registered at src/duobench/tasks/bin_sort.py:276",
+      "gym env duobench/block_balance registered at src/duobench/tasks/block_balance.py:265",
+      "gym env duobench/carry_pot registered at src/duobench/tasks/carry_pot.py:264",
+      "gym env duobench/example registered at src/duobench/tasks/example.py:43",
+      "gym env duobench/hinge_chest registered at src/duobench/tasks/hinge_chest.py:225",
+      "gym env duobench/join_blocks registered at src/duobench/tasks/join_blocks.py:189",
+      "gym env duobench/pour_marbles registered at src/duobench/tasks/pour_marbles.py:438",
+      "gym env duobench/spring_door registered at src/duobench/tasks/spring_door.py:167",
+      "gym env duobench/transfer_cube registered at src/duobench/tasks/transfer_cube.py:246",
+      "gym env duobench/transfer_gate registered at src/duobench/tasks/transfer_gate.py:247",
+      "gym env duobench/transfer_reorient registered at src/duobench/tasks/transfer_reorient.py:221"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/robotcontrolstack__duobench --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

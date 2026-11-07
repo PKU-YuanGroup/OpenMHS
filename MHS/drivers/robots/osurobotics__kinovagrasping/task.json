@@ -1,0 +1,104 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.osurobotics/kinovagrasping",
+  "track": "robots",
+  "local_path": "robots/osurobotics/kinovagrasping",
+  "driver_dir": "MHS/drivers/robots/osurobotics__kinovagrasping",
+  "upstream": {
+    "repo_url": "https://github.com/osurobotics/kinovagrasping",
+    "commit": "f22af60d3683fdc4ffecf49ccff179fbc6750748",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 367,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_kinova_gripper.envs:KinovaGripper_Env",
+      "file": "gym-kinova-gripper/gym_kinova_gripper/__init__.py",
+      "line": 3,
+      "confidence": "recon"
+    }
+  ],
+  "models": [
+    {
+      "file": "UR5+gripper/UR5gripper.xml",
+      "line": 14,
+      "kind": "robot"
+    },
+    {
+      "file": "jaco/jaco.xml",
+      "line": 19,
+      "kind": "robot"
+    },
+    {
+      "file": "gym-kinova-gripper/gym_kinova_gripper/envs/kinova_description/DisplayStuff.xml",
+      "line": 8,
+      "kind": "robot"
+    },
+    {
+      "file": "gym-kinova-gripper/gym_kinova_gripper/envs/kinova_description/j2s7s300.xml",
+      "line": 8,
+      "kind": "robot"
+    },
+    {
+      "file": "gym-kinova-gripper/gym_kinova_gripper/envs/kinova_description/j2s7s300_end_effector_v1_Cone1B.xml",
+      "line": 8,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym-kinova-gripper/gym_kinova_gripper/__init__.py:3 gym env kinovagripper-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env kinovagripper-v0 registered at gym-kinova-gripper/gym_kinova_gripper/__init__.py:3"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/osurobotics__kinovagrasping --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

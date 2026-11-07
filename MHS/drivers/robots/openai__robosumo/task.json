@@ -1,0 +1,89 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.openai/robosumo",
+  "track": "robots",
+  "local_path": "robots/openai/robosumo",
+  "driver_dir": "MHS/drivers/robots/openai__robosumo",
+  "upstream": {
+    "repo_url": "https://github.com/openai/robosumo",
+    "commit": "3a317e27d2342dd47a869950e93315b23a74921a",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 423,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robosumo.envs:SumoEnv",
+      "file": "robosumo/envs/sumo.py",
+      "line": 28,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robosumo/__init__.py:8 gym env RoboSumo-Ant-vs-Ant-v0",
+      "robosumo/__init__.py:19 gym env RoboSumo-Ant-vs-Bug-v0",
+      "robosumo/__init__.py:30 gym env RoboSumo-Ant-vs-Spider-v0",
+      "robosumo/__init__.py:41 gym env RoboSumo-Bug-vs-Ant-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env RoboSumo-Ant-vs-Ant-v0 registered at robosumo/__init__.py:8",
+      "gym env RoboSumo-Ant-vs-Bug-v0 registered at robosumo/__init__.py:19",
+      "gym env RoboSumo-Ant-vs-Spider-v0 registered at robosumo/__init__.py:30",
+      "gym env RoboSumo-Bug-vs-Ant-v0 registered at robosumo/__init__.py:41",
+      "gym env RoboSumo-Bug-vs-Bug-v0 registered at robosumo/__init__.py:52",
+      "gym env RoboSumo-Bug-vs-Spider-v0 registered at robosumo/__init__.py:63",
+      "gym env RoboSumo-Spider-vs-Ant-v0 registered at robosumo/__init__.py:74",
+      "gym env RoboSumo-Spider-vs-Bug-v0 registered at robosumo/__init__.py:85",
+      "gym env RoboSumo-Spider-vs-Spider-v0 registered at robosumo/__init__.py:96"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/openai__robosumo --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

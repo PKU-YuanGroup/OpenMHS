@@ -1,0 +1,118 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jkoba0512/genesis_humanoid_rl",
+  "track": "robots",
+  "local_path": "robots/jkoba0512/genesis_humanoid_rl",
+  "driver_dir": "MHS/drivers/robots/jkoba0512__genesis_humanoid_rl",
+  "upstream": {
+    "repo_url": "https://github.com/jkoba0512/genesis_humanoid_rl",
+    "commit": "32e5bd1a1e516bf4caedcb31f1a8ee366f2efebc",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 77,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "genesis_humanoid_rl.environments.humanoid_env:HumanoidWalkingEnv",
+      "file": "src/genesis_humanoid_rl/environments/humanoid_env.py",
+      "line": 24,
+      "confidence": "override"
+    },
+    {
+      "symbol": "genesis_humanoid_rl.environments.sb3_wrapper:SB3HumanoidEnv",
+      "file": "src/genesis_humanoid_rl/environments/sb3_wrapper.py",
+      "line": 14,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "assets/robots/g1/g1_23dof.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "assets/robots/g1/g1_23dof_rev_1_0.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "assets/robots/g1/g1_29dof.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "assets/robots/g1/g1_29dof_lock_waist.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "assets/robots/g1/g1_29dof_lock_waist_rev_1_0.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.10,<3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "assets/robots/g1/g1_23dof.xml:1 MJCF robot model",
+      "assets/robots/g1/g1_23dof_rev_1_0.xml:1 MJCF robot model",
+      "assets/robots/g1/g1_29dof.xml:1 MJCF robot model",
+      "assets/robots/g1/g1_29dof_lock_waist.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model assets/robots/g1/g1_23dof.xml:1",
+      "MJCF robot model assets/robots/g1/g1_23dof_rev_1_0.xml:1",
+      "MJCF robot model assets/robots/g1/g1_29dof.xml:1",
+      "MJCF robot model assets/robots/g1/g1_29dof_lock_waist.xml:1",
+      "MJCF robot model assets/robots/g1/g1_29dof_lock_waist_rev_1_0.xml:1",
+      "MJCF robot model assets/robots/g1/g1_29dof_lock_waist_with_hand_rev_1_0.xml:1",
+      "MJCF robot model assets/robots/g1/g1_29dof_rev_1_0.xml:1",
+      "MJCF robot model assets/robots/g1/g1_29dof_with_hand.xml:1",
+      "MJCF robot model assets/robots/g1/g1_29dof_with_hand_rev_1_0.xml:1",
+      "MJCF robot model assets/robots/g1/g1_dual_arm.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jkoba0512__genesis_humanoid_rl --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

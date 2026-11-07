@@ -1,0 +1,75 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.metadriverse/metadrive",
+  "track": "robots",
+  "local_path": "robots/metadriverse/metadrive",
+  "driver_dir": "MHS/drivers/robots/metadriverse__metadrive",
+  "upstream": {
+    "repo_url": "https://github.com/metadriverse/metadrive",
+    "commit": "325d9e2f9c20e495bde66f30e0ef2b40efbce39c",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 260,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "metadrive.envs.metadrive_env:MetaDriveEnv",
+      "file": "metadrive/envs/metadrive_env.py",
+      "line": 97,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "metadrive/envs/metadrive_env.py:97 MetaDriveEnv environment class",
+      "metadrive/envs/multigoal_intersection.py:498 MultiGoalIntersectionEnv environment class",
+      "metadrive/envs/scenario_env.py:414 ScenarioOnlineEnv environment class",
+      "metadrive/envs/scenario_env.py:442 ScenarioWaypointEnv environment class"
+    ],
+    "upstream_tests": "metadrive/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/metadriverse__metadrive --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

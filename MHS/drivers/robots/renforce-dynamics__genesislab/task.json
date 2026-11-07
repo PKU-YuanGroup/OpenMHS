@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.renforce-dynamics/genesislab",
+  "track": "robots",
+  "local_path": "robots/renforce-dynamics/genesislab",
+  "driver_dir": "MHS/drivers/robots/renforce-dynamics__genesislab",
+  "upstream": {
+    "repo_url": "https://github.com/renforce-dynamics/genesislab",
+    "commit": "0f2e4d96df9b24bcce66f8bdf7a1884a1363a5bb",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 57,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "genesislab.envs:ManagerBasedRlEnv",
+      "file": "source/genesislab/genesislab/envs/manager_based_rl_env.py",
+      "line": 28,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/genesis_tasks/genesis_tasks/locomotion/hvelocity/g1/__init__.py:4 gym env Genesis-HVelocity-G1-v0",
+      "source/genesis_tasks/genesis_tasks/imitation/tracking/robots/g1/__init__.py:22 gym env Genesis-Tracking-Flat-G1-v0",
+      "source/genesis_tasks/genesis_tasks/imitation/tracking/robots/g1/__init__.py:36 gym env Genesis-Tracking-Flat-G1-Wo-State-Estimation-v0",
+      "source/genesis_tasks/genesis_tasks/imitation/tracking/robots/g1/__init__.py:50 gym env Genesis-Tracking-Flat-G1-Low-Freq-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Genesis-HVelocity-G1-v0 registered at source/genesis_tasks/genesis_tasks/locomotion/hvelocity/g1/__init__.py:4",
+      "gym env Genesis-Tracking-Flat-G1-v0 registered at source/genesis_tasks/genesis_tasks/imitation/tracking/robots/g1/__init__.py:22",
+      "gym env Genesis-Tracking-Flat-G1-Wo-State-Estimation-v0 registered at source/genesis_tasks/genesis_tasks/imitation/tracking/robots/g1/__init__.py:36",
+      "gym env Genesis-Tracking-Flat-G1-Low-Freq-v0 registered at source/genesis_tasks/genesis_tasks/imitation/tracking/robots/g1/__init__.py:50",
+      "gym env Genesis-Velocity-Flat-Unitree-B2-v0 registered at source/genesis_tasks/genesis_tasks/locomotion/velocity/robots/b2/__init__.py:20",
+      "gym env Genesis-Velocity-Flat-Unitree-B2-Play-v0 registered at source/genesis_tasks/genesis_tasks/locomotion/velocity/robots/b2/__init__.py:30",
+      "gym env Genesis-Velocity-Rough-Unitree-B2-v0 registered at source/genesis_tasks/genesis_tasks/locomotion/velocity/robots/b2/__init__.py:40",
+      "gym env Genesis-Velocity-Rough-Unitree-B2-Play-v0 registered at source/genesis_tasks/genesis_tasks/locomotion/velocity/robots/b2/__init__.py:50",
+      "gym env Genesis-Velocity-Flat-Go2-v0 registered at source/genesis_tasks/genesis_tasks/locomotion/velocity/robots/go2/__init__.py:20",
+      "gym env Genesis-Velocity-Flat-Go2-Play-v0 registered at source/genesis_tasks/genesis_tasks/locomotion/velocity/robots/go2/__init__.py:30",
+      "gym env Genesis-Velocity-Rough-Go2-v0 registered at source/genesis_tasks/genesis_tasks/locomotion/velocity/robots/go2/__init__.py:40",
+      "gym env Genesis-Velocity-Rough-Go2-Play-v0 registered at source/genesis_tasks/genesis_tasks/locomotion/velocity/robots/go2/__init__.py:50"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/renforce-dynamics__genesislab --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

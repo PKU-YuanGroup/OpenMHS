@@ -1,0 +1,61 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:b8f3a3142e88e62e0073fbee3c4601bfc55190737dfe48d0c4e39ac48251824a",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.disaster-robotics-proalertas.move_usv_goal.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class fits one nav_msgs/Odometry goal publication. cap.motion.mobile_base.v1 takes linear_velocity, angular_velocity and duration_s and requires measured distance/heading/stopped output; the heading controller consumes only pose.pose.position x/y and publishes no acknowledgement. cap.motion.cartesian_pose.v1 is an arm pose in millimetres and also expects an execution result.",
+      "similar": [
+        "cap.motion.mobile_base.v1",
+        "cap.motion.cartesian_pose.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.disaster-robotics-proalertas.simulator_state.v1",
+      "verb": "read",
+      "reason": "No catalogue read class binds a simulated world's nav_msgs/Odometry pose. cap.sensing.read.v1 binds sensor, sensor.imu and sensor.force_torque resources, not world.sim, and this observation is an explicit topic subscription with an inline output schema.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.disaster-robotics-proalertas.goal_result.v1",
+      "verb": "read",
+      "reason": "The controller's std_msgs/Float64 move_usv/result value is a target-distance comparison, not a catalogue measurement or stopped-state signal. No catalogue class binds it to world.sim.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.disaster-robotics-proalertas.thruster_command.v1",
+      "verb": "read",
+      "reason": "The heading controller publishes diagnostic sensor_msgs/JointState thruster entries. No catalogue read class binds a controller output on world.sim; the entry is observed, not commanded.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.disaster-robotics-proalertas.pause_physics.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds the Gazebo std_srvs/Empty pause_physics service. cap.motion.stop.v1 is robot motion with a deceleration and a measured stopped result; this service simply pauses simulated world stepping and returns no state.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.disaster-robotics-proalertas.unpause_physics.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds the Gazebo std_srvs/Empty unpause_physics service. cap.motion.mobile_base.v1 is a bounded velocity command, not a physics-resume request; this service returns no motion acknowledgement.",
+      "similar": [
+        "cap.motion.mobile_base.v1"
+      ]
+    }
+  ],
+  "notes": "SCOPE: the selected simulated device is the differential-boat heading controller (usv_base_ctrl/scripts/diff_control_heading.py) in the diffboat namespace, its goal/state/result/thruster topics, and the Gazebo pause/unpause/reset services used by usv_navigation/scripts/patrol_pid_scene1.py. The goal is a publication, so the receipt is transmission-only; no motion, arrival or stopped state is claimed. The state, result and thruster topics are explicit observations, not an automatic resource snapshot.\n\nSTOP AND SAFETY: the acknowledged stop is the /gazebo/pause_physics std_srvs/Empty service, exposed as the native e-stop binding and as an input-free safe_state=True action. /gazebo/reset_simulation is the safety reset; /gazebo/unpause_physics is an ordinary command refused while latched. The source calls pause, reset and unpause separately, so reset does not resume physics. The Gazebo service implementations are in gazebo_ros, outside the pinned parent tree; the clone proves the client endpoints and their separate use, not the callback body. Pausing physics is a simulator stop, not a physical emergency stop; the heading controller is not terminated and retains its target, so unpause can resume motion. No physical e-stop exists or is claimed, and risk R2 reflects the simulated mobile-base motion. reviewed_by stays null; no human review, live ROS run or hardware run is claimed.\n\nLIMITS: goal x_m and y_m are Limit.operator_required because the valid goal area is defined by the loaded scenario and world, not by the controller. site-limits.example.json admits only the shipped diffboat_scenario1 start point (x=240, y=95) as an example; it must be replaced with the deployment's goal area. The example's single admitted point is also what keeps the unacknowledged goal publication's conformance probe on one valid input; a wider overlay does not create a native goal or arrival acknowledgement.\n\nFAKE AND FIDELITY: the fake is an analytic ROS-free F0 recording stand-in, not captured traffic. It runs no Gazebo/UWSim physics, waves, wind, water current, buoyancy, thruster or boat dynamics; its state, result and thruster values and its pause/unpause/reset state are placeholders. The real state topic may stop producing fresh samples while physics is paused. The freefloating_gazebo_resources files are a git submodule and are not part of the pinned parent tree, so no fact or endpoint citation uses them. The laser scan, camera, TF, water-current and wind-current surfaces are out of scope. The goal frame and the metre units are supported by the tracked patrol-script fact and the control documentation; the freefloating_gazebo submodule is not cited. This package was authored from the Flatland exemplar structure only; its driver, fake, facts and tests were rewritten for this repository.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked the goal, state, result and thruster topics against diff_control_heading.py and the diffboat launch namespace, the Gazebo pause, unpause and reset services against the patrol script's proxies (the servers are in gazebo_ros, outside the clone, as the package says), the operator_required goal bounds, all 13 facts, the empty resource snapshot (topics can go silent while paused) and the stop: the acknowledged std_srvs/Empty pause is a real simulator stop whose safe_state discloses that the heading controller keeps its retained goal. Two facts said more than their lines: the reset fact concluded that reset_simulation does not resume physics, which the clone does not show, and the thruster fact attributed the positions to the heading error although the lines show rudder_ctrl() + 100 and -rudder_ctrl() + 100. Reviewer changed driver.py (both facts reworded to what the lines show, one fidelity gap states that clearing the latch calls /gazebo/reset_simulation and so restarts the simulated world) and facts.md, and regenerated reference.json, REFERENCE.md and check-report.json; the gate and collect.py --strict pass with the digest unchanged. Risk R2 is above what a simulator needs but is allowed and was kept. For the human reviewer: The e-stop pauses Gazebo physics; the heading controller keeps running and keeps its goal, so unpausing drives the boat toward the old goal. mhs.safety.reset is bound to /gazebo/reset_simulation, so clearing the latch also resets the simulated world.",
+  "blocked_on": []
+}

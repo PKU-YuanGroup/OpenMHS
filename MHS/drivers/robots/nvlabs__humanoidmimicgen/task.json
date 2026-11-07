@@ -1,0 +1,117 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nvlabs/humanoidmimicgen",
+  "track": "robots",
+  "local_path": "robots/nvlabs/humanoidmimicgen",
+  "driver_dir": "MHS/drivers/robots/nvlabs__humanoidmimicgen",
+  "upstream": {
+    "repo_url": "https://github.com/nvlabs/humanoidmimicgen",
+    "commit": "d82844dcec242c82d6b82628ccc45933c3ad5cbd",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 103,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "humanoidmimicgen.locomanipulation.envs.base:GroundOnly",
+      "file": "humanoidmimicgen/locomanipulation/envs/base.py",
+      "line": 420,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "humanoidmimicgen.locomanipulation.envs.locomanip:LMSimpleEnv",
+      "file": "humanoidmimicgen/locomanipulation/envs/locomanip.py",
+      "line": 92,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "humanoidmimicgen.locomanipulation.envs.locomanip_basic:LMBoxTableToShelf",
+      "file": "humanoidmimicgen/locomanipulation/envs/locomanip_basic.py",
+      "line": 52,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "humanoidmimicgen.locomanipulation.envs.locomanip_pnp:LMBoxLift",
+      "file": "humanoidmimicgen/locomanipulation/envs/locomanip_pnp.py",
+      "line": 66,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "humanoidmimicgen.locomanipulation.envs.locomanip_pnp:LMBoxLiftFloor",
+      "file": "humanoidmimicgen/locomanipulation/envs/locomanip_pnp.py",
+      "line": 129,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "humanoidmimicgen/locomanipulation/models/assets/robots/unitree_g1/g1_29dof_rev_1_0.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "humanoidmimicgen/locomanipulation/models/assets/robots/unitree_g1/g1_threefinger_left_hand.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "humanoidmimicgen/locomanipulation/models/assets/robots/unitree_g1/g1_threefinger_right_hand.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "humanoidmimicgen/locomanipulation/models/assets/robots/unitree_g1/g1_29dof_rev_1_0.xml:1 MJCF robot model",
+      "humanoidmimicgen/locomanipulation/models/assets/robots/unitree_g1/g1_threefinger_left_hand.xml:1 MJCF robot model",
+      "humanoidmimicgen/locomanipulation/models/assets/robots/unitree_g1/g1_threefinger_right_hand.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model humanoidmimicgen/locomanipulation/models/assets/robots/unitree_g1/g1_29dof_rev_1_0.xml:1",
+      "MJCF robot model humanoidmimicgen/locomanipulation/models/assets/robots/unitree_g1/g1_threefinger_left_hand.xml:1",
+      "MJCF robot model humanoidmimicgen/locomanipulation/models/assets/robots/unitree_g1/g1_threefinger_right_hand.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nvlabs__humanoidmimicgen --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

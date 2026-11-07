@@ -1,0 +1,67 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:d550997ea4bc756962572a0cbe8ecee1e79560b6528d7a63fa3e3360686915ea",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.novog93.takeoff.v1",
+      "reason": "No catalogue class binds a takeoff publication for a simulated aerial vehicle. cap.motion.mobile_base.v1 is a bounded planar linear/angular velocity command with a duration and distance/heading outputs, while /simple_drone/takeoff is an unacknowledged std_msgs/Empty publication whose callback only changes the state machine.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.novog93.land.v1",
+      "reason": "No catalogue class binds a landing publication. cap.motion.stop.v1 requires a deceleration and reports a stopped position, while /simple_drone/land is an unacknowledged std_msgs/Empty publication whose callback only sets LANDING_MODEL.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.novog93.reset.v1",
+      "reason": "No catalogue class binds the plugin's unacknowledged controller-reset publication. cap.world.reset.v1 requires a scenario/seed and returns observation and seed, none of which the /simple_drone/reset std_msgs/Empty callback provides.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.novog93.cmd_vel.v1",
+      "reason": "No catalogue class binds the overloaded geometry_msgs/Twist command of this Gazebo plugin. cap.motion.mobile_base.v1 is a planar bounded velocity command, while these fields are position targets in position-control mode and velocity/tilt/rate otherwise; the clone states no numeric input range, so all six components are operator-required.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.novog93.posctrl.v1",
+      "reason": "No catalogue class binds a boolean control-mode selection publication. The /simple_drone/posctrl std_msgs/Bool callback only stores m_posCtrl; no class exposes a mode flag with a ROS publication acknowledgement.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.novog93.vel_mode.v1",
+      "reason": "No catalogue class binds a boolean velocity-versus-tilt mode publication. The /simple_drone/dronevel_mode std_msgs/Bool callback stores m_velMode and publishes the resulting cmd_mode String; it is not a motion command class.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.novog93.state.v1",
+      "reason": "No catalogue class observes the plugin's std_msgs/Int8 navi_state topic. cap.sensing classes describe physical sensor quantities, while this is the simulator's control-state enum.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.novog93.pose.v1",
+      "reason": "No catalogue class observes a geometry_msgs/Pose ground-truth topic. cap.motion.cartesian_pose.v1 is a robot.arm command in millimetres with an inverse-kinematics reached output, not a simulator pose observation.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.novog93.mode.v1",
+      "reason": "No catalogue class observes the plugin's std_msgs/String cmd_mode topic. It is a simulator control-mode label published only by the dronevel_mode callback, not a motion command or physical sensor reading.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.novog93.reset_world.v1",
+      "reason": "No catalogue class binds the Gazebo /reset_world std_srvs/srv/Empty service that the clone's reset_sim.sh calls. cap.world.reset.v1 requires a scenario/seed and returns observation and seed, none of which this empty service provides, so using it would invent a seed and an observation.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.novog93.last_cmd_vel.v1",
+      "verb": "read",
+      "reason": "No catalogue class observes the next geometry_msgs/Twist a client publishes on a command topic; the former device-resource read of /simple_drone/cmd_vel waited for client publications, so it became an explicit extension read with an inline output schema."
+    }
+  ],
+  "notes": "PASS on the fake backend. Last gate run: `python3 -m mhs.driver check MHS/drivers/robots/novog93__sjtu_drone --backend fake` exited 0 with G1-G9 pass and digest sha256:d550997ea4bc756962572a0cbe8ecee1e79560b6528d7a63fa3e3360686915ea. No G4.REF_VALUE, G4.REF_BINARY or G1.BYTECODE warning was emitted in that run.\n\nSCOPE: a configuration-only RosDriver over the pinned ROS 2 topic contract of the sjtu_drone Gazebo model plugin under its shipped /simple_drone namespace. It covers the takeoff, land, reset, cmd_vel, posctrl and dronevel_mode publications; the state (Int8), gt_pose (Pose) and cmd_mode (String) observations; a last_cmd_vel resource observation of the cmd_vel topic; and the /reset_world std_srvs/srv/Empty service that the clone's reset_sim.sh calls. Every binding cites the exact topic/type literal in the pinned clone. The upstream Python DroneObject/DroneController hints are in-process ROS 2 helpers that publish these same topics; they are not services or actions, so the driver exposes the runtime topic contract rather than importing or running the helpers. No entry symbol is claimed.\n\nSTOP: the clone has no flight-control service or action. The only acknowledged stop-like path is the external Gazebo /reset_world service referenced by reset_sim.sh:3; it is declared as the estop binding and as an input-free safe-state action. A successful empty service response is an acknowledged world reset, not measured drone quiescence and not a physical emergency stop. The service implementation is in gazebo_ros, outside the clone. The plugin's ordinary /simple_drone/reset is an unacknowledged publication and is not the MHS safety reset.\n\nRISK: simulated R1, device_kind world.sim, matching the task floor. The deployment is a Gazebo simulation with no physical equipment; no hardware robot.mobile_base is bound. The driver claims no physical stop and no hardware safety.\n\nLIMITS: the clone states no numeric cmd_vel input envelope; the PID limits and maxForce in the YAML/SDF are controller parameters. The cmd_vel Twist is also overloaded between position targets and velocity/tilt/rate. All six components are Limit.operator_required, so a deployment refuses them until an operator supplies site-limits.json. site-limits.example.json is illustrative example data only, not a device fact.\n\nNOT COVERED: the front and bottom sensor_msgs/Image streams, the IMU, sonar, GPS and odometry topics, the upstream Gazebo physics and PID controllers, the Python control nodes, external ROS clients, and any live ROS graph or hardware run. The fake is a ROS-free scripted contract stand-in [...]\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked every topic, type and the /simple_drone namespace (SDF line 194 and drone.yaml:2) against the plugin sources, all 33 facts, the six operator_required cmd_vel components and the declared stop. The e-stop and safe-state action was the gazebo_ros /reset_world service named only by reset_sim.sh:3, but the plugin's only reset path, Reset() (plugin_drone_private.cpp:36-56, reached from the model plugin hook at plugin_drone.cpp:156-159 and the reset topic), clears six PID controllers and the current force and torque and never assigns navi_state or the stored cmd_vel, while UpdateDynamics keeps adding thrust computed from that command while flying (488-585): after a world reset a flying drone keeps flying, yet the SDK reported the e-stop completed with safe_state_achieved true. A probe with every subscription silent also showed each command waiting 2 s for the last_cmd_vel resource sample (cmd_vel carries only what clients publish) and mhs.resource.read failing NOT_READY, which the fake hides. The reviewer removed the e-stop binding and safe_state=True, rewrote safe_state, the docstring, both reset descriptions and the stop and fake gaps (including that resource read), added four source facts and corrected seven (the QoS on line 68, the Odometry include on 36, ResetCallback, CmdCallback, the gt_pose read on 434, gt_vel and gt_acc as RotateVector results, the helper's private ~/ topics) in driver.py; made both fake reset paths keep the state label and stored command as the plugin does (fake.py); changed the reset and e-stop cases to that semantics and to SAFE_STATE_UNREACHED with the latch held (test_driver.py); updated facts.md; and regenerated reference.json, REFERENCE.md and check-report.json. The gate now fails G6.ESTOP_FAILED and G8 SAFE-028 (one blocker, as in the author-blocked uav_simulator), the nine package cases pass, and collect.py reports RESULT_UNTRUSTED until the orchestrator writes status blocked. For the human reviewer: Simulation only (Gazebo 11, ROS 2). The plugin offers no acknowledged stop: land is an unacknowledged topic, LANDED_MODEL follows 1.0 s of simulated time after it from a timer, not from ground contact, and in LANDED_MODEL the plugin applies no force, so a drone still in the air falls; /reset_world resets the world but leaves the flight state and the last command in place. The fake answers cmd_mode at once, while the plugin publishes it only on a dronevel_mode change. The shipped sjtu_drone_bringup.launch.py also starts joy_node and a teleop node in the drone namespace that publish cmd_vel, takeoff and land (lines 27-48, 113-124), so an MHS deployment should start only sjtu_drone_gazebo.launch.py. Unblocking needs an acknowledged simulator stop that the clone names (for example a Gazebo pause service) or an upstream stop service.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Repaired from blocked (HELPER_MISSING) to pass under the user's decision of 2026-11-05 (a stop may cite a locally cloned companion repository at a pinned commit) and the user's authorisation of 2026-11-05 (shallow clones under work/companions, LOCK.json), with the new SDK stall read-back (E1). The card declares the lock companion ros-simulation__gazebo_ros_pkgs@3.9.0 (ae6e5793) and the corpus gazebo-classic at b22c6e15 (Gazebo 11.15.1), profile ros2-humble-gazebo11, fixed to Humble (README.md:3 Humble badge, README.md:11 Gazebo 11, run_docker.sh:12; gazebo_msgs-extras.cmake:4-5 humble). The e-stop is /pause_physics (gazebo_ros_init.cpp:266-271, 328-333), confirmed only when two /get_model_list answers 250 ms apart carry the same header.stamp (gazebo_ros_factory.cpp:139-143, 168; World.cc:835-854); estop_latency_ms 1500. /reset_world stays an ordinary command. Risk R2 instead of the author's R1 (REVIEW.md item 12: cmd_vel, takeoff, land and reset command the vehicle; the server applies the device risk to every capability). No unpause is offered (SAFE-042 condition): in position control the cmd_vel linear fields are position targets (plugin_drone_private.cpp:492-520), a take-off in progress continues (573-585), and CmdCallback adds drift noise (227-254), so the stored motion cannot be cleared; the operator lands or re-commands the drone and unpauses outside MHS. The cmd_vel resource read became the explicit read x-cap.novog93.last_cmd_vel.v1 and the cmd_vel receipt reports the six values it sent. Files: driver.py, fake.py, test_driver.py, facts.md, driver.lock.json, reference.json, REFERENCE.md, RESULT.json; task.json synced. All nine gates pass (G6 also breaks the stall on purpose, STALL_FAIL_OPEN); evidence contract_checked on the fake only; the claude-sonnet-5-5 review is still to come.\n\nMODEL REVIEW (claude-sonnet-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Different-model review of the p3-companion-2 repair by claude-opus-5-5 (the user chose Claude Sonnet as the different model, 2026-11-04): E1 stall stop on Humble, with the risk raised from R1 to R2 under REVIEW item 12 and no digest change. No unpause is offered because the plugin stores cmd_vel, a take-off in progress continues, and a zero Twist is a flight to the origin in position mode. Cited plugin lines verified. Fake contract_checked only; model review, not human.",
+  "blocked_on": []
+}

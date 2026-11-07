@@ -1,0 +1,86 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.catachiii/crl-humanoid-ros",
+  "track": "robots",
+  "local_path": "robots/catachiii/crl-humanoid-ros",
+  "driver_dir": "MHS/drivers/robots/catachiii__crl-humanoid-ros",
+  "upstream": {
+    "repo_url": "https://github.com/catachiii/crl-humanoid-ros",
+    "commit": "31202ed7c73ab6b6735d0416274ee9d256ecdf02",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 157,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "crl_humanoid_commons/data/robots/g1_description/scene_crl.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "crl_humanoid_commons/data/robots/wf_tron1a_description/xml/scene_crl.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "crl_humanoid_commons/data/robots/g1_description/g1_29dof_crl.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "crl_humanoid_commons/data/robots/g1_description/scene_crl.xml:1 MJCF scene model",
+      "crl_humanoid_commons/data/robots/wf_tron1a_description/xml/scene_crl.xml:1 MJCF scene model",
+      "crl_humanoid_commons/data/robots/g1_description/g1_29dof_crl.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "crl_g1_goalcontroller_py/crl_g1_goalcontroller_python/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model crl_humanoid_commons/data/robots/g1_description/scene_crl.xml:1",
+      "MJCF scene model crl_humanoid_commons/data/robots/wf_tron1a_description/xml/scene_crl.xml:1",
+      "MJCF robot model crl_humanoid_commons/data/robots/g1_description/g1_29dof_crl.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/catachiii__crl-humanoid-ros --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,17 @@
+{
+  "status": "blocked",
+  "blocked_on": [
+    "SDK_BUG"
+  ],
+  "notes": "The upstream clone is modified before any driver code was written, so the gate cannot pass G1. The last gate run (backend fake) reported: G1.CLONE_MODIFIED: the upstream clone has modified tracked files: ['workspace/vendor/unitree_mujoco'] (the clone is read-only: never write in it, not even to restore it; an operator restores it from the pinned commit). Minimal repro: git -C robots/adyansh04/grove-g1 status --porcelain --untracked-files=no prints ' M workspace/vendor/unitree_mujoco'; inside that submodule, git status --porcelain --untracked-files=no prints ' M unitree_robots/go2w/assets/terrain.STL'. The changed paths are workspace/vendor/unitree_mujoco and workspace/vendor/unitree_mujoco/unitree_robots/go2w/assets/terrain.STL. The submodule HEAD is 8467dea26a09fff3fbff08402c9c9ca9005dab74, while the working-tree STL differs from the pinned blob (git diff --stat reports one binary file changed, 38084 -> 38084 bytes). This authoring run did not write to the clone and did not restore it, per the read-only rule. An operator must restore the clone to the pinned commit before the package can be authored and checked. No driver implementation was attempted after this blocker. Package directory contents at the last run: task.json, check-report.json and this RESULT.json.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Confirmed the author's block: the reviewer's gate run fails G1.CLONE_MODIFIED (besides the missing-file findings of an unauthored package) because the clone's submodule workspace/vendor/unitree_mujoco has a modified tracked file, unitree_robots/go2w/assets/terrain.STL, whose modification time (2026-10-13) predates wave C; the reviewer ran no git and did not touch the clone. PROMPT.md hard rule 1 prescribes SDK_BUG for a modified clone, but this is a clone-integrity problem, not an SDK defect: the same relative path is the known unitree_mujoco file of CODEX-HANDOFF rule 11, here in grove-g1's vendored fork (the two files differ), and only an operator restore from the pinned commit unblocks the card. No driver was written, so nothing else could be reviewed; the reviewer changed no authored file, and the gate re-run rewrote check-report.json with the same findings. For the human reviewer: Grove-G1 is a ROS 2 Jazzy autonomy stack for the Unitree G1 humanoid (Nav2, MoveIt, approach, pick, place and posture action servers, a learned locomotion controller that owns the legs over rt/lowcmd). README.md:8-11 says the same hardware interface, navigation and control code run unchanged on the real G1 after a change of DDS domain and network interface, and README.md:84-85 says commanding rt/lowcmd means owning balance with no onboard controller underneath. A future package bound to these endpoints is only as simulated as the operator's DDS domain: rate it by the real humanoid's hazards (R2; MHS/spec/04-safety.md:71-76) unless the deployment is isolated, and find a source-backed stop (g1_controllers has freeze and safety controllers) before any actuation is accepted.",
+  "gate": {
+    "digest": "sha256:98f7c387802aa1fab4234d390301f0e35ae1e6997a697f3055fabf1ca5813afd",
+    "failed": [
+      "G1",
+      "G2",
+      "G3",
+      "G9"
+    ],
+    "report": "check-report.json"
+  }
+}

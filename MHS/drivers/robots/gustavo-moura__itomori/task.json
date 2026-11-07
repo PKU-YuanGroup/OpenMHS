@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.gustavo-moura/itomori",
+  "track": "robots",
+  "local_path": "robots/gustavo-moura/itomori",
+  "driver_dir": "MHS/drivers/robots/gustavo-moura__itomori",
+  "upstream": {
+    "repo_url": "https://github.com/gustavo-moura/itomori",
+    "commit": "0c2da173bf989736f919772d3c6cbc2fea098b72",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 148,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "itomori.envs:Navigation2DEnv",
+      "file": "itomori/envs/navigation2d.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "itomori.envs:DiscreteNavigation2DEnv",
+      "file": "itomori/envs/navigation2d.py",
+      "line": 711,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "itomori/__init__.py:3 gym env itomori/Navigation2DEnv-v0",
+      "itomori/__init__.py:9 gym env itomori/DiscreteNavigation2DEnv-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env itomori/Navigation2DEnv-v0 registered at itomori/__init__.py:3",
+      "gym env itomori/DiscreteNavigation2DEnv-v0 registered at itomori/__init__.py:9"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/gustavo-moura__itomori --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

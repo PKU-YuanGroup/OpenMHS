@@ -1,0 +1,135 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.princeton-robot-planning-and-learning/kindergarden",
+  "track": "robots",
+  "local_path": "robots/princeton-robot-planning-and-learning/kindergarden",
+  "driver_dir": "MHS/drivers/robots/princeton-robot-planning-and-learning__kindergarden",
+  "upstream": {
+    "repo_url": "https://github.com/princeton-robot-planning-and-learning/kindergarden",
+    "commit": "5b2dbac482142b879b48449b3fa2af63f641aed3",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 54,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "kinder.envs.kinematic2d.obstruction2d:ObjectCentricObstruction2DEnv",
+      "file": "src/kinder/envs/kinematic2d/obstruction2d.py",
+      "line": 146,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "kinder.envs.dynamic3d.task_families:ConstrainedCupboard3DEnv",
+      "file": "src/kinder/envs/dynamic3d/task_families.py",
+      "line": 118,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "kinder.envs.dynamic3d.task_families:Dynamo3DEnv",
+      "file": "src/kinder/envs/dynamic3d/task_families.py",
+      "line": 125,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "kinder.envs.dynamic3d.task_families:Shelf3DEnv",
+      "file": "src/kinder/envs/dynamic3d/task_families.py",
+      "line": 136,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "kinder.envs.dynamic3d.task_families:Tossing3DEnv",
+      "file": "src/kinder/envs/dynamic3d/task_families.py",
+      "line": 147,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "src/kinder/envs/dynamic3d/models/kinova_gen3/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "src/kinder/envs/dynamic3d/models/kinova_gen3/scene_2f85.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "src/kinder/envs/dynamic3d/models/rby1a/rby1a_model_v1.2.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "src/kinder/envs/dynamic3d/models/stanford_tidybot/base_motion.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "src/kinder/envs/dynamic3d/models/stanford_tidybot/cupboard_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.10,<3.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/kinder/envs/dynamic3d/models/kinova_gen3/scene.xml:1 MJCF scene model",
+      "src/kinder/envs/dynamic3d/models/kinova_gen3/scene_2f85.xml:1 MJCF scene model",
+      "src/kinder/envs/dynamic3d/models/rby1a/rby1a_model_v1.2.xml:1 MJCF scene model",
+      "src/kinder/envs/dynamic3d/models/stanford_tidybot/base_motion.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model src/kinder/envs/dynamic3d/models/kinova_gen3/scene.xml:1",
+      "MJCF scene model src/kinder/envs/dynamic3d/models/kinova_gen3/scene_2f85.xml:1",
+      "MJCF scene model src/kinder/envs/dynamic3d/models/rby1a/rby1a_model_v1.2.xml:1",
+      "MJCF scene model src/kinder/envs/dynamic3d/models/stanford_tidybot/base_motion.xml:1",
+      "MJCF scene model src/kinder/envs/dynamic3d/models/stanford_tidybot/cupboard_scene.xml:1",
+      "MJCF scene model src/kinder/envs/dynamic3d/models/stanford_tidybot/table_scene.xml:1",
+      "MJCF robot model src/kinder/envs/dynamic3d/models/franka_fr3/fr3.xml:1",
+      "MJCF robot model src/kinder/envs/dynamic3d/models/kinova_gen3/gen3.xml:1",
+      "MJCF robot model src/kinder/envs/dynamic3d/models/kinova_gen3/gen3_2f85.xml:1",
+      "MJCF robot model src/kinder/envs/dynamic3d/models/stanford_tidybot/base.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/princeton-robot-planning-and-learning__kindergarden --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

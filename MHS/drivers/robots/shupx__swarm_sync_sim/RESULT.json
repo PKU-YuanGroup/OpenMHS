@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:9425487ee2ee8e10078897f3a037ff18e2d8f4331095ea398c5f0c9537541c04",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.shupx.clock.v1",
+      "reason": "no catalogue class reads a ROS simulation-clock sample; cap.world.step.v1 advances ticks and requires observation/tick/state_hash, which the latched TimeServer /clock topic does not provide",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.shupx.online.v1",
+      "reason": "no catalogue class observes a simulator liveness flag; the world.sim classes cover step, reset, seed and render, not an online Bool topic",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.shupx.pause.v1",
+      "reason": "no catalogue class pauses a simulator clock; cap.world.step.v1 advances ticks and cannot express proceed=false, and cap.motion.stop.v1 binds robot or axis motion rather than the simulation clock",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.shupx.resume.v1",
+      "reason": "no catalogue class resumes a simulator clock or sets its speed ratio; cap.world.step.v1 takes ticks and an action and returns a step observation, not a clock-control acknowledgement",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "Fake-backend gate pass only (contract_checked). No ROS graph, rosbridge, TimeServer nodelet, simulator or hardware was run, and driver.lock.json keeps reviewed_by null. The upstream entry is a ROS noetic C++ nodelet, so the upstream simulator was not launchable in this ROS-free harness; the package uses a ROS-free recording fake. The package declares only the fake backend .fake:FakeSwarmSyncSim; a live run needs the operator's ROS noetic sss_sim_env nodes plus a rosbridge endpoint and an explicit RosDriver simulation_deployment (endpoint, deployment_id, fidelity) through the sim backend. No hardware backend is declared, and RosDriver refuses every hardware backend without a human hardware review. The scope is the absolute /clock and /sss_clock_is_online observations and the acknowledged /sss_clock_control service. pause is the simulator stop and the estop binding; it stops the wall-timer speed regulator only, while a registered time client can still call try_update_clock through /sss_time_client/update_clock_request (src/sss_sim_env/src/sim_clock/TimeServer.cpp:164-193), so it is not a physical stop and does not guarantee that simulated time stops. The service response reports only success, so a resume receipt cannot prove the applied speed ratio; max_sim_speed is operator_required and site-limits.example.json is example-only, narrowing this example site to one approved ratio (1.0). The fake's /clock sample is a placeholder advanced by a fixed test step on each observation while unpaused, not wall-clock paced, and it is not fresh stopped-state evidence. NOT COVERED: /sss_timeclient_register, /sss_timeclient_unregister, /sss_time_client/update_clock_request and the lock-step stepping loop; simulated robot dynamics, MAVROS/PX4, tello and UGV topics, physics, reset, snapshot, restore and rendering. No G4 warnings were reported.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked the latched absolute /clock and /sss_clock_is_online subscriptions, the /sss_clock_control pause and resume bindings against SimClockControl.srv, all 14 facts, the operator_required speed ratio and the pause stop against TimeServer.cpp, sim_clock.launch and clock_ui.py at the pin. Stop trace: the callback stores is_paused_ and always answers success, and its only consumer, the wall-timer regulator registered as time client 0, stops posting requests while paused (TimeServer.cpp:81-117, 58-62); try_update_clock publishes only when every client, client 0 included, has a new request and clears satisfied requests (248-297), so time clients can complete at most the regulator's pending 0.01 s step (67-68) and simulated time then holds. The safe_state and one fact said the opposite (simulated time not guaranteed to stop, through a 'so' inference), and the shipped sim_clock.launch starts clock_ui.py by default, whose Start button and every speed-dial change send proceed=true and resume a paused clock (sim_clock.launch:4-23, clock_ui.py:48-82 and 162-164), which was not disclosed. The reviewer rewrote safe_state, the docstring, the pause description and the binding comment, removed the inference, replaced one fact with the all-clients rule, added seven facts and three gaps (driver.py); updated facts.md; and regenerated reference.json, REFERENCE.md and check-report.json. The gate and collect.py --strict pass with the digest unchanged and the 13 package cases pass; the author's notes above still say a registered time client can advance the clock after a pause. For the human reviewer: Simulation only (ROS 1 lock-step clock nodelet; the simulated vehicles are separate nodes and out of scope). The e-stop pauses the clock: after at most the regulator's pending 0.01 s step /clock holds and nodes timed on simulated time freeze. Any ROS client can resume it with proceed=true, and the default sim_clock.launch starts clock_ui.py, whose Start button or speed dial resumes the clock; launch with open_ui:=false or treat the UI as a second operator. The callback always answers success=true, so the acknowledgement proves receipt, not the hold, and /clock is latched, so a read while paused returns the held sample.",
+  "blocked_on": []
+}

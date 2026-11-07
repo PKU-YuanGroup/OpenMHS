@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pauldanielml/mujoco_rl_ur5",
+  "track": "robots",
+  "local_path": "robots/pauldanielml/mujoco_rl_ur5",
+  "driver_dir": "MHS/drivers/robots/pauldanielml__mujoco_rl_ur5",
+  "upstream": {
+    "repo_url": "https://github.com/pauldanielml/mujoco_rl_ur5",
+    "commit": "206d33edf0bc29aca6cd14778de6488e1d1ed0b3",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 180,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_grasper.envs:GraspEnv",
+      "file": "gym_grasper/envs/GraspingEnv.py",
+      "line": 25,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "UR5+gripper/UR5gripper_2_finger_many_objects.xml",
+      "line": 14,
+      "kind": "scene"
+    },
+    {
+      "file": "UR5+gripper/UR5gripper.xml",
+      "line": 14,
+      "kind": "robot"
+    },
+    {
+      "file": "UR5+gripper/UR5gripper_2_finger.xml",
+      "line": 14,
+      "kind": "robot"
+    },
+    {
+      "file": "UR5+gripper/UR5gripper_3_finger.xml",
+      "line": 14,
+      "kind": "robot"
+    },
+    {
+      "file": "UR5+gripper/UR5gripper_reacher.xml",
+      "line": 14,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_grasper/__init__.py:4 gym env Grasper-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Grasper-v0 registered at gym_grasper/__init__.py:4"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/pauldanielml__mujoco_rl_ur5 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

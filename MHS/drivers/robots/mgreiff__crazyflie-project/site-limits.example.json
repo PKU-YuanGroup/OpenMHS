@@ -1,0 +1,49 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example Crazyflie trajectory bench (operator overlay example, not a flight approval)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example numeric envelopes only. The pinned clone states no numeric operating bound for any of these inputs, so these values are operator choices, not device facts, not a flight envelope and not a recommendation. A real site must replace them with its own assessed limits.",
+  "devices": {
+    "mhs://localhost/crazyflie-trajectory": {
+      "x-cap.mgreiff.trajectory_packet.v1": {
+        "data[*]": {"min": -10.0, "max": 10.0, "source": "operator",
+                    "reason": "example site envelope for one spline coefficient"},
+        "time": {"min": 0.0, "max": 10.0, "unit": "s", "source": "operator",
+                 "reason": "example site envelope for one trajectory packet duration"},
+        "index": {"min": 0, "max": 63, "unit": "1", "source": "operator",
+                  "reason": "example site envelope for a spline index"},
+        "dimension": {"min": 0, "max": 4, "unit": "1", "source": "operator",
+                      "reason": "example site envelope for the flat-output dimension selector"},
+        "number": {"min": 1, "max": 64, "unit": "1", "source": "operator",
+                   "reason": "example site envelope for a spline count"},
+        "type": {"min": 0, "max": 2, "unit": "1", "source": "operator",
+                 "reason": "example site envelope for a spline type selector"}
+      },
+      "x-cap.mgreiff.synchronization_packet.v1": {
+        "synchronize": {"min": 0, "max": 1, "unit": "1", "source": "operator",
+                        "reason": "example site envelope for the synchronization flag"},
+        "circular[*]": {"min": 0, "max": 1, "unit": "1", "source": "operator",
+                        "reason": "example site envelope for a circular flag"},
+        "number[*]": {"min": 1, "max": 64, "unit": "1", "source": "operator",
+                      "reason": "example site envelope for a spline count"},
+        "time[*]": {"min": 0.0, "max": 10.0, "unit": "s", "source": "operator",
+                    "reason": "example site envelope for the replicated start delay"}
+      },
+      "x-cap.mgreiff.cmd_vel.v1": {
+        "linear.x": {"min": -1.0, "max": 1.0, "source": "operator",
+                     "reason": "example site envelope for Twist linear.x (meaning set by the external driver)"},
+        "linear.y": {"min": -1.0, "max": 1.0, "source": "operator",
+                     "reason": "example site envelope for Twist linear.y (meaning set by the external driver)"},
+        "linear.z": {"min": -1.0, "max": 1.0, "source": "operator",
+                     "reason": "example site envelope for Twist linear.z (meaning set by the external driver)"},
+        "angular.x": {"min": -1.0, "max": 1.0, "source": "operator",
+                      "reason": "example site envelope for Twist angular.x (meaning set by the external driver)"},
+        "angular.y": {"min": -1.0, "max": 1.0, "source": "operator",
+                      "reason": "example site envelope for Twist angular.y (meaning set by the external driver)"},
+        "angular.z": {"min": -1.0, "max": 1.0, "source": "operator",
+                      "reason": "example site envelope for Twist angular.z (meaning set by the external driver)"}
+      }
+    }
+  }
+}

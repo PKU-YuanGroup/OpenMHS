@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:46651cd4462606efb776b4f8640f28374fec1b8288a89c61e8d8585b20406265",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.nobleo.laser_scan.v1",
+      "reason": "No catalogue class defines a bounded LaserScan geometry/ranges/intensities subscription. cap.sensing.point_cloud.v1 is a point-cloud artifact class requiring artifact_ref and point_count with resource kind sensor.depth, and cap.sensing.read.v1 requires a sampled_at string plus an open values object; neither carries a fixed sensor_msgs/msg/LaserScan subscription schema. The package uses an x-cap id with an inline output schema meanwhile.",
+      "verb": "read",
+      "summary": "Read one fresh sensor_msgs/msg/LaserScan publication from the /scan topic.",
+      "similar": [
+        "cap.sensing.point_cloud.v1",
+        "cap.sensing.read.v1"
+      ]
+    }
+  ],
+  "notes": "The selected SICK scan2 LaserScan subscription resolves to /scan in the pinned empty-namespace node profile, not /sick_scan2/scan. The relative source topic and ROS 2 LaserScan type remain cited. Range decoder citations cover the ASCII and binary expansion sites and the stop-related source line without treating them as new wire stops. Finite array values and beam geometry remain explicit; JSON-incompatible nonfinite ranges are reported as unavailable/unknown outcomes, not converted into fabricated finite measurements. The fake is a small source-shaped packet with placeholder geometry and no scanner, physics or captured traffic. The package is read-only R0; no scanner setting, motion or native stop is claimed. Remapping, deployed frame/laser profile and native acquisition remain unverified.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Accept the selected LaserScan observation after fixing root topic, decoder references and nonfinite handling. Complete fake gate passes; evidence is contract_checked only. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: REFERENCE.md, RESULT.json, check-report.json, driver.py, facts.md, fake.py, reference.json, test_driver.py. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

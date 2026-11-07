@@ -1,0 +1,136 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.paddlepaddle/metagym",
+  "track": "robots",
+  "local_path": "robots/paddlepaddle/metagym",
+  "driver_dir": "MHS/drivers/robots/paddlepaddle__metagym",
+  "upstream": {
+    "repo_url": "https://github.com/paddlepaddle/metagym",
+    "commit": "ca724c22fd0c2ade8ec905edc688a1befdf98a3c",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 71,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "metagym.bandits:Bandits",
+      "file": "metagym/bandits/bandits_env.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "metagym.liftsim:LiftSim",
+      "file": "metagym/liftsim/environment/env.py",
+      "line": 37,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "metagym.metalm:MetaLM",
+      "file": "metagym/metalm/metalm.py",
+      "line": 21,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "metagym.metalocomotion.envs.meta_ants.meta_ant_env:MetaAntEnv",
+      "file": "metagym/metalocomotion/envs/meta_ants/meta_ant_env.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "metagym.metalocomotion.envs.meta_humanoids.meta_humanoids_env:MetaHumanoidEnv",
+      "file": "metagym/metalocomotion/envs/meta_humanoids/meta_humanoids_env.py",
+      "line": 7,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "metagym/metalocomotion/envs/assets/ants/ant.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "metagym/metalocomotion/envs/assets/ants/ant_var_ood_000.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "metagym/metalocomotion/envs/assets/ants/ant_var_ood_001.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "metagym/metalocomotion/envs/assets/ants/ant_var_ood_002.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "metagym/metalocomotion/envs/assets/ants/ant_var_ood_003.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "metagym/bandits/__init__.py:18 gym env bandits-v0",
+      "metagym/liftsim/__init__.py:19 gym env liftsim-v0",
+      "metagym/metalm/__init__.py:18 gym env meta-lm-v0",
+      "metagym/metalocomotion/__init__.py:19 gym env meta-ant-v0"
+    ],
+    "upstream_tests": "metagym/liftsim/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env bandits-v0 registered at metagym/bandits/__init__.py:18",
+      "gym env liftsim-v0 registered at metagym/liftsim/__init__.py:19",
+      "gym env meta-lm-v0 registered at metagym/metalm/__init__.py:18",
+      "gym env meta-ant-v0 registered at metagym/metalocomotion/__init__.py:19",
+      "gym env meta-humanoid-v0 registered at metagym/metalocomotion/__init__.py:29",
+      "gym env meta-maze-continuous-3D-v0 registered at metagym/metamaze/__init__.py:21",
+      "gym env meta-maze-discrete-3D-v0 registered at metagym/metamaze/__init__.py:33",
+      "gym env meta-maze-2D-v0 registered at metagym/metamaze/__init__.py:45",
+      "gym env quadrotor-v0 registered at metagym/quadrotor/__init__.py:20",
+      "gym env quadrupedal-v0 registered at metagym/quadrupedal/__init__.py:6"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/paddlepaddle__metagym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

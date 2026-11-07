@@ -1,0 +1,110 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.yitianshi/metaisaacgrasp",
+  "track": "robots",
+  "local_path": "robots/yitianshi/metaisaacgrasp",
+  "driver_dir": "MHS/drivers/robots/yitianshi__metaisaacgrasp",
+  "upstream": {
+    "repo_url": "https://github.com/yitianshi/metaisaacgrasp",
+    "commit": "2acd0808ba799f14bcd8450e8443a581586ab543",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 54,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "isaac_env.air_env_data:AIREnvData",
+      "file": "isaac_env/air_env_data/env.py",
+      "line": 37,
+      "confidence": "override"
+    },
+    {
+      "symbol": "isaac_env.air_env_grasp:AIREnvGrasp",
+      "file": "isaac_env/air_env_grasp/env.py",
+      "line": 35,
+      "confidence": "override"
+    },
+    {
+      "symbol": "isaac_env.air_env_tele:AIREnvTele",
+      "file": "isaac_env/air_env_tele/env.py",
+      "line": 46,
+      "confidence": "override"
+    },
+    {
+      "symbol": "isaac_env.air_env_sb3:AIREnvSB3",
+      "file": "isaac_env/air_env_sb3/env.py",
+      "line": 30,
+      "confidence": "override"
+    },
+    {
+      "symbol": "isaac_env.air_env_rl:AIREnvRL",
+      "file": "isaac_env/air_env_rl/env.py",
+      "line": 30,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "isaac_env/air_env_data/__init__.py:25 gym env AIR-v0-Data",
+      "isaac_env/air_env_grasp/__init__.py:25 gym env AIR-v0-Grasp",
+      "isaac_env/air_env_grasp/__init__.py:37 gym env AIR-v0-SB3",
+      "isaac_env/air_env_grasp/__init__.py:49 gym env AIR-v0-Data"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env AIR-v0-Data registered at isaac_env/air_env_data/__init__.py:25",
+      "gym env AIR-v0-Grasp registered at isaac_env/air_env_grasp/__init__.py:25",
+      "gym env AIR-v0-SB3 registered at isaac_env/air_env_grasp/__init__.py:37",
+      "gym env AIR-v0-Data registered at isaac_env/air_env_grasp/__init__.py:49",
+      "gym env AIR-v0-Tele registered at isaac_env/air_env_grasp/__init__.py:61",
+      "gym env AIR-v0-RL registered at isaac_env/air_env_rl/__init__.py:25",
+      "gym env AIR-v0-SB3 registered at isaac_env/air_env_sb3/__init__.py:25",
+      "gym env AIR-v0-SKRL registered at isaac_env/air_env_skrl/__init__.py:25",
+      "gym env AIR-v0-Targo registered at isaac_env/air_env_targo/__init__.py:25",
+      "gym env AIR-v0-Tele registered at isaac_env/air_env_tele/__init__.py:25"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/yitianshi__metaisaacgrasp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

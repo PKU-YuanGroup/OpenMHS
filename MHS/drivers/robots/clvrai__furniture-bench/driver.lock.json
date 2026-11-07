@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.clvrai/furniture-bench",
+  "upstream": {
+    "repo_url": "https://github.com/clvrai/furniture-bench",
+    "commit": "a87960a2490a7a19c86ea16a5ef371718b2baa70",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">3.7,<3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux",
+    "notes": "setup.py:7-31 requires gym==0.21.0 and python_requires >3.7,<3.9; the simulator also needs Isaac Gym with CUDA. The gate and the fake backend need neither: fake.py is pure Python and the gate never installs or imports the upstream package. Install it only to serve the driver on the real simulator (backend sim), which was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeFurnitureSimEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wD-044",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

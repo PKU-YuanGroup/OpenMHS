@@ -1,0 +1,114 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.iit-dlslab/gym-quadruped",
+  "track": "robots",
+  "local_path": "robots/iit-dlslab/gym-quadruped",
+  "driver_dir": "MHS/drivers/robots/iit-dlslab__gym-quadruped",
+  "upstream": {
+    "repo_url": "https://github.com/iit-dlslab/gym-quadruped",
+    "commit": "097a8d649ae2232d3c0ed5eb83dc0e4f77483019",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 362,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_quadruped.quadruped_env:QuadrupedEnv",
+      "file": "gym_quadruped/quadruped_env.py",
+      "line": 71,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "gym_quadruped/robot_model/a2/scene_flat.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym_quadruped/robot_model/aliengo/scene_flat.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym_quadruped/robot_model/go2/scene_flat.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym_quadruped/robot_model/mini_cheetah/scene_slope.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym_quadruped/robot_model/mini_cheetah/scene_suspend_stairs.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_quadruped/robot_model/a2/scene_flat.xml:1 MJCF scene model",
+      "gym_quadruped/robot_model/aliengo/scene_flat.xml:1 MJCF scene model",
+      "gym_quadruped/robot_model/go2/scene_flat.xml:1 MJCF scene model",
+      "gym_quadruped/robot_model/mini_cheetah/scene_slope.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model gym_quadruped/robot_model/a2/scene_flat.xml:1",
+      "MJCF scene model gym_quadruped/robot_model/aliengo/scene_flat.xml:1",
+      "MJCF scene model gym_quadruped/robot_model/go2/scene_flat.xml:1",
+      "MJCF scene model gym_quadruped/robot_model/mini_cheetah/scene_slope.xml:1",
+      "MJCF scene model gym_quadruped/robot_model/mini_cheetah/scene_suspend_stairs.xml:1",
+      "MJCF scene model gym_quadruped/robot_model/pegasus/scene_flat.xml:1",
+      "MJCF scene model gym_quadruped/robot_model/spot/scene.xml:1",
+      "MJCF scene model gym_quadruped/robot_model/spot/scene_arm.xml:1",
+      "MJCF robot model gym_quadruped/robot_model/a2/a2.xml:1",
+      "MJCF robot model gym_quadruped/robot_model/a2/a2_original.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/iit-dlslab__gym-quadruped --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

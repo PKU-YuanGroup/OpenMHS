@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.auturbo/stridesim",
+  "track": "robots",
+  "local_path": "robots/auturbo/stridesim",
+  "driver_dir": "MHS/drivers/robots/auturbo__stridesim",
+  "upstream": {
+    "repo_url": "https://github.com/auturbo/stridesim",
+    "commit": "d941ee93cec051c9455cf0c699384fd5410d4d3f",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 70,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "StrideSim_RL.tasks.locomotion.velocity.config.anymal_d.flat_env_cfg:AnymalDFlatEnvCfg",
+      "file": "rl/StrideSim_RL/tasks/locomotion/velocity/config/anymal_d/flat_env_cfg.py",
+      "line": 7,
+      "confidence": "override"
+    },
+    {
+      "symbol": "StrideSim_RL.tasks.locomotion.velocity.config.anymal_d.rough_env_cfg:AnymalDRoughEnvCfg",
+      "file": "rl/StrideSim_RL/tasks/locomotion/velocity/config/anymal_d/rough_env_cfg.py",
+      "line": 12,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "rl/StrideSim_RL/tasks/locomotion/velocity/config/anymal_d/__init__.py:9 gym env Template-Isaac-Velocity-Flat-Anymal-D-v0",
+      "rl/StrideSim_RL/tasks/locomotion/velocity/config/anymal_d/__init__.py:19 gym env Template-Isaac-Velocity-Flat-Anymal-D-Play-v0",
+      "rl/StrideSim_RL/tasks/locomotion/velocity/config/anymal_d/__init__.py:29 gym env Template-Isaac-Velocity-Rough-Anymal-D-v0",
+      "rl/StrideSim_RL/tasks/locomotion/velocity/config/anymal_d/__init__.py:39 gym env Template-Isaac-Velocity-Rough-Anymal-D-Play-v0"
+    ],
+    "upstream_tests": "3rdparty/nvblox/nvblox/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Template-Isaac-Velocity-Flat-Anymal-D-v0 registered at rl/StrideSim_RL/tasks/locomotion/velocity/config/anymal_d/__init__.py:9",
+      "gym env Template-Isaac-Velocity-Flat-Anymal-D-Play-v0 registered at rl/StrideSim_RL/tasks/locomotion/velocity/config/anymal_d/__init__.py:19",
+      "gym env Template-Isaac-Velocity-Rough-Anymal-D-v0 registered at rl/StrideSim_RL/tasks/locomotion/velocity/config/anymal_d/__init__.py:29",
+      "gym env Template-Isaac-Velocity-Rough-Anymal-D-Play-v0 registered at rl/StrideSim_RL/tasks/locomotion/velocity/config/anymal_d/__init__.py:39"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/auturbo__stridesim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

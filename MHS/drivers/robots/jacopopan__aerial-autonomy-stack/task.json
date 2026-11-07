@@ -1,0 +1,74 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jacopopan/aerial-autonomy-stack",
+  "track": "robots",
+  "local_path": "robots/jacopopan/aerial-autonomy-stack",
+  "driver_dir": "MHS/drivers/robots/jacopopan__aerial-autonomy-stack",
+  "upstream": {
+    "repo_url": "https://github.com/jacopopan/aerial-autonomy-stack",
+    "commit": "bf1ca32ac8b13339da4b9bce742f46fcb9b5567c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 98,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "aas_gym.aas_env:AASEnv",
+      "file": "aas-gym/src/aas_gym/aas_env.py",
+      "line": 15,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "tools_and_docs/gym_run.py:17 gym env AASEnv-v0"
+    ],
+    "upstream_tests": "tools_and_docs/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env AASEnv-v0 registered at tools_and_docs/gym_run.py:17"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jacopopan__aerial-autonomy-stack --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

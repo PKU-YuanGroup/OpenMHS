@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.blackcoffeerobotics/bcr_bot",
+  "upstream": {
+    "repo_url": "https://github.com/blackcoffeerobotics/bcr_bot",
+    "commit": "58b9220f35870bf8543db12f8b457942fa07cac3",
+    "license_spdx": "Apache-2.0"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "colcon build"
+    ],
+    "system_deps": [
+      "ament/colcon workspace and the ROS dependencies declared in package.xml"
+    ],
+    "gpu": false,
+    "platform": "linux",
+    "notes": "The gate and the fake backend need only Python 3.10+ and the standard library: fake.py is a package-local stand-in for the mujoco module and reads the MJCF text. Install the ROS 2/ament/colcon workspace and its declared dependencies to build and launch the upstream ROS package, and install the official mujoco module separately to run the real sim backend. Neither the ROS stack nor MuJoCo was installed or run here."
+  },
+  "backends": {
+    "fake": ".fake:FakeMujoco"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "ros-wave-c-056",
+    "date": "2026-11-04"
+  },
+  "reviewed_by": null
+}

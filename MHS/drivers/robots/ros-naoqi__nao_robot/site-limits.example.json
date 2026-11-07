@@ -1,0 +1,35 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example NAO deployment (illustrative operator overlay, not a device limit)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Illustrative values only: replace every rule with the measured envelope for the installed NAO, surface and workspace. The pinned clone states neither SI units nor safe ranges for these native motion values.",
+  "devices": {
+    "mhs://localhost/nao-walker": {
+      "x-cap.ros-naoqi.walk_velocity.v1": {
+        "linear_x": {"min": -0.05, "max": 0.05, "unit": "1", "source": "operator",
+                     "reason": "example overlay: native Twist linear.x component"},
+        "linear_y": {"min": -0.05, "max": 0.05, "unit": "1", "source": "operator",
+                     "reason": "example overlay: native Twist linear.y component"},
+        "angular_z": {"min": -0.2, "max": 0.2, "unit": "1", "source": "operator",
+                      "reason": "example overlay: native Twist angular.z component"}
+      },
+      "x-cap.ros-naoqi.walk_pose.v1": {
+        "x": {"min": -0.3, "max": 0.3, "unit": "1", "source": "operator",
+              "reason": "example overlay: robot-frame walkTo x"},
+        "y": {"min": -0.3, "max": 0.3, "unit": "1", "source": "operator",
+              "reason": "example overlay: robot-frame walkTo y"},
+        "theta": {"min": -0.3, "max": 0.3, "unit": "1", "source": "operator",
+                  "reason": "example overlay: robot-frame walkTo theta"}
+      },
+      "x-cap.ros-naoqi.clip_footstep.v1": {
+        "x": {"min": -0.04, "max": 0.08, "unit": "1", "source": "operator",
+              "reason": "example overlay: footstep clipping x range"},
+        "y": {"min": -0.16, "max": -0.088, "unit": "1", "source": "operator",
+              "reason": "example overlay: footstep clipping y range for the message-default support side"},
+        "theta": {"min": -0.5, "max": 0.5, "unit": "1", "source": "operator",
+                  "reason": "example overlay: footstep clipping theta range"}
+      }
+    }
+  }
+}

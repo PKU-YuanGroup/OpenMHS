@@ -1,0 +1,30 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:1e93518391d0a71c89cdd024c96f43c9a3ff97c14014ff625805046c17d3a495",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.machines-in-motion.go2_body_velocity.v1",
+      "reason": "No catalogue class fits a 3-DOF body velocity on a robot.mobile_base. cap.motion.mobile_base.v1 requires distance_m and heading_rad in its output, but GO2Real exposes no odometry read, and its single linear_velocity cannot carry the lateral velocity that setCommandsHigh takes. cap.motion.cartesian_twist.v1 binds robot.arm only.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.mobile_base.v1",
+        "cap.motion.cartesian_twist.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.machines-in-motion.go2_joint_command.v1",
+      "reason": "No catalogue class fits a 12-joint position plus feedforward-torque command on a quadruped mobile base. cap.motion.joint_position.v1 binds robot.arm and motion.axis, not robot.mobile_base, and has no feedforward torque input.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.joint_position.v1",
+        "cap.motion.joint_torque.v1"
+      ]
+    }
+  ],
+  "notes": "Passed the fake-backend gate with no warning. The hardware backend was never run: this is a model-authored, unreviewed R2 package, and the loader refuses backend=hardware until a human signs reviewed_by in driver.lock.json. The fake has no DDS, no C++ bridge, no state thread and no motion over time; it records high- and low-level commands and applies a low-level command to the reported joint state at once, so its evidence is contract_checked at fidelity F0. The driver exposes a 3-DOF body-velocity extension and a 12-joint position/feedforward-torque extension because no catalogue class fits (see catalogue_requests). The low-level action fixes dq_des = 0, kp = 150 and kd = 3, the upstream FSM's tracking gains, and exposes neither gains nor desired velocities. The body-velocity command has no duration or expiry because the clone documents none; the cap.motion.stop.v1 action and the e-stop send the bridge's damping command, and the clone's stop has no deceleration profile, so the action accepts the class's deceleration input but does not use it. The joint order is the bridge's FR, FL, RR, RL (bridge.cpp:188-219), not the URDF's FL, FR, RL, RR order, and the limits are mapped by joint name. The URDF calf range is -2.7227..-0.83776 rad, so the clone's own sitting_q calf angle of -2.828 rad lies outside the enforced range and is refused. The body-velocity envelope is operator_required; site-limits.example.json is an example overlay only, not a device fact. No hardware run and no human review are claimed.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted after reviewer edits. cap.motion.stop.v1 sent only the low-level damping command, which does not end a body-velocity command the sport controller is executing (the bridge turns setCommandsHigh into Move, deploy/ros2_nodes/go2py_bridge/src/bridge.cpp:278-287); it now sends zero body velocity and then the damping command, as the e-stop does, and a new test case checks it. The safe_state and the stop descriptions claimed a sport-mode Damp request, which the Python interface cannot send (its high-level message carries only v_x, v_y and omega_z, Go2Py/robot/interface.py:163-171); they now say what is sent, and the joint command says that its target is sent at once, without the 0.5 s ramp of the upstream FSM's moveTo (Go2Py/robot/fsm.py:52-63). For the human reviewer: in sport mode the damping command reaches /lowcmd while the sport controller still balances, and only the bridge's own stop (the remote's R2 and L2) adds the Damp request; the joint command is a step of kp 150 toward any target inside the URDF ranges. driver.py, test_driver.py and the reference changed; the author's files are kept in work/handoff-runs/wD/reviewer-originals/. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review."
+}

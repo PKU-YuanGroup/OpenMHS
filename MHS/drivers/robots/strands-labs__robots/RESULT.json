@@ -1,0 +1,28 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:d0f792f0a020bf6134eb4a49235324b76610c9a36635195588a1a86d9551fba5",
+    "failed": []
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.strands-labs.home.v1",
+      "reason": "cap.motion.joint_position.v1 is already bound to move_joints and a catalogue class may be bound only once on a resource; home is the fixed vendor grasp-init pose and takes no input.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.strands-labs.gripper.v1",
+      "reason": "cap.manipulation.grasp.v1 asks for a grasp force and width and reports an achieved width; the upstream set_gripper accepts only a boolean open/closed and gives no width or force feedback.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.strands-labs.mobile-base.v1",
+      "reason": "cap.motion.mobile_base.v1 binds resource kind robot.mobile_base, while this package serves robot.arm (the arm is the primary capability); the extension carries the mecanum base's linear.x, linear.y, angular.z and duration on the same resource.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). Model-authored and unreviewed: the R2 hardware backend is refused until reviewed_by is set, and nothing ran on a robot. No decision deviation: the card's python-object helper is not used because the upstream class is a concrete object whose methods return status envelopes, so the package is a direct Driver over the card's entry symbol strands_robots.drivers.yahboom_m3pro:YahboomM3ProDriver. The arm is cap.motion.joint_position.v1; the stop is cap.motion.stop.v1 bound safe_state=True, so SAFE-045 is met without a physical e-stop (the upstream documents none for this chassis). The base, gripper and home pose use x-cap.strands-labs.* extensions for the reasons in catalogue_requests. G4.REF_VALUE x3 remain: yahboom_m3pro_wire.py:92-98 states the vendor ceilings as magnitudes 1.0 m/s and 5.0 rad/s, so the driver's symmetric -1.0/-5.0 bounds use the same magnitude in reverse and no source line prints the minus sign. The fake is F0: no kinematics, no motion over time and no ROS graph; it records the last servo degrees and Twist and returns canned envelopes. On the robot get_observation is {} because the upstream verifies no /joint_states topic; commanded_arm_pose is a command record, not a measurement. stop_task goes through the upstream /cmd_vel operator gate: on hardware the zero Twist needs STRANDS_ROS2_COMMAND_ALLOW=/cmd_vel or an approving operator, otherwise the firmware watchdog is the stop. The optional cap.motion.stop.v1 deceleration field is refused because the upstream stop has no deceleration profile. NOT COVERED: the camera and lidar topics and any policy provider, which the upstream class leaves outside this driver. The hardware path (native.py, the rosbridge/ros2 transport, an e-stop from another thread) was never run.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. Its three UNSOURCED_LIMIT_GATE_WARNING lines (the -1.0 m/s and -5.0 rad/s floors of the base) are gone with the G4 fix of this review (MHS/changes/WAVE-B2.md): the cited lines bound a magnitude, and the upstream refuses each component past it (yahboom_m3pro_wire.py:92-98, 190-196). After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above."
+}

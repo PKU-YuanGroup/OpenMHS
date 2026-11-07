@@ -1,0 +1,106 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.caelan/ltamp",
+  "track": "robots",
+  "local_path": "robots/caelan/ltamp",
+  "driver_dir": "MHS/drivers/robots/caelan__ltamp",
+  "upstream": {
+    "repo_url": "https://github.com/caelan/ltamp",
+    "commit": "7e0a28dca1156b1dc6d3b9459fed58607249c3ed",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "sim-env",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 148,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "plan_tools.ros_world:ROSWorld",
+      "file": "plan_tools/ros_world.py",
+      "line": 15,
+      "confidence": "override"
+    },
+    {
+      "symbol": "control_tools.pb_controller:PBController",
+      "file": "control_tools/pb_controller.py",
+      "line": 18,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "pddlstream/FastDownward/misc/tests"
+  },
+  "hints": {
+    "reads": [
+      "ROSController.get_arm_joint_names",
+      "ROSController.get_arm_positions",
+      "ROSController.get_display_trajectory",
+      "ROSController.get_gripper_joint_names",
+      "ROSController.get_joint_log",
+      "ROSController.get_joint_names",
+      "ROSController.get_joint_positions",
+      "ROSController.get_joint_velocities",
+      "ROSController.get_robot_state",
+      "PBController.get_arm_joint_names",
+      "PBController.get_arm_positions",
+      "PBController.get_gripper_joint_names"
+    ],
+    "writes": [
+      "PBController.set_gravity",
+      "PBController.set_joint_positions",
+      "ActiveGP.set_world_feature"
+    ],
+    "actions": [
+      "ROSController.command_arm",
+      "ROSController.command_arm_trajectory",
+      "ROSController.reset",
+      "ROSController.start_joint_logging",
+      "ROSController.stop_arm",
+      "ROSController.stop_base",
+      "ROSController.stop_joint_logging",
+      "PBController.command_arm",
+      "PBController.command_arm_trajectory",
+      "PBController.reset",
+      "ActiveGP.reset_sample"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/caelan__ltamp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

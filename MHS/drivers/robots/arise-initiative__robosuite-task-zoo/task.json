@@ -1,0 +1,100 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.arise-initiative/robosuite-task-zoo",
+  "track": "robots",
+  "local_path": "robots/arise-initiative/robosuite-task-zoo",
+  "driver_dir": "MHS/drivers/robots/arise-initiative__robosuite-task-zoo",
+  "upstream": {
+    "repo_url": "https://github.com/arise-initiative/robosuite-task-zoo",
+    "commit": "74eab7f88214c21ca1ae8617c2b2f8d19718a9ed",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 245,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robosuite_task_zoo.environments.manipulation.hammer_place:HammerPlaceEnv",
+      "file": "robosuite_task_zoo/environments/manipulation/hammer_place.py",
+      "line": 19,
+      "confidence": "override"
+    },
+    {
+      "symbol": "robosuite_task_zoo.environments.manipulation.kitchen:KitchenEnv",
+      "file": "robosuite_task_zoo/environments/manipulation/kitchen.py",
+      "line": 18,
+      "confidence": "override"
+    },
+    {
+      "symbol": "robosuite_task_zoo.environments.manipulation.multitask_kitchen:MultitaskKitchenDomain",
+      "file": "robosuite_task_zoo/environments/manipulation/multitask_kitchen.py",
+      "line": 17,
+      "confidence": "override"
+    },
+    {
+      "symbol": "robosuite_task_zoo.environments.manipulation.tool_use:ToolUseEnvBase",
+      "file": "robosuite_task_zoo/environments/manipulation/tool_use.py",
+      "line": 17,
+      "confidence": "override"
+    },
+    {
+      "symbol": "robosuite_task_zoo.environments.manipulation.tool_use:ToolUseEnv",
+      "file": "robosuite_task_zoo/environments/manipulation/tool_use.py",
+      "line": 545,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robosuite_task_zoo/environments/manipulation/hammer_place.py:19 HammerPlaceEnv environment class",
+      "robosuite_task_zoo/environments/manipulation/kitchen.py:18 KitchenEnv environment class",
+      "robosuite_task_zoo/environments/manipulation/multitask_kitchen.py:17 MultitaskKitchenDomain environment class",
+      "robosuite_task_zoo/environments/manipulation/tool_use.py:545 ToolUseEnv environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "model"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/arise-initiative__robosuite-task-zoo --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

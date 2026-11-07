@@ -1,0 +1,45 @@
+OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
+
+# Source facts for gh.iamaisim/projectairsim
+
+Pinned commit: `62229cd7c77ad31da7bc8aba8dd6303c564d8ba2`. Source declarations and controlled fake results are not native execution.
+
+| Fact | Source | Reference |
+|---|---|---|
+| ProjectAirSimEnv subclasses gym.Env and, in its constructor, connects a ProjectAirSimClient and constructs a World from the scene configuration. | upstream_code | `client/python/projectairsim/src/projectairsim/gym_envs/gym_env.py:15-29` |
+| ProjectAirSimEnv defines close() as client.disconnect(), while reset() and step() are NotImplementedError hooks for concrete environments. | upstream_code | `client/python/projectairsim/src/projectairsim/gym_envs/gym_env.py:33-51` |
+| The gym registry maps ProjectAirSimDroneLanding-v0 to ProjectAirSimDroneLandingEnv in projectairsim_dronelanding_env. | upstream_code | `client/python/projectairsim/src/projectairsim/gym_envs/__init__.py:14-18` |
+| The drone-landing environment uses a 0.100 s delta/step time, chosen to be longer than the flight controller's 50 Hz (20 ms) minimum command duration. | upstream_code | `client/python/projectairsim/src/projectairsim/gym_envs/projectairsim_dronelanding_env.py:21-23` |
+| The observation shape is (4,) for dx, dy, dz and dyaw, and the action shape is (3,) for V_north, V_east and V_down. | upstream_code | `client/python/projectairsim/src/projectairsim/gym_envs/projectairsim_dronelanding_env.py:25-27` |
+| The observation space is Box(-math.inf, math.inf, shape=(4,)) and the action space is Box(-1.0, 1.0, shape=(3,)). | upstream_code | `client/python/projectairsim/src/projectairsim/gym_envs/projectairsim_dronelanding_env.py:29-30` |
+| reset() loads the scene, creates a Drone, subscribes to its actual_pose and collision_info, enables API control and arms the vehicle. | upstream_code | `client/python/projectairsim/src/projectairsim/gym_envs/projectairsim_dronelanding_env.py:32-59` |
+| step() is async: it calls the drone's move_by_velocity_async with the three action components, advances the simulated world by dt, awaits the move task and returns the legacy four-tuple (observation, reward, done, info). | upstream_code | `client/python/projectairsim/src/projectairsim/gym_envs/projectairsim_dronelanding_env.py:63-88` |
+| move_by_velocity_async documents v_north, v_east and v_down as desired velocities in world NED axes in m/s. | upstream_code | `client/python/projectairsim/src/projectairsim/drone.py:306-308` |
+| get_observation returns the actor pose relative to the landing pad as dx, dy, dz and the actor yaw; get_reward returns the L2 distance between the goal and actor poses. | upstream_code | `client/python/projectairsim/src/projectairsim/gym_envs/projectairsim_dronelanding_env.py:100-141` |
+| collision_callback stores the collision info and sets done, which is the only path in this environment that ends an episode. | upstream_code | `client/python/projectairsim/src/projectairsim/gym_envs/projectairsim_dronelanding_env.py:191-194` |
+| The environment's own comment marks landing-success termination as an unfinished TODO, so the pinned episode ends on collision only. | upstream_code | `client/python/projectairsim/src/projectairsim/gym_envs/projectairsim_dronelanding_env.py:85` |
+| The drone-landing scene uses a steppable clock with a 5,000,000 ns step that pauses on start. | upstream_code | `client/python/projectairsim/src/projectairsim/gym_envs/sim_config/scene_bonsai_drone_landing.jsonc:14-19` |
+| World.continue_for_sim_time continues the simulation for delta_time_nanos and then pauses. | upstream_code | `client/python/projectairsim/src/projectairsim/world.py:252-255` |
+| World.pause sends the scene's Pause service request with do_pause True. | upstream_code | `client/python/projectairsim/src/projectairsim/world.py:114-126` |
+| World.is_paused sends the scene's IsPaused service request and returns its boolean answer. | upstream_code | `client/python/projectairsim/src/projectairsim/world.py:238-250` |
+| The server's SimPause supports only a steppable clock, and ContinueForSimTime with wait_until_complete waits until the clock reports paused. | upstream_code | `core_sim/src/scene.cpp:706-752` |
+| The client's service socket waits up to 300000 ms for a reply to each request. | upstream_code | `client/python/projectairsim/src/projectairsim/client.py:59-60` |
+| request_async sends on a new socket context and returns an asyncio task that processes the reply. | upstream_code | `client/python/projectairsim/src/projectairsim/client.py:284-309` |
+| disconnect stops the receive loop, joins the receive thread, unsubscribes and closes both sockets. | upstream_code | `client/python/projectairsim/src/projectairsim/client.py:419-433` |
+| Inside the async step, the environment advances the world with the synchronous world.continue_for_sim_time call and only then awaits the move task. | upstream_code | `client/python/projectairsim/src/projectairsim/gym_envs/projectairsim_dronelanding_env.py:77-81` |
+| World.continue_for_sim_time sends its ContinueForSimTime request through client.request. | upstream_code | `client/python/projectairsim/src/projectairsim/world.py:263-273` |
+| client.request sends on the service socket and blocks in recv_msg until the reply arrives or the receive timeout expires. | upstream_code | `client/python/projectairsim/src/projectairsim/client.py:255-282` |
+| The server's SimPause carries a TODO asking whether it should wait for external components such as Unreal to confirm the pause before returning. | upstream_code | `core_sim/src/scene.cpp:711-712` |
+| The server's IsPaused service returns the simulation clock's paused flag. | upstream_code | `core_sim/src/scene.cpp:725` |
+| The Linux client setup installs the Python client library from client/python/projectairsim with pip install -e. | upstream_code | `docs/client_setup.md:125-128` |
+| The client's autonomy extra pins gym==0.18.3; the base dependencies do not include gym. | upstream_code | `client/python/projectairsim/pyproject.toml:55` |
+
+## Live route (declared, not run)
+
+Both backends declare the SDK's `asyncio_owned_loop_v1` profile: one owned event loop awaits the coroutine `step`, calls the argument-free `reset`, `close`, the remote stop `world.pause` and the stop probe `world.is_paused`. Local bounds (package choices, not upstream facts): step 30 s, reset 120 s, close 15 s, stop and probe 5 s each, settlement after a stop 10 s. A native call that outlives its bound is not cancelled locally: its outcome is unknown, it stays owned, new native work and safety reset are refused until it settles, and an explicit world reset is required afterwards. The e-stop reports the safe state only when the pause returned, `is_paused` returned exactly True and no native work is still owned; otherwise it is unconfirmed and the endpoint keeps the latch and retries. Close pauses the world, closes the environment on the loop and stops the loop, all bounded; while native work is owned, close is deferred until it settles.
+
+The live `sim` backend (sim.py) imports and constructs the pinned environment only when it opens (on the caller's thread, outside the owned loop), and disconnects a client that a failed constructor already connected. The native reset takes no seed: no seed capability is served and no seeded determinism is claimed; the reset input `seed` is accepted for the class contract and not used. `driver.lock.json` lists the install commands taken from the upstream's Linux client setup (`docs/client_setup.md:125-128`) and the `gym==0.18.3` pin of its autonomy extra (`client/python/projectairsim/pyproject.toml:55`); nothing runs them here.
+
+## Not established
+
+No Project AirSim server, Unreal scene, flight controller or client library was run or installed. The remote stop cannot interrupt the step's blocking `world.continue_for_sim_time` (`projectairsim_dronelanding_env.py:77-81`, `client.py:255-282`): the stop queues behind it on the owned loop, the call ends by itself at its simulated-time bound with the clock paused (`scene.cpp:727-752`), and only then does the pause run and the probe read. `world.is_paused` reads the scene clock's flag only (`scene.cpp:725`); SimPause does not wait for Unreal or other external components to confirm the pause (`scene.cpp:711-712`), and because every step ends paused the probe confirms a paused clock rather than proving the pause request took effect. Also not verified: how long the blocking calls and `client.disconnect` take; thread-safety of the pose and collision callbacks that run on the client's receive thread; that no other client advances the scene clock; that the listed install commands work with the lock's Python (gym 0.18.3 is an old release). The upstream episode ends on collision only (the success TODO at line 85). Image, Sydney and perception variants remain separate unfinished scope.

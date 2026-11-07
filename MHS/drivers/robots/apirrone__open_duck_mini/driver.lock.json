@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.apirrone/open_duck_mini",
+  "upstream": {
+    "repo_url": "https://github.com/apirrone/open_duck_mini",
+    "commit": "b23317a485b3cec7d8417f352478778b3475173c",
+    "license_spdx": "Apache-2.0"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.cfg:24-36 lists the environment extras (mujoco 3.1.5, gymnasium[mujoco] 0.29.1, placo 0.5.0, stable-baselines3 2.3.2); the clone states no requires-python. The gate and the fake backend need none of them: fake.py is pure Python on the SDK's Python 3.10+, and the gate never installs or imports the upstream package. Install the extras only to serve the driver on the real environment (backend sim), which was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeBDXEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-080",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

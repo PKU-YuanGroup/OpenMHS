@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.farama-foundation/highwayenv",
+  "upstream": {
+    "repo_url": "https://github.com/farama-foundation/highwayenv",
+    "commit": "2a268f348f10f4d1ac83f96bc8a53d2fa50dd3b0",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "pyproject.toml:9 requires Python 3.10 or newer and :29-37 the dependencies gymnasium, farama-notifications, numpy, pygame-ce, matplotlib, pandas and noise. The gate and the fake backend need none of them: fake.py is pure Python on the SDK's Python, and the gate never installs or imports the upstream package. Install it only to serve the driver on the real environment (backend sim), which was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeHighwayEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wA-s09-002",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

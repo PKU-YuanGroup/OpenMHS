@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "notes": "BLOCKED before driver implementation. Cozmo's required drive/head/lift and image workflow is topic-driven. backpack_led uses std_msgs/msg/ColorRGBA, not geometry_msgs/msg/ColorRGBA. The 10 Hz timer repeatedly applies retained wheel velocities without expiry; head/lift completion waits are commented out. set_camera_info is calibration persistence, not stop. destroy_node calls stop_all_motors locally after spin, but is not a rosbridge-callable independently acknowledged endpoint. No complete cancellation/ownership or source-backed hardware stop is available. The RGB image packet itself has source-stated rgb8/stride bytes; an image-only replacement would omit required actuation. R2 applies to the mobile platform. Only a missing-layout diagnostic gate is recorded, with no node, robot, SDK or hardware execution.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Retain blocked; correct ColorRGBA provenance while preserving required drive/head/lift/image scope. Complete fake/diagnostic gate remains rejected at G1, G2, G3, G9. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: RESULT.json, check-report.json. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged.",
+  "gate": {
+    "digest": "sha256:78b4401405db534125d9e845cc78becc4aea0ee70fb591ce90efd44e3ad92378",
+    "failed": [
+      "G1",
+      "G2",
+      "G3",
+      "G9"
+    ],
+    "report": "check-report.json"
+  }
+}

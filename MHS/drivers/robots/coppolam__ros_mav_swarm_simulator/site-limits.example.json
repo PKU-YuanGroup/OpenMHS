@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example uav1 velocity bench (operator overlay example, not a flight approval)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example numeric envelopes only. The pinned controller YAML states a combined velocity max_xy of 10.0 m/s, a velocity z maximum of 5.0 m/s and an attitude yawrate maximum of 3.14; it states no per-axis x or y bound, so all four inputs are operator_required and this overlay must supply them. These values are operator choices, not device facts, not a flight envelope and not a recommendation. A real site must replace them with its own assessed limits.",
+  "devices": {
+    "mhs://localhost/mav-swarm": {
+      "x-cap.coppolam.cmd_vel.v1": {
+        "linear_x": {"min": -1.0, "max": 1.0, "unit": "m/s", "source": "operator",
+                      "reason": "example site envelope for base_stabilized velocity x"},
+        "linear_y": {"min": -1.0, "max": 1.0, "unit": "m/s", "source": "operator",
+                      "reason": "example site envelope for base_stabilized velocity y"},
+        "linear_z": {"min": -0.5, "max": 0.5, "unit": "m/s", "source": "operator",
+                      "reason": "example site envelope for vertical velocity"},
+        "angular_z": {"min": -0.5, "max": 0.5, "unit": "rad/s", "source": "operator",
+                       "reason": "example site envelope for yaw rate"}
+      }
+    }
+  }
+}

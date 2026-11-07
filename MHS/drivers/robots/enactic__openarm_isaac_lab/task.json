@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.enactic/openarm_isaac_lab",
+  "track": "robots",
+  "local_path": "robots/enactic/openarm_isaac_lab",
+  "driver_dir": "MHS/drivers/robots/enactic__openarm_isaac_lab",
+  "upstream": {
+    "repo_url": "https://github.com/enactic/openarm_isaac_lab",
+    "commit": "cb7ff7547bdb81f290591edb9302b4845b1d49a7",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 84,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "openarm.tasks.manager_based.openarm_manipulation.unimanual.reach.config.joint_pos_env_cfg:OpenArmReachEnvCfg",
+      "file": "source/openarm/openarm/tasks/manager_based/openarm_manipulation/unimanual/reach/config/joint_pos_env_cfg.py",
+      "line": 37,
+      "confidence": "override"
+    },
+    {
+      "symbol": "openarm.tasks.manager_based.openarm_manipulation.bimanual.reach.config.joint_pos_env_cfg:OpenArmReachEnvCfg",
+      "file": "source/openarm/openarm/tasks/manager_based/openarm_manipulation/bimanual/reach/config/joint_pos_env_cfg.py",
+      "line": 36,
+      "confidence": "override"
+    },
+    {
+      "symbol": "openarm.tasks.manager_based.openarm_manipulation.unimanual.lift.config.joint_pos_env_cfg:OpenArmCubeLiftEnvCfg",
+      "file": "source/openarm/openarm/tasks/manager_based/openarm_manipulation/unimanual/lift/config/joint_pos_env_cfg.py",
+      "line": 41,
+      "confidence": "override"
+    },
+    {
+      "symbol": "openarm.tasks.manager_based.openarm_manipulation.unimanual.cabinet.config.joint_pos_env_cfg:OpenArmCabinetEnvCfg",
+      "file": "source/openarm/openarm/tasks/manager_based/openarm_manipulation/unimanual/cabinet/config/joint_pos_env_cfg.py",
+      "line": 35,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/openarm/openarm/tasks/manager_based/openarm_manipulation/bimanual/reach/config/__init__.py:19 gym env Isaac-Reach-OpenArm-Bi-v0",
+      "source/openarm/openarm/tasks/manager_based/openarm_manipulation/bimanual/reach/config/__init__.py:31 gym env Isaac-Reach-OpenArm-Bi-Play-v0",
+      "source/openarm/openarm/tasks/manager_based/openarm_manipulation/unimanual/cabinet/config/__init__.py:27 gym env Isaac-Open-Drawer-OpenArm-v0",
+      "source/openarm/openarm/tasks/manager_based/openarm_manipulation/unimanual/cabinet/config/__init__.py:39 gym env Isaac-Open-Drawer-OpenArm-Play-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Isaac-Reach-OpenArm-Bi-v0 registered at source/openarm/openarm/tasks/manager_based/openarm_manipulation/bimanual/reach/config/__init__.py:19",
+      "gym env Isaac-Reach-OpenArm-Bi-Play-v0 registered at source/openarm/openarm/tasks/manager_based/openarm_manipulation/bimanual/reach/config/__init__.py:31",
+      "gym env Isaac-Open-Drawer-OpenArm-v0 registered at source/openarm/openarm/tasks/manager_based/openarm_manipulation/unimanual/cabinet/config/__init__.py:27",
+      "gym env Isaac-Open-Drawer-OpenArm-Play-v0 registered at source/openarm/openarm/tasks/manager_based/openarm_manipulation/unimanual/cabinet/config/__init__.py:39",
+      "gym env Isaac-Lift-Cube-OpenArm-v0 registered at source/openarm/openarm/tasks/manager_based/openarm_manipulation/unimanual/lift/config/__init__.py:28",
+      "gym env Isaac-Lift-Cube-OpenArm-Play-v0 registered at source/openarm/openarm/tasks/manager_based/openarm_manipulation/unimanual/lift/config/__init__.py:41",
+      "gym env Isaac-Reach-OpenArm-v0 registered at source/openarm/openarm/tasks/manager_based/openarm_manipulation/unimanual/reach/config/__init__.py:20",
+      "gym env Isaac-Reach-OpenArm-Play-v0 registered at source/openarm/openarm/tasks/manager_based/openarm_manipulation/unimanual/reach/config/__init__.py:32"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/enactic__openarm_isaac_lab --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

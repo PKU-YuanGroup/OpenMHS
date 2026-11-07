@@ -1,0 +1,147 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.erdalpekel/panda_simulation",
+  "track": "robots",
+  "local_path": "robots/erdalpekel/panda_simulation",
+  "driver_dir": "MHS/drivers/robots/erdalpekel__panda_simulation",
+  "upstream": {
+    "repo_url": "https://github.com/erdalpekel/panda_simulation",
+    "commit": "70b6a9d7a426a9cc4dd3e41b2a61f817f1531f4b",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 213,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install",
+    "capabilities"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/erdalpekel__panda_simulation --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required",
+  "companions": [
+    {
+      "alias": "gazebo_ros_pkgs",
+      "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+      "commit": "0667c5e52e8afa1f478955d8a2569b473a5acdf1",
+      "profile": "ros1-melodic-gazebo9",
+      "reason": "pause_physics and its get_physics_properties read-back (pause) are served by gazebo_ros 2.8.7 (Melodic), whose empty_world.launch the clone's simulation launch includes.",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:5",
+          "token": "ROS melodic"
+        },
+        {
+          "side": "package",
+          "ref": "panda_simulation/package.xml:19",
+          "token": "catkin"
+        },
+        {
+          "side": "package",
+          "ref": "panda_simulation/launch/simulation.launch:15",
+          "token": "$(find gazebo_ros)/launch/empty_world.launch"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/package.xml:4",
+          "token": "2.8.7"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/package.xml:22",
+          "token": "catkin"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_dev/package.xml:22",
+          "token": "libgazebo9-dev"
+        },
+        {
+          "side": "companion",
+          "ref": "docs/RELEASE.md:19",
+          "token": "ROS Melodic: Gazebo 9"
+        }
+      ],
+      "lock": "ros-simulation__gazebo_ros_pkgs@2.8.7",
+      "ref": "2.8.7",
+      "local_path": "work/companions/ros-simulation__gazebo_ros_pkgs@0667c5e52e8a",
+      "repo_url": "https://github.com/ros-simulation/gazebo_ros_pkgs.git",
+      "license_spdx": "NOASSERTION",
+      "licence_note": "Apache-2.0 AND BSD (per package.xml; no licence file in the repository)"
+    },
+    {
+      "alias": "gazebo_classic",
+      "package_id": "gh.gazebosim/gazebo-classic",
+      "commit": "e4400ae7e04e4859eec392ac67b813402703bab0",
+      "profile": "ros1-melodic-gazebo9",
+      "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (Gazebo 9.19.0; facts only).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:5",
+          "token": "ROS melodic"
+        },
+        {
+          "side": "companion:gazebo_ros_pkgs",
+          "ref": "docs/RELEASE.md:19",
+          "token": "ROS Melodic: Gazebo 9"
+        },
+        {
+          "side": "companion",
+          "ref": "CMakeLists.txt:16",
+          "token": "GAZEBO_MAJOR_VERSION 9"
+        },
+        {
+          "side": "companion",
+          "ref": "Changelog.md:3",
+          "token": "Gazebo 9.19.0"
+        }
+      ],
+      "lock": "gazebosim__gazebo-classic@gazebo9_9.19.0",
+      "ref": "gazebo9_9.19.0",
+      "local_path": "work/companions/gazebosim__gazebo-classic@e4400ae7e04e",
+      "repo_url": "https://github.com/gazebosim/gazebo-classic.git",
+      "license_spdx": "Apache-2.0"
+    }
+  ]
+}

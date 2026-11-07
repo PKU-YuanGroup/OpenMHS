@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.vikashplus/unitree_sim",
+  "track": "robots",
+  "local_path": "robots/vikashplus/unitree_sim",
+  "driver_dir": "MHS/drivers/robots/vikashplus__unitree_sim",
+  "upstream": {
+    "repo_url": "https://github.com/vikashplus/unitree_sim",
+    "commit": "21b5524e7c5586565de5e789e94bb69efd36db69",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 413,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "a1.xml",
+      "line": 10,
+      "kind": "scene"
+    },
+    {
+      "file": "aliengo.xml",
+      "line": 9,
+      "kind": "scene"
+    },
+    {
+      "file": "laikago.xml",
+      "line": 9,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "a1.xml:10 MJCF scene model",
+      "aliengo.xml:9 MJCF scene model",
+      "laikago.xml:9 MJCF scene model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model a1.xml:10",
+      "MJCF scene model aliengo.xml:9",
+      "MJCF scene model laikago.xml:9"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/vikashplus__unitree_sim --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

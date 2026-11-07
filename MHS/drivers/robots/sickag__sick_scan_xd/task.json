@@ -1,0 +1,70 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sickag/sick_scan_xd",
+  "track": "robots",
+  "local_path": "robots/sickag/sick_scan_xd",
+  "driver_dir": "MHS/drivers/robots/sickag__sick_scan_xd",
+  "upstream": {
+    "repo_url": "https://github.com/SICKAG/sick_scan_xd",
+    "commit": "ed157563f1fdc3a2ea4ba6a6cac7e45ba3ab6e36",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 51,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [
+    {
+      "symbol": "sick_scan_common_tcp:SickScanCommonTcp",
+      "file": "include/sick_scan/sick_scan_common_tcp.h",
+      "line": 91,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [
+      "Resolve the root ROS build tooling from pinned package.xml/CMakeLists.txt before installation"
+    ],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "capabilities",
+    "motion"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/sickag__sick_scan_xd --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

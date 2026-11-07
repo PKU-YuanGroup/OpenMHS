@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.kscalelabs/mujoco_playground",
+  "upstream": {
+    "repo_url": "https://github.com/kscalelabs/mujoco_playground",
+    "commit": "9762ac537cf8d03197ce8bfeaf116f56687f3c19",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.py:36 requires Python 3.12 or newer; playground/requirements.txt lists the upstream runtime stack (jax, mediapy, opencv and others). The gate and fake.py need neither: fake.py is pure Python and the gate never installs or imports the upstream package or the MuJoCo engine. Install the upstream stack and mujoco only to serve the model with the real engine (backend sim), which was not run; the clone's playground/kbot/xmls/meshes and assets must stay beside the scene."
+  },
+  "backends": {
+    "fake": ".fake:fake_mujoco"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-098",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

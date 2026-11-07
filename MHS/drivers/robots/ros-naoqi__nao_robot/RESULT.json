@@ -1,0 +1,53 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "gate": {
+    "digest": "sha256:cd0f896fc3ce076e12796dec51b0240988fa2b523f3df6df0d2e194f2b8221f4",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.ros-naoqi.walk_velocity.v1",
+      "reason": "No catalogue class fits a rosbridge publication of the NAO cmd_vel Twist. cap.motion.mobile_base.v1 requires a bounded duration plus distance and heading outputs, while the node's cmd_vel callback forwards only twist.linear.x, twist.linear.y and twist.angular.z to setWalkTargetVelocity and publishes no motion acknowledgement. A rosbridge publish receipt is transmission evidence only, so the extension reports published=true and confirmed=false.",
+      "verb": "invoke",
+      "summary": "Publish a Twist on the nao_walker cmd_vel teleoperation topic.",
+      "similar": [
+        "cap.motion.mobile_base.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ros-naoqi.walk_pose.v1",
+      "reason": "No catalogue class fits the NAO robot-frame walkTo Pose2D topic. cap.motion.cartesian_pose.v1 is a robot-arm tool-centre-point class with a reached output, and cap.motion.mobile_base.v1 requires a duration plus measured distance and heading. The cmd_pose publication carries no arrival or completion acknowledgement, so the extension reports published=true and confirmed=false.",
+      "verb": "invoke",
+      "summary": "Publish a Pose2D on the nao_walker cmd_pose teleoperation topic.",
+      "similar": [
+        "cap.motion.mobile_base.v1",
+        "cap.motion.cartesian_pose.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ros-naoqi.stop_walk.v1",
+      "reason": "The ordinary stop_walk_srv Empty request reports callback_returned, not sensed cessation or retirement of earlier callbacks. A None handler return is a service failure. This is not a safe-state or estop action.",
+      "verb": "invoke",
+      "summary": "Request the ordinary walking stop and report only a valid Empty callback response.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ros-naoqi.clip_footstep.v1",
+      "reason": "No catalogue class fits a footstep clipping helper. The upstream ClipFootstep service takes a StepTarget and returns the clipped StepTarget; no catalogue motion class accepts a footstep pose, and the upstream full helper also runs external almath ellipse and collision routines. The extension carries an inline pose input/output schema.",
+      "verb": "invoke",
+      "summary": "Call the nao_footsteps clip_footstep_srv footstep clipping helper.",
+      "similar": []
+    }
+  ],
+  "notes": "BLOCKED: the selected NAO velocity, pose, ordinary stop_walk and footstep-clipping calls remain, but an earlier gotoStartWalkPose callback can resume walking after a stop callback returns. The ordinary stop request is therefore not an estop binding, safe-state action or latch exemption. A valid Empty response acknowledges only the callback; the pinned exception branch returns None, which is a rospy service failure, not an EmptyResponse. Malformed replies become OutcomeUnknown and service failures become DriverFailed. The stock estop reports failed/false safety while retaining the latch, and sends no unproven stop request. Raw motion inputs and footstep workspace are operator-required, with example values marked as fake test configuration. External NAOqi/almath behavior, retained callbacks and physical balance/safe stop remain unproven. R2 and the required complete motion scope remain; no observation-only substitute is accepted.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Retain blocked; preserve the ordinary stop request but withdraw unsafe certification and correct failure semantics. Complete fake/diagnostic gate remains rejected at G3. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: REFERENCE.md, RESULT.json, check-report.json, driver.py, facts.md, fake.py, reference.json, test_driver.py. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

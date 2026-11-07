@@ -1,0 +1,26 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example BCR arm simulation site (test data only)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/bcr_arm": {
+      "x-cap.blackcoffeerobotics.arm_trajectory.v1": {
+        "points[*].time_from_start.sec": {
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "source": "operator",
+          "reason": "example trajectory time envelope for the test harness; the deployed site supplies its own bound"
+        },
+        "points[*].time_from_start.nanosec": {
+          "min": 0,
+          "max": 999999999,
+          "unit": "ns",
+          "source": "operator",
+          "reason": "example nanosecond range for the test harness; the deployed site supplies its own bound"
+        }
+      }
+    }
+  }
+}

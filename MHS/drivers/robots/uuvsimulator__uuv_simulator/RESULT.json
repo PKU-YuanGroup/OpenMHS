@@ -1,0 +1,52 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:e0a57bc59c90bdf2e3ebbc1ebe2acbc11f902863845b04a63cde46b92f5520c5",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.uuvsimulator.set_current_velocity.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class expresses the atomic three-field SetCurrentVelocity environment request. cap.device.configure.v1 maps a patch of independently writable state fields and cannot send the coupled velocity, horizontal_angle and vertical_angle request as one acknowledged operation.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.uuvsimulator.set_horizontal_angle.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds a single simulated environment angle to the SetCurrentDirection service. cap.device.configure.v1 has no matching state field and cap.motion.* classes bind robot motion, not water-current direction.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.uuvsimulator.set_vertical_angle.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds a single simulated environment angle to the SetCurrentDirection service. cap.device.configure.v1 has no matching state field and cap.motion.* classes bind robot motion, not water-current direction.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.uuvsimulator.current_velocity.v1",
+      "verb": "read",
+      "reason": "cap.sensing.read.v1 binds sensor, sensor.imu and sensor.force_torque resources. This device is world.sim and the observation is a geometry_msgs/TwistStamped flow vector from a Gazebo world plugin; the extension carries the explicit subscribe schema.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.uuvsimulator.zero_current.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class expresses an input-free safe-state action that zeroes a simulated water-current model. cap.motion.stop.v1 is robot motion; cap.device.configure.v1 needs a writable state patch and cannot carry the fixed SetCurrentVelocity request.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "SCOPE: the selected sim-env device is the UnderwaterCurrentROSPlugin world plugin (uuv_world_ros_plugins), not the DPControllerLocalPlanner hinted by the card. It is a coherent environment control surface: set_current_velocity, set_current_horz_angle, set_current_vert_angle, the current_velocity flow topic and a fixed zero-current safe state. The DP controller service surface is not exposed by this package. Its service types are declared in the clone only as rospy.Service arguments and uuv_control_msgs.Hold / uuv_control_msgs.GoTo docstring dot forms, which the G7 ROS checker does not accept as a type citation; the selected plugin's generated types are include-cited at UnderwaterCurrentROSPlugin.hh:33-37.\n\nLIMITS: every numeric setter input is Limit.operator_required because the velocity and angle ranges are read from the deployment's constant_current SDF block. site-limits.example.json contains example values only; the shipped world's 0..5 m/s and -3.141592653589793238..3.141592653589793238 rad values are an example configuration, not a fixed device bound.\n\nSTOP: the e-stop binding is the same input-free fixed set_current_velocity request used by the zero_current safe-state action. It zeroes the three Gauss-Markov model means; it is an acknowledged software action on the simulated current model and does not stop the vehicle, the Gazebo world or the clock. It fails closed if the deployment's velocity model excludes zero (GaussMarkovProcess::SetMean returns false). No physical emergency stop is claimed and no hardware run was made.\n\nDEPLOYMENT: the plugin's namespace comes from the world SDF; /hydrodynamics is the shipped auv_underwater_world namespace. The operator must configure or remap the actual namespace. The model getter/setter services and the vertical-angle getter advertised with the horizontal-angle callback (UnderwaterCurrentROSPlugin.cc:105-108) are out of scope.\n\nFAKE: the fake is an analytic ROS-free F0 stand-in for the declared service and topic traffic, not a recording and not Gazebo. It runs no world update, Gauss-Markov process, physics, current field or vehicle dynamics; its canned flow mapping and model ranges are placeholders. No live ROS graph, Gazebo world or hardware was contacted. Evidence is contract_checked only. driver.lock.json keeps reviewed_by null; no human review or hardware validation is claimed.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked every service and topic name and type against the pinned clone (relative names under the SDF namespace, /hydrodynamics in the shipped world and in the upstream scripts set_timed_current_perturbation.py:69,75), the success predicates against SetCurrentVelocity.srv and SetCurrentDirection.srv, the five operator_required bounds, all 13 facts and the zero-current stop. The safe_state misdescribed the stop: it said the flow decays toward zero and is refused only when the velocity range excludes zero, but SetMean resets the Gauss-Markov state to the new mean at once (noise continues when noiseAmp is non-zero), the request is refused when any of the three ranges excludes zero, and the callback stops at the first refusal so the velocity mean may already be zero. Reviewer changed driver.py (safe_state, one comment, four fidelity gaps, two GaussMarkovProcess facts at GaussMarkovProcess.cc:35-49 and 74-86) and facts.md, and regenerated reference.json, REFERENCE.md and check-report.json. The gate and collect.py --strict pass with no warning and the digest unchanged; a probe with a silent flow topic showed the e-stop still completes and the flow read is refused NOT_READY. For the human reviewer: The e-stop is a simulated-environment action: the fixed SetCurrentVelocity(0, 0, 0) request zeroes the current model means; it does not stop vehicles, thrusters or the Gazebo world, and it fails with the latch held when a configured range excludes zero. The endpoints assume the shipped hydrodynamics namespace; a world with another namespace must remap. Only the current plugin is covered; the DP controllers, thruster managers and vehicle plugins of the repository are not.",
+  "blocked_on": []
+}

@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nimazareian/quadruped-rl-locomotion",
+  "track": "robots",
+  "local_path": "robots/nimazareian/quadruped-rl-locomotion",
+  "driver_dir": "MHS/drivers/robots/nimazareian__quadruped-rl-locomotion",
+  "upstream": {
+    "repo_url": "https://github.com/nimazareian/quadruped-rl-locomotion",
+    "commit": "99763acae393e7d686d006d53310b7b5eaca53e4",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 384,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "go1_mujoco_env:Go1MujocoEnv",
+      "file": "go1_mujoco_env.py",
+      "line": 21,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "unitree_go1/scene_position.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "unitree_go1/scene_torque.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "unitree_go1/go1_position.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "unitree_go1/go1_torque.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "unitree_go1/scene_position.xml:1 MJCF scene model",
+      "unitree_go1/scene_torque.xml:1 MJCF scene model",
+      "unitree_go1/go1_position.xml:1 MJCF robot model",
+      "unitree_go1/go1_torque.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model unitree_go1/scene_position.xml:1",
+      "MJCF scene model unitree_go1/scene_torque.xml:1",
+      "MJCF robot model unitree_go1/go1_position.xml:1",
+      "MJCF robot model unitree_go1/go1_torque.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nimazareian__quadruped-rl-locomotion --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.angel-ayala/gym-webots-drone",
+  "upstream": {
+    "repo_url": "https://github.com/angel-ayala/gym-webots-drone",
+    "commit": "24eb199041403d108bc94fac0f522cb33a544c9c",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "Webots R2023b"
+    ],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.py:25-27 declares gym==0.26.0, simple_pid==2.0.0 and opencv-python==4.8.1.*; README.md:220-224 requires Webots R2023b with WEBOTS_HOME and LD_LIBRARY_PATH. The gate and the fake backend need none of them: fake.py is pure Python. Install the upstream package and Webots only to serve the driver on the real environment (backend sim), which was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeDroneEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wD-020",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

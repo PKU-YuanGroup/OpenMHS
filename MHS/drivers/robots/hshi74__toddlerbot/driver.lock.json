@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.hshi74/toddlerbot",
+  "upstream": {
+    "repo_url": "https://github.com/hshi74/toddlerbot",
+    "commit": "e337f3b177b4b53abff70b31d1695a7b66cc6d2e",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any",
+    "notes": "pyproject.toml:14 requires Python 3.10 or newer; pyproject.toml:36-37 pins mujoco 3.3.4 and mujoco-mjx 3.3.4, and the rest of the stack (jax, brax, numpy) is in pyproject.toml:17-39. The acceptance gate and fake.py need none of them: fake.py is pure Python and reads the card's MJCF text, and the gate never installs or imports the upstream package or MuJoCo. Install the upstream stack only to serve the scene with the real engine (backend sim), which was not run here."
+  },
+  "backends": {
+    "fake": ".fake:FakeMujoco"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-216",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

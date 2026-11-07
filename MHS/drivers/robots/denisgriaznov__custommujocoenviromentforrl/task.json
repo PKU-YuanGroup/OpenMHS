@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.denisgriaznov/custommujocoenviromentforrl",
+  "track": "robots",
+  "local_path": "robots/denisgriaznov/custommujocoenviromentforrl",
+  "driver_dir": "MHS/drivers/robots/denisgriaznov__custommujocoenviromentforrl",
+  "upstream": {
+    "repo_url": "https://github.com/denisgriaznov/custommujocoenviromentforrl",
+    "commit": "a6d91aeb4e9770feda5210753706e7a431643242",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 394,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "ball_balance_env:BallBalanceEnv",
+      "file": "ball_balance_env.py",
+      "line": 9,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "assets/ball_balance.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "assets/ball_balance.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model assets/ball_balance.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/denisgriaznov__custommujocoenviromentforrl --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

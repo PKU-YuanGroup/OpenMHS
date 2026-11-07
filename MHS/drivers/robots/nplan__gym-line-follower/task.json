@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nplan/gym-line-follower",
+  "track": "robots",
+  "local_path": "robots/nplan/gym-line-follower",
+  "driver_dir": "MHS/drivers/robots/nplan__gym-line-follower",
+  "upstream": {
+    "repo_url": "https://github.com/nplan/gym-line-follower",
+    "commit": "11b3dd8fe791c02bc36cbbf91c686825776b3025",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 117,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_line_follower.envs:LineFollowerEnv",
+      "file": "gym_line_follower/envs/line_follower_env.py",
+      "line": 26,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_line_follower.envs:LineFollowerCameraEnv",
+      "file": "gym_line_follower/envs/line_follower_env.py",
+      "line": 342,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_line_follower/__init__.py:3 gym env LineFollower-v0",
+      "gym_line_follower/__init__.py:9 gym env LineFollowerCamera-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env LineFollower-v0 registered at gym_line_follower/__init__.py:3",
+      "gym env LineFollowerCamera-v0 registered at gym_line_follower/__init__.py:9"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nplan__gym-line-follower --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

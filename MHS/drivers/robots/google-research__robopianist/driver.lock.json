@@ -1,0 +1,38 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.google-research/robopianist",
+  "upstream": {
+    "repo_url": "https://github.com/google-research/robopianist",
+    "commit": "0d9736c64eba5faafdf214ed7d38d648ffbd5c7f",
+    "license_spdx": "Apache-2.0"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "git submodule init && git submodule update",
+      "bash scripts/install_deps.sh",
+      "pip install -e \".[dev]\""
+    ],
+    "system_deps": [
+      "fluidsynth",
+      "portaudio19-dev",
+      "ffmpeg"
+    ],
+    "gpu": false,
+    "platform": "any",
+    "notes": "Cited data that nothing runs: README.md:65-78 (the upstream supports Python 3.8 and later and recommends 3.10; the SDK needs 3.10). scripts/install_deps.sh installs fluidsynth, portaudio and ffmpeg with apt or Homebrew (lines 43-58), downloads the TimGM6mb.sf2 soundfont from SourceForge (60-76; importing robopianist fails without it) and checks the menagerie submodule out at 1afc8be before copying the Shadow Hand model (78-88). Nothing was installed, downloaded or imported for this package."
+  },
+  "backends": {
+    "fake": ".fake:FakePianoEnvironment",
+    "sim": ".sim:make_env"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "claude-opus-5-5",
+    "run_id": "p3-sdk-gaps-a-robopianist-20261105",
+    "date": "2026-11-05"
+  },
+  "reviewed_by": null
+}

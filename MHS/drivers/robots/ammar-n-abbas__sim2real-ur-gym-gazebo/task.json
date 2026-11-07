@@ -1,0 +1,75 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ammar-n-abbas/sim2real-ur-gym-gazebo",
+  "track": "robots",
+  "local_path": "robots/ammar-n-abbas/sim2real-ur-gym-gazebo",
+  "driver_dir": "MHS/drivers/robots/ammar-n-abbas__sim2real-ur-gym-gazebo",
+  "upstream": {
+    "repo_url": "https://github.com/ammar-n-abbas/sim2real-ur-gym-gazebo",
+    "commit": "c36c625626c21ed44d02729426a1220fde5ec56a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 155,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "ur_openai.task_envs.ur5_task_space:UR5TaskSpaceEnv",
+      "file": "ur_openai_gym/ur_openai/src/ur_openai/task_envs/ur5_task_space.py",
+      "line": 17,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ur_openai_gym/ur_openai/src/ur_openai/task_envs/ur5_joint_space.py:15 UR5JointSpaceEnv environment class",
+      "ur_openai_gym/ur_openai/src/ur_openai/task_envs/ur5_task_space.py:17 UR5TaskSpaceEnv environment class",
+      "ur_openai_gym/ur_openai/src/ur_openai/task_envs/ur5_task_space_grasp.py:49 UR5GraspEnv environment class",
+      "ur_openai_gym/ur_openai/src/ur_openai/task_envs/ur5_task_space_pick_and_place.py:33 UR5PickAndPlaceEnv environment class"
+    ],
+    "upstream_tests": "ur_gazebo/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ammar-n-abbas__sim2real-ur-gym-gazebo --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

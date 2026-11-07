@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.hewlettpackard/sustain-cluster",
+  "track": "robots",
+  "local_path": "robots/hewlettpackard/sustain-cluster",
+  "driver_dir": "MHS/drivers/robots/hewlettpackard__sustain-cluster",
+  "upstream": {
+    "repo_url": "https://github.com/hewlettpackard/sustain-cluster",
+    "commit": "3f6ea95cb835b89ba50b0ef76d66d14b8037643e",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 142,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "envs.task_scheduling_env:TaskSchedulingEnv",
+      "file": "envs/task_scheduling_env.py",
+      "line": 18,
+      "confidence": "override"
+    },
+    {
+      "symbol": "envs.sustaindc.sustaindc_env:SustainDC",
+      "file": "envs/sustaindc/sustaindc_env.py",
+      "line": 30,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "envs/task_scheduling_env.py:18 TaskSchedulingEnv environment class",
+      "envs/sustaindc/battery_env.py:7 BatteryEnvFwd environment class",
+      "envs/sustaindc/dc_gym.py:11 dc_gymenv environment class",
+      "envs/sustaindc/sustaindc_env.py:30 SustainDC environment class"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/hewlettpackard__sustain-cluster --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

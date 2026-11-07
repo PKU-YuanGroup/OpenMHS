@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.avisingh599/roboverse",
+  "track": "robots",
+  "local_path": "robots/avisingh599/roboverse",
+  "driver_dir": "MHS/drivers/robots/avisingh599__roboverse",
+  "upstream": {
+    "repo_url": "https://github.com/avisingh599/roboverse",
+    "commit": "a443f79af67529158ba409889fd7b8006b1d3f88",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 278,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "roboverse.envs.widow250:Widow250Env",
+      "file": "roboverse/envs/widow250.py",
+      "line": 30,
+      "confidence": "override"
+    },
+    {
+      "symbol": "roboverse.envs.registration:make",
+      "file": "roboverse/envs/registration.py",
+      "line": 1035,
+      "confidence": "override"
+    },
+    {
+      "symbol": "roboverse.envs.widow250:Widow250MultiObjectEnv",
+      "file": "roboverse/envs/widow250.py",
+      "line": 361,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "roboverse/envs/widow250.py:361 Widow250MultiObjectEnv environment class",
+      "roboverse/envs/widow250_button.py:8 Widow250ButtonEnv environment class",
+      "roboverse/envs/widow250_drawer.py:132 Widow250DrawerRandomizedEnv environment class",
+      "roboverse/envs/widow250_drawer.py:216 Widow250DoubleDrawerEnv environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/avisingh599__roboverse --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

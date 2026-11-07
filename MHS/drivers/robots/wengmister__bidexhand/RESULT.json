@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "notes": "BLOCKED before driver implementation. BiDexHand exposes both cli service and streaming servo-control profiles. The required primary hand motion depends on retained targets and external servo/controller state; the owned source does not provide an acknowledged independent stop with bounded cancellation/lifecycle. Model calibration and vision metadata cannot replace the selected actuation workflow. No limits or safe stop are fabricated from demonstration values. The retained source review checks the exact service/type and streaming declarations and the full required scope. Only the missing-layout diagnostic gate is recorded. No servo, upstream node, camera or hardware was run.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Retain blocked; required hand actuation is not replaced by metadata or observation. Complete fake/diagnostic gate remains rejected at G1, G2, G3, G9. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: RESULT.json, check-report.json. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged.",
+  "gate": {
+    "digest": "sha256:01e194b8689c96b5f815230e6d18ba9486d961e10294c4570cb91690d0000619",
+    "failed": [
+      "G1",
+      "G2",
+      "G3",
+      "G9"
+    ],
+    "report": "check-report.json"
+  }
+}

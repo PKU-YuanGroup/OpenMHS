@@ -1,0 +1,138 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.benelot/pybullet-gym",
+  "track": "robots",
+  "local_path": "robots/benelot/pybullet-gym",
+  "driver_dir": "MHS/drivers/robots/benelot__pybullet-gym",
+  "upstream": {
+    "repo_url": "https://github.com/benelot/pybullet-gym",
+    "commit": "bc68201c8101c4e30dde95f425647a0709ee2f29",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 62,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "pybulletgym.envs.roboschool.envs.pendulum.inverted_pendulum_env:InvertedPendulumBulletEnv",
+      "file": "pybulletgym/envs/roboschool/envs/pendulum/inverted_pendulum_env.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pybulletgym.envs.roboschool.envs.pendulum.inverted_double_pendulum_env:InvertedDoublePendulumBulletEnv",
+      "file": "pybulletgym/envs/roboschool/envs/pendulum/inverted_double_pendulum_env.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pybulletgym.envs.roboschool.envs.pendulum.inverted_pendulum_env:InvertedPendulumSwingupBulletEnv",
+      "file": "pybulletgym/envs/roboschool/envs/pendulum/inverted_pendulum_env.py",
+      "line": 45,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pybulletgym.envs.roboschool.envs.manipulation.reacher_env:ReacherBulletEnv",
+      "file": "pybulletgym/envs/roboschool/envs/manipulation/reacher_env.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pybulletgym.envs.roboschool.envs.manipulation.pusher_env:PusherBulletEnv",
+      "file": "pybulletgym/envs/roboschool/envs/manipulation/pusher_env.py",
+      "line": 7,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "pybulletgym/envs/assets/mjcf/ant.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "pybulletgym/envs/assets/mjcf/ground.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "pybulletgym/envs/assets/mjcf/half_cheetah.xml",
+      "line": 35,
+      "kind": "robot"
+    },
+    {
+      "file": "pybulletgym/envs/assets/mjcf/hopper.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "pybulletgym/envs/assets/mjcf/humanoid.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pybulletgym/agents/__init__.py:9 gym env KerasCEMAgent-v0",
+      "pybulletgym/agents/__init__.py:14 gym env KerasDDPGAgent-v0",
+      "pybulletgym/agents/__init__.py:19 gym env KerasDDQNAgent-v0",
+      "pybulletgym/agents/__init__.py:24 gym env KerasDQNAgent-v0"
+    ],
+    "upstream_tests": "pybulletgym/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env KerasCEMAgent-v0 registered at pybulletgym/agents/__init__.py:9",
+      "gym env KerasDDPGAgent-v0 registered at pybulletgym/agents/__init__.py:14",
+      "gym env KerasDDQNAgent-v0 registered at pybulletgym/agents/__init__.py:19",
+      "gym env KerasDQNAgent-v0 registered at pybulletgym/agents/__init__.py:24",
+      "gym env KerasNAFAgent-v0 registered at pybulletgym/agents/__init__.py:29",
+      "gym env InvertedPendulumPyBulletEnv-v0 registered at pybulletgym/envs/__init__.py:5",
+      "gym env InvertedDoublePendulumPyBulletEnv-v0 registered at pybulletgym/envs/__init__.py:12",
+      "gym env InvertedPendulumSwingupPyBulletEnv-v0 registered at pybulletgym/envs/__init__.py:19",
+      "gym env ReacherPyBulletEnv-v0 registered at pybulletgym/envs/__init__.py:28",
+      "gym env PusherPyBulletEnv-v0 registered at pybulletgym/envs/__init__.py:35",
+      "gym env ThrowerPyBulletEnv-v0 registered at pybulletgym/envs/__init__.py:42",
+      "gym env StrikerPyBulletEnv-v0 registered at pybulletgym/envs/__init__.py:49"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/benelot__pybullet-gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

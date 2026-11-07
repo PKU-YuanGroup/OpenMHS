@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.hybridrobotics/whole_body_tracking",
+  "track": "robots",
+  "local_path": "robots/hybridrobotics/whole_body_tracking",
+  "driver_dir": "MHS/drivers/robots/hybridrobotics__whole_body_tracking",
+  "upstream": {
+    "repo_url": "https://github.com/hybridrobotics/whole_body_tracking",
+    "commit": "cd65172032893724b445448818c34165846d847d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 66,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "whole_body_tracking.tasks.tracking.config.g1.flat_env_cfg:G1FlatEnvCfg",
+      "file": "source/whole_body_tracking/whole_body_tracking/tasks/tracking/config/g1/flat_env_cfg.py",
+      "line": 9,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/whole_body_tracking/whole_body_tracking/tasks/tracking/config/g1/__init__.py:9 gym env Tracking-Flat-G1-v0",
+      "source/whole_body_tracking/whole_body_tracking/tasks/tracking/config/g1/__init__.py:19 gym env Tracking-Flat-G1-Wo-State-Estimation-v0",
+      "source/whole_body_tracking/whole_body_tracking/tasks/tracking/config/g1/__init__.py:30 gym env Tracking-Flat-G1-Low-Freq-v0",
+      "source/whole_body_tracking/whole_body_tracking/tasks/tracking/config/humanoid/__init__.py:9 gym env Tracking-Flat-Walk-Humanoid-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Tracking-Flat-G1-v0 registered at source/whole_body_tracking/whole_body_tracking/tasks/tracking/config/g1/__init__.py:9",
+      "gym env Tracking-Flat-G1-Wo-State-Estimation-v0 registered at source/whole_body_tracking/whole_body_tracking/tasks/tracking/config/g1/__init__.py:19",
+      "gym env Tracking-Flat-G1-Low-Freq-v0 registered at source/whole_body_tracking/whole_body_tracking/tasks/tracking/config/g1/__init__.py:30",
+      "gym env Tracking-Flat-Walk-Humanoid-v0 registered at source/whole_body_tracking/whole_body_tracking/tasks/tracking/config/humanoid/__init__.py:9",
+      "gym env Tracking-Flat-WalkBack-Humanoid-v0 registered at source/whole_body_tracking/whole_body_tracking/tasks/tracking/config/humanoid/__init__.py:19",
+      "gym env Tracking-Flat-WalkBox-Humanoid-v0 registered at source/whole_body_tracking/whole_body_tracking/tasks/tracking/config/humanoid/__init__.py:29"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/hybridrobotics__whole_body_tracking --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

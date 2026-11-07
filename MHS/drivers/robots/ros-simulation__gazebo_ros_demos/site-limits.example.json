@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example RRBot simulation site (operator overlay example, not a device fact)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example joint envelopes only. The pinned clone declares joint1 and joint2 as continuous joints and states no travel bound (rrbot.xacro:55-61,90-96); rrbot_control.yaml declares PID gains but no position limit. The values below are test data for the fake conformance run, not device facts, not a runtime clamp and not a recommendation. A real site must replace them with its own assessed envelope.",
+  "devices": {
+    "mhs://localhost/rrbot": {
+      "x-cap.ros-simulation.rrbot_joint1_position.v1": {
+        "position": {"min": -3.141592653589793, "max": 3.141592653589793, "unit": "rad",
+                     "source": "operator", "reason": "example site envelope for joint1; the clone states no bound"}
+      },
+      "x-cap.ros-simulation.rrbot_joint2_position.v1": {
+        "position": {"min": -3.141592653589793, "max": 3.141592653589793, "unit": "rad",
+                     "source": "operator", "reason": "example site envelope for joint2; the clone states no bound"}
+      }
+    }
+  }
+}

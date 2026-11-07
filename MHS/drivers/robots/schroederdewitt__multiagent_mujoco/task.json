@@ -1,0 +1,106 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.schroederdewitt/multiagent_mujoco",
+  "track": "robots",
+  "local_path": "robots/schroederdewitt/multiagent_mujoco",
+  "driver_dir": "MHS/drivers/robots/schroederdewitt__multiagent_mujoco",
+  "upstream": {
+    "repo_url": "https://github.com/schroederdewitt/multiagent_mujoco",
+    "commit": "b212ddd74b258e7cea006ff1d642b5ffada4b99d",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 110,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "multiagent_mujoco.mujoco_multi:MujocoMulti",
+      "file": "multiagent_mujoco/mujoco_multi.py",
+      "line": 29,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "multiagent_mujoco/assets/coupled_half_cheetah.xml",
+      "line": 31,
+      "kind": "robot"
+    },
+    {
+      "file": "multiagent_mujoco/assets/manyagent_ant.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "multiagent_mujoco/assets/manyagent_ant__stage1.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "multiagent_mujoco/assets/manyagent_swimmer__bckp2.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "multiagent_mujoco/assets/manyagent_swimmer_bckp.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "multiagent_mujoco/assets/coupled_half_cheetah.xml:31 MJCF robot model",
+      "multiagent_mujoco/assets/manyagent_ant.xml:1 MJCF robot model",
+      "multiagent_mujoco/assets/manyagent_ant__stage1.xml:1 MJCF robot model",
+      "multiagent_mujoco/assets/manyagent_swimmer__bckp2.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model multiagent_mujoco/assets/coupled_half_cheetah.xml:31",
+      "MJCF robot model multiagent_mujoco/assets/manyagent_ant.xml:1",
+      "MJCF robot model multiagent_mujoco/assets/manyagent_ant__stage1.xml:1",
+      "MJCF robot model multiagent_mujoco/assets/manyagent_swimmer__bckp2.xml:1",
+      "MJCF robot model multiagent_mujoco/assets/manyagent_swimmer_bckp.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/schroederdewitt__multiagent_mujoco --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

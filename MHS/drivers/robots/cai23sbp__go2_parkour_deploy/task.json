@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cai23sbp/go2_parkour_deploy",
+  "track": "robots",
+  "local_path": "robots/cai23sbp/go2_parkour_deploy",
+  "driver_dir": "MHS/drivers/robots/cai23sbp__go2_parkour_deploy",
+  "upstream": {
+    "repo_url": "https://github.com/cai23sbp/go2_parkour_deploy",
+    "commit": "5f04c3b51dcef3629a9500aef16e247d756fcd61",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 64,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "mujoco_deploy.mujoco_env:MujocoEnv",
+      "file": "mujoco_deploy/mujoco_env.py",
+      "line": 9,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "core/go2/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "core/go2/scene_parkour.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "core/go2/go2.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "core/go2/scene.xml:1 MJCF scene model",
+      "core/go2/scene_parkour.xml:1 MJCF scene model",
+      "core/go2/go2.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model core/go2/scene.xml:1",
+      "MJCF scene model core/go2/scene_parkour.xml:1",
+      "MJCF robot model core/go2/go2.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cai23sbp__go2_parkour_deploy --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

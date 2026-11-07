@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.wil3/gymfc",
+  "upstream": {
+    "repo_url": "https://github.com/wil3/gymfc",
+    "commit": "08df94b06a5d7f8fb6d2cb2c155751f5336720e7",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "Gazebo 10.1.0 with Dart 6.7.0 (README.md:97); the C++ plugins are built by setup.py:9-32"
+    ],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The upstream package requires Gazebo 10.1.0 with Dart 6.7.0 and a digital-twin SDF (README.md:97, gymfc/envs/fc_env.py:488-493); setup.py:51 also needs numpy, protobuf and psutil. The gate and the fake backend need none of this: fake.py is pure Python. Install GymFC and Gazebo only to serve the real simulator (backend sim), which was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeStepEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wD-017",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

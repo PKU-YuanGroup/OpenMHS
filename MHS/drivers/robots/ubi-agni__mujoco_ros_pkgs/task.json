@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ubi-agni/mujoco_ros_pkgs",
+  "track": "robots",
+  "local_path": "robots/ubi-agni/mujoco_ros_pkgs",
+  "driver_dir": "MHS/drivers/robots/ubi-agni__mujoco_ros_pkgs",
+  "upstream": {
+    "repo_url": "https://github.com/ubi-agni/mujoco_ros_pkgs",
+    "commit": "9304ca7ec254ac1aaa0c2f556513a9a51d28530e",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 135,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [
+    {
+      "symbol": "mujoco_ros.mujoco_env:MujocoEnv",
+      "file": "mujoco_ros/python/src/mujoco_ros/mujoco_env.py",
+      "line": 296,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "mujoco_ros/python/src/mujoco_ros/mujoco_env.py:296 MujocoEnv environment class"
+    ],
+    "upstream_tests": ".versioning/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ubi-agni__mujoco_ros_pkgs --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

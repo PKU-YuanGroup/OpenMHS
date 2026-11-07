@@ -1,0 +1,112 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.farama-foundation/minigrid",
+  "track": "robots",
+  "local_path": "robots/farama-foundation/minigrid",
+  "driver_dir": "MHS/drivers/robots/farama-foundation__minigrid",
+  "upstream": {
+    "repo_url": "https://github.com/farama-foundation/minigrid",
+    "commit": "b34a5755dbef71e3f1662552259a94b255c1a8bb",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 35,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "minigrid.envs:BlockedUnlockPickupEnv",
+      "file": "minigrid/envs/blockedunlockpickup.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "minigrid.envs:CrossingEnv",
+      "file": "minigrid/envs/crossing.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "minigrid.envs:DistShiftEnv",
+      "file": "minigrid/envs/distshift.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "minigrid.envs:DoorKeyEnv",
+      "file": "minigrid/envs/doorkey.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "minigrid.envs:DynamicObstaclesEnv",
+      "file": "minigrid/envs/dynamicobstacles.py",
+      "line": 13,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "minigrid/__init__.py:17 gym env MiniGrid-BlockedUnlockPickup-v0",
+      "minigrid/__init__.py:24 gym env MiniGrid-LavaCrossingS9N1-v0",
+      "minigrid/__init__.py:30 gym env MiniGrid-LavaCrossingS9N2-v0",
+      "minigrid/__init__.py:36 gym env MiniGrid-LavaCrossingS9N3-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env MiniGrid-BlockedUnlockPickup-v0 registered at minigrid/__init__.py:17",
+      "gym env MiniGrid-LavaCrossingS9N1-v0 registered at minigrid/__init__.py:24",
+      "gym env MiniGrid-LavaCrossingS9N2-v0 registered at minigrid/__init__.py:30",
+      "gym env MiniGrid-LavaCrossingS9N3-v0 registered at minigrid/__init__.py:36",
+      "gym env MiniGrid-LavaCrossingS11N5-v0 registered at minigrid/__init__.py:42",
+      "gym env MiniGrid-SimpleCrossingS9N1-v0 registered at minigrid/__init__.py:51",
+      "gym env MiniGrid-SimpleCrossingS9N2-v0 registered at minigrid/__init__.py:57",
+      "gym env MiniGrid-SimpleCrossingS9N3-v0 registered at minigrid/__init__.py:63",
+      "gym env MiniGrid-SimpleCrossingS11N5-v0 registered at minigrid/__init__.py:69",
+      "gym env MiniGrid-DistShift1-v0 registered at minigrid/__init__.py:78",
+      "gym env MiniGrid-DistShift2-v0 registered at minigrid/__init__.py:84",
+      "gym env MiniGrid-DoorKey-5x5-v0 registered at minigrid/__init__.py:93"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/farama-foundation__minigrid --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.genesis-embodied-ai/difftactile",
+  "upstream": {
+    "repo_url": "https://github.com/genesis-embodied-ai/difftactile",
+    "commit": "c4bf43d44071758aea68a5c7ae125fc8257bb8e1",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": "3.9.16",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any",
+    "notes": "README.md:16 creates the conda environment with python=3.9.16. The gate and the fake backend never install or import the upstream package: fake.py is pure Python and runs on the SDK's Python. Installing the clone is only needed to serve the real simulator, which was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeTactileEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-108",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

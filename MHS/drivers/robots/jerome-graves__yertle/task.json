@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jerome-graves/yertle",
+  "track": "robots",
+  "local_path": "robots/jerome-graves/yertle",
+  "driver_dir": "MHS/drivers/robots/jerome-graves__yertle",
+  "upstream": {
+    "repo_url": "https://github.com/jerome-graves/yertle",
+    "commit": "9d04e2d2c1da07d5845807bd36b242b1d0eff843",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 80,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "learning.yertle_env:YertleEnv",
+      "file": "learning/yertle_env.py",
+      "line": 126,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "isaac_lab/__init__.py:10 gym env Isaac-Velocity-Flat-Yertle-v0",
+      "isaac_lab/__init__.py:20 gym env Isaac-Velocity-Flat-Yertle-Play-v0",
+      "isaac_lab/__init__.py:30 gym env Isaac-Velocity-Rough-Yertle-v0",
+      "isaac_lab/__init__.py:40 gym env Isaac-Velocity-Flat-Yertle-Distill-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Isaac-Velocity-Flat-Yertle-v0 registered at isaac_lab/__init__.py:10",
+      "gym env Isaac-Velocity-Flat-Yertle-Play-v0 registered at isaac_lab/__init__.py:20",
+      "gym env Isaac-Velocity-Rough-Yertle-v0 registered at isaac_lab/__init__.py:30",
+      "gym env Isaac-Velocity-Flat-Yertle-Distill-v0 registered at isaac_lab/__init__.py:40",
+      "gym env Isaac-Velocity-Rough-Yertle-Play-v0 registered at isaac_lab/__init__.py:50"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jerome-graves__yertle --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

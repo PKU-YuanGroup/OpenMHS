@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.clementperroud/gym-trading-env",
+  "track": "robots",
+  "local_path": "robots/clementperroud/gym-trading-env",
+  "driver_dir": "MHS/drivers/robots/clementperroud__gym-trading-env",
+  "upstream": {
+    "repo_url": "https://github.com/clementperroud/gym-trading-env",
+    "commit": "a86fc03d29759374fae2db7df4d878485808a730",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 104,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_trading_env.environments:TradingEnv",
+      "file": "src/gym_trading_env/environments.py",
+      "line": 26,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_trading_env.environments:MultiDatasetTradingEnv",
+      "file": "src/gym_trading_env/environments.py",
+      "line": 309,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/gym_trading_env/__init__.py:3 gym env TradingEnv",
+      "src/gym_trading_env/__init__.py:9 gym env MultiDatasetTradingEnv"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env TradingEnv registered at src/gym_trading_env/__init__.py:3",
+      "gym env MultiDatasetTradingEnv registered at src/gym_trading_env/__init__.py:9"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/clementperroud__gym-trading-env --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

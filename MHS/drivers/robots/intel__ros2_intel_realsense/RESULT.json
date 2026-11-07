@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:1c0952621fbfd029b8fff87a1a70364a73a5e4dff816b13dafb264eac43cbd62",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "notes": "The selected Intel RealSense D400 ROS 2 contract exposes the RGB image artifact and read-only frame geometry. The ROS 2 stamp uses sec/nanosec. SIGINT handler registration is at realsense_ros2_camera/src/realsense_camera_node.cpp:113, not line109; it is lifecycle context, not a declared remote camera stop. The fake's small RGB packet is marked placeholder and its full 24 pixel bytes are checked through artifact output; invalid stride/encoding are refused without a grant. Depth, IR, IMU, parameter writes and other camera modes are not silently substituted for the selected RGB contract. Native librealsense, namespace, image timing and camera acquisition lifecycle remain unverified. Execution memory/image bounds are not universal physical device limits.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Accept the selected RGB artifact contract after correcting ROS stamp and source facts. Complete fake gate passes; evidence is contract_checked only. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: REFERENCE.md, RESULT.json, check-report.json, driver.py, facts.md, fake.py, reference.json. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged.",
+  "blocked_on": []
+}

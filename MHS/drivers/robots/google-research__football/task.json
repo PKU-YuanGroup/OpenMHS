@@ -1,0 +1,80 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.google-research/football",
+  "track": "robots",
+  "local_path": "robots/google-research/football",
+  "driver_dir": "MHS/drivers/robots/google-research__football",
+  "upstream": {
+    "repo_url": "https://github.com/google-research/football",
+    "commit": "3d9e754720a95621bba6475c4d3b0d56fe919014",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 256,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gfootball.env:create_environment",
+      "file": "gfootball/__init__.py",
+      "line": 24,
+      "confidence": "recon"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gfootball/__init__.py:24 gym env GFootball-{}-SMM-v0",
+      "gfootball/__init__.py:33 gym env GFootball-{}-Pixels-v0",
+      "gfootball/__init__.py:42 gym env GFootball-{}-simple115-v0",
+      "gfootball/__init__.py:51 gym env GFootball-{}-simple115v2-v0"
+    ],
+    "upstream_tests": "gfootball/scenarios/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env GFootball-{}-SMM-v0 (id template, built at run time) registered at gfootball/__init__.py:24",
+      "gym env GFootball-{}-Pixels-v0 (id template, built at run time) registered at gfootball/__init__.py:33",
+      "gym env GFootball-{}-simple115-v0 (id template, built at run time) registered at gfootball/__init__.py:42",
+      "gym env GFootball-{}-simple115v2-v0 (id template, built at run time) registered at gfootball/__init__.py:51"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/google-research__football --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

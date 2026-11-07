@@ -1,0 +1,60 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:6d021a290add79448cc33d8efcfc4011f5f10d44713692603c5b1dd002793d6b",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.alexanderkeijzer.joint_observation.v1",
+      "reason": "No catalogue class binds the gym_env/SensorMessage joint-position publication on a world.sim resource. cap.sensing.read.v1 binds only sensor, sensor.imu and sensor.force_torque resources and takes a fields selection, not the native nine-element observations vector. The extension preserves the node's own message without relabelling the arm as a physical sensor.",
+      "verb": "read",
+      "summary": "Read one gym_env/SensorMessage sample on /joint_sensors/value.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.alexanderkeijzer.action_step.v1",
+      "reason": "No catalogue class binds one gym-style environment step that publishes a normalized nine-element incremental joint action, requests one Webots time_step and returns the joint positions read after it. cap.world.step.v1 takes ticks and requires a tick and state_hash; cap.motion.joint_position.v1 takes absolute positions and requires a reached result. The extension preserves the node's publication, its step service and its sensor sample; the publication itself stays unacknowledged.",
+      "verb": "invoke",
+      "summary": "Publish one nine-joint action, call /webots/step once and read /joint_sensors/value after it.",
+      "similar": [
+        "cap.world.step.v1",
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.alexanderkeijzer.step.v1",
+      "reason": "cap.world.step.v1 takes ticks and returns an observation, tick and state_hash. The node's /webots/step callback requests one Webots robot/time_step (the request value is fixed to 80 ms) and returns only a transport success; it returns no observation, reward, tick, termination or state hash. The extension preserves the one-request step.",
+      "verb": "invoke",
+      "summary": "Request one Webots robot/time_step advance through /webots/step.",
+      "similar": [
+        "cap.world.step.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.alexanderkeijzer.reset.v1",
+      "reason": "cap.world.reset.v1 takes a scenario, options and seed and requires an observation and seed in its result. The node's /webots/reset callback takes no request fields, calls the Webots supervisor simulation_reset, requests one 8 ms step and returns a boolean; it has no seed or observation output. The extension preserves the native reset and is the declared safe-state action.",
+      "verb": "invoke",
+      "summary": "Reset the Webots simulation through /webots/reset.",
+      "similar": [
+        "cap.world.reset.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.alexanderkeijzer.reward.v1",
+      "reason": "No catalogue class binds the gym environment's scalar reward service. cap.sensing.read.v1 binds physical sensor resources and selects named fields; the node's /reward callback returns a derived negative joint-distance sum for the environment, not a physical sensor channel.",
+      "verb": "read",
+      "summary": "Read the environment reward scalar from /reward.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    }
+  ],
+  "notes": "HISTORICAL (superseded by the 2026-11-05 repair paragraph at the end where they conflict): BLOCKED (HELPER_MISSING): the RosDriver can bind the pinned ROS 1 surface, but the stock helper cannot give the node's primary actuation the input-dependent observable effect that conformance TCAP-003 requires. Last gate run (2026-11-05T09:24:04Z, backend fake): G1 pass, G2 pass, G3 pass, G4 pass, G5 pass, G6 pass, G7 pass, G8 fail with G8.CONFORMANCE (MHS-Sim CL1; failing required test TCAP-003) and G8.TEST, G9 skip. Report digest sha256:4d5c5a2d957293801a146cb3f4e87c0f8e847d7aa1fb25579bfd1f0813d57626.\n\nThe blocker: the only input-bearing capability is the /joint_actuators/value gym_env/ActuatorMessage publication (src/gym_env_webots_node.cpp:258). Its callback adds motorRange[i]*actions[i]/20 to a static setpoint, clamps the result and calls the per-joint set_position services (117-125); it publishes nothing back. The effect is visible only after a separate /webots/step call (144-164, 253), and a RosDriver command binds exactly one service, action or topic. The publication receipt is {published: true, confirmed: false} for every input, so TCAP-003 sees identical outputs and an unchanged resource state. The only ways to pass would be a fake-only output or resource state that the real interface does not have, or pretending the action service applies the vector; the package does neither. The fake only records the publication and does not simulate joint motion.\n\nSafety: the node advertises /joint_sensors, /joint_actuators, /webots/step, /webots/close, /webots/reset and /reward (250-256); none is a stop or pause. /webots/close only logs Close and returns true (166-169). The reset is declared as the input-free safe-state action: it asks the Webots supervisor to reset the simulation, requests one 8 ms time_step, loops until it succeeds and re-enables the sensors (171-195), restoring the initial simulated world. It does not stop the Webots process, cancel a queued step or fence other /joint_actuators/value publishers, and no independent hardware stop exists or is claimed. The runtime latches in software and the safe-state action is achieved by the reset; the reference correctly reports no native stop (software latch only). The action capability is R2 (robot arm; card floor R0) per MHS/spec/04-safety.md. The fake answers the safe-state reset immediately; that proves the declared ROS call and output contract, not that a Webots process or unrelated ROS clients stopped.\n\nImplemented and checked: the /joint_sensors/value gym_env/SensorMessage subscription (source_ref 259, type include 16), the /joint_actuators/value gym_env/ActuatorMessage publication (258, include 17), /webots/step gym_env/StepEnv (253, include 20), /webots/reset gym_env/ResetEnv (255, include 19) and /reward gym_env/GetReward (256, include 21) as extension capabilities. The nine-element action length comes from MOTOR_NUMBER (25) and the motor_names order (44-46); the normalized -1.0..1.0 action bound is the actuatorSpacesCallback space (108-113; the callback scales by range/20 and clamps the joint setpoint at 117-125). The gym_env message/service definitions are external: the clone only declares the gym_env dependency (package.xml:52-63) and includes its headers (9-21). The StepEnv and ResetEnv response fields are not defined in the clone; the declared empty-response application predicate ($ == {}) is the expected empty-values contract, not a field read from a definition.\n\nFidelity and deployment: the deployed fake is an event-driven ROS-free recording transport (F0), not [...]\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Confirmed the author's block: every endpoint and type (absolute names, gym_env_webots_node.cpp:250-259; the ActuatorMessage actions, SensorMessage observations and GetReward reward fields match the callbacks, the gym_env definitions lie outside the clone), the -1..1 action limit (108-113), all facts and the reset safe state were checked at the pin, and the gate still fails only G8 TCAP-003: a /joint_actuators/value publication only calls set_position and shows nothing until a separate /webots/step, which a RosDriver cannot compose (HELPER_MISSING). Defects: three facts said more than their lines (initSensors' 'sensor period', the step and reset clients named off their ranges, 'one 8 ms time_step' where at least two run), and safe_state claimed the reset 'restores the initial simulated world' (Webots behaviour outside the clone) while omitting that it never clears motorSetPoints and that its unbounded retry loops can outlast the 2 s binding timeout. The reviewer corrected those facts, added three source facts (the --synchronize ros controller, the PROTO's synchronization default, motorSetPoints), rewrote safe_state and added one gap (driver.py), updated facts.md, and regenerated reference.json, REFERENCE.md and check-report.json; the stable digest sha256:46da407d52d686e677316985d27720eb5a7d16787aa6185125f079c80737f035 is unchanged (the author quoted the report_digest). The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it. For the human reviewer: Simulated Panda in Webots; no hardware path in the clone (author's R2 kept). The e-stop runs /webots/reset, whose reply proves only that the supervisor accepted simulation_reset and a later 8 ms step succeeded; it is kept as the safe state because the Panda runs the ros controller with --synchronize, so the world advances only on time_step calls, which the latch refuses for MHS but not for other clients such as the gym_env agent this node serves. motorSetPoints survives the reset. Unblocking needs a publish-then-step command (or a read after a step) in the helper.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): PASS after repair; the blocked text above is historical. Depends on the SDK change ROS-PUBLISH-STEP-AND-MVSIM (publish-then-step; Sonnet review round 1 done). x-cap.alexanderkeijzer.action_step.v1 replaces joint_action: publish /joint_actuators/value (258; 117-125), call /webots/step once (253; 144-164), read a fresh /joint_sensors/value sample (259); a failure after the publication is unknown. TCAP-003 passes. Publication and step reach the node on different ROS connections, one ros::spin() (253, 258, 265): the step may run first, so the observation need not reflect the action (gap; fake switch action_after_step). Not in the clone: a sample after the step reply (none in 2 s: unknown). Reset safe state unchanged. Fingers no longer claim rad (Panda.proto:1348-1351, 1413-1416). Changed driver.py, fake.py, test_driver.py (17 cases), facts.md, reference files, check-report.json, RESULT.json. Pin, DeepSeek attribution, null reviewed_by, publish_review required kept. G1-G9 pass, contract_checked; no Webots or ROS run.\n\nMODEL REVIEW (claude-sonnet-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Different-model review of the p3-sdk-gaps-b work by claude-opus-5-5 (the user chose Claude Sonnet as the different model, 2026-11-04): Claude Sonnet 5.5 (a model, not a human) re-checked this package in round 2. The publish-then-step ordering hazard is now stated in a fidelity gap, in facts.md Scope, in the action description and in a new fact citing gym_env_webots_node.cpp:258-265, and the fake's action_after_step switch with a test reproduces it. The unsettled-step reset limitation (F4) is disclosed precisely and fails closed. The gate and collect --strict pass, and the 17 package tests pass. Evidence stays contract_checked from the fake only, with no Webots or ROS run; reviewed_by stays null and publish_review required is kept. The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it."
+}

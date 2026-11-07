@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "notes": "BLOCKED: the selected WX250s command profile remains a six-arm-joint group plus seven-entry JointState observations including gripper. The model order includes forearm_roll. The unproven raw gripper position is not labeled globally as radians. Six arm bounds are operator-required; the example overlay is test data. Torque-off is not an independently proven safe arm state, and the external server/controller contract is not established, so no native estop or safe-state action is fabricated. The full fake gate correctly rejects this R2 hardware declaration at G3. The required arm command path and state shape remain present rather than being replaced by an observation-only package. No native deployment or gravity-safe behavior is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Retain blocked; repair the model dimensions/joint order and units without inventing safe torque shutdown. Complete fake/diagnostic gate remains rejected at G3. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: REFERENCE.md, RESULT.json, check-report.json, driver.py, facts.md, fake.py, reference.json, site-limits.example.json, test_driver.py. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged.",
+  "gate": {
+    "digest": "sha256:715e1adf931a707503e2c99281ce4e44343250820b3d23d9a816f117da8a53b5",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.bilalkabas/drl-nav",
+  "track": "robots",
+  "local_path": "robots/bilalkabas/drl-nav",
+  "driver_dir": "MHS/drivers/robots/bilalkabas__drl-nav",
+  "upstream": {
+    "repo_url": "https://github.com/bilalkabas/drl-nav",
+    "commit": "a996f5461c90adfe765ca3274d4da7c8499891c3",
+    "license_spdx": "AGPL-3.0",
+    "license_class": "network-copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 236,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "scripts.airsim_env:AirSimDroneEnv",
+      "file": "scripts/airsim_env.py",
+      "line": 11,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/bilalkabas__drl-nav --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

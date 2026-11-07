@@ -1,0 +1,119 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.stanfordvl/gibsonenv",
+  "track": "robots",
+  "local_path": "robots/stanfordvl/gibsonenv",
+  "driver_dir": "MHS/drivers/robots/stanfordvl__gibsonenv",
+  "upstream": {
+    "repo_url": "https://github.com/stanfordvl/gibsonenv",
+    "commit": "f474d9efd5b5ef703e3bf630a6f7448b54875d0c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 37,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gibson.envs.env_bases:BaseEnv",
+      "file": "gibson/envs/env_bases.py",
+      "line": 22,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gibson.envs.ant_env:AntNavigateEnv",
+      "file": "gibson/envs/ant_env.py",
+      "line": 26,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gibson.envs.humanoid_env:HumanoidNavigateEnv",
+      "file": "gibson/envs/humanoid_env.py",
+      "line": 23,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gibson.envs.husky_env:HuskyNavigateEnv",
+      "file": "gibson/envs/husky_env.py",
+      "line": 29,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "gibson/assets/models/ant.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "gibson/assets/models/humanoid.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "gibson/core/physics/models/ant.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "gibson/core/physics/models/humanoid.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gibson/__init__.py:14 gym env HumanoidCamera-v0",
+      "gibson/__init__.py:19 gym env HumanoidSensor-v0",
+      "gibson/__init__.py:25 gym env AntWalkingEnv-v0",
+      "gibson/__init__.py:31 gym env HuskyWalkingEnv-v0"
+    ],
+    "upstream_tests": "examples/configs/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env HumanoidCamera-v0 registered at gibson/__init__.py:14",
+      "gym env HumanoidSensor-v0 registered at gibson/__init__.py:19",
+      "gym env AntWalkingEnv-v0 registered at gibson/__init__.py:25",
+      "gym env HuskyWalkingEnv-v0 registered at gibson/__init__.py:31"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/stanfordvl__gibsonenv --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

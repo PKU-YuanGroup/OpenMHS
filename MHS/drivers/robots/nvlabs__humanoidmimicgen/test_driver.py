@@ -1,0 +1,119 @@
+"""Acceptance run of the HumanoidMimicGen G1 package: the gate, plus cases for what is specific to this driver.
+
+Add cases, never remove the check_driver call.  The cases run on the fake backend (fake.py): MuJoCo itself is not
+installed where the gate runs, so nothing here compares the stand-in with the real engine.
+"""
+
+import unittest
+from pathlib import Path
+
+from mhs.adapter import close_server, load
+from mhs.testing import check_driver, client_for
+
+HERE = Path(__file__).resolve().parent
+ENVELOPE = "MHS.SAFETY.ENVELOPE_VIOLATION"
+ESTOP = "MHS.SAFETY.ESTOP_ENGAGED"
+
+#: The model has one free joint (7 qpos values, 6 dof) and 29 hinge joints (one each), and 29 motor actuators.
+#: g1_29dof_rev_1_0.xml:61, :391-419.
+NQ = 7 + 29
+NV = 6 + 29
+NU = 29
+#: In-range controls: every wrist actuator accepts 5.0 (its range is +-10) and the larger ranges accept it too.
+MID = [5.0] * NU
+#: A second in-range vector, smaller, so the first joint moves toward a positive value.
+TARGET = [2.5] * NU
+#: The free joint's default quaternion is MuJoCo's identity, stored as [x, y, z, qw, qx, qy, qz].
+FREE_QPOS = [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0]
+
+
+class DriverGate(unittest.TestCase):
+    def test_gate(self) -> None:
+        report = check_driver(HERE, backend="fake")
+        self.assertEqual(report["failed"], [], report)
+
+
+class G1Cases(unittest.TestCase):
+    def serve(self):
+        server = load(HERE, backend="fake")
+        self.addCleanup(close_server, server)
+        client = client_for(server)
+        device_id = client.hello()["devices"][0]["device_id"]
+        session = client.open_session(device_ids=[device_id])["session_id"]
+        self.ids = {"device_id": device_id, "session_id": session}
+        return client
+
+    def reset(self, client):
+        return client.invoke("cap.world.reset.v1", {}, **self.ids)
+
+    def step(self, client, ctrl, ticks=1):
+        return client.invoke("cap.world.step.v1", {"ticks": ticks, "action": {"ctrl": list(ctrl)}}, **self.ids)
+
+    def state(self, client):
+        return client.read("world", **self.ids)["state"]
+
+    def test_the_model_shape_comes_from_the_card_model(self) -> None:
+        client = self.serve()
+        state = self.state(client)
+        self.assertEqual((len(state["qpos"]), len(state["qvel"])), (NQ, NV))
+        self.assertEqual(len(state["ctrl"]), NU)
+        self.assertEqual(state["qpos"][:7], FREE_QPOS)
+        self.assertEqual(state["qpos"][7:], [0.0] * 29)
+        self.assertEqual(state["timestep_ms"], 2.0)          # the model sets no timestep: the library default
+        self.assertEqual(state["tick"], 0)
+
+    def test_a_step_is_bounded_by_the_actuator_control_ranges(self) -> None:
+        client = self.serve()
+        self.assertEqual(self.reset(client)["status"], "completed")
+        self.assertEqual(self.step(client, MID, ticks=2)["status"], "completed")
+        self.assertEqual(self.state(client)["tick"], 2)
+        for index, value in ((0, 89.0), (1, -140.0), (20, 11.0), (26, -31.0)):
+            refused = self.step(client, MID[:index] + [value] + MID[index + 1:])
+            self.assertEqual(refused["status"], "rejected", (index, value))
+            self.assertEqual(refused["error"]["mhs_code"], ENVELOPE, (index, value))
+            self.assertEqual(refused["error"]["details"]["path"], f"action.ctrl[{index}]", (index, value))
+        self.assertEqual(self.state(client)["tick"], 2)       # the refused steps changed nothing
+
+    def test_the_state_follows_the_control_value(self) -> None:
+        client = self.serve()
+        self.assertEqual(self.reset(client)["status"], "completed")
+        first = self.step(client, TARGET)["output"]["observation"]
+        second = self.step(client, TARGET)["output"]["observation"]
+        self.assertGreater(first["qpos"][7], 0.0)             # left_hip_pitch moves toward the control value
+        self.assertGreater(second["qpos"][7], first["qpos"][7])
+        self.assertAlmostEqual(second["time"], 0.004)         # two ticks of the 2 ms step
+        self.assertEqual(self.state(client)["ctrl"], TARGET)
+
+    def test_a_reset_restores_the_model_defaults(self) -> None:
+        client = self.serve()
+        self.step(client, TARGET, ticks=3)
+        receipt = self.reset(client)
+        self.assertEqual(receipt["status"], "completed")
+        output = receipt["output"]
+        self.assertEqual(self.state(client)["tick"], 0)
+        self.assertEqual(output["observation"]["qpos"], FREE_QPOS + [0.0] * 29)
+        self.assertEqual(output["observation"]["time"], 0.0)
+
+    def test_the_fidelity_contract_is_published(self) -> None:
+        client = self.serve()
+        device = client.inspect(self.ids["device_id"])
+        fidelity = device["fidelity"]
+        self.assertEqual(device["mode"], "simulated")
+        self.assertEqual((fidelity["engine"], fidelity["fidelity_level"]),
+                         ("mujoco:g1_29dof_with_hand_rev_1_0", "F1"))
+        self.assertEqual(fidelity["timestep_ms"], 2.0)
+        self.assertEqual((fidelity["realtime_factor"], fidelity["clock"]), (0, "lockstep"))
+        self.assertEqual(fidelity["reset"], "full")
+        self.assertGreaterEqual(len(fidelity["gaps"]), 8)
+
+    def test_the_estop_latches_the_simulation(self) -> None:
+        client = self.serve()
+        self.assertEqual(self.step(client, MID)["status"], "completed")
+        client.estop("test", **self.ids)
+        for refused in (self.step(client, MID), self.reset(client)):
+            self.assertEqual(refused["error"]["mhs_code"], ESTOP)
+        self.assertEqual(self.state(client)["tick"], 1)       # readable, and not advanced
+
+
+if __name__ == "__main__":
+    unittest.main()

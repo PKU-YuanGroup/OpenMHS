@@ -1,0 +1,79 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.toppers/hakoniwa-digital-twin",
+  "track": "robots",
+  "local_path": "robots/toppers/hakoniwa-digital-twin",
+  "driver_dir": "MHS/drivers/robots/toppers__hakoniwa-digital-twin",
+  "upstream": {
+    "repo_url": "https://github.com/toppers/hakoniwa-digital-twin",
+    "commit": "1a2c15b8aade01696a81207c8f28a77013497384",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 377,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "real/test"
+  },
+  "hints": {
+    "reads": [
+      "InfraSensorPositionEstimater.get_segments",
+      "InfraSensorPositionEstimater.get_segments_old2",
+      "InfraSensorPositionEstimater.is_scan_mode",
+      "InfraSensorPositionEstimater.is_significant_change",
+      "HakoPduCommWebSocketImpl.get_instance",
+      "HakoPduServer.get_instance",
+      "HakoPduServer.get_packet"
+    ],
+    "writes": [
+      "InfraSensorPositionEstimater.write_pos",
+      "HakoPduCommWebSocketImpl.setBuffer"
+    ],
+    "actions": [
+      "InfraSensorPositionEstimater.run",
+      "InfraSensorPositionEstimater.plotter.stop",
+      "HakoPduCommWebSocketImpl.run"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/toppers__hakoniwa-digital-twin --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (panda_simulation driver)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only, not a statement about any Panda arm. The pinned clone states no joint travel bound; the limits belong to the external franka_description and panda_moveit_config packages. Replace this example with the reviewed joint range of the deployed arm. Until site-limits.json supplies it, every joint-position call is refused with MHS.SAFETY.LIMITS_UNSET.",
+  "devices": {
+    "mhs://localhost/panda_simulation": {
+      "x-cap.erdalpekel.joint_position_command.v1": {
+        "joint_positions": {"min": -0.1, "max": 0.1, "unit": "rad", "source": "operator",
+                            "reason": "example: replace with the reviewed joint range of the deployed arm"}
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cram2/semantic_digital_twin",
+  "track": "robots",
+  "local_path": "robots/cram2/semantic_digital_twin",
+  "driver_dir": "MHS/drivers/robots/cram2__semantic_digital_twin",
+  "upstream": {
+    "repo_url": "https://github.com/cram2/semantic_digital_twin",
+    "commit": "40a35e7e481b358cd7f9d939c7ff4e0c23826098",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 101,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "resources/mjcf/mjx_single_cube_no_mesh.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "resources/mjcf/mjx_single_cube_no_mesh.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model resources/mjcf/mjx_single_cube_no_mesh.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cram2__semantic_digital_twin --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

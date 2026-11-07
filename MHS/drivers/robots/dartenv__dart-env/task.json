@@ -1,0 +1,140 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.dartenv/dart-env",
+  "track": "robots",
+  "local_path": "robots/dartenv/dart-env",
+  "driver_dir": "MHS/drivers/robots/dartenv__dart-env",
+  "upstream": {
+    "repo_url": "https://github.com/dartenv/dart-env",
+    "commit": "43e5f8c17b534e180e2340ec2ef405950ad7f542",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 250,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym.envs.algorithmic:CopyEnv",
+      "file": "gym/envs/algorithmic/copy_.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym.envs.algorithmic:RepeatCopyEnv",
+      "file": "gym/envs/algorithmic/repeat_copy.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym.envs.algorithmic:ReversedAdditionEnv",
+      "file": "gym/envs/algorithmic/reversed_addition.py",
+      "line": 5,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym.envs.algorithmic:DuplicatedInputEnv",
+      "file": "gym/envs/algorithmic/duplicated_input.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym.envs.algorithmic:ReverseEnv",
+      "file": "gym/envs/algorithmic/reverse.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "gym/envs/robotics/assets/fetch/pick_and_place.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "gym/envs/robotics/assets/hand/manipulate_block.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "gym/envs/robotics/assets/hand/manipulate_block_touch_sensors.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "gym/envs/robotics/assets/hand/manipulate_egg.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "gym/envs/robotics/assets/hand/manipulate_egg_touch_sensors.xml",
+      "line": 2,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym/envs/__init__.py:6 gym env Copy-v0",
+      "gym/envs/__init__.py:13 gym env RepeatCopy-v0",
+      "gym/envs/__init__.py:20 gym env ReversedAddition-v0",
+      "gym/envs/__init__.py:28 gym env ReversedAddition3-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Copy-v0 registered at gym/envs/__init__.py:6",
+      "gym env RepeatCopy-v0 registered at gym/envs/__init__.py:13",
+      "gym env ReversedAddition-v0 registered at gym/envs/__init__.py:20",
+      "gym env ReversedAddition3-v0 registered at gym/envs/__init__.py:28",
+      "gym env DuplicatedInput-v0 registered at gym/envs/__init__.py:36",
+      "gym env Reverse-v0 registered at gym/envs/__init__.py:43",
+      "gym env CartPole-v0 registered at gym/envs/__init__.py:53",
+      "gym env CartPole-v1 registered at gym/envs/__init__.py:60",
+      "gym env MountainCar-v0 registered at gym/envs/__init__.py:67",
+      "gym env MountainCarContinuous-v0 registered at gym/envs/__init__.py:74",
+      "gym env Pendulum-v0 registered at gym/envs/__init__.py:81",
+      "gym env Acrobot-v1 registered at gym/envs/__init__.py:87"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/dartenv__dart-env --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

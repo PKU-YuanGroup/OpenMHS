@@ -1,0 +1,108 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.aalmuzairee/squint",
+  "track": "robots",
+  "local_path": "robots/aalmuzairee/squint",
+  "driver_dir": "MHS/drivers/robots/aalmuzairee__squint",
+  "upstream": {
+    "repo_url": "https://github.com/aalmuzairee/squint",
+    "commit": "7086fd516eda7df585a5261c541e0670a6d916b4",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 223,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "envs.lift:LiftCube",
+      "file": "envs/lift.py",
+      "line": 408,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "envs.lift:LiftCan",
+      "file": "envs/lift.py",
+      "line": 413,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "envs.place:PlaceCube",
+      "file": "envs/place.py",
+      "line": 544,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "envs.place:PlaceCan",
+      "file": "envs/place.py",
+      "line": 550,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "envs.reach:ReachCube",
+      "file": "envs/reach.py",
+      "line": 406,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "envs/lift.py:408 gym env SO101LiftCube-v1",
+      "envs/lift.py:413 gym env SO101LiftCan-v1",
+      "envs/place.py:544 gym env SO101PlaceCube-v1",
+      "envs/place.py:550 gym env SO101PlaceCan-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env SO101LiftCube-v1 registered at envs/lift.py:408",
+      "gym env SO101LiftCan-v1 registered at envs/lift.py:413",
+      "gym env SO101PlaceCube-v1 registered at envs/place.py:544",
+      "gym env SO101PlaceCan-v1 registered at envs/place.py:550",
+      "gym env SO101ReachCube-v1 registered at envs/reach.py:406",
+      "gym env SO101ReachCan-v1 registered at envs/reach.py:412",
+      "gym env SO101StackCube-v1 registered at envs/stack.py:536",
+      "gym env SO101StackCan-v1 registered at envs/stack.py:542"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/aalmuzairee__squint --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

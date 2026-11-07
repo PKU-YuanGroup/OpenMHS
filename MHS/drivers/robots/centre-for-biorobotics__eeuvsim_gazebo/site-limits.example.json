@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example eeUVsim UCAT bench (operator overlay example, not a device fact)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example fin envelopes only. The pinned clone has no runtime bound on Flipper.amplitude, frequency, zero_direction or phase_offset: moveFins.py copies the message values without a check. The amplitude and direction values below follow the RL training action space (RL_UCAT.py:67-71) as an operator example; they are not device facts, not a runtime clamp and not a recommendation. A real site must replace them with its own assessed envelope.",
+  "devices": {
+    "mhs://localhost/eeuvsim-ucat": {
+      "x-cap.centre-for-biorobotics.fin_oscillation.v1": {
+        "flippers[*].amplitude": {"min": 0.0, "max": 0.85, "unit": "rad", "source": "operator",
+                                  "reason": "example site envelope for one fin amplitude"},
+        "flippers[*].frequency": {"min": 0.0, "max": 2.0, "unit": "Hz", "source": "operator",
+                                  "reason": "example site envelope for one fin frequency"},
+        "flippers[*].zero_direction": {"min": -3.141592653589793, "max": 3.141592653589793,
+                                       "unit": "rad", "source": "operator",
+                                       "reason": "example site envelope for one fin zero direction"},
+        "flippers[*].phase_offset": {"min": 0.0, "max": 6.283185307179586, "unit": "rad",
+                                     "source": "operator",
+                                     "reason": "example site envelope for one fin phase offset"}
+      }
+    }
+  }
+}

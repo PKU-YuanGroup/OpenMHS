@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.gongxudong/fly-craft",
+  "upstream": {
+    "repo_url": "https://github.com/gongxudong/fly-craft",
+    "commit": "a54a1c2a1005b6d6ba67d8cea9fbc78c8769f449",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.py:23 requires gymnasium>=0.26, numpy and pandas, and setup.py:29-31 lists Python 3.8 to 3.10. Upstream README.md:74 documents Linux or Windows only because of the compiled *.so/*.dll libraries; the fake backend in fake.py is pure Python and needs no upstream install, and the gate never installs or imports the clone. Installing the upstream package and serving the sim backend were not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeFlyCraftEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-041",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

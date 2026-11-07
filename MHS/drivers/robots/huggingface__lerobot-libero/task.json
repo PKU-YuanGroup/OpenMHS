@@ -1,0 +1,100 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.huggingface/lerobot-libero",
+  "track": "robots",
+  "local_path": "robots/huggingface/lerobot-libero",
+  "driver_dir": "MHS/drivers/robots/huggingface__lerobot-libero",
+  "upstream": {
+    "repo_url": "https://github.com/huggingface/lerobot-libero",
+    "commit": "14fd6f022ff6647defc24e73563b95aa36670f43",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 7,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "libero.libero.envs.problems.libero_coffee_table_manipulation:Libero_Coffee_Table_Manipulation",
+      "file": "libero/libero/envs/problems/libero_coffee_table_manipulation.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "libero.libero.envs.problems.libero_floor_manipulation:Libero_Floor_Manipulation",
+      "file": "libero/libero/envs/problems/libero_floor_manipulation.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "libero.libero.envs.problems.libero_kitchen_tabletop_manipulation:Libero_Kitchen_Tabletop_Manipulation",
+      "file": "libero/libero/envs/problems/libero_kitchen_tabletop_manipulation.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "libero.libero.envs.problems.libero_living_room_tabletop_manipulation:Libero_Living_Room_Tabletop_Manipulation",
+      "file": "libero/libero/envs/problems/libero_living_room_tabletop_manipulation.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "libero.libero.envs.problems.libero_study_tabletop_manipulation:Libero_Study_Tabletop_Manipulation",
+      "file": "libero/libero/envs/problems/libero_study_tabletop_manipulation.py",
+      "line": 12,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "libero/libero/envs/problems/libero_coffee_table_manipulation.py:12 Libero_Coffee_Table_Manipulation environment class",
+      "libero/libero/envs/problems/libero_floor_manipulation.py:12 Libero_Floor_Manipulation environment class",
+      "libero/libero/envs/problems/libero_kitchen_tabletop_manipulation.py:12 Libero_Kitchen_Tabletop_Manipulation environment class",
+      "libero/libero/envs/problems/libero_living_room_tabletop_manipulation.py:12 Libero_Living_Room_Tabletop_Manipulation environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "model"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/huggingface__lerobot-libero --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

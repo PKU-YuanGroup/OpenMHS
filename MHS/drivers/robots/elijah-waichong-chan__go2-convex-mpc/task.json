@@ -1,0 +1,86 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.elijah-waichong-chan/go2-convex-mpc",
+  "track": "robots",
+  "local_path": "robots/elijah-waichong-chan/go2-convex-mpc",
+  "driver_dir": "MHS/drivers/robots/elijah-waichong-chan__go2-convex-mpc",
+  "upstream": {
+    "repo_url": "https://github.com/elijah-waichong-chan/go2-convex-mpc",
+    "commit": "1c63c6a762779887ab0431fd60db681dede6cb32",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 116,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "models/MJCF/go2/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/MJCF/go2/scene_terrain.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/MJCF/go2/go2.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.10,<3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "models/MJCF/go2/scene.xml:1 MJCF scene model",
+      "models/MJCF/go2/scene_terrain.xml:1 MJCF scene model",
+      "models/MJCF/go2/go2.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model models/MJCF/go2/scene.xml:1",
+      "MJCF scene model models/MJCF/go2/scene_terrain.xml:1",
+      "MJCF robot model models/MJCF/go2/go2.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/elijah-waichong-chan__go2-convex-mpc --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

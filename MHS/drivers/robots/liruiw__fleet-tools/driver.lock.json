@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.liruiw/fleet-tools",
+  "upstream": {
+    "repo_url": "https://github.com/liruiw/fleet-tools",
+    "commit": "ca358b149f798301beb04542ee873c45daebceb9",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The upstream environment also needs pydrake, torch and the bundled assets (requirements.txt). The gate and the fake backend need neither: fake.py is pure Python and the gate never installs or imports the upstream package. The sim backend (gymnasium.make of FrankaDrakeEnv-v0) needs the upstream package registered and a Hydra task_config, and was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeFrankaDrakeEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wC-070",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

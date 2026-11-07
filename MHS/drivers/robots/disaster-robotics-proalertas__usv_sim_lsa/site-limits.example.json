@@ -1,0 +1,27 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example USV_SIM_LSA deployment",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example-only operator envelope. The goal bounds are operator_required because the valid area is defined by the loaded scenario and Gazebo world. This example admits only the shipped diffboat_scenario1 start point (x=240 m, y=95 m); replace it with the deployment's planar goal area.",
+  "devices": {
+    "mhs://localhost/usv-sim": {
+      "x-cap.disaster-robotics-proalertas.move_usv_goal.v1": {
+        "x_m": {
+          "min": 240.0,
+          "max": 240.0,
+          "unit": "m",
+          "source": "operator",
+          "reason": "example only: the shipped diffboat_scenario1 scene starts the boat at x=240; replace with the deployment's goal range"
+        },
+        "y_m": {
+          "min": 95.0,
+          "max": 95.0,
+          "unit": "m",
+          "source": "operator",
+          "reason": "example only: the shipped diffboat_scenario1 scene starts the boat at y=95; replace with the deployment's goal range"
+        }
+      }
+    }
+  }
+}

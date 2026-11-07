@@ -1,0 +1,75 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.geonhee-lee/ur5_ros_gym",
+  "track": "robots",
+  "local_path": "robots/geonhee-lee/ur5_ros_gym",
+  "driver_dir": "MHS/drivers/robots/geonhee-lee__ur5_ros_gym",
+  "upstream": {
+    "repo_url": "https://github.com/geonhee-lee/ur5_ros_gym",
+    "commit": "bd291129c8a12be28311538822c900d7d0930930",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 381,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "rl_gym.envs:UnscrewingEnv",
+      "file": "rl_unscrew/rl-gym/rl_gym/envs/unscrewing_env.py",
+      "line": 14,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "rl_unscrew/rl-gym/rl_gym/__init__.py:3 gym env gym_unscrewing_env-v0"
+    ],
+    "upstream_tests": "universal_robot/ur5_moveit_config/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env gym_unscrewing_env-v0 registered at rl_unscrew/rl-gym/rl_gym/__init__.py:3"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/geonhee-lee__ur5_ros_gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.medevilunknown/water-pouring-robot-simulation",
+  "track": "robots",
+  "local_path": "robots/medevilunknown/water-pouring-robot-simulation",
+  "driver_dir": "MHS/drivers/robots/medevilunknown__water-pouring-robot-simulation",
+  "upstream": {
+    "repo_url": "https://github.com/medevilunknown/water-pouring-robot-simulation",
+    "commit": "ff33ae12ae58ef9569ff40d75c88635a14c61d27",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 388,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "so101_mujoco.mujoco.pour_env:So101PourEnv",
+      "file": "workshop/dev/docker/workspace/src/so101_mujoco/mujoco/pour_env.py",
+      "line": 7,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "workshop/dev/docker/workspace/src/so101_mujoco/mujoco/scene-prev.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "workshop/dev/docker/workspace/src/so101_mujoco/mujoco/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "workshop/dev/docker/workspace/src/so101_mujoco/mujoco/so101.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "workshop/dev/docker/workspace/src/so101_mujoco/mujoco/so101_new_calib.xml",
+      "line": 5,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "workshop/dev/docker/workspace/src/so101_mujoco/mujoco/scene-prev.xml:1 MJCF scene model",
+      "workshop/dev/docker/workspace/src/so101_mujoco/mujoco/scene.xml:1 MJCF scene model",
+      "workshop/dev/docker/workspace/src/so101_mujoco/mujoco/so101.xml:2 MJCF robot model",
+      "workshop/dev/docker/workspace/src/so101_mujoco/mujoco/so101_new_calib.xml:5 MJCF robot model"
+    ],
+    "upstream_tests": "workshop/dev/docker/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model workshop/dev/docker/workspace/src/so101_mujoco/mujoco/scene-prev.xml:1",
+      "MJCF scene model workshop/dev/docker/workspace/src/so101_mujoco/mujoco/scene.xml:1",
+      "MJCF robot model workshop/dev/docker/workspace/src/so101_mujoco/mujoco/so101.xml:2",
+      "MJCF robot model workshop/dev/docker/workspace/src/so101_mujoco/mujoco/so101_new_calib.xml:5"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/medevilunknown__water-pouring-robot-simulation --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

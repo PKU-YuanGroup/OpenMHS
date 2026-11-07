@@ -1,0 +1,43 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example CrazyS deployment (operator data, not a device fact)",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "notes": "Example only, not a statement about any Crazyflie or simulation. The pinned clone states no device bound for the roll, pitch, yaw-rate or thrust command; the joystick MAX_* values are configurable defaults. Replace this example with the reviewed envelope. Until site-limits.json supplies it, every command is refused with MHS.SAFETY.LIMITS_UNSET.",
+  "devices": {
+    "mhs://localhost/crazys": {
+      "x-cap.gsilano.attitude_thrust.v1": {
+        "roll": {
+          "min": -0.1,
+          "max": 0.1,
+          "unit": "rad",
+          "source": "operator",
+          "reason": "example: replace with the reviewed roll envelope"
+        },
+        "pitch": {
+          "min": -0.1,
+          "max": 0.1,
+          "unit": "rad",
+          "source": "operator",
+          "reason": "example: replace with the reviewed pitch envelope"
+        },
+        "yaw_rate": {
+          "min": -0.5,
+          "max": 0.5,
+          "unit": "rad/s",
+          "source": "operator",
+          "reason": "example: replace with the reviewed yaw-rate envelope"
+        },
+        "thrust": {
+          "min": 0.0,
+          "max": 1000.0,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example: replace with the reviewed thrust envelope"
+        }
+      }
+    }
+  }
+}

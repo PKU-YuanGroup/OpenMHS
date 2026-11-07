@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Scout V2 Gazebo empty world)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only, not a statement about any Scout. The pinned clone states no numeric range or physical unit for cmd_vel linear.x or angular.z. SCOUT_WHEELBASE and SCOUT_WHEEL_RADIUS are kinematics, and the yaml PID gains are controller gains. Replace this example with the reviewed envelope of the deployment. Until site-limits.json supplies it, every cmd_vel call is refused with MHS.SAFETY.LIMITS_UNSET.",
+  "devices": {
+    "mhs://localhost/scout-v2-gazebo": {
+      "x-cap.agilexrobotics.cmd_vel.v1": {
+        "linear_x": {"min": -1.0, "max": 1.0, "unit": "1", "source": "operator",
+                     "reason": "example: replace with the reviewed linear.x envelope of the deployment"},
+        "angular_z": {"min": -1.0, "max": 1.0, "unit": "1", "source": "operator",
+                      "reason": "example: replace with the reviewed angular.z envelope of the deployment"}
+      }
+    }
+  }
+}

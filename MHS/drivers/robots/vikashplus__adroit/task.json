@@ -1,0 +1,79 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.vikashplus/adroit",
+  "track": "robots",
+  "local_path": "robots/vikashplus/adroit",
+  "driver_dir": "MHS/drivers/robots/vikashplus__adroit",
+  "upstream": {
+    "repo_url": "https://github.com/vikashplus/adroit",
+    "commit": "c98c9c92fc9729e92a10c8db79588348897d8fe3",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 227,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "Adroit_hand.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "Adroit_hand_withOverlay.xml",
+      "line": 11,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "Adroit_hand.xml:1 MJCF scene model",
+      "Adroit_hand_withOverlay.xml:11 MJCF scene model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model Adroit_hand.xml:1",
+      "MJCF scene model Adroit_hand_withOverlay.xml:11"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/vikashplus__adroit --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

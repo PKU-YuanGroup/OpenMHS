@@ -1,0 +1,68 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:1fc741606d96e6b896794ae31731efda73dfe7f12c826cb74bb0f364de8892df",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.anhtuduong.move_joints.v1",
+      "reason": "No catalogue class fits the upstream response. cap.motion.joint_position.v1 requires both reached and the achieved joint_positions in its output, but /ur5/move_joints returns only bool success and the achieved positions are a separate topic. The package uses an inline x-cap output carrying the actual service flag.",
+      "verb": "invoke",
+      "summary": "Command six UR5 joint positions through the upstream /ur5/move_joints service.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.anhtuduong.move_gripper.v1",
+      "reason": "No catalogue class fits the upstream response. cap.manipulation.grasp.v1 models grasp force and an object result and requires grasped, but /ur5/move_gripper sets a diameter and returns only ack. The package uses an inline x-cap output and echoes the requested diameter as a requested value, not a measured opening.",
+      "verb": "invoke",
+      "summary": "Command the soft-gripper opening diameter through the upstream /ur5/move_gripper service.",
+      "similar": [
+        "cap.manipulation.grasp.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.anhtuduong.pause.v1",
+      "reason": "No catalogue class controls a Gazebo physics pause. cap.motion.stop.v1 is a motion deceleration stop, not a simulator pause, and the clone exposes the Gazebo std_srvs/Empty pause service only as a proxy declaration.",
+      "verb": "invoke",
+      "summary": "Pause the Gazebo simulation with the acknowledged /gazebo/pause_physics service.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.anhtuduong.resume.v1",
+      "reason": "No catalogue class resumes a paused simulator. The counterpart of the Gazebo pause is not a world-step or motion class; the fixed unpause service is also the driver's native reset path.",
+      "verb": "invoke",
+      "summary": "Resume the Gazebo simulation with the acknowledged /gazebo/unpause_physics service.",
+      "similar": [
+        "cap.world.step.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.anhtuduong.joint_state.v1",
+      "reason": "No catalogue class observes a raw sensor_msgs/JointState message. cap.sensing.read.v1 expects named channel values in a values object, not the message name/position/velocity/effort arrays; the package declares the exact message shape with an inline schema.",
+      "verb": "read",
+      "summary": "Read one explicit /ur5/joint_states sample.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.anhtuduong.ee_pose.v1",
+      "reason": "No catalogue class observes a geometry_msgs/Pose end-effector pose. cap.sensing.read.v1 is a sensor-channel read, and the clone publishes the pose on its own topic; the package declares the exact Pose shape with an inline schema.",
+      "verb": "read",
+      "summary": "Read one explicit /ur5/ee_pose sample.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    }
+  ],
+  "notes": "PASS on the fake backend only (evidence contract_checked, never an MHS-Device level). Model-authored and unreviewed: driver.lock.json reviewed_by is null. No hardware was attached and no ROS graph, Gazebo, MoveIt, simulator or hardware run is claimed. The card's family:ros/RosDriver shape was confirmed against the pinned clone: motion/ur5_controller.py:308-310 registers the absolute services /ur5/move_joints, /ur5/move_to and /ur5/move_gripper; /ur5/joint_states is a JointState subscription; /ur5/ee_pose is a geometry_msgs.msg.Pose publication; /gazebo/pause_physics and /gazebo/unpause_physics are std_srvs/Empty ServiceProxy declarations. No Python native class is invented. The driver is ROS 1, mode simulated, risk R2, device_kind robot.arm. The main resource snapshot is intentionally empty. Joint state and end-effector pose are explicit x-cap subscription actions; a paused live topic may be silent, so they must not be automatic resource reads. Six catalogue_requests are attached. Safety: the device is a robot arm, so risk is R2 even though the card floor is R1. The input-free pause action (safe_state=True) and the same /gazebo/pause_physics service as the estop binding are the independent stop path. The clone only declares the proxy and never calls it; there is no stop callback, no cancellation check in the /ur5/move_joints loop (motion/ur5_controller.py:635-644), and no stopped-state measurement. The safe_state sentence and fidelity gaps disclose that the acknowledgement is not sensed quiescence and that a pending service callback is not cancelled. mhs.safety.reset clears the latch and calls the fixed /gazebo/unpause_physics reset; resume is also an ordinary action and is refused while latched. Limits: the six joint inputs carry the per-joint UR5e min/max from locosim/robot_descriptions/ur_description/config/ur5e/joint_limits.yaml:10-80, with the configured joint order from params.py:17. The gripper diameter has no stated mechanical bound, so it is Limit.operator_required; site-limits.example.json contains clearly marked example-only test values and the operator must replace them. Fixed request values dt 0.001 s and v_des 0.6 are the upstream simulated client's configured values (params.py:12, motion/main.py:53-56), not device limits. move_to is NOT COVERED because the clone states no reachable workspace envelope and the 7-element pose array cannot be bounded per component from source. Fidelity: analytic ROS contract fake, F0, no physics; every fake number is a # placeholder. The fake always answers observations; a live paused topic may go silent. The service callbacks return bare True/False while the .srv files declare response objects, so live deployment must confirm the serialized response before relying on the ack. No real ROS or hardware test was run. The last gate run passed all gates G1-G9 with no warnings; digest sha256:1fc741606d96e6b896794ae31731efda73dfe7f12c826cb74bb0f364de8892df.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked every service, topic and type against ur5_controller.py and the .srv files, all 21 facts, the UR5e joint limits (joint_limits.yaml:10-80, selected by ros_impedance_controller_ur5.launch:26), the operator_required gripper bound, the fake and the stop path. The /gazebo/pause_physics e-stop freezes the simulated world, but the reset binding called /gazebo/unpause_physics, and both motion loops only sleep on a ros.Rate (move_joints 621-644, move_gripper 589-604) under the launch's use_sim_time (58-67) with no cancellation, so mhs.safety.reset would let an interrupted motion continue without a new command, which SAFE-042 of 04-safety.md forbids (the author's facts.md even said reset leaves the simulation paused). The fake also refused motion calls while paused, which the upstream never does (it waits), the gripper fact misstated the loop's exit, and neither the real-robot path (real_robot flag, ur_robot_driver, gripper scripts to 192.168.0.100:30002) nor the upstream motion client that calls the same services (motion/main.py:67-72) was disclosed. The reviewer removed the reset binding (reset clears only the latch; the explicit resume command unpauses, and its description says an interrupted motion continues), rewrote safe_state, the docstring and that fact, added seven source facts and four gaps (driver.py); removed the invented paused refusal and added a ROS 1 JointState header (fake.py); made the reset case assert that Gazebo stays paused until resume (test_driver.py); updated facts.md; and regenerated reference.json, REFERENCE.md and check-report.json. The gate and collect.py --strict pass with the digest unchanged; the author's note that mhs.safety.reset calls the unpause service is superseded. For the human reviewer: Simulated UR5 arm (ROS 1, Gazebo, MoveIt). The e-stop pauses Gazebo physics; an interrupted /ur5/move_joints or /ur5/move_gripper callback is held, not cancelled, and continues its old motion as soon as anyone unpauses (the explicit resume command, the Gazebo GUI or another client); while paused, new motion calls wait until a resume or their 120 s / 30 s binding timeout. The shipped launch starts Gazebo paused, and the upstream motion client (motion/main.py) calls the same motion services, so it must not run beside MHS. With real_robot set in params.py the same node drives a real UR5 through ur_robot_driver and sends gripper scripts to 192.168.0.100:30002; there the Gazebo pause does not exist, the MHS e-stop fails SAFE_STATE_UNREACHED with the latch held and nothing upstream stops the arm, so a hardware deployment needs a human review and an independent physical stop. The example overlay also names an unserved device id (mhs://localhost/ur5legovision/fake), which only produces a runtime warning."
+}

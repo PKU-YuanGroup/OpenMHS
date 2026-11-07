@@ -1,0 +1,77 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.isaaczh/himloco_lab",
+  "track": "robots",
+  "local_path": "robots/isaaczh/himloco_lab",
+  "driver_dir": "MHS/drivers/robots/isaaczh__himloco_lab",
+  "upstream": {
+    "repo_url": "https://github.com/isaaczh/himloco_lab",
+    "commit": "c3fbd0173f2a53a86e472c099f8e2e9744cf7639",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 112,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "himloco_lab.envs:HimlocoManagerBasedRLEnv",
+      "file": "source/himloco_lab/himloco_lab/envs/him_manager_based_rl_env.py",
+      "line": 6,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/himloco_lab/himloco_lab/tasks/locomotion/robots/go2/__init__.py:3 gym env Unitree-Go2-Velocity",
+      "source/himloco_lab/himloco_lab/tasks/locomotion/robots/go2/__init__.py:15 gym env Unitree-Go2-Velocity-Play"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Unitree-Go2-Velocity registered at source/himloco_lab/himloco_lab/tasks/locomotion/robots/go2/__init__.py:3",
+      "gym env Unitree-Go2-Velocity-Play registered at source/himloco_lab/himloco_lab/tasks/locomotion/robots/go2/__init__.py:15"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/isaaczh__himloco_lab --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

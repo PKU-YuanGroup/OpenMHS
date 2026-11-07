@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.andrejorsula/space_robotics_bench",
+  "track": "robots",
+  "local_path": "robots/andrejorsula/space_robotics_bench",
+  "driver_dir": "MHS/drivers/robots/andrejorsula__space_robotics_bench",
+  "upstream": {
+    "repo_url": "https://github.com/andrejorsula/space_robotics_bench",
+    "commit": "7528ff81f1ac0b34ba259b1ae150fdb4f6a90b5e",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 53,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "srb.tasks.manipulation._manipulation.task:Task",
+      "file": "srb/tasks/manipulation/_manipulation/task.py",
+      "line": 53,
+      "confidence": "override"
+    },
+    {
+      "symbol": "srb.core.env.common.base.direct.impl:DirectEnv",
+      "file": "srb/core/env/common/base/direct/impl.py",
+      "line": 27,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": "==3.11",
+    "commands": [
+      "colcon build"
+    ],
+    "system_deps": [
+      "ament/colcon workspace and the ROS dependencies declared in package.xml"
+    ],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "srb/utils/registry.py:25 gym env {}/{}"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env {}/{} (id template, built at run time) registered at srb/utils/registry.py:25"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/andrejorsula__space_robotics_bench --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.eric-ai-lab/vlmbench",
+  "upstream": {
+    "repo_url": "https://github.com/eric-ai-lab/vlmbench",
+    "commit": "479bd17b7d80645002af74f142a29dfe8b428876",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "README.md:20 requires CoppeliaSim 4.1.0 and PyRep for the upstream simulator; the gate and the fake backend need neither. fake.py is pure Python, and the gate never installs or imports the upstream package. Install the upstream only to serve the driver on the real environment (backend sim, which also needs import amsolver.gym to register the task ids); that path was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeVLMBenchEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wD-012",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

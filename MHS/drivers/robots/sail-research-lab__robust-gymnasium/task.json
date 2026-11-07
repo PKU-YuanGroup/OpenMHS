@@ -1,0 +1,140 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sail-research-lab/robust-gymnasium",
+  "track": "robots",
+  "local_path": "robots/sail-research-lab/robust-gymnasium",
+  "driver_dir": "MHS/drivers/robots/sail-research-lab__robust-gymnasium",
+  "upstream": {
+    "repo_url": "https://github.com/sail-research-lab/robust-gymnasium",
+    "commit": "af6de64d92793ef4c01b80e51e3f2bcd35f8066b",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 59,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robust_gymnasium.envs.classic_control.cartpole:CartPoleEnv",
+      "file": "robust_gymnasium/envs/classic_control/cartpole.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robust_gymnasium.envs.classic_control.mountain_car:MountainCarEnv",
+      "file": "robust_gymnasium/envs/classic_control/mountain_car.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robust_gymnasium.envs.classic_control.continuous_mountain_car:Continuous_MountainCarEnv",
+      "file": "robust_gymnasium/envs/classic_control/continuous_mountain_car.py",
+      "line": 27,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robust_gymnasium.envs.classic_control.pendulum:PendulumEnv",
+      "file": "robust_gymnasium/envs/classic_control/pendulum.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robust_gymnasium.envs.classic_control.acrobot:AcrobotEnv",
+      "file": "robust_gymnasium/envs/classic_control/acrobot.py",
+      "line": 28,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "robust_gymnasium/envs/assets/adroit_hand/adroit_door.xml",
+      "line": 19,
+      "kind": "scene"
+    },
+    {
+      "file": "robust_gymnasium/envs/assets/adroit_hand/adroit_hammer.xml",
+      "line": 19,
+      "kind": "scene"
+    },
+    {
+      "file": "robust_gymnasium/envs/assets/adroit_hand/adroit_pen.xml",
+      "line": 19,
+      "kind": "scene"
+    },
+    {
+      "file": "robust_gymnasium/envs/assets/adroit_hand/adroit_relocate.xml",
+      "line": 19,
+      "kind": "scene"
+    },
+    {
+      "file": "robust_gymnasium/envs/assets/fetch/pick_and_place.xml",
+      "line": 2,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robust_gymnasium/envs/__init__.py:19 gym env CartPole-v0",
+      "robust_gymnasium/envs/__init__.py:27 gym env CartPole-v1",
+      "robust_gymnasium/envs/__init__.py:35 gym env MountainCar-v0",
+      "robust_gymnasium/envs/__init__.py:42 gym env MountainCarContinuous-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env CartPole-v0 registered at robust_gymnasium/envs/__init__.py:19",
+      "gym env CartPole-v1 registered at robust_gymnasium/envs/__init__.py:27",
+      "gym env MountainCar-v0 registered at robust_gymnasium/envs/__init__.py:35",
+      "gym env MountainCarContinuous-v0 registered at robust_gymnasium/envs/__init__.py:42",
+      "gym env Pendulum-v1 registered at robust_gymnasium/envs/__init__.py:49",
+      "gym env Acrobot-v1 registered at robust_gymnasium/envs/__init__.py:55",
+      "gym env phys2d/CartPole-v0 registered at robust_gymnasium/envs/__init__.py:66",
+      "gym env phys2d/CartPole-v1 registered at robust_gymnasium/envs/__init__.py:75",
+      "gym env phys2d/Pendulum-v0 registered at robust_gymnasium/envs/__init__.py:84",
+      "gym env LunarLander-v3 registered at robust_gymnasium/envs/__init__.py:95",
+      "gym env LunarLanderContinuous-v3 registered at robust_gymnasium/envs/__init__.py:102",
+      "gym env BipedalWalker-v3 registered at robust_gymnasium/envs/__init__.py:110"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/sail-research-lab__robust-gymnasium --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

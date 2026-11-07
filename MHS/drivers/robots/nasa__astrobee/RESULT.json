@@ -1,0 +1,22 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:b0d3711c3d7284a6b9284283909163cca69cd238d0baa3c8e754539f4e53f6dc",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.nasa.astrobee.move.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class expresses the choreographer's Motion MOVE pose sequence for robot.mobile_base. cap.motion.mobile_base.v1 binds a linear/angular velocity for a duration, and cap.motion.cartesian_pose.v1 binds robot.arm only; the native message is a geometry_msgs/PoseStamped[] with its own result response codes."
+    },
+    {
+      "capability_id": "x-cap.nasa.astrobee.stop.v1",
+      "verb": "invoke",
+      "reason": "cap.motion.stop.v1 exposes an optional deceleration input and optional stopping-position outputs. The fixed gnc/control ControlAction STOP has no deceleration goal field, and a safe-state action must be input-free; no catalogue class fits that fixed native stop shape."
+    }
+  ],
+  "notes": "The selected Astrobee profile preserves the complete Motion MOVE pose sequence and independent GNC Control STOP action, plus the segment-stamp observation. Every nested position XYZ leaf is operator-required. The example workspace is labeled fake test data, not installed keep-in zones or flight-mode limits. Missing overlays and oversized later-array elements are refused before any goal; a bounded full pose sequence remains callable. The source STOP state machine acknowledges success after its configured velocity/omega thresholds; this is software acknowledgement, not a physical emergency-stop certificate. Pending MOVE cancellation must settle before a fresh stop proof is accepted. Negative application and malformed terminal replies remain failures. Native namespace, flight-mode/EKF/use_truth configuration and child-action ordering remain unverified deployment requirements. IDLE, EXEC, PREP, mob/set_state, validate and reset remain outside this selected profile. R2 is retained, no hardware backend is signed, and no native simulator or physical flight was run.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Accept the selected bounded pose/acknowledged-stop fake contract; native configuration and action ordering remain unverified. Complete fake gate passes; evidence is contract_checked only. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: NATIVE-BLOCKERS.md, REFERENCE.md, RESULT.json, check-report.json, driver.py, facts.md, reference.json, site-limits.example.json, test_driver.py. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. Catalogue rationale corrected: no exclusivity claim about stop capability classes. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged.",
+  "blocked_on": []
+}

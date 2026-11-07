@@ -1,0 +1,75 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jackvice/roboterrain",
+  "track": "robots",
+  "local_path": "robots/jackvice/roboterrain",
+  "driver_dir": "MHS/drivers/robots/jackvice__roboterrain",
+  "upstream": {
+    "repo_url": "https://github.com/jackvice/roboterrain",
+    "commit": "e56a6642b21746f1c5897b9515ef7ac7d258a550",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:source-review",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 158,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "sb3.environments.rover_env:RoverEnv",
+      "file": "ros2_ws/src/sb3/environments/rover_env.py",
+      "line": 68,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ros2_ws/src/sb3/environments/discrete_rover_env_fused.py:64 RoverEnvFused environment class",
+      "ros2_ws/src/sb3/environments/leo_rover_env_fused.py:64 RoverEnvFused environment class",
+      "ros2_ws/src/sb3/environments/rover_env.py:68 RoverEnv environment class",
+      "ros2_ws/src/sb3/environments/rover_env_fused.py:63 RoverEnvFused environment class"
+    ],
+    "upstream_tests": "ros2_ws/src/rover_metrics/bak/2_actor_csv_files/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jackvice__roboterrain --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

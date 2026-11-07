@@ -1,0 +1,101 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.embomaster/polysim",
+  "track": "robots",
+  "local_path": "robots/embomaster/polysim",
+  "driver_dir": "MHS/drivers/robots/embomaster__polysim",
+  "upstream": {
+    "repo_url": "https://github.com/embomaster/polysim",
+    "commit": "0fdb349785479b5c0c30d3c676fae67025b8d34a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 68,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "humanoidverse.simulator.mujoco.mujoco:MuJoCo",
+      "file": "humanoidverse/simulator/mujoco/mujoco.py",
+      "line": 15,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "humanoidverse/data/robots/g1/scene_29dof.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "humanoidverse/data/robots/g1/g1_29dof_anneal_23dof.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "humanoidverse/data/robots/g1/g1_29dof_anneal_23dof_fitmotionONLY.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "smpl_sim/data/assets/mjcf/mesh_humanoid.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "smpl_sim/data/assets/mjcf/smpl_humanoid.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "humanoidverse/simulator/maniskill/maniskill.py:1434 gym env G1Humanoid-Bridge-v0"
+    ],
+    "upstream_tests": "scripts/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env G1Humanoid-Bridge-v0 registered at humanoidverse/simulator/maniskill/maniskill.py:1434"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/embomaster__polysim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

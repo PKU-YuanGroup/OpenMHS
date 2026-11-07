@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:7106d9ba1a5b03a7e2d825ddabc4e8166472026f49ee358f7c83e0072f0e488f",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.sickag.scan.v1",
+      "reason": "No catalogue class carries a complete sensor_msgs LaserScan sample. cap.sensing.point_cloud.v1 is an invoke class for a point-cloud artifact reference with resource kind sensor.depth, not a LaserScan array. cap.sensing.read.v1 requires sampled_at and returns a generic values object; a configuration-only RosDriver cannot synthesize sampled_at from the LaserScan header without a production adapter. The package therefore uses an extension id with an inline read-only schema for the full scan sample.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "The selected sick_scan_xd ROS 2 LaserScan profile uses the shipped laserscan_topic=scan setting, which overrides the node-name fallback and resolves to /scan. Its declaration, facts and generated references agree. The five-beam fake has consistent angle_min/angle_increment/angle_max geometry; values remain explicitly marked placeholders. Nonfinite wire samples are refused as unknown/unavailable rather than silently replaced by finite ranges. The array schema is finite and source-pinned; no universal range/resolution bound is inferred from example launch settings. The package is observational R0, with no scanner configuration or stopping claim. Native driver, namespace/remapping, installed scanner and acquisition behavior are unverified.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Accept the selected LaserScan observation after correcting root topic, fake geometry and nonfinite handling. Complete fake gate passes; evidence is contract_checked only. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: REFERENCE.md, RESULT.json, check-report.json, driver.py, facts.md, fake.py, reference.json, test_driver.py. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. The stop_scanner Fact now cites lines762-807 including send/error handling and states the non-NAV350 profile; no stop capability was added. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged.",
+  "blocked_on": []
+}

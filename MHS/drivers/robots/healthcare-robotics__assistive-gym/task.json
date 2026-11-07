@@ -1,0 +1,94 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.healthcare-robotics/assistive-gym",
+  "track": "robots",
+  "local_path": "robots/healthcare-robotics/assistive-gym",
+  "driver_dir": "MHS/drivers/robots/healthcare-robotics__assistive-gym",
+  "upstream": {
+    "repo_url": "https://github.com/healthcare-robotics/assistive-gym",
+    "commit": "fb799c377e1f144ff96044fb9096725f7f9cfc61",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 107,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "assistive_gym.envs:HumanTestingEnv",
+      "file": "assistive_gym/envs/human_testing.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "assistive_gym.envs:SMPLXTestingEnv",
+      "file": "assistive_gym/envs/smplx_testing.py",
+      "line": 9,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "assistive_gym/__init__.py:22 gym env HumanTesting-v1",
+      "assistive_gym/__init__.py:28 gym env SMPLXTesting-v1",
+      "assistive_gym/envs/arm_manipulation_envs.py:42 gym env assistive_gym:ArmManipulationPR2Human-v1",
+      "assistive_gym/envs/arm_manipulation_envs.py:47 gym env assistive_gym:ArmManipulationBaxterHuman-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env HumanTesting-v1 registered at assistive_gym/__init__.py:22",
+      "gym env SMPLXTesting-v1 registered at assistive_gym/__init__.py:28",
+      "gym env assistive_gym:ArmManipulationPR2Human-v1 registered at assistive_gym/envs/arm_manipulation_envs.py:42",
+      "gym env assistive_gym:ArmManipulationBaxterHuman-v1 registered at assistive_gym/envs/arm_manipulation_envs.py:47",
+      "gym env assistive_gym:ArmManipulationSawyerHuman-v1 registered at assistive_gym/envs/arm_manipulation_envs.py:52",
+      "gym env assistive_gym:ArmManipulationJacoHuman-v1 registered at assistive_gym/envs/arm_manipulation_envs.py:57",
+      "gym env assistive_gym:ArmManipulationStretchHuman-v1 registered at assistive_gym/envs/arm_manipulation_envs.py:62",
+      "gym env assistive_gym:ArmManipulationPandaHuman-v1 registered at assistive_gym/envs/arm_manipulation_envs.py:67",
+      "gym env assistive_gym:BedBathingPR2Human-v1 registered at assistive_gym/envs/bed_bathing_envs.py:42",
+      "gym env assistive_gym:BedBathingBaxterHuman-v1 registered at assistive_gym/envs/bed_bathing_envs.py:47",
+      "gym env assistive_gym:BedBathingSawyerHuman-v1 registered at assistive_gym/envs/bed_bathing_envs.py:52",
+      "gym env assistive_gym:BedBathingJacoHuman-v1 registered at assistive_gym/envs/bed_bathing_envs.py:57"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/healthcare-robotics__assistive-gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

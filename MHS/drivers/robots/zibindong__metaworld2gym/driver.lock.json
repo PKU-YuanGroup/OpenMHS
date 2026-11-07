@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.zibindong/metaworld2gym",
+  "upstream": {
+    "repo_url": "https://github.com/zibindong/metaworld2gym",
+    "commit": "9e7d3da16a86b6bed1353e1c2042115ed75edb1a",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.py:9-16 requires gym, mujoco-py, numpy, torch, termcolor, zarr and numba. The acceptance gate and fake.py need none of them: fake.py is pure Python and the gate never installs or imports the upstream package. Install the upstream stack only to run the wrapper's MuJoCo rendering and point-cloud paths, which this package does not declare as a backend and never ran."
+  },
+  "backends": {
+    "fake": ".fake:FakeMetaWorldEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-178",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

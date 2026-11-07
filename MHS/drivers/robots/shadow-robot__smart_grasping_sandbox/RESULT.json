@@ -1,0 +1,89 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:105d5afd39921275e0c584930b2f8a68ead80e71dd2f4b126b6d484245af4c67",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.shadow-robot.pause_physics.v1",
+      "reason": "No catalogue class controls a simulator's physics pause. cap.motion.stop.v1 stops motion, not the Gazebo physics engine, and cap.world.step.v1 advances a world rather than holding it; the package uses an input-free x-cap action with an acknowledgement-only output and also binds the same service as its simulator stop.",
+      "verb": "invoke",
+      "summary": "Hold the Gazebo simulation with the upstream std_srvs/Empty /gazebo/pause_physics service.",
+      "similar": [
+        "cap.motion.stop.v1",
+        "cap.world.step.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.shadow-robot.unpause_physics.v1",
+      "reason": "No catalogue class resumes a paused physics engine. cap.world.step.v1 advances an unpaused world and has no resume semantics; the package uses an x-cap action for the upstream /gazebo/unpause_physics service.",
+      "verb": "invoke",
+      "summary": "Resume the Gazebo simulation with the upstream std_srvs/Empty /gazebo/unpause_physics service.",
+      "similar": [
+        "cap.world.step.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.shadow-robot.reset_world.v1",
+      "reason": "cap.world.reset.v1 binds the world.sim kind and requires an observation and seed in its output. This driver's device is the simulated robot arm, and the upstream /gazebo/reset_world service is std_srvs/Empty and returns neither an observation nor a seed; the package uses an acknowledged x-cap action instead.",
+      "verb": "invoke",
+      "summary": "Reset the Gazebo world with the upstream std_srvs/Empty /gazebo/reset_world service.",
+      "similar": [
+        "cap.world.reset.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.shadow-robot.joint_states.v1",
+      "reason": "cap.sensing.read.v1 binds sensor resource kinds and returns one values object. The upstream /joint_states topic is the arm's sensor_msgs/JointState with four parallel arrays (name, position, velocity, effort), and robot.arm is not a sensing class; the package exposes a read-only subscription x-cap with an explicit array schema.",
+      "verb": "read",
+      "summary": "Read one fresh /joint_states sample with names, positions, velocities and efforts.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.shadow-robot.object_pose.v1",
+      "reason": "No catalogue class reads a Gazebo model pose. cap.world.state.v1 binds world.sim and requires a state hash and revision that /gazebo/get_model_state does not return, and cap.sensing.read.v1 binds sensor kinds; the package uses a read-only x-cap service observation with an explicit pose schema.",
+      "verb": "read",
+      "summary": "Read the current cricket_ball pose from /gazebo/get_model_state in the world frame.",
+      "similar": [
+        "cap.world.state.v1",
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.shadow-robot.home_configuration.v1",
+      "reason": "cap.motion.home.v1 is the closest class, but it exposes axes and speed_scale controls and describes a homing move. The upstream reset path writes a fixed 15-joint configuration through gazebo_msgs/SetModelConfiguration and cannot honour those controls; the package uses an input-free x-cap that reports the service application result and does not claim trajectory motion.",
+      "verb": "invoke",
+      "summary": "Set the 15 UR10 and H1 joints to SmartGrasper.reset_world's fixed configuration.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.shadow-robot.hand_open.v1",
+      "reason": "cap.manipulation.release.v1 binds robot.gripper and takes an open_width. The upstream open_hand writes the fixed MoveIt open group state through gazebo_msgs/SetModelConfiguration; no width is selected or measured, so the package uses an input-free x-cap that reports the applied configuration.",
+      "verb": "invoke",
+      "summary": "Set the nine H1 hand joints to the MoveIt open group state.",
+      "similar": [
+        "cap.manipulation.release.v1",
+        "cap.manipulation.grasp.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.shadow-robot.hand_close.v1",
+      "reason": "cap.manipulation.grasp.v1 binds robot.arm and robot.gripper and takes force and width. The upstream close_hand writes the fixed MoveIt close group state through gazebo_msgs/SetModelConfiguration; no force or width is selected or measured, so the package uses an input-free x-cap that reports the applied configuration.",
+      "verb": "invoke",
+      "summary": "Set the nine H1 hand joints to the MoveIt close group state.",
+      "similar": [
+        "cap.manipulation.grasp.v1"
+      ]
+    }
+  ],
+  "notes": "PASS on the fake backend only (evidence contract_checked, never an MHS-Device level). This package is model-authored and unreviewed (driver.lock.json reviewed_by is null); no ROS graph, Gazebo process, simulator run or hardware run is claimed, and the hardware backend of a model-written ROS package additionally requires a human hardware review. The card named helper RosDriver; it matches the ROS 1 Indigo wire graph, so there is no helper deviation. The card's entry_symbols is empty; there is no Python native class and no native.py. The upstream SmartGrasper is Python 2 / ROS Indigo, while this driver is Python 3 and speaks the rosbridge JSON wire protocol. The pinned endpoints and types were read directly from the clone: /gazebo/pause_physics and /gazebo/unpause_physics (std_srvs/Empty, smart_grasping_sandbox/src/smart_grasping_sandbox/smart_grasper.py:52-55), /gazebo/reset_world (std_srvs/Empty, :48-49), /joint_states (sensor_msgs/JointState, :44-45), /gazebo/get_model_state (gazebo_msgs/GetModelState, :47-50) and /gazebo/set_model_configuration (gazebo_msgs/SetModelConfiguration, :58-59). The fixed home request uses the 15 joint positions written by SmartGrasper.reset_world (:97-105); the hand open/close requests use the MoveIt open/close group states (smart_grasp_moveit_config/config/ur10.srdf:32-53). Scope: pause/unpause/reset, joint-state observation, cricket_ball pose observation, fixed 15-joint home configuration, fixed hand open and fixed hand close. The device is declared R2 because it exposes arm and hand configuration commands (the card floor R0 is lower). The stop is /gazebo/pause_physics as an input-free safe_state=True action and as safety_bindings.estop; /gazebo/reset_world is safety_bindings.reset. The e-stop latches in software first; a normal safe-state invocation does not latch (tested). The pause holds Gazebo physics but does not cancel a MoveIt plan, a queued action goal or an external ROS client, and the service acknowledgement is not sensed quiescence; the driver makes no physical e-stop claim. After an e-stop the unpause/home/hand commands and the observational x-cap reads are refused until mhs.safety.reset and a fresh unpause. NOT COVERED: arbitrary Cartesian arm motion, MoveIt planning/execution through /move_group, pick/place sequences, move_tip/send_command trajectories, object spawn/delete, planning-scene collision-matrix changes, controller switching, TF, camera/depth and every Gazebo plugin or other ROS topic. The static rosbridge mapping cannot express the nested MoveGroup constraints or the multi-step helper routines; those need a dedicated Python 2-side bridge or a direct driver with a deployment-validated native factory. The fixed home/open/close commands set named joints directly with SetModelConfiguration; they are not trajectory execution and do not move around obstacles. The upstream Gazebo simulator was not runnable in the gate environment (ROS 1 Indigo / Python 2, no ROS graph and no network), so the ROS-free contract fake is the fallback. Only the fake backend factory is declared; the hardware backend is the RosDriver built-in rosbridge WebSocket path, which requires a live ROS Indigo/Gazebo deployment with rosbridge and a human hardware review. Fake: a ROS-free contract fake on RecordingRosTransport, not captured-traffic replay and not the Gazebo simulator. Fidelity is F0: event-driven, timestep_ms 0, realtime_factor 0, no physics or pacing, reset none, no snapshot/restore. The placeholder joint sample has the full 15-joint size; values, pose, status strings and service switches are test data marked # placeholder, not facts. Negative cases cover failed and malformed pause replies through driver.estop, a rejected pause application, a rejected pose application and a rejected configuration. The F0 timing is the fake's event-driven response, not upstream simulator defaults. No Limit is declared: every served capability has empty input and the clone states no numeric bound for these services or topics; site-limits.example.json is not needed. G4 is clean (no REF_VALUE or REF_BINARY). The only warning is G8.SAFE014_NOT_APPLICABLE because there is no numeric actuating limit to probe; all other CL3 tests passed. The clone was left unmodified; no network, pip install, upstream execution or hardware was used. G9 passes with 16 package cases including the gate.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked the Gazebo service and topic bindings against SmartGrasper's proxies (smart_grasper.py:44-59; the servers are in gazebo_ros, outside the clone), the request fields and success predicates, the fake, all 17 facts and the stop: the acknowledged std_srvs/Empty /gazebo/pause_physics is a simulator stop, as accepted for usv_sim_lsa, and it freezes the ros_control controllers that gazebo_ros_control updates. Defects: the docstring and the home and hand descriptions presented SetModelConfiguration teleports as the helper's own primitives, although reset_world sets that configuration only between stopping its controllers and pausing physics and restarting both (92-113) and open_hand/close_hand use MoveIt planning (209-229), so with the arm (PositionJointInterface) and hand (effort JointTrajectoryController) controllers running the joints can be driven back while the receipt says applied; safe_state did not say that the controllers keep their goals and resume when any client unpauses (SmartGrasper() itself does through reset_world, 86 and 111, as does the default Gazebo GUI); four facts said more than their lines (a get_object_pose call outside 47-50, controller starting through a Timer, a 'so ... not importable' inference, the MoveIt controller list called the Gazebo controller configuration); and the helper's 'Proprietary and Confidential' header, which conflicts with the GPL-3.0 LICENSE, was not recorded. Reviewer changed driver.py (docstring, safe_state, three action descriptions, four facts corrected, twelve source facts added, five fidelity gaps) and facts.md, and regenerated reference.json, REFERENCE.md and check-report.json; the gate and collect.py --strict pass with the expected G8.SAFE014_NOT_APPLICABLE and the digest unchanged. The RESULT.json catalogue_requests reasons saying that the upstream open_hand and close_hand write SetModelConfiguration are wrong and stay as written. For the human reviewer: Simulation only (ROS 1 Indigo, Gazebo 7, Python 2 helper; no hardware path in the clone; R2 is the author's choice for a simulated arm). The e-stop pauses Gazebo physics: the arm and hand trajectory controllers keep their goals, move_group and RViz (launched by default) still accept goals, and any client resumes physics, including the Gazebo GUI (gui defaults to true) and SmartGrasper() itself, whose constructor calls reset_world, which restarts the controllers and unpauses; do not run the notebooks or the helper beside MHS. mhs.safety.reset calls /gazebo/reset_world and physics stays paused until unpause_physics. The home and hand commands teleport joints while the controllers run and may be undone. Every binding uses the 2 s default service timeout. Licence: LICENSE and package.xml say GPL-3.0, but smart_grasper.py, nodes/grasp_quality.py and jupyter_notebook_config.py carry a 'Proprietary and Confidential, All Rights Reserved' header while the card says publish_review not_required; the owner should decide before publication."
+}

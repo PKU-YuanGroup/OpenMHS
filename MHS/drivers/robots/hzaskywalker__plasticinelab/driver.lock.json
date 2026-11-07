@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.hzaskywalker/plasticinelab",
+  "upstream": {
+    "repo_url": "https://github.com/hzaskywalker/plasticinelab",
+    "commit": "ac1a2f7b0bbbe88706b51bf3aa9d72483e1d05b6",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any",
+    "notes": "The upstream repository ships no licence file, so the card's NOASSERTION/unknown is pinned as it is. pip install . installs the upstream plb package, which needs Taichi, the legacy gym package, numpy and a GPU (ti.init(arch=ti.gpu) at plb/engine/taichi_env.py:6). The gate and the fake backend need none of this: fake.py is pure Python, and the gate never installs or imports the clone. Install the upstream only to serve the sim backend, which was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakePlasticineEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wP-079",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

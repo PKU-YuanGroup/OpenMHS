@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example swarm_sync_sim simulation host",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "notes": "Example-only operator envelope. It fills the operator_required resume speed ratio with the one ratio this example site approves and does not claim a device limit; the clone states no numeric maximum and the launch value is a configured default. Pause is input-free and does not use this overlay.",
+  "devices": {
+    "mhs://localhost/swarm_sync_sim": {
+      "x-cap.shupx.resume.v1": {
+        "max_sim_speed": {
+          "unit": "1",
+          "source": "operator",
+          "reason": "example only: this site approves one simulation speed ratio for resume; the TimeServer callback accepts any nonzero max_sim_speed and the clone states no numeric maximum",
+          "allowed": [
+            1.0
+          ]
+        }
+      }
+    }
+  }
+}

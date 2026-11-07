@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.gustavo-moura/itomori",
+  "upstream": {
+    "repo_url": "https://github.com/gustavo-moura/itomori",
+    "commit": "0c2da173bf989736f919772d3c6cbc2fea098b72",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "README.md:25 states Python 3.8+. setup.py:11 and :17 list numpy, matplotlib, gymnasium and pygame; the environment also imports scipy (navigation2d.py:9-10), and scipy, pygame and matplotlib are imported by the environment module. The gate and the fake backend need none of them: fake.py is pure Python and the gate never installs or imports the upstream package. Install the upstream only to serve the driver on the real environment (backend sim), which was not run: its default map_filepath does not match the data in the clone (navigation2d.py:22)."
+  },
+  "backends": {
+    "fake": ".fake:FakeNavigation2DEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-102",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

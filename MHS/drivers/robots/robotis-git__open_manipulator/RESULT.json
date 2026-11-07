@@ -1,0 +1,54 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "gate": {
+    "digest": "sha256:afa0bc05180f51f4eab9a2995c7c78908d99591ca98577321fbc187ba5e96a0d",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.robotis-git.arm_trajectory.v1",
+      "reason": "cap.motion.joint_position.v1 takes a flat joint_positions array and requires reached and joint_positions outputs. The pinned ROS 2 controller action is control_msgs/action/FollowJointTrajectory: its goal carries trajectory.points, an array of point objects, and its terminal result is error_code and error_string. RosDriver argument targets must be object field paths (no array indices), so the flat class cannot be placed into trajectory.points; the class output also does not match the native result. The extension keeps the controller's trajectory and terminal-result semantics.",
+      "verb": "invoke",
+      "summary": "Send one JointTrajectory point through /arm_controller/follow_joint_trajectory and report the terminal error_code.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.robotis-git.gripper_command.v1",
+      "reason": "cap.manipulation.grasp.v1 takes force in N and width in mm and reports grasped and width_mm. The pinned GripperCommand action takes command.position in the gripper joint's native position unit and command.max_effort in the controller's native effort unit, and its result is reached_goal, stalled, position and effort. Binding the grasp class would change the units and the control shape, and the clone states no installed-gripper force or width conversion. The extension preserves the native controller contract.",
+      "verb": "invoke",
+      "summary": "Send a control_msgs/action/GripperCommand goal to /gripper_controller/gripper_cmd and report its terminal fields.",
+      "similar": [
+        "cap.manipulation.grasp.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.robotis-git.joint_state.v1",
+      "reason": "cap.sensing.read.v1 is restricted to sensor, sensor.imu and sensor.force_torque resource kinds. This device is robot.arm, and the pinned observation is a sensor_msgs/msg/JointState message with parallel name, position and velocity arrays. The extension carries that message shape without relabelling the arm as a sensor.",
+      "verb": "read",
+      "summary": "Read one sensor_msgs/msg/JointState sample from /joint_states.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.robotis-git.torque_off.v1",
+      "reason": "The ordinary fixed SetBool(false) request reports only an external torque-service acknowledgement. It does not establish gravity-safe cessation and is not a safe-state or estop action.",
+      "verb": "invoke",
+      "summary": "Disable joint torque through the external acknowledged dynamixel_hardware_interface set_dxl_torque SetBool service.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "BLOCKED: the full selected OpenManipulator arm trajectory, gripper goal, joint-state observation and ordinary torque-off request remain, but external controller/torque lifecycle and safe physical cessation are unproven. Torque-off may release an arm under gravity; service acknowledgement does not establish safe state. It is no longer an estop or safe-state action. The stock latch reports failed/false safety and blocks subsequent ordinary arm/torque actions. Non-success FollowJointTrajectory and GripperCommand application results are surfaced. Arm, gripper and effort bounds remain operator-required for the selected installed profile; the clone does contain gripper model bounds, so absence of every upstream gripper bound is not claimed. The example overlay is only controlled test data, not a universal conversion or mechanical envelope. R2 and the unsigned hardware restriction remain. No external ROS controller or hardware behavior is validated.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Retain blocked; external arm/gripper control and gravity-safe torque shutdown are unproven. Complete fake/diagnostic gate remains rejected at G3. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: REFERENCE.md, RESULT.json, check-report.json, driver.py, facts.md, reference.json, test_driver.py. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged."
+}

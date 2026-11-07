@@ -1,0 +1,119 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.stanfordvl/lasersuite",
+  "track": "robots",
+  "local_path": "robots/stanfordvl/lasersuite",
+  "driver_dir": "MHS/drivers/robots/stanfordvl__lasersuite",
+  "upstream": {
+    "repo_url": "https://github.com/stanfordvl/lasersuite",
+    "commit": "8b78c3d202f2a4b8712c5f228feaf5fae61f16e9",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 185,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robosuite.environments.door_open:DoorOpen",
+      "file": "robosuite/environments/door_open.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robosuite.environments.lift:Lift",
+      "file": "robosuite/environments/lift.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robosuite.environments.nut_assembly:NutAssemblySingle",
+      "file": "robosuite/environments/nut_assembly.py",
+      "line": 592,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robosuite.environments.nut_assembly:NutAssemblySquare",
+      "file": "robosuite/environments/nut_assembly.py",
+      "line": 602,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robosuite.environments.nut_assembly:NutAssemblyRound",
+      "file": "robosuite/environments/nut_assembly.py",
+      "line": 614,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "robosuite/models/assets/robots/baxter/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "robosuite/models/assets/robots/panda/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "robosuite/models/assets/robots/sawyer/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robosuite/models/assets/robots/baxter/robot.xml:1 MJCF robot model",
+      "robosuite/models/assets/robots/panda/robot.xml:1 MJCF robot model",
+      "robosuite/models/assets/robots/sawyer/robot.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model robosuite/models/assets/robots/baxter/robot.xml:1",
+      "MJCF robot model robosuite/models/assets/robots/panda/robot.xml:1",
+      "MJCF robot model robosuite/models/assets/robots/sawyer/robot.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/stanfordvl__lasersuite --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

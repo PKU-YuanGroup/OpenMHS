@@ -1,0 +1,104 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.google-deepmind/mujoco_menagerie",
+  "track": "robots",
+  "local_path": "robots/google-deepmind/mujoco_menagerie",
+  "driver_dir": "MHS/drivers/robots/google-deepmind__mujoco_menagerie",
+  "upstream": {
+    "repo_url": "https://github.com/google-deepmind/mujoco_menagerie",
+    "commit": "0059d4335f8156206f63a35662313385f7ad6d74",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 59,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "agilex_piper/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "agility_cassie/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "aloha/aloha.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "aloha/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "anybotics_anymal_b/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "agilex_piper/scene.xml:1 MJCF scene model",
+      "agility_cassie/scene.xml:1 MJCF scene model",
+      "aloha/aloha.xml:1 MJCF scene model",
+      "aloha/scene.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model agilex_piper/scene.xml:1",
+      "MJCF scene model agility_cassie/scene.xml:1",
+      "MJCF scene model aloha/aloha.xml:1",
+      "MJCF scene model aloha/scene.xml:1",
+      "MJCF scene model anybotics_anymal_b/scene.xml:1",
+      "MJCF scene model anybotics_anymal_c/scene.xml:1",
+      "MJCF scene model anybotics_anymal_c/scene_mjx.xml:1",
+      "MJCF scene model apptronik_apollo/scene.xml:1",
+      "MJCF scene model arx_l5/scene.xml:1",
+      "MJCF scene model berkeley_humanoid/scene.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/google-deepmind__mujoco_menagerie --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

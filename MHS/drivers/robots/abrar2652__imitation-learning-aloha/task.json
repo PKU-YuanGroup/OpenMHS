@@ -1,0 +1,104 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.abrar2652/imitation-learning-aloha",
+  "track": "robots",
+  "local_path": "robots/abrar2652/imitation-learning-aloha",
+  "driver_dir": "MHS/drivers/robots/abrar2652__imitation-learning-aloha",
+  "upstream": {
+    "repo_url": "https://github.com/abrar2652/imitation-learning-aloha",
+    "commit": "4180b39b634420e614be283c9336c1a62e307499",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 205,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_aloha.env:AlohaEnv",
+      "file": "gym-aloha/gym_aloha/__init__.py",
+      "line": 3,
+      "confidence": "recon"
+    }
+  ],
+  "models": [
+    {
+      "file": "gym-aloha/gym_aloha/assets/bimanual_viperx_end_effector_insertion.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym-aloha/gym_aloha/assets/bimanual_viperx_end_effector_transfer_cube.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym-aloha/gym_aloha/assets/bimanual_viperx_insertion.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym-aloha/gym_aloha/assets/bimanual_viperx_transfer_cube.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym-aloha/gym_aloha/assets/single_arm_viperx_pick_and_place.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym-aloha/gym_aloha/__init__.py:3 gym env gym_aloha/AlohaInsertion-v0",
+      "gym-aloha/gym_aloha/__init__.py:13 gym env gym_aloha/AlohaTransferCube-v0",
+      "gym-aloha/gym_aloha/__init__.py:23 gym env gym_aloha/AlohaPickAndPlace-v0"
+    ],
+    "upstream_tests": "gym-aloha/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env gym_aloha/AlohaInsertion-v0 registered at gym-aloha/gym_aloha/__init__.py:3",
+      "gym env gym_aloha/AlohaTransferCube-v0 registered at gym-aloha/gym_aloha/__init__.py:13",
+      "gym env gym_aloha/AlohaPickAndPlace-v0 registered at gym-aloha/gym_aloha/__init__.py:23"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/abrar2652__imitation-learning-aloha --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

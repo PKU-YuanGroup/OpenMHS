@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.internrobotics/internutopia",
+  "track": "robots",
+  "local_path": "robots/internrobotics/internutopia",
+  "driver_dir": "MHS/drivers/robots/internrobotics__internutopia",
+  "upstream": {
+    "repo_url": "https://github.com/internrobotics/internutopia",
+    "commit": "b0a9520c586317c2743023c153cbf7c4f04f4732",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 32,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "internutopia.core.gym_env:Env",
+      "file": "internutopia/core/gym_env.py",
+      "line": 10,
+      "confidence": "override"
+    },
+    {
+      "symbol": "internutopia.core.vec_env:Env",
+      "file": "internutopia/core/vec_env.py",
+      "line": 9,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "internutopia/core/gym_env.py:10 Env environment class",
+      "internutopia/core/vec_env.py:9 Env environment class"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/internrobotics__internutopia --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

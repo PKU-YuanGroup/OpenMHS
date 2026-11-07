@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.turagalab/flybody",
+  "upstream": {
+    "repo_url": "https://github.com/turagalab/flybody",
+    "commit": "d015e9bfe441bd90ae431bac24c55cb74bdbce26",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "pyproject.toml:8-14 requires Python 3.10 or newer plus numpy, dm_control, h5py, pytest and mediapy; the gate and the fake backend need none of them (fake.py is pure Python and the gate never installs or imports the upstream package). Install the upstream stack only to serve the raw model with the real MuJoCo engine (backend sim), which was not run; that path also needs the 80 mesh .obj assets the clone does not carry beside the copied model.xml."
+  },
+  "backends": {
+    "fake": ".fake:fake_mujoco"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wA-s03-003",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

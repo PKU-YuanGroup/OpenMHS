@@ -1,0 +1,105 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tetheria/aero-hand-open",
+  "track": "robots",
+  "local_path": "robots/tetheria/aero-hand-open",
+  "driver_dir": "MHS/drivers/robots/tetheria__aero-hand-open",
+  "upstream": {
+    "repo_url": "https://github.com/tetheria/aero-hand-open",
+    "commit": "7bb2f23485a7d440960c21046da642de132b7745",
+    "license_spdx": "LicenseRef-noncommercial",
+    "license_class": "source-available"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 39,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "aero_open_sdk.aero_hand:AeroHand",
+      "file": "sdk/src/aero_open_sdk/aero_hand.py",
+      "line": 53,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ros2/src/aero_hand_open_rl/aero_hand_open_rl/utils/sim_to_real_mappings.py:1"
+    ],
+    "upstream_tests": "ros2/src/aero_hand_open/test"
+  },
+  "hints": {
+    "reads": [
+      "AeroHand.get_actuations",
+      "AeroHand.get_actuator_currents",
+      "AeroHand.get_actuator_speeds",
+      "AeroHand.get_actuator_temperatures",
+      "AeroHand.get_forward_kinematics",
+      "AeroHand.get_joint_positions",
+      "AeroHand.get_joint_positions_compact",
+      "CubeRotateZAxis.get_cube_angacc",
+      "CubeRotateZAxis.get_cube_angvel",
+      "CubeRotateZAxis.get_cube_goal_orientation",
+      "CubeRotateZAxis.get_cube_goal_upvector",
+      "CubeRotateZAxis.get_cube_linvel"
+    ],
+    "writes": [
+      "AeroHand.set_actuations",
+      "AeroHand.set_id",
+      "AeroHand.set_joint_positions",
+      "AeroHand.set_speed",
+      "AeroHand.set_torque"
+    ],
+    "actions": [
+      "AeroHand.calibrate_mid",
+      "AeroHand.run_trajectory",
+      "AeroHand.send_homing",
+      "AeroHand.trim_servo",
+      "CubeRotateZAxis.reset",
+      "CubeReorient.reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.calibrate.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "sdk/src/aero_open_sdk/aero_hand.py:48 _UINT16_MAX = 65535",
+      "sdk/src/aero_open_sdk/aero_hand_constants.py:49 actuation_lower_limits = [0.0, 0.0, -15.2789, 0.0, 0.0, 0.0, 0.0]",
+      "sdk/src/aero_open_sdk/aero_hand_constants.py:52 actuation_upper_limits = [100.0, 104.125, 247.15, 288.1603, 288.1603, 288.1603, 288.1603]"
+    ]
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/tetheria__aero-hand-open --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

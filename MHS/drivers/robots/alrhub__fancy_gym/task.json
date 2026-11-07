@@ -1,0 +1,138 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.alrhub/fancy_gym",
+  "track": "robots",
+  "local_path": "robots/alrhub/fancy_gym",
+  "driver_dir": "MHS/drivers/robots/alrhub__fancy_gym",
+  "upstream": {
+    "repo_url": "https://github.com/alrhub/fancy_gym",
+    "commit": "da1bced0181ced8267247779c001509a2fc94635",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 94,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "fancy_gym.envs.classic_control.simple_reacher.simple_reacher:SimpleReacherEnv",
+      "file": "fancy_gym/envs/classic_control/simple_reacher/simple_reacher.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "fancy_gym.envs.classic_control.viapoint_reacher.viapoint_reacher:ViaPointReacherEnv",
+      "file": "fancy_gym/envs/classic_control/viapoint_reacher/viapoint_reacher.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "fancy_gym.envs.classic_control.hole_reacher.hole_reacher:HoleReacherEnv",
+      "file": "fancy_gym/envs/classic_control/hole_reacher/hole_reacher.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "fancy_gym.envs.mujoco.reacher.reacher:ReacherEnv",
+      "file": "fancy_gym/envs/mujoco/reacher/reacher.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "fancy_gym.envs.mujoco:HopperJumpEnv",
+      "file": "fancy_gym/envs/mujoco/hopper_jump/hopper_jump.py",
+      "line": 98,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "fancy_gym/envs/mujoco/box_pushing/assets/box_pushing.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "fancy_gym/envs/mujoco/air_hockey/data/iiwas/double.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "fancy_gym/envs/mujoco/air_hockey/data/iiwas/single.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "fancy_gym/envs/mujoco/air_hockey/data/planar/double.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "fancy_gym/envs/mujoco/air_hockey/data/planar/single.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "fancy_gym/dmc/__init__.py:11 gym env dm_control/ball_in_cup-catch-v0",
+      "fancy_gym/dmc/__init__.py:18 gym env dm_control/reacher-easy-v0",
+      "fancy_gym/dmc/__init__.py:25 gym env dm_control/reacher-hard-v0",
+      "fancy_gym/dmc/__init__.py:41 gym env dm_control/cartpole-two_poles-v0"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env dm_control/ball_in_cup-catch-v0 registered at fancy_gym/dmc/__init__.py:11",
+      "gym env dm_control/reacher-easy-v0 registered at fancy_gym/dmc/__init__.py:18",
+      "gym env dm_control/reacher-hard-v0 registered at fancy_gym/dmc/__init__.py:25",
+      "gym env dm_control/cartpole-two_poles-v0 registered at fancy_gym/dmc/__init__.py:41",
+      "gym env dm_control/cartpole-three_poles-v0 registered at fancy_gym/dmc/__init__.py:48",
+      "gym env dm_control/reach_site_features-v0 registered at fancy_gym/dmc/__init__.py:56",
+      "gym env fancy/SimpleReacher-v0 registered at fancy_gym/envs/__init__.py:38",
+      "gym env fancy/LongSimpleReacher-v0 registered at fancy_gym/envs/__init__.py:48",
+      "gym env fancy/ViaPointReacher-v0 registered at fancy_gym/envs/__init__.py:59",
+      "gym env fancy/HoleReacher-v0 registered at fancy_gym/envs/__init__.py:72",
+      "gym env fancy/Reacher{}d-v0 (id template, built at run time) registered at fancy_gym/envs/__init__.py:93",
+      "gym env fancy/Reacher{}dSparse-v0 (id template, built at run time) registered at fancy_gym/envs/__init__.py:103"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/alrhub__fancy_gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.robin-shaun/xtdrone",
+  "track": "robots",
+  "local_path": "robots/robin-shaun/xtdrone",
+  "driver_dir": "MHS/drivers/robots/robin-shaun__xtdrone",
+  "upstream": {
+    "repo_url": "https://github.com/robin-shaun/xtdrone",
+    "commit": "671f3d45b22bfe4b7f2b23ae8d4251f3172781b3",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 72,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [
+    {
+      "symbol": "coordination.task_assignment.evaluate:Env",
+      "file": "coordination/task_assignment/evaluate.py",
+      "line": 11,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "coordination/task_assignment/evaluate.py:11 Env environment class"
+    ],
+    "upstream_tests": "coordination/fixed_wing_formation_control/src/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/robin-shaun__xtdrone --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

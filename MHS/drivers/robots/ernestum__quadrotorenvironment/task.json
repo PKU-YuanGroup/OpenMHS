@@ -1,0 +1,79 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ernestum/quadrotorenvironment",
+  "track": "robots",
+  "local_path": "robots/ernestum/quadrotorenvironment",
+  "driver_dir": "MHS/drivers/robots/ernestum__quadrotorenvironment",
+  "upstream": {
+    "repo_url": "https://github.com/ernestum/quadrotorenvironment",
+    "commit": "597f8e3294c6a5d3ffc6907749f94a97dee700f3",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 195,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "quadrotor_environment.quadrotor_environment:QuadrotorEnvironment",
+      "file": "quadrotor_environment/quadrotor_environment.py",
+      "line": 26,
+      "confidence": "override"
+    },
+    {
+      "symbol": "quadrotor_environment.simulation_parameter_randomization:SPRWrappedQuadrotorEnvironment",
+      "file": "quadrotor_environment/simulation_parameter_randomization.py",
+      "line": 30,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "quadrotor_environment/quadrotor_environment.py:26 QuadrotorEnvironment environment class",
+      "quadrotor_environment/simulation_parameter_randomization.py:30 SPRWrappedQuadrotorEnvironment environment class"
+    ],
+    "upstream_tests": "quadrotor_environment/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ernestum__quadrotorenvironment --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.wil3/gymfc",
+  "track": "robots",
+  "local_path": "robots/wil3/gymfc",
+  "driver_dir": "MHS/drivers/robots/wil3__gymfc",
+  "upstream": {
+    "repo_url": "https://github.com/wil3/gymfc",
+    "commit": "08df94b06a5d7f8fb6d2cb2c155751f5336720e7",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 272,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gymfc.envs.fc_env:FlightControlEnv",
+      "file": "gymfc/envs/fc_env.py",
+      "line": 107,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gymfc_nf.envs.step:StepEnv",
+      "file": "examples/gymfc_nf/envs/step.py",
+      "line": 10,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/wil3__gymfc --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

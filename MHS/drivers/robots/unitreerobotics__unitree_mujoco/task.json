@@ -1,0 +1,104 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.unitreerobotics/unitree_mujoco",
+  "track": "robots",
+  "local_path": "robots/unitreerobotics/unitree_mujoco",
+  "driver_dir": "MHS/drivers/robots/unitreerobotics__unitree_mujoco",
+  "upstream": {
+    "repo_url": "https://github.com/unitreerobotics/unitree_mujoco",
+    "commit": "1eb6642e3f3fdfb7fb13a9794fd6a2dd93ea0e7d",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:flagship-twin",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 82,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "unitree_robots/h1/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "unitree_robots/h1_2/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "unitree_robots/h2/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "unitree_robots/a2/qrc_map_sloped.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "unitree_robots/a2/scene_terrain.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "unitree_robots/h1/scene.xml:1 MJCF scene model",
+      "unitree_robots/h1_2/scene.xml:1 MJCF scene model",
+      "unitree_robots/h2/scene.xml:1 MJCF scene model",
+      "unitree_robots/a2/qrc_map_sloped.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "simulate_python/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model unitree_robots/h1/scene.xml:1",
+      "MJCF scene model unitree_robots/h1_2/scene.xml:1",
+      "MJCF scene model unitree_robots/h2/scene.xml:1",
+      "MJCF scene model unitree_robots/a2/qrc_map_sloped.xml:1",
+      "MJCF scene model unitree_robots/a2/scene_terrain.xml:1",
+      "MJCF scene model unitree_robots/as2/plane_terrain.xml:1",
+      "MJCF scene model unitree_robots/as2/scene_terrain.xml:1",
+      "MJCF scene model unitree_robots/b2/scene.xml:1",
+      "MJCF scene model unitree_robots/b2/scene_terrain.xml:1",
+      "MJCF scene model unitree_robots/b2w/scene.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/unitreerobotics__unitree_mujoco --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

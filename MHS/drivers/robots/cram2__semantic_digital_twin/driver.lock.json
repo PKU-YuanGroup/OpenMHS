@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.cram2/semantic_digital_twin",
+  "upstream": {
+    "repo_url": "https://github.com/cram2/semantic_digital_twin",
+    "commit": "40a35e7e481b358cd7f9d939c7ff4e0c23826098",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux",
+    "notes": "pyproject.toml:17 requires Python 3.10 or newer and the upstream MJCF adapter imports mujoco and numpy (src/semantic_digital_twin/adapters/mjcf.py:3-6). The gate and fake.py need neither: fake.py is pure Python and the gate never installs or imports the upstream package or the engine. Install the upstream stack only to serve the model with the real MuJoCo engine (backend sim), which was not run."
+  },
+  "backends": {
+    "fake": ".fake:fake_mujoco"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-056",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

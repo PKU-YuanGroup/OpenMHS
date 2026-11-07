@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.bark-simulator/bark-ml",
+  "upstream": {
+    "repo_url": "https://github.com/bark-simulator/bark-ml",
+    "commit": "ea2ee58be406e71c5e95c80c0ffbe56c03d6ec60",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "setup.py:145-154 requires pygame, gym, tensorflow, tensorboard, tf-agents, tensorflow-probability, bark-simulator>=1.4.8 and graph-nets, and setup.py:80-125 builds the bark_ml.core extension with Bazel; the gate and the fake backend need none of this, because fake.py is pure Python. The sim backend also needs the registration module bark_ml.environments.gym imported and a display, because ContinuousHighwayGym always renders (gym.py:30-36); it was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeContinuousHighwayGym"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-081",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

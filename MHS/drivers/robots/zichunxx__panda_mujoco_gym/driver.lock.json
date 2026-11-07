@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.zichunxx/panda_mujoco_gym",
+  "upstream": {
+    "repo_url": "https://github.com/zichunxx/panda_mujoco_gym",
+    "commit": "e9881d993234875ee1d55d717176bf7999bdb583",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "requirements.txt pins the upstream stack (mujoco 2.3.3 and the reinforcement-learning libraries the environments derive from); the package itself, including fake.py and the gate, needs none of it, because fake.py is pure Python and the gate never installs or imports the upstream package. Install the upstream stack only to serve the model with the real MuJoCo engine (backend sim), which was not run and also needs the meshes beside model.xml."
+  },
+  "backends": {
+    "fake": ".fake:fake_mujoco"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wA-s08-003",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

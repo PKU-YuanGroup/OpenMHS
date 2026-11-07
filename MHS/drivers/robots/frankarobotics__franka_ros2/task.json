@@ -1,0 +1,113 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.frankarobotics/franka_ros2",
+  "track": "robots",
+  "local_path": "robots/frankarobotics/franka_ros2",
+  "driver_dir": "MHS/drivers/robots/frankarobotics__franka_ros2",
+  "upstream": {
+    "repo_url": "https://github.com/frankarobotics/franka_ros2",
+    "commit": "4acc05c01ebfcdf916ee6b3df966df0ad7b2f9ec",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:flagship-driver",
+  "role": "device-driver",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 10,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [
+    {
+      "symbol": "franka_mobile.franka_mobile.battery_controller:BatteryController",
+      "file": "franka_mobile/franka_mobile/battery_controller.py",
+      "line": 86,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "franka_spine.franka_spine_server.franka_spine_server.spine_controller:SpineController",
+      "file": "franka_spine/franka_spine_server/franka_spine_server/spine_controller.py",
+      "line": 222,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "franka_mobile.franka_mobile.battery_api_client:BatteryApiClient",
+      "file": "franka_mobile/franka_mobile/battery_api_client.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "franka_spine.franka_spine_server.franka_spine_server.spine_api_client:SpineApiClient",
+      "file": "franka_spine/franka_spine_server/franka_spine_server/spine_api_client.py",
+      "line": 27,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "franka_bringup/test"
+  },
+  "hints": {
+    "reads": [
+      "BatteryController.get_is_charging",
+      "BatteryController.get_mobile_charging_system_status",
+      "BatteryController.get_system_info",
+      "BatteryController.get_system_states",
+      "SpineController.get_parameters",
+      "SpineController.get_position",
+      "SpineController.get_state",
+      "BatteryApiClient.get_is_charging",
+      "BatteryApiClient.get_mobile_charging_system_status",
+      "BatteryApiClient.get_system_info",
+      "BatteryApiClient.get_system_states"
+    ],
+    "writes": [],
+    "actions": [
+      "BatteryController.stop_wireless_charging",
+      "BatteryController.try_start_wireless_charging",
+      "SpineController.fault_reset",
+      "SpineController.halt",
+      "SpineController.move_absolute",
+      "SpineController.api.halt_motion",
+      "SpineController.api.start_motion",
+      "BatteryApiClient.stop_wireless_charging",
+      "BatteryApiClient.try_start_wireless_charging"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "franka_spine/franka_spine_server/franka_spine_server/spine_controller.py:209 lower_limit = 0.0",
+      "franka_spine/franka_spine_server/franka_spine_server/spine_controller.py:210 upper_limit = 0.0"
+    ]
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/frankarobotics__franka_ros2 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

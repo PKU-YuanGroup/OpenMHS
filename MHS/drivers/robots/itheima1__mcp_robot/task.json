@@ -1,0 +1,89 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.itheima1/mcp_robot",
+  "track": "robots",
+  "local_path": "robots/itheima1/mcp_robot",
+  "driver_dir": "MHS/drivers/robots/itheima1__mcp_robot",
+  "upstream": {
+    "repo_url": "https://github.com/itheima1/mcp_robot",
+    "commit": "18f9ea5ff42c6bf01bc16d659e422c048be6d312",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 281,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "sources.servo_control_standalone:ServoControllerStandalone",
+      "file": "sources/servo_control_standalone.py",
+      "line": 288,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "ServoControllerStandalone.get_multiple_servo_angles",
+      "ServoControllerStandalone.get_servo_angle",
+      "ServoControllerStandalone.read_position",
+      "ServoControllerStandalone.read_positions"
+    ],
+    "writes": [
+      "ServoControllerStandalone.set_multiple_servo_angles",
+      "ServoControllerStandalone.set_position",
+      "ServoControllerStandalone.set_positions",
+      "ServoControllerStandalone.set_servo_angle"
+    ],
+    "actions": [
+      "ServoControllerStandalone.disable_torque",
+      "ServoControllerStandalone.enable_torque",
+      "ServoControllerStandalone.go_home",
+      "ServoControllerStandalone.sync_disable_torque",
+      "ServoControllerStandalone.sync_enable_torque"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.motion.cartesian_pose.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/itheima1__mcp_robot --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

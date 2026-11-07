@@ -1,0 +1,110 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ac-93/tactile_gym",
+  "track": "robots",
+  "local_path": "robots/ac-93/tactile_gym",
+  "driver_dir": "MHS/drivers/robots/ac-93__tactile_gym",
+  "upstream": {
+    "repo_url": "https://github.com/ac-93/tactile_gym",
+    "commit": "28417ebaf52ac325200c4fbd351cd13c6a466f7d",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 207,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "tactile_gym.rl_envs.exploration.edge_follow.edge_follow_env:EdgeFollowEnv",
+      "file": "tactile_gym/rl_envs/exploration/edge_follow/edge_follow_env.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "tactile_gym.rl_envs.exploration.surface_follow.surface_follow_auto.surface_follow_auto_env:SurfaceFollowAutoEnv",
+      "file": "tactile_gym/rl_envs/exploration/surface_follow/surface_follow_auto/surface_follow_auto_env.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "tactile_gym.rl_envs.exploration.surface_follow.surface_follow_goal.surface_follow_goal_env:SurfaceFollowGoalEnv",
+      "file": "tactile_gym/rl_envs/exploration/surface_follow/surface_follow_goal/surface_follow_goal_env.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "tactile_gym.rl_envs.nonprehensile_manipulation.object_roll.object_roll_env:ObjectRollEnv",
+      "file": "tactile_gym/rl_envs/nonprehensile_manipulation/object_roll/object_roll_env.py",
+      "line": 23,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "tactile_gym.rl_envs.nonprehensile_manipulation.object_push.object_push_env:ObjectPushEnv",
+      "file": "tactile_gym/rl_envs/nonprehensile_manipulation/object_push/object_push_env.py",
+      "line": 25,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "tactile_gym/rl_envs/__init__.py:3 gym env edge_follow-v0",
+      "tactile_gym/rl_envs/__init__.py:8 gym env edge_follow_aotu-v0",
+      "tactile_gym/rl_envs/__init__.py:13 gym env surface_follow-v0",
+      "tactile_gym/rl_envs/__init__.py:18 gym env surface_follow-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env edge_follow-v0 registered at tactile_gym/rl_envs/__init__.py:3",
+      "gym env edge_follow_aotu-v0 registered at tactile_gym/rl_envs/__init__.py:8",
+      "gym env surface_follow-v0 registered at tactile_gym/rl_envs/__init__.py:13",
+      "gym env surface_follow-v1 registered at tactile_gym/rl_envs/__init__.py:18",
+      "gym env object_roll-v0 registered at tactile_gym/rl_envs/__init__.py:23",
+      "gym env object_push-v0 registered at tactile_gym/rl_envs/__init__.py:28",
+      "gym env object_balance-v0 registered at tactile_gym/rl_envs/__init__.py:33",
+      "gym env surface_follow-v2 registered at tactile_gym/rl_envs/__init__.py:38"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ac-93__tactile_gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

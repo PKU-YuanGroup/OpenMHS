@@ -1,0 +1,25 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example Unity Niryo pick-and-place planning bench (unity-technologies__unity-robotics-hub); not a deployment approval",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "notes": "Example operator overlay. It fills the operator_required bounds so the fake can be exercised. Each range is one bench's choice. The elbow max 1.570796326795 is 3.14159265359/2 from the xacro PI literal (niryo_one.urdf.xacro:37 and :44); it is an operator example, not a Limit source. The driver does not cite ${PI/2} as a number.",
+  "devices": {
+    "mhs://localhost/unity-niryo-pick-place-planner": {
+      "x-cap.unity-technologies.niryo_pick_place_plan.v1": {
+        "start_joints_rad[2]": {"min": -1.397485, "max": 1.570796326795, "unit": "rad", "source": "operator",
+                                "reason": "example elbow bound"},
+        "pick_position[*]": {"min": -2, "max": 2, "unit": "m", "source": "operator",
+                             "reason": "example scene box"},
+        "place_position[*]": {"min": -2, "max": 2, "unit": "m", "source": "operator",
+                              "reason": "example scene box"},
+        "pick_orientation[*]": {"min": -1, "max": 1, "unit": "1", "source": "operator",
+                                "reason": "example quaternion"},
+        "place_orientation[*]": {"min": -1, "max": 1, "unit": "1", "source": "operator",
+                                 "reason": "example quaternion"}
+      }
+    }
+  }
+}

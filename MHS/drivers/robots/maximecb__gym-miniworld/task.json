@@ -1,0 +1,112 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.maximecb/gym-miniworld",
+  "track": "robots",
+  "local_path": "robots/maximecb/gym-miniworld",
+  "driver_dir": "MHS/drivers/robots/maximecb__gym-miniworld",
+  "upstream": {
+    "repo_url": "https://github.com/maximecb/gym-miniworld",
+    "commit": "c660156dd73994e55ad81a4e2925582399446aba",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 129,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "miniworld.envs.collecthealth:CollectHealth",
+      "file": "miniworld/envs/collecthealth.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "miniworld.envs.fourrooms:FourRooms",
+      "file": "miniworld/envs/fourrooms.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "miniworld.envs.hallway:Hallway",
+      "file": "miniworld/envs/hallway.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "miniworld.envs.maze:Maze",
+      "file": "miniworld/envs/maze.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "miniworld.envs.maze:MazeS2",
+      "file": "miniworld/envs/maze.py",
+      "line": 165,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "miniworld/envs/__init__.py:44 gym env MiniWorld-CollectHealth-v0",
+      "miniworld/envs/__init__.py:49 gym env MiniWorld-FourRooms-v0",
+      "miniworld/envs/__init__.py:54 gym env MiniWorld-Hallway-v0",
+      "miniworld/envs/__init__.py:59 gym env MiniWorld-Maze-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env MiniWorld-CollectHealth-v0 registered at miniworld/envs/__init__.py:44",
+      "gym env MiniWorld-FourRooms-v0 registered at miniworld/envs/__init__.py:49",
+      "gym env MiniWorld-Hallway-v0 registered at miniworld/envs/__init__.py:54",
+      "gym env MiniWorld-Maze-v0 registered at miniworld/envs/__init__.py:59",
+      "gym env MiniWorld-MazeS2-v0 registered at miniworld/envs/__init__.py:64",
+      "gym env MiniWorld-MazeS3-v0 registered at miniworld/envs/__init__.py:69",
+      "gym env MiniWorld-MazeS3Fast-v0 registered at miniworld/envs/__init__.py:74",
+      "gym env MiniWorld-OneRoom-v0 registered at miniworld/envs/__init__.py:79",
+      "gym env MiniWorld-OneRoomS6-v0 registered at miniworld/envs/__init__.py:84",
+      "gym env MiniWorld-OneRoomS6Fast-v0 registered at miniworld/envs/__init__.py:89",
+      "gym env MiniWorld-PickupObjects-v0 registered at miniworld/envs/__init__.py:94",
+      "gym env MiniWorld-PutNext-v0 registered at miniworld/envs/__init__.py:99"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/maximecb__gym-miniworld --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

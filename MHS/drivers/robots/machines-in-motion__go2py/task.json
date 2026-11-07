@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.machines-in-motion/go2py",
+  "track": "robots",
+  "local_path": "robots/machines-in-motion/go2py",
+  "driver_dir": "MHS/drivers/robots/machines-in-motion__go2py",
+  "upstream": {
+    "repo_url": "https://github.com/machines-in-motion/go2py",
+    "commit": "eff240b82b0ff6dae6ba5ee934a381f38fe64c0d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 21,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "Go2Py.robot.interface:GO2Real",
+      "file": "Go2Py/robot/interface.py",
+      "line": 24,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "Go2Py/control/bipedal.py:136 NeuroDiffSimAgent",
+      "Go2Py/control/neuro_diff_sim.py:111 NeuroDiffSimAgent",
+      "Go2Py/sim/mujoco.py:237 Go2Sim",
+      "Go2Py/control/neuro_diff_sim.py:1",
+      "deploy/ros2_nodes/m-explore-ros2/map_merge/launch/tb3_simulation/multi_tb3_simulation_launch.py:1",
+      "deploy/ros2_nodes/m-explore-ros2/map_merge/launch/tb3_simulation/tb3_simulation_launch.py:1"
+    ],
+    "upstream_tests": "deploy/ros2_nodes/m-explore-ros2/explore/test"
+  },
+  "hints": {
+    "reads": [
+      "XBoxController.getStates",
+      "XBoxController.read_values",
+      "Agent.get_action",
+      "Agent.get_value",
+      "PyGameJoyManager.read_values"
+    ],
+    "writes": [],
+    "actions": [
+      "XBoxController.start_daq",
+      "XBoxController.stop_daq",
+      "PyGameJoyManager.start_daq",
+      "PyGameJoyManager.stop_daq"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "motion"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/machines-in-motion__go2py --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

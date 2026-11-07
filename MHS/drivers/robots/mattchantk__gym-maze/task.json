@@ -1,0 +1,112 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mattchantk/gym-maze",
+  "track": "robots",
+  "local_path": "robots/mattchantk/gym-maze",
+  "driver_dir": "MHS/drivers/robots/mattchantk__gym-maze",
+  "upstream": {
+    "repo_url": "https://github.com/mattchantk/gym-maze",
+    "commit": "83176811b49b5538a6213520612f44fb1bc49114",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 109,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_maze.envs:MazeEnvSample5x5",
+      "file": "gym_maze/envs/maze_env.py",
+      "line": 109,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_maze.envs:MazeEnvRandom5x5",
+      "file": "gym_maze/envs/maze_env.py",
+      "line": 115,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_maze.envs:MazeEnvSample10x10",
+      "file": "gym_maze/envs/maze_env.py",
+      "line": 121,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_maze.envs:MazeEnvRandom10x10",
+      "file": "gym_maze/envs/maze_env.py",
+      "line": 127,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_maze.envs:MazeEnvSample3x3",
+      "file": "gym_maze/envs/maze_env.py",
+      "line": 133,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_maze/__init__.py:4 gym env maze-v0",
+      "gym_maze/__init__.py:10 gym env maze-sample-5x5-v0",
+      "gym_maze/__init__.py:16 gym env maze-random-5x5-v0",
+      "gym_maze/__init__.py:23 gym env maze-sample-10x10-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env maze-v0 registered at gym_maze/__init__.py:4",
+      "gym env maze-sample-5x5-v0 registered at gym_maze/__init__.py:10",
+      "gym env maze-random-5x5-v0 registered at gym_maze/__init__.py:16",
+      "gym env maze-sample-10x10-v0 registered at gym_maze/__init__.py:23",
+      "gym env maze-random-10x10-v0 registered at gym_maze/__init__.py:29",
+      "gym env maze-sample-3x3-v0 registered at gym_maze/__init__.py:36",
+      "gym env maze-random-3x3-v0 registered at gym_maze/__init__.py:42",
+      "gym env maze-sample-100x100-v0 registered at gym_maze/__init__.py:50",
+      "gym env maze-random-100x100-v0 registered at gym_maze/__init__.py:56",
+      "gym env maze-random-10x10-plus-v0 registered at gym_maze/__init__.py:63",
+      "gym env maze-random-20x20-plus-v0 registered at gym_maze/__init__.py:70",
+      "gym env maze-random-30x30-plus-v0 registered at gym_maze/__init__.py:77"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/mattchantk__gym-maze --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.nvlabs/humanoidmimicgen",
+  "upstream": {
+    "repo_url": "https://github.com/nvlabs/humanoidmimicgen",
+    "commit": "d82844dcec242c82d6b82628ccc45933c3ad5cbd",
+    "license_spdx": "Apache-2.0"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "pyproject.toml:10 and :21-25 require Python 3.10 or newer and pin mujoco 3.2.6, numpy 1.26.4, robosuite 1.5.1 and robosuite-models 1.0.0 for the upstream environments. The gate and fake.py need none of them: fake.py is pure Python and reads the MJCF text, and the gate never installs or imports the upstream package or the engine. Install the upstream stack only to serve the model with the real MuJoCo engine (backend sim), which was not run; the clone's meshes must stay beside the model."
+  },
+  "backends": {
+    "fake": ".fake:FakeMujoco"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wB2-058",
+    "date": "2026-10-29"
+  },
+  "reviewed_by": null
+}

@@ -1,0 +1,100 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.enactic/openarm_maniskill_simulation",
+  "track": "robots",
+  "local_path": "robots/enactic/openarm_maniskill_simulation",
+  "driver_dir": "MHS/drivers/robots/enactic__openarm_maniskill_simulation",
+  "upstream": {
+    "repo_url": "https://github.com/enactic/openarm_maniskill_simulation",
+    "commit": "3d3615aadabff11ce61ddc2e1608c1447cb3a59d",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 414,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "mani_skill.agents.robots.openarm.openarm:OpenArm",
+      "file": "mani_skill/agents/robots/openarm/openarm.py",
+      "line": 17,
+      "confidence": "override"
+    },
+    {
+      "symbol": "mani_skill.envs.tasks.tabletop.pick_cube:PickCubeEnv",
+      "file": "mani_skill/envs/tasks/tabletop/pick_cube.py",
+      "line": 35,
+      "confidence": "override"
+    },
+    {
+      "symbol": "mani_skill.envs.tasks.tabletop.pull_cube:PullCubeEnv",
+      "file": "mani_skill/envs/tasks/tabletop/pull_cube.py",
+      "line": 21,
+      "confidence": "override"
+    },
+    {
+      "symbol": "mani_skill.envs.tasks.tabletop.push_cube:PushCubeEnv",
+      "file": "mani_skill/envs/tasks/tabletop/push_cube.py",
+      "line": 38,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "mani_skill/envs/tasks/tabletop/pick_cube.py:35 gym env PickCube-v1",
+      "mani_skill/envs/tasks/tabletop/pick_cube.py:214 gym env PickCubeSO100-v1",
+      "mani_skill/envs/tasks/tabletop/pick_cube.py:225 gym env PickCubeWidowXAI-v1",
+      "mani_skill/envs/tasks/tabletop/pull_cube.py:21 gym env PullCube-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env PickCube-v1 registered at mani_skill/envs/tasks/tabletop/pick_cube.py:35",
+      "gym env PickCubeSO100-v1 registered at mani_skill/envs/tasks/tabletop/pick_cube.py:214",
+      "gym env PickCubeWidowXAI-v1 registered at mani_skill/envs/tasks/tabletop/pick_cube.py:225",
+      "gym env PullCube-v1 registered at mani_skill/envs/tasks/tabletop/pull_cube.py:21",
+      "gym env PushCube-v1 registered at mani_skill/envs/tasks/tabletop/push_cube.py:38"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/enactic__openarm_maniskill_simulation --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

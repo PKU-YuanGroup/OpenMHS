@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "gate": {
+    "digest": "sha256:d06621411a1c7617ab1e9cb369b58d170ee9ea6e7f0ef35b4703c9c8c84e976a",
+    "failed": [
+      "G6",
+      "G8"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.darienmt.state.v1",
+      "reason": "No catalogue class observes a mavros_msgs/State topic (connected, armed and mode). The motion classes are commands, and a resource read is not a capability. This package uses an extension read with an inline output schema for the exact fields the clone reads.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.darienmt.altitude.v1",
+      "reason": "No catalogue class observes the amsl field of a mavros_msgs/Altitude topic. cap.sensing.read.v1 is not a catalogue class, and the motion classes are commands. This package uses an extension read with an inline scalar schema.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.darienmt.hover.v1",
+      "reason": "No catalogue class binds the offb example's fixed geometry_msgs/PoseStamped hover publication on mavros/setpoint_position/local. cap.motion.mobile_base.v1 requires linear/angular velocity and a duration and returns distance/heading; cap.motion.cartesian_pose.v1 is a robot.arm command with a reached pose. A rosbridge publication is transmission-only, so this extension reports published/confirmed and makes no arrival claim.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.darienmt.setpoint_position.v1",
+      "reason": "No catalogue class binds one geometry_msgs/PoseStamped position setpoint publication. cap.motion.mobile_base.v1 is a bounded velocity command with distance/heading outputs; cap.motion.cartesian_pose.v1 is robot.arm-only in millimetres and reports a reached pose. The clone states no workspace bound, so the three inputs are operator_required.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.darienmt.setpoint_velocity_body.v1",
+      "reason": "No catalogue class binds a body-frame mavros_msgs/PositionTarget velocity publication. cap.motion.mobile_base.v1 takes linear/angular velocity and a duration and returns measured distance/heading, while this one-message publication reports transmission only. The clone uses symbolic frame and type-mask constants and states no velocity bound, so the components are operator_required.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.darienmt.setpoint_velocity_ned.v1",
+      "reason": "No catalogue class binds a local-NED mavros_msgs/PositionTarget velocity publication. cap.motion.mobile_base.v1 is a bounded mobile-base command with measured distance/heading, while this one-message publication reports transmission only. The clone uses symbolic frame and type-mask constants and states no velocity or yaw bound, so the components are operator_required.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.darienmt.request_arm.v1",
+      "reason": "No catalogue class binds the fixed mavros_msgs/CommandBool value=true arming service request. cap.device.configure.v1 writes named resource-state parameters, not a ROS service request; the request has no numeric input, so an input-free extension invoke is used.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.darienmt.request_offboard.v1",
+      "reason": "No catalogue class binds a fixed mavros_msgs/SetMode custom_mode=OFFBOARD service request. cap.device.configure.v1 writes named resource-state parameters, not a ROS mode service. The response mode_sent is a request acknowledgement, not a sensed mode transition, and the extension reports exactly that.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.darienmt.request_land.v1",
+      "reason": "No catalogue class binds a fixed mavros_msgs/CommandTOL landing service request. cap.motion.stop.v1 requires a deceleration input and a stopped result; the clone's service response is a landing-request success flag, not touchdown, disarm or sensed quiescence. The extension is the package's safe-state action and does not report a stopped vehicle.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "Blocked on SDK_BUG (BL-17). Evidence state none: the gate fails G6 and G8 (earlier contract_checked results are historical). The gate fails G6 and G8 because a ROS 1 producer stamp is not a freshness proof, so the sensed stop is not confirmed. Gate digest sha256:d06621411a1c7617ab1e9cb369b58d170ee9ea6e7f0ef35b4703c9c8c84e976a. The gate printed no G4.REF_VALUE or G4.REF_BINARY warnings. check-report.json is the gate's own report. The driver is a configuration-only RosDriver over rosbridge; it declares no Python native class and neither imports nor runs the clone. The operator must run the clone's MAVROS/PX4 SITL deployment and rosbridge separately.\n\nSCOPE: resource reads of /mavros/state (connected, armed, mode) and /mavros/altitude (amsl); explicit observations of the same two topics as x-caps; the offb example's fixed hover PoseStamped; a parameterized position setpoint on mavros/setpoint_position/local; body-frame and local-NED velocity PositionTarget [...]\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked every MAVROS endpoint, type and message field, all 23 facts, the operator_required setpoint limits and the stop against offb_node.cpp, drone_offboard.cpp, offb_velocity_node.cpp and both launch files at the pin. The e-stop and the safe_state=True action were the /mavros/cmd/land CommandTOL request, whose success only acknowledges a LAND request (drone_offboard.cpp:57-71) after which the clone just sleeps and shuts down (offb_velocity_node.cpp:59-70), and the shipped offb.launch starts offb_node, which requests OFFBOARD and arming again every 5 s while streaming its hover setpoint (offb_node.cpp:53-84), so a LAND is not a stop and could be undone, yet the SDK reported the e-stop completed. The reviewer removed the binding and safe_state=True (/mavros/cmd/land stays an ordinary command), rewrote safe_state, the docstring (which told operators to run offb.launch or offb_velocity.launch), the stop gaps and the velocity input descriptions (the clone logs vz 2 as 'Go Up' and vy -2 as 'Move towards South'), corrected eight facts (ranges that missed the 20 Hz rate, the pose defaults and the altitude wait; 'ignores force' where the mask sets the FORCE flag; the land home_set_ precondition) and added five (driver.py); replaced the latched-stop case with one expecting MHS.SAFETY.SAFE_STATE_UNREACHED, no upstream call and the latch refusing land, OFFBOARD and setpoints, added a declaration check, and replaced fake-only landed_state assertions with the sent request (test_driver.py); updated facts.md; and regenerated reference.json, REFERENCE.md and check-report.json. The gate now fails G6.ESTOP_FAILED and G8 SAFE-028 (no stop at R2), the 12 package cases pass, and collect.py reports RESULT_UNTRUSTED until the orchestrator writes status blocked; the author's notes above still describe /mavros/cmd/land as the e-stop. For the human reviewer: PX4 SITL through MAVROS, both outside the clone; MAVROS can equally be pointed at a serial PX4, so the same surface would fly a real multirotor. An MHS e-stop now calls nothing upstream and, while latched, refuses /mavros/cmd/land too. Do not run the clone's offb.launch or offb_velocity.launch next to this driver: offb_node streams a (0, 0, 2) hover setpoint at 20 Hz with an all-zero quaternion and requests OFFBOARD and arming again every 5 s, which would undo a LAND, and the velocity node flies its own arm, takeoff, velocity and land sequence. Each MHS setpoint is a single publication while the clone states OFFBOARD needs a stream faster than 2 Hz (offb_node.cpp:32). Velocity inputs use the clone's ROS-side signs (vz positive is up). Unblocking needs a stop with a sensed outcome, for example LAND followed by a confirmed landed and disarmed state.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): PASS after repair; the blocked text above is historical and superseded. A LAND acknowledgement alone is still not a stop (2026-11-04); under the user's decision of 2026-11-05 (simulated devices only) the e-stop is a sensed-confirmation stop (SAFE-049, MHS/changes/SENSED-CONFIRMATION-STOP.md): it sends the clone's CommandTOL land (drone_offboard.cpp:14, 65-67) and a CommandBool disarm on its arming endpoint (:29; refused in the air, repeated by the retry), and is achieved only when mavros/state reads connected and not armed (consumed at offb_node.cpp:36, :70) and /mavros/altitude AMSL stays still (consumed at drone_offboard.cpp:120). The confirmation counts only new subscriptions opened after the request (first sample discarded, strictly increasing producer stamps, three consecutive samples within the 1500 ms fake bound); every threshold is operator_required (fake placeholders in fixtures/estop-confirmation.json; a live simulation supplies them and its own client bounds in simulation_deployment['estop_confirmation']). The fake now starts armed in OFFBOARD at the offb hover altitude; two contract cases set their own starting state. Disclosed: a running offb_node re-arms every 5 s (a reset is refused then), PX4 auto-disarm lives in the px4-firmware submodule, MAVROS can drive a real PX4. Changed driver.py (sensed_stop, safe_state, estop_latency_ms 3500, three facts, gaps), fake.py, fixtures/estop-confirmation.json (new), test_driver.py (nine sensed cases, check_driver kept), facts.md, reference.json, REFERENCE.md, check-report.json, RESULT.json. G1-G9 pass, contract_checked; G6 SENSED_FAIL_OPEN (withheld, frozen, nulled samples) leaves the e-stop unachieved and latched. Source pin, DeepSeek attribution and null reviewed_by unchanged. No ROS graph, simulator, MAVROS, PX4 or hardware ran.\n\nMODEL REVIEW (claude-sonnet-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Different-model review of the p3-sensed-stop work by claude-opus-5-5 (the user chose Claude Sonnet as the different model, 2026-11-04): ACCEPT. The gate and collect --strict pass with the digest matching. All cited lines of offb_node.cpp and drone_offboard.cpp read as claimed. The CommandTOL land plus CommandBool disarm stop is confirmed by mavros/state connected and not armed and a still AMSL altitude. The threshold is operator_required, and the offb_node re-arm, the px4-firmware submodule and the MAVROS real-PX4 dual use are disclosed. Evidence is fake contract_checked only; nothing was run beyond the fake. I changed no file.\n\nMODEL REVIEW (grok-4.7, a model and not a human, 2026-11-05; reviewed_by stays null): Round 3 blocks this package on SDK_BUG. The bridge has no proven offset between a ROS 1 producer clock and wall time, so every ROS 1 stamp is discarded and cannot confirm the stop (BL-17). The gate fails G6 (ESTOP_FAILED) and G8 (TSAFE-001, SAFE-028, SAFE-014). The clone has no other stop. The shipped offb_node re-arms every 5 s. No hardware run, no simulator run, and no human review. reviewed_by stays null.\n\nORCHESTRATOR DECISION (claude-opus-5-5, a model and not a human, 2026-11-06, chosen by the user; reviewed_by stays null): Blocked on SDK_BUG, failing closed, because of BL-17: on ROS 1 a topic latched by several publishers replays one stale sample per publisher, and the earlier discard-first rule discarded only one, so a ROS 1 sensed confirmation could accept a stale sample. The reviewed fix (p5-sdk-stampless, Codex gpt-6.1-sol round 5) landed on 2026-11-06: every ROS 1 stamp sample is discarded, so this package cannot confirm its stop, and the gate recorded here (G6 and G8 fail) is the fixed SDK's.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-06; reviewed_by stays null): Different-model review by Codex (gpt-6.1-sol) of the work of Grok (grok-4.7), unit p5-sdk-stampless--all, round 5: Checked land/disarm requests, ROS 1 confirmation refusal, retained latch, reset refusal, package tests, and matching G6/G8 failure digest. BL-17 prevents confirmation; the shipped OFFBOARD/arming loop remains an additional deployment hazard.",
+  "blocked_on": [
+    "SDK_BUG"
+  ]
+}

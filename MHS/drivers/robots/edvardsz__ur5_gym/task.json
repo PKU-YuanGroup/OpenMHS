@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.edvardsz/ur5_gym",
+  "track": "robots",
+  "local_path": "robots/edvardsz/ur5_gym",
+  "driver_dir": "MHS/drivers/robots/edvardsz__ur5_gym",
+  "upstream": {
+    "repo_url": "https://github.com/edvardsz/ur5_gym",
+    "commit": "d059332a01d320a48617d5a46edb9856f3a4c86d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 210,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_ur5.tasks.reach:Reach",
+      "file": "src/gym_ur5/tasks/reach.py",
+      "line": 22,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gym_ur5.tasks.reach_dict:Reach",
+      "file": "src/gym_ur5/tasks/reach_dict.py",
+      "line": 24,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gym_ur5.tasks.pick_and_place:PickAndPlace",
+      "file": "src/gym_ur5/tasks/pick_and_place.py",
+      "line": 22,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/gym_ur5/__init__.py:8 gym env ReachUR5-v0",
+      "src/gym_ur5/__init__.py:20 gym env ReachDictUR5-v0",
+      "src/gym_ur5/__init__.py:34 gym env PickAndPlaceUR5-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env ReachUR5-v0 registered at src/gym_ur5/__init__.py:8",
+      "gym env ReachDictUR5-v0 registered at src/gym_ur5/__init__.py:20",
+      "gym env PickAndPlaceUR5-v0 registered at src/gym_ur5/__init__.py:34"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/edvardsz__ur5_gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

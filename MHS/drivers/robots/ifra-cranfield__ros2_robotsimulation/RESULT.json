@@ -1,0 +1,50 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "status": "blocked",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "gate": {
+    "digest": "sha256:9c985513d654c092fc6fb14b0c3f97eb506328eaac1b1bdc06408266fc706c2d",
+    "failed": [
+      "G6",
+      "G8"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.ifra-cranfield.move-j.v1",
+      "reason": "No catalogue class carries the native /MoveJ wire: six scalar degree joint fields plus a MoveIt velocity scaling factor, with a string SUCCESS/FAILED/CANCELED result. cap.motion.joint_position.v1 takes a radian array and an optional duration and has no velocity scaling factor, so using it would change the device's units and control mode.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ifra-cranfield.move-js.v1",
+      "reason": "No catalogue class carries the seven-joint /MoveJs degree pose plus the MoveIt velocity scaling factor; cap.motion.joint_position.v1 is a generic radian array with no separate speed field and would not preserve the native seven-field pose and scaling-factor request.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ifra-cranfield.move-xyz.v1",
+      "reason": "No catalogue class carries the native /MoveXYZ wire: three scalar metre fields plus a velocity scaling factor, with the orientation fixed to the current pose by the server. cap.motion.cartesian_pose.v1 uses a nested millimetre position, an optional orientation and a reached output that the native action does not report.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.cartesian_pose.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.ifra-cranfield.move-g.v1",
+      "reason": "No catalogue class carries a parallel-gripper finger-opening position command. cap.manipulation.grasp.v1 is an object grasp with approach, force and width, not the upstream /MoveG goal and its per-model 0.04 or 0.025 metre travel check.",
+      "verb": "invoke",
+      "similar": [
+        "cap.manipulation.grasp.v1"
+      ]
+    }
+  ],
+  "notes": "BLOCKED (HELPER_MISSING) on the missing acknowledged stop for the effectful ROS 2 action surface. Last gate run 2026-11-05T07:44:29Z, backend fake, report digest sha256:99577b34d474be29bca9536c86e1135ca85429b75351228b708c5a5c89a1f37a: G1 pass Layout and isolation; G2 pass Lock; G3 pass Strict resolve; G4 pass Provenance; G5 pass Reference; G6 fail Behaviour with error G6.ESTOP_FAILED: mhs.safety.estop status failed, MHS.SAFETY.SAFE_STATE_UNREACHED: the device reports that its safe state was not reached; the latch stays engaged; retrying in the background (estop 'engaged', expected engaged or software_only); G7 pass Native surface; G8 fail Protocol and surface with G8.CONFORMANCE and G8.TEST TCAP-003 (no observable effect: /MoveG returned the identical MoveG:SUCCESS output for two valid goals and the driver has no mutable resource state); G9 skip Repository tests (G9.NOT_RUN because G6 failed).\n\nWHAT WAS AUTHORED: a configuration-only RosDriver over the pinned IFRA ROS 2 action servers /MoveJ, /MoveJs, /MoveXYZ and /MoveG. The first two take six or seven joint values in degrees plus the README-documented speed scaling factor (0, 1]; /MoveXYZ takes absolute x/y/z metres plus speed and keeps the current orientation; /MoveG takes a gripper opening in metres and the upstream server checks the selected model's own bound (0.04 m for panda_gripper, 0.025 m for egp64). Each binding cites the create_server line and the generated action header in the pinned clone; the result predicate is the upstream's Move*:SUCCESS string, so the upstream's Move*:FAILED planning result is a failed MHS command even though the server calls goal_handle->succeed. The fake is a ROS-free RecordingRosTransport over the four native action wire shapes; every state flag and canned status number is test data, and the fake is F0 with no Gazebo physics, MoveIt planning or trajectory execution. No live ROS graph, rosbridge deployment, Gazebo world or hardware was contacted; the lock keeps reviewed_by null.\n\nWHY THE HELPER CANNOT COMPLETE THIS SURFACE: the pinned action servers expose no pause, stop, hold, reset or safe-state service or action. The only stop-shaped path is the action cancel callback, which calls move_group_interface.stop() and accepts cancellation (moveJ_action.cpp:117-128). The RosDriver contract does not accept action cancellation as an acknowledged stop binding, and a software latch cannot prove that an external MoveIt controller stopped. No safe-state Action was fabricated: a fixed MoveJ or MoveG goal would command motion during an e-stop, not stop it. Consequently the stock e-stop reports SAFE_STATE_UNREACHED. This is the concrete blocker; it is not hidden behind an instant fake stop.\n\nSCOPE GAPS DISCLOSED: /MoveL, /MoveR, /MoveROT, /MoveRP, /MoveYPR and /MoveXYZW are additional action variants in the same package and remain unbound; binding them would add more effectful actions with the same missing stop. The /Attacher action is also unbound: it is a pose-replication loop with an empty result and no independent terminal success field. The G8 TCAP-003 result is a real limitation of the pinned native result, which is a constant string on success; the extension actions have no mutable resource to expose, so the conformance suite sees no input-dependent output. The package does not claim that the fake proves a real stop, a real ROS run or any hardware behaviour.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Confirmed the author's block: the pinned ros2_actions servers (/MoveJ, /MoveJs, /MoveXYZ, /MoveG and the unbound Move* variants) expose no stop, hold, pause or reset service or action; the only stop-shaped path is each server's cancel callback, which calls move_group_interface.stop() and accepts (moveJ_action.cpp:117-128), while the execute thread checks is_canceling only after move() returns (317-329), and goal cancellation is not an acknowledged stop binding. The stock e-stop therefore fails G6.ESTOP_FAILED with the latch held, and G8 also fails TCAP-003 because each server answers a constant Move*:SUCCESS string and the driver has no state read. The four action names, types and goal fields match MoveJ.action, MoveJs.action, MoveXYZ.action and MoveG.action, the speed range matches README.md:41, and the clone's hardware interfaces are gazebo_ros2_control GazeboSystem only, so R0 simulated is consistent. The reviewer changed no authored file; the gate re-run rewrote check-report.json with the same findings. For the next author: the MoveXYZ and MoveG facts claim the generated header include on 80-85, where only create_server is (the include is on line 46); the MoveJ fact on 301-306 places setJointValueTarget, which is on 307; the speed Limit (min 0) admits the 0 that README.md:41 calls invalid, and its comment's claim that MoveIt rejects zero is not in the clone (the server passes speed to setMaxVelocityScalingFactor unchanged, moveJ_action.cpp:142-144); joint, Cartesian and gripper inputs declare no Limit although the servers check per-robot joint and gripper bounds (moveJ_action.cpp:163-289, moveG_action.cpp:150-164); and the servers ignore move()'s MoveIt error code, so Move*:SUCCESS does not prove the trajectory executed (moveJ_action.cpp:317-329). For the human reviewer: Simulation only (Gazebo with gazebo_ros2_control and MoveIt 2 for ABB, Fanuc, KUKA, UR and Panda models). Goal cancellation stops MoveIt trajectory execution through move_group_interface.stop() but returns no stopped state, each goal runs in a detached thread, and the execute thread looks at cancellation only after move() returns. Unblocking needs an acknowledged stop (for example a controller or MoveIt stop service with a result and a sensed standstill) or an SDK profile that accepts an exact goal cancellation plus a sensed standstill as a stop."
+}

@@ -1,0 +1,94 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.darshmenon/ur3_ros2_pick_and_place",
+  "track": "robots",
+  "local_path": "robots/darshmenon/ur3_ros2_pick_and_place",
+  "driver_dir": "MHS/drivers/robots/darshmenon__ur3_ros2_pick_and_place",
+  "upstream": {
+    "repo_url": "https://github.com/darshmenon/ur3_ros2_pick_and_place",
+    "commit": "e58ea6178d8d8195beb92387ba365227840a96a9",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:source-review",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 146,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "mujoco_ur_rl_ros2.envs.ur_reach_env:URReachEnv",
+      "file": "mujoco_ur_rl_ros2/envs/ur_reach_env.py",
+      "line": 26,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "ur_rl_training/models/robotiq_2f85/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ur_rl_training/models/ur3/ur3.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "ur_rl_training/models/robotiq_2f85/2f85.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ur_rl_training/models/robotiq_2f85/scene.xml:1 MJCF scene model",
+      "ur_rl_training/models/ur3/ur3.xml:1 MJCF robot model",
+      "ur_rl_training/models/robotiq_2f85/2f85.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "ur_mtc_pick_place_demo/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model ur_rl_training/models/robotiq_2f85/scene.xml:1",
+      "MJCF robot model ur_rl_training/models/ur3/ur3.xml:1",
+      "MJCF robot model ur_rl_training/models/robotiq_2f85/2f85.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/darshmenon__ur3_ros2_pick_and_place --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,68 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:3185bc6893a362ddfaea96ac0b88ba6528128ec422967a2f36edaba96821d523",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.yizhengzhang1.pause_physics.v1",
+      "reason": "No catalogue class controls a Gazebo physics pause. cap.world.step.v1 advances a world and cap.world.reset.v1 resets one; neither pauses or resumes real-time physics, and the upstream service is std_srvs/Empty. The extension is also the input-free safe-state action and the acknowledged simulator stop.",
+      "verb": "invoke",
+      "summary": "Pause simulated Gazebo physics with the acknowledged /gazebo/pause_physics service.",
+      "similar": [
+        "cap.world.step.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.yizhengzhang1.unpause_physics.v1",
+      "reason": "No catalogue class resumes paused Gazebo physics; cap.world.step.v1 is a fixed-step advance, not an unpause of real-time physics. This is the counterpart of the pause service used by the openai_ros step lifecycle.",
+      "verb": "invoke",
+      "summary": "Resume simulated Gazebo physics with the acknowledged /gazebo/unpause_physics service.",
+      "similar": [
+        "cap.world.step.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.yizhengzhang1.start_game.v1",
+      "reason": "No catalogue class starts or stops the RoboMaster referee game loop. cap.world.reset.v1 resets a world and does not bind rm_simulator/GameState or the start/stop of game_spin; the service only acknowledges receipt of the request.",
+      "verb": "invoke",
+      "summary": "Ask the referee node to start or stop its game loop through the /start_game service.",
+      "similar": [
+        "cap.world.reset.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.yizhengzhang1.referee_state.v1",
+      "reason": "No catalogue class reads the rm_simulator/ReferSystemInfo referee message. cap.world.state.v1 binds a world state snapshot, but this endpoint is a live 120 Hz referee game-state publication carrying robot health, bullets, poses and cell state; the extension carries the fields the package maps.",
+      "verb": "read",
+      "summary": "Read one rm_simulator/ReferSystemInfo referee-state sample.",
+      "similar": [
+        "cap.world.state.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.yizhengzhang1.turret_position.v1",
+      "reason": "No catalogue class commands a single turret joint angle without a completion acknowledgement. cap.motion.joint_position.v1 requires a reached boolean and a joint_positions output that the upstream turret controller does not provide; the extension preserves the Float32 turret_position topic and reports transmission only.",
+      "verb": "invoke",
+      "summary": "Publish one turret angle in radians on /jackal0/turret_position.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.yizhengzhang1.cmd_vel.v1",
+      "reason": "No catalogue class binds a persistent ROS geometry_msgs/Twist velocity publication. cap.motion.mobile_base.v1 requires a bounded duration and returns distance_m/heading_rad, which the mecanum controller topic does not acknowledge; cap.motion.cartesian_twist.v1 binds robot.arm resources and is a bounded Cartesian twist. The extension preserves the native /jackal0/cmd_vel topic.",
+      "verb": "invoke",
+      "summary": "Publish one body twist on /jackal0/cmd_vel for the mecanum base controller.",
+      "similar": [
+        "cap.motion.mobile_base.v1"
+      ]
+    }
+  ],
+  "notes": "PASS on the fake backend only (evidence contract_checked, never an MHS-Device level). This package is model-authored and unreviewed: driver.lock.json reviewed_by is null, no hardware was attached, and no ROS graph, Gazebo process, simulator run or hardware run is claimed. DEVIATION FROM THE CARD: the card's entry_symbols name the vendored openai_ros template (MyRobotEnv, whose task hooks raise NotImplementedError) and unrelated example task environments; its hint SumitXlRoom-v0 is also a vendored example. The RoboMaster-specific AiChallengeEnv-v1 registration exists at src/competition_rl/scripts/multiAgentChallengeTaskEnv.py:15-21, but _get_obs is a pass, _compute_reward returns 0 and _is_done returns False (:60-86), so a GymnasiumDriver would have to invent the observation, action space and reward. I therefore used the concrete ROS interfaces the clone ships: /gazebo/pause_physics and /gazebo/unpause_physics (std_srvs/Empty, the openai_ros MultiRobotGazeboEnv step pair), /jackal0/cmd_vel (geometry_msgs/Twist, the mecanum controller subscription), /jackal0/turret_position (std_msgs/Float32, the turret controller subscription), /start_game (rm_simulator/GameState) and /refer_system_info (rm_simulator/ReferSystemInfo). task.json was not edited. The package is a configuration-only ROS 1 RosDriver, mode simulated, risk R2, device_kind world.sim; there is no Python native class and no native.py. The endpoints and types are cited from the clone: multi_robot_gazebo_connection.py:20-21 and :4, refer_system.cpp:37-38 and :7-8, turret_controller.cpp:13 and :3, mecanum_drive_controller.cpp:183 and mecanum_drive_controller.h:169. The pause action is input-free with safe_state=True and the same /gazebo/pause_physics service is the e-stop binding; the runtime latches in software first. The described safe state is paused simulated physics, not a physical emergency stop, not a zero-velocity command and not a referee shutdown. The service implementation is in gazebo_ros, outside the clone; the clone proves the client endpoints and their use in the openai_ros step/reset lifecycle, not the callback body. start:false stops only the referee game_spin path; it does not pause physics or stop the base controller. Pausing freezes physics but does not terminate the referee node, its 120 Hz loop or the controllers; unpause can resume retained controller state. The base and turret commands are topic publications; their receipts report published=true and confirmed=false and echo the exact published input fields (the shared production adapter does this; it is not a fake-only conversion). No receipt claims that the base moved or the joint reached an angle. The mecanum controller's 0.25 s cmd_vel timeout brake is a controller timeout, not an acknowledged stop. Limits: the turret position is bounded to [-1.5707, 1.5707] rad by the front_camera_pivot_joint URDF limit at camera_mount.urdf.xacro:53. The cmd_vel linear x/y and angular z inputs are Limit.operator_required because the pinned controller's 3.0/2.0/2.0 maxima are controller configuration values, not device constants; site-limits.example.json is an example narrowing overlay and its values are test data. The read referee fields are raw; gameTime is seconds because game_spin computes it from ros::Time::now().toSec() minus start_secs; the clone states no unit for the pose and cell coordinates. No G4.REF_VALUE or G4.REF_BINARY warnings are present; the gate reported no findings. The fake is a ROS-free RecordingRosTransport; it answers the declared endpoints and models application and transport failures, a rejected start_game, a silent referee topic and a malformed referee message. It runs no Gazebo physics, controllers, sensors or wall-clock loop; all its numbers are placeholders. Fidelity is F0 for the deployed event-driven fake: engine analytic:ROS recording fake (no physics), determinism none, timestep_ms 0, realtime_factor 0, reset none, no snapshot/restore. NOT COVERED: the ReferSystemInfo header, cellState and debuff-time fields; /jackal0/shoot, /jackal0/debuff (documented as not used), /jackal0/cmd_vel_acc, /jackal0/obstacle_filtered, the camera, laser and TF surfaces, the multi-robot jackal1..3 namespaces, and world step/reset/snapshot/restore. test_driver.py keeps the check_driver call and adds eight cases: referee mapping, pause/unpause service calls, turret publication and out-of-limit refusal, operator_required base velocity, start_game application failure, pause service failure, silent referee observation and the e-stop latch. G9 passed. The clone was left unmodified (G1 passed); no network, pip install or upstream execution was used. No hardware backend was run; the loader refuses an unreviewed model-written package's hardware backend at R2 and RosDriver refuses every hardware backend without a human hardware review.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked every endpoint and type (/gazebo/pause_physics and /gazebo/unpause_physics through the openai_ros proxies, whose servers are in gazebo_ros outside the clone; the root referee service and latched topic; the turret and base topics under the jackal0 namespace, the base reaching ridgeback_velocity_controller through the relay of control.launch), the GameState.srv and ReferSystemInfo.msg fields, the URDF turret bound (camera_mount.urdf.xacro:53), the operator_required Twist bounds, all 19 facts and the stop: pause_physics is an acknowledged Gazebo service that stops the world stepping, accepted as for usv_sim_lsa. Three facts said more than their lines (the _reset_sim fact read meaning into method names, the referee-loop fact added a 'so ...' inference, and the game_spin fact put the 120 Hz rate on line 398 although it is in main at 426), and the package did not disclose that the referee itself publishes /jackal0/cmd_vel (forwarding the planner's cmd_vel_acc), that /refer_system_info is latched and empty until a game starts, or that the referee loop sleeps on simulated time while paused. Reviewer changed driver.py (the three facts, the latch added to the referee fact, five new source facts on isGameStart, the referee's cmd_vel publisher and forwarding, the relay and one_ridgeback.launch, safe_state now naming any client's unpause, and four fidelity gaps) and facts.md, and regenerated reference.json, REFERENCE.md and check-report.json; the gate and collect.py --strict pass with the digest unchanged. For the human reviewer: Simulator only: the e-stop pauses Gazebo physics (any client can unpause it, and an openai_ros training step does); the referee node, the planners and retained controller commands are not stopped. The repository also vendors hardware stacks that rm_simulator's launch files do not start: RoboRTS roborts_base talks to a real RoboMaster over /dev/serial_sdk (roborts_base/roborts_base_config.h:26), plus puma_motor_driver and pointgrey_camera_driver; none is covered. The card's entry symbols are vendored openai_ros examples (the MyRobotEnv template, a cart-pole and three Fetch environments), none of them the RoboMaster simulator; the package keeps the card's RosDriver family, so no override is proposed."
+}

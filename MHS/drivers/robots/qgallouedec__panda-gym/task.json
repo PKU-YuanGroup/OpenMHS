@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.qgallouedec/panda-gym",
+  "track": "robots",
+  "local_path": "robots/qgallouedec/panda-gym",
+  "driver_dir": "MHS/drivers/robots/qgallouedec__panda-gym",
+  "upstream": {
+    "repo_url": "https://github.com/qgallouedec/panda-gym",
+    "commit": "10c4d8adaab07d8a29b2f8dc0aa85f8edd8532ae",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 92,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "panda_gym.envs.panda_tasks:PandaReachEnv",
+      "file": "panda_gym/envs/panda_tasks.py",
+      "line": 167,
+      "confidence": "override"
+    },
+    {
+      "symbol": "panda_gym.envs.core:RobotTaskEnv",
+      "file": "panda_gym/envs/core.py",
+      "line": 197,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "panda_gym/envs/panda_tasks.py:16 PandaFlipEnv environment class",
+      "panda_gym/envs/panda_tasks.py:67 PandaPickAndPlaceEnv environment class",
+      "panda_gym/envs/panda_tasks.py:117 PandaPushEnv environment class",
+      "panda_gym/envs/panda_tasks.py:167 PandaReachEnv environment class"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/qgallouedec__panda-gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

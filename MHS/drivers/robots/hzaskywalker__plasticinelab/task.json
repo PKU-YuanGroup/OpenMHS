@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.hzaskywalker/plasticinelab",
+  "track": "robots",
+  "local_path": "robots/hzaskywalker/plasticinelab",
+  "driver_dir": "MHS/drivers/robots/hzaskywalker__plasticinelab",
+  "upstream": {
+    "repo_url": "https://github.com/hzaskywalker/plasticinelab",
+    "commit": "ac1a2f7b0bbbe88706b51bf3aa9d72483e1d05b6",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 107,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "plb.envs.env:PlasticineEnv",
+      "file": "plb/envs/env.py",
+      "line": 12,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "plb/envs/__init__.py:8 gym env {}-v{}"
+    ],
+    "upstream_tests": "plb/algorithms/discor/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env {}-v{} (id template, built at run time) registered at plb/envs/__init__.py:8"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/hzaskywalker__plasticinelab --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

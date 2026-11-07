@@ -1,0 +1,89 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "gate": {
+    "digest": "sha256:2c9eba33be5a593654925ad90cd887eb62b361bee3a7db096eeccd31cc507a2e",
+    "failed": [
+      "G3",
+      "G7"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.unitreerobotics.fr_hip_command.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds one relative per-joint MotorCmd publication. cap.motion.joint_position.v1 takes a joint_positions array and reports reached; the upstream controller has twelve independent command topics, no completion acknowledgement, and a raw MotorCmd carrying mode/q/dq/tau/Kp/Kd. The extension preserves that wire contract."
+    },
+    {
+      "capability_id": "x-cap.unitreerobotics.fr_thigh_command.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds one relative per-joint MotorCmd publication. cap.motion.joint_position.v1 takes a joint_positions array and reports reached; the upstream controller has twelve independent command topics, no completion acknowledgement, and a raw MotorCmd carrying mode/q/dq/tau/Kp/Kd. The extension preserves that wire contract."
+    },
+    {
+      "capability_id": "x-cap.unitreerobotics.fr_calf_command.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds one relative per-joint MotorCmd publication. cap.motion.joint_position.v1 takes a joint_positions array and reports reached; the upstream controller has twelve independent command topics, no completion acknowledgement, and a raw MotorCmd carrying mode/q/dq/tau/Kp/Kd. The extension preserves that wire contract."
+    },
+    {
+      "capability_id": "x-cap.unitreerobotics.fl_hip_command.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds one relative per-joint MotorCmd publication. cap.motion.joint_position.v1 takes a joint_positions array and reports reached; the upstream controller has twelve independent command topics, no completion acknowledgement, and a raw MotorCmd carrying mode/q/dq/tau/Kp/Kd. The extension preserves that wire contract."
+    },
+    {
+      "capability_id": "x-cap.unitreerobotics.fl_thigh_command.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds one relative per-joint MotorCmd publication. cap.motion.joint_position.v1 takes a joint_positions array and reports reached; the upstream controller has twelve independent command topics, no completion acknowledgement, and a raw MotorCmd carrying mode/q/dq/tau/Kp/Kd. The extension preserves that wire contract."
+    },
+    {
+      "capability_id": "x-cap.unitreerobotics.fl_calf_command.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds one relative per-joint MotorCmd publication. cap.motion.joint_position.v1 takes a joint_positions array and reports reached; the upstream controller has twelve independent command topics, no completion acknowledgement, and a raw MotorCmd carrying mode/q/dq/tau/Kp/Kd. The extension preserves that wire contract."
+    },
+    {
+      "capability_id": "x-cap.unitreerobotics.rr_hip_command.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds one relative per-joint MotorCmd publication. cap.motion.joint_position.v1 takes a joint_positions array and reports reached; the upstream controller has twelve independent command topics, no completion acknowledgement, and a raw MotorCmd carrying mode/q/dq/tau/Kp/Kd. The extension preserves that wire contract."
+    },
+    {
+      "capability_id": "x-cap.unitreerobotics.rr_thigh_command.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds one relative per-joint MotorCmd publication. cap.motion.joint_position.v1 takes a joint_positions array and reports reached; the upstream controller has twelve independent command topics, no completion acknowledgement, and a raw MotorCmd carrying mode/q/dq/tau/Kp/Kd. The extension preserves that wire contract."
+    },
+    {
+      "capability_id": "x-cap.unitreerobotics.rr_calf_command.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds one relative per-joint MotorCmd publication. cap.motion.joint_position.v1 takes a joint_positions array and reports reached; the upstream controller has twelve independent command topics, no completion acknowledgement, and a raw MotorCmd carrying mode/q/dq/tau/Kp/Kd. The extension preserves that wire contract."
+    },
+    {
+      "capability_id": "x-cap.unitreerobotics.rl_hip_command.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds one relative per-joint MotorCmd publication. cap.motion.joint_position.v1 takes a joint_positions array and reports reached; the upstream controller has twelve independent command topics, no completion acknowledgement, and a raw MotorCmd carrying mode/q/dq/tau/Kp/Kd. The extension preserves that wire contract."
+    },
+    {
+      "capability_id": "x-cap.unitreerobotics.rl_thigh_command.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds one relative per-joint MotorCmd publication. cap.motion.joint_position.v1 takes a joint_positions array and reports reached; the upstream controller has twelve independent command topics, no completion acknowledgement, and a raw MotorCmd carrying mode/q/dq/tau/Kp/Kd. The extension preserves that wire contract."
+    },
+    {
+      "capability_id": "x-cap.unitreerobotics.rl_calf_command.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class binds one relative per-joint MotorCmd publication. cap.motion.joint_position.v1 takes a joint_positions array and reports reached; the upstream controller has twelve independent command topics, no completion acknowledgement, and a raw MotorCmd carrying mode/q/dq/tau/Kp/Kd. The extension preserves that wire contract."
+    },
+    {
+      "capability_id": "x-cap.unitreerobotics.low_state.v1",
+      "verb": "read",
+      "reason": "No catalogue class binds a read-only aggregate LowState.motorState array of twenty entries. cap.sensing.imu.v1 covers the IMU, not the joint state; this extension declares the explicit subscription and its output schema."
+    },
+    {
+      "capability_id": "x-cap.unitreerobotics.brake.v1",
+      "verb": "invoke",
+      "reason": "No catalogue class fits a fixed BRAKE MotorCmd publication. cap.motion.stop.v1 requires a stopped-state report that a rosbridge topic publication cannot provide; the action is declared safe_state only to exercise the stop path and is refused by the helper."
+    }
+  ],
+  "notes": "BLOCKED at G3 and G7. The original Unitree twelve-joint position/velocity/effort/gain publications and twenty-entry LowState contract are retained. All 12 A1 URDF joint elements and 36 position/velocity/effort numbers were checked; gains remain operator-required. A BRAKE MotorCmd is a damping command and one FR-hip publication cannot acknowledge a complete-device stop. The controller retains commands and stopping() is empty. The LowState source-name claim does not match the exact composed suffix _gazebo/lowState/state. Neither issue is waived or fixed by generating a reference. The original reference.json and REFERENCE.md are historical, stale relative to the rejected declaration, and deliberately unchanged. The source includes the exact pinned unitree_ros_to_real gitlink; no message schema or endpoint was fabricated. The full gate is still rejected and the retained gate-assertion test is not counted as passing. No ROS, Gazebo, controller, terrain asset or hardware was modified or run.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Retain blocked with original G3/G7 failures and historical references; do not accept a single-joint brake as whole-device cessation. Complete fake/diagnostic gate remains rejected at G3, G7. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: NATIVE-BLOCKERS.md, RESULT.json, check-report.json. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. Catalogue rationale corrected: deceleration is optional; the required stopped output is the unresolved semantic difference. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

@@ -1,0 +1,94 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.haosulab/maniskill-legacy",
+  "track": "robots",
+  "local_path": "robots/haosulab/maniskill-legacy",
+  "driver_dir": "MHS/drivers/robots/haosulab__maniskill-legacy",
+  "upstream": {
+    "repo_url": "https://github.com/haosulab/maniskill-legacy",
+    "commit": "58964d08b4c7d2e14c5e6e287dbb9430d900f54d",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 81,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "mani_skill.env.base_env:BaseEnv",
+      "file": "mani_skill/env/base_env.py",
+      "line": 64,
+      "confidence": "override"
+    },
+    {
+      "symbol": "mani_skill.env.open_cabinet_door_drawer:OpenCabinetDoorEnv",
+      "file": "mani_skill/env/open_cabinet_door_drawer.py",
+      "line": 347,
+      "confidence": "override"
+    },
+    {
+      "symbol": "mani_skill.env.open_cabinet_door_drawer:OpenCabinetDrawerEnv",
+      "file": "mani_skill/env/open_cabinet_door_drawer.py",
+      "line": 362,
+      "confidence": "override"
+    },
+    {
+      "symbol": "mani_skill.env.push_chair:PushChairEnv",
+      "file": "mani_skill/env/push_chair.py",
+      "line": 16,
+      "confidence": "override"
+    },
+    {
+      "symbol": "mani_skill.env.move_bucket:MoveBucketEnv",
+      "file": "mani_skill/env/move_bucket.py",
+      "line": 15,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/haosulab__maniskill-legacy --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.robotology-legacy/gym-ignition",
+  "upstream": {
+    "repo_url": "https://github.com/robotology-legacy/gym-ignition",
+    "commit": "4bc8e0465eed68911434485ba0b9c0a6740d516e",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The upstream environment needs Ignition Gazebo, ScenARIO and gym_ignition_models (pip install . pulls them in). The gate and the fake backend need none of them: fake.py is pure Python and the gate never installs or imports the upstream package. Install it only to serve the sim backend (gym.make of the registered environment), which was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeCartPoleDiscrete"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wD-004",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

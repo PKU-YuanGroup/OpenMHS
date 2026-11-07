@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:f04a9df891e5aa83ac89c9c3032485b36a7abbd6f05818e109f77089e5164646",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.szenergy.fix.v1",
+      "reason": "No catalogue class observes sensor_msgs/NavSatFix. cap.sensing.read.v1 returns an open values object and cap.sensing.imu.v1 is restricted to sensor.imu kinematics; neither carries the complete NavSatFix header, status, covariance array and covariance type. The package uses an x-cap id with an inline full-message schema.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.szenergy.imu.v1",
+      "reason": "No catalogue class carries the complete sensor_msgs/Imu message. cap.sensing.imu.v1 returns only linear acceleration, angular velocity, orientation and sampled_at for a sensor.imu resource; the upstream message also carries the native header and three fixed covariance arrays, so the package uses an x-cap id with an inline full-message schema.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.szenergy.mag.v1",
+      "reason": "No catalogue class observes sensor_msgs/MagneticField. cap.sensing.read.v1 returns an open values object without the native header, magnetic-field vector and covariance array contract, so the package uses an x-cap id with an inline full-message schema.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.szenergy.time_reference.v1",
+      "reason": "No catalogue class carries sensor_msgs/TimeReference or the upstream GPS-week and time-of-week arithmetic. The package uses an x-cap id with an inline full-message schema that preserves the ROS 1 header, time_ref secs/nsecs and source label.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.szenergy.fix_status.v1",
+      "reason": "No catalogue class reads the upstream std_msgs/UInt8 fix-mode flag. cap.sensing.read.v1 is a generic sensor channel read and cap.sensing.imu.v1 is IMU kinematics; neither binds the receiver's numeric SBP fix-mode output, so the package uses an x-cap id with an inline schema.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.szenergy.fix_status_text.v1",
+      "reason": "No catalogue class reads the upstream human-readable std_msgs/String fix status. The package uses an x-cap id with an inline string schema for this status observation.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.szenergy.pose.v1",
+      "reason": "No catalogue class carries geometry_msgs/PoseStamped as an observation. cap.motion.cartesian_pose.v1 is an actuating pose command; this node only publishes its UTM pose, so the package uses an x-cap id with an inline full-message schema.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.szenergy.odometry.v1",
+      "reason": "No catalogue class carries nav_msgs/Odometry as an observation, including the child frame, pose covariance and twist arrays. The package uses an x-cap id with an inline full-message schema.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.szenergy.attitude.v1",
+      "reason": "No catalogue class carries geometry_msgs/Vector3 Euler angles as an observation. cap.motion.cartesian_pose.v1 is an actuating pose command and cap.sensing.imu.v1 uses a different output shape, so the package uses an x-cap id with an inline schema.",
+      "verb": "read"
+    }
+  ],
+  "notes": "PASS on the fake backend only (evidence contract_checked, never an MHS-Device level); this package is model-authored and unreviewed (driver.lock.json reviewed_by is null), no hardware was attached, and no ROS graph, receiver, rosbridge connection or hardware run is claimed. The card's family-config decision and RosDriver helper match the C++ ROS 1 publisher interface, so there is no decision deviation; the card's entry_symbols list is empty and a RosDriver needs no entry symbol, so there was no symbol to verify. The driver is configuration-only (no Python native class, no native.py) and declares no Python native for the C++ node. Scope: nine read-only subscriptions, each returning one complete ROS 1 message under output field sample: /fix (sensor_msgs/NavSatFix, src/duro.cpp:475), /imu (sensor_msgs/Imu, 477), /mag (sensor_msgs/MagneticField, 476), /time_ref (sensor_msgs/TimeReference, 482), /status_flag (std_msgs/UInt8, 480), /status_string (std_msgs/String, 481), /current_pose (geometry_msgs/PoseStamped, 473), /odom (nav_msgs/Odometry, 472) and /rollpitchyaw (geometry_msgs/Vector3, 478). The node advertises relative names and the example launch starts node duro_driver without a namespace (launch/duro_example.launch:3-23), so the configured endpoints are the root-resolved names and the exact upstream relative token is retained in source_name. README.md:91-103 documents a /gps/duro/... namespaced deployment; the operator must expose the declared endpoint by launching under that namespace or remapping it, and the bridge does not prove the ROS graph. The full native messages preserve header seq/stamp/frame_id, fix status and 9-element covariance, three-axis IMU vectors and three 9-element covariance arrays, the magnetic vector and covariance, ROS 1 time_ref secs/nsecs and source gps_duro, pose position and quaternion, odometry position and child frame (the odometry pose orientation is the publisher default because the node never assigns it), 36-element odometry pose/twist covariance arrays, and Euler x/y/z in radians. The driver performs no unit conversion and silently clamps nothing; the upstream conversions (mm to m2 covariance at src/duro.cpp:159-165, acceleration and gyro scaling at 349-365, magnetic 1e-6 at 449-459, Euler 57292374 at 332-334) already occur in the node. The output schemas enforce fixed covariance lengths, JSON types, required header stamps and closed objects. Each capability opens its own short subscription; the observations are independent, not an atomic synchronized snapshot, and a completed read means a message arrived, not that the fix is valid, the source is recent or the time is absolutely accurate. Invalid mode 0 emits no fix, pose or odometry but still publishes status (src/duro.cpp:154-270). Dead Reckoning mode 5 and unsupported positive modes publish a NavSatFix whose status is STATUS_NO_FIX (-1) rather than relabelling it (253-268); this is modelled and tested. IMU output is absent until configuration (linear_acc_conf > 0, 351-354, set by 403-441); missing samples are not replaced with zeros. IMU orientation is copied from pose_msg (367-370), so it is not synchronized with the raw IMU sample; current_pose orientation follows orientation_source and may be the odometry-derived fallback (210-227). NOT COVERED: current_pose_fake_orientation, rollpitchyaw_fake, time_diff and time_gps_str (debug/derived or time-diagnostic topics outside the README topic table), ROS parameters, QoS, TF, the SBP/libsbp decoder and TCP socket, and every actuation, reset or stop path. The clone states no numeric device bound or writable field, so the package declares no Limit and no site-limits.example.json overlay; it is mode hardware at the card floor risk R0 and exposes no actuator, so no e-stop, safe-state action, reset or hardware stop is invented. The reference's software latch is the SDK no-native-stop state, not a device stop or a safety claim. The fake is a package-local RecordingRosTransport subclass: it answers subscribe with one complete canned message, suppresses /fix, /current_pose and /odom when fix_mode <= 0, suppresses /imu until imu_ready, preserves status -1 for positive Dead Reckoning and unsupported modes, and models silent topics, mismatched subscription ids and transport failure. Every placeholder value, frame id and covariance default is test data, marked # placeholder; the fake runs no SBP decoder, navigation filter, ROS node or wall-clock loop, and its evidence level is F0. Tests: test_driver.py keeps check_driver and adds 24 repository cases covering every complete sample, the declared subscribe endpoints/types/queue_length and unsubscribe, the empty resource snapshot with no transport request, no service or command operation, invalid-fix silence, Dead Reckoning and unsupported status -1, IMU gating, missing and short covariance, boolean-for-number, malformed stamp, extra field, non-finite refusal, silent topic, unrelated subscription id and transpo [...]\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked the nine root-resolved publisher bindings and types against main (src/duro.cpp:472-482) and the example launch, every fact, the fake's fix-mode gating and NavSatStatus mapping (154-268), the IMU gating (74-75, 351-373) and the R0 passive-sensor scope (no service, subscriber or actuator in main, 467-516). The odometry output schema, the fake and one test used a flattened nav_msgs/Odometry (position, orientation and covariance directly under pose, linear and angular under twist), but the message nests PoseWithCovariance and TwistWithCovariance (the node writes odom.pose.pose.position, 173-175), so the closed output schema would have refused every real odometry message as OUTPUT_INVALID; eleven facts also claimed more than their ranges (function names, branch conditions and the fix-mode bit width outside the range, a 'so' inference on IMU orientation, a non-existent 'odometry callback'), and the namespace text said to launch under the README's /gps/duro namespace, which would not expose the configured root endpoints. Reviewer changed driver.py (nested Odometry schema; eleven facts narrowed or widened to their lines; three source facts added: fix-mode bits and enum 105-121, the -1.0 initial IMU scales 74-75, the debug script's /gps/duro/time_ref at src/debug_time_drift.py:18), fake.py (nested Odometry), test_driver.py (asserts the nesting; a new case refuses the flattened shape) and facts.md (same facts; the namespace paragraph now says the root endpoints match only a root-namespace launch or remap), and regenerated reference.json, REFERENCE.md and check-report.json. The gate and collect.py --strict pass with the expected G8.SAFE014_NOT_APPLICABLE and the digest unchanged; 26 cases pass. RESULT.json notes written before the fix are superseded where they say 'by launching under that namespace or remapping it' (it must be the root namespace, as the corrected facts.md says) and count 24 repository cases (now 25). The coordinator's later patterns do not apply: the nine observations are explicit read capabilities with an empty resource snapshot, the node has no competing publisher or service, and the relative ROS 1 names resolve under the node's namespace. For the human reviewer: Passive GNSS/INS receiver at R0: the node only publishes, so there is no stop and none is needed. The endpoints are the root-resolved names of launch/duro_example.launch (/fix, /odom, ...); the README topic table and the repository's src/debug_time_drift.py use /gps/duro/..., so a deployment that follows the README must launch the node at the root namespace or remap before these bindings receive anything. current_pose and imu orientation depend on euler_based_orientation, orientation_source and on SBP messages 544/545 being enabled on the receiver; the odometry orientation is the all-zero default quaternion, and the IMU orientation is a copy of the last pose orientation, not a synchronized measurement."
+}

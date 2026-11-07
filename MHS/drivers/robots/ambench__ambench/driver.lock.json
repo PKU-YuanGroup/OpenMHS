@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.ambench/ambench",
+  "upstream": {
+    "repo_url": "https://github.com/ambench/ambench",
+    "commit": "60bf5b73041df4eab571f7d9f0a297aeecbf2e0d",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.11",
+    "commands": [],
+    "system_deps": [
+      "Isaac Sim 5.1",
+      "Isaac Lab"
+    ],
+    "gpu": true,
+    "platform": "linux",
+    "notes": "README.md:42-43 requires a native Linux host, a discrete NVIDIA GPU and Isaac Sim 5.1 with Python 3.11, and README.md:45-60 says Isaac Sim and Isaac Lab must be installed before ./scripts/setup/install.sh builds acados and Pyroki. Nothing was installed or imported here: the gate and the fake backend are pure Python and need no upstream dependency, and the sim backend (gymnasium.make of the registered task) was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakePressButtonEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "wD-011",
+    "date": "2026-10-30"
+  },
+  "reviewed_by": null
+}

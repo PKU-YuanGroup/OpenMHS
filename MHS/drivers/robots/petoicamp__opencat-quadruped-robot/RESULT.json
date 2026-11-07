@@ -1,0 +1,15 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:6f8c819380fc4622330afaa259ca7aeb15011915e6a21e39ea9472e17834bccd",
+    "failed": []
+  },
+  "notes": "DEVIATION FROM THE CARD: the SerialDriver helper cannot express this interface; the upstream Python layer assembles every wire command from a token and arguments (and some tokens are binary frames), so the package is a direct Driver over the card's entry symbol serialMaster.SerialCommunication:Communication, with native.py opening it. Covered: model/firmware identity ('?'), IMU pitch and roll in degrees ('v'), the 16 current joint angles in degrees ('j'), and the safe-state rest action x-cap.petoicamp.rest.v1 ('d'); the @estop sends 'd'. NOT COVERED: locomotion and gait skills, joint commands, calibration, the buzzer, and the optional sensor pack. The fake returns the full 16-element joint array. G8 warns SAFE014_NOT_APPLICABLE because the driver has no numeric inputs or limits, the gate's documented exemption for a driver that limits nothing; G4 reported no warnings. The device is R2 because it is a mobile base, and the parameterless rest action is the independent stop path. No hardware was attached; this model-authored package is unreviewed (reviewed_by null).\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-10-30; reviewed_by stays null): accepted; the reviewer changed no file of the package. The DEVIATION FROM THE CARD is accepted: a registry override now makes the card a direct driver. After the registry rebuild refreshed task.json, the reviewer re-ran the gate and wrote its digest above.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): Synchronized the exact generated registry task card after reviewed routing, install-recipe and package-outcome changes (changed card keys: rank). Changed task.json, RESULT.json. This synchronization preserves the package decision and prior gate evidence; the current complete gate collection is pending and no hardware or upstream simulator execution is claimed.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-02; reviewed_by stays null): metadata-only fix. Changed task.json and RESULT.json; copied the generated card exactly and retained status. No new native review. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged.",
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.petoicamp.rest.v1",
+      "reason": "cap.motion.stop.v1 does not fit: its input schema carries an optional deceleration value the firmware's 'd' rest command has no parameter for, and a binding must accept every class input; no catalogue class binds a parameterless rest/stop action for a robot.mobile_base.",
+      "verb": "invoke"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ikalevatykh/mano_pybullet",
+  "track": "robots",
+  "local_path": "robots/ikalevatykh/mano_pybullet",
+  "driver_dir": "MHS/drivers/robots/ikalevatykh__mano_pybullet",
+  "upstream": {
+    "repo_url": "https://github.com/ikalevatykh/mano_pybullet",
+    "commit": "960c257cf465f8966e770562b66150beaa359230",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 140,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "mano_pybullet.envs:HandLiftEnv",
+      "file": "mano_pybullet/envs/hand_lift_env.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "mano_pybullet.envs:HandPushEnv",
+      "file": "mano_pybullet/envs/hand_push_env.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "mano_pybullet/envs/__init__.py:9 gym env HandLiftEnv-v1",
+      "mano_pybullet/envs/__init__.py:14 gym env HandPushEnv-v1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env HandLiftEnv-v1 registered at mano_pybullet/envs/__init__.py:9",
+      "gym env HandPushEnv-v1 registered at mano_pybullet/envs/__init__.py:14"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ikalevatykh__mano_pybullet --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:91684e03be276f2ef216b6b0c0f667dfea89798089dcbae93d0e7831e3fd86f9",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.shupx.clock.v1",
+      "reason": "No catalogue class observes a simulated ROS /clock. cap.world.step.v1 advances a world and cap.world.reset.v1 resets one, but neither subscribes to /clock; the package uses an x-cap id with an inline output schema carrying the rosgraph_msgs/msg/Clock sample.",
+      "verb": "read",
+      "summary": "Read one simulated clock sample from the fss_time coordinator.",
+      "similar": [
+        "cap.world.step.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.shupx.clock_status.v1",
+      "reason": "No catalogue class reads a simulator clock coordinator's status (running, factor, participants). cap.world.step.v1 is an advance command, not a status observation; the package uses an x-cap id with an inline object schema.",
+      "verb": "read",
+      "summary": "Read the fss_time coordinator status.",
+      "similar": [
+        "cap.world.step.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.shupx.pause.v1",
+      "reason": "No catalogue class pauses a shared simulation clock. cap.world.step.v1 advances a world and cap.motion.stop.v1 stops motion, not simulation time; the package uses an x-cap id, also as its input-free safe-state action and acknowledged simulator stop.",
+      "verb": "invoke",
+      "summary": "Pause clock advancement with the acknowledged fss/clock_control service.",
+      "similar": [
+        "cap.world.step.v1",
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.shupx.resume.v1",
+      "reason": "No catalogue class resumes a paused simulator clock with an operator-selected real-time factor; cap.world.step.v1 is a bounded step, not a pause/resume control, so the package uses an x-cap id with an inline input schema.",
+      "verb": "invoke",
+      "summary": "Resume clock advancement at an operator-selected factor.",
+      "similar": [
+        "cap.world.step.v1"
+      ]
+    }
+  ],
+  "notes": "PASS on the fake backend only (evidence contract_checked, never an MHS-Device level). This package is model-authored and unreviewed: driver.lock.json authored_by is the deepseek-v4.1-flash:1017 model with run_id ros-wave-c-039, reviewed_by remains null, no human reviewed or tested anything, no hardware was attached, and no ROS graph, FastSwarmSim process, PX4 run or simulator run is claimed. The card's entry_symbols list is empty, so there was no Python entry symbol to verify; the RosDriver card helper is used without deviation and no native.py exists. The pinned ROS 2 surface is the fss_time coordinator: /clock as rosgraph_msgs/msg/Clock (src/fss_time/src/time_coordinator.cpp:181-183), the relative fss/sim_clock_status topic as fss_time_interfaces/msg/SimClockStatus (185-186, type include at src/fss_time/include/fss_time/time_coordinator.hpp:18), and the relative fss/clock_control service as fss_time_interfaces/srv/SimClockControl (187-196, type include at time_coordinator.hpp:19). Relative names are recorded as source_name and configured as /fss/... root endpoints; a namespaced deployment must expose those resolved names. Scope and NOT COVERED: only the shared simulation-time environment control is served (clock, status, pause, resume, speed). The PX4/MAVROS setpoint, state, arming and mode interfaces, PX4 dynamics, LiDAR point clouds, RViz visualisation, DDS QoS, rosbridge deployment and every other simulator package are NOT COVERED; no vehicle motion is commanded or claimed. Risk R0 reflects only isolated simulation-clock control (MHS/spec/04-safety.md SAFE-006); vehicle motion is outside this package. Safety: pause is an input-free safe_state=True action and the acknowledged /fss/clock_control service bound as the simulator stop. The fixed pause request sends running=false and max_real_time_factor=0.0, where 0.0 is the README-documented value that disables periodic regulator requests (src/fss_time/README.md:221); should_advance then returns false while running_ is false (time_coordinator.cpp:695-700). This is a simulated stop, not a physical emergency stop, and it does not stop a vehicle, a PX4 controller or an unrelated ROS client; participant threads may continue computing their current step, because pause stops only the coordinator's clock grants and does not quiesce or cancel participants. The service callback always applies both request fields (time_coordinator.cpp:192-195), so the pause also overwrites the factor; resume therefore requires an operator-selected max_real_time_factor and declares Limit.operator_required, with site-limits.example.json as an example-only operator envelope (it is not a device fact and was not supplied as live config). After an e-stop, resume is rejected until safety reset; observational x-cap read actions remain latched, as covered by the local test. The main resource exposes the continuous status topic as clock_running and clock_factor; this is not a silent-topic snapshot, because the coordinator republishes /clock and status from its 200 ms tick (time_coordinator.cpp:341-344 and 609-617). That observable resource change satisfies G8 TCAP-003 for resume. All 13 facts cite the pinned clone at 56a6380fcd409a0700baedc39a632a823622d633 and are mirrored in facts.md; there are no G4.REF_VALUE or G4.REF_BINARY warnings and no unsourced source limits. The card mock strategy preferred upstream-sim, but no ROS 2/colcon/PX4 stack was installed or executed; the fake is the SDK's ROS-free canned-response RecordingRosTransport, F0, with every clock/status number marked # placeholder and no captured traffic. The deployed-fake fidelity is engine analytic:ROS canned-response fake, determinism none, timestep_ms 0, realtime_factor 0, reset none, no snapshot/restore; gaps disclose the absent coordinator, ZeroMQ participant network, PX4, LiDAR and wall clock. The fake models the observed wire shapes, the positive service response {\"success\": true, \"message\": \"time_coordinator updated\"}, a transport failure, and a rejected application predicate; test_driver.py adds nine local cases to the mandatory check_driver call, including the operator-envelope refusal, overlay resume, paused clock/status visibility, negative service results and the e-stop latch. The clone was left unmodified (G1 passed), and no network, pip install or upstream execution was used.\n\nMODEL REVIEW (claude-opus-5-5, a model and not a human, 2026-11-05; reviewed_by stays null): Checked the /clock, fss/sim_clock_status and fss/clock_control bindings and the SimClockStatus/SimClockControl definitions, all 13 facts, the operator_required resume factor and the fake against time_coordinator.cpp, the launch files, the coordinator UI and the README at the pin, then traced the stop: the callback applies the factor and running_ before answering success (192-195), and in a root coordinator every advance goes through should_advance, which checks running_ first (695-700), so the acknowledged pause holds the clock. The package did not say that this holds only for a root coordinator: a child coordinator (fss_time_parent_coordinator_endpoint set, the README's multi-machine hierarchy) sets its clock from every parent GRANT without checking running_ (502-525), and a parent that follows real time does not wait for a child that follows real time (707-725); nor that the default launch starts the coordinator UI, whose play button resumes the clock while the MHS latch is held, and a comment called the KeepLast(10) transient-local status topic volatile. The reviewer rewrote safe_state, the docstring and that comment, added seven source facts and three fidelity gaps (driver.py), updated facts.md, and regenerated reference.json, REFERENCE.md and check-report.json; the gate and collect.py --strict pass with the digest unchanged. The author's note that should_advance then refuses to advance the clock is right only for a root coordinator. For the human reviewer: Simulation-time control only; no vehicle is commanded. The e-stop pauses a root coordinator's clock; deploy it only against the root (parent) coordinator, because a child coordinator keeps following its parent's grants and the SDK would still report the pause as achieved. The coordinator UI started by the default launch, or any other fss/clock_control client, can resume the clock while MHS is latched. Participant processes are not cancelled by a pause, and a status read right after a pause may return a stored pre-pause sample (transient-local, depth 10)."
+}

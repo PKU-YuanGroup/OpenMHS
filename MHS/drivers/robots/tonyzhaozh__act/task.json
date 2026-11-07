@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tonyzhaozh/act",
+  "track": "robots",
+  "local_path": "robots/tonyzhaozh/act",
+  "driver_dir": "MHS/drivers/robots/tonyzhaozh__act",
+  "upstream": {
+    "repo_url": "https://github.com/tonyzhaozh/act",
+    "commit": "742c753c0d4a5d87076c8f69e5628c79a8cc5488",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 152,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "assets/bimanual_viperx_ee_insertion.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/bimanual_viperx_ee_transfer_cube.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/bimanual_viperx_insertion.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/bimanual_viperx_transfer_cube.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "assets/bimanual_viperx_ee_insertion.xml:1 MJCF scene model",
+      "assets/bimanual_viperx_ee_transfer_cube.xml:1 MJCF scene model",
+      "assets/bimanual_viperx_insertion.xml:1 MJCF scene model",
+      "assets/bimanual_viperx_transfer_cube.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model assets/bimanual_viperx_ee_insertion.xml:1",
+      "MJCF scene model assets/bimanual_viperx_ee_transfer_cube.xml:1",
+      "MJCF scene model assets/bimanual_viperx_insertion.xml:1",
+      "MJCF scene model assets/bimanual_viperx_transfer_cube.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/tonyzhaozh__act --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

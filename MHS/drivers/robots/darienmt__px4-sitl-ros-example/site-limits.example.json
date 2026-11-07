@@ -1,0 +1,39 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example PX4 SITL bench (operator overlay example, not a flight approval)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example numeric envelopes only. The pinned clone states no workspace or velocity bound, so these values are operator choices, not device facts, not a flight envelope and not a recommendation. A real site must replace them with its own assessed limits.",
+  "devices": {
+    "mhs://localhost/px4-sitl": {
+      "x-cap.darienmt.setpoint_position.v1": {
+        "x": {"min": -1.0, "max": 1.0, "unit": "m", "source": "operator",
+              "reason": "example site envelope for a position setpoint x"},
+        "y": {"min": -1.0, "max": 1.0, "unit": "m", "source": "operator",
+              "reason": "example site envelope for a position setpoint y"},
+        "z": {"min": 0.0, "max": 2.0, "unit": "m", "source": "operator",
+              "reason": "example site envelope for a position setpoint z"}
+      },
+      "x-cap.darienmt.setpoint_velocity_body.v1": {
+        "vx": {"min": -1.0, "max": 1.0, "unit": "m/s", "source": "operator",
+               "reason": "example site envelope for body-frame velocity x"},
+        "vy": {"min": -1.0, "max": 1.0, "unit": "m/s", "source": "operator",
+               "reason": "example site envelope for body-frame velocity y"},
+        "vz": {"min": -1.0, "max": 1.0, "unit": "m/s", "source": "operator",
+               "reason": "example site envelope for body-frame velocity z"},
+        "yaw_rate": {"min": -0.5, "max": 0.5, "unit": "rad/s", "source": "operator",
+                     "reason": "example site envelope for body-frame yaw rate"}
+      },
+      "x-cap.darienmt.setpoint_velocity_ned.v1": {
+        "vx": {"min": -1.0, "max": 1.0, "unit": "m/s", "source": "operator",
+               "reason": "example site envelope for local-NED velocity x"},
+        "vy": {"min": -1.0, "max": 1.0, "unit": "m/s", "source": "operator",
+               "reason": "example site envelope for local-NED velocity y"},
+        "vz": {"min": -1.0, "max": 1.0, "unit": "m/s", "source": "operator",
+               "reason": "example site envelope for local-NED velocity z"},
+        "yaw": {"min": -0.5, "max": 0.5, "unit": "rad", "source": "operator",
+                "reason": "example site envelope for local-NED yaw"}
+      }
+    }
+  }
+}

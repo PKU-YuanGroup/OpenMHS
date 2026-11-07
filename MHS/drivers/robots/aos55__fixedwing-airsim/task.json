@@ -1,0 +1,73 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.aos55/fixedwing-airsim",
+  "track": "robots",
+  "local_path": "robots/aos55/fixedwing-airsim",
+  "driver_dir": "MHS/drivers/robots/aos55__fixedwing-airsim",
+  "upstream": {
+    "repo_url": "https://github.com/aos55/fixedwing-airsim",
+    "commit": "c5054486fb05dc67668b123c7789e399c8d4ce02",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 132,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "envs.single_observation:SingleObservation",
+      "file": "src/envs/single_observation.py",
+      "line": 13,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/envs/advanced_landing.py:18 Environment environment class",
+      "src/envs/single_observation.py:13 SingleObservation environment class"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/aos55__fixedwing-airsim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

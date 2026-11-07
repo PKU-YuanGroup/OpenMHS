@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ambench/ambench",
+  "track": "robots",
+  "local_path": "robots/ambench/ambench",
+  "driver_dir": "MHS/drivers/robots/ambench__ambench",
+  "upstream": {
+    "repo_url": "https://github.com/ambench/ambench",
+    "commit": "60bf5b73041df4eab571f7d9f0a297aeecbf2e0d",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 247,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "ambench.tasks.base.base_env:BaseEnv",
+      "file": "source/ambench/ambench/tasks/base/base_env.py",
+      "line": 29,
+      "confidence": "override"
+    },
+    {
+      "symbol": "ambench.tasks.press_button.press_button_env:PressButton",
+      "file": "source/ambench/ambench/tasks/press_button/press_button_env.py",
+      "line": 17,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/ambench/ambench/tasks/cabinet_pick_place/cabinet_pick_place_env.py:20 CabinetPickPlace environment class",
+      "source/ambench/ambench/tasks/frame_assembly/frame_assembly_env.py:19 FrameAssembly environment class",
+      "source/ambench/ambench/tasks/lemon_harvesting/lemon_harvesting_env.py:17 LemonHarvesting environment class",
+      "source/ambench/ambench/tasks/ndt/ndt_env.py:17 NDT environment class"
+    ],
+    "upstream_tests": "ext/acados/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ambench__ambench --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

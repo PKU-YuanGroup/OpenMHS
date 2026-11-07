@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.enac-drones/dronesim",
+  "track": "robots",
+  "local_path": "robots/enac-drones/dronesim",
+  "driver_dir": "MHS/drivers/robots/enac-drones__dronesim",
+  "upstream": {
+    "repo_url": "https://github.com/enac-drones/dronesim",
+    "commit": "158e40f4631e64d731f16f81641f629fa7b2a986",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 289,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "dronesim.envs.CtrlAviary:CtrlAviary",
+      "file": "dronesim/envs/CtrlAviary.py",
+      "line": 7,
+      "confidence": "override"
+    },
+    {
+      "symbol": "dronesim.envs.RPYTAviary:RPYTAviary",
+      "file": "dronesim/envs/RPYTAviary.py",
+      "line": 7,
+      "confidence": "override"
+    },
+    {
+      "symbol": "dronesim.envs.VelocityAviary:VelocityAviary",
+      "file": "dronesim/envs/VelocityAviary.py",
+      "line": 13,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "dronesim/envs/CtrlAviary.py:7 CtrlAviary environment class",
+      "dronesim/envs/RPYTAviary.py:7 RPYTAviary environment class",
+      "dronesim/envs/VelocityAviary.py:13 VelocityAviary environment class",
+      "dronesim/envs/BaseAviary.py:122 BaseAviary environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/enac-drones__dronesim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

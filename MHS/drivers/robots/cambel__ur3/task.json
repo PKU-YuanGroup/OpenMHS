@@ -1,0 +1,271 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cambel/ur3",
+  "track": "robots",
+  "local_path": "robots/cambel/ur3",
+  "driver_dir": "MHS/drivers/robots/cambel__ur3",
+  "upstream": {
+    "repo_url": "https://github.com/cambel/ur3",
+    "commit": "10f96dc362a7700b14e4a2469c8025134ef3e4f7",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 129,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [
+    {
+      "symbol": "ur_control.arm:Arm",
+      "file": "ur_control/ur_control/arm.py",
+      "line": 49,
+      "confidence": "override"
+    },
+    {
+      "symbol": "ur_control.fzi_cartesian_compliance_controller:CompliantController",
+      "file": "ur_control/ur_control/fzi_cartesian_compliance_controller.py",
+      "line": 90,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "ur_control/test"
+  },
+  "hints": {
+    "reads": [
+      "CompliantController.get_wrench",
+      "CompliantController.get_wrench_history",
+      "CompliantController.controller_manager.get_controller_state",
+      "CompliantController.controller_manager.get_loaded_controllers",
+      "CompliantController.dashboard_services.is_protective_stopped",
+      "CompliantController.dashboard_services.is_running_normally",
+      "CompliantController.gripper.get_opening_percentage",
+      "CompliantController.gripper.get_position",
+      "CompliantController.gripper.get_result",
+      "CompliantController.gripper.get_state",
+      "CompliantController.joint_traj_controller.get_num_points",
+      "CompliantController.joint_traj_controller.get_result"
+    ],
+    "writes": [
+      "CompliantController.set_cartesian_target_pose",
+      "CompliantController.set_cartesian_target_wrench",
+      "CompliantController.set_control_mode",
+      "CompliantController.set_end_effector_link",
+      "CompliantController.set_ft_filtering",
+      "CompliantController.set_hand_frame_control",
+      "CompliantController.set_joint_positions",
+      "CompliantController.set_joint_trajectory",
+      "CompliantController.set_joint_velocities",
+      "CompliantController.set_pose_trajectory",
+      "CompliantController.set_position_control_mode",
+      "CompliantController.set_solver_parameters"
+    ],
+    "actions": [
+      "CompliantController.move_relative",
+      "CompliantController.stop_robot",
+      "CompliantController.wait_for_robot_to_stop",
+      "CompliantController.controller_manager.reset_controllers",
+      "CompliantController.dashboard_services.check_for_dead_controller_and_force_start",
+      "CompliantController.dashboard_services.reset_connection",
+      "CompliantController.dashboard_services.unlock_protective_stop",
+      "CompliantController.gripper.stop",
+      "CompliantController.joint_traj_controller.start",
+      "CompliantController.joint_traj_controller.start_no_action_server",
+      "CompliantController.joint_traj_controller.stop",
+      "CompliantController.joint_vel_controller.stop_all_joints"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.cartesian_pose.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cambel__ur3 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required",
+  "companions": [
+    {
+      "alias": "gz_sim",
+      "package_id": "gh.gazebosim/gz-sim",
+      "commit": "446a44335a45b704b4d36dabcc5508ee34eeb3d8",
+      "profile": "ros2-jazzy-gzsim8",
+      "reason": "gz-sim 8.15.0 (Harmonic) serves the WorldControl pause on /world/<name>/control and the paused flag in WorldStatistics on <world>/stats.",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:6",
+          "token": "ROS 2 Jazzy"
+        },
+        {
+          "side": "package",
+          "ref": "README.md:6",
+          "token": "gz-sim 8"
+        },
+        {
+          "side": "package",
+          "ref": "ur_gripper_gz/package.xml:16",
+          "token": "ament_cmake"
+        },
+        {
+          "side": "package",
+          "ref": "ur_gripper_gz/launch/ur_gz_control.launch.py:93",
+          "token": "gz_sim.launch.py"
+        },
+        {
+          "side": "companion",
+          "ref": "CMakeLists.txt:6",
+          "token": "project(gz-sim8 VERSION 8.15.0)"
+        },
+        {
+          "side": "companion",
+          "ref": "Changelog.md:3",
+          "token": "Gazebo Sim 8.15.0"
+        },
+        {
+          "side": "companion:ros_gz",
+          "ref": "README.md:9",
+          "token": "Jazzy | Harmonic | [jazzy]"
+        },
+        {
+          "side": "companion:ros_gz",
+          "ref": "ros_gz_sim/package.xml:32",
+          "token": "gz_sim_vendor"
+        }
+      ],
+      "lock": "gazebosim__gz-sim@gz-sim8_8.15.0",
+      "ref": "gz-sim8_8.15.0",
+      "local_path": "work/companions/gazebosim__gz-sim@446a44335a45",
+      "repo_url": "https://github.com/gazebosim/gz-sim.git",
+      "license_spdx": "Apache-2.0"
+    },
+    {
+      "alias": "ros_gz",
+      "package_id": "gh.gazebosim/ros_gz",
+      "commit": "b87d7523400a695a10d47ca7b8cb5fa86d5b8d9d",
+      "profile": "ros2-jazzy-gzsim8",
+      "reason": "ros_gz_bridge 1.0.25 (Jazzy) maps ControlWorld to the gz WorldControl request and WorldStatistics to the ROS message; the operator runs its parameter_bridge.",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:6",
+          "token": "ROS 2 Jazzy"
+        },
+        {
+          "side": "package",
+          "ref": "ur_gripper_gz/package.xml:33",
+          "token": "ros_gz_bridge"
+        },
+        {
+          "side": "package",
+          "ref": "ur_gripper_gz/package.xml:34",
+          "token": "ros_gz_sim"
+        },
+        {
+          "side": "companion",
+          "ref": "ros_gz_bridge/package.xml:5",
+          "token": "<version>1.0.25</version>"
+        },
+        {
+          "side": "companion",
+          "ref": "ros_gz_bridge/CHANGELOG.rst:5",
+          "token": "1.0.25 (2026-10-13)"
+        },
+        {
+          "side": "companion",
+          "ref": "README.md:56",
+          "token": "This branch supports ROS Jazzy"
+        },
+        {
+          "side": "companion",
+          "ref": "README.md:9",
+          "token": "Jazzy | Harmonic | [jazzy]"
+        }
+      ],
+      "lock": "gazebosim__ros_gz@1.0.25",
+      "ref": "1.0.25",
+      "local_path": "work/companions/gazebosim__ros_gz@b87d7523400a",
+      "repo_url": "https://github.com/gazebosim/ros_gz.git",
+      "license_spdx": "Apache-2.0"
+    },
+    {
+      "alias": "gz_transport",
+      "package_id": "gh.gazebosim/gz-transport",
+      "commit": "35fef7ea10c2e133498e9010bd2e397a0ce0c3bf",
+      "profile": "ros2-jazzy-gzsim8",
+      "reason": "gz-transport 13.6.0 sends the bridge's gz service request asynchronously (facts only).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:6",
+          "token": "gz-sim 8"
+        },
+        {
+          "side": "package",
+          "ref": "README.md:6",
+          "token": "Gazebo Harmonic"
+        },
+        {
+          "side": "package",
+          "ref": "ur_gripper_gz/launch/ur_gz_control.launch.py:93",
+          "token": "gz_sim.launch.py"
+        },
+        {
+          "side": "companion",
+          "ref": "CMakeLists.txt:6",
+          "token": "project(gz-transport13 VERSION 13.6.0)"
+        },
+        {
+          "side": "companion",
+          "ref": "Changelog.md:3",
+          "token": "Gazebo Transport 13.6.0"
+        },
+        {
+          "side": "companion:gz_sim",
+          "ref": "CMakeLists.txt:87",
+          "token": "gz_find_package(gz-transport13"
+        },
+        {
+          "side": "companion:ros_gz",
+          "ref": "README.md:9",
+          "token": "Jazzy | Harmonic | [jazzy]"
+        }
+      ],
+      "lock": "gazebosim__gz-transport@gz-transport13_13.6.0",
+      "ref": "gz-transport13_13.6.0",
+      "local_path": "work/companions/gazebosim__gz-transport@35fef7ea10c2",
+      "repo_url": "https://github.com/gazebosim/gz-transport.git",
+      "license_spdx": "Apache-2.0"
+    }
+  ]
+}

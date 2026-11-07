@@ -1,0 +1,91 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jaber628/worldcomposer",
+  "track": "robots",
+  "local_path": "robots/jaber628/worldcomposer",
+  "driver_dir": "MHS/drivers/robots/jaber628__worldcomposer",
+  "upstream": {
+    "repo_url": "https://github.com/jaber628/worldcomposer",
+    "commit": "c2de3a2c9b3cc0f91e2bf739e5e6a24742988da2",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 116,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "WorldComposer.tasks.Task01_Tableware.Tableware:TablewareEnv",
+      "file": "source/WorldComposer/WorldComposer/tasks/Task01_Tableware/Tableware.py",
+      "line": 17,
+      "confidence": "override"
+    },
+    {
+      "symbol": "WorldComposer.tasks.Task02_Microwave.Microwave:MicrowaveEnv",
+      "file": "source/WorldComposer/WorldComposer/tasks/Task02_Microwave/Microwave.py",
+      "line": 19,
+      "confidence": "override"
+    },
+    {
+      "symbol": "WorldComposer.tasks.Task03_Drawer.Drawer:DrawerEnv",
+      "file": "source/WorldComposer/WorldComposer/tasks/Task03_Drawer/Drawer.py",
+      "line": 19,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/WorldComposer/WorldComposer/tasks/Task01_Tableware/__init__.py:3 gym env WorldComposer-Tableware-v0",
+      "source/WorldComposer/WorldComposer/tasks/Task02_Microwave/__init__.py:4 gym env WorldComposer-Microwave-v0",
+      "source/WorldComposer/WorldComposer/tasks/Task03_Drawer/__init__.py:4 gym env WorldComposer-Drawer-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env WorldComposer-Tableware-v0 registered at source/WorldComposer/WorldComposer/tasks/Task01_Tableware/__init__.py:3",
+      "gym env WorldComposer-Microwave-v0 registered at source/WorldComposer/WorldComposer/tasks/Task02_Microwave/__init__.py:4",
+      "gym env WorldComposer-Drawer-v0 registered at source/WorldComposer/WorldComposer/tasks/Task03_Drawer/__init__.py:4"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jaber628__worldcomposer --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

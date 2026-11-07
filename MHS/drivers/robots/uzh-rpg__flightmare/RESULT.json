@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:31cf13900feff2afb8cfe45cffa5092a62762939deb3bd499f01d99ab1d0487d",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "notes": "DEVIATION FROM THE CARD: FlightEnvVec is a vectorized Gym environment, so GymnasiumDriver preserves its primary step/reset/seed interface instead of using unrelated flightros rendering metadata. The production VecEnvGymAdapter keeps the full four-action input, batched native observation/reward/done/info and explicit single-environment contract. num_envs!=1 is rejected rather than inventing other agents' actions. The factory now owns raw until the adapter returns and attempts raw.close exactly once on rejection. If cleanup also fails, the package factory retains both exception objects and their text. The stock loader preserves their formatted text only; it does not preserve those exception objects or the chain. Normalized action bounds are sourced policy inputs; fake dimensions/timing are documented placeholders/defaults, not physical limits. The fake preserves the native batch shape before production adaptation. Native partial-constructor ownership, cleanup latency, ignored C++ step return, RNG and Unity/rendering lifecycle remain unverified; no native constructor or simulator was run. The accepted finite fake/adapter contract does not certify those native paths.\n\nMODEL REVIEW (gpt-6, a model and not a human, 2026-11-04; reviewed_by stays null): Accept the finite single-environment fake and batch-adapter contract after verifying rejected-construction cleanup; native lifecycle limitations remain open. Complete fake gate passes; evidence is contract_checked only. No UNSOURCED_LIMIT_GATE_WARNING or UNVERIFIABLE_CITATION is accepted. Changed files: CONSTRUCTION-OWNERSHIP.md, RESULT.json, check-report.json, driver.py, facts.md, test_driver.py. Task bytes, source pin and model-authored/null human signature remain unchanged. No hardware or native deployment validation is claimed. Metadata audit clarified factory exception-object retention versus stock-loader text-only reporting. 2026-11-04: registry7 refreshed task.json and RESULT.json; decision unchanged. Generated install.platform=any is the registry heuristic, not verified native cross-platform support; the native flightgym build and configuration remain untested. Camera1 refreshed task.json and RESULT.json; source, routing and signature unchanged."
+}

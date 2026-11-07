@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (Duke Humanoid driver)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only. The clone states no command envelope: BipedController copies the cmd array from its UDP receiver (biped_controller.py:315-321), and the gamepad merely scales its stick axes into -0.3..0.3, -0.25..0.25 and -0.2..0.2 (gamepad.py:6-8). These example values repeat that teleop scaling; replace them with the validated walking envelope of the deployment. The command fields carry no unit in the clone, so the overlay uses the dimensionless unit 1.",
+  "devices": {
+    "mhs://localhost/duke-humanoid": {
+      "command_forward": {
+        "min": -0.3,
+        "max": 0.3,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example: the gamepad's lin_vel_x_max scaling (gamepad.py:6), not a device bound"
+      },
+      "command_lateral": {
+        "min": -0.25,
+        "max": 0.25,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example: the gamepad's lin_vel_y_max scaling (gamepad.py:7), not a device bound"
+      },
+      "command_yaw": {
+        "min": -0.2,
+        "max": 0.2,
+        "unit": "1",
+        "source": "operator",
+        "reason": "example: the gamepad's ang_vel_z_max scaling (gamepad.py:8), not a device bound"
+      }
+    }
+  }
+}

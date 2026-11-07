@@ -1,0 +1,100 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.kscalelabs/mujoco_playground",
+  "track": "robots",
+  "local_path": "robots/kscalelabs/mujoco_playground",
+  "driver_dir": "MHS/drivers/robots/kscalelabs__mujoco_playground",
+  "upstream": {
+    "repo_url": "https://github.com/kscalelabs/mujoco_playground",
+    "commit": "9762ac537cf8d03197ce8bfeaf116f56687f3c19",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 144,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "playground/kbot/xmls/scene_mjx_feetonly_flat_terrain.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "playground/kbot/xmls/scene_mjx_feetonly_rough_terrain.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "playground/zbot/xmls/scene_mjx_feetonly_flat_terrain.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "playground/zbot/xmls/scene_mjx_feetonly_rough_terrain.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "playground/kbot/xmls/kbot.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "playground/kbot/xmls/scene_mjx_feetonly_flat_terrain.xml:1 MJCF scene model",
+      "playground/kbot/xmls/scene_mjx_feetonly_rough_terrain.xml:1 MJCF scene model",
+      "playground/zbot/xmls/scene_mjx_feetonly_flat_terrain.xml:1 MJCF scene model",
+      "playground/zbot/xmls/scene_mjx_feetonly_rough_terrain.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model playground/kbot/xmls/scene_mjx_feetonly_flat_terrain.xml:1",
+      "MJCF scene model playground/kbot/xmls/scene_mjx_feetonly_rough_terrain.xml:1",
+      "MJCF scene model playground/zbot/xmls/scene_mjx_feetonly_flat_terrain.xml:1",
+      "MJCF scene model playground/zbot/xmls/scene_mjx_feetonly_rough_terrain.xml:1",
+      "MJCF robot model playground/kbot/xmls/kbot.xml:1",
+      "MJCF robot model playground/zbot/xmls/zbot_feet_only.xml:6"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/kscalelabs__mujoco_playground --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}
