@@ -1,0 +1,32 @@
+Optional OpenAI4S hook for the OpenMHS developer overlay (integration/openai4s).
+
+Not required: the MCP connector rows and the governed host route need only
+openai4s-core.patch. This hook appends one guarded block to openai4s/__init__.py so
+that `import openai4s` calls openai4s_mhs.install(), which registers the native
+mhs_* developer tools only while the MHS integration is enabled.
+
+Upstream: https://github.com/PKU-YuanGroup/OpenAI4S.git
+Base-Commit: f48f216c81fe400444857c8a5d84d7407398918c
+OpenAI4S-Version: 0.3.1
+Files: openai4s/__init__.py
+Check: python3 -m openai4s_mhs core-patch check --overlay
+Apply: git -C <OpenAI4S checkout at Base-Commit> apply <this file>
+
+diff --git a/openai4s/__init__.py b/openai4s/__init__.py
+index e98d45855bea526ad97a45a6a7c5f6f48cb0dad8..4c5b3edf1507e8122ea5f797e8a97e76b9077e3d 100644
+--- a/openai4s/__init__.py
++++ b/openai4s/__init__.py
+@@ -5,3 +5,13 @@ persistent kernel. Linux daemon form-factor.
+ """
+ 
+ __version__ = "0.3.1"
++
++# Optional OpenMHS developer overlay (integration/openai4s).  Importing it
++# registers the mhs_* tools and HostDispatcher methods while the MHS integration
++# is enabled; a missing overlay or SDK must never make `import openai4s` fail.
++try:
++    import openai4s_mhs
++
++    openai4s_mhs.install()
++except Exception:
++    pass

@@ -1,0 +1,157 @@
+# OpenMHS continuous integration.
+#
+# Every gate of the optimization plan runs here, in a clean clone (the clone IS the export: the private research workspace is
+# not in the repository). The jobs:
+#   suites       generated data in sync, spec doctests, SDK, registry, published conformance reports, wheel smoke test
+#   drivers      the exemplar and tutorial gates; for a pull request, the gate on every changed driver package
+#   site         the site builds for a URL and passes its checks, including the staleness gate
+#   integration  the OpenAI4S reference host (only when the repository variable OPENAI4S_REPO names a checkout to test against)
+#   export       static checks of the open-source tree (tools/oss_export_check.py --skip-suites)
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHONDONTWRITEBYTECODE: "1"
+  PYTHONPATH: MHS/sdk/src
+
+jobs:
+  suites:
+    name: suites (python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          allow-prereleases: true
+      - name: Generated data is in sync
+        run: |
+          python3 MHS/sdk/tools/sync_data.py
+          python3 MHS/sdk/tools/sync_data.py --check
+          python3 MHS/sdk/tools/gen_errors.py --check
+          python3 MHS/sdk/tools/gen_appendices.py --check
+          python3 MHS/sdk/tools/build_applicability.py --check
+      - name: The generated interface contract is current
+        run: python3 -m mhs.driver --print-interface | diff - MHS/sdk/INTERFACE.md
+      - name: Spec doctests
+        run: python3 MHS/sdk/tools/spec_doctest.py MHS/spec
+      - name: Test dependencies (image and array artifacts)
+        run: python3 -m pip install -r MHS/sdk/requirements-test.txt
+      - name: SDK tests (schema examples, safety, persistence, conformance, drivers, surfaces)
+        run: python3 -m unittest discover -s MHS/sdk/tests -t MHS/sdk
+      - name: Registry
+        # --allow-stale-cards: a driver pull request changes nothing outside MHS/drivers/, so the card and the record of a new
+        # package still say "none" until a maintainer runs build_registry.py and prepare.py --sync after the merge
+        run: |
+          python3 -m unittest discover -s MHS/registry/tests
+          python3 MHS/registry/build_index.py
+          python3 MHS/registry/validate.py --no-corpus --allow-stale-cards
+      - name: Published conformance reports verify by re-running the suite
+        run: |
+          python3 -m mhs.conformance verify MHS/conformance/reports/conveyor-cl4.json --reference conveyor
+          python3 -m mhs.conformance verify MHS/conformance/reports/lab-cl4.json --reference lab
+          python3 -m mhs.conformance verify MHS/conformance/reports/arm-cl4.json --reference arm
+          python3 -m mhs.conformance verify MHS/sdk/docs/reports/conformance-arm-2dof-seeded.json --reference arm --noise
+          python3 -m mhs.conformance verify MHS/sdk/docs/reports/conformance-replay-recorded.json --reference replay --bundle MHS/sdk/docs/reports/replay-bundle-conveyor.json
+      - name: The wheel builds and works outside the checkout
+        run: |
+          python3 -m pip install --upgrade pip build
+          python3 MHS/sdk/tools/sync_data.py
+          python3 -m build --wheel --outdir "$RUNNER_TEMP/wheel" MHS/sdk
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install "$RUNNER_TEMP"/wheel/openmhs-*.whl
+          cd "$RUNNER_TEMP"
+          env -u PYTHONPATH "$RUNNER_TEMP/venv/bin/python" -I -m mhs.conformance --help
+          env -u PYTHONPATH "$RUNNER_TEMP/venv/bin/python" -I -c "import mhs; print(mhs.__version__)"
+
+  drivers:
+    name: driver packages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: The exemplars and the tutorial pass the gate
+        run: |
+          python3 -m pip install -r MHS/sdk/requirements-test.txt
+          python3 tools/fetch_clone.py --exemplars
+          for d in $(cat MHS/drivers/EXEMPLARS.txt); do python3 -m mhs.driver check "$d" --backend fake --no-report || exit 1; done
+          python3 -m mhs.driver check MHS/sdk/examples/thermostat --backend fake --no-report
+          if [ -f MHS/handoff/pilot-20.json ]; then python3 MHS/handoff/tools/dispatch.py --check-pilot; fi
+      - name: A driver pull request touches one package and passes the gate (RESULT.json is never trusted)
+        if: github.event_name == 'pull_request'
+        run: |
+          base="origin/${{ github.base_ref }}"
+          changed=$(git diff --name-only "$base"...HEAD -- MHS/drivers | awk -F/ 'NF >= 5 {print $1"/"$2"/"$3"/"$4}' | sort -u)
+          if [ -z "$changed" ]; then echo "no driver package changed"; exit 0; fi
+          others=$(git diff --name-only "$base"...HEAD | grep -v '^MHS/drivers/' || true)
+          if [ -n "$others" ]; then echo "a driver pull request must not touch anything outside MHS/drivers/:"; echo "$others"; exit 1; fi
+          if [ "$(echo "$changed" | wc -l)" -gt 1 ]; then echo "one driver package per pull request:"; echo "$changed"; exit 1; fi
+          for d in $changed; do
+            test -f "$d/task.json" || { echo "$d was deleted or has no task.json"; exit 1; }
+            python3 tools/fetch_clone.py "$d"
+            python3 -m mhs.driver check "$d" --backend fake --no-report
+            python3 MHS/handoff/tools/collect.py "$d" --strict
+          done
+
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build the registry aggregates, then the site, then check it
+        run: |
+          python3 MHS/sdk/tools/sync_data.py
+          python3 MHS/registry/build_index.py
+          python3 MHS/site/build.py --release --site-url "https://example.invalid/" --out "$RUNNER_TEMP/site"
+          python3 MHS/site/check.py --site "$RUNNER_TEMP/site" --site-url "https://example.invalid/" --fresh
+
+  integration:
+    name: OpenAI4S reference host
+    if: ${{ vars.OPENAI4S_REPO != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.OPENAI4S_REPO }}
+          path: work/openai4s-src
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 MHS/sdk/tools/sync_data.py
+      - name: Integration tests
+        run: |
+          export PYTHONPATH=integration/openai4s:MHS/sdk/src:work/openai4s-src
+          python3 -m unittest discover -s integration/openai4s/tests -t integration/openai4s
+
+  export:
+    name: open-source tree checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 tools/oss_export_check.py --skip-suites

@@ -1,0 +1,6055 @@
+{
+  "checkpoints": [
+    {
+      "detail": "mhs SDK 0.9.0.dev0 importable",
+      "id": "sdk_available",
+      "passed": true
+    },
+    {
+      "detail": "MHS is an MCP connector, experimental and disabled by default (rows listed, connector disabled, no endpoint connection)",
+      "enabled": false,
+      "id": "mcp_default_off",
+      "passed": true
+    },
+    {
+      "connectors": [
+        "mhs-conveyor",
+        "mhs-lab",
+        "mhs-arm"
+      ],
+      "detail": "operator enabled the experimental MCP integration for this demo",
+      "enabled": true,
+      "id": "mcp_enabled_for_demo",
+      "passed": true
+    },
+    {
+      "detail": "3 endpoints up (http, stdio)",
+      "endpoints": [
+        "conveyor",
+        "lab",
+        "arm"
+      ],
+      "id": "endpoints_ready",
+      "passed": true
+    },
+    {
+      "detail": "one host discovered 5 devices, 27 capabilities, modes=['simulated'], fidelity gaps disclosed",
+      "device_ids": [
+        "mhs://localhost/conveyor/lab/conveyor-workcell",
+        "mhs://localhost:62336/lab/liquid-handler",
+        "mhs://localhost:62336/lab/plate-reader",
+        "mhs://localhost:62336/lab/sample-mover",
+        "mhs://localhost:7400/robot/arm-2dof"
+      ],
+      "errors": [],
+      "id": "discovery",
+      "passed": true
+    },
+    {
+      "detail": "conveyor, pipette, sample mover, plate reader and arm are all addressable",
+      "id": "devices_resolved",
+      "missing": [],
+      "passed": true
+    },
+    {
+      "detail": "read pipette, mover, reader, conveyor and arm state",
+      "id": "state_reads",
+      "passed": true
+    },
+    {
+      "detail": "pipette A1->B1 25 uL, plate moved to reader, absorbance measured on B1",
+      "id": "lab_workflow",
+      "passed": true,
+      "receipts": [
+        {
+          "capability_id": "cap.fluid.transfer.v1",
+          "receipt_id": "01M5JKBN9F5XSGWY8MXRW7QCH5",
+          "status": "completed"
+        },
+        {
+          "capability_id": "cap.sample.move.v1",
+          "receipt_id": "01M5JKBN9HACBBD6HKAYM1GCDK",
+          "status": "completed"
+        },
+        {
+          "capability_id": "cap.measure.spectrum.v1",
+          "receipt_id": "01M5JKBN9KQX71J3ZAY54EPV8D",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "detail": "conveyor advanced 10 deterministic ticks",
+      "id": "conveyor_step",
+      "passed": true
+    },
+    {
+      "detail": "permit-gated diverter actuation completed (the operator route issued the MHS permit)",
+      "id": "permit_gated_actuation",
+      "passed": true
+    },
+    {
+      "detail": "2-DOF arm moved to joint positions [25, 40] deg",
+      "id": "arm_move",
+      "passed": true
+    },
+    {
+      "detail": "lost receipt produced an unknown receipt; state re-read before any retry",
+      "id": "unknown_outcome",
+      "passed": true
+    },
+    {
+      "detail": "e-stop receipt 01M5JKBN9Y60TC042CSEVZCNMZ chained; next actuation refused with MHS.SAFETY.ESTOP_ENGAGED; reset restored operation",
+      "id": "safety_rejection",
+      "passed": true
+    },
+    {
+      "capability_tools": [
+        "mhs__lab_conveyor_workcell__actuation_valve",
+        "mhs__lab_conveyor_workcell__mhs_reference_feed",
+        "mhs__lab_conveyor_workcell__mhs_reference_start",
+        "mhs__lab_conveyor_workcell__mhs_test_delay",
+        "mhs__lab_conveyor_workcell__mhs_test_fault_injec_284d1f",
+        "mhs__lab_conveyor_workcell__mhs_test_set_door",
+        "mhs__lab_conveyor_workcell__motion_stop",
+        "mhs__lab_conveyor_workcell__world_restore",
+        "mhs__lab_conveyor_workcell__world_snapshot",
+        "mhs__lab_conveyor_workcell__world_state",
+        "mhs__lab_conveyor_workcell__world_step",
+        "mhs__lab_liquid_handler__fluid_aspirate",
+        "mhs__lab_liquid_handler__fluid_dispense",
+        "mhs__lab_liquid_handler__fluid_level",
+        "mhs__lab_liquid_handler__fluid_transfer",
+        "mhs__lab_liquid_handler__motion_stop",
+        "mhs__lab_plate_reader__measure_spectrum",
+        "mhs__lab_sample_mover__motion_stop",
+        "mhs__lab_sample_mover__sample_move",
+        "mhs__robot_arm_2dof__motion_cartesian_pos_529c54",
+        "mhs__robot_arm_2dof__motion_home",
+        "mhs__robot_arm_2dof__motion_joint_positio_288cd9",
+        "mhs__robot_arm_2dof__motion_stop",
+        "mhs__robot_arm_2dof__world_restore",
+        "mhs__robot_arm_2dof__world_seed",
+        "mhs__robot_arm_2dof__world_snapshot",
+        "mhs__robot_arm_2dof__world_state"
+      ],
+      "detail": "27 capability tools, each bound to one device; no generic hardware-control tool; permits gate the actuation",
+      "generic_tools": [],
+      "id": "mcp_least_authority",
+      "passed": true
+    },
+    {
+      "detail": "same lab endpoint via MCPManager: mhs__lab_liquid_handler__fluid_transfer returned the native command_id 01M5JKBN9CAHDARE1NR948NCCX",
+      "id": "mcp_interop",
+      "mcp_command_id": "01M5JKBN9CAHDARE1NR948NCCX",
+      "mcp_is_error": false,
+      "mcp_status": "completed",
+      "native_command_id": "01M5JKBN9CAHDARE1NR948NCCX",
+      "passed": true,
+      "text": "MHS cap.fluid.transfer.v1 completed at revision 1 (receipt 01M5JKBN9F5XSGWY8MXRW7QCH5)\n{\"accepted_at\": \"2026-10-22T20:03:09.231Z\", \"capability_id\": \"cap.fluid.transfer.v1\", \"command_id\": \"01M5JKBN9CAHDARE1NR948NCCX\", \"device_id\": \"mhs://localhost:62336/lab/liquid-handler\", \"effects\": [{\"kind\": \"material.transfer\", \"reversible\": true, \"severity\": \"R2\", \"summary\": \"cap.fluid.transfer.v1 (completed)\"}, {\"kind\": \"consumable.tip_used\", \"reversible\": true, \"severity\": \"R2\", \"summary\": \"cap.fluid.transfer.v1 (completed)\"}], \"ended_at\": \"2026-10-22T20:03:09.231Z\", \"endpoint_id\": \"mhs://localhost:62336\", \"evidence\": {\"digest\": \"sha256:c16d4cfb59c30fc2579666d02c469ab5a5f94082bbf2dcdad2b85b3ea70304a9\", \"prev_digest\": \"sha256:f229a36d1304a02f5369afdf1d2e58f2eea669838b1d5b8c7f570b59baa3580e\", \"seq\": 1}",
+      "tool": "mhs__lab_liquid_handler__fluid_transfer"
+    },
+    {
+      "detail": "three endpoint evidence chains exported and verified offline",
+      "heads": {
+        "arm": "sha256:9bf753d2fd06b646a1aa4c0829d4d136a127fe0fd271886689cbbf29960b6da9",
+        "conveyor": "sha256:dc6496134944fc1ec8d7a6c4396aa1ebb247e7cc2c1eeec067b80b8505c62caf",
+        "lab": "sha256:3c93d340afaf6c218828f6416bf31ae59f098fe100c1ec43bd355ab440640da7"
+      },
+      "id": "evidence_verified",
+      "passed": true
+    },
+    {
+      "detail": "host ledger holds 12 receipts; demo recorded 12",
+      "id": "receipt_ledger",
+      "passed": true
+    }
+  ],
+  "demo": "openai4s-mhs",
+  "devices": [
+    {
+      "capabilities": [
+        {
+          "capability_id": "cap.world.step.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "exclusive",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "exclusive": true,
+          "input_schema": {
+            "properties": {
+              "ticks": {
+                "maximum": 10000,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "ticks"
+            ],
+            "type": "object"
+          },
+          "limits": {
+            "ticks": {
+              "max": 10000,
+              "min": 1,
+              "reason": "bounded step to keep calls bounded"
+            }
+          },
+          "native": "ConveyorSim::advance(ticks)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "workcell",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "world.time",
+              "motion.transport"
+            ],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [
+              "tick advanced by ticks",
+              "parts advanced by velocity"
+            ],
+            "preconditions": [
+              "workcell not latched",
+              "estop released",
+              "safety door closed"
+            ],
+            "summary": "Advance the deterministic integer workcell simulation by whole 1 ms ticks.",
+            "tags": [
+              "conveyor",
+              "simulation",
+              "deterministic",
+              "fixed step",
+              "world step"
+            ],
+            "units": {
+              "ticks": "ms"
+            }
+          },
+          "title": "Advance the simulated workcell",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {
+              "ticks": {
+                "max": 10000,
+                "min": 1,
+                "reason": "bounded step to keep calls bounded"
+              }
+            }
+          }
+        },
+        {
+          "capability_id": "cap.world.state.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "shared",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "native": "ConveyorSim::state()",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "workcell",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [],
+            "summary": "Read the complete conveyor workcell state document without mutating it.",
+            "tags": [
+              "conveyor",
+              "world state",
+              "read only",
+              "observation"
+            ],
+            "units": {}
+          },
+          "title": "Read the complete world state",
+          "verb": "read",
+          "x-mhs-effective-limits": {
+            "limits": {}
+          }
+        },
+        {
+          "capability_id": "cap.actuation.valve.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "exclusive",
+            "max_duration_ms": 2000
+          },
+          "determinism": "exact",
+          "exclusive": true,
+          "input_schema": {
+            "properties": {
+              "gate": {
+                "enum": [
+                  "main",
+                  "divert"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "gate"
+            ],
+            "type": "object"
+          },
+          "native": "ConveyorSim::set_diverter(gate)",
+          "output_schema": {
+            "type": "object"
+          },
+          "requires_permit": true,
+          "resource": "workcell",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "actuation.valve"
+            ],
+            "hazards": [
+              "part misrouting",
+              "jam"
+            ],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [
+              "safety door closed",
+              "workcell not latched"
+            ],
+            "summary": "Move the diverter gate so parts route to the main line or the divert bin.",
+            "tags": [
+              "conveyor",
+              "diverter",
+              "routing",
+              "valve",
+              "actuation"
+            ],
+            "units": {}
+          },
+          "title": "Set the diverter gate",
+          "verb": "write",
+          "x-mhs-effective-limits": {
+            "limits": {
+              "gate": {
+                "allowed": [
+                  "main",
+                  "divert"
+                ],
+                "reason": "two-position gate"
+              }
+            },
+            "unlimited": [
+              "position"
+            ]
+          }
+        },
+        {
+          "capability_id": "cap.motion.stop.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "shared",
+            "max_duration_ms": 1000
+          },
+          "determinism": "exact",
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "native": "ConveyorSim::stop()",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "workcell",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "motion.stop"
+            ],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [
+              "velocity is zero",
+              "gate is main"
+            ],
+            "preconditions": [],
+            "summary": "Stop the conveyor drive and return the diverter gate to the main position (declared safe state).",
+            "tags": [
+              "conveyor",
+              "stop",
+              "safe state",
+              "motion"
+            ],
+            "units": {}
+          },
+          "title": "Stop the conveyor in its safe state",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {},
+            "unlimited": [
+              "deceleration"
+            ]
+          }
+        },
+        {
+          "capability_id": "cap.world.snapshot.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "shared",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "native": "ConveyorSim::snapshot()",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "workcell",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [],
+            "summary": "Return a snapshot of the normative workcell state for later exact restore.",
+            "tags": [
+              "simulation",
+              "snapshot",
+              "determinism",
+              "replay"
+            ],
+            "units": {}
+          },
+          "title": "Take a deterministic snapshot",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {}
+          }
+        },
+        {
+          "capability_id": "cap.world.restore.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "exclusive",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "exclusive": true,
+          "input_schema": {
+            "properties": {
+              "snapshot": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "snapshot"
+            ],
+            "type": "object"
+          },
+          "native": "ConveyorSim::restore(snapshot)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "workcell",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [
+              "snapshot was taken by this device",
+              "mode is simulated or replay"
+            ],
+            "summary": "Restore a previously taken snapshot; only valid on simulated/replay endpoints.",
+            "tags": [
+              "simulation",
+              "restore",
+              "determinism",
+              "replay"
+            ],
+            "units": {}
+          },
+          "title": "Restore a deterministic snapshot",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {}
+          }
+        },
+        {
+          "capability_id": "x-cap.mhs-reference.start.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "exclusive",
+            "max_duration_ms": 1000
+          },
+          "determinism": "exact",
+          "exclusive": true,
+          "input_schema": {
+            "properties": {
+              "speed_mm_s": {
+                "maximum": 200,
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "limits": {
+            "speed_mm_s": {
+              "max": 200,
+              "min": 0,
+              "reason": "bounded reference speed"
+            }
+          },
+          "native": "ConveyorSim::start(speed_mm_s)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "workcell",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "motion.start"
+            ],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [
+              "workcell not latched",
+              "estop released",
+              "safety door closed"
+            ],
+            "summary": "Start the conveyor drive at a bounded integer speed in mm/s.",
+            "tags": [
+              "conveyor",
+              "start",
+              "drive",
+              "reference extension"
+            ],
+            "units": {
+              "speed_mm_s": "mm/s"
+            }
+          },
+          "title": "Start the conveyor drive (reference extension)",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {
+              "speed_mm_s": {
+                "max": 200,
+                "min": 0,
+                "reason": "bounded reference speed",
+                "unit": "mm/s"
+              }
+            }
+          }
+        },
+        {
+          "capability_id": "x-cap.mhs-reference.feed.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "exclusive",
+            "max_duration_ms": 1000
+          },
+          "determinism": "exact",
+          "exclusive": true,
+          "input_schema": {
+            "properties": {
+              "count": {
+                "maximum": 32,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "limits": {
+            "count": {
+              "max": 32,
+              "min": 1,
+              "reason": "bounded feed batch"
+            }
+          },
+          "native": "ConveyorSim::feed(count)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "workcell",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "material.feed"
+            ],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [
+              "infeed zone clear",
+              "workcell not latched"
+            ],
+            "summary": "Place parts on the infeed when the infeed zone is clear, up to a bounded count.",
+            "tags": [
+              "conveyor",
+              "infeed",
+              "material feed",
+              "reference extension"
+            ],
+            "units": {}
+          },
+          "title": "Feed parts onto the conveyor infeed (reference extension)",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {
+              "count": {
+                "max": 32,
+                "min": 1,
+                "reason": "bounded feed batch"
+              }
+            }
+          }
+        },
+        {
+          "capability_id": "x-cap.mhs-test.fault_inject.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "shared",
+            "max_duration_ms": 1000
+          },
+          "determinism": "exact",
+          "input_schema": {
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "fault": {
+                "enum": [
+                  "jam",
+                  "sensor_fault",
+                  "lost_receipt"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "fault"
+            ],
+            "type": "object"
+          },
+          "native": "ConveyorSim::set_fault(fault, enabled)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "workcell",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "test.fault"
+            ],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [],
+            "summary": "TEST PROFILE ONLY. Inject a deterministic fault: conveyor jam, sensor fault, or a lost receipt.",
+            "tags": [
+              "test only",
+              "fault injection",
+              "jam",
+              "sensor fault",
+              "unknown outcome"
+            ],
+            "units": {}
+          },
+          "title": "Inject a test fault (test profile only)",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {}
+          }
+        },
+        {
+          "capability_id": "x-cap.mhs-test.set_door.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "exclusive",
+            "max_duration_ms": 1000
+          },
+          "determinism": "exact",
+          "exclusive": true,
+          "input_schema": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "open",
+                  "closed"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "state"
+            ],
+            "type": "object"
+          },
+          "native": "ConveyorSim::set_door(state)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "workcell",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "safety.interlock"
+            ],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [],
+            "summary": "TEST PROFILE ONLY. Open or close the simulated safety door to exercise interlock rejection.",
+            "tags": [
+              "test only",
+              "safety door",
+              "interlock",
+              "negative test"
+            ],
+            "units": {}
+          },
+          "title": "Open or close the simulated safety door (test profile only)",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {}
+          }
+        },
+        {
+          "capability_id": "x-cap.mhs-test.delay.v1",
+          "constraints": {
+            "cancellable": true,
+            "concurrency": "shared",
+            "max_duration_ms": 2000
+          },
+          "determinism": "exact",
+          "input_schema": {
+            "properties": {
+              "ms": {
+                "maximum": 2000,
+                "minimum": 10,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "ms"
+            ],
+            "type": "object"
+          },
+          "native": "ConveyorSim::delay(ms)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "workcell",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [],
+            "summary": "TEST PROFILE ONLY. Sleep for a bounded time so cancellation and deadline behaviour can be exercised.",
+            "tags": [
+              "test only",
+              "delay",
+              "cancellation",
+              "deadline"
+            ],
+            "units": {}
+          },
+          "title": "Bounded cancellable delay (test profile only)",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {
+              "ms": {
+                "max": 2000,
+                "min": 10,
+                "reason": "bounded test delay",
+                "unit": "ms"
+              }
+            }
+          }
+        }
+      ],
+      "conformance": {
+        "issued_at": "2026-10-22T15:57:36.010Z",
+        "issuer_kind": "self",
+        "level": "CL4",
+        "profile": "MHS-Sim",
+        "report_digest": "sha256:e24872f066429195e2d5bd4e93dddfd16110b6db4209650e5c21c4c4b3401d02",
+        "suite_version": "1.3.0"
+      },
+      "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+      "display_name": "Deterministic conveyor workcell (simulated)",
+      "endpoint_id": "conveyor",
+      "fidelity": {
+        "determinism": {
+          "kind": "exact",
+          "notes": "Deterministic Python model; integer/fixed-point normative state, no wall-clock pacing.",
+          "seed_control": "none"
+        },
+        "engine": "custom-integer",
+        "fidelity_level": "F0",
+        "gaps": [
+          "No contact physics",
+          "No sensor noise model",
+          "Parts are points, not rigid bodies",
+          "The safety door and e-stop are simulated, not a safety-rated channel"
+        ],
+        "realtime_factor": 0,
+        "reset": "full",
+        "snapshot_restore": true,
+        "timestep_ms": 1
+      },
+      "instance_id": "01J8ZQ3V6Y7M2N4P6R8S0T2V4W",
+      "mhs_version": "1.0",
+      "mode": "simulated",
+      "model": "conveyor-workcell-sim",
+      "profile": {
+        "docs": [
+          "MHS/sdk/docs/reference-endpoints.md"
+        ],
+        "operating_notes": [
+          "Advance the model with cap.world.step.v1; each tick is 1 ms of simulated time.",
+          "Every mutation returns a receipt with a new revision and state hash.",
+          "Opening the safety door or engaging the e-stop latches the workcell; reset after clearing interlocks."
+        ],
+        "summary": "A small conveyor with a diverter, photoelectric eyes, a safety door and an emergency stop. Deterministic integer simulation intended for testing agent command semantics: revisions, command ids, interlocks, permits and receipts.",
+        "tags": [
+          "conveyor",
+          "lab automation",
+          "workcell",
+          "deterministic simulation",
+          "safety interlock",
+          "command semantics"
+        ],
+        "title": "Conveyor workcell"
+      },
+      "provenance": {
+        "adapter_id": "openmhs:reference.conveyor-workcell",
+        "evidence": [
+          "MHS/sdk/src/mhs/reference/conveyor.py"
+        ],
+        "generated_by": "mhs.reference (protocol fixture, not a driver template)"
+      },
+      "reference": {
+        "$schema": "https://openmhs.invalid/schema/0.9/reference.schema.json",
+        "actions": [
+          {
+            "cancellable": false,
+            "cap_id": "cap.world.step.v1",
+            "description": "Advance the simulated world by a bounded number of fixed timesteps, optionally applying an action for each step, and return the resulting observation and terminal flags.",
+            "inputs": [
+              {
+                "limit": {
+                  "max": 10000,
+                  "min": 1,
+                  "reason": "bounded step to keep calls bounded"
+                },
+                "name": "ticks",
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "name": "action",
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "long_running": false,
+            "name": "world.step",
+            "outputs": [
+              {
+                "name": "observation",
+                "required": true,
+                "type": "object"
+              },
+              {
+                "name": "reward",
+                "required": false,
+                "type": "number",
+                "unit": "1"
+              },
+              {
+                "name": "terminated",
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "name": "truncated",
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "name": "tick",
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "name": "state_hash",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "workcell",
+            "risk": "R1",
+            "status": "stable",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "cap.actuation.valve.v1",
+            "description": "Open, close or position a valve to a declared state, reporting the achieved position. The port routing map is declared per binding.",
+            "inputs": [
+              {
+                "enum": [
+                  "main",
+                  "divert"
+                ],
+                "limit": {
+                  "allowed": [
+                    "main",
+                    "divert"
+                  ],
+                  "reason": "two-position gate"
+                },
+                "name": "gate",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "position",
+                "required": false,
+                "type": "number",
+                "unit": "%"
+              },
+              {
+                "name": "outlet",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "open",
+                  "closed"
+                ],
+                "name": "state",
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "long_running": false,
+            "name": "actuation.valve",
+            "outputs": [
+              {
+                "name": "position",
+                "required": true,
+                "type": "number",
+                "unit": "%"
+              },
+              {
+                "enum": [
+                  "open",
+                  "closed"
+                ],
+                "name": "state",
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "requires_permit": true,
+            "resource": "workcell",
+            "risk": "R1",
+            "status": "stable",
+            "verb": "write"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "cap.motion.stop.v1",
+            "description": "Stop all motion on the resource with a declared deceleration profile and report the stopping position. This capability is always cancellable=false and is exempt from rate limiting.",
+            "examples": [
+              {
+                "deceleration": 2.0
+              }
+            ],
+            "inputs": [
+              {
+                "name": "deceleration",
+                "required": false,
+                "type": "number",
+                "unit": "m/s2"
+              }
+            ],
+            "long_running": false,
+            "name": "motion.stop",
+            "outputs": [
+              {
+                "name": "stopped",
+                "required": true,
+                "type": "boolean"
+              },
+              {
+                "name": "stopped_at",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "stopped_position",
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "workcell",
+            "risk": "R1",
+            "status": "stable",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "cap.world.snapshot.v1",
+            "description": "Capture a restorable snapshot of the complete world state, including the revision and state hash, for deterministic restore later.",
+            "examples": [
+              {}
+            ],
+            "inputs": [],
+            "long_running": false,
+            "name": "world.snapshot",
+            "outputs": [
+              {
+                "name": "snapshot",
+                "required": true,
+                "type": "object"
+              },
+              {
+                "name": "snapshot_digest",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "revision",
+                "required": true,
+                "type": "integer"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "workcell",
+            "risk": "R1",
+            "status": "deprecated",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "cap.world.restore.v1",
+            "description": "Restore the world to a previously captured snapshot, replacing the current state; the device revision advances and the state hash MUST equal the snapshot's.",
+            "inputs": [
+              {
+                "name": "snapshot",
+                "required": true,
+                "type": "object"
+              }
+            ],
+            "long_running": false,
+            "name": "world.restore",
+            "outputs": [
+              {
+                "name": "revision",
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "name": "state_hash",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "workcell",
+            "risk": "R1",
+            "status": "deprecated",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "x-cap.mhs-reference.start.v1",
+            "description": "Start the conveyor drive (reference extension)",
+            "inputs": [
+              {
+                "limit": {
+                  "max": 200,
+                  "min": 0,
+                  "reason": "bounded reference speed",
+                  "unit": "mm/s"
+                },
+                "name": "speed_mm_s",
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "long_running": false,
+            "name": "mhs-reference.start",
+            "outputs": [],
+            "requires_permit": false,
+            "resource": "workcell",
+            "risk": "R1",
+            "status": "extension",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "x-cap.mhs-reference.feed.v1",
+            "description": "Feed parts onto the conveyor infeed (reference extension)",
+            "inputs": [
+              {
+                "limit": {
+                  "max": 32,
+                  "min": 1,
+                  "reason": "bounded feed batch"
+                },
+                "name": "count",
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "long_running": false,
+            "name": "mhs-reference.feed",
+            "outputs": [],
+            "requires_permit": false,
+            "resource": "workcell",
+            "risk": "R1",
+            "status": "extension",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "x-cap.mhs-test.fault_inject.v1",
+            "description": "Inject a test fault (test profile only)",
+            "inputs": [
+              {
+                "enum": [
+                  "jam",
+                  "sensor_fault",
+                  "lost_receipt"
+                ],
+                "name": "fault",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "enabled",
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "long_running": false,
+            "name": "mhs-test.fault_inject",
+            "outputs": [],
+            "requires_permit": false,
+            "resource": "workcell",
+            "risk": "R1",
+            "status": "extension",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "x-cap.mhs-test.set_door.v1",
+            "description": "Open or close the simulated safety door (test profile only)",
+            "inputs": [
+              {
+                "enum": [
+                  "open",
+                  "closed"
+                ],
+                "name": "state",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "long_running": false,
+            "name": "mhs-test.set_door",
+            "outputs": [],
+            "requires_permit": false,
+            "resource": "workcell",
+            "risk": "R1",
+            "status": "extension",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": true,
+            "cap_id": "x-cap.mhs-test.delay.v1",
+            "description": "Bounded cancellable delay (test profile only)",
+            "inputs": [
+              {
+                "limit": {
+                  "max": 2000,
+                  "min": 10,
+                  "reason": "bounded test delay",
+                  "unit": "ms"
+                },
+                "name": "ms",
+                "required": true,
+                "type": "integer"
+              }
+            ],
+            "long_running": false,
+            "name": "mhs-test.delay",
+            "outputs": [],
+            "requires_permit": false,
+            "resource": "workcell",
+            "risk": "R1",
+            "status": "extension",
+            "verb": "invoke"
+          }
+        ],
+        "adjusts": [],
+        "device": {
+          "id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+          "kind": "world.sim",
+          "mode": "simulated",
+          "model": "conveyor-workcell-sim",
+          "name": "Deterministic conveyor workcell (simulated)",
+          "risk": "R1",
+          "vendor": "OpenMHS reference fixture"
+        },
+        "facts": [],
+        "fidelity": {
+          "determinism": {
+            "kind": "exact",
+            "notes": "Deterministic Python model; integer/fixed-point normative state, no wall-clock pacing.",
+            "seed_control": "none"
+          },
+          "engine": "custom-integer",
+          "fidelity_level": "F0",
+          "gaps": [
+            "No contact physics",
+            "No sensor noise model",
+            "Parts are points, not rigid bodies",
+            "The safety door and e-stop are simulated, not a safety-rated channel"
+          ],
+          "realtime_factor": 0,
+          "reset": "full",
+          "snapshot_restore": true,
+          "timestep_ms": 1
+        },
+        "measures": [
+          {
+            "name": "tick",
+            "resource": "workcell",
+            "type": "integer",
+            "unit": "ms"
+          },
+          {
+            "name": "door",
+            "resource": "workcell",
+            "type": "string"
+          },
+          {
+            "name": "estop",
+            "resource": "workcell",
+            "type": "string"
+          },
+          {
+            "items_type": "object",
+            "name": "parts",
+            "resource": "workcell",
+            "type": "array"
+          },
+          {
+            "name": "velocity_mm_s",
+            "resource": "workcell",
+            "type": "integer",
+            "unit": "mm/s"
+          },
+          {
+            "name": "mono_ms",
+            "resource": "workcell",
+            "type": "integer",
+            "unit": "ms"
+          },
+          {
+            "name": "gate",
+            "resource": "workcell",
+            "type": "string"
+          },
+          {
+            "name": "drive",
+            "resource": "workcell",
+            "type": "string"
+          },
+          {
+            "name": "latched",
+            "resource": "workcell",
+            "type": "boolean"
+          },
+          {
+            "name": "latch_reason",
+            "resource": "workcell",
+            "type": "string"
+          },
+          {
+            "name": "part_seq",
+            "resource": "workcell",
+            "type": "integer"
+          },
+          {
+            "name": "parts_delivered",
+            "resource": "workcell",
+            "type": "integer"
+          },
+          {
+            "items_type": "string",
+            "name": "faults",
+            "resource": "workcell",
+            "type": "array"
+          },
+          {
+            "name": "sensors",
+            "resource": "workcell",
+            "type": "object"
+          },
+          {
+            "cap_id": "cap.world.state.v1",
+            "description": "Return the complete normative state of a simulated world together with its revision and canonical state hash.",
+            "inputs": [
+              {
+                "items_type": "string",
+                "name": "fields",
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "name": "world.state",
+            "resource": "workcell",
+            "type": "object"
+          }
+        ],
+        "openmhs": "0.9",
+        "overlay": null,
+        "provenance": {
+          "catalogue_digest": "sha256:c114376cd58d3ae5c4454dd0ba9b67563b958c195bf1e75c3b8373cd23ab1d0c",
+          "generated_by": "mhs.reference_file",
+          "manifest_digest": "sha256:fda70787f8648f181b58a90fe7a3f28b3a703681ab5cb27d258f8da6cc5f5f8d",
+          "sdk_version": "0.9.0.dev0"
+        },
+        "safety": {
+          "estop": {
+            "kind": "software",
+            "latching": true,
+            "latency_ms": 50,
+            "native": "ConveyorBridge.estop",
+            "physical_ref": "No physical e-stop exists on a simulated workcell; MHS never replaces one."
+          },
+          "interlocks": [
+            {
+              "description": "Safety door is closed",
+              "id": "door_closed",
+              "required_for": [
+                "cap.actuation.*",
+                "cap.actuation.*",
+                "cap.world.step.v1",
+                "x-cap.mhs-reference.start.v1",
+                "x-cap.mhs-reference.feed.v1",
+                "x-cap.mhs-test.delay.v1",
+                "cap.world.step.v1",
+                "cap.actuation.valve.v1",
+                "x-cap.mhs-reference.feed.v1"
+              ],
+              "source": "simulated"
+            }
+          ],
+          "not_certified": true,
+          "operator_required": [],
+          "safe_state": {
+            "achieved_by": [
+              "cap.motion.stop.v1"
+            ],
+            "description": "Conveyor stopped, diverter gate in main position, no parts moving"
+          }
+        },
+        "tags": [
+          "conveyor",
+          "lab automation",
+          "workcell",
+          "deterministic simulation",
+          "safety interlock",
+          "command semantics"
+        ]
+      },
+      "resources": [
+        {
+          "hash_exclusions": [
+            "/mono_ms"
+          ],
+          "kind": "world.sim",
+          "resource_id": "workcell",
+          "revision": 0,
+          "sampling": {
+            "mode": "on_change"
+          },
+          "state": {
+            "door": "closed",
+            "drive": "stopped",
+            "estop": "released",
+            "faults": [],
+            "gate": "main",
+            "latch_reason": null,
+            "latched": false,
+            "mono_ms": 0,
+            "part_seq": 0,
+            "parts": [],
+            "parts_delivered": 0,
+            "sensors": {
+              "diverter": "clear",
+              "infeed": "clear"
+            },
+            "tick": 0,
+            "velocity_mm_s": 0
+          },
+          "state_schema": {
+            "properties": {
+              "door": {
+                "enum": [
+                  "closed",
+                  "open"
+                ],
+                "type": "string"
+              },
+              "drive": {
+                "enum": [
+                  "stopped",
+                  "running"
+                ],
+                "type": "string"
+              },
+              "estop": {
+                "enum": [
+                  "released",
+                  "engaged"
+                ],
+                "type": "string"
+              },
+              "faults": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "gate": {
+                "enum": [
+                  "main",
+                  "divert"
+                ],
+                "type": "string"
+              },
+              "latch_reason": {
+                "enum": [
+                  "door",
+                  "estop",
+                  null
+                ],
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "latched": {
+                "type": "boolean"
+              },
+              "mono_ms": {
+                "type": "integer",
+                "x-mhs-unit": "ms"
+              },
+              "part_seq": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "parts": {
+                "items": {
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "position_mm": {
+                      "type": "integer",
+                      "x-mhs-unit": "mm"
+                    },
+                    "position_um": {
+                      "type": "integer",
+                      "x-mhs-unit": "um"
+                    },
+                    "route": {
+                      "enum": [
+                        "main",
+                        "diverted",
+                        "stopped"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "position_mm",
+                    "route"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "parts_delivered": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "sensors": {
+                "type": "object"
+              },
+              "tick": {
+                "minimum": 0,
+                "type": "integer",
+                "x-mhs-unit": "ms"
+              },
+              "velocity_mm_s": {
+                "type": "integer",
+                "x-mhs-unit": "mm/s"
+              }
+            },
+            "required": [
+              "tick",
+              "door",
+              "estop",
+              "parts"
+            ],
+            "type": "object"
+          },
+          "title": "Workcell world state"
+        }
+      ],
+      "safety": {
+        "envelope": {
+          "cap.actuation.valve.v1": {
+            "gate": {
+              "allowed": [
+                "main",
+                "divert"
+              ],
+              "reason": "two-position gate"
+            }
+          },
+          "cap.world.step.v1": {
+            "ticks": {
+              "max": 10000,
+              "min": 1,
+              "reason": "bounded simulation step"
+            }
+          },
+          "x-cap.mhs-reference.feed.v1": {
+            "count": {
+              "max": 32,
+              "min": 1,
+              "reason": "bounded feed batch"
+            }
+          },
+          "x-cap.mhs-reference.start.v1": {
+            "speed_mm_s": {
+              "max": 200,
+              "min": 0,
+              "reason": "bounded drive speed",
+              "unit": "mm/s"
+            }
+          },
+          "x-cap.mhs-test.delay.v1": {
+            "ms": {
+              "max": 2000,
+              "min": 10,
+              "reason": "bounded test delay",
+              "unit": "ms"
+            }
+          }
+        },
+        "estop": {
+          "kind": "software",
+          "latching": true,
+          "latency_ms": 50,
+          "physical_ref": "No physical e-stop exists on a simulated workcell; MHS never replaces one.",
+          "reset": "mhs.safety.reset"
+        },
+        "interlocks": [
+          {
+            "description": "Safety door is closed",
+            "id": "door_closed",
+            "required_for": [
+              "cap.actuation.*",
+              "cap.actuation.*",
+              "cap.world.step.v1",
+              "x-cap.mhs-reference.start.v1",
+              "x-cap.mhs-reference.feed.v1",
+              "x-cap.mhs-test.delay.v1",
+              "cap.world.step.v1",
+              "cap.actuation.valve.v1",
+              "x-cap.mhs-reference.feed.v1"
+            ],
+            "source": "simulated"
+          }
+        ],
+        "requires_permit": [
+          "cap.actuation.*"
+        ],
+        "risk_class": "R1",
+        "safe_state": {
+          "achieved_by": [
+            "cap.motion.stop.v1"
+          ],
+          "description": "Conveyor stopped, diverter gate in main position, no parts moving"
+        }
+      },
+      "vendor": {
+        "name": "OpenMHS reference fixture"
+      }
+    },
+    {
+      "capabilities": [
+        {
+          "capability_id": "cap.fluid.aspirate.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "exclusive",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "exclusive": true,
+          "input_schema": {
+            "properties": {
+              "source_well": {
+                "default": "A1",
+                "type": "string",
+                "x-mhs-unit": "1"
+              },
+              "volume_ul": {
+                "default": 10,
+                "maximum": 200,
+                "minimum": 1,
+                "type": "integer",
+                "x-mhs-unit": "uL"
+              }
+            },
+            "required": [
+              "source_well",
+              "volume_ul"
+            ],
+            "type": "object"
+          },
+          "limits": {
+            "volume_ul": {
+              "max": 200,
+              "min": 1,
+              "reason": "tip capacity",
+              "unit": "uL"
+            }
+          },
+          "native": "PipetteBridge::aspirate(source_well, volume_ul)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "pipette",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "material.transfer"
+            ],
+            "hazards": [
+              "cross_contamination",
+              "bubble_formation",
+              "volume_error"
+            ],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [
+              "tip_loaded",
+              "liquid_present",
+              "plate on liquid handler deck"
+            ],
+            "summary": "Draw a bounded volume of liquid from a plate well into the loaded pipette tip (integer uL bookkeeping).",
+            "tags": [
+              "liquid handling",
+              "pipetting",
+              "aspirate",
+              "volume",
+              "labware"
+            ],
+            "units": {
+              "volume_ul": "uL"
+            }
+          },
+          "title": "Aspirate liquid from a well",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {
+              "volume": {
+                "max": 1000,
+                "min": 0,
+                "reason": "pipette tip capacity; bindings declare their actual range",
+                "source": "class_default",
+                "unit": "uL"
+              },
+              "volume_ul": {
+                "max": 200,
+                "min": 1,
+                "reason": "tip capacity",
+                "unit": "uL"
+              }
+            },
+            "unlimited": [
+              "flow_rate",
+              "liquid_level_offset"
+            ]
+          }
+        },
+        {
+          "capability_id": "cap.fluid.dispense.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "exclusive",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "exclusive": true,
+          "input_schema": {
+            "properties": {
+              "destination_well": {
+                "default": "B1",
+                "type": "string"
+              },
+              "volume_ul": {
+                "default": 10,
+                "maximum": 200,
+                "minimum": 1,
+                "type": "integer",
+                "x-mhs-unit": "uL"
+              }
+            },
+            "required": [
+              "destination_well",
+              "volume_ul"
+            ],
+            "type": "object"
+          },
+          "limits": {
+            "volume_ul": {
+              "max": 200,
+              "min": 1,
+              "reason": "tip capacity",
+              "unit": "uL"
+            }
+          },
+          "native": "PipetteBridge::dispense(destination_well, volume_ul)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "pipette",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "material.transfer"
+            ],
+            "hazards": [
+              "spill",
+              "well_overflow",
+              "cross_contamination"
+            ],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [
+              "liquid in tip",
+              "plate on liquid handler deck"
+            ],
+            "summary": "Dispense a bounded volume from the pipette tip into a plate well, refusing well overflow.",
+            "tags": [
+              "liquid handling",
+              "pipetting",
+              "dispense",
+              "volume",
+              "labware"
+            ],
+            "units": {
+              "volume_ul": "uL"
+            }
+          },
+          "title": "Dispense liquid into a well",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {
+              "volume": {
+                "max": 1000,
+                "min": 0,
+                "reason": "pipette tip capacity",
+                "source": "class_default",
+                "unit": "uL"
+              },
+              "volume_ul": {
+                "max": 200,
+                "min": 1,
+                "reason": "tip capacity",
+                "unit": "uL"
+              }
+            },
+            "unlimited": [
+              "flow_rate",
+              "mix_cycles"
+            ]
+          }
+        },
+        {
+          "capability_id": "cap.fluid.transfer.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "exclusive",
+            "max_duration_ms": 10000
+          },
+          "determinism": "exact",
+          "exclusive": true,
+          "input_schema": {
+            "properties": {
+              "destination_well": {
+                "default": "B1",
+                "type": "string"
+              },
+              "source_well": {
+                "default": "A1",
+                "type": "string"
+              },
+              "volume_ul": {
+                "default": 10,
+                "maximum": 200,
+                "minimum": 1,
+                "type": "integer",
+                "x-mhs-unit": "uL"
+              }
+            },
+            "required": [
+              "source_well",
+              "destination_well",
+              "volume_ul"
+            ],
+            "type": "object"
+          },
+          "limits": {
+            "volume_ul": {
+              "max": 200,
+              "min": 1,
+              "reason": "tip capacity",
+              "unit": "uL"
+            }
+          },
+          "native": "PipetteBridge::transfer(source_well, destination_well, volume_ul)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "pipette",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "material.transfer",
+              "consumable.tip_used"
+            ],
+            "hazards": [
+              "cross_contamination",
+              "spill",
+              "volume_error"
+            ],
+            "notes": "",
+            "postconditions": [
+              "destination volume increased by volume_ul",
+              "tip consumed"
+            ],
+            "preconditions": [
+              "tip_loaded",
+              "source volume sufficient",
+              "destination capacity sufficient"
+            ],
+            "summary": "Atomically aspirate from a source well and dispense into a destination well, consuming one pipette tip.",
+            "tags": [
+              "liquid handling",
+              "pipetting",
+              "transfer",
+              "volume",
+              "consumable"
+            ],
+            "units": {
+              "volume_ul": "uL"
+            }
+          },
+          "title": "Transfer liquid between wells",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {
+              "volume": {
+                "max": 1000,
+                "min": 0,
+                "reason": "pipette tip capacity",
+                "source": "class_default",
+                "unit": "uL"
+              },
+              "volume_ul": {
+                "max": 200,
+                "min": 1,
+                "reason": "tip capacity",
+                "unit": "uL"
+              }
+            },
+            "unlimited": [
+              "flow_rate",
+              "mix_cycles"
+            ]
+          }
+        },
+        {
+          "capability_id": "cap.fluid.level.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "shared",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "input_schema": {
+            "properties": {
+              "well_ids": {
+                "items": {
+                  "enum": [
+                    "A1",
+                    "A2",
+                    "A3",
+                    "A4",
+                    "A5",
+                    "A6",
+                    "A7",
+                    "A8",
+                    "B1",
+                    "B2",
+                    "B3",
+                    "B4",
+                    "B5",
+                    "B6",
+                    "B7",
+                    "B8",
+                    "C1",
+                    "C2",
+                    "C3",
+                    "C4",
+                    "C5",
+                    "C6",
+                    "C7",
+                    "C8",
+                    "D1",
+                    "D2",
+                    "D3",
+                    "D4",
+                    "D5",
+                    "D6",
+                    "D7",
+                    "D8",
+                    "E1",
+                    "E2",
+                    "E3",
+                    "E4",
+                    "E5",
+                    "E6",
+                    "E7",
+                    "E8",
+                    "F1",
+                    "F2",
+                    "F3",
+                    "F4",
+                    "F5",
+                    "F6",
+                    "F7",
+                    "F8",
+                    "G1",
+                    "G2",
+                    "G3",
+                    "G4",
+                    "G5",
+                    "G6",
+                    "G7",
+                    "G8",
+                    "H1",
+                    "H2",
+                    "H3",
+                    "H4",
+                    "H5",
+                    "H6",
+                    "H7",
+                    "H8"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 96,
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "native": "PipetteBridge::level(well_ids)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "plate",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [],
+            "summary": "Read the integer liquid volumes of plate wells (observational, no consumable use).",
+            "tags": [
+              "liquid handling",
+              "plate",
+              "volume",
+              "observation"
+            ],
+            "units": {}
+          },
+          "title": "Read well volumes",
+          "verb": "read",
+          "x-mhs-effective-limits": {
+            "limits": {}
+          }
+        },
+        {
+          "capability_id": "cap.motion.stop.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "shared",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "native": "PipetteBridge::stop()",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "pipette",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "motion.stop"
+            ],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [],
+            "summary": "Stop the pipette in its declared safe state: tip stationary, no pending transfer.",
+            "tags": [
+              "liquid handling",
+              "stop",
+              "safe state"
+            ],
+            "units": {}
+          },
+          "title": "Abort pipetting and return to idle",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {},
+            "unlimited": [
+              "deceleration"
+            ]
+          }
+        }
+      ],
+      "conformance": {
+        "issued_at": "2026-10-22T15:57:36.783Z",
+        "issuer_kind": "self",
+        "level": "CL4",
+        "profile": "MHS-Sim",
+        "report_digest": "sha256:a5b3c03784b0e09de7a7d7ade23e6d9b056c9e89723f605ccaa7d8b991b2daa6",
+        "suite_version": "1.3.0"
+      },
+      "device_id": "mhs://localhost:62336/lab/liquid-handler",
+      "display_name": "Analytic pipette (simulated)",
+      "endpoint_id": "lab",
+      "fidelity": {
+        "determinism": {
+          "kind": "exact",
+          "notes": "Deterministic Python model; integer/fixed-point normative state, no wall-clock pacing.",
+          "seed_control": "none"
+        },
+        "engine": "analytic",
+        "fidelity_level": "F0",
+        "gaps": [
+          "Analytic fluid bookkeeping only: no viscosity, bubbles, droplet formation or evaporation",
+          "No cross-contamination model",
+          "Shared plate state is restored per device, not atomically across the endpoint"
+        ],
+        "realtime_factor": 0,
+        "reset": "full",
+        "snapshot_restore": true,
+        "timestep_ms": 0
+      },
+      "instance_id": "01J8ZQ3V6Y7M2N4P6R8S0T2V50",
+      "mhs_version": "1.0",
+      "mode": "simulated",
+      "model": "pipette-sim",
+      "profile": {
+        "operating_notes": [
+          "Aspirate/dispense/transfer use integer microlitres; the tip capacity is 200 uL.",
+          "Transfer consumes one tip and the reference rack has 8 tips.",
+          "The plate must be on the liquid handler deck for pipetting."
+        ],
+        "summary": "Integer microlitre pipette with consumable tip bookkeeping for deterministic liquid-handling protocol tests.",
+        "tags": [
+          "liquid handling",
+          "pipetting",
+          "volume bookkeeping",
+          "deterministic simulation"
+        ],
+        "title": "Analytic pipette"
+      },
+      "provenance": {
+        "adapter_id": "openmhs:reference.liquid-handler",
+        "evidence": [
+          "MHS/sdk/src/mhs/reference/lab.py"
+        ],
+        "generated_by": "mhs.reference (protocol fixture, not a driver template)"
+      },
+      "reference": {
+        "$schema": "https://openmhs.invalid/schema/0.9/reference.schema.json",
+        "actions": [
+          {
+            "cancellable": false,
+            "cap_id": "cap.fluid.aspirate.v1",
+            "description": "Draw a specified volume of liquid from a declared labware well into a pipette tip, with a bounded flow rate and an optional liquid-level offset.",
+            "inputs": [
+              {
+                "default": "A1",
+                "name": "source_well",
+                "required": true,
+                "type": "string",
+                "unit": "1"
+              },
+              {
+                "default": 10,
+                "limit": {
+                  "max": 200,
+                  "min": 1,
+                  "reason": "tip capacity",
+                  "unit": "uL"
+                },
+                "name": "volume_ul",
+                "required": true,
+                "type": "integer",
+                "unit": "uL"
+              },
+              {
+                "limit": {
+                  "max": 1000,
+                  "min": 0,
+                  "reason": "pipette tip capacity; bindings declare their actual range",
+                  "source": "class_default",
+                  "unit": "uL"
+                },
+                "name": "volume",
+                "required": false,
+                "type": "number",
+                "unit": "uL"
+              },
+              {
+                "name": "source",
+                "required": false,
+                "type": "object"
+              },
+              {
+                "name": "source.labware",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "source.well",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "flow_rate",
+                "required": false,
+                "type": "number",
+                "unit": "uL/s"
+              },
+              {
+                "name": "tip",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "liquid_level_offset",
+                "required": false,
+                "type": "number",
+                "unit": "mm"
+              }
+            ],
+            "long_running": false,
+            "name": "fluid.aspirate",
+            "outputs": [
+              {
+                "name": "aspirated_volume",
+                "required": true,
+                "type": "number",
+                "unit": "uL"
+              },
+              {
+                "name": "tip",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "liquid_level_mm",
+                "required": false,
+                "type": "number",
+                "unit": "mm"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "pipette",
+            "risk": "R2",
+            "status": "stable",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "cap.fluid.dispense.v1",
+            "description": "Dispense a specified volume from the pipette into a declared labware well, with optional blowout and mixing after dispense.",
+            "inputs": [
+              {
+                "default": "B1",
+                "name": "destination_well",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": 10,
+                "limit": {
+                  "max": 200,
+                  "min": 1,
+                  "reason": "tip capacity",
+                  "unit": "uL"
+                },
+                "name": "volume_ul",
+                "required": true,
+                "type": "integer",
+                "unit": "uL"
+              },
+              {
+                "limit": {
+                  "max": 1000,
+                  "min": 0,
+                  "reason": "pipette tip capacity",
+                  "source": "class_default",
+                  "unit": "uL"
+                },
+                "name": "volume",
+                "required": false,
+                "type": "number",
+                "unit": "uL"
+              },
+              {
+                "name": "target",
+                "required": false,
+                "type": "object"
+              },
+              {
+                "name": "target.labware",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "target.well",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "flow_rate",
+                "required": false,
+                "type": "number",
+                "unit": "uL/s"
+              },
+              {
+                "name": "blowout",
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "name": "mix_cycles",
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "long_running": false,
+            "name": "fluid.dispense",
+            "outputs": [
+              {
+                "name": "dispensed_volume",
+                "required": true,
+                "type": "number",
+                "unit": "uL"
+              },
+              {
+                "name": "target_volume_after",
+                "required": false,
+                "type": "number",
+                "unit": "uL"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "pipette",
+            "risk": "R2",
+            "status": "stable",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "cap.fluid.transfer.v1",
+            "description": "Aspirate a volume from a source well and dispense it into a target well as one receipted operation, so a failed transfer cannot leave an untracked half-state.",
+            "inputs": [
+              {
+                "default": "A1",
+                "name": "source_well",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": "B1",
+                "name": "destination_well",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": 10,
+                "limit": {
+                  "max": 200,
+                  "min": 1,
+                  "reason": "tip capacity",
+                  "unit": "uL"
+                },
+                "name": "volume_ul",
+                "required": true,
+                "type": "integer",
+                "unit": "uL"
+              },
+              {
+                "limit": {
+                  "max": 1000,
+                  "min": 0,
+                  "reason": "pipette tip capacity",
+                  "source": "class_default",
+                  "unit": "uL"
+                },
+                "name": "volume",
+                "required": false,
+                "type": "number",
+                "unit": "uL"
+              },
+              {
+                "name": "source",
+                "required": false,
+                "type": "object"
+              },
+              {
+                "name": "source.labware",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "source.well",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "target",
+                "required": false,
+                "type": "object"
+              },
+              {
+                "name": "target.labware",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "target.well",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "flow_rate",
+                "required": false,
+                "type": "number",
+                "unit": "uL/s"
+              },
+              {
+                "name": "mix_cycles",
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "name": "tip",
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "long_running": false,
+            "name": "fluid.transfer",
+            "outputs": [
+              {
+                "name": "transferred_volume",
+                "required": true,
+                "type": "number",
+                "unit": "uL"
+              },
+              {
+                "name": "source_volume_after",
+                "required": false,
+                "type": "number",
+                "unit": "uL"
+              },
+              {
+                "name": "target_volume_after",
+                "required": false,
+                "type": "number",
+                "unit": "uL"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "pipette",
+            "risk": "R2",
+            "status": "stable",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "cap.motion.stop.v1",
+            "description": "Stop all motion on the resource with a declared deceleration profile and report the stopping position. This capability is always cancellable=false and is exempt from rate limiting.",
+            "examples": [
+              {
+                "deceleration": 2.0
+              }
+            ],
+            "inputs": [
+              {
+                "name": "deceleration",
+                "required": false,
+                "type": "number",
+                "unit": "m/s2"
+              }
+            ],
+            "long_running": false,
+            "name": "motion.stop",
+            "outputs": [
+              {
+                "name": "stopped",
+                "required": true,
+                "type": "boolean"
+              },
+              {
+                "name": "stopped_at",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "stopped_position",
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "pipette",
+            "risk": "R2",
+            "status": "stable",
+            "verb": "invoke"
+          }
+        ],
+        "adjusts": [],
+        "device": {
+          "id": "mhs://localhost:62336/lab/liquid-handler",
+          "kind": "lab.pipette",
+          "mode": "simulated",
+          "model": "pipette-sim",
+          "name": "Analytic pipette (simulated)",
+          "risk": "R2",
+          "vendor": "OpenMHS reference fixture"
+        },
+        "facts": [],
+        "fidelity": {
+          "determinism": {
+            "kind": "exact",
+            "notes": "Deterministic Python model; integer/fixed-point normative state, no wall-clock pacing.",
+            "seed_control": "none"
+          },
+          "engine": "analytic",
+          "fidelity_level": "F0",
+          "gaps": [
+            "Analytic fluid bookkeeping only: no viscosity, bubbles, droplet formation or evaporation",
+            "No cross-contamination model",
+            "Shared plate state is restored per device, not atomically across the endpoint"
+          ],
+          "realtime_factor": 0,
+          "reset": "full",
+          "snapshot_restore": true,
+          "timestep_ms": 0
+        },
+        "measures": [
+          {
+            "name": "tip_loaded",
+            "resource": "pipette",
+            "type": "boolean"
+          },
+          {
+            "name": "tip_volume_ul",
+            "resource": "pipette",
+            "type": "integer",
+            "unit": "uL"
+          },
+          {
+            "name": "tip_capacity_ul",
+            "resource": "pipette",
+            "type": "integer",
+            "unit": "uL"
+          },
+          {
+            "name": "tips_remaining",
+            "resource": "pipette",
+            "type": "integer"
+          },
+          {
+            "name": "tips_used",
+            "resource": "pipette",
+            "type": "integer"
+          },
+          {
+            "name": "cycles",
+            "resource": "pipette",
+            "type": "integer"
+          },
+          {
+            "name": "mode",
+            "resource": "pipette",
+            "type": "string"
+          },
+          {
+            "name": "plate_id",
+            "resource": "plate",
+            "type": "string"
+          },
+          {
+            "name": "wells",
+            "resource": "plate",
+            "type": "object"
+          },
+          {
+            "name": "transfers",
+            "resource": "plate",
+            "type": "integer"
+          },
+          {
+            "cap_id": "cap.fluid.level.v1",
+            "description": "Detect and report the liquid level and estimated volume in a declared container using a declared detection method.",
+            "inputs": [
+              {
+                "items_type": "string",
+                "name": "well_ids",
+                "required": false,
+                "type": "array"
+              },
+              {
+                "name": "container",
+                "required": false,
+                "type": "object"
+              },
+              {
+                "name": "container.labware",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "container.well",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "capacitance",
+                  "pressure",
+                  "image"
+                ],
+                "name": "method",
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "name": "fluid.level",
+            "resource": "plate",
+            "type": "number",
+            "unit": "mm"
+          }
+        ],
+        "openmhs": "0.9",
+        "overlay": null,
+        "provenance": {
+          "catalogue_digest": "sha256:c114376cd58d3ae5c4454dd0ba9b67563b958c195bf1e75c3b8373cd23ab1d0c",
+          "generated_by": "mhs.reference_file",
+          "manifest_digest": "sha256:e70ce49a5fc587777811c240d3960b8728f27f87f0f5b403e1a1645034e5fc58",
+          "sdk_version": "0.9.0.dev0"
+        },
+        "safety": {
+          "estop": {
+            "kind": "software",
+            "latching": true,
+            "latency_ms": 50,
+            "native": "PipetteBridge.estop"
+          },
+          "interlocks": [
+            {
+              "description": "Bench safety door is closed",
+              "id": "door_closed",
+              "required_for": [
+                "cap.fluid.*"
+              ],
+              "source": "simulated"
+            },
+            {
+              "description": "Plate is on the liquid handler deck",
+              "id": "plate_loaded",
+              "required_for": [
+                "cap.fluid.*"
+              ],
+              "source": "simulated"
+            }
+          ],
+          "not_certified": true,
+          "operator_required": [],
+          "safe_state": {
+            "achieved_by": [
+              "cap.motion.stop.v1"
+            ],
+            "description": "Tip stationary with no pending transfer"
+          }
+        },
+        "tags": [
+          "liquid handling",
+          "pipetting",
+          "volume bookkeeping",
+          "deterministic simulation"
+        ]
+      },
+      "resources": [
+        {
+          "kind": "lab.pipette",
+          "resource_id": "pipette",
+          "revision": 0,
+          "sampling": {
+            "mode": "on_change"
+          },
+          "state": {
+            "cycles": 0,
+            "mode": "idle",
+            "tip_capacity_ul": 200,
+            "tip_loaded": true,
+            "tip_volume_ul": 0,
+            "tips_remaining": 7,
+            "tips_used": 0
+          },
+          "state_schema": {
+            "properties": {
+              "cycles": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "mode": {
+                "type": "string"
+              },
+              "tip_capacity_ul": {
+                "minimum": 1,
+                "type": "integer",
+                "x-mhs-unit": "uL"
+              },
+              "tip_loaded": {
+                "type": "boolean"
+              },
+              "tip_volume_ul": {
+                "maximum": 200,
+                "minimum": 0,
+                "type": "integer",
+                "x-mhs-unit": "uL"
+              },
+              "tips_remaining": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "tips_used": {
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "tip_loaded",
+              "tip_volume_ul",
+              "tips_remaining"
+            ],
+            "type": "object"
+          },
+          "title": "Pipette tip state"
+        },
+        {
+          "kind": "lab.labware",
+          "resource_id": "plate",
+          "revision": 0,
+          "sampling": {
+            "mode": "on_change"
+          },
+          "state": {
+            "plate_id": "plate-001",
+            "transfers": 0,
+            "wells": {
+              "A1": {
+                "max_volume_ul": 200,
+                "volume_ul": 150
+              },
+              "A2": {
+                "max_volume_ul": 200,
+                "volume_ul": 150
+              },
+              "A3": {
+                "max_volume_ul": 200,
+                "volume_ul": 150
+              },
+              "A4": {
+                "max_volume_ul": 200,
+                "volume_ul": 150
+              },
+              "A5": {
+                "max_volume_ul": 200,
+                "volume_ul": 150
+              },
+              "A6": {
+                "max_volume_ul": 200,
+                "volume_ul": 150
+              },
+              "A7": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "A8": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "B1": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "B2": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "B3": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "B4": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "B5": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "B6": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "B7": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "B8": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "C1": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "C2": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "C3": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "C4": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "C5": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "C6": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "C7": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "C8": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "D1": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "D2": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "D3": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "D4": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "D5": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "D6": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "D7": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "D8": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "E1": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "E2": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "E3": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "E4": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "E5": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "E6": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "E7": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "E8": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "F1": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "F2": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "F3": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "F4": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "F5": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "F6": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "F7": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "F8": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "G1": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "G2": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "G3": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "G4": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "G5": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "G6": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "G7": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "G8": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "H1": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "H2": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "H3": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "H4": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "H5": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "H6": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "H7": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              },
+              "H8": {
+                "max_volume_ul": 200,
+                "volume_ul": 0
+              }
+            }
+          },
+          "state_schema": {
+            "properties": {
+              "plate_id": {
+                "type": "string"
+              },
+              "transfers": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "wells": {
+                "additionalProperties": {
+                  "properties": {
+                    "max_volume_ul": {
+                      "minimum": 1,
+                      "type": "integer",
+                      "x-mhs-unit": "uL"
+                    },
+                    "volume_ul": {
+                      "minimum": 0,
+                      "type": "integer",
+                      "x-mhs-unit": "uL"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "object"
+              }
+            },
+            "required": [
+              "plate_id",
+              "wells"
+            ],
+            "type": "object"
+          },
+          "title": "Plate well volumes"
+        }
+      ],
+      "safety": {
+        "estop": {
+          "kind": "software",
+          "latching": true,
+          "latency_ms": 50,
+          "reset": "mhs.safety.reset"
+        },
+        "interlocks": [
+          {
+            "description": "Bench safety door is closed",
+            "id": "door_closed",
+            "required_for": [
+              "cap.fluid.*"
+            ],
+            "source": "simulated"
+          },
+          {
+            "description": "Plate is on the liquid handler deck",
+            "id": "plate_loaded",
+            "required_for": [
+              "cap.fluid.*"
+            ],
+            "source": "simulated"
+          }
+        ],
+        "risk_class": "R2",
+        "safe_state": {
+          "achieved_by": [
+            "cap.motion.stop.v1"
+          ],
+          "description": "Tip stationary with no pending transfer"
+        }
+      },
+      "vendor": {
+        "name": "OpenMHS reference fixture"
+      }
+    },
+    {
+      "capabilities": [
+        {
+          "capability_id": "cap.measure.spectrum.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "shared",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "input_schema": {
+            "properties": {
+              "plate_id": {
+                "default": "plate-001",
+                "type": "string"
+              },
+              "wavelengths_nm": {
+                "default": [
+                  600
+                ],
+                "items": {
+                  "maximum": 800,
+                  "minimum": 400,
+                  "type": "integer"
+                },
+                "maxItems": 16,
+                "minItems": 1,
+                "type": "array",
+                "x-mhs-unit": "nm"
+              },
+              "well_ids": {
+                "items": {
+                  "enum": [
+                    "A1",
+                    "A2",
+                    "A3",
+                    "A4",
+                    "A5",
+                    "A6",
+                    "A7",
+                    "A8",
+                    "B1",
+                    "B2",
+                    "B3",
+                    "B4",
+                    "B5",
+                    "B6",
+                    "B7",
+                    "B8",
+                    "C1",
+                    "C2",
+                    "C3",
+                    "C4",
+                    "C5",
+                    "C6",
+                    "C7",
+                    "C8",
+                    "D1",
+                    "D2",
+                    "D3",
+                    "D4",
+                    "D5",
+                    "D6",
+                    "D7",
+                    "D8",
+                    "E1",
+                    "E2",
+                    "E3",
+                    "E4",
+                    "E5",
+                    "E6",
+                    "E7",
+                    "E8",
+                    "F1",
+                    "F2",
+                    "F3",
+                    "F4",
+                    "F5",
+                    "F6",
+                    "F7",
+                    "F8",
+                    "G1",
+                    "G2",
+                    "G3",
+                    "G4",
+                    "G5",
+                    "G6",
+                    "G7",
+                    "G8",
+                    "H1",
+                    "H2",
+                    "H3",
+                    "H4",
+                    "H5",
+                    "H6",
+                    "H7",
+                    "H8"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 96,
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "plate_id",
+              "wavelengths_nm"
+            ],
+            "type": "object"
+          },
+          "native": "PlateReaderBridge::spectrum(plate_id, wavelengths_nm, well_ids)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "reader",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "measure.absorbance"
+            ],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [
+              "plate on reader",
+              "plate location matches plate_id"
+            ],
+            "summary": "Measure integer absorbance for the requested wells and wavelengths; deterministic analytic photometry.",
+            "tags": [
+              "plate reader",
+              "absorbance",
+              "spectrum",
+              "measurement",
+              "observation"
+            ],
+            "units": {
+              "wavelengths_nm": "nm"
+            }
+          },
+          "title": "Measure absorbance spectra of a plate",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {
+              "wavelength_min": {
+                "max": 2500,
+                "min": 200,
+                "reason": "detector range is declared per binding",
+                "source": "class_default",
+                "unit": "nm"
+              }
+            },
+            "unlimited": [
+              "wavelengths_nm",
+              "wavelength_max",
+              "step_nm",
+              "integration_ms"
+            ]
+          }
+        }
+      ],
+      "conformance": {
+        "issued_at": "2026-10-22T15:57:36.783Z",
+        "issuer_kind": "self",
+        "level": "CL4",
+        "profile": "MHS-Sim",
+        "report_digest": "sha256:a5b3c03784b0e09de7a7d7ade23e6d9b056c9e89723f605ccaa7d8b991b2daa6",
+        "suite_version": "1.3.0"
+      },
+      "device_id": "mhs://localhost:62336/lab/plate-reader",
+      "display_name": "Absorbance plate reader (simulated)",
+      "endpoint_id": "lab",
+      "fidelity": {
+        "determinism": {
+          "kind": "exact",
+          "notes": "Deterministic Python model; integer/fixed-point normative state, no wall-clock pacing.",
+          "seed_control": "none"
+        },
+        "engine": "analytic",
+        "fidelity_level": "F0",
+        "gaps": [
+          "Analytic photometry only: no optical noise, stray light or path-length variation"
+        ],
+        "realtime_factor": 0,
+        "reset": "full",
+        "snapshot_restore": true,
+        "timestep_ms": 0
+      },
+      "instance_id": "01J8ZQ3V6Y7M2N4P6R8S0T2V51",
+      "mhs_version": "1.0",
+      "mode": "simulated",
+      "model": "plate-reader-sim",
+      "profile": {
+        "operating_notes": [
+          "The plate must be moved to the reader before measuring."
+        ],
+        "summary": "Deterministic integer absorbance reader; readings are a pure function of well content and wavelength.",
+        "tags": [
+          "plate reader",
+          "absorbance",
+          "spectrophotometry",
+          "measurement"
+        ],
+        "title": "Plate reader"
+      },
+      "provenance": {
+        "adapter_id": "openmhs:reference.plate-reader",
+        "evidence": [
+          "MHS/sdk/src/mhs/reference/lab.py"
+        ],
+        "generated_by": "mhs.reference (protocol fixture, not a driver template)"
+      },
+      "reference": {
+        "$schema": "https://openmhs.invalid/schema/0.9/reference.schema.json",
+        "actions": [
+          {
+            "cancellable": false,
+            "cap_id": "cap.measure.spectrum.v1",
+            "description": "Acquire an optical or mass spectrum over a declared wavelength or mass range and return the axis and intensity arrays, or an artifact reference for large spectra.",
+            "inputs": [
+              {
+                "default": "plate-001",
+                "name": "plate_id",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": [
+                  600
+                ],
+                "items_type": "integer",
+                "name": "wavelengths_nm",
+                "required": true,
+                "type": "array",
+                "unit": "nm"
+              },
+              {
+                "items_type": "string",
+                "name": "well_ids",
+                "required": false,
+                "type": "array"
+              },
+              {
+                "limit": {
+                  "max": 2500,
+                  "min": 200,
+                  "reason": "detector range is declared per binding",
+                  "source": "class_default",
+                  "unit": "nm"
+                },
+                "name": "wavelength_min",
+                "required": false,
+                "type": "number",
+                "unit": "nm"
+              },
+              {
+                "name": "wavelength_max",
+                "required": false,
+                "type": "number",
+                "unit": "nm"
+              },
+              {
+                "name": "step_nm",
+                "required": false,
+                "type": "number",
+                "unit": "nm"
+              },
+              {
+                "name": "integration_ms",
+                "required": false,
+                "type": "number",
+                "unit": "ms"
+              },
+              {
+                "name": "artifact",
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "long_running": false,
+            "name": "measure.spectrum",
+            "outputs": [
+              {
+                "items_type": "number",
+                "name": "wavelengths",
+                "required": false,
+                "type": "array",
+                "unit": "nm"
+              },
+              {
+                "items_type": "number",
+                "name": "intensities",
+                "required": false,
+                "type": "array",
+                "unit": "1"
+              },
+              {
+                "name": "artifact_ref",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "sampled_at",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "reader",
+            "risk": "R0",
+            "status": "stable",
+            "verb": "invoke"
+          }
+        ],
+        "adjusts": [],
+        "device": {
+          "id": "mhs://localhost:62336/lab/plate-reader",
+          "kind": "instrument.spectrophotometer",
+          "mode": "simulated",
+          "model": "plate-reader-sim",
+          "name": "Absorbance plate reader (simulated)",
+          "risk": "R0",
+          "vendor": "OpenMHS reference fixture"
+        },
+        "facts": [],
+        "fidelity": {
+          "determinism": {
+            "kind": "exact",
+            "notes": "Deterministic Python model; integer/fixed-point normative state, no wall-clock pacing.",
+            "seed_control": "none"
+          },
+          "engine": "analytic",
+          "fidelity_level": "F0",
+          "gaps": [
+            "Analytic photometry only: no optical noise, stray light or path-length variation"
+          ],
+          "realtime_factor": 0,
+          "reset": "full",
+          "snapshot_restore": true,
+          "timestep_ms": 0
+        },
+        "measures": [
+          {
+            "name": "plate_id",
+            "resource": "reader",
+            "type": "string"
+          },
+          {
+            "name": "measurements",
+            "resource": "reader",
+            "type": "integer"
+          },
+          {
+            "name": "last_measurement",
+            "resource": "reader",
+            "type": "object"
+          },
+          {
+            "name": "location",
+            "resource": "reader",
+            "type": "string"
+          }
+        ],
+        "openmhs": "0.9",
+        "overlay": null,
+        "provenance": {
+          "catalogue_digest": "sha256:c114376cd58d3ae5c4454dd0ba9b67563b958c195bf1e75c3b8373cd23ab1d0c",
+          "generated_by": "mhs.reference_file",
+          "manifest_digest": "sha256:9bec243a7abbf2606f438c7526b7366bf1ce510cc0612a06176004e15be5b6e5",
+          "sdk_version": "0.9.0.dev0"
+        },
+        "safety": {
+          "estop": {
+            "kind": "software",
+            "latching": true,
+            "latency_ms": 50,
+            "native": "PlateReaderBridge.estop"
+          },
+          "interlocks": [
+            {
+              "description": "Bench safety door is closed",
+              "id": "door_closed",
+              "required_for": [
+                "cap.measure.*"
+              ],
+              "source": "simulated"
+            },
+            {
+              "description": "Plate is present on the reader",
+              "id": "plate_loaded",
+              "required_for": [
+                "cap.measure.*"
+              ],
+              "source": "simulated"
+            }
+          ],
+          "not_certified": true,
+          "operator_required": [],
+          "safe_state": {
+            "achieved_by": [],
+            "description": "Reader idle: no measurement running, nothing moving"
+          }
+        },
+        "tags": [
+          "plate reader",
+          "absorbance",
+          "spectrophotometry",
+          "measurement"
+        ]
+      },
+      "resources": [
+        {
+          "kind": "instrument.spectrophotometer",
+          "resource_id": "reader",
+          "revision": 0,
+          "sampling": {
+            "mode": "on_change"
+          },
+          "state": {
+            "last_measurement": null,
+            "location": "liquid_handler",
+            "measurements": 0,
+            "plate_id": "plate-001"
+          },
+          "state_schema": {
+            "properties": {
+              "last_measurement": {
+                "type": [
+                  "object",
+                  "null"
+                ]
+              },
+              "location": {
+                "enum": [
+                  "liquid_handler",
+                  "reader",
+                  "output"
+                ],
+                "type": "string"
+              },
+              "measurements": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "plate_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "plate_id",
+              "measurements"
+            ],
+            "type": "object"
+          },
+          "title": "Plate reader state"
+        }
+      ],
+      "safety": {
+        "estop": {
+          "kind": "software",
+          "latching": true,
+          "latency_ms": 50,
+          "reset": "mhs.safety.reset"
+        },
+        "interlocks": [
+          {
+            "description": "Bench safety door is closed",
+            "id": "door_closed",
+            "required_for": [
+              "cap.measure.*"
+            ],
+            "source": "simulated"
+          },
+          {
+            "description": "Plate is present on the reader",
+            "id": "plate_loaded",
+            "required_for": [
+              "cap.measure.*"
+            ],
+            "source": "simulated"
+          }
+        ],
+        "risk_class": "R0",
+        "safe_state": {
+          "achieved_by": [],
+          "description": "Reader idle: no measurement running, nothing moving"
+        }
+      },
+      "vendor": {
+        "name": "OpenMHS reference fixture"
+      }
+    },
+    {
+      "capabilities": [
+        {
+          "capability_id": "cap.sample.move.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "exclusive",
+            "max_duration_ms": 10000
+          },
+          "determinism": "exact",
+          "exclusive": true,
+          "input_schema": {
+            "properties": {
+              "plate_id": {
+                "default": "plate-001",
+                "type": "string"
+              },
+              "to": {
+                "enum": [
+                  "liquid_handler",
+                  "reader",
+                  "output"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "plate_id",
+              "to"
+            ],
+            "type": "object"
+          },
+          "limits": {
+            "to": {
+              "allowed": [
+                "liquid_handler",
+                "reader",
+                "output"
+              ],
+              "reason": "declared bench locations"
+            }
+          },
+          "native": "SampleMoverBridge::move(plate_id, to)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "bench",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "material.move"
+            ],
+            "hazards": [
+              "plate drop",
+              "collision"
+            ],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [
+              "door closed",
+              "plate present at current location"
+            ],
+            "summary": "Carry the sample plate from its current instrument to another instrument or the output stacker.",
+            "tags": [
+              "sample mover",
+              "plate transfer",
+              "orchestration",
+              "lab automation"
+            ],
+            "units": {}
+          },
+          "title": "Move the sample plate between instruments",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {
+              "to": {
+                "allowed": [
+                  "liquid_handler",
+                  "reader",
+                  "output"
+                ],
+                "reason": "declared bench locations"
+              }
+            }
+          }
+        },
+        {
+          "capability_id": "cap.motion.stop.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "shared",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "native": "SampleMoverBridge::stop()",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "bench",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "motion.stop"
+            ],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [],
+            "summary": "Stop the sample mover in its declared safe state: plate held still at its current location.",
+            "tags": [
+              "sample mover",
+              "stop",
+              "safe state"
+            ],
+            "units": {}
+          },
+          "title": "Stop the sample mover",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {},
+            "unlimited": [
+              "deceleration"
+            ]
+          }
+        }
+      ],
+      "conformance": {
+        "issued_at": "2026-10-22T15:57:36.783Z",
+        "issuer_kind": "self",
+        "level": "CL4",
+        "profile": "MHS-Sim",
+        "report_digest": "sha256:a5b3c03784b0e09de7a7d7ade23e6d9b056c9e89723f605ccaa7d8b991b2daa6",
+        "suite_version": "1.3.0"
+      },
+      "device_id": "mhs://localhost:62336/lab/sample-mover",
+      "display_name": "Sample mover (simulated)",
+      "endpoint_id": "lab",
+      "fidelity": {
+        "determinism": {
+          "kind": "exact",
+          "notes": "Deterministic Python model; integer/fixed-point normative state, no wall-clock pacing.",
+          "seed_control": "none"
+        },
+        "engine": "analytic",
+        "fidelity_level": "F0",
+        "gaps": [
+          "Point-to-point transfer only: no trajectory dynamics or collision geometry"
+        ],
+        "realtime_factor": 0,
+        "reset": "full",
+        "snapshot_restore": true,
+        "timestep_ms": 0
+      },
+      "instance_id": "01J8ZQ3V6Y7M2N4P6R8S0T2V52",
+      "mhs_version": "1.0",
+      "mode": "simulated",
+      "model": "sample-mover-sim",
+      "profile": {
+        "operating_notes": [
+          "Moves are instant and deterministic; the plate must be at the named location."
+        ],
+        "summary": "Moves the sample plate between the liquid handler, the plate reader and the output stacker.",
+        "tags": [
+          "sample mover",
+          "plate transfer",
+          "laboratory automation",
+          "orchestration"
+        ],
+        "title": "Sample mover"
+      },
+      "provenance": {
+        "adapter_id": "openmhs:reference.sample-mover",
+        "evidence": [
+          "MHS/sdk/src/mhs/reference/lab.py"
+        ],
+        "generated_by": "mhs.reference (protocol fixture, not a driver template)"
+      },
+      "reference": {
+        "$schema": "https://openmhs.invalid/schema/0.9/reference.schema.json",
+        "actions": [
+          {
+            "cancellable": false,
+            "cap_id": "cap.sample.move.v1",
+            "description": "Move a sample, plate or other labware object from one declared location to another using the device's transport mechanism.",
+            "inputs": [
+              {
+                "default": "plate-001",
+                "name": "plate_id",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "liquid_handler",
+                  "reader",
+                  "output"
+                ],
+                "limit": {
+                  "allowed": [
+                    "liquid_handler",
+                    "reader",
+                    "output"
+                  ],
+                  "reason": "declared bench locations"
+                },
+                "name": "to",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "to.location",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "sample_id",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "from",
+                "required": false,
+                "type": "object"
+              },
+              {
+                "name": "from.location",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "carrier",
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "long_running": false,
+            "name": "sample.move",
+            "outputs": [
+              {
+                "name": "moved",
+                "required": true,
+                "type": "boolean"
+              },
+              {
+                "name": "location",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "sample_id",
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "bench",
+            "risk": "R1",
+            "status": "stable",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "cap.motion.stop.v1",
+            "description": "Stop all motion on the resource with a declared deceleration profile and report the stopping position. This capability is always cancellable=false and is exempt from rate limiting.",
+            "examples": [
+              {
+                "deceleration": 2.0
+              }
+            ],
+            "inputs": [
+              {
+                "name": "deceleration",
+                "required": false,
+                "type": "number",
+                "unit": "m/s2"
+              }
+            ],
+            "long_running": false,
+            "name": "motion.stop",
+            "outputs": [
+              {
+                "name": "stopped",
+                "required": true,
+                "type": "boolean"
+              },
+              {
+                "name": "stopped_at",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "stopped_position",
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "bench",
+            "risk": "R1",
+            "status": "stable",
+            "verb": "invoke"
+          }
+        ],
+        "adjusts": [],
+        "device": {
+          "id": "mhs://localhost:62336/lab/sample-mover",
+          "kind": "lab.labware",
+          "mode": "simulated",
+          "model": "sample-mover-sim",
+          "name": "Sample mover (simulated)",
+          "risk": "R1",
+          "vendor": "OpenMHS reference fixture"
+        },
+        "facts": [],
+        "fidelity": {
+          "determinism": {
+            "kind": "exact",
+            "notes": "Deterministic Python model; integer/fixed-point normative state, no wall-clock pacing.",
+            "seed_control": "none"
+          },
+          "engine": "analytic",
+          "fidelity_level": "F0",
+          "gaps": [
+            "Point-to-point transfer only: no trajectory dynamics or collision geometry"
+          ],
+          "realtime_factor": 0,
+          "reset": "full",
+          "snapshot_restore": true,
+          "timestep_ms": 0
+        },
+        "measures": [
+          {
+            "name": "plate_id",
+            "resource": "bench",
+            "type": "string"
+          },
+          {
+            "name": "location",
+            "resource": "bench",
+            "type": "string"
+          },
+          {
+            "name": "door",
+            "resource": "bench",
+            "type": "string"
+          },
+          {
+            "name": "transfers",
+            "resource": "bench",
+            "type": "integer"
+          },
+          {
+            "name": "moves",
+            "resource": "bench",
+            "type": "integer"
+          },
+          {
+            "name": "mode",
+            "resource": "bench",
+            "type": "string"
+          }
+        ],
+        "openmhs": "0.9",
+        "overlay": null,
+        "provenance": {
+          "catalogue_digest": "sha256:c114376cd58d3ae5c4454dd0ba9b67563b958c195bf1e75c3b8373cd23ab1d0c",
+          "generated_by": "mhs.reference_file",
+          "manifest_digest": "sha256:988011810cf65aeef147f98a0aea38cd1a54b82115eb6fa5867a939a3df3ce48",
+          "sdk_version": "0.9.0.dev0"
+        },
+        "safety": {
+          "estop": {
+            "kind": "software",
+            "latching": true,
+            "latency_ms": 50,
+            "native": "SampleMoverBridge.estop"
+          },
+          "interlocks": [
+            {
+              "description": "Bench safety door is closed",
+              "id": "door_closed",
+              "required_for": [
+                "cap.sample.*"
+              ],
+              "source": "simulated"
+            }
+          ],
+          "not_certified": true,
+          "operator_required": [],
+          "safe_state": {
+            "achieved_by": [
+              "cap.motion.stop.v1"
+            ],
+            "description": "Plate held still at a declared bench location"
+          }
+        },
+        "tags": [
+          "sample mover",
+          "plate transfer",
+          "laboratory automation",
+          "orchestration"
+        ]
+      },
+      "resources": [
+        {
+          "kind": "lab.labware",
+          "resource_id": "bench",
+          "revision": 0,
+          "sampling": {
+            "mode": "on_change"
+          },
+          "state": {
+            "door": "closed",
+            "location": "liquid_handler",
+            "mode": "idle",
+            "moves": 0,
+            "plate_id": "plate-001",
+            "transfers": 0
+          },
+          "state_schema": {
+            "properties": {
+              "door": {
+                "enum": [
+                  "closed",
+                  "open"
+                ],
+                "type": "string"
+              },
+              "location": {
+                "enum": [
+                  "liquid_handler",
+                  "reader",
+                  "output"
+                ],
+                "type": "string"
+              },
+              "mode": {
+                "type": "string"
+              },
+              "moves": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "plate_id": {
+                "type": "string"
+              },
+              "transfers": {
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "plate_id",
+              "location",
+              "door"
+            ],
+            "type": "object"
+          },
+          "title": "Shared bench state"
+        }
+      ],
+      "safety": {
+        "estop": {
+          "kind": "software",
+          "latching": true,
+          "latency_ms": 50,
+          "reset": "mhs.safety.reset"
+        },
+        "interlocks": [
+          {
+            "description": "Bench safety door is closed",
+            "id": "door_closed",
+            "required_for": [
+              "cap.sample.*"
+            ],
+            "source": "simulated"
+          }
+        ],
+        "risk_class": "R1",
+        "safe_state": {
+          "achieved_by": [
+            "cap.motion.stop.v1"
+          ],
+          "description": "Plate held still at a declared bench location"
+        }
+      },
+      "vendor": {
+        "name": "OpenMHS reference fixture"
+      }
+    },
+    {
+      "capabilities": [
+        {
+          "capability_id": "cap.motion.joint_position.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "exclusive",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "exclusive": true,
+          "input_schema": {
+            "properties": {
+              "joint_positions_deg": {
+                "default": [
+                  0,
+                  0
+                ],
+                "items": {
+                  "maximum": 135,
+                  "minimum": -135,
+                  "type": "number",
+                  "x-mhs-unit": "deg"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array",
+                "x-mhs-unit": "deg"
+              }
+            },
+            "required": [
+              "joint_positions_deg"
+            ],
+            "type": "object"
+          },
+          "limits": {
+            "joint_positions_deg": {
+              "max": 135,
+              "min": -135,
+              "reason": "joint travel limits",
+              "unit": "deg"
+            }
+          },
+          "native": "Arm2DOF::move_joints(joint_positions_deg)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "arm",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "motion.joint"
+            ],
+            "hazards": [
+              "collision",
+              "joint limit violation"
+            ],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [
+              "estop released",
+              "arm not latched"
+            ],
+            "summary": "Move both joints to an absolute joint-space target (degrees); bounds are enforced as a safety envelope.",
+            "tags": [
+              "robot arm",
+              "joint motion",
+              "2-dof",
+              "kinematics",
+              "deterministic simulation"
+            ],
+            "units": {
+              "joint_positions_deg": "deg"
+            }
+          },
+          "title": "Move the arm to a joint-space target",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {
+              "joint_positions": {
+                "reason": "joint travel limits are declared per binding"
+              },
+              "joint_positions_deg": {
+                "max": 135,
+                "min": -135,
+                "reason": "joint travel limits",
+                "unit": "deg"
+              }
+            },
+            "unlimited": [
+              "joint_positions",
+              "duration_s"
+            ]
+          }
+        },
+        {
+          "capability_id": "cap.motion.cartesian_pose.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "exclusive",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "exclusive": true,
+          "input_schema": {
+            "properties": {
+              "elbow": {
+                "default": "down",
+                "enum": [
+                  "down",
+                  "up"
+                ],
+                "type": "string"
+              },
+              "x_mm": {
+                "default": 300,
+                "type": "number",
+                "x-mhs-unit": "mm"
+              },
+              "y_mm": {
+                "default": 0,
+                "type": "number",
+                "x-mhs-unit": "mm"
+              }
+            },
+            "required": [
+              "x_mm",
+              "y_mm"
+            ],
+            "type": "object"
+          },
+          "limits": {
+            "x_mm": {
+              "max": 450,
+              "min": -450,
+              "reason": "workspace",
+              "unit": "mm"
+            },
+            "y_mm": {
+              "max": 450,
+              "min": -450,
+              "reason": "workspace",
+              "unit": "mm"
+            }
+          },
+          "native": "Arm2DOF::move_cartesian(x_mm, y_mm, elbow)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "arm",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "motion.cartesian"
+            ],
+            "hazards": [
+              "collision",
+              "unreachable target"
+            ],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [
+              "target inside the 2-link workspace",
+              "estop released",
+              "arm not latched"
+            ],
+            "summary": "Move the end effector to a planar cartesian target using closed-form inverse kinematics.",
+            "tags": [
+              "robot arm",
+              "cartesian motion",
+              "inverse kinematics",
+              "2-dof"
+            ],
+            "units": {
+              "x_mm": "mm",
+              "y_mm": "mm"
+            }
+          },
+          "title": "Move the end effector to a cartesian pose",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {
+              "position": {
+                "reason": "workspace bounds are declared per binding"
+              },
+              "x_mm": {
+                "max": 450,
+                "min": -450,
+                "reason": "workspace",
+                "unit": "mm"
+              },
+              "y_mm": {
+                "max": 450,
+                "min": -450,
+                "reason": "workspace",
+                "unit": "mm"
+              }
+            },
+            "unlimited": [
+              "position.x",
+              "position.y",
+              "position.z",
+              "orientation.roll",
+              "orientation.pitch",
+              "orientation.yaw",
+              "duration_s"
+            ]
+          }
+        },
+        {
+          "capability_id": "cap.motion.home.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "exclusive",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "exclusive": true,
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "native": "Arm2DOF::home()",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "arm",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "motion.home"
+            ],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [
+              "estop released",
+              "arm not latched"
+            ],
+            "summary": "Move the arm to the declared home pose (both joints at zero).",
+            "tags": [
+              "robot arm",
+              "home",
+              "motion"
+            ],
+            "units": {}
+          },
+          "title": "Return the arm to its home pose",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {},
+            "unlimited": [
+              "speed_scale"
+            ]
+          }
+        },
+        {
+          "capability_id": "cap.motion.stop.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "shared",
+            "max_duration_ms": 1000
+          },
+          "determinism": "exact",
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "native": "Arm2DOF::stop()",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "arm",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [
+              "motion.stop"
+            ],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [
+              "arm stationary"
+            ],
+            "preconditions": [],
+            "summary": "Stop the arm at its current pose (declared safe state); no motion follows.",
+            "tags": [
+              "robot arm",
+              "stop",
+              "safe state",
+              "motion"
+            ],
+            "units": {}
+          },
+          "title": "Stop the arm in its safe state",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {},
+            "unlimited": [
+              "deceleration"
+            ]
+          }
+        },
+        {
+          "capability_id": "cap.world.state.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "shared",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "native": "Arm2DOF::state()",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "arm",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [],
+            "summary": "Read joint positions, end-effector pose, mode and determinism counters.",
+            "tags": [
+              "robot arm",
+              "state",
+              "observation"
+            ],
+            "units": {}
+          },
+          "title": "Read the arm state",
+          "verb": "read",
+          "x-mhs-effective-limits": {
+            "limits": {}
+          }
+        },
+        {
+          "capability_id": "cap.world.snapshot.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "shared",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "native": "Arm2DOF::snapshot()",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "arm",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [],
+            "summary": "Snapshot the exact integer joint/pose state for deterministic restore.",
+            "tags": [
+              "robot arm",
+              "snapshot",
+              "determinism",
+              "replay"
+            ],
+            "units": {}
+          },
+          "title": "Take a deterministic arm snapshot",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {}
+          }
+        },
+        {
+          "capability_id": "cap.world.restore.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "exclusive",
+            "max_duration_ms": 5000
+          },
+          "determinism": "exact",
+          "exclusive": true,
+          "input_schema": {
+            "properties": {
+              "snapshot": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "snapshot"
+            ],
+            "type": "object"
+          },
+          "native": "Arm2DOF::restore(snapshot)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "arm",
+          "semantics": {
+            "determinism": "exact",
+            "effects": [],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [],
+            "summary": "Restore a previously taken arm snapshot; simulated/replay only.",
+            "tags": [
+              "robot arm",
+              "restore",
+              "determinism",
+              "replay"
+            ],
+            "units": {}
+          },
+          "title": "Restore a deterministic arm snapshot",
+          "verb": "invoke",
+          "x-mhs-effective-limits": {
+            "limits": {}
+          }
+        },
+        {
+          "capability_id": "cap.world.seed.v1",
+          "constraints": {
+            "cancellable": false,
+            "concurrency": "shared",
+            "max_duration_ms": 1000
+          },
+          "determinism": "seeded",
+          "input_schema": {
+            "properties": {
+              "seed": {
+                "maximum": 4294967295,
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "seed"
+            ],
+            "type": "object"
+          },
+          "native": "Arm2DOF::seed(seed)",
+          "output_schema": {
+            "type": "object"
+          },
+          "resource": "arm",
+          "semantics": {
+            "determinism": "seeded",
+            "effects": [],
+            "hazards": [],
+            "notes": "",
+            "postconditions": [],
+            "preconditions": [],
+            "summary": "Set the xorshift32 seed used by the seeded-noise pose perturbation; receipts echo the seed.",
+            "tags": [
+              "robot arm",
+              "seed",
+              "determinism",
+              "seeded noise"
+            ],
+            "units": {}
+          },
+          "title": "Seed the deterministic noise source",
+          "verb": "write",
+          "x-mhs-effective-limits": {
+            "limits": {},
+            "unlimited": [
+              "seed"
+            ]
+          }
+        }
+      ],
+      "conformance": {
+        "issued_at": "2026-10-22T15:57:37.490Z",
+        "issuer_kind": "self",
+        "level": "CL4",
+        "profile": "MHS-Sim",
+        "report_digest": "sha256:c0b5749b3a04ec84e99653f99b52fa4375abf53bbd705e3f3e8656717ce5ee25",
+        "suite_version": "1.3.0"
+      },
+      "device_id": "mhs://localhost:7400/robot/arm-2dof",
+      "display_name": "2-DOF planar arm (simulated)",
+      "endpoint_id": "arm",
+      "fidelity": {
+        "determinism": {
+          "kind": "exact",
+          "notes": "Deterministic Python model; integer/fixed-point normative state, no wall-clock pacing.",
+          "seed_control": "none"
+        },
+        "engine": "analytic",
+        "fidelity_level": "F0",
+        "gaps": [
+          "Planar 2-DOF rigid-link kinematics only: no dynamics, inertia, gravity or contact",
+          "Cartesian targets that need an elbow flip may be rejected by joint limits"
+        ],
+        "realtime_factor": 0,
+        "reset": "full",
+        "snapshot_restore": true,
+        "timestep_ms": 0
+      },
+      "instance_id": "01J8ZQ3V6Y7M2N4P6R8S0T2V53",
+      "mhs_version": "1.0",
+      "mode": "simulated",
+      "model": "planar-arm-2dof-sim",
+      "profile": {
+        "operating_notes": [
+          "Normative state is integer millidegrees and micrometres; no floating point is stored.",
+          "With --noise, cap.world.seed.v1 selects a deterministic pose perturbation sequence.",
+          "Snapshot/restore reproduces the exact joint, pose and PRNG state."
+        ],
+        "summary": "Analytic two-link planar arm with integer fixed-point kinematics and exact or seeded deterministic replay.",
+        "tags": [
+          "robot arm",
+          "planar",
+          "2-dof",
+          "kinematics",
+          "deterministic simulation"
+        ],
+        "title": "2-DOF planar arm"
+      },
+      "provenance": {
+        "adapter_id": "openmhs:reference.arm-2dof",
+        "evidence": [
+          "MHS/sdk/src/mhs/reference/arm.py"
+        ],
+        "generated_by": "mhs.reference (protocol fixture, not a driver template)"
+      },
+      "reference": {
+        "$schema": "https://openmhs.invalid/schema/0.9/reference.schema.json",
+        "actions": [
+          {
+            "cancellable": false,
+            "cap_id": "cap.motion.joint_position.v1",
+            "description": "Command one or more actuated joints to target positions in joint space, optionally over a declared duration, and report whether the target was reached within tolerance.",
+            "inputs": [
+              {
+                "default": [
+                  0,
+                  0
+                ],
+                "items_type": "number",
+                "length": 2,
+                "limit": {
+                  "max": 135,
+                  "min": -135,
+                  "reason": "joint travel limits",
+                  "unit": "deg"
+                },
+                "name": "joint_positions_deg",
+                "required": true,
+                "type": "array",
+                "unit": "deg"
+              },
+              {
+                "items_type": "number",
+                "name": "joint_positions",
+                "required": false,
+                "type": "array",
+                "unit": "rad"
+              },
+              {
+                "name": "duration_s",
+                "required": false,
+                "type": "number",
+                "unit": "s"
+              },
+              {
+                "name": "block",
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "long_running": false,
+            "name": "motion.joint_position",
+            "outputs": [
+              {
+                "name": "reached",
+                "required": true,
+                "type": "boolean"
+              },
+              {
+                "items_type": "number",
+                "name": "joint_positions",
+                "required": true,
+                "type": "array",
+                "unit": "rad"
+              },
+              {
+                "name": "tolerance_rad",
+                "required": false,
+                "type": "number",
+                "unit": "rad"
+              },
+              {
+                "name": "duration_ms",
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "arm",
+            "risk": "R1",
+            "status": "stable",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "cap.motion.cartesian_pose.v1",
+            "description": "Move the tool centre point to a Cartesian position and orientation in a named frame. The endpoint solves inverse kinematics; an unreachable target is rejected before motion.",
+            "inputs": [
+              {
+                "default": 300,
+                "limit": {
+                  "max": 450,
+                  "min": -450,
+                  "reason": "workspace",
+                  "unit": "mm"
+                },
+                "name": "x_mm",
+                "required": true,
+                "type": "number",
+                "unit": "mm"
+              },
+              {
+                "default": 0,
+                "limit": {
+                  "max": 450,
+                  "min": -450,
+                  "reason": "workspace",
+                  "unit": "mm"
+                },
+                "name": "y_mm",
+                "required": true,
+                "type": "number",
+                "unit": "mm"
+              },
+              {
+                "default": "down",
+                "enum": [
+                  "down",
+                  "up"
+                ],
+                "name": "elbow",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "position",
+                "required": false,
+                "type": "object"
+              },
+              {
+                "name": "position.x",
+                "required": false,
+                "type": "number",
+                "unit": "mm"
+              },
+              {
+                "name": "position.y",
+                "required": false,
+                "type": "number",
+                "unit": "mm"
+              },
+              {
+                "name": "position.z",
+                "required": false,
+                "type": "number",
+                "unit": "mm"
+              },
+              {
+                "name": "orientation",
+                "required": false,
+                "type": "object"
+              },
+              {
+                "name": "orientation.roll",
+                "required": false,
+                "type": "number",
+                "unit": "rad"
+              },
+              {
+                "name": "orientation.pitch",
+                "required": false,
+                "type": "number",
+                "unit": "rad"
+              },
+              {
+                "name": "orientation.yaw",
+                "required": false,
+                "type": "number",
+                "unit": "rad"
+              },
+              {
+                "enum": [
+                  "base",
+                  "tool"
+                ],
+                "name": "frame",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "duration_s",
+                "required": false,
+                "type": "number",
+                "unit": "s"
+              }
+            ],
+            "long_running": false,
+            "name": "motion.cartesian_pose",
+            "outputs": [
+              {
+                "name": "reached",
+                "required": true,
+                "type": "boolean"
+              },
+              {
+                "name": "position",
+                "required": false,
+                "type": "object"
+              },
+              {
+                "name": "position.x",
+                "required": false,
+                "type": "number",
+                "unit": "mm"
+              },
+              {
+                "name": "position.y",
+                "required": false,
+                "type": "number",
+                "unit": "mm"
+              },
+              {
+                "name": "position.z",
+                "required": false,
+                "type": "number",
+                "unit": "mm"
+              },
+              {
+                "name": "tolerance_mm",
+                "required": false,
+                "type": "number",
+                "unit": "mm"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "arm",
+            "risk": "R1",
+            "status": "stable",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "cap.motion.home.v1",
+            "description": "Drive axes to their declared home position or reference switch, establishing the coordinate reference needed by other motion capabilities.",
+            "examples": [
+              {
+                "axes": [
+                  "x",
+                  "y"
+                ],
+                "speed_scale": 0.5
+              }
+            ],
+            "inputs": [
+              {
+                "items_type": "string",
+                "name": "axes",
+                "required": false,
+                "type": "array"
+              },
+              {
+                "name": "speed_scale",
+                "required": false,
+                "type": "number",
+                "unit": "1"
+              }
+            ],
+            "long_running": false,
+            "name": "motion.home",
+            "outputs": [
+              {
+                "name": "homed",
+                "required": true,
+                "type": "boolean"
+              },
+              {
+                "items_type": "number",
+                "name": "joint_positions",
+                "required": false,
+                "type": "array",
+                "unit": "rad"
+              },
+              {
+                "items_type": "string",
+                "name": "axes",
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "arm",
+            "risk": "R1",
+            "status": "experimental",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "cap.motion.stop.v1",
+            "description": "Stop all motion on the resource with a declared deceleration profile and report the stopping position. This capability is always cancellable=false and is exempt from rate limiting.",
+            "examples": [
+              {
+                "deceleration": 2.0
+              }
+            ],
+            "inputs": [
+              {
+                "name": "deceleration",
+                "required": false,
+                "type": "number",
+                "unit": "m/s2"
+              }
+            ],
+            "long_running": false,
+            "name": "motion.stop",
+            "outputs": [
+              {
+                "name": "stopped",
+                "required": true,
+                "type": "boolean"
+              },
+              {
+                "name": "stopped_at",
+                "required": false,
+                "type": "string"
+              },
+              {
+                "name": "stopped_position",
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "arm",
+            "risk": "R1",
+            "status": "stable",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "cap.world.snapshot.v1",
+            "description": "Capture a restorable snapshot of the complete world state, including the revision and state hash, for deterministic restore later.",
+            "examples": [
+              {}
+            ],
+            "inputs": [],
+            "long_running": false,
+            "name": "world.snapshot",
+            "outputs": [
+              {
+                "name": "snapshot",
+                "required": true,
+                "type": "object"
+              },
+              {
+                "name": "snapshot_digest",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "revision",
+                "required": true,
+                "type": "integer"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "arm",
+            "risk": "R1",
+            "status": "deprecated",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "cap.world.restore.v1",
+            "description": "Restore the world to a previously captured snapshot, replacing the current state; the device revision advances and the state hash MUST equal the snapshot's.",
+            "inputs": [
+              {
+                "name": "snapshot",
+                "required": true,
+                "type": "object"
+              }
+            ],
+            "long_running": false,
+            "name": "world.restore",
+            "outputs": [
+              {
+                "name": "revision",
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "name": "state_hash",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "arm",
+            "risk": "R1",
+            "status": "deprecated",
+            "verb": "invoke"
+          },
+          {
+            "cancellable": false,
+            "cap_id": "cap.world.seed.v1",
+            "description": "Set the seed used by the simulated world's random number generators for subsequent steps, without resetting the world. The accepted seed is echoed in the receipt.",
+            "inputs": [
+              {
+                "name": "seed",
+                "required": true,
+                "type": "integer"
+              }
+            ],
+            "long_running": false,
+            "name": "world.seed",
+            "outputs": [
+              {
+                "name": "seed",
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "name": "accepted",
+                "required": true,
+                "type": "boolean"
+              }
+            ],
+            "requires_permit": false,
+            "resource": "arm",
+            "risk": "R1",
+            "status": "stable",
+            "verb": "write"
+          }
+        ],
+        "adjusts": [],
+        "device": {
+          "id": "mhs://localhost:7400/robot/arm-2dof",
+          "kind": "robot.arm",
+          "mode": "simulated",
+          "model": "planar-arm-2dof-sim",
+          "name": "2-DOF planar arm (simulated)",
+          "risk": "R1",
+          "vendor": "OpenMHS reference fixture"
+        },
+        "facts": [],
+        "fidelity": {
+          "determinism": {
+            "kind": "exact",
+            "notes": "Deterministic Python model; integer/fixed-point normative state, no wall-clock pacing.",
+            "seed_control": "none"
+          },
+          "engine": "analytic",
+          "fidelity_level": "F0",
+          "gaps": [
+            "Planar 2-DOF rigid-link kinematics only: no dynamics, inertia, gravity or contact",
+            "Cartesian targets that need an elbow flip may be rejected by joint limits"
+          ],
+          "realtime_factor": 0,
+          "reset": "full",
+          "snapshot_restore": true,
+          "timestep_ms": 0
+        },
+        "measures": [
+          {
+            "items_type": "integer",
+            "length": 2,
+            "name": "joint_mdeg",
+            "resource": "arm",
+            "type": "array",
+            "unit": "mdeg"
+          },
+          {
+            "items_type": "number",
+            "length": 2,
+            "name": "joint_deg",
+            "resource": "arm",
+            "type": "array",
+            "unit": "deg"
+          },
+          {
+            "items_type": "integer",
+            "length": 2,
+            "name": "pose_um",
+            "resource": "arm",
+            "type": "array",
+            "unit": "um"
+          },
+          {
+            "items_type": "number",
+            "length": 2,
+            "name": "pose_mm",
+            "resource": "arm",
+            "type": "array",
+            "unit": "mm"
+          },
+          {
+            "name": "mode",
+            "resource": "arm",
+            "type": "string"
+          },
+          {
+            "name": "estop",
+            "resource": "arm",
+            "type": "string"
+          },
+          {
+            "name": "latched",
+            "resource": "arm",
+            "type": "boolean"
+          },
+          {
+            "name": "moves",
+            "resource": "arm",
+            "type": "integer"
+          },
+          {
+            "name": "seed",
+            "resource": "arm",
+            "type": "integer"
+          },
+          {
+            "name": "noise_enabled",
+            "resource": "arm",
+            "type": "boolean"
+          },
+          {
+            "items_type": "integer",
+            "length": 2,
+            "name": "noise_delta_um",
+            "resource": "arm",
+            "type": "array"
+          },
+          {
+            "name": "rng_state",
+            "resource": "arm",
+            "type": "integer"
+          },
+          {
+            "cap_id": "cap.world.state.v1",
+            "description": "Return the complete normative state of a simulated world together with its revision and canonical state hash.",
+            "inputs": [
+              {
+                "items_type": "string",
+                "name": "fields",
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "name": "world.state",
+            "resource": "arm",
+            "type": "object"
+          }
+        ],
+        "openmhs": "0.9",
+        "overlay": null,
+        "provenance": {
+          "catalogue_digest": "sha256:c114376cd58d3ae5c4454dd0ba9b67563b958c195bf1e75c3b8373cd23ab1d0c",
+          "generated_by": "mhs.reference_file",
+          "manifest_digest": "sha256:b895157189cd9b92cfb1ac5040ff1e38b8093d93f7278425a674c33cc51d4eb4",
+          "sdk_version": "0.9.0.dev0"
+        },
+        "safety": {
+          "estop": {
+            "kind": "software",
+            "latching": true,
+            "latency_ms": 50,
+            "native": "ArmBridge.estop",
+            "physical_ref": "No physical e-stop exists on a simulated arm; MHS never replaces one."
+          },
+          "interlocks": [],
+          "not_certified": true,
+          "operator_required": [],
+          "safe_state": {
+            "achieved_by": [
+              "cap.motion.stop.v1"
+            ],
+            "description": "Arm stationary at its current pose; no further motion"
+          }
+        },
+        "tags": [
+          "robot arm",
+          "planar",
+          "2-dof",
+          "kinematics",
+          "deterministic simulation"
+        ]
+      },
+      "resources": [
+        {
+          "kind": "robot.arm",
+          "resource_id": "arm",
+          "revision": 0,
+          "sampling": {
+            "mode": "on_change"
+          },
+          "state": {
+            "estop": "released",
+            "joint_deg": [
+              0.0,
+              0.0
+            ],
+            "joint_mdeg": [
+              0,
+              0
+            ],
+            "latched": false,
+            "mode": "idle",
+            "moves": 0,
+            "noise_delta_um": [
+              0,
+              0
+            ],
+            "noise_enabled": false,
+            "pose_mm": [
+              450.0,
+              0.0
+            ],
+            "pose_um": [
+              450000,
+              0
+            ],
+            "rng_state": 305419896,
+            "seed": 0
+          },
+          "state_schema": {
+            "properties": {
+              "estop": {
+                "enum": [
+                  "released",
+                  "engaged"
+                ],
+                "type": "string"
+              },
+              "joint_deg": {
+                "items": {
+                  "type": "number",
+                  "x-mhs-unit": "deg"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "joint_mdeg": {
+                "items": {
+                  "type": "integer",
+                  "x-mhs-unit": "mdeg"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "latched": {
+                "type": "boolean"
+              },
+              "mode": {
+                "enum": [
+                  "idle",
+                  "moving",
+                  "homed",
+                  "stopped"
+                ],
+                "type": "string"
+              },
+              "moves": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "noise_delta_um": {
+                "items": {
+                  "type": "integer"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "noise_enabled": {
+                "type": "boolean"
+              },
+              "pose_mm": {
+                "items": {
+                  "type": "number",
+                  "x-mhs-unit": "mm"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "pose_um": {
+                "items": {
+                  "type": "integer",
+                  "x-mhs-unit": "um"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "rng_state": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "seed": {
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "joint_mdeg",
+              "pose_um",
+              "mode"
+            ],
+            "type": "object"
+          },
+          "title": "Planar arm state"
+        }
+      ],
+      "safety": {
+        "envelope": {
+          "cap.motion.cartesian_pose.v1": {
+            "x_mm": {
+              "max": 450,
+              "min": -450,
+              "reason": "2-link workspace",
+              "unit": "mm"
+            },
+            "y_mm": {
+              "max": 450,
+              "min": -450,
+              "reason": "2-link workspace",
+              "unit": "mm"
+            }
+          },
+          "cap.motion.joint_position.v1": {
+            "joint_positions_deg": {
+              "max": 135,
+              "min": -135,
+              "reason": "joint travel limits",
+              "unit": "deg"
+            }
+          }
+        },
+        "estop": {
+          "kind": "software",
+          "latching": true,
+          "latency_ms": 50,
+          "physical_ref": "No physical e-stop exists on a simulated arm; MHS never replaces one.",
+          "reset": "mhs.safety.reset"
+        },
+        "interlocks": [],
+        "risk_class": "R1",
+        "safe_state": {
+          "achieved_by": [
+            "cap.motion.stop.v1"
+          ],
+          "description": "Arm stationary at its current pose; no further motion"
+        }
+      },
+      "vendor": {
+        "name": "OpenMHS reference fixture"
+      }
+    }
+  ],
+  "endpoints": [
+    {
+      "id": "conveyor",
+      "label": "conveyor workcell (stdio, host-managed)",
+      "ready": null,
+      "target": "python3 -m mhs.reference conveyor --stdio --test-profile --quiet",
+      "transport": "stdio"
+    },
+    {
+      "id": "lab",
+      "label": "lab bench (HTTP)",
+      "ready": {
+        "devices": [
+          {
+            "capabilities": [
+              "cap.fluid.aspirate.v1",
+              "cap.fluid.dispense.v1",
+              "cap.fluid.transfer.v1",
+              "cap.fluid.level.v1",
+              "cap.motion.stop.v1"
+            ],
+            "device_id": "mhs://localhost:62336/lab/liquid-handler",
+            "mode": "simulated"
+          },
+          {
+            "capabilities": [
+              "cap.measure.spectrum.v1"
+            ],
+            "device_id": "mhs://localhost:62336/lab/plate-reader",
+            "mode": "simulated"
+          },
+          {
+            "capabilities": [
+              "cap.sample.move.v1",
+              "cap.motion.stop.v1"
+            ],
+            "device_id": "mhs://localhost:62336/lab/sample-mover",
+            "mode": "simulated"
+          }
+        ],
+        "endpoint_id": "mhs://localhost:62336",
+        "mhs_ready": true,
+        "name": "lab",
+        "profile": "MHS-Sim",
+        "test_profile": false,
+        "transport": "http",
+        "url": "http://127.0.0.1:62336"
+      },
+      "target": "http://127.0.0.1:62336",
+      "transport": "http"
+    },
+    {
+      "id": "arm",
+      "label": "2-DOF arm (HTTP)",
+      "ready": {
+        "devices": [
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.cartesian_pose.v1",
+              "cap.motion.home.v1",
+              "cap.motion.stop.v1",
+              "cap.world.state.v1",
+              "cap.world.snapshot.v1",
+              "cap.world.restore.v1",
+              "cap.world.seed.v1"
+            ],
+            "device_id": "mhs://localhost:7400/robot/arm-2dof",
+            "mode": "simulated"
+          }
+        ],
+        "endpoint_id": "mhs://localhost:7400",
+        "mhs_ready": true,
+        "name": "arm",
+        "profile": "MHS-Sim",
+        "test_profile": false,
+        "transport": "http",
+        "url": "http://127.0.0.1:7400"
+      },
+      "target": "http://127.0.0.1:7400",
+      "transport": "http"
+    }
+  ],
+  "evidence": {
+    "endpoints": {
+      "arm": {
+        "checked": 1,
+        "count": 1,
+        "errors": [],
+        "head_digest": "sha256:9bf753d2fd06b646a1aa4c0829d4d136a127fe0fd271886689cbbf29960b6da9",
+        "valid": true
+      },
+      "conveyor": {
+        "checked": 10,
+        "count": 10,
+        "errors": [],
+        "head_digest": "sha256:dc6496134944fc1ec8d7a6c4396aa1ebb247e7cc2c1eeec067b80b8505c62caf",
+        "valid": true
+      },
+      "lab": {
+        "checked": 3,
+        "count": 3,
+        "errors": [],
+        "head_digest": "sha256:3c93d340afaf6c218828f6416bf31ae59f098fe100c1ec43bd355ab440640da7",
+        "valid": true
+      }
+    },
+    "valid": true
+  },
+  "evidence_head_digest": "sha256:3c93d340afaf6c218828f6416bf31ae59f098fe100c1ec43bd355ab440640da7",
+  "finished_at": "2026-10-22T20:03:09Z",
+  "mcp": {
+    "endpoint": "http://127.0.0.1:62336",
+    "native_command_id": "01M5JKBN9CAHDARE1NR948NCCX",
+    "ok": true,
+    "reconciled_by": "command_id"
+  },
+  "mcp_integration": {
+    "connector_ids": [
+      "mhs-conveyor",
+      "mhs-lab",
+      "mhs-arm"
+    ],
+    "default_enabled": false,
+    "experimental": true,
+    "kind": "mcp",
+    "transport": "mcp"
+  },
+  "ok": true,
+  "project": "OpenMHS (independent draft; not affiliated with or endorsed by Anthropic)",
+  "python": "3.14.7",
+  "receipts": [
+    {
+      "capability_id": "cap.fluid.transfer.v1",
+      "command_id": "01M5JKBN9CAHDARE1NR948NCCX",
+      "device_id": "mhs://localhost:62336/lab/liquid-handler",
+      "endpoint_id": "lab",
+      "evidence_digest": "sha256:c16d4cfb59c30fc2579666d02c469ab5a5f94082bbf2dcdad2b85b3ea70304a9",
+      "mhs_code": null,
+      "mode": "simulated",
+      "receipt_id": "01M5JKBN9F5XSGWY8MXRW7QCH5",
+      "replayed": false,
+      "state_hash_after": "sha256:152111cd650a928562ddbe65ac13e39017a505e8986a102055f1496f09cabf01",
+      "status": "completed"
+    },
+    {
+      "capability_id": "cap.sample.move.v1",
+      "command_id": "01M5JKBN9GWXC0BWS83NP6H7WK",
+      "device_id": "mhs://localhost:62336/lab/sample-mover",
+      "endpoint_id": "lab",
+      "evidence_digest": "sha256:e28f333c96090d43814bca02146ebebbbe49434c6fef606d5709a8244111b2b3",
+      "mhs_code": null,
+      "mode": "simulated",
+      "receipt_id": "01M5JKBN9HACBBD6HKAYM1GCDK",
+      "replayed": false,
+      "state_hash_after": "sha256:ce9e606af47da2ba2504d3f12a5a9e991bf624fc44251d6786d382cbe5cec3d9",
+      "status": "completed"
+    },
+    {
+      "capability_id": "cap.measure.spectrum.v1",
+      "command_id": "01M5JKBN9JCG6EE8D5G66K9RXH",
+      "device_id": "mhs://localhost:62336/lab/plate-reader",
+      "endpoint_id": "lab",
+      "evidence_digest": "sha256:3c93d340afaf6c218828f6416bf31ae59f098fe100c1ec43bd355ab440640da7",
+      "mhs_code": null,
+      "mode": "simulated",
+      "receipt_id": "01M5JKBN9KQX71J3ZAY54EPV8D",
+      "replayed": false,
+      "state_hash_after": "sha256:6efe7c5fd1cb9a0a7439c9b7a482d3abb2622dbd8eb4382f8c2c4e26172fd065",
+      "status": "completed"
+    },
+    {
+      "capability_id": "cap.world.step.v1",
+      "command_id": "01M5JKBN9KWRGXQVS704P0M1KM",
+      "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+      "endpoint_id": "conveyor",
+      "evidence_digest": "sha256:7d9787ef79d3c85a4a4c4b6650100dc5d836fe7ee731a6ea2456397b2ab969c2",
+      "mhs_code": null,
+      "mode": "simulated",
+      "receipt_id": "01M5JKBN9NDATHYXC4G69E20P2",
+      "replayed": false,
+      "state_hash_after": "sha256:d4ce51ad21817e5c7722052d698a62b92c5de4c680a1c9aa8b4deec8b523bfbb",
+      "status": "completed"
+    },
+    {
+      "capability_id": "cap.actuation.valve.v1",
+      "command_id": "01M5JKBN9QMX1ZAFCCR0G1Z1VZ",
+      "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+      "endpoint_id": "conveyor",
+      "evidence_digest": "sha256:4efab6cac08a91d1f92e3d960d8609aabb791fca12cee72fb2a9490d066aad32",
+      "mhs_code": null,
+      "mode": "simulated",
+      "receipt_id": "01M5JKBN9RDA4PD0V55P3V6E79",
+      "replayed": false,
+      "state_hash_after": "sha256:aa2423d082f123c5da1c0ca01a06faef65ab54332869eb3e24bb8d7728bcf31f",
+      "status": "completed"
+    },
+    {
+      "capability_id": "cap.motion.joint_position.v1",
+      "command_id": "01M5JKBN9RV2FDR8YHFQ9QP4BG",
+      "device_id": "mhs://localhost:7400/robot/arm-2dof",
+      "endpoint_id": "arm",
+      "evidence_digest": "sha256:9bf753d2fd06b646a1aa4c0829d4d136a127fe0fd271886689cbbf29960b6da9",
+      "mhs_code": null,
+      "mode": "simulated",
+      "receipt_id": "01M5JKBN9TRVAYSCEQDEBQYVRW",
+      "replayed": false,
+      "state_hash_after": "sha256:6a5ac83fb3df15cdc3399adae96a62fe550e5b7d1d0cb4d2e371e138b50c191e",
+      "status": "completed"
+    },
+    {
+      "capability_id": "x-cap.mhs-test.fault_inject.v1",
+      "command_id": "01M5JKBN9V70GEBAM2QG9SVW7J",
+      "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+      "endpoint_id": "conveyor",
+      "evidence_digest": "sha256:50af8ade44822b3512284a7418a300975514a544fec94aeb331d84c14cdf6da0",
+      "mhs_code": null,
+      "mode": "simulated",
+      "receipt_id": "01M5JKBN9WNPY1HNVGWNCMJZSP",
+      "replayed": false,
+      "state_hash_after": "sha256:04d8e399d936c439bbff182396b3305b272beda8b1252b80a3d61d951e02cb3f",
+      "status": "completed"
+    },
+    {
+      "capability_id": "cap.world.step.v1",
+      "command_id": "01M5JKBN9WHT5WGJ5P0ENW6FEB",
+      "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+      "endpoint_id": "conveyor",
+      "evidence_digest": "sha256:8662d8e7656e917ad0fbf56affd58132a21e60194f3e182b767d71c8c8023bf5",
+      "mhs_code": "MHS.OUTCOME.UNKNOWN",
+      "mode": "simulated",
+      "receipt_id": "01M5JKBN9XV7EX7XTZH0TDWM9C",
+      "replayed": false,
+      "state_hash_after": "sha256:9964704eed8f3b844d4ca6ea2380a4295f82fe33c2e7e28af7e0db5052113267",
+      "status": "unknown"
+    },
+    {
+      "capability_id": "cap.device.estop.v1",
+      "command_id": "01M5JKBN9XV7EX7XTZH0TDWM9D",
+      "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+      "endpoint_id": "conveyor",
+      "evidence_digest": "sha256:86d429ff7664a637f5e81f213b6a1b87bbf2388ba926564175f28141776c37f3",
+      "mode": "simulated",
+      "receipt_id": "01M5JKBN9Y60TC042CSEVZCNMZ",
+      "state_hash_after": "sha256:74352b16fa303f42b76be951876edb32a8bbf127810a1aed34a25cfc66307caf",
+      "status": "completed"
+    },
+    {
+      "capability_id": "cap.world.step.v1",
+      "command_id": "01M5JKBN9Y51P3XM9X1RS094Z5",
+      "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+      "endpoint_id": "conveyor",
+      "evidence_digest": "sha256:4b6f0fd309a12b68056e434986384d26a564f3b10d2aa5a21f06cc83ff05be36",
+      "mhs_code": "MHS.SAFETY.ESTOP_ENGAGED",
+      "mode": "simulated",
+      "receipt_id": "01M5JKBN9Y60TC042CSEVZCNN0",
+      "replayed": false,
+      "state_hash_after": "sha256:74352b16fa303f42b76be951876edb32a8bbf127810a1aed34a25cfc66307caf",
+      "status": "rejected"
+    },
+    {
+      "capability_id": "cap.device.reset.v1",
+      "command_id": "01M5JKBN9Y60TC042CSEVZCNN1",
+      "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+      "endpoint_id": "conveyor",
+      "evidence_digest": "sha256:aaccf7481b69cc82eab8cf11b782c9c837f2f6ba2826248b12863669c8222c3f",
+      "mode": "simulated",
+      "receipt_id": "01M5JKBN9Y60TC042CSEVZCNN2",
+      "state_hash_after": "sha256:31672dfcfd1d83de7a42288e37a5cb2f8bbcc2e6ac3a4a02e2196daaf7ac3cc3",
+      "status": "completed"
+    },
+    {
+      "capability_id": "cap.world.step.v1",
+      "command_id": "01M5JKBN9Z1C749N9P1BWDDKD6",
+      "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+      "endpoint_id": "conveyor",
+      "evidence_digest": "sha256:dc6496134944fc1ec8d7a6c4396aa1ebb247e7cc2c1eeec067b80b8505c62caf",
+      "mhs_code": null,
+      "mode": "simulated",
+      "receipt_id": "01M5JKBN9ZWBM2YEFACRJY9NWM",
+      "replayed": false,
+      "state_hash_after": "sha256:49d76a860601c11bf5c3a9c163f1b5e71f386e591705073f912f35cda378d0b2",
+      "status": "completed"
+    }
+  ],
+  "repo_root": ".",
+  "route": "host operator route (mhs.mcp --operator-tools): the demo issues a permit and resets an e-stop",
+  "safety_rejection": {
+    "blocked_actuation": {
+      "kind": "receipt",
+      "mhs_code": "MHS.SAFETY.ESTOP_ENGAGED",
+      "receipt": true,
+      "status": "rejected"
+    },
+    "estop_receipt": {
+      "command_id": "01M5JKBN9XV7EX7XTZH0TDWM9D",
+      "evidence_digest": "sha256:86d429ff7664a637f5e81f213b6a1b87bbf2388ba926564175f28141776c37f3",
+      "receipt_id": "01M5JKBN9Y60TC042CSEVZCNMZ",
+      "status": "completed"
+    },
+    "recovered_after_reset": "completed"
+  },
+  "sdk": {
+    "available": true,
+    "import_path": "MHS/sdk/src",
+    "version": "0.9.0.dev0"
+  },
+  "sdk_gaps": [],
+  "started_at": "2026-10-22T20:03:08Z",
+  "state_reads": {
+    "arm": {
+      "estop": "released",
+      "joint_deg": [
+        0.0,
+        0.0
+      ],
+      "joint_mdeg": [
+        0,
+        0
+      ],
+      "latched": false,
+      "mode": "idle",
+      "moves": 0,
+      "noise_delta_um": [
+        0,
+        0
+      ],
+      "noise_enabled": false,
+      "pose_mm": [
+        450.0,
+        0.0
+      ],
+      "pose_um": [
+        450000,
+        0
+      ],
+      "rng_state": 305419896,
+      "seed": 0
+    },
+    "conveyor": {
+      "door": "closed",
+      "drive": "stopped",
+      "estop": "released",
+      "faults": [],
+      "gate": "main",
+      "latch_reason": null,
+      "latched": false,
+      "mono_ms": 0,
+      "part_seq": 0,
+      "parts": [],
+      "parts_delivered": 0,
+      "sensors": {
+        "diverter": "clear",
+        "infeed": "clear"
+      },
+      "tick": 0,
+      "velocity_mm_s": 0
+    },
+    "mover": {
+      "door": "closed",
+      "location": "liquid_handler",
+      "mode": "idle",
+      "moves": 0,
+      "plate_id": "plate-001",
+      "transfers": 0
+    },
+    "pipette": {
+      "cycles": 0,
+      "mode": "idle",
+      "tip_capacity_ul": 200,
+      "tip_loaded": true,
+      "tip_volume_ul": 0,
+      "tips_remaining": 7,
+      "tips_used": 0
+    },
+    "reader": {
+      "last_measurement": null,
+      "location": "liquid_handler",
+      "measurements": 0,
+      "plate_id": "plate-001"
+    }
+  },
+  "tool_calls": [
+    {
+      "arguments": {
+        "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell"
+      },
+      "kind": "read",
+      "ok": true,
+      "status": "completed",
+      "tool": "mhs_read"
+    },
+    {
+      "arguments": {
+        "device_id": "mhs://localhost:62336/lab/liquid-handler"
+      },
+      "kind": "read",
+      "ok": true,
+      "status": "completed",
+      "tool": "mhs_read"
+    },
+    {
+      "arguments": {
+        "device_id": "mhs://localhost:62336/lab/sample-mover"
+      },
+      "kind": "read",
+      "ok": true,
+      "status": "completed",
+      "tool": "mhs_read"
+    },
+    {
+      "arguments": {
+        "device_id": "mhs://localhost:62336/lab/plate-reader"
+      },
+      "kind": "read",
+      "ok": true,
+      "status": "completed",
+      "tool": "mhs_read"
+    },
+    {
+      "arguments": {
+        "device_id": "mhs://localhost:7400/robot/arm-2dof"
+      },
+      "kind": "read",
+      "ok": true,
+      "status": "completed",
+      "tool": "mhs_read"
+    },
+    {
+      "arguments": {
+        "capability_id": "cap.fluid.transfer.v1",
+        "device_id": "mhs://localhost:62336/lab/liquid-handler",
+        "endpoint_id": "lab",
+        "input": {
+          "destination_well": "B1",
+          "source_well": "A1",
+          "volume_ul": 25
+        }
+      },
+      "command_id": "01M5JKBN9CAHDARE1NR948NCCX",
+      "durability": null,
+      "duration_ms": 3,
+      "evidence_digest": "sha256:c16d4cfb59c30fc2579666d02c469ab5a5f94082bbf2dcdad2b85b3ea70304a9",
+      "kind": "receipt",
+      "mhs_code": null,
+      "ok": true,
+      "receipt_id": "01M5JKBN9F5XSGWY8MXRW7QCH5",
+      "status": "completed",
+      "tool": "mhs_command"
+    },
+    {
+      "arguments": {
+        "capability_id": "cap.sample.move.v1",
+        "device_id": "mhs://localhost:62336/lab/sample-mover",
+        "endpoint_id": "lab",
+        "input": {
+          "plate_id": "plate-001",
+          "to": "reader"
+        }
+      },
+      "command_id": "01M5JKBN9GWXC0BWS83NP6H7WK",
+      "durability": null,
+      "duration_ms": 1,
+      "evidence_digest": "sha256:e28f333c96090d43814bca02146ebebbbe49434c6fef606d5709a8244111b2b3",
+      "kind": "receipt",
+      "mhs_code": null,
+      "ok": true,
+      "receipt_id": "01M5JKBN9HACBBD6HKAYM1GCDK",
+      "status": "completed",
+      "tool": "mhs_command"
+    },
+    {
+      "arguments": {
+        "capability_id": "cap.measure.spectrum.v1",
+        "device_id": "mhs://localhost:62336/lab/plate-reader",
+        "endpoint_id": "lab",
+        "input": {
+          "plate_id": "plate-001",
+          "wavelengths_nm": [
+            600
+          ],
+          "well_ids": [
+            "B1"
+          ]
+        }
+      },
+      "command_id": "01M5JKBN9JCG6EE8D5G66K9RXH",
+      "durability": null,
+      "duration_ms": 1,
+      "evidence_digest": "sha256:3c93d340afaf6c218828f6416bf31ae59f098fe100c1ec43bd355ab440640da7",
+      "kind": "receipt",
+      "mhs_code": null,
+      "ok": true,
+      "receipt_id": "01M5JKBN9KQX71J3ZAY54EPV8D",
+      "status": "completed",
+      "tool": "mhs_command"
+    },
+    {
+      "arguments": {
+        "capability_id": "cap.world.step.v1",
+        "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+        "endpoint_id": "conveyor",
+        "input": {
+          "ticks": 10
+        }
+      },
+      "command_id": "01M5JKBN9KWRGXQVS704P0M1KM",
+      "durability": null,
+      "duration_ms": 2,
+      "evidence_digest": "sha256:7d9787ef79d3c85a4a4c4b6650100dc5d836fe7ee731a6ea2456397b2ab969c2",
+      "kind": "receipt",
+      "mhs_code": null,
+      "ok": true,
+      "receipt_id": "01M5JKBN9NDATHYXC4G69E20P2",
+      "status": "completed",
+      "tool": "mhs_command"
+    },
+    {
+      "arguments": {
+        "capability_id": "cap.actuation.valve.v1",
+        "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+        "endpoint_id": "conveyor",
+        "input": {
+          "gate": "divert"
+        }
+      },
+      "command_id": "01M5JKBN9QMX1ZAFCCR0G1Z1VZ",
+      "durability": null,
+      "duration_ms": 2,
+      "evidence_digest": "sha256:4efab6cac08a91d1f92e3d960d8609aabb791fca12cee72fb2a9490d066aad32",
+      "kind": "receipt",
+      "mhs_code": null,
+      "ok": true,
+      "receipt_id": "01M5JKBN9RDA4PD0V55P3V6E79",
+      "status": "completed",
+      "tool": "mhs_command"
+    },
+    {
+      "arguments": {
+        "capability_id": "cap.motion.joint_position.v1",
+        "device_id": "mhs://localhost:7400/robot/arm-2dof",
+        "endpoint_id": "arm",
+        "input": {
+          "joint_positions_deg": [
+            25,
+            40
+          ]
+        }
+      },
+      "command_id": "01M5JKBN9RV2FDR8YHFQ9QP4BG",
+      "durability": null,
+      "duration_ms": 2,
+      "evidence_digest": "sha256:9bf753d2fd06b646a1aa4c0829d4d136a127fe0fd271886689cbbf29960b6da9",
+      "kind": "receipt",
+      "mhs_code": null,
+      "ok": true,
+      "receipt_id": "01M5JKBN9TRVAYSCEQDEBQYVRW",
+      "status": "completed",
+      "tool": "mhs_command"
+    },
+    {
+      "arguments": {
+        "capability_id": "x-cap.mhs-test.fault_inject.v1",
+        "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+        "endpoint_id": "conveyor",
+        "input": {
+          "enabled": true,
+          "fault": "lost_receipt"
+        }
+      },
+      "command_id": "01M5JKBN9V70GEBAM2QG9SVW7J",
+      "durability": null,
+      "duration_ms": 1,
+      "evidence_digest": "sha256:50af8ade44822b3512284a7418a300975514a544fec94aeb331d84c14cdf6da0",
+      "kind": "receipt",
+      "mhs_code": null,
+      "ok": true,
+      "receipt_id": "01M5JKBN9WNPY1HNVGWNCMJZSP",
+      "status": "completed",
+      "tool": "mhs_command"
+    },
+    {
+      "arguments": {
+        "capability_id": "cap.world.step.v1",
+        "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+        "endpoint_id": "conveyor",
+        "input": {
+          "ticks": 1
+        }
+      },
+      "command_id": "01M5JKBN9WHT5WGJ5P0ENW6FEB",
+      "durability": null,
+      "duration_ms": 0,
+      "evidence_digest": "sha256:8662d8e7656e917ad0fbf56affd58132a21e60194f3e182b767d71c8c8023bf5",
+      "kind": "receipt",
+      "mhs_code": "MHS.OUTCOME.UNKNOWN",
+      "ok": true,
+      "receipt_id": "01M5JKBN9XV7EX7XTZH0TDWM9C",
+      "status": "unknown",
+      "tool": "mhs_command"
+    },
+    {
+      "arguments": {
+        "action": "estop",
+        "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell"
+      },
+      "command_id": "01M5JKBN9XV7EX7XTZH0TDWM9D",
+      "kind": "receipt",
+      "ok": true,
+      "receipt_id": "01M5JKBN9Y60TC042CSEVZCNMZ",
+      "status": "completed",
+      "tool": "mhs_safety"
+    },
+    {
+      "arguments": {
+        "capability_id": "cap.world.step.v1",
+        "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+        "endpoint_id": "conveyor",
+        "input": {
+          "ticks": 1
+        }
+      },
+      "command_id": "01M5JKBN9Y51P3XM9X1RS094Z5",
+      "durability": null,
+      "duration_ms": 0,
+      "evidence_digest": "sha256:4b6f0fd309a12b68056e434986384d26a564f3b10d2aa5a21f06cc83ff05be36",
+      "kind": "receipt",
+      "mhs_code": "MHS.SAFETY.ESTOP_ENGAGED",
+      "ok": true,
+      "receipt_id": "01M5JKBN9Y60TC042CSEVZCNN0",
+      "status": "rejected",
+      "tool": "mhs_command"
+    },
+    {
+      "arguments": {
+        "capability_id": "cap.world.step.v1",
+        "device_id": "mhs://localhost/conveyor/lab/conveyor-workcell",
+        "endpoint_id": "conveyor",
+        "input": {
+          "ticks": 1
+        }
+      },
+      "command_id": "01M5JKBN9Z1C749N9P1BWDDKD6",
+      "durability": null,
+      "duration_ms": 0,
+      "evidence_digest": "sha256:dc6496134944fc1ec8d7a6c4396aa1ebb247e7cc2c1eeec067b80b8505c62caf",
+      "kind": "receipt",
+      "mhs_code": null,
+      "ok": true,
+      "receipt_id": "01M5JKBN9ZWBM2YEFACRJY9NWM",
+      "status": "completed",
+      "tool": "mhs_command"
+    },
+    {
+      "arguments": {
+        "action": "tools/list",
+        "server": "mhs-lab",
+        "tool": "*"
+      },
+      "duration_ms": 159,
+      "kind": "mcp_list",
+      "ok": true,
+      "tool": "call_mcp_tool",
+      "tools": [
+        "mhs__devices",
+        "mhs__inspect",
+        "mhs__read",
+        "mhs__safety",
+        "mhs__operations",
+        "mhs__evidence",
+        "mhs__estop",
+        "mhs__lab_liquid_handler__fluid_aspirate",
+        "mhs__lab_liquid_handler__fluid_dispense",
+        "mhs__lab_liquid_handler__fluid_level",
+        "mhs__lab_liquid_handler__fluid_transfer",
+        "mhs__lab_liquid_handler__motion_stop",
+        "mhs__lab_plate_reader__measure_spectrum",
+        "mhs__lab_sample_mover__motion_stop",
+        "mhs__lab_sample_mover__sample_move"
+      ]
+    },
+    {
+      "arguments": {
+        "args": {
+          "command_id": "01M5JKBN9CAHDARE1NR948NCCX",
+          "destination_well": "B1",
+          "source_well": "A1",
+          "volume_ul": 25
+        },
+        "server": "mhs-lab",
+        "tool": "mhs__lab_liquid_handler__fluid_transfer"
+      },
+      "command_id": "01M5JKBN9CAHDARE1NR948NCCX",
+      "duration_ms": 161,
+      "is_error": false,
+      "kind": "mcp_call",
+      "ok": true,
+      "status": "completed",
+      "tool": "call_mcp_tool"
+    }
+  ],
+  "unknown_outcome": {
+    "receipt": {
+      "mhs_code": "MHS.OUTCOME.UNKNOWN",
+      "receipt_id": "01M5JKBN9XV7EX7XTZH0TDWM9C",
+      "status": "unknown"
+    },
+    "reconciled_state": {
+      "door": "closed",
+      "drive": "stopped",
+      "estop": "released",
+      "faults": [],
+      "gate": "divert",
+      "latch_reason": null,
+      "latched": false,
+      "mono_ms": 11,
+      "part_seq": 0,
+      "parts": [],
+      "parts_delivered": 0,
+      "sensors": {
+        "diverter": "clear",
+        "infeed": "clear"
+      },
+      "tick": 11,
+      "velocity_mm_s": 0
+    },
+    "retried": false
+  }
+}
