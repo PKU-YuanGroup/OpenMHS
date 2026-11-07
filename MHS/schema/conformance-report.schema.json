@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/conformance-report.schema.json",
+  "title": "OpenMHS conformance report",
+  "description": "Produced by the OpenMHS conformance suite (python -m mhs.conformance). A conformance claim is only valid if it references a report digest that can be recomputed offline from this document.",
+  "type": "object",
+  "required": ["report_version", "suite_version", "profile", "subject", "level_claimed", "level_achieved", "tests", "environment", "report_digest", "disclaimers"],
+  "additionalProperties": false,
+  "properties": {
+    "report_version": { "$ref": "defs.schema.json#/$defs/semver" },
+    "suite_version": { "$ref": "defs.schema.json#/$defs/semver" },
+    "profile": { "$ref": "defs.schema.json#/$defs/profile" },
+    "subject": {
+      "type": "object",
+      "required": ["kind", "id"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "type": "string", "enum": ["endpoint", "package", "adapter", "host", "registry"] },
+        "id": { "type": "string" },
+        "mhs_version": { "$ref": "defs.schema.json#/$defs/mhsVersion" },
+        "manifest_digest": { "$ref": "defs.schema.json#/$defs/digest", "description": "Digest of the device manifest(s) under test, so a report cannot be reused for a different driver." },
+        "source_commit": { "$ref": "defs.schema.json#/$defs/commitSha", "description": "Pinned upstream commit of the driver or adapter under test." }
+      }
+    },
+    "level_claimed": { "$ref": "defs.schema.json#/$defs/conformanceLevel" },
+    "level_achieved": { "$ref": "defs.schema.json#/$defs/conformanceLevel" },
+    "tests": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Z]+-[0-9]{3}$" },
+          "name": { "type": "string" },
+          "status": { "$ref": "defs.schema.json#/$defs/verdict" },
+          "required": { "type": "boolean", "description": "True when the test is required for the claimed level; a failed required test caps the level." },
+          "spec_ref": { "type": "string", "minLength": 1, "maxLength": 200, "description": "Requirement id or section the test checks, e.g. SAFE-014." },
+          "level": { "$ref": "defs.schema.json#/$defs/conformanceLevel" },
+          "duration_ms": { "type": "number", "minimum": 0 },
+          "detail": { "type": "string" },
+          "mhs_code": { "type": "string" },
+          "evidence": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "request_digest": { "$ref": "defs.schema.json#/$defs/digest" },
+              "response_digest": { "$ref": "defs.schema.json#/$defs/digest" },
+              "note": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "required": ["os", "date", "suite"],
+      "additionalProperties": false,
+      "properties": {
+        "os": { "type": "string" },
+        "python": { "type": "string" },
+        "date": { "$ref": "defs.schema.json#/$defs/rfc3339" },
+        "suite": { "type": "string" },
+        "endpoint_ids": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "string" }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "required": { "type": "integer", "minimum": 0 },
+        "passed": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 },
+        "skipped": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "report_digest": { "$ref": "defs.schema.json#/$defs/digest" },
+    "issuer": {
+      "type": "object",
+      "required": ["kind"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "type": "string", "enum": ["self", "verified"] },
+        "name": { "type": "string" },
+        "key_id": { "type": "string" },
+        "signature": { "type": "string" }
+      }
+    },
+    "limitations": { "type": "array", "items": { "type": "string" } },
+    "disclaimers": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Statements every reader of the report must see. Optional for reports written before 0.9; when present it MUST include not_certified (a conformance report is a behavioural test result, not a safety certification).",
+      "items": {
+        "type": "object",
+        "required": ["id", "text"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "enum": ["not_certified", "not_affiliated", "contract_checked_only", "self_issued", "simulation_only"] },
+          "text": { "type": "string", "minLength": 1, "maxLength": 1000 }
+        }
+      },
+      "contains": { "type": "object", "properties": { "id": { "const": "not_certified" } }, "required": ["id"] }
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/check-report.schema.json",
+  "title": "OpenMHS driver check report (check-report.json)",
+  "description": "Written by python -m mhs.driver check <dir>. One result per gate G1-G9 (layout, lock, strict resolve, provenance, reference freshness, behaviour, native surface, protocol and surface, repository tests). A pass on a fake or simulated backend yields evidence_state contract_checked only, never an MHS-Device level.",
+  "type": "object",
+  "required": ["openmhs", "driver_dir", "backend", "sdk_version", "generated_at", "passed", "failed", "gates", "evidence_state", "report_digest"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "openmhs": { "$ref": "defs.schema.json#/$defs/specVersion" },
+    "package_id": { "$ref": "defs.schema.json#/$defs/packageId" },
+    "driver_dir": { "type": "string", "minLength": 1, "maxLength": 512 },
+    "backend": { "type": "string", "enum": ["fake", "sim", "hardware"] },
+    "sdk_version": { "$ref": "defs.schema.json#/$defs/pep440" },
+    "upstream": {
+      "type": "object",
+      "required": ["commit"],
+      "additionalProperties": false,
+      "properties": {
+        "repo_url": { "type": "string" },
+        "commit": { "$ref": "defs.schema.json#/$defs/commitSha" }
+      }
+    },
+    "generated_at": { "$ref": "defs.schema.json#/$defs/rfc3339" },
+    "duration_ms": { "type": "number", "minimum": 0 },
+    "passed": { "type": "boolean" },
+    "failed": { "type": "array", "uniqueItems": true, "items": { "$ref": "defs.schema.json#/$defs/gateId" } },
+    "gates": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": { "$ref": "#/$defs/gateResult" },
+      "allOf": [
+        { "contains": { "properties": { "id": { "const": "G1" } }, "required": ["id"] } },
+        { "contains": { "properties": { "id": { "const": "G2" } }, "required": ["id"] } },
+        { "contains": { "properties": { "id": { "const": "G3" } }, "required": ["id"] } },
+        { "contains": { "properties": { "id": { "const": "G4" } }, "required": ["id"] } },
+        { "contains": { "properties": { "id": { "const": "G5" } }, "required": ["id"] } },
+        { "contains": { "properties": { "id": { "const": "G6" } }, "required": ["id"] } },
+        { "contains": { "properties": { "id": { "const": "G7" } }, "required": ["id"] } },
+        { "contains": { "properties": { "id": { "const": "G8" } }, "required": ["id"] } },
+        { "contains": { "properties": { "id": { "const": "G9" } }, "required": ["id"] } }
+      ]
+    },
+    "evidence_state": { "type": "string", "enum": ["none", "contract_checked", "hardware_checked"] },
+    "report_digest": { "$ref": "defs.schema.json#/$defs/digest", "description": "sha256 of the JCS form of this report without report_digest." }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "passed": { "const": true } }, "required": ["passed"] },
+      "then": { "properties": { "failed": { "maxItems": 0 } } },
+      "else": { "properties": { "failed": { "minItems": 1 }, "evidence_state": { "const": "none" } } }
+    },
+    {
+      "if": { "properties": { "backend": { "enum": ["fake", "sim"] } }, "required": ["backend"] },
+      "then": { "properties": { "evidence_state": { "enum": ["none", "contract_checked"] } } }
+    }
+  ],
+  "$defs": {
+    "gateResult": {
+      "type": "object",
+      "required": ["id", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "defs.schema.json#/$defs/gateId" },
+        "name": { "type": "string", "maxLength": 120 },
+        "status": { "type": "string", "enum": ["pass", "fail", "skip", "warn"] },
+        "required": { "type": "boolean" },
+        "duration_ms": { "type": "number", "minimum": 0 },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code", "message"],
+            "additionalProperties": false,
+            "properties": {
+              "code": { "type": "string", "pattern": "^[A-Z][A-Z0-9_.]*$" },
+              "message": { "type": "string", "minLength": 1, "maxLength": 2000 },
+              "severity": { "type": "string", "enum": ["error", "warning"] },
+              "path": { "type": "string", "maxLength": 512 },
+              "ref": { "type": "string", "maxLength": 500 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

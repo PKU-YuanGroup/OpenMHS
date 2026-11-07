@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/adapter.schema.json",
+  "title": "OpenMHS adapter manifest (mhs-adapter.json)",
+  "description": "Declarative mapping from an existing repo/SDK/simulator to one or more OpenMHS devices. Since 0.9 the default per-repo deliverable is a Driver package (MHS/drivers/<track>/<owner>__<repo>/); this manifest remains the declarative interchange format.",
+  "type": "object",
+  "required": ["mhs_adapter", "adapter_id", "family", "source", "runtime", "devices"],
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x-": { "description": "Extension member (x- prefix); never interpreted by OpenMHS." }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+    "mhs_adapter": { "$ref": "defs.schema.json#/$defs/mhsVersion" },
+    "adapter_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_.-]{2,127}$" },
+    "title": { "type": "string", "maxLength": 160 },
+    "family": {
+      "type": "string",
+      "enum": [
+        "python-object", "gymnasium", "dm-env", "mujoco", "pybullet", "isaac-sim",
+        "isaac-lab", "isaac-gym", "gazebo", "ros2", "ros1", "webots", "unity",
+        "sapien", "drake", "brax-mjx", "habitat", "airsim", "lerobot-real",
+        "http-api", "mcp-proxy", "scpi-visa", "serial", "sila2", "opentrons",
+        "micromanager", "flowchem", "madsci", "pylabrobot", "bluesky-ophyd",
+        "qcodes", "cli-process", "docker", "replay", "other"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "required": ["repo", "license"],
+      "additionalProperties": false,
+      "properties": {
+        "repo": { "type": "string" },
+        "commit": { "type": "string" },
+        "path": { "type": "string", "description": "Subdirectory inside the repo holding the adapter files." },
+        "license": { "type": "string" },
+        "redistributable": { "type": "boolean" },
+        "local_path": { "type": "string" }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "required": ["kind"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "type": "string", "enum": ["python", "node", "binary", "docker", "external"] },
+        "python": { "type": "string" },
+        "install": { "type": "array", "items": { "type": "string" } },
+        "entry": { "type": "string", "description": "Bridge entry point, e.g. mhs.bridge.gym:main or a shim path." },
+        "env": { "type": "object", "additionalProperties": { "type": "string" } },
+        "gpu": { "type": "boolean" },
+        "requirements": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "type": "object",
+          "required": ["kind"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "type": "string", "enum": ["process", "in_process", "external"] },
+            "command": { "type": "array", "items": { "type": "string" } },
+            "cwd": { "type": "string" },
+            "env": { "type": "object", "additionalProperties": { "type": "string" } }
+          }
+        },
+        "ready": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "method": { "type": "string", "enum": ["mhs.hello"] },
+            "deadline_ms": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "stop": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "type": "string", "enum": ["terminate", "mhs.session.close"] },
+            "grace_s": { "type": "number", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "devices": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Device manifests this adapter publishes. Each entry is a complete device manifest (device.schema.json requires instance_id); the runtime replaces instance_id with a fresh ULID when it starts.",
+      "items": {
+        "allOf": [
+          { "$ref": "device.schema.json" }
+        ]
+      }
+    },
+    "bridges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["bridge_id", "kind"],
+        "additionalProperties": false,
+        "properties": {
+          "bridge_id": { "type": "string" },
+          "kind": { "type": "string" },
+          "version": { "$ref": "defs.schema.json#/$defs/semver" },
+          "config": { "type": "object" }
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "risk_class": { "$ref": "defs.schema.json#/$defs/riskClass" },
+        "notes": { "type": "string" },
+        "estop": { "type": "object" }
+      }
+    },
+    "conformance_target": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "profile": { "$ref": "defs.schema.json#/$defs/profile" },
+        "level": { "$ref": "defs.schema.json#/$defs/conformanceLevel" }
+      }
+    },
+    "conformance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "profile": { "$ref": "defs.schema.json#/$defs/profile" },
+        "level": { "$ref": "defs.schema.json#/$defs/conformanceLevel" },
+        "suite_version": { "$ref": "defs.schema.json#/$defs/semver" },
+        "report_digest": { "$ref": "defs.schema.json#/$defs/digest" },
+        "issued_at": { "$ref": "defs.schema.json#/$defs/rfc3339" },
+        "issuer_kind": { "type": "string", "enum": ["self", "verified"] }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["state", "entry_points"],
+      "additionalProperties": false,
+      "properties": {
+        "state": { "type": "string", "enum": ["declared", "packaged", "runnable", "conformant", "certified"] },
+        "read_by": { "type": "string", "enum": ["static_analysis", "agent_read", "runtime"] },
+        "entry_points": { "type": "array", "items": { "type": "string" }, "description": "file:line or module:symbol evidence for the native mapping." },
+        "verified_at": { "$ref": "defs.schema.json#/$defs/rfc3339" },
+        "notes": { "type": "string" }
+      }
+    },
+    "stability": { "type": "string", "enum": ["stable", "fragile", "experimental"] },
+    "tier": { "type": "string", "enum": ["A", "B", "C", "D", "X"] },
+    "redaction": { "type": "array", "items": { "type": "string" }, "description": "JSON pointers whose values must never appear in evidence or logs." },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "package_id": { "type": "string" },
+        "homepage": { "type": "string" },
+        "docs": { "type": "string" },
+        "maintainers": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "x-vendor": { "type": "object" }
+  }
+}

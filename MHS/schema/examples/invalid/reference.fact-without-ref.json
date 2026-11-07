@@ -1,0 +1,208 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/reference.schema.json",
+  "openmhs": "0.9",
+  "device": {
+    "id": "mhs://localhost:7400/lab/thermal-bath",
+    "kind": "thermal.zone",
+    "name": "Circulating thermal bath (illustrative example)",
+    "vendor": "Example Instruments",
+    "model": "EX-100",
+    "mode": "hardware",
+    "risk": "R2"
+  },
+  "measures": [
+    {
+      "name": "temperature",
+      "type": "number",
+      "unit": "Cel",
+      "description": "Bath temperature",
+      "resource": "bath"
+    },
+    {
+      "name": "circulating",
+      "type": "boolean",
+      "resource": "bath"
+    },
+    {
+      "name": "measure_temperature",
+      "type": "number",
+      "unit": "Cel",
+      "cap_id": "cap.measure.temperature.v1",
+      "resource": "bath",
+      "description": "Probe reading through cap.measure.temperature.v1"
+    }
+  ],
+  "adjusts": [
+    {
+      "name": "setpoint",
+      "type": "number",
+      "unit": "Cel",
+      "description": "Temperature setpoint",
+      "resource": "bath",
+      "risk": "R2",
+      "limit": {
+        "min": -20,
+        "max": 95,
+        "unit": "Cel",
+        "source": "operator",
+        "reason": "water-glycol fluid in use"
+      }
+    },
+    {
+      "name": "pump_speed",
+      "type": "number",
+      "unit": "/min",
+      "description": "Circulation pump speed",
+      "resource": "bath",
+      "risk": "R2",
+      "limit": {
+        "min": 0,
+        "max": 1200,
+        "unit": "/min",
+        "source": "operator",
+        "reason": "operator-measured safe range"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "name": "set_temperature",
+      "cap_id": "cap.thermal.setpoint.v1",
+      "verb": "write",
+      "status": "stable",
+      "resource": "bath",
+      "description": "Set the target temperature of a thermal zone and optionally wait for it.",
+      "inputs": [
+        {
+          "name": "target_temperature",
+          "type": "number",
+          "unit": "Cel",
+          "required": true,
+          "limit": {
+            "min": -20,
+            "max": 95,
+            "unit": "Cel",
+            "source": "operator"
+          }
+        },
+        {
+          "name": "rate",
+          "type": "number",
+          "unit": "K/min",
+          "limit": {
+            "max": 5,
+            "unit": "K/min",
+            "source": "vendor_doc",
+            "ref": "EX-100 manual, section 4.3"
+          }
+        },
+        {
+          "name": "wait",
+          "type": "boolean"
+        },
+        {
+          "name": "tolerance",
+          "type": "number",
+          "unit": "K"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "setpoint",
+          "type": "number",
+          "unit": "Cel",
+          "required": true
+        },
+        {
+          "name": "reached",
+          "type": "boolean"
+        }
+      ],
+      "long_running": true,
+      "cancellable": true,
+      "risk": "R2",
+      "examples": [
+        {
+          "target_temperature": 37
+        }
+      ]
+    },
+    {
+      "name": "heater_off",
+      "cap_id": "x-cap.example.heater_off.v1",
+      "verb": "invoke",
+      "status": "extension",
+      "resource": "bath",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "heater_off",
+          "type": "boolean",
+          "required": true
+        }
+      ],
+      "long_running": false,
+      "cancellable": false,
+      "risk": "R0"
+    }
+  ],
+  "safety": {
+    "estop": {
+      "kind": "both",
+      "latching": true,
+      "native": "stop",
+      "physical_ref": "red stop switch on the front panel",
+      "latency_ms": 200
+    },
+    "safe_state": {
+      "description": "Heater off, pump stopped",
+      "achieved_by": [
+        "x-cap.example.heater_off.v1"
+      ]
+    },
+    "interlocks": [
+      {
+        "id": "lid_closed",
+        "description": "Bath lid closed",
+        "source": "hardware",
+        "required_for": [
+          "cap.thermal.setpoint.v1",
+          "cap.device.configure.v1"
+        ],
+        "reset_exempt": true
+      }
+    ],
+    "watchdog_ms": 5000,
+    "operator_required": [],
+    "not_certified": true
+  },
+  "facts": [
+    {
+      "text": "Do not run the bath without fluid; the heater has no dry-run protection.",
+      "source": "vendor_doc",
+      "reviewed_by": null
+    }
+  ],
+  "tags": [
+    "circulator",
+    "temperature control",
+    "thermal bath"
+  ],
+  "overlay": {
+    "digest": "sha256:745e341e48a3cf005150c1f86dc64b79427876030ed0c04328592ce215c42a44",
+    "file": "site-limits.json",
+    "narrowed": [
+      "setpoint.max: 150 -> 95",
+      "cap.thermal.setpoint.v1 target_temperature.max: 120 -> 95"
+    ]
+  },
+  "provenance": {
+    "generated_by": "mhs.reference_file",
+    "sdk_version": "0.9.0.dev0",
+    "authored_by": {
+      "kind": "human",
+      "name": "Example author"
+    },
+    "reviewed_by": null
+  }
+}

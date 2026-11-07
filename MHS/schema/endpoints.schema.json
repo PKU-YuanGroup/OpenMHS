@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/endpoints.schema.json",
+  "title": "OpenMHS endpoints file (~/.mhs/endpoints.json)",
+  "description": "A local list of endpoints for discovery (mhs discover reads it together with MHS_ENDPOINTS and probes /.well-known/mhs.json). Discovered does not mean trusted: listing an endpoint grants nothing, hosts still authenticate, and only the operator arms hardware. Tokens are referenced by file, never inlined.",
+  "type": "object",
+  "required": ["endpoints"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "openmhs": { "$ref": "defs.schema.json#/$defs/specVersion" },
+    "endpoints": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/endpoint" }
+    }
+  },
+  "$defs": {
+    "endpoint": {
+      "type": "object",
+      "required": ["transport"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "transport": { "type": "string", "enum": ["http", "stdio"] },
+        "url": { "type": "string", "pattern": "^https?://[^\\s]+$", "description": "Base URL of an HTTP endpoint (its descriptor is at /.well-known/mhs.json)." },
+        "command": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 }, "description": "Launch command of a local stdio endpoint." },
+        "cwd": { "type": "string" },
+        "token_file": { "type": "string", "minLength": 1, "description": "Path to a file holding the bearer token (mode 0600); the token itself never appears here." },
+        "endpoint_id": { "$ref": "defs.schema.json#/$defs/endpointId" },
+        "devices": { "type": "array", "items": { "$ref": "defs.schema.json#/$defs/deviceId" } },
+        "tags": { "$ref": "defs.schema.json#/$defs/tags" },
+        "notes": { "type": "string", "maxLength": 2000 }
+      },
+      "allOf": [
+        { "if": { "properties": { "transport": { "const": "http" } }, "required": ["transport"] }, "then": { "required": ["url"] } },
+        { "if": { "properties": { "transport": { "const": "stdio" } }, "required": ["transport"] }, "then": { "required": ["command"] } }
+      ]
+    }
+  }
+}

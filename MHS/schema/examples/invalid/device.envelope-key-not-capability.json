@@ -1,0 +1,155 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/device.schema.json",
+  "mhs_version": "1.0",
+  "device_id": "mhs://localhost:7400/lab/thermal-bath",
+  "instance_id": "01JB2C3D4E5F6G7H8J9KAMBNCP",
+  "display_name": "Circulating thermal bath (illustrative example)",
+  "vendor": {
+    "name": "Example Instruments"
+  },
+  "model": "EX-100",
+  "mode": "hardware",
+  "resources": [
+    {
+      "resource_id": "bath",
+      "kind": "thermal.zone",
+      "title": "Bath",
+      "state_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "temperature": {
+            "type": "number",
+            "x-mhs-unit": "Cel",
+            "readOnly": true,
+            "description": "Bath temperature"
+          },
+          "setpoint": {
+            "type": "number",
+            "x-mhs-unit": "Cel",
+            "description": "Temperature setpoint"
+          },
+          "pump_speed": {
+            "type": "number",
+            "x-mhs-unit": "/min",
+            "minimum": 0,
+            "description": "Circulation pump speed"
+          },
+          "circulating": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        }
+      }
+    }
+  ],
+  "capabilities": [
+    {
+      "capability_id": "cap.device.configure.v1",
+      "resource": "bath",
+      "title": "Set bath parameters",
+      "verb": "write",
+      "limits": {
+        "setpoint": {
+          "min": -20,
+          "max": 150,
+          "unit": "Cel",
+          "source": "vendor_doc",
+          "ref": "EX-100 manual, section 4.2",
+          "reason": "rated working range"
+        },
+        "pump_speed": "operator_required"
+      }
+    },
+    {
+      "capability_id": "cap.thermal.setpoint.v1",
+      "resource": "bath",
+      "verb": "write",
+      "constraints": {
+        "long_running": true,
+        "cancellable": true,
+        "max_duration_ms": 3600000
+      },
+      "limits": {
+        "target_temperature": {
+          "min": -20,
+          "max": 150,
+          "unit": "Cel",
+          "source": "vendor_doc",
+          "ref": "EX-100 manual, section 4.2"
+        },
+        "rate": {
+          "max": 5,
+          "unit": "K/min",
+          "source": "vendor_doc",
+          "ref": "EX-100 manual, section 4.3"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.measure.temperature.v1",
+      "resource": "bath",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.example.heater_off.v1",
+      "resource": "bath",
+      "title": "Switch the heater off",
+      "verb": "invoke",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "heater_off": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "heater_off"
+        ],
+        "additionalProperties": false
+      },
+      "x-mhs-schema-digest": "sha256:d782e41af9e646924c2b68be3e7bed238a2ca7f449bfa0081d73863ca831c193"
+    }
+  ],
+  "safety": {
+    "risk_class": "R2",
+    "envelope": {
+      "target_temperature": {
+        "max": 120
+      }
+    },
+    "interlocks": [
+      {
+        "id": "lid_closed",
+        "description": "Bath lid closed",
+        "source": "hardware",
+        "required_for": [
+          "cap.thermal.setpoint.v1",
+          "cap.device.configure.v1"
+        ],
+        "reset_exempt": true
+      }
+    ],
+    "estop": {
+      "kind": "both",
+      "latching": true,
+      "latency_ms": 200,
+      "physical_ref": "red stop switch on the front panel"
+    },
+    "safe_state": {
+      "description": "Heater off, pump stopped",
+      "achieved_by": [
+        "x-cap.example.heater_off.v1"
+      ]
+    }
+  },
+  "watchdog_ms": 5000,
+  "x-example-site": {
+    "rack": "B3"
+  }
+}

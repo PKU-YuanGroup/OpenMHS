@@ -1,0 +1,54 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example lab, bench 3",
+  "issued_by": {
+    "id": "operator:lab-manager"
+  },
+  "issued_at": "2026-10-21T09:00:00Z",
+  "devices": {
+    "mhs://localhost:7400/lab/thermal-bath": {
+      "setpoint": {
+        "max": 200,
+        "unit": "Cel",
+        "source": "operator"
+      },
+      "pump_speed": {
+        "min": 0,
+        "max": 1200,
+        "unit": "/min",
+        "source": "operator",
+        "reason": "operator-measured safe range"
+      },
+      "cap.thermal.setpoint.v1": {
+        "target_temperature": {
+          "max": 95,
+          "unit": "Cel"
+        }
+      }
+    },
+    "mhs://localhost:7400/robot/arm-6dof": {
+      "cap.motion.joint_position.v1": {
+        "joint_positions": {
+          "min": [
+            -3.14,
+            -2.0,
+            -3.0,
+            -3.14,
+            -1.5,
+            -3.14
+          ],
+          "max": [
+            3.14,
+            2.0,
+            0.1,
+            3.14,
+            3.0,
+            3.14
+          ],
+          "unit": "rad"
+        }
+      }
+    }
+  }
+}

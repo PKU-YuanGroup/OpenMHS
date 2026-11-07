@@ -1,0 +1,29 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/endpoints.schema.json",
+  "openmhs": "0.9",
+  "endpoints": [
+    {
+      "name": "bench bath",
+      "transport": "http",
+      "url": "http://127.0.0.1:7400",
+      "token_file": "~/.mhs/tokens/bench",
+      "devices": [
+        "mhs://localhost:7400/lab/thermal-bath"
+      ]
+    },
+    {
+      "name": "conveyor demo",
+      "transport": "stdio",
+      "command": [
+        "python3",
+        "-m",
+        "mhs.reference",
+        "conveyor",
+        "--stdio"
+      ],
+      "tags": [
+        "demo"
+      ]
+    }
+  ]
+}

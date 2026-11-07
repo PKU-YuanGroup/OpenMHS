@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/snapshot.schema.json",
+  "title": "OpenMHS snapshot",
+  "description": "Result of mhs.snapshot (MHS-002 9.1). Only simulated/hybrid devices with fidelity.snapshot_restore=true and replay devices may produce one. Canonical wire field: `state` (the {resource_id: state} document). `snapshot` is the retained backward-compatible alias for the same document; a snapshot MUST carry at least one of the two, and endpoints SHOULD emit both with identical content. `snapshot_digest` is the canonical digest of the state document. Restoring a snapshot MUST reproduce `revision` and `state_hash`; `device_id`, `instance_id`, `mode` and `fidelity_digest` are mandatory identity/fidelity metadata, and a snapshot from another device/instance/fidelity configuration MUST be rejected (PROTO-035/FID-004).",
+  "type": "object",
+  "required": [
+    "device_id",
+    "instance_id",
+    "mode",
+    "revision",
+    "state_hash",
+    "snapshot_digest",
+    "fidelity_digest"
+  ],
+  "anyOf": [
+    { "required": ["state"] },
+    { "required": ["snapshot"] }
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "device_id": {
+      "$ref": "defs.schema.json#/$defs/deviceId"
+    },
+    "instance_id": {
+      "$ref": "defs.schema.json#/$defs/ulid",
+      "description": "ULID of the device instance (the same identity that devices.get and restore compare against)."
+    },
+    "mode": {
+      "$ref": "defs.schema.json#/$defs/mode"
+    },
+    "revision": {
+      "$ref": "defs.schema.json#/$defs/revisionValue"
+    },
+    "state_hash": {
+      "$ref": "defs.schema.json#/$defs/digest"
+    },
+    "state": {
+      "type": "object",
+      "description": "Canonical state document: {resource_id: resource state}, exactly as served by mhs.resource.read and bound by state_hash under the device's hash_exclusions."
+    },
+    "snapshot": {
+      "type": "object",
+      "description": "Backward-compatible alias of `state`; when both are present they MUST be identical."
+    },
+    "snapshot_digest": {
+      "$ref": "defs.schema.json#/$defs/digest",
+      "description": "canonical.digest(state document)."
+    },
+    "fidelity_digest": {
+      "$ref": "defs.schema.json#/$defs/digest",
+      "description": "Digest of the serving device's declared fidelity configuration; a snapshot from another fidelity instance MUST be rejected (FID-004)."
+    },
+    "created_at": {
+      "$ref": "defs.schema.json#/$defs/rfc3339"
+    }
+  }
+}

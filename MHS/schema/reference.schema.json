@@ -1,0 +1,1038 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/reference.schema.json",
+  "title": "OpenMHS reference file (reference.json)",
+  "description": "The generated reference file of one device: what it can measure, what can be adjusted and within which enforced limits, which actions it offers, its safety facts and the provenance of every statement. It is rendered deterministically (JCS) from the driver or manifest, the capability catalogue, tags, facts and the operator overlay; it is never written by hand. devices.get and the MCP tool descriptions show it. The schema is closed at every level.",
+  "type": "object",
+  "required": [
+    "openmhs",
+    "device",
+    "measures",
+    "adjusts",
+    "actions",
+    "safety",
+    "facts",
+    "tags"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "openmhs": {
+      "$ref": "defs.schema.json#/$defs/specVersion"
+    },
+    "device": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "name",
+        "mode",
+        "risk"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "kind": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.]*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "vendor": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "model": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "mode": {
+          "$ref": "defs.schema.json#/$defs/mode"
+        },
+        "risk": {
+          "$ref": "defs.schema.json#/$defs/riskClass",
+          "description": "Highest effective risk of any adjust or action (never below a class floor)."
+        },
+        "models": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "For a simulated or fake-backed device: the hardware device id(s) it stands in for."
+        },
+        "resources": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 8,
+          "description": "A composed device's resources in manifest order (package composition): the first is the main resource, whose kind is device.kind. Present only when the device has more than one resource; every action and measure names its resource.",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "kind"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9_.-]{0,63}$"
+              },
+              "kind": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_.]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              }
+            }
+          }
+        },
+        "upstream": {
+          "type": "object",
+          "required": [
+            "repo",
+            "commit"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "repo": {
+              "type": "string",
+              "minLength": 1
+            },
+            "commit": {
+              "$ref": "defs.schema.json#/$defs/commitSha"
+            }
+          }
+        }
+      }
+    },
+    "measures": {
+      "type": "array",
+      "description": "Readable parameters (served by mhs.resource.read or a read-verb capability). Reading never changes the revision.",
+      "items": {
+        "$ref": "#/$defs/measure"
+      }
+    },
+    "adjusts": {
+      "type": "array",
+      "description": "Writable parameters (written through cap.device.configure.v1 / mhs.resource.write), each with its effective limit or operator_required.",
+      "items": {
+        "$ref": "#/$defs/adjust"
+      }
+    },
+    "actions": {
+      "type": "array",
+      "description": "Operations other than parameter writes (mhs.command), with their typed inputs and effective limits.",
+      "items": {
+        "$ref": "#/$defs/action"
+      }
+    },
+    "safety": {
+      "type": "object",
+      "required": [
+        "estop",
+        "safe_state",
+        "not_certified"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "estop": {
+          "type": "object",
+          "required": [
+            "kind",
+            "latching"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "hardware",
+                "software",
+                "both"
+              ]
+            },
+            "latching": {
+              "type": "boolean"
+            },
+            "native": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "\\S",
+              "description": "Native stop path the runtime calls (e.g. emergency_stop), or null when the stop is software-only."
+            },
+            "physical_ref": {
+              "type": "string",
+              "description": "Where the independent physical e-stop is; OpenMHS never replaces it."
+            },
+            "latency_ms": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "reenable": {
+              "$ref": "defs.schema.json#/$defs/capabilityId",
+              "description": "The capability that re-enables the device after a completed safety reset (CORE-086); the reset never runs it and the latch refuses it."
+            },
+            "terminal": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500,
+              "pattern": "\\S",
+              "description": "Why the native stop cannot be undone without a new endpoint (CORE-087); a reset after the e-stop is refused (terminal_estop)."
+            },
+            "confirmation": {
+              "type": "object",
+              "description": "A sensed-confirmation stop (SAFE-049; core.md CORE-088), for a device of mode simulated only: the request steps prove nothing; the e-stop is achieved only when every source delivers consecutive fresh producer-stamped samples that satisfy every predicate term within confirm_within_ms of the first request transmission. Otherwise the e-stop is failed MHS.SAFETY.SAFE_STATE_UNREACHED with the latch kept and retried in the background; a reset re-confirms without a request. Thresholds are cited or operator_required; the other bounds are client execution bounds.",
+              "required": [
+                "kind",
+                "request",
+                "sources",
+                "predicate",
+                "thresholds",
+                "consecutive",
+                "min_span_ms",
+                "max_gap_ms",
+                "confirm_within_ms",
+                "description"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "sensed"
+                  ]
+                },
+                "request": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 3,
+                  "description": "The fixed request steps, in order (a service call with its success predicate, or a fixed topic publication).",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "kind",
+                      "native"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "service",
+                          "topic"
+                        ]
+                      },
+                      "native": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 512
+                      },
+                      "type": {
+                        "type": "string",
+                        "maxLength": 256
+                      }
+                    }
+                  }
+                },
+                "sources": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 3,
+                  "description": "The topic subscriptions the confirmation counts (opened after the request). A stamp source publishes stamp_path. An arrival source (ROS 2, cited volatile publisher, no producer stamp) publishes freshness arrival and min_interval_ms and no stamp_path.",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "topic",
+                      "type"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_]{0,63}$"
+                      },
+                      "topic": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 512
+                      },
+                      "type": {
+                        "type": "string",
+                        "minLength": 3,
+                        "maxLength": 256
+                      },
+                      "stamp_path": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256,
+                        "description": "Producer-stamp path of a stamp source (default header.stamp). Absent on an arrival source."
+                      },
+                      "freshness": {
+                        "type": "string",
+                        "enum": [
+                          "stamp",
+                          "arrival"
+                        ],
+                        "description": "stamp (default): producer stamps must strictly increase. arrival: ROS 2 volatile only; freshness is the arrival time, the first sample is discarded, and a sample closer than min_interval_ms restarts the count."
+                      },
+                      "min_interval_ms": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1000,
+                        "description": "Arrival sources only. A sample closer than this to the previous arrival does not count."
+                      },
+                      "throttle_ms": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "history": {
+                        "type": "object",
+                        "description": "A ROS 2 source's publisher history (SAFE-049, CORE-088): what a new subscription can receive that was published before it, which the bridge discards (at least one sample) before it counts any. volatile: nothing; transient_local: up to depth samples. Cited (ref, the line that creates the publisher with its QoS), operator_required (the operator states it for a live deployment), or the deployment's operator value (source operator). An arrival source cites volatile only. A ROS 1 source has none: every ROS 1 stamp sample is discarded and does not refresh counted freshness, because a producer stamp is not a freshness proof.",
+                        "additionalProperties": false,
+                        "properties": {
+                          "durability": {
+                            "type": "string",
+                            "enum": [
+                              "volatile",
+                              "transient_local"
+                            ]
+                          },
+                          "depth": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 10000
+                          },
+                          "ref": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 512
+                          },
+                          "source": {
+                            "type": "string",
+                            "enum": [
+                              "operator"
+                            ]
+                          },
+                          "operator_required": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 500
+                          }
+                        },
+                        "oneOf": [
+                          {
+                            "required": [
+                              "durability",
+                              "ref"
+                            ],
+                            "not": {
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "source"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "operator_required"
+                                  ]
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "required": [
+                              "durability",
+                              "source"
+                            ],
+                            "not": {
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "ref"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "operator_required"
+                                  ]
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "required": [
+                              "operator_required"
+                            ],
+                            "not": {
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "durability"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "depth"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "ref"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "source"
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        ],
+                        "if": {
+                          "properties": {
+                            "durability": {
+                              "const": "transient_local"
+                            }
+                          },
+                          "required": [
+                            "durability"
+                          ]
+                        },
+                        "then": {
+                          "required": [
+                            "depth"
+                          ]
+                        },
+                        "else": {
+                          "not": {
+                            "required": [
+                              "depth"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "predicate": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 16,
+                  "description": "Every term must hold (equals, range, abs_max, norm_max, span_max), as one line each.",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 300
+                  }
+                },
+                "thresholds": {
+                  "type": "array",
+                  "maxItems": 32,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "bound"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 80
+                      },
+                      "bound": {
+                        "type": "string",
+                        "enum": [
+                          "min",
+                          "max"
+                        ]
+                      },
+                      "unit": {
+                        "type": "string",
+                        "maxLength": 64
+                      },
+                      "value": {
+                        "type": "number"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "vendor_doc",
+                          "upstream_code",
+                          "operator"
+                        ]
+                      },
+                      "ref": {
+                        "type": "string",
+                        "maxLength": 512
+                      },
+                      "operator_required": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      }
+                    }
+                  }
+                },
+                "consecutive": {
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 64
+                },
+                "min_span_ms": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "max_gap_ms": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "confirm_within_ms": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              }
+            }
+          },
+          "not": {
+            "required": [
+              "reenable",
+              "terminal"
+            ]
+          }
+        },
+        "safe_state": {
+          "type": "object",
+          "required": [
+            "description",
+            "achieved_by"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "achieved_by": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "interlocks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string"
+              },
+              "required_for": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "defs.schema.json#/$defs/capabilityPattern"
+                }
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "hardware",
+                  "software",
+                  "operator",
+                  "simulated"
+                ]
+              },
+              "reset_exempt": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "watchdog_ms": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "operator_required": {
+          "type": "array",
+          "description": "Limits that are declared operator_required and are not yet filled by an overlay; hardware use is refused with MHS.SAFETY.LIMITS_UNSET until they are.",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/name",
+                "description": "Adjust or action name."
+              },
+              "path": {
+                "$ref": "defs.schema.json#/$defs/limitPath",
+                "description": "Input path inside the action; absent for an adjust."
+              },
+              "reason": {
+                "type": "string",
+                "maxLength": 500
+              }
+            }
+          }
+        },
+        "operator_bridges": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "description": "Bridges the operator must run for this package (a RosDriver's operator_bridges): one ros_gz parameter_bridge argument each, with the citation that shows its ROS type. The package never starts them; the endpoints they carry exist only while the operator runs them.",
+          "items": {
+            "type": "object",
+            "required": [
+              "args",
+              "ref"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "args": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300
+              }
+            }
+          }
+        },
+        "not_certified": {
+          "const": true,
+          "description": "OpenMHS is not a safety certification and not a safety-rated channel."
+        }
+      }
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "text",
+          "source"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "source": {
+            "$ref": "defs.schema.json#/$defs/factSource"
+          },
+          "ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500,
+            "description": "file:line at the pinned commit, or a manual page."
+          },
+          "reviewed_by": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "source": {
+                  "enum": [
+                    "vendor_doc",
+                    "upstream_code"
+                  ]
+                }
+              },
+              "required": [
+                "source"
+              ]
+            },
+            "then": {
+              "required": [
+                "ref"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "tags": {
+      "$ref": "defs.schema.json#/$defs/tags"
+    },
+    "fidelity": {
+      "$ref": "device.schema.json#/properties/fidelity",
+      "description": "The fidelity contract, for simulated, hybrid and fake-backed devices."
+    },
+    "overlay": {
+      "description": "The operator overlay (site-limits.json) applied when the file was rendered, or null.",
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "digest",
+            "narrowed"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "digest": {
+              "$ref": "defs.schema.json#/$defs/digest"
+            },
+            "file": {
+              "$ref": "defs.schema.json#/$defs/relPath"
+            },
+            "narrowed": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 300
+              },
+              "description": "Human-readable list of narrowed bounds, e.g. setpoint.max: 150 -> 95."
+            }
+          }
+        }
+      ]
+    },
+    "provenance": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "generated_by": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "sdk_version": {
+              "$ref": "defs.schema.json#/$defs/pep440"
+            },
+            "catalogue_digest": {
+              "$ref": "defs.schema.json#/$defs/digest"
+            },
+            "manifest_digest": {
+              "$ref": "defs.schema.json#/$defs/digest"
+            },
+            "authored_by": {
+              "$ref": "defs.schema.json#/$defs/authoredBy"
+            },
+            "reviewed_by": {
+              "$ref": "defs.schema.json#/$defs/reviewedBy"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$"
+    },
+    "jsonType": {
+      "type": "string",
+      "enum": [
+        "number",
+        "integer",
+        "boolean",
+        "string",
+        "array",
+        "object",
+        "null"
+      ]
+    },
+    "measure": {
+      "type": "object",
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/name"
+        },
+        "type": {
+          "$ref": "#/$defs/jsonType"
+        },
+        "items_type": {
+          "$ref": "#/$defs/jsonType"
+        },
+        "unit": {
+          "$ref": "defs.schema.json#/$defs/ucum"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "resource": {
+          "$ref": "defs.schema.json#/$defs/resourceId"
+        },
+        "cap_id": {
+          "$ref": "defs.schema.json#/$defs/capabilityId",
+          "description": "Read-verb capability that serves it; absent when served by mhs.resource.read."
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/field"
+              },
+              {
+                "properties": {
+                  "required": {
+                    "const": false
+                  }
+                },
+                "not": {
+                  "required": [
+                    "limit"
+                  ]
+                }
+              }
+            ]
+          },
+          "description": "Optional parameters a read-verb measure accepts (e.g. the probe or channel); none is required, a measure never needs input."
+        }
+      }
+    },
+    "adjust": {
+      "type": "object",
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/name"
+        },
+        "type": {
+          "$ref": "#/$defs/jsonType"
+        },
+        "items_type": {
+          "$ref": "#/$defs/jsonType"
+        },
+        "unit": {
+          "$ref": "defs.schema.json#/$defs/ucum"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "resource": {
+          "$ref": "defs.schema.json#/$defs/resourceId"
+        },
+        "risk": {
+          "$ref": "defs.schema.json#/$defs/riskClass"
+        },
+        "enum": {
+          "type": "array",
+          "minItems": 1
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "limit": {
+          "$ref": "defs.schema.json#/$defs/limitValue"
+        }
+      }
+    },
+    "field": {
+      "type": "object",
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "defs.schema.json#/$defs/limitPath",
+          "description": "Field path inside the input or output (a.b for nested objects)."
+        },
+        "type": {
+          "$ref": "#/$defs/jsonType"
+        },
+        "items_type": {
+          "$ref": "#/$defs/jsonType"
+        },
+        "unit": {
+          "$ref": "defs.schema.json#/$defs/ucum"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "enum": {
+          "type": "array",
+          "minItems": 1
+        },
+        "default": {},
+        "length": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "limit": {
+          "$ref": "defs.schema.json#/$defs/limitValue"
+        }
+      }
+    },
+    "action": {
+      "type": "object",
+      "required": [
+        "name",
+        "cap_id",
+        "inputs",
+        "outputs",
+        "risk"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/name"
+        },
+        "cap_id": {
+          "$ref": "defs.schema.json#/$defs/capabilityId"
+        },
+        "verb": {
+          "$ref": "defs.schema.json#/$defs/verb"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "stable",
+            "experimental",
+            "deprecated",
+            "extension"
+          ],
+          "description": "Catalogue status of the class; extension for x-cap.* and cap.x.* ids."
+        },
+        "resource": {
+          "$ref": "defs.schema.json#/$defs/resourceId"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        },
+        "long_running": {
+          "type": "boolean"
+        },
+        "cancellable": {
+          "type": "boolean"
+        },
+        "risk": {
+          "$ref": "defs.schema.json#/$defs/riskClass"
+        },
+        "requires_permit": {
+          "type": "boolean"
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

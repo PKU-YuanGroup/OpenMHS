@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/errors.schema.json",
+  "title": "OpenMHS error registry (MHS/spec/errors.json)",
+  "description": "The machine-readable error registry. Every record has one shape. MHS/spec/appendix-b-errors.md and the tables in mhs/errors.py are generated from it. driver_subset marks the small set of codes a driver or bridge may raise; every other code is produced by the runtime.",
+  "type": "object",
+  "required": ["mhs_error_registry", "spec_version", "error_count", "areas", "errors"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "mhs_error_registry": { "type": "string", "pattern": "^1\\.[0-9]+$", "description": "Registry format and wire revision (codes are part of wire revision 1). Not a specification release: record 'since' values are spec_version releases." },
+    "spec_version": { "$ref": "defs.schema.json#/$defs/specVersion" },
+    "generated_artifacts": { "type": "array", "items": { "type": "string" } },
+    "error_count": { "type": "integer", "minimum": 0, "description": "Number of records in errors." },
+    "areas": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["area", "jsonrpc_codes", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "area": { "type": "string", "pattern": "^[A-Z]+$" },
+          "jsonrpc_codes": { "type": "array", "minItems": 1, "items": { "type": "integer" }, "description": "Structural JSON-RPC codes used by the area (ERR-007)." },
+          "summary": { "type": "string", "minLength": 1, "maxLength": 300 }
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/record" }
+    }
+  },
+  "$defs": {
+    "code": { "type": "string", "pattern": "^MHS\\.[A-Z]+\\.[A-Z0-9_]+$" },
+    "record": {
+      "type": "object",
+      "required": ["code", "area", "jsonrpc_code", "retryable", "status", "since", "meaning", "remediation", "driver_subset"],
+      "additionalProperties": false,
+      "properties": {
+        "code": { "$ref": "#/$defs/code" },
+        "area": { "type": "string", "pattern": "^[A-Z]+$" },
+        "jsonrpc_code": { "type": ["integer", "null"] },
+        "retryable": { "type": ["boolean", "null"] },
+        "status": { "type": "string", "enum": ["stable", "deprecated", "retired", "feature", "active"], "description": "Lifecycle, in the words capability classes use: stable (supported), deprecated (still registered and accepted; emit replaced_by), retired (kept for reference, never emitted), feature (a hello.features disclosure string, never emitted as an error). 'active' is the pre-0.9 spelling of stable, accepted for older registry copies." },
+        "since": { "$ref": "defs.schema.json#/$defs/semver", "description": "OpenMHS specification release (MAJOR.MINOR.PATCH of spec_version, e.g. 0.9.0) that registered the code with its current meaning; never later than spec_version. Independent of mhs_error_registry (the registry format and wire revision)." },
+        "meaning": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "remediation": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "driver_subset": { "type": "boolean", "description": "True for the codes drivers and bridges may raise (DriverFailed); the runtime emits the rest." },
+        "replaced_by": { "$ref": "#/$defs/code", "description": "For a deprecated code: the code to emit instead." }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "feature" } }, "required": ["status"] },
+          "then": { "properties": { "jsonrpc_code": { "type": "null" }, "retryable": { "type": "null" }, "driver_subset": { "const": false } } },
+          "else": { "properties": { "jsonrpc_code": { "type": "integer" }, "retryable": { "type": "boolean" } } }
+        },
+        {
+          "if": { "properties": { "status": { "const": "deprecated" } }, "required": ["status"] },
+          "then": { "required": ["replaced_by"] }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/driver-lock.schema.json",
+  "title": "OpenMHS driver lock (driver.lock.json)",
+  "description": "Pins one per-repo driver package to its upstream source and records who wrote and who reviewed it. The gate (G2) checks the commit against the task card and refuses a missing licence or author. A model-authored driver of a hardware device at risk R2 or above cannot start a hardware backend while reviewed_by is null.",
+  "type": "object",
+  "required": ["package_id", "upstream", "backends", "sdk_version", "authored_by", "reviewed_by"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "openmhs": { "$ref": "defs.schema.json#/$defs/specVersion" },
+    "package_id": { "$ref": "defs.schema.json#/$defs/packageId" },
+    "upstream": {
+      "type": "object",
+      "required": ["repo_url", "commit", "license_spdx"],
+      "additionalProperties": false,
+      "properties": {
+        "repo_url": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "commit": { "$ref": "defs.schema.json#/$defs/commitSha" },
+        "license_spdx": { "$ref": "defs.schema.json#/$defs/spdxExpression" },
+        "license_class": { "$ref": "defs.schema.json#/$defs/licenseClass" }
+      }
+    },
+    "companions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "description": "The task card's companion sources (companions, user decision 2026-11-05) as {package_id, commit}, with lock (the LOCK.json alias) for a clone fetched under work/companions, in the card's order: clones at pinned commits that the package's e-stop, its read-back, its declared re-enable and its facts cite (companion:<alias>/<path>:<LINE>). Gate G2 refuses a list that differs from the card's.",
+      "items": {
+        "type": "object",
+        "required": ["package_id", "commit"],
+        "additionalProperties": false,
+        "properties": {
+          "package_id": { "$ref": "defs.schema.json#/$defs/packageId" },
+          "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+          "lock": { "type": "string", "maxLength": 200, "pattern": "^[A-Za-z0-9_.-]+__[A-Za-z0-9_.-]+@[A-Za-z0-9_.+-]+$", "description": "The LOCK.json alias (<owner>__<repo>@<ref>) of a companion fetched under work/companions; absent for a corpus companion." }
+        }
+      }
+    },
+    "install": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "How the sandbox copy is installed (network only during this step).",
+      "properties": {
+        "python": { "type": "string", "maxLength": 50, "description": "Python requirement, e.g. >=3.10." },
+        "commands": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 1000 } },
+        "system_deps": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 200 } },
+        "gpu": { "type": "boolean" },
+        "platform": { "type": "string", "enum": ["any", "linux", "macos", "windows"] },
+        "notes": { "type": "string", "maxLength": 2000 }
+      }
+    },
+    "backends": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Backend name -> entry point relative to the package (e.g. hardware: .native:connect, fake: .fake:FakeBath).",
+      "propertyNames": { "pattern": "^[a-z][a-z0-9_-]{0,31}$" },
+      "additionalProperties": { "type": "string", "pattern": "^\\.?[A-Za-z_][A-Za-z0-9_.]*(:[A-Za-z_][A-Za-z0-9_.]*)?$" }
+    },
+    "sdk_version": { "$ref": "defs.schema.json#/$defs/pep440" },
+    "authored_by": { "$ref": "defs.schema.json#/$defs/authoredBy" },
+    "reviewed_by": { "$ref": "defs.schema.json#/$defs/reviewedBy" },
+    "files": {
+      "type": "object",
+      "description": "sha256 of each package file at lock time (relative path -> digest), excluding driver.lock.json itself.",
+      "propertyNames": { "$ref": "defs.schema.json#/$defs/relPath" },
+      "additionalProperties": { "$ref": "defs.schema.json#/$defs/digest" }
+    }
+  }
+}

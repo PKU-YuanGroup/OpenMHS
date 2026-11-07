@@ -1,0 +1,205 @@
+{
+  "$comment": "Expected failures of the invalid examples, checked by MHS/sdk/tests/catalog_data. check=schema: the document fails its JSON Schema at pointer. check=semantic: the document is schema-valid and fails a load-time rule (rule) at pointer; those rules need the capability catalogue or the device manifest, so a schema cannot express them.",
+  "cases": [
+    {
+      "file": "device.limit-key-typo.json",
+      "schema": "device.schema.json",
+      "check": "schema",
+      "pointer": "/capabilities/1/limits/target_temperature/maxx",
+      "contains": "additional property",
+      "why": "A misspelled rule key ('maxx') must be an error, never a silently missing bound."
+    },
+    {
+      "file": "device.unknown-rule-member.json",
+      "schema": "device.schema.json",
+      "check": "schema",
+      "pointer": "/safety/envelope/cap.thermal.setpoint.v1/target_temperature/clamp",
+      "contains": "additional property",
+      "why": "Limit rules are closed: 'clamp' is not a rule member (clamping is never silent)."
+    },
+    {
+      "file": "device.limit-path-typo.json",
+      "schema": "device.schema.json",
+      "check": "semantic",
+      "rule": "limit-path-resolves",
+      "pointer": "/capabilities/1/limits/target_temprature",
+      "why": "A grammatical but misspelled limit path does not resolve in the binding input schema; it is a load error."
+    },
+    {
+      "file": "device.limit-path-grammar.json",
+      "schema": "device.schema.json",
+      "check": "schema",
+      "pointer": "/capabilities/0/limits/joint_positions[-1]",
+      "contains": "property name",
+      "why": "Limit paths use identifier segments with optional [*] or [N]; a negative index is not a path."
+    },
+    {
+      "file": "device.array-bound-length.json",
+      "schema": "device.schema.json",
+      "check": "semantic",
+      "rule": "array-bound-length",
+      "pointer": "/capabilities/0/limits/joint_positions/max",
+      "why": "A per-element bound must have one value per element of the fixed-length (6) array."
+    },
+    {
+      "file": "device.interlock-empty-required-for.json",
+      "schema": "device.schema.json",
+      "check": "schema",
+      "pointer": "/safety/interlocks/0/required_for",
+      "contains": "minItems",
+      "why": "An interlock that gates nothing must omit required_for; an empty list is an error (SAFE-020)."
+    },
+    {
+      "file": "device.verb-mismatch.json",
+      "schema": "device.schema.json",
+      "check": "semantic",
+      "rule": "verb-matches-class",
+      "pointer": "/capabilities/1/verb",
+      "why": "cap.thermal.setpoint.v1 has verb write in the catalogue; a binding cannot re-declare it as read."
+    },
+    {
+      "file": "device.verb-unknown.json",
+      "schema": "device.schema.json",
+      "check": "schema",
+      "pointer": "/capabilities/2/verb",
+      "contains": "is not one of",
+      "why": "A binding verb is one of read, write or invoke."
+    },
+    {
+      "file": "device.envelope-key-not-capability.json",
+      "schema": "device.schema.json",
+      "check": "schema",
+      "pointer": "/safety/envelope/target_temperature",
+      "contains": "property name",
+      "why": "Envelope keys are capability ids or patterns; limit paths go one level deeper."
+    },
+    {
+      "file": "device.limit-unit-mismatch.json",
+      "schema": "device.schema.json",
+      "check": "semantic",
+      "rule": "limit-unit-matches-field",
+      "pointer": "/capabilities/1/limits/target_temperature/unit",
+      "why": "A limit's unit must equal the field's x-mhs-unit (Cel); conversions are never implicit."
+    },
+    {
+      "file": "site-limits.widening.json",
+      "schema": "site-limits.schema.json",
+      "check": "semantic",
+      "rule": "overlay-narrows",
+      "pointer": "/devices/mhs:~1~1localhost:7400~1lab~1thermal-bath/setpoint/max",
+      "why": "The overlay may only narrow: setpoint max 200 Cel is wider than the driver's 150 Cel."
+    },
+    {
+      "file": "site-limits.widening-element.json",
+      "schema": "site-limits.schema.json",
+      "check": "semantic",
+      "rule": "overlay-narrows",
+      "pointer": "/devices/mhs:~1~1localhost:7400~1robot~1arm-6dof/cap.motion.joint_position.v1/joint_positions/min",
+      "why": "Per-element bounds narrow element by element: joint j1 min -7.0 rad is wider than -6.28 rad."
+    },
+    {
+      "file": "site-limits.operator-required.json",
+      "schema": "site-limits.schema.json",
+      "check": "schema",
+      "pointer": "/devices/mhs:~1~1localhost:7400~1lab~1thermal-bath/setpoint",
+      "contains": "expected object",
+      "why": "An overlay supplies bounds; it cannot itself defer to the operator."
+    },
+    {
+      "file": "site-limits.not-operator-source.json",
+      "schema": "site-limits.schema.json",
+      "check": "schema",
+      "pointer": "/devices/mhs:~1~1localhost:7400~1lab~1thermal-bath/setpoint/source",
+      "contains": "expected constant",
+      "why": "Every overlay rule comes from the operator."
+    },
+    {
+      "file": "reference.not-certified-false.json",
+      "schema": "reference.schema.json",
+      "check": "schema",
+      "pointer": "/safety/not_certified",
+      "contains": "expected constant",
+      "why": "Every reference file states that OpenMHS is not a safety certification."
+    },
+    {
+      "file": "reference.fact-without-ref.json",
+      "schema": "reference.schema.json",
+      "check": "schema",
+      "pointer": "/facts/0",
+      "contains": "'ref'",
+      "why": "A vendor_doc or upstream_code fact cites file:line or a manual page."
+    },
+    {
+      "file": "driver-lock.model-without-model-id.json",
+      "schema": "driver-lock.schema.json",
+      "check": "schema",
+      "pointer": "/authored_by",
+      "contains": "'model_id'",
+      "why": "A model-authored package names the model."
+    },
+    {
+      "file": "driver-lock.unpinned-commit.json",
+      "schema": "driver-lock.schema.json",
+      "check": "schema",
+      "pointer": "/upstream/commit",
+      "contains": "does not match",
+      "why": "The upstream is pinned to a full commit id, never a branch."
+    },
+    {
+      "file": "driver-result.blocked-without-codes.json",
+      "schema": "driver-result.schema.json",
+      "check": "schema",
+      "pointer": "",
+      "contains": "'blocked_on'",
+      "why": "A blocked result names at least one blocked code."
+    },
+    {
+      "file": "check-report.missing-gate.json",
+      "schema": "check-report.schema.json",
+      "check": "schema",
+      "pointer": "/gates",
+      "contains": "minItems",
+      "why": "A check report carries exactly one result per gate G1-G9."
+    },
+    {
+      "file": "check-report.fake-claims-hardware.json",
+      "schema": "check-report.schema.json",
+      "check": "schema",
+      "pointer": "/evidence_state",
+      "contains": "is not one of",
+      "why": "A fake-backend pass is contract_checked only, never hardware evidence."
+    },
+    {
+      "file": "endpoints.http-without-url.json",
+      "schema": "endpoints.schema.json",
+      "check": "schema",
+      "pointer": "/endpoints/0",
+      "contains": "'url'",
+      "why": "An HTTP endpoint entry needs its URL."
+    },
+    {
+      "file": "registry-record.bad-strategy.json",
+      "schema": "registry-record.schema.json",
+      "check": "schema",
+      "pointer": "/integration/strategy",
+      "contains": "is not one of",
+      "why": "integration.strategy is one of the triage outcomes."
+    },
+    {
+      "file": "conformance-report.missing-not-certified.json",
+      "schema": "conformance-report.schema.json",
+      "check": "schema",
+      "pointer": "/disclaimers",
+      "contains": "contains",
+      "why": "When disclaimers are present they include not_certified."
+    },
+    {
+      "file": "reference.measure-input-required.json",
+      "schema": "reference.schema.json",
+      "check": "schema",
+      "pointer": "/measures/2/inputs/0/required",
+      "contains": "expected constant",
+      "why": "A measure never needs input: its optional inputs are not required."
+    }
+  ]
+}

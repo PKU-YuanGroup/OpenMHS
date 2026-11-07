@@ -1,0 +1,1013 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/device.schema.json",
+  "title": "OpenMHS device manifest",
+  "description": "A device manifest declares everything an agent needs to understand and operate one device: identity, mode, resources, capabilities, safety envelope and (for simulated/hybrid) the fidelity contract. The manifest is served by mhs.devices.get and published by the registry. Additions in 0.9 are optional, so earlier manifests stay valid; members starting with x- are extensions.",
+  "type": "object",
+  "required": [
+    "mhs_version",
+    "device_id",
+    "instance_id",
+    "display_name",
+    "mode",
+    "resources",
+    "capabilities",
+    "safety"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "x-mhs-experimental": {
+      "type": "boolean",
+      "description": "Binding-level flag: true when this manifest binds capability classes with status 'experimental' (CAP-005)."
+    },
+    "$schema": {
+      "type": "string"
+    },
+    "mhs_version": {
+      "$ref": "defs.schema.json#/$defs/mhsVersion"
+    },
+    "device_id": {
+      "$ref": "defs.schema.json#/$defs/deviceId"
+    },
+    "instance_id": {
+      "$ref": "defs.schema.json#/$defs/ulid"
+    },
+    "display_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "vendor": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "contact": {
+          "type": "string"
+        }
+      }
+    },
+    "model": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "firmware": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "serial": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "mode": {
+      "$ref": "defs.schema.json#/$defs/mode"
+    },
+    "models": {
+      "type": "array",
+      "items": {
+        "$ref": "defs.schema.json#/$defs/deviceId"
+      },
+      "description": "For simulated/hybrid devices: the physical device(s) this model represents. Identity stays distinct."
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The generated device profile: semantic, model-readable description. Derived from capabilities and safety, not hand-maintained prose.",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "tags": {
+          "$ref": "defs.schema.json#/$defs/tags"
+        },
+        "operating_notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "docs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "resources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "resource_id",
+          "kind",
+          "state_schema"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "resource_id": {
+            "$ref": "defs.schema.json#/$defs/resourceId"
+          },
+          "kind": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_.]*$"
+          },
+          "title": {
+            "type": "string"
+          },
+          "state_schema": {
+            "type": "object",
+            "description": "JSON Schema for this resource's state document."
+          },
+          "state": {
+            "type": "object",
+            "description": "Current state (present in devices.get and snapshots)."
+          },
+          "revision": {
+            "$ref": "defs.schema.json#/$defs/revisionValue"
+          },
+          "sampling": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "on_change",
+                  "periodic",
+                  "poll"
+                ]
+              },
+              "rate_hz": {
+                "type": "number",
+                "minimum": 0
+              },
+              "coalesce_ms": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          "hash_exclusions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "JSON pointers excluded from state_hash (volatile fields)."
+          }
+        },
+        "patternProperties": {
+          "^x-": {
+            "description": "Extension member (x- prefix). Unknown to OpenMHS, never interpreted as a safety rule."
+          }
+        }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "capability_id",
+          "resource"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "capability_id": {
+            "$ref": "defs.schema.json#/$defs/capabilityId"
+          },
+          "resource": {
+            "$ref": "defs.schema.json#/$defs/resourceId"
+          },
+          "title": {
+            "type": "string"
+          },
+          "verb": {
+            "$ref": "defs.schema.json#/$defs/verb",
+            "description": "Optional; when present it must equal the class verb (capabilities.json). Read-verb bindings never change the revision."
+          },
+          "input_schema_ref": {
+            "type": "string"
+          },
+          "output_schema_ref": {
+            "type": "string"
+          },
+          "input_schema": {
+            "type": "object"
+          },
+          "output_schema": {
+            "type": "object"
+          },
+          "semantics": {
+            "type": "object",
+            "description": "Per-binding refinement of the class semantics (tags, units, hazards)."
+          },
+          "constraints": {
+            "type": "object",
+            "description": "Per-binding execution constraints. Known members are typed; other members are tolerated for compatibility.",
+            "properties": {
+              "long_running": {
+                "type": "boolean",
+                "description": "A deadline bounds only the response: on timeout the endpoint returns a running receipt with an operation_id and keeps executing within max_duration_ms."
+              },
+              "cancellable": {
+                "type": "boolean"
+              },
+              "max_duration_ms": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "concurrency": {
+                "$ref": "defs.schema.json#/$defs/concurrency"
+              }
+            }
+          },
+          "limits": {
+            "$ref": "defs.schema.json#/$defs/limitMap",
+            "description": "Binding limits keyed by limit path (field, a.b, a[*], a[N]); values are a closed limit rule or \"operator_required\". Intersected with the class limits, the device envelope and the operator overlay; never widening."
+          },
+          "determinism": {
+            "$ref": "defs.schema.json#/$defs/determinism"
+          },
+          "exclusive": {
+            "type": "boolean"
+          },
+          "requires_permit": {
+            "type": "boolean"
+          },
+          "native": {
+            "type": "string",
+            "description": "Human-readable native symbol this capability maps to (e.g. module.Class.method)."
+          },
+          "x-mhs-schema-digest": {
+            "$ref": "defs.schema.json#/$defs/digest",
+            "description": "CAP-037 pin: sha256 of the JCS-canonical class document the binding was reviewed against; for an extension class bound with inline schemas, of {\"input_schema\": ..., \"output_schema\": ...} as written in this binding."
+          }
+        },
+        "patternProperties": {
+          "^x-": {
+            "description": "Extension member (x- prefix). Unknown to OpenMHS, never interpreted as a safety rule."
+          }
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "required": [
+        "risk_class",
+        "estop",
+        "safe_state"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "risk_class": {
+          "$ref": "defs.schema.json#/$defs/riskClass"
+        },
+        "envelope": {
+          "type": "object",
+          "description": "Device envelope: {capability id or pattern (cap.<class>.*): {limit path: limit rule | \"operator_required\"}}. Enforced server-side before any effect; intersected with class and binding limits.",
+          "propertyNames": {
+            "$ref": "defs.schema.json#/$defs/capabilityPattern"
+          },
+          "additionalProperties": {
+            "$ref": "defs.schema.json#/$defs/limitMap"
+          }
+        },
+        "interlocks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "required_for": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "defs.schema.json#/$defs/capabilityPattern"
+                },
+                "description": "Capability ids or patterns this interlock gates; omit the member (not an empty list) for a purely informative interlock."
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "hardware",
+                  "software",
+                  "operator",
+                  "simulated"
+                ]
+              },
+              "reset_exempt": {
+                "type": "boolean",
+                "description": "When true, mhs.safety.reset does not require this interlock to read closed (for example an interlock that only gates motion, not recovery)."
+              }
+            }
+          }
+        },
+        "requires_permit": {
+          "type": "array",
+          "items": {
+            "$ref": "defs.schema.json#/$defs/capabilityPattern"
+          }
+        },
+        "estop": {
+          "type": "object",
+          "required": [
+            "kind",
+            "latching"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "hardware",
+                "software",
+                "both"
+              ]
+            },
+            "latching": {
+              "type": "boolean"
+            },
+            "native": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "\\S",
+              "description": "Native stop the runtime calls on mhs.safety.estop (a driver method or upstream call such as emergency_stop), or null for a software-only latch. Optional; the reference file publishes it as safety.estop.native."
+            },
+            "latency_ms": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "physical_ref": {
+              "type": "string",
+              "description": "Where the independent hardware e-stop is documented; MHS never replaces it."
+            },
+            "reset": {
+              "type": "string",
+              "enum": [
+                "mhs.safety.reset"
+              ]
+            },
+            "reenable": {
+              "$ref": "defs.schema.json#/$defs/capabilityId",
+              "description": "The capability that re-enables the device after a completed mhs.safety.reset (SAFE-042's new start command; core.md CORE-086). The reset never runs it; it is refused with MHS.SAFETY.ESTOP_ENGAGED while the device is latched; it is bound to exactly one resource, takes an empty input and is never a read, a stop class or a safe_state.achieved_by action. Absent: the next ordinary command is the new start command."
+            },
+            "terminal": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500,
+              "pattern": "\\S",
+              "description": "Why the native stop cannot be undone without a new endpoint (for example, it closes the native session for good; core.md CORE-087). After this endpoint starts the stop path, mhs.safety.reset is refused with MHS.SAFETY.RESET_REFUSED (details.reason terminal_estop, details.terminal this text) and the latch is kept until the endpoint ends."
+            },
+            "confirmation": {
+              "type": "object",
+              "description": "A sensed-confirmation stop (SAFE-049; core.md CORE-088), for a device of mode simulated only: the request steps prove nothing; the e-stop is achieved only when every source delivers consecutive fresh producer-stamped samples that satisfy every predicate term within confirm_within_ms of the first request transmission. Otherwise the e-stop is failed MHS.SAFETY.SAFE_STATE_UNREACHED with the latch kept and retried in the background; a reset re-confirms without a request. Thresholds are cited or operator_required; the other bounds are client execution bounds.",
+              "required": [
+                "kind",
+                "request",
+                "sources",
+                "predicate",
+                "thresholds",
+                "consecutive",
+                "min_span_ms",
+                "max_gap_ms",
+                "confirm_within_ms",
+                "description"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "sensed"
+                  ]
+                },
+                "request": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 3,
+                  "description": "The fixed request steps, in order (a service call with its success predicate, or a fixed topic publication).",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "kind",
+                      "native"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "service",
+                          "topic"
+                        ]
+                      },
+                      "native": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 512
+                      },
+                      "type": {
+                        "type": "string",
+                        "maxLength": 256
+                      }
+                    }
+                  }
+                },
+                "sources": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 3,
+                  "description": "The topic subscriptions the confirmation counts (opened after the request). A stamp source publishes stamp_path. An arrival source (ROS 2, cited volatile publisher, no producer stamp) publishes freshness arrival and min_interval_ms and no stamp_path.",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "topic",
+                      "type"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_]{0,63}$"
+                      },
+                      "topic": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 512
+                      },
+                      "type": {
+                        "type": "string",
+                        "minLength": 3,
+                        "maxLength": 256
+                      },
+                      "stamp_path": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256,
+                        "description": "Producer-stamp path of a stamp source (default header.stamp). Absent on an arrival source."
+                      },
+                      "freshness": {
+                        "type": "string",
+                        "enum": [
+                          "stamp",
+                          "arrival"
+                        ],
+                        "description": "stamp (default): producer stamps must strictly increase. arrival: ROS 2 volatile only; freshness is the arrival time, the first sample is discarded, and a sample closer than min_interval_ms restarts the count."
+                      },
+                      "min_interval_ms": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1000,
+                        "description": "Arrival sources only. A sample closer than this to the previous arrival does not count."
+                      },
+                      "throttle_ms": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "history": {
+                        "type": "object",
+                        "description": "A ROS 2 source's publisher history (SAFE-049, CORE-088): what a new subscription can receive that was published before it, which the bridge discards (at least one sample) before it counts any. volatile: nothing; transient_local: up to depth samples. Cited (ref, the line that creates the publisher with its QoS), operator_required (the operator states it for a live deployment), or the deployment's operator value (source operator). An arrival source cites volatile only. A ROS 1 source has none: every ROS 1 stamp sample is discarded and does not refresh counted freshness, because a producer stamp is not a freshness proof.",
+                        "additionalProperties": false,
+                        "properties": {
+                          "durability": {
+                            "type": "string",
+                            "enum": [
+                              "volatile",
+                              "transient_local"
+                            ]
+                          },
+                          "depth": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 10000
+                          },
+                          "ref": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 512
+                          },
+                          "source": {
+                            "type": "string",
+                            "enum": [
+                              "operator"
+                            ]
+                          },
+                          "operator_required": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 500
+                          }
+                        },
+                        "oneOf": [
+                          {
+                            "required": [
+                              "durability",
+                              "ref"
+                            ],
+                            "not": {
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "source"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "operator_required"
+                                  ]
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "required": [
+                              "durability",
+                              "source"
+                            ],
+                            "not": {
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "ref"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "operator_required"
+                                  ]
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "required": [
+                              "operator_required"
+                            ],
+                            "not": {
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "durability"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "depth"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "ref"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "source"
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        ],
+                        "if": {
+                          "properties": {
+                            "durability": {
+                              "const": "transient_local"
+                            }
+                          },
+                          "required": [
+                            "durability"
+                          ]
+                        },
+                        "then": {
+                          "required": [
+                            "depth"
+                          ]
+                        },
+                        "else": {
+                          "not": {
+                            "required": [
+                              "depth"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "predicate": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 16,
+                  "description": "Every term must hold (equals, range, abs_max, norm_max, span_max), as one line each.",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 300
+                  }
+                },
+                "thresholds": {
+                  "type": "array",
+                  "maxItems": 32,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "bound"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 80
+                      },
+                      "bound": {
+                        "type": "string",
+                        "enum": [
+                          "min",
+                          "max"
+                        ]
+                      },
+                      "unit": {
+                        "type": "string",
+                        "maxLength": 64
+                      },
+                      "value": {
+                        "type": "number"
+                      },
+                      "source": {
+                        "type": "string",
+                        "enum": [
+                          "vendor_doc",
+                          "upstream_code",
+                          "operator"
+                        ]
+                      },
+                      "ref": {
+                        "type": "string",
+                        "maxLength": 512
+                      },
+                      "operator_required": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      }
+                    }
+                  }
+                },
+                "consecutive": {
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 64
+                },
+                "min_span_ms": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "max_gap_ms": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "confirm_within_ms": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              }
+            }
+          },
+          "not": {
+            "required": [
+              "reenable",
+              "terminal"
+            ]
+          }
+        },
+        "safe_state": {
+          "type": "object",
+          "required": [
+            "description",
+            "achieved_by"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "achieved_by": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Capabilities or actions that bring the device to a safe state."
+            }
+          }
+        },
+        "max_cumulative": {
+          "type": "object",
+          "description": "Cumulative dose limits over a window, e.g. laser on-time, motor travel."
+        }
+      }
+    },
+    "fidelity": {
+      "type": "object",
+      "description": "REQUIRED when mode is simulated or hybrid; forbidden for hardware.",
+      "additionalProperties": false,
+      "properties": {
+        "engine": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fidelity_level": {
+          "type": "string",
+          "enum": [
+            "F0",
+            "F1",
+            "F2",
+            "F3"
+          ]
+        },
+        "determinism": {
+          "type": "object",
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "$ref": "defs.schema.json#/$defs/determinism"
+            },
+            "seed_control": {
+              "type": "string",
+              "enum": [
+                "parameter",
+                "reset_required",
+                "none"
+              ]
+            },
+            "notes": {
+              "type": "string"
+            }
+          }
+        },
+        "timestep_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "realtime_factor": {
+          "type": "number",
+          "minimum": 0
+        },
+        "clock": {
+          "type": "string",
+          "enum": [
+            "lockstep",
+            "free_running",
+            "external"
+          ],
+          "description": "Who advances simulated time: lockstep (only commands advance it), free_running (the simulator runs on its own clock) or external (an outside scheduler)."
+        },
+        "reset": {
+          "type": "string",
+          "enum": [
+            "full",
+            "partial",
+            "none"
+          ]
+        },
+        "snapshot_restore": {
+          "type": "boolean"
+        },
+        "authority": {
+          "type": "object",
+          "description": "For hybrid mode: per-resource truth side (FID-030). Keys MUST be exactly the device's resource ids.",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "hardware",
+              "model"
+            ]
+          }
+        },
+        "validation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "against_device": {
+              "type": "string"
+            },
+            "metrics": {
+              "type": "object"
+            },
+            "evidence_ref": {
+              "type": "string"
+            },
+            "validated_at": {
+              "$ref": "defs.schema.json#/$defs/rfc3339"
+            }
+          }
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Known fidelity gaps. MUST be disclosed to the agent."
+        }
+      }
+    },
+    "access": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "principals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Principal ids or patterns allowed to open sessions."
+        },
+        "default_risk_class": {
+          "$ref": "defs.schema.json#/$defs/riskClass"
+        },
+        "requires_human_present": {
+          "type": "boolean"
+        }
+      }
+    },
+    "conformance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "profile": {
+          "$ref": "defs.schema.json#/$defs/profile"
+        },
+        "level": {
+          "$ref": "defs.schema.json#/$defs/conformanceLevel"
+        },
+        "suite_version": {
+          "$ref": "defs.schema.json#/$defs/semver"
+        },
+        "report_digest": {
+          "$ref": "defs.schema.json#/$defs/digest"
+        },
+        "issued_at": {
+          "$ref": "defs.schema.json#/$defs/rfc3339"
+        },
+        "issuer_kind": {
+          "type": "string",
+          "enum": [
+            "self",
+            "verified"
+          ]
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "adapter_id": {
+          "type": "string"
+        },
+        "source_repo": {
+          "type": "string"
+        },
+        "source_commit": {
+          "type": "string"
+        },
+        "generated_by": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "signatures": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "watchdog_ms": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Command watchdog (dead-man) period: a continuously controlled device that receives no command or heartbeat for this long returns to its declared safe state."
+    },
+    "reference": {
+      "$ref": "reference.schema.json",
+      "description": "The generated reference file (what can be measured, what can be adjusted, which limits are enforced). Optional; never hand-written."
+    },
+    "x-vendor": {
+      "type": "object"
+    }
+  },
+  "patternProperties": {
+    "^x-": {
+      "description": "Extension member (x- prefix). Unknown to OpenMHS, never interpreted as a safety rule."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "enum": [
+              "simulated",
+              "hybrid"
+            ]
+          }
+        },
+        "required": [
+          "mode"
+        ]
+      },
+      "then": {
+        "required": [
+          "fidelity"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "const": "hybrid"
+          }
+        },
+        "required": [
+          "mode"
+        ]
+      },
+      "then": {
+        "required": [
+          "fidelity"
+        ],
+        "properties": {
+          "fidelity": {
+            "required": [
+              "authority"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "enum": [
+              "hardware"
+            ]
+          }
+        },
+        "required": [
+          "mode"
+        ]
+      },
+      "then": {
+        "not": {
+          "required": [
+            "fidelity"
+          ]
+        }
+      }
+    }
+  ]
+}

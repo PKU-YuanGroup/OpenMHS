@@ -1,0 +1,276 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/capability.schema.json",
+  "title": "OpenMHS capability class definition",
+  "description": "Defines one capability class as published in the MHS capability registry (MHS/spec/capabilities.json, normative). The class id carries the MAJOR version (v<major>). Entries are FLAT by design: summary, tags, units, effects, hazards, preconditions, postconditions, determinism, concurrency and risk_class live on the entry. A nested `semantics` object is NOT part of the contract (SPEC-002).",
+  "type": "object",
+  "required": [
+    "capability_id",
+    "title",
+    "verb",
+    "resource_kinds",
+    "input_schema",
+    "output_schema",
+    "summary",
+    "tags"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "capability_id": {
+      "$ref": "defs.schema.json#/$defs/capabilityId"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "stable",
+        "experimental",
+        "deprecated",
+        "active"
+      ],
+      "description": "Lifecycle: stable (supported), experimental (schema may change; binding requires x-mhs-experimental), deprecated (still valid and callable; migrate per x-mhs-replaced-by). 'active' is the pre-0.9 spelling of stable and is accepted for older class documents."
+    },
+    "profile": {
+      "type": "string",
+      "enum": [
+        "core",
+        "sim"
+      ],
+      "description": "core: usable on any device mode; sim: Sim/Fidelity profile class (world.*), only for simulated, hybrid or replay devices."
+    },
+    "since": {
+      "$ref": "defs.schema.json#/$defs/semver",
+      "description": "OpenMHS specification release (MAJOR.MINOR.PATCH of the catalogue's spec_version, e.g. 0.9.0) that introduced the class in its current form; never later than spec_version. Independent of the class MAJOR (v<major>) and of the wire revision (mhs_capabilities)."
+    },
+    "verb": {
+      "type": "string",
+      "enum": [
+        "read",
+        "write",
+        "invoke",
+        "subscribe",
+        "compose"
+      ],
+      "description": "read never changes device state or the revision; write sets named parameters; invoke performs an action. subscribe and compose are reserved."
+    },
+    "domain": {
+      "type": "string",
+      "description": "Capability domain code, e.g. world, motion, fluid, measure, device."
+    },
+    "resource_kinds": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^([a-z][a-z0-9_.]*|\\*)$"
+      },
+      "description": "Resource kinds this class can bind to, e.g. robot.arm, lab.liquid_handler, world.sim. '*' (used only by cap.device.configure.v1) means any resource kind the device declares."
+    },
+    "modes": {
+      "type": "array",
+      "items": {
+        "$ref": "defs.schema.json#/$defs/mode"
+      },
+      "description": "Device modes in which this class may be bound (world.* classes are simulated/hybrid/replay only)."
+    },
+    "input_schema": {
+      "type": "object",
+      "description": "JSON Schema (2020-12) for the capability input. Numeric physical fields MUST carry x-mhs-unit; a temperature difference (a tolerance, a rate such as K/min) also carries x-mhs-delta: true, so unit conversion never applies the Kelvin/Celsius offset to it."
+    },
+    "output_schema": {
+      "type": "object",
+      "description": "JSON Schema for the capability output (x-mhs-unit and x-mhs-delta as for input_schema)."
+    },
+    "examples": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object"
+      },
+      "description": "Example inputs; each MUST validate against input_schema (the catalogue carries at least one per class)."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 800,
+      "description": "Model-readable description of what the action does in the physical or simulated world."
+    },
+    "tags": {
+      "$ref": "defs.schema.json#/$defs/tags"
+    },
+    "units": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "defs.schema.json#/$defs/ucum"
+      },
+      "description": "Map of field name to UCUM unit for fields whose unit is not already carried by x-mhs-unit."
+    },
+    "effects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Effect taxonomy, e.g. motion.joint, material.transfer, energy.emission, measurement.capture."
+    },
+    "hazards": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "preconditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "postconditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "determinism": {
+      "$ref": "defs.schema.json#/$defs/determinism"
+    },
+    "concurrency": {
+      "$ref": "defs.schema.json#/$defs/concurrency"
+    },
+    "risk_class": {
+      "$ref": "defs.schema.json#/$defs/riskClass"
+    },
+    "typical_duration_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 4000
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rate_limit": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "max_per_second": {
+              "type": "number",
+              "minimum": 0
+            },
+            "max_per_minute": {
+              "type": "number",
+              "minimum": 0
+            },
+            "burst": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "concurrency": {
+          "$ref": "defs.schema.json#/$defs/concurrency"
+        },
+        "max_duration_ms": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "cancellable": {
+          "type": "boolean"
+        },
+        "requires_session_mode": {
+          "type": "array",
+          "items": {
+            "$ref": "defs.schema.json#/$defs/mode"
+          }
+        },
+        "long_running": {
+          "type": "boolean",
+          "description": "The deadline bounds only the response; the operation continues and reports through operation_id."
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "risk_class": {
+          "$ref": "defs.schema.json#/$defs/riskClass"
+        },
+        "limits": {
+          "$ref": "defs.schema.json#/$defs/limitMap",
+          "description": "Unused legacy location; prefer the top-level limits member."
+        },
+        "requires_permit": {
+          "type": "boolean"
+        },
+        "interlocks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "conformance_tests": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "supersedes": {
+      "$ref": "defs.schema.json#/$defs/capabilityId"
+    },
+    "x-mhs-replaced-by": {
+      "type": "string",
+      "pattern": "^(mhs\\.[a-z_]+(\\.[a-z_]+)*|cap\\.[a-z0-9_.-]+\\.v[0-9]+)$",
+      "description": "For a deprecated class: the protocol method or class that replaces it (CAP-040)."
+    },
+    "x-vendor": {
+      "type": "object"
+    },
+    "limits": {
+      "$ref": "defs.schema.json#/$defs/limitMap",
+      "description": "Class limits keyed by limit path: {path: {min,max,allowed,unit,reason,...}}. Bindings, device envelopes and operator overlays may narrow but never widen them; input_schema bounds never exceed them."
+    },
+    "requires_permit": {
+      "type": "boolean",
+      "description": "True when invoking this class needs a permit/approval (R2/R3 or process-gated)."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "domain": {
+            "const": "world"
+          }
+        },
+        "required": [
+          "domain"
+        ]
+      },
+      "then": {
+        "properties": {
+          "modes": {
+            "items": {
+              "enum": [
+                "simulated",
+                "hybrid",
+                "replay"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

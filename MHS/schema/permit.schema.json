@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/permit.schema.json",
+  "title": "OpenMHS permit",
+  "description": "Result of mhs.safety.permit: a single-use authorisation bound to device, capability, resource, exact input digest, principal and TTL. An endpoint MUST reject a permit whose input_digest does not equal the digest of the command input it accompanies. The shape matches the live SDK output (top-level identity fields repeated in scope).",
+  "type": "object",
+  "required": ["permit_id", "capability_id", "input_digest", "expires_at", "approvals"],
+  "additionalProperties": false,
+  "properties": {
+    "permit_id": { "type": "string", "pattern": "^permit_[A-Za-z0-9_]+$" },
+    "capability_id": { "$ref": "defs.schema.json#/$defs/capabilityId" },
+    "resource": { "$ref": "defs.schema.json#/$defs/resourceId" },
+    "input_digest": { "$ref": "defs.schema.json#/$defs/digest" },
+    "expires_at": { "$ref": "defs.schema.json#/$defs/rfc3339" },
+    "single_use": { "type": "boolean" },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "device_id": { "$ref": "defs.schema.json#/$defs/deviceId" },
+        "capability_id": { "$ref": "defs.schema.json#/$defs/capabilityId" },
+        "resource": { "$ref": "defs.schema.json#/$defs/resourceId" },
+        "input_digest": { "$ref": "defs.schema.json#/$defs/digest" },
+        "principal": { "type": "string", "minLength": 1 },
+        "expires_at": { "$ref": "defs.schema.json#/$defs/rfc3339" },
+        "single_use": { "type": "boolean" },
+        "session_id": { "type": "string" }
+      }
+    },
+    "approvals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["principal"],
+        "additionalProperties": false,
+        "properties": {
+          "principal": { "type": "string", "minLength": 1 },
+          "method": { "type": "string", "enum": ["human_click", "policy_rule", "dual_control", "auto"] },
+          "approved_at": { "$ref": "defs.schema.json#/$defs/rfc3339" },
+          "evidence_ref": { "type": "string" },
+          "permit_id": { "type": "string" }
+        }
+      }
+    },
+    "evidence": {
+      "description": "Evidence-chain link of the audit receipt that recorded the approval (SAFE-035).",
+      "anyOf": [
+        { "$ref": "defs.schema.json#/$defs/evidenceLink" },
+        { "type": "null" }
+      ]
+    }
+  }
+}

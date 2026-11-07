@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/receipt.schema.json",
+  "title": "OpenMHS receipt",
+  "description": "The immutable record returned by mhs.command, mhs.resource.write, mhs.restore, mhs.safety.* and mhs.operations.*. Receipts are hash-chained into the endpoint evidence log.",
+  "type": "object",
+  "required": ["receipt_id", "command_id", "session_id", "endpoint_id", "device_id", "capability_id", "input_digest", "status", "mode", "accepted_at"],
+  "additionalProperties": false,
+  "properties": {
+    "receipt_id": { "$ref": "defs.schema.json#/$defs/ulid" },
+    "command_id": { "$ref": "defs.schema.json#/$defs/ulid" },
+    "operation_id": { "type": "string", "pattern": "^op_[A-Za-z0-9]+$" },
+    "session_id": { "type": "string", "pattern": "^mhs_s_[A-Za-z0-9]+$" },
+    "endpoint_id": { "$ref": "defs.schema.json#/$defs/endpointId" },
+    "device_id": { "$ref": "defs.schema.json#/$defs/deviceId" },
+    "capability_id": { "$ref": "defs.schema.json#/$defs/capabilityId" },
+    "resource_ids": { "type": "array", "items": { "$ref": "defs.schema.json#/$defs/resourceId" } },
+    "input_digest": { "$ref": "defs.schema.json#/$defs/digest" },
+    "status": { "$ref": "defs.schema.json#/$defs/receiptStatus" },
+    "mode": { "$ref": "defs.schema.json#/$defs/mode" },
+    "principal": { "$ref": "defs.schema.json#/$defs/principal" },
+    "accepted_at": { "$ref": "defs.schema.json#/$defs/rfc3339" },
+    "started_at": { "$ref": "defs.schema.json#/$defs/rfc3339" },
+    "ended_at": { "$ref": "defs.schema.json#/$defs/rfc3339" },
+    "state_revision_before": { "$ref": "defs.schema.json#/$defs/revisionValue" },
+    "state_revision_after": { "$ref": "defs.schema.json#/$defs/revisionValue" },
+    "state_hash_after": { "$ref": "defs.schema.json#/$defs/digest" },
+    "output": { "type": ["object", "array", "string", "number", "boolean", "null"] },
+    "effects": { "type": "array", "items": { "$ref": "defs.schema.json#/$defs/effect" } },
+    "progress": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "percent": { "type": "number", "minimum": 0, "maximum": 100 },
+        "ticks": { "type": "integer", "minimum": 0 },
+        "message": { "type": "string" }
+      }
+    },
+    "telemetry_ref": { "type": "string" },
+    "artifacts": { "type": "array", "items": { "type": "object" } },
+    "error": { "$ref": "defs.schema.json#/$defs/error" },
+    "approvals": { "type": "array", "items": { "$ref": "defs.schema.json#/$defs/approval" } },
+    "cancellation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "requested_at": { "$ref": "defs.schema.json#/$defs/rfc3339" },
+        "requested_by": { "type": "string" },
+        "reason": { "type": "string" },
+        "safe_state_achieved": { "type": "boolean" }
+      }
+    },
+    "replayed": { "type": "boolean", "description": "True when returned from the idempotency store, not re-executed." },
+    "seed": { "type": "integer", "description": "Simulation seed actually used; MUST be echoed for determinism claims." },
+    "evidence": { "$ref": "defs.schema.json#/$defs/evidenceLink" },
+    "redacted_fields": { "type": "array", "items": { "type": "string" } },
+    "x-vendor": { "type": "object" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "enum": ["rejected", "failed", "unknown"] } }, "required": ["status"] },
+      "then": { "required": ["error"] }
+    },
+    {
+      "if": { "properties": { "status": { "enum": ["accepted", "running"] } }, "required": ["status"] },
+      "then": { "required": ["operation_id"] }
+    }
+  ]
+}

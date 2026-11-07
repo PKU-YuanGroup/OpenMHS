@@ -1,0 +1,6891 @@
+{
+  "mhs_capabilities": "1.0",
+  "spec_version": "0.9",
+  "generated_by": "spec-author",
+  "source": "MHS/spec/03-capability-registry.md",
+  "capability_count": 63,
+  "resource_kinds": [
+    {
+      "kind": "actuation.pump",
+      "title": "Pump actuator",
+      "see_also": [
+        "fluid.pump"
+      ]
+    },
+    {
+      "kind": "actuation.valve",
+      "title": "Valve actuator",
+      "see_also": [
+        "fluid.valve"
+      ]
+    },
+    {
+      "kind": "compute.node",
+      "title": "Compute node"
+    },
+    {
+      "kind": "device",
+      "title": "Whole device (generic)"
+    },
+    {
+      "kind": "fluid.pump",
+      "title": "Fluid-handling pump",
+      "see_also": [
+        "actuation.pump"
+      ]
+    },
+    {
+      "kind": "fluid.valve",
+      "title": "Fluid-routing valve",
+      "see_also": [
+        "actuation.valve"
+      ]
+    },
+    {
+      "kind": "host.process",
+      "title": "Host process"
+    },
+    {
+      "kind": "instrument",
+      "title": "Instrument (generic)"
+    },
+    {
+      "kind": "instrument.balance",
+      "title": "Balance or scale"
+    },
+    {
+      "kind": "instrument.dmm",
+      "title": "Digital multimeter"
+    },
+    {
+      "kind": "instrument.flowmeter",
+      "title": "Flowmeter"
+    },
+    {
+      "kind": "instrument.gauge",
+      "title": "Pressure or vacuum gauge"
+    },
+    {
+      "kind": "instrument.incubator",
+      "title": "Incubator instrument",
+      "see_also": [
+        "lab.incubator"
+      ]
+    },
+    {
+      "kind": "instrument.microscope",
+      "title": "Microscope"
+    },
+    {
+      "kind": "instrument.smu",
+      "title": "Source-measure unit"
+    },
+    {
+      "kind": "instrument.spectrometer",
+      "title": "Spectrometer"
+    },
+    {
+      "kind": "instrument.spectrophotometer",
+      "title": "Spectrophotometer or plate reader"
+    },
+    {
+      "kind": "instrument.thermometer",
+      "title": "Thermometer"
+    },
+    {
+      "kind": "io.digital",
+      "title": "Digital I/O line"
+    },
+    {
+      "kind": "io.gpio",
+      "title": "General-purpose I/O pin"
+    },
+    {
+      "kind": "lab.centrifuge",
+      "title": "Centrifuge"
+    },
+    {
+      "kind": "lab.incubator",
+      "title": "Lab incubator",
+      "see_also": [
+        "instrument.incubator"
+      ]
+    },
+    {
+      "kind": "lab.labware",
+      "title": "Labware (plate, tube, reservoir)"
+    },
+    {
+      "kind": "lab.liquid_handler",
+      "title": "Liquid handler"
+    },
+    {
+      "kind": "lab.pipette",
+      "title": "Pipette"
+    },
+    {
+      "kind": "lab.plate_sealer",
+      "title": "Plate sealer"
+    },
+    {
+      "kind": "lab.sample",
+      "title": "Sample or plate in transport"
+    },
+    {
+      "kind": "lab.storage",
+      "title": "Sample storage"
+    },
+    {
+      "kind": "lab.thermal_block",
+      "title": "Thermal block or cycler"
+    },
+    {
+      "kind": "light.source",
+      "title": "Light source",
+      "see_also": [
+        "optics.source",
+        "optics.laser"
+      ]
+    },
+    {
+      "kind": "motion.axis",
+      "title": "Motion axis or stage"
+    },
+    {
+      "kind": "optics.laser",
+      "title": "Laser",
+      "see_also": [
+        "optics.source",
+        "light.source"
+      ]
+    },
+    {
+      "kind": "optics.mirror",
+      "title": "Optical mirror mount"
+    },
+    {
+      "kind": "optics.shutter",
+      "title": "Optical shutter"
+    },
+    {
+      "kind": "optics.source",
+      "title": "Optical source",
+      "see_also": [
+        "light.source",
+        "optics.laser"
+      ]
+    },
+    {
+      "kind": "optics.stage",
+      "title": "Optical positioning stage"
+    },
+    {
+      "kind": "process.controller",
+      "title": "Process controller"
+    },
+    {
+      "kind": "robot.arm",
+      "title": "Robot arm"
+    },
+    {
+      "kind": "robot.gripper",
+      "title": "Gripper or end effector"
+    },
+    {
+      "kind": "robot.mobile_base",
+      "title": "Mobile robot base"
+    },
+    {
+      "kind": "sensor",
+      "title": "Sensor (generic)"
+    },
+    {
+      "kind": "sensor.camera",
+      "title": "Camera"
+    },
+    {
+      "kind": "sensor.depth",
+      "title": "Depth sensor or lidar"
+    },
+    {
+      "kind": "sensor.flow",
+      "title": "Flow sensor"
+    },
+    {
+      "kind": "sensor.force_torque",
+      "title": "Force-torque sensor"
+    },
+    {
+      "kind": "sensor.imu",
+      "title": "Inertial measurement unit"
+    },
+    {
+      "kind": "sensor.optical",
+      "title": "Optical sensor"
+    },
+    {
+      "kind": "sensor.pressure",
+      "title": "Pressure sensor"
+    },
+    {
+      "kind": "sensor.temperature",
+      "title": "Temperature sensor"
+    },
+    {
+      "kind": "thermal.zone",
+      "title": "Thermal zone"
+    },
+    {
+      "kind": "world.sim",
+      "title": "Simulated world (Sim profile)"
+    }
+  ],
+  "capabilities": [
+    {
+      "capability_id": "cap.world.reset.v1",
+      "title": "Reset a simulated world",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "sim",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "world.sim"
+      ],
+      "modes": [
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Reset the simulated world to a scenario start state and return the initial observation. When a seed is supplied the endpoint records it in the receipt; otherwise the endpoint's declared default seed applies.",
+      "tags": [
+        "world reset",
+        "simulation start",
+        "scenario initialisation",
+        "seeded reset",
+        "episode start"
+      ],
+      "units": {},
+      "effects": [
+        "simulation.advance"
+      ],
+      "hazards": [],
+      "determinism": "seeded",
+      "concurrency": "exclusive",
+      "risk_class": "R0",
+      "domain": "world",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "scenario": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "options": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "observation": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          },
+          "seed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "observation",
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "seed": 42,
+          "scenario": "default"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 30000,
+        "cancellable": false
+      },
+      "notes": "A reset advances the device revision. For determinism kind 'seeded', seed_control='reset_required' means the seed MUST be supplied here."
+    },
+    {
+      "capability_id": "cap.world.step.v1",
+      "title": "Advance a simulated world",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "sim",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "world.sim"
+      ],
+      "modes": [
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Advance the simulated world by a bounded number of fixed timesteps, optionally applying an action for each step, and return the resulting observation and terminal flags.",
+      "tags": [
+        "simulation step",
+        "advance time",
+        "apply action",
+        "physics tick",
+        "reinforcement learning step"
+      ],
+      "units": {
+        "reward": "1"
+      },
+      "effects": [
+        "simulation.advance"
+      ],
+      "hazards": [],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R0",
+      "domain": "world",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "ticks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000
+          },
+          "action": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "observation": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          },
+          "reward": {
+            "type": "number",
+            "x-mhs-unit": "1"
+          },
+          "terminated": {
+            "type": "boolean"
+          },
+          "truncated": {
+            "type": "boolean"
+          },
+          "tick": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "state_hash": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "observation",
+          "tick",
+          "state_hash"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "ticks": 10
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 5000,
+        "cancellable": false,
+        "rate_limit": {
+          "max_per_second": 100,
+          "burst": 10
+        }
+      },
+      "notes": "ticks counts fixed simulated timesteps (fidelity.timestep_ms). The receipt's state_hash_after is the state hash after the last tick."
+    },
+    {
+      "capability_id": "cap.world.state.v1",
+      "title": "Read a simulated world state",
+      "verb": "read",
+      "status": "deprecated",
+      "profile": "sim",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "world.sim"
+      ],
+      "modes": [
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Return the complete normative state of a simulated world together with its revision and canonical state hash.",
+      "tags": [
+        "world state",
+        "simulation observation",
+        "state snapshot",
+        "read world",
+        "deterministic state"
+      ],
+      "units": {},
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "none"
+      ],
+      "determinism": "exact",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "world",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "maxItems": 64
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          },
+          "state_hash": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sampled_at": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "state",
+          "state_hash",
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "fields": [
+            "position"
+          ]
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 2000,
+        "cancellable": false
+      },
+      "notes": "Deprecated in 0.9: Duplicate of the protocol method mhs.resource.read. The class stays valid and callable for its deprecation window; new drivers use the protocol method.",
+      "x-mhs-replaced-by": "mhs.resource.read"
+    },
+    {
+      "capability_id": "cap.world.snapshot.v1",
+      "title": "Take a world snapshot",
+      "verb": "invoke",
+      "status": "deprecated",
+      "profile": "sim",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "world.sim"
+      ],
+      "modes": [
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Capture a restorable snapshot of the complete world state, including the revision and state hash, for deterministic restore later.",
+      "tags": [
+        "snapshot",
+        "save state",
+        "checkpoint",
+        "restore point",
+        "deterministic capture"
+      ],
+      "units": {},
+      "effects": [
+        "simulation.advance"
+      ],
+      "hazards": [],
+      "determinism": "exact",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "world",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "snapshot": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          },
+          "snapshot_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "snapshot",
+          "snapshot_digest",
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {}
+      ],
+      "constraints": {
+        "max_duration_ms": 10000,
+        "cancellable": false
+      },
+      "notes": "Deprecated in 0.9: Duplicate of the protocol method mhs.snapshot (Sim profile). The class stays valid and callable for its deprecation window; new drivers use the protocol method. Requires fidelity.snapshot_restore = true; otherwise MHS.MODE.SNAPSHOT_UNSUPPORTED.",
+      "x-mhs-replaced-by": "mhs.snapshot"
+    },
+    {
+      "capability_id": "cap.world.restore.v1",
+      "title": "Restore a world snapshot",
+      "verb": "invoke",
+      "status": "deprecated",
+      "profile": "sim",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "world.sim"
+      ],
+      "modes": [
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Restore the world to a previously captured snapshot, replacing the current state; the device revision advances and the state hash MUST equal the snapshot's.",
+      "tags": [
+        "restore",
+        "load state",
+        "rollback",
+        "checkpoint restore",
+        "deterministic rewind"
+      ],
+      "units": {},
+      "effects": [
+        "simulation.advance"
+      ],
+      "hazards": [],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R0",
+      "domain": "world",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "snapshot": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          }
+        },
+        "required": [
+          "snapshot"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "state_hash": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "revision",
+          "state_hash"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "snapshot": {
+            "belt": {
+              "position_mm": 0
+            }
+          }
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 30000,
+        "cancellable": false
+      },
+      "notes": "Deprecated in 0.9: Duplicate of the protocol method mhs.restore (Sim profile). The class stays valid and callable for its deprecation window; new drivers use the protocol method. Only valid in simulated or replay mode and only when fidelity.snapshot_restore is true.",
+      "x-mhs-replaced-by": "mhs.restore"
+    },
+    {
+      "capability_id": "cap.world.render.v1",
+      "title": "Render a simulation frame",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "sim",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "world.sim"
+      ],
+      "modes": [
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Render the current simulated world through a named camera and return an image artifact reference. Rendering does not advance simulated time.",
+      "tags": [
+        "render",
+        "camera",
+        "visualisation",
+        "image capture",
+        "headless rendering"
+      ],
+      "units": {},
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [],
+      "determinism": "exact",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "world",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "camera": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8192
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8192
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "png",
+              "jpeg",
+              "rgb_array"
+            ]
+          }
+        },
+        "required": [
+          "width",
+          "height"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "image_ref": {
+            "type": "string"
+          },
+          "media_type": {
+            "type": "string"
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "image_ref",
+          "width",
+          "height"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "camera": "overview",
+          "width": 640,
+          "height": 480,
+          "format": "png"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 30000,
+        "cancellable": false
+      }
+    },
+    {
+      "capability_id": "cap.world.seed.v1",
+      "title": "Set the world RNG seed",
+      "verb": "write",
+      "status": "stable",
+      "profile": "sim",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "world.sim"
+      ],
+      "modes": [
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Set the seed used by the simulated world's random number generators for subsequent steps, without resetting the world. The accepted seed is echoed in the receipt.",
+      "tags": [
+        "seed",
+        "random seed",
+        "reproducibility",
+        "determinism control",
+        "rng"
+      ],
+      "units": {},
+      "effects": [
+        "simulation.advance"
+      ],
+      "hazards": [],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R0",
+      "domain": "world",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "seed"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "accepted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "seed",
+          "accepted"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "seed": 7
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 2000,
+        "cancellable": false
+      },
+      "notes": "Only meaningful when fidelity.determinism.seed_control is parameter or reset_required."
+    },
+    {
+      "capability_id": "cap.motion.joint_position.v1",
+      "title": "Move joints to positions",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "robot.arm",
+        "motion.axis"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Command one or more actuated joints to target positions in joint space, optionally over a declared duration, and report whether the target was reached within tolerance.",
+      "tags": [
+        "joint motion",
+        "move arm",
+        "joint position",
+        "trajectory",
+        "position control"
+      ],
+      "units": {
+        "duration_s": "s",
+        "joint_positions": "rad",
+        "tolerance_rad": "rad"
+      },
+      "effects": [
+        "motion.joint"
+      ],
+      "hazards": [
+        "pinch",
+        "collision",
+        "unexpected_contact"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "motion",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "joint_positions": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "rad"
+            },
+            "minItems": 1,
+            "maxItems": 64
+          },
+          "duration_s": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 0
+          },
+          "block": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "joint_positions"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "reached": {
+            "type": "boolean"
+          },
+          "joint_positions": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "rad"
+            }
+          },
+          "tolerance_rad": {
+            "type": "number",
+            "x-mhs-unit": "rad",
+            "minimum": 0
+          },
+          "duration_ms": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "reached",
+          "joint_positions"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "joint_positions": [
+            0.0,
+            -0.5,
+            1.2
+          ],
+          "duration_s": 2.0
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 120000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 2000,
+      "limits": {
+        "joint_positions": {
+          "reason": "joint travel limits are declared per binding"
+        }
+      },
+      "notes": "Position limits, velocity limits and joint-order conventions MUST be declared per binding in safety.envelope."
+    },
+    {
+      "capability_id": "cap.motion.joint_velocity.v1",
+      "title": "Command joint velocities",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "robot.arm",
+        "motion.axis"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Command continuous joint velocities for a bounded duration. The operation stops at the end of the duration or when cancelled.",
+      "tags": [
+        "joint velocity",
+        "velocity control",
+        "continuous motion",
+        "jog",
+        "bounded motion"
+      ],
+      "units": {
+        "duration_s": "s",
+        "joint_velocities": "rad/s"
+      },
+      "effects": [
+        "motion.joint"
+      ],
+      "hazards": [
+        "pinch",
+        "collision"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "motion",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "joint_velocities": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "rad/s"
+            },
+            "minItems": 1,
+            "maxItems": 64
+          },
+          "duration_s": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 0,
+            "maximum": 60
+          }
+        },
+        "required": [
+          "joint_velocities",
+          "duration_s"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "applied": {
+            "type": "boolean"
+          },
+          "joint_velocities": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "rad/s"
+            }
+          }
+        },
+        "required": [
+          "applied"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "joint_velocities": [
+            0.1,
+            0.0,
+            -0.1
+          ],
+          "duration_s": 1.0
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 60000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 1000,
+      "limits": {
+        "joint_velocities": {
+          "reason": "velocity limits are declared per binding"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.motion.joint_torque.v1",
+      "title": "Command joint torques",
+      "verb": "invoke",
+      "status": "experimental",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "robot.arm"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Apply commanded joint torques for a bounded duration for compliant or force-controlled motion. Torque magnitude is bounded by the binding safety envelope.",
+      "tags": [
+        "torque control",
+        "compliance",
+        "force control",
+        "joint torque",
+        "impedance"
+      ],
+      "units": {
+        "duration_s": "s",
+        "joint_torques": "N.m"
+      },
+      "effects": [
+        "motion.joint"
+      ],
+      "hazards": [
+        "pinch",
+        "high_force",
+        "collision"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R2",
+      "domain": "motion",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "joint_torques": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "N.m"
+            },
+            "minItems": 1,
+            "maxItems": 64
+          },
+          "duration_s": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 0,
+            "maximum": 10
+          }
+        },
+        "required": [
+          "joint_torques",
+          "duration_s"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "applied": {
+            "type": "boolean"
+          },
+          "joint_torques": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "N.m"
+            }
+          }
+        },
+        "required": [
+          "applied"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "joint_torques": [
+            0.5,
+            0.0
+          ],
+          "duration_s": 0.5
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 10000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 500,
+      "limits": {
+        "joint_torques": {
+          "reason": "torque limits are declared per binding; exceeding them is MHS.SAFETY.ENVELOPE_VIOLATION"
+        }
+      },
+      "requires_permit": true
+    },
+    {
+      "capability_id": "cap.motion.cartesian_pose.v1",
+      "title": "Move to a Cartesian pose",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "robot.arm"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Move the tool centre point to a Cartesian position and orientation in a named frame. The endpoint solves inverse kinematics; an unreachable target is rejected before motion.",
+      "tags": [
+        "cartesian motion",
+        "move to pose",
+        "inverse kinematics",
+        "tool centre point",
+        "waypoint"
+      ],
+      "units": {
+        "duration_s": "s",
+        "orientation.pitch": "rad",
+        "orientation.roll": "rad",
+        "orientation.yaw": "rad",
+        "position.x": "mm",
+        "position.y": "mm",
+        "position.z": "mm",
+        "tolerance_mm": "mm"
+      },
+      "effects": [
+        "motion.cartesian"
+      ],
+      "hazards": [
+        "pinch",
+        "collision",
+        "unreachable_target"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "motion",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "x-mhs-unit": "mm"
+              },
+              "y": {
+                "type": "number",
+                "x-mhs-unit": "mm"
+              },
+              "z": {
+                "type": "number",
+                "x-mhs-unit": "mm"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false
+          },
+          "orientation": {
+            "type": "object",
+            "properties": {
+              "roll": {
+                "type": "number",
+                "x-mhs-unit": "rad"
+              },
+              "pitch": {
+                "type": "number",
+                "x-mhs-unit": "rad"
+              },
+              "yaw": {
+                "type": "number",
+                "x-mhs-unit": "rad"
+              }
+            },
+            "required": [
+              "roll",
+              "pitch",
+              "yaw"
+            ],
+            "additionalProperties": false
+          },
+          "frame": {
+            "type": "string",
+            "enum": [
+              "base",
+              "tool"
+            ]
+          },
+          "duration_s": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "position"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "reached": {
+            "type": "boolean"
+          },
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "x-mhs-unit": "mm"
+              },
+              "y": {
+                "type": "number",
+                "x-mhs-unit": "mm"
+              },
+              "z": {
+                "type": "number",
+                "x-mhs-unit": "mm"
+              }
+            },
+            "additionalProperties": false
+          },
+          "tolerance_mm": {
+            "type": "number",
+            "x-mhs-unit": "mm",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "reached"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "position": {
+            "x": 300,
+            "y": 0,
+            "z": 250
+          },
+          "orientation": {
+            "roll": 0,
+            "pitch": 3.14159,
+            "yaw": 0
+          },
+          "frame": "base",
+          "duration_s": 3.0
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 120000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 3000,
+      "limits": {
+        "position": {
+          "reason": "workspace bounds are declared per binding"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.motion.cartesian_twist.v1",
+      "title": "Command a Cartesian twist",
+      "verb": "invoke",
+      "status": "experimental",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "robot.arm"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Move with a commanded linear and angular velocity for a bounded duration, in a named frame.",
+      "tags": [
+        "velocity motion",
+        "twist",
+        "cartesian velocity",
+        "teleoperation",
+        "servo"
+      ],
+      "units": {
+        "angular.x": "rad/s",
+        "angular.y": "rad/s",
+        "angular.z": "rad/s",
+        "duration_s": "s",
+        "linear.x": "m/s",
+        "linear.y": "m/s",
+        "linear.z": "m/s",
+        "stopped_position.x": "mm",
+        "stopped_position.y": "mm",
+        "stopped_position.z": "mm"
+      },
+      "effects": [
+        "motion.cartesian"
+      ],
+      "hazards": [
+        "pinch",
+        "collision"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "motion",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "linear": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "x-mhs-unit": "m/s"
+              },
+              "y": {
+                "type": "number",
+                "x-mhs-unit": "m/s"
+              },
+              "z": {
+                "type": "number",
+                "x-mhs-unit": "m/s"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false
+          },
+          "angular": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "x-mhs-unit": "rad/s"
+              },
+              "y": {
+                "type": "number",
+                "x-mhs-unit": "rad/s"
+              },
+              "z": {
+                "type": "number",
+                "x-mhs-unit": "rad/s"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false
+          },
+          "frame": {
+            "type": "string",
+            "enum": [
+              "base",
+              "tool"
+            ]
+          },
+          "duration_s": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 0.01,
+            "maximum": 60
+          }
+        },
+        "required": [
+          "linear",
+          "angular",
+          "duration_s"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "applied": {
+            "type": "boolean"
+          },
+          "stopped_position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "x-mhs-unit": "mm"
+              },
+              "y": {
+                "type": "number",
+                "x-mhs-unit": "mm"
+              },
+              "z": {
+                "type": "number",
+                "x-mhs-unit": "mm"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "applied"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "linear": {
+            "x": 0.05,
+            "y": 0,
+            "z": 0
+          },
+          "angular": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "frame": "tool",
+          "duration_s": 1.0
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 60000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 1000,
+      "limits": {
+        "linear": {
+          "reason": "speed limits are declared per binding"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.motion.mobile_base.v1",
+      "title": "Drive a mobile base",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "robot.mobile_base"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Drive a mobile base with a commanded linear and angular velocity for a bounded duration, or to a target pose. Obstacle and zone limits are enforced by the binding safety envelope.",
+      "tags": [
+        "mobile robot",
+        "base motion",
+        "drive",
+        "navigation",
+        "differential drive"
+      ],
+      "units": {
+        "angular_velocity": "rad/s",
+        "distance_m": "m",
+        "duration_s": "s",
+        "heading_rad": "rad",
+        "linear_velocity": "m/s"
+      },
+      "effects": [
+        "motion.mobile"
+      ],
+      "hazards": [
+        "collision",
+        "person_in_workspace",
+        "tip_over"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R2",
+      "domain": "motion",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "linear_velocity": {
+            "type": "number",
+            "x-mhs-unit": "m/s"
+          },
+          "angular_velocity": {
+            "type": "number",
+            "x-mhs-unit": "rad/s"
+          },
+          "duration_s": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 0,
+            "maximum": 300
+          }
+        },
+        "required": [
+          "linear_velocity",
+          "angular_velocity",
+          "duration_s"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "distance_m": {
+            "type": "number",
+            "x-mhs-unit": "m",
+            "minimum": 0
+          },
+          "heading_rad": {
+            "type": "number",
+            "x-mhs-unit": "rad"
+          },
+          "stopped": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "distance_m",
+          "heading_rad"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "linear_velocity": 0.2,
+          "angular_velocity": 0.0,
+          "duration_s": 5
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 300000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 5000,
+      "limits": {
+        "linear_velocity": {
+          "reason": "maximum transit speed is declared per binding"
+        },
+        "angular_velocity": {
+          "reason": "maximum turn rate is declared per binding"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.motion.stop.v1",
+      "title": "Stop motion safely",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "robot.arm",
+        "robot.mobile_base",
+        "motion.axis"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Stop all motion on the resource with a declared deceleration profile and report the stopping position. This capability is always cancellable=false and is exempt from rate limiting.",
+      "tags": [
+        "stop",
+        "halt",
+        "decelerate",
+        "safe stop",
+        "emergency deceleration"
+      ],
+      "units": {
+        "deceleration": "m/s2"
+      },
+      "effects": [
+        "motion.joint"
+      ],
+      "hazards": [
+        "collision"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "motion",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "deceleration": {
+            "type": "number",
+            "x-mhs-unit": "m/s2",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "stopped": {
+            "type": "boolean"
+          },
+          "stopped_at": {
+            "type": "string"
+          },
+          "stopped_position": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          }
+        },
+        "required": [
+          "stopped"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "deceleration": 2.0
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 5000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 200,
+      "notes": "motion.stop is the declared safe-state achievement for many devices; endpoints MUST NOT rate-limit or permit-gate it."
+    },
+    {
+      "capability_id": "cap.motion.home.v1",
+      "title": "Home the axes",
+      "verb": "invoke",
+      "status": "experimental",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "robot.arm",
+        "motion.axis"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Drive axes to their declared home position or reference switch, establishing the coordinate reference needed by other motion capabilities.",
+      "tags": [
+        "homing",
+        "reference",
+        "calibration motion",
+        "home position",
+        "axis setup"
+      ],
+      "units": {
+        "joint_positions": "rad",
+        "speed_scale": "1"
+      },
+      "effects": [
+        "motion.joint"
+      ],
+      "hazards": [
+        "pinch",
+        "collision"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "motion",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "axes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "maxItems": 32
+          },
+          "speed_scale": {
+            "type": "number",
+            "x-mhs-unit": "1",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "homed": {
+            "type": "boolean"
+          },
+          "joint_positions": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "rad"
+            }
+          },
+          "axes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 64
+            }
+          }
+        },
+        "required": [
+          "homed"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "axes": [
+            "x",
+            "y"
+          ],
+          "speed_scale": 0.5
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 300000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 15000,
+      "notes": "Homing moves are motion; they are NOT a substitute for mhs.safety.reset and MUST be rejected while the device is latched."
+    },
+    {
+      "capability_id": "cap.motion.estop.v1",
+      "title": "Engage the device emergency stop",
+      "verb": "invoke",
+      "status": "deprecated",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "robot.arm",
+        "robot.mobile_base",
+        "motion.axis",
+        "world.sim"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Engage the device-level emergency stop: motion stops within the declared latency, outputs transition to the declared safe state, and the device latches until mhs.safety.reset.",
+      "tags": [
+        "emergency stop",
+        "e-stop",
+        "halt device",
+        "safety stop",
+        "latch"
+      ],
+      "units": {},
+      "effects": [
+        "safety.estop"
+      ],
+      "hazards": [
+        "collision",
+        "person_in_workspace",
+        "unexpected_energy"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R0",
+      "domain": "motion",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "reason"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "engaged": {
+            "type": "boolean"
+          },
+          "latched": {
+            "type": "boolean"
+          },
+          "latency_ms": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "safe_state_achieved": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "engaged",
+          "latched"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "reason": "operator requested stop"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 2000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 50,
+      "notes": "Deprecated in 0.9: Duplicate of the protocol method mhs.safety.estop; endpoints route it to the same latch. The class stays valid and callable for its deprecation window; new drivers use the protocol method. motion.estop is the capability-level expression of mhs.safety.estop. Both MUST reach the same latch. MHS is never a safety-rated channel (MHS-000 6.3).",
+      "x-mhs-replaced-by": "mhs.safety.estop"
+    },
+    {
+      "capability_id": "cap.manipulation.grasp.v1",
+      "title": "Grasp an object",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "robot.gripper",
+        "robot.arm"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Close the gripper on a target object with a bounded force and report the achieved grasp width. A failed grasp is a completed operation with grasped=false, not a silent success.",
+      "tags": [
+        "grasp",
+        "gripper close",
+        "pick object",
+        "force grasp",
+        "contact"
+      ],
+      "units": {
+        "force": "N",
+        "width": "mm",
+        "width_mm": "mm"
+      },
+      "effects": [
+        "manipulation.grasp"
+      ],
+      "hazards": [
+        "pinch",
+        "object_damage",
+        "collision"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "manipulation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "force": {
+            "type": "number",
+            "x-mhs-unit": "N",
+            "minimum": 0
+          },
+          "width": {
+            "type": "number",
+            "x-mhs-unit": "mm",
+            "minimum": 0
+          },
+          "approach": {
+            "type": "string",
+            "enum": [
+              "top",
+              "side",
+              "front"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "grasped": {
+            "type": "boolean"
+          },
+          "width_mm": {
+            "type": "number",
+            "x-mhs-unit": "mm",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "grasped"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "force": 20,
+          "width": 40,
+          "approach": "top"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 30000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 800,
+      "limits": {
+        "force": {
+          "reason": "grasp force limit is declared per binding"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.manipulation.release.v1",
+      "title": "Release a grasped object",
+      "verb": "invoke",
+      "status": "experimental",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "robot.gripper"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Open the gripper to release the held object, optionally to a declared opening width, and report the achieved width.",
+      "tags": [
+        "release",
+        "gripper open",
+        "drop object",
+        "ungrasp",
+        "place handoff"
+      ],
+      "units": {
+        "open_width": "mm",
+        "width_mm": "mm"
+      },
+      "effects": [
+        "manipulation.release"
+      ],
+      "hazards": [
+        "object_damage",
+        "drop"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "manipulation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "open_width": {
+            "type": "number",
+            "x-mhs-unit": "mm",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "released": {
+            "type": "boolean"
+          },
+          "width_mm": {
+            "type": "number",
+            "x-mhs-unit": "mm",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "released"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "open_width": 60
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 10000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 400
+    },
+    {
+      "capability_id": "cap.manipulation.place.v1",
+      "title": "Place an object at a target",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "robot.arm",
+        "robot.gripper"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Place the held object at a declared target location with an approach height, release the gripper and verify the object is no longer held.",
+      "tags": [
+        "place",
+        "put down",
+        "deposit",
+        "assembly",
+        "position object"
+      ],
+      "units": {
+        "placement_height": "mm"
+      },
+      "effects": [
+        "manipulation.grasp",
+        "material.move"
+      ],
+      "hazards": [
+        "collision",
+        "object_damage",
+        "sample_loss"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R2",
+      "domain": "manipulation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          },
+          "placement_height": {
+            "type": "number",
+            "x-mhs-unit": "mm",
+            "minimum": 0
+          },
+          "release_after": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "target"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "placed": {
+            "type": "boolean"
+          },
+          "target_revision": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "placed"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "target": {
+            "location": "tray_a"
+          },
+          "placement_height": 10,
+          "release_after": true
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 120000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 4000
+    },
+    {
+      "capability_id": "cap.manipulation.pick.v1",
+      "title": "Pick an object from a source",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "robot.arm",
+        "robot.gripper"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Move to a declared source, grasp the object, lift it by a declared clearance and verify the grasp still holds. Combines cartesian motion and grasp under one receipt.",
+      "tags": [
+        "pick",
+        "pick and place",
+        "retrieve",
+        "lift object",
+        "bin picking"
+      ],
+      "units": {
+        "lift_clearance": "mm"
+      },
+      "effects": [
+        "manipulation.grasp",
+        "motion.cartesian"
+      ],
+      "hazards": [
+        "collision",
+        "object_damage",
+        "sample_loss"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R2",
+      "domain": "manipulation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          },
+          "approach": {
+            "type": "string",
+            "enum": [
+              "top",
+              "side",
+              "front"
+            ]
+          },
+          "lift_clearance": {
+            "type": "number",
+            "x-mhs-unit": "mm",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "source"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "grasped": {
+            "type": "boolean"
+          },
+          "object_id": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "lifted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "grasped"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "source": {
+            "location": "bin_1"
+          },
+          "approach": "top",
+          "lift_clearance": 50
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 180000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 6000
+    },
+    {
+      "capability_id": "cap.sensing.read.v1",
+      "title": "Read a sensor",
+      "verb": "read",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "sensor",
+        "sensor.imu",
+        "sensor.force_torque"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Read the current value of one or more sensor channels and return the values with a sampling timestamp and a monotone sequence number. Volatile channels are also available by subscription.",
+      "tags": [
+        "sensor read",
+        "telemetry",
+        "measurement",
+        "observation",
+        "channel value"
+      ],
+      "units": {},
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [],
+      "determinism": "statistical",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "sensing",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "maxItems": 64
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "values": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          },
+          "sampled_at": {
+            "type": "string"
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "values",
+          "sampled_at"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "fields": [
+            "temperature"
+          ]
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 2000,
+        "cancellable": false
+      }
+    },
+    {
+      "capability_id": "cap.sensing.image.v1",
+      "title": "Capture an image",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "sensor.camera"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Capture a single image from a named camera with a declared resolution and exposure and return an image artifact reference.",
+      "tags": [
+        "camera",
+        "image capture",
+        "snapshot",
+        "vision",
+        "photograph"
+      ],
+      "units": {
+        "exposure_ms": "ms"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "privacy"
+      ],
+      "determinism": "statistical",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "sensing",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "camera": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8192
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8192
+          },
+          "exposure_ms": {
+            "type": "number",
+            "x-mhs-unit": "ms",
+            "minimum": 0
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "png",
+              "jpeg",
+              "raw"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "image_ref": {
+            "type": "string"
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "media_type": {
+            "type": "string"
+          },
+          "exposure_ms": {
+            "type": "number",
+            "x-mhs-unit": "ms",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "image_ref",
+          "width",
+          "height"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "camera": "front",
+          "width": 1280,
+          "height": 720,
+          "exposure_ms": 10,
+          "format": "png"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 30000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 200
+    },
+    {
+      "capability_id": "cap.sensing.point_cloud.v1",
+      "title": "Capture a point cloud",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "sensor.depth"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Capture a depth point cloud over a declared range and return a point-cloud artifact reference with the point count and coordinate frame.",
+      "tags": [
+        "point cloud",
+        "depth",
+        "lidar",
+        "3d scan",
+        "range image"
+      ],
+      "units": {
+        "max_range": "mm",
+        "min_range": "mm"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "privacy"
+      ],
+      "determinism": "statistical",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "sensing",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "min_range": {
+            "type": "number",
+            "x-mhs-unit": "mm",
+            "minimum": 0
+          },
+          "max_range": {
+            "type": "number",
+            "x-mhs-unit": "mm",
+            "minimum": 0
+          },
+          "max_points": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000000
+          },
+          "frame": {
+            "type": "string",
+            "maxLength": 64
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "artifact_ref": {
+            "type": "string"
+          },
+          "point_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "frame": {
+            "type": "string",
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "artifact_ref",
+          "point_count"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "min_range": 100,
+          "max_range": 3000,
+          "max_points": 100000,
+          "frame": "camera"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 60000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 500
+    },
+    {
+      "capability_id": "cap.sensing.force_torque.v1",
+      "title": "Read a force/torque sensor",
+      "verb": "read",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "sensor.force_torque"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Read the current force and torque vector in a declared frame and return the wrench with its sampling timestamp.",
+      "tags": [
+        "force torque",
+        "wrench",
+        "contact force",
+        "load cell",
+        "six axis"
+      ],
+      "units": {
+        "force": "N",
+        "torque": "N.m"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "high_force"
+      ],
+      "determinism": "statistical",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "sensing",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "axes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "x",
+                "y",
+                "z",
+                "rx",
+                "ry",
+                "rz"
+              ]
+            },
+            "maxItems": 6
+          },
+          "frame": {
+            "type": "string",
+            "enum": [
+              "tool",
+              "base"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "force": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "N"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "torque": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "N.m"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "sampled_at": {
+            "type": "string"
+          },
+          "saturated": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "force",
+          "torque",
+          "sampled_at"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "frame": "tool"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 2000,
+        "cancellable": false
+      }
+    },
+    {
+      "capability_id": "cap.sensing.imu.v1",
+      "title": "Read an IMU",
+      "verb": "read",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "sensor.imu"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Read linear acceleration, angular velocity and orientation from an inertial measurement unit, with the declared reference frame and timestamp.",
+      "tags": [
+        "imu",
+        "accelerometer",
+        "gyroscope",
+        "orientation",
+        "inertial"
+      ],
+      "units": {
+        "angular_velocity": "rad/s",
+        "linear_acceleration": "m/s2",
+        "orientation.w": "1",
+        "orientation.x": "1",
+        "orientation.y": "1",
+        "orientation.z": "1"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [],
+      "determinism": "statistical",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "sensing",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "frame": {
+            "type": "string",
+            "enum": [
+              "body",
+              "world"
+            ]
+          }
+        },
+        "required": [
+          "frame"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "linear_acceleration": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "m/s2"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "angular_velocity": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "rad/s"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "orientation": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "x-mhs-unit": "1"
+              },
+              "y": {
+                "type": "number",
+                "x-mhs-unit": "1"
+              },
+              "z": {
+                "type": "number",
+                "x-mhs-unit": "1"
+              },
+              "w": {
+                "type": "number",
+                "x-mhs-unit": "1"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z",
+              "w"
+            ],
+            "additionalProperties": false
+          },
+          "sampled_at": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "linear_acceleration",
+          "angular_velocity",
+          "sampled_at"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "frame": "body"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 2000,
+        "cancellable": false
+      },
+      "notes": "Quaternion components are dimensionless (UCUM 1); the unit is carried here, not implied by convention."
+    },
+    {
+      "capability_id": "cap.fluid.aspirate.v1",
+      "title": "Aspirate liquid",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "lab.liquid_handler",
+        "lab.pipette"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Draw a specified volume of liquid from a declared labware well into a pipette tip, with a bounded flow rate and an optional liquid-level offset.",
+      "tags": [
+        "liquid handling",
+        "pipetting",
+        "aspirate",
+        "volume",
+        "labware"
+      ],
+      "units": {
+        "aspirated_volume": "uL",
+        "flow_rate": "uL/s",
+        "liquid_level_mm": "mm",
+        "liquid_level_offset": "mm",
+        "volume": "uL"
+      },
+      "effects": [
+        "material.transfer",
+        "consumable.use"
+      ],
+      "hazards": [
+        "cross_contamination",
+        "spill",
+        "bubble_formation",
+        "volume_error"
+      ],
+      "determinism": "statistical",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "fluid",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "volume": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "labware": {
+                "type": "string",
+                "maxLength": 128
+              },
+              "well": {
+                "type": "string",
+                "maxLength": 32
+              }
+            },
+            "required": [
+              "labware",
+              "well"
+            ],
+            "additionalProperties": false
+          },
+          "flow_rate": {
+            "type": "number",
+            "x-mhs-unit": "uL/s",
+            "minimum": 0
+          },
+          "tip": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "liquid_level_offset": {
+            "type": "number",
+            "x-mhs-unit": "mm"
+          }
+        },
+        "required": [
+          "volume",
+          "source"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "aspirated_volume": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0
+          },
+          "tip": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "liquid_level_mm": {
+            "type": "number",
+            "x-mhs-unit": "mm"
+          }
+        },
+        "required": [
+          "aspirated_volume"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "volume": 50,
+          "source": {
+            "labware": "plate_1",
+            "well": "A1"
+          },
+          "flow_rate": 100
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 60000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 1500,
+      "limits": {
+        "volume": {
+          "min": 0,
+          "max": 1000,
+          "unit": "uL",
+          "reason": "pipette tip capacity; bindings declare their actual range"
+        }
+      },
+      "notes": "Preconditions: tip attached, liquid present, labware loaded. Errors: MHS.DEVICE.PRECONDITION_UNMET with details.precondition."
+    },
+    {
+      "capability_id": "cap.fluid.dispense.v1",
+      "title": "Dispense liquid",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "lab.liquid_handler",
+        "lab.pipette"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Dispense a specified volume from the pipette into a declared labware well, with optional blowout and mixing after dispense.",
+      "tags": [
+        "liquid handling",
+        "dispense",
+        "pipette",
+        "well",
+        "reagent addition"
+      ],
+      "units": {
+        "dispensed_volume": "uL",
+        "flow_rate": "uL/s",
+        "target_volume_after": "uL",
+        "volume": "uL"
+      },
+      "effects": [
+        "material.transfer"
+      ],
+      "hazards": [
+        "cross_contamination",
+        "spill",
+        "volume_error"
+      ],
+      "determinism": "statistical",
+      "concurrency": "exclusive",
+      "risk_class": "R2",
+      "domain": "fluid",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "volume": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "target": {
+            "type": "object",
+            "properties": {
+              "labware": {
+                "type": "string",
+                "maxLength": 128
+              },
+              "well": {
+                "type": "string",
+                "maxLength": 32
+              }
+            },
+            "required": [
+              "labware",
+              "well"
+            ],
+            "additionalProperties": false
+          },
+          "flow_rate": {
+            "type": "number",
+            "x-mhs-unit": "uL/s",
+            "minimum": 0
+          },
+          "blowout": {
+            "type": "boolean"
+          },
+          "mix_cycles": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "volume",
+          "target"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "dispensed_volume": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0
+          },
+          "target_volume_after": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "dispensed_volume"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "volume": 50,
+          "target": {
+            "labware": "plate_2",
+            "well": "B1"
+          },
+          "blowout": true
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 60000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 1500,
+      "limits": {
+        "volume": {
+          "min": 0,
+          "max": 1000,
+          "unit": "uL",
+          "reason": "pipette tip capacity"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.fluid.transfer.v1",
+      "title": "Transfer liquid between wells",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "lab.liquid_handler",
+        "lab.pipette"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Aspirate a volume from a source well and dispense it into a target well as one receipted operation, so a failed transfer cannot leave an untracked half-state.",
+      "tags": [
+        "transfer",
+        "pipetting",
+        "liquid movement",
+        "plate to plate",
+        "reagent transfer"
+      ],
+      "units": {
+        "flow_rate": "uL/s",
+        "source_volume_after": "uL",
+        "target_volume_after": "uL",
+        "transferred_volume": "uL",
+        "volume": "uL"
+      },
+      "effects": [
+        "material.transfer",
+        "consumable.use"
+      ],
+      "hazards": [
+        "cross_contamination",
+        "spill",
+        "sample_loss"
+      ],
+      "determinism": "statistical",
+      "concurrency": "exclusive",
+      "risk_class": "R2",
+      "domain": "fluid",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "volume": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "labware": {
+                "type": "string",
+                "maxLength": 128
+              },
+              "well": {
+                "type": "string",
+                "maxLength": 32
+              }
+            },
+            "required": [
+              "labware",
+              "well"
+            ],
+            "additionalProperties": false
+          },
+          "target": {
+            "type": "object",
+            "properties": {
+              "labware": {
+                "type": "string",
+                "maxLength": 128
+              },
+              "well": {
+                "type": "string",
+                "maxLength": 32
+              }
+            },
+            "required": [
+              "labware",
+              "well"
+            ],
+            "additionalProperties": false
+          },
+          "flow_rate": {
+            "type": "number",
+            "x-mhs-unit": "uL/s",
+            "minimum": 0
+          },
+          "mix_cycles": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "tip": {
+            "type": "string",
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "volume",
+          "source",
+          "target"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "transferred_volume": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0
+          },
+          "source_volume_after": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0
+          },
+          "target_volume_after": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "transferred_volume"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "volume": 20,
+          "source": {
+            "labware": "reservoir",
+            "well": "A1"
+          },
+          "target": {
+            "labware": "plate_1",
+            "well": "C3"
+          }
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 120000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 3000,
+      "limits": {
+        "volume": {
+          "min": 0,
+          "max": 1000,
+          "unit": "uL",
+          "reason": "pipette tip capacity"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.fluid.mix.v1",
+      "title": "Mix the contents of a well",
+      "verb": "invoke",
+      "status": "experimental",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "lab.liquid_handler",
+        "lab.pipette"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Mix the contents of a declared well by repeated aspiration and dispense cycles at a bounded volume and speed.",
+      "tags": [
+        "mix",
+        "homogenise",
+        "resuspend",
+        "agitation",
+        "well mixing"
+      ],
+      "units": {
+        "speed": "/min",
+        "volume": "uL"
+      },
+      "effects": [
+        "material.transfer"
+      ],
+      "hazards": [
+        "cross_contamination",
+        "bubble_formation",
+        "sample_loss"
+      ],
+      "determinism": "statistical",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "fluid",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "object",
+            "properties": {
+              "labware": {
+                "type": "string",
+                "maxLength": 128
+              },
+              "well": {
+                "type": "string",
+                "maxLength": 32
+              }
+            },
+            "required": [
+              "labware",
+              "well"
+            ],
+            "additionalProperties": false
+          },
+          "cycles": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "volume": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0
+          },
+          "speed": {
+            "type": "number",
+            "x-mhs-unit": "/min",
+            "minimum": 0,
+            "description": "Mixing rate in aspirate/dispense cycles per minute."
+          }
+        },
+        "required": [
+          "target",
+          "cycles"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "mixed": {
+            "type": "boolean"
+          },
+          "cycles": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "mixed"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "target": {
+            "labware": "plate_1",
+            "well": "A1"
+          },
+          "cycles": 3,
+          "volume": 50,
+          "speed": 60
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 120000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 4000
+    },
+    {
+      "capability_id": "cap.fluid.wash.v1",
+      "title": "Wash a well or tip",
+      "verb": "invoke",
+      "status": "experimental",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "lab.liquid_handler"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Wash a declared well or the pipette tip with a bounded volume of wash solution, discarding waste to a declared waste container.",
+      "tags": [
+        "wash",
+        "rinse",
+        "tip wash",
+        "well wash",
+        "decontamination"
+      ],
+      "units": {
+        "volume": "uL",
+        "waste_volume": "uL"
+      },
+      "effects": [
+        "material.transfer",
+        "consumable.use"
+      ],
+      "hazards": [
+        "cross_contamination",
+        "spill",
+        "chemical_exposure"
+      ],
+      "determinism": "statistical",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "fluid",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "object",
+            "properties": {
+              "labware": {
+                "type": "string",
+                "maxLength": 128
+              },
+              "well": {
+                "type": "string",
+                "maxLength": 32
+              }
+            },
+            "additionalProperties": false
+          },
+          "cycles": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "volume": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0
+          },
+          "waste": {
+            "type": "object",
+            "properties": {
+              "labware": {
+                "type": "string",
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "labware"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "cycles",
+          "volume",
+          "waste"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "washed": {
+            "type": "boolean"
+          },
+          "waste_volume": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "washed"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "cycles": 2,
+          "volume": 200,
+          "waste": {
+            "labware": "waste_trough"
+          }
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 180000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 8000
+    },
+    {
+      "capability_id": "cap.fluid.level.v1",
+      "title": "Read a liquid level",
+      "verb": "read",
+      "status": "experimental",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "lab.liquid_handler",
+        "lab.labware"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Detect and report the liquid level and estimated volume in a declared container using a declared detection method.",
+      "tags": [
+        "liquid level",
+        "volume estimate",
+        "meniscus",
+        "capacitance detection",
+        "pressure detection"
+      ],
+      "units": {
+        "confidence": "1",
+        "level_mm": "mm",
+        "volume_uL": "uL"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "cross_contamination"
+      ],
+      "determinism": "statistical",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "fluid",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "container": {
+            "type": "object",
+            "properties": {
+              "labware": {
+                "type": "string",
+                "maxLength": 128
+              },
+              "well": {
+                "type": "string",
+                "maxLength": 32
+              }
+            },
+            "required": [
+              "labware",
+              "well"
+            ],
+            "additionalProperties": false
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "capacitance",
+              "pressure",
+              "image"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "level_mm": {
+            "type": "number",
+            "x-mhs-unit": "mm",
+            "minimum": 0
+          },
+          "volume_uL": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0
+          },
+          "detection": {
+            "type": "string",
+            "enum": [
+              "capacitance",
+              "pressure",
+              "image"
+            ]
+          },
+          "confidence": {
+            "type": "number",
+            "x-mhs-unit": "1",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "required": [
+          "level_mm",
+          "detection"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "container": {
+            "labware": "reservoir",
+            "well": "A1"
+          },
+          "method": "capacitance"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 10000,
+        "cancellable": false
+      }
+    },
+    {
+      "capability_id": "cap.sample.move.v1",
+      "title": "Move a sample or labware",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "lab.sample",
+        "lab.labware"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Move a sample, plate or other labware object from one declared location to another using the device's transport mechanism.",
+      "tags": [
+        "move plate",
+        "transfer labware",
+        "sample transport",
+        "plate mover",
+        "carrier"
+      ],
+      "units": {},
+      "effects": [
+        "material.move"
+      ],
+      "hazards": [
+        "sample_loss",
+        "drop",
+        "collision"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "sample",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "sample_id": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "from": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false
+          },
+          "to": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false
+          },
+          "carrier": {
+            "type": "string",
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "sample_id",
+          "from",
+          "to"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "moved": {
+            "type": "boolean"
+          },
+          "location": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "sample_id": {
+            "type": "string",
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "moved",
+          "location"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "sample_id": "plate_1",
+          "from": {
+            "location": "hotel_3"
+          },
+          "to": {
+            "location": "reader"
+          }
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 120000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 4000
+    },
+    {
+      "capability_id": "cap.sample.incubate.v1",
+      "title": "Incubate samples",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "lab.incubator"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Hold samples at a declared temperature, and optionally a declared atmosphere, for a declared duration. The achieved temperature and duration are reported in the output and receipt.",
+      "tags": [
+        "incubate",
+        "temperature hold",
+        "cell culture",
+        "thermal protocol",
+        "environmental control"
+      ],
+      "units": {
+        "actual_duration_s": "s",
+        "actual_temperature": "Cel",
+        "atmosphere.co2_percent": "%",
+        "duration_s": "s",
+        "temperature": "Cel"
+      },
+      "effects": [
+        "energy.heating",
+        "sample.state_change"
+      ],
+      "hazards": [
+        "thermal_burn",
+        "sample_loss",
+        "biohazard"
+      ],
+      "determinism": "none",
+      "concurrency": "exclusive",
+      "risk_class": "R2",
+      "domain": "sample",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "sample_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "minItems": 1,
+            "maxItems": 384
+          },
+          "temperature": {
+            "type": "number",
+            "x-mhs-unit": "Cel"
+          },
+          "duration_s": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 0
+          },
+          "atmosphere": {
+            "type": "object",
+            "properties": {
+              "co2_percent": {
+                "type": "number",
+                "x-mhs-unit": "%",
+                "minimum": 0,
+                "maximum": 100
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "sample_ids",
+          "temperature",
+          "duration_s"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "incubated": {
+            "type": "boolean"
+          },
+          "actual_temperature": {
+            "type": "number",
+            "x-mhs-unit": "Cel"
+          },
+          "actual_duration_s": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "incubated",
+          "actual_temperature"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "sample_ids": [
+            "plate_1"
+          ],
+          "temperature": 37,
+          "duration_s": 3600,
+          "atmosphere": {
+            "co2_percent": 5
+          }
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 86400000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 3600000,
+      "limits": {
+        "temperature": {
+          "min": 0,
+          "max": 80,
+          "unit": "Cel",
+          "reason": "incubator safe operating range; bindings narrow it"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.sample.centrifuge.v1",
+      "title": "Centrifuge samples",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "lab.centrifuge"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Spin declared samples at a target speed for a declared duration, optionally at a controlled temperature, then report the achieved speed and duration.",
+      "tags": [
+        "centrifuge",
+        "spin",
+        "pellet",
+        "phase separation",
+        "rpm"
+      ],
+      "units": {
+        "duration_s": "s",
+        "duration_s_actual": "s",
+        "rpm": "/min",
+        "rpm_actual": "/min",
+        "temperature": "Cel"
+      },
+      "effects": [
+        "sample.state_change"
+      ],
+      "hazards": [
+        "centrifuge_imbalance",
+        "aerosol",
+        "sample_loss",
+        "rotor_failure"
+      ],
+      "determinism": "none",
+      "concurrency": "exclusive",
+      "risk_class": "R2",
+      "domain": "sample",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "sample_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "minItems": 1,
+            "maxItems": 384
+          },
+          "rpm": {
+            "type": "number",
+            "x-mhs-unit": "/min",
+            "minimum": 0,
+            "maximum": 15000
+          },
+          "duration_s": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 0
+          },
+          "temperature": {
+            "type": "number",
+            "x-mhs-unit": "Cel"
+          }
+        },
+        "required": [
+          "sample_ids",
+          "rpm",
+          "duration_s"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "completed": {
+            "type": "boolean"
+          },
+          "rpm_actual": {
+            "type": "number",
+            "x-mhs-unit": "/min",
+            "minimum": 0
+          },
+          "duration_s_actual": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "completed",
+          "rpm_actual"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "sample_ids": [
+            "tube_1",
+            "tube_2"
+          ],
+          "rpm": 4000,
+          "duration_s": 300
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 7200000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 600000,
+      "limits": {
+        "rpm": {
+          "min": 0,
+          "max": 15000,
+          "unit": "/min",
+          "reason": "rotor and sample balance limits are declared per binding"
+        }
+      },
+      "requires_permit": true,
+      "notes": "Cancellation is not offered while spinning: stopping a centrifuge mid-run is itself a hazard. Use mhs.safety.estop for emergency stops."
+    },
+    {
+      "capability_id": "cap.sample.seal.v1",
+      "title": "Seal a plate",
+      "verb": "invoke",
+      "status": "experimental",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "lab.plate_sealer"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Apply a declared seal type to a microplate and report completion; the seal consumable is recorded as a consumable use.",
+      "tags": [
+        "seal plate",
+        "foil seal",
+        "adhesive seal",
+        "plate preparation",
+        "consumable"
+      ],
+      "units": {},
+      "effects": [
+        "consumable.use",
+        "material.move"
+      ],
+      "hazards": [
+        "thermal_burn",
+        "plate_damage"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "sample",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "plate": {
+            "type": "object",
+            "properties": {
+              "labware": {
+                "type": "string",
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "labware"
+            ],
+            "additionalProperties": false
+          },
+          "seal_type": {
+            "type": "string",
+            "enum": [
+              "foil",
+              "adhesive",
+              "heat",
+              "cap_mat"
+            ]
+          }
+        },
+        "required": [
+          "plate",
+          "seal_type"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "sealed": {
+            "type": "boolean"
+          },
+          "seal_type": {
+            "type": "string",
+            "enum": [
+              "foil",
+              "adhesive",
+              "heat",
+              "cap_mat"
+            ]
+          }
+        },
+        "required": [
+          "sealed"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "plate": {
+            "labware": "plate_1"
+          },
+          "seal_type": "foil"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 120000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 5000
+    },
+    {
+      "capability_id": "cap.sample.unseal.v1",
+      "title": "Unseal a plate",
+      "verb": "invoke",
+      "status": "experimental",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "lab.plate_sealer"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Remove the seal from a microplate so that the wells are accessible, reporting completion.",
+      "tags": [
+        "unseal",
+        "remove seal",
+        "peel",
+        "plate preparation",
+        "open plate"
+      ],
+      "units": {},
+      "effects": [
+        "material.move"
+      ],
+      "hazards": [
+        "plate_damage",
+        "cross_contamination",
+        "aerosol"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "sample",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "plate": {
+            "type": "object",
+            "properties": {
+              "labware": {
+                "type": "string",
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "labware"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "plate"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "unsealed": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "unsealed"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "plate": {
+            "labware": "plate_1"
+          }
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 120000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 5000
+    },
+    {
+      "capability_id": "cap.sample.store.v1",
+      "title": "Store samples",
+      "verb": "invoke",
+      "status": "experimental",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "lab.storage",
+        "lab.sample"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Place samples into a declared storage location at a declared temperature and record the storage location in the output so later retrieval is unambiguous.",
+      "tags": [
+        "store",
+        "archive",
+        "cold storage",
+        "sample inventory",
+        "freezer"
+      ],
+      "units": {
+        "temperature": "Cel"
+      },
+      "effects": [
+        "material.move",
+        "sample.state_change"
+      ],
+      "hazards": [
+        "sample_loss",
+        "frost_damage",
+        "biohazard"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R2",
+      "domain": "sample",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "sample_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "minItems": 1,
+            "maxItems": 384
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "system": {
+                "type": "string",
+                "maxLength": 64
+              },
+              "slot": {
+                "type": "string",
+                "maxLength": 64
+              }
+            },
+            "required": [
+              "system",
+              "slot"
+            ],
+            "additionalProperties": false
+          },
+          "temperature": {
+            "type": "number",
+            "x-mhs-unit": "Cel"
+          }
+        },
+        "required": [
+          "sample_ids",
+          "location"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "stored": {
+            "type": "boolean"
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "system": {
+                "type": "string",
+                "maxLength": 64
+              },
+              "slot": {
+                "type": "string",
+                "maxLength": 64
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "stored",
+          "location"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "sample_ids": [
+            "plate_1"
+          ],
+          "location": {
+            "system": "freezer_1",
+            "slot": "R2S4"
+          },
+          "temperature": -20
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 600000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 20000
+    },
+    {
+      "capability_id": "cap.imaging.capture.v1",
+      "title": "Capture a microscope image",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "instrument.microscope"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Acquire a microscope image of the current field of view for a declared channel, exposure, binning and region of interest, returning an image artifact.",
+      "tags": [
+        "microscope",
+        "imaging",
+        "fluorescence",
+        "brightfield",
+        "camera acquisition"
+      ],
+      "units": {
+        "exposure_ms": "ms"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "photobleaching",
+        "privacy"
+      ],
+      "determinism": "statistical",
+      "concurrency": "exclusive",
+      "risk_class": "R0",
+      "domain": "imaging",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "camera": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "channel": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "exposure_ms": {
+            "type": "number",
+            "x-mhs-unit": "ms",
+            "minimum": 0,
+            "maximum": 600000
+          },
+          "binning": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "roi": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "width": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "height": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "width",
+              "height"
+            ],
+            "additionalProperties": false
+          },
+          "save_as": {
+            "type": "string",
+            "maxLength": 128
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "image_ref": {
+            "type": "string"
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "exposure_ms": {
+            "type": "number",
+            "x-mhs-unit": "ms",
+            "minimum": 0
+          },
+          "channel": {
+            "type": "string",
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "image_ref",
+          "width",
+          "height"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "channel": "DAPI",
+          "exposure_ms": 50,
+          "binning": 2
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 120000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 300
+    },
+    {
+      "capability_id": "cap.imaging.focus.v1",
+      "title": "Focus the microscope",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "instrument.microscope"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Move the focus axis to a target Z position or run an autofocus search over a declared range, returning the achieved Z position and focus score.",
+      "tags": [
+        "focus",
+        "autofocus",
+        "z stage",
+        "focal plane",
+        "sharpness"
+      ],
+      "units": {
+        "score": "1",
+        "search_range": "um",
+        "target_z": "um",
+        "z_um": "um"
+      },
+      "effects": [
+        "motion.cartesian"
+      ],
+      "hazards": [
+        "collision",
+        "slide_damage"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "imaging",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "target_z": {
+            "type": "number",
+            "x-mhs-unit": "um",
+            "minimum": -1000000,
+            "maximum": 1000000
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "autofocus",
+              "manual",
+              "none"
+            ]
+          },
+          "search_range": {
+            "type": "number",
+            "x-mhs-unit": "um",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "method"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "focused": {
+            "type": "boolean"
+          },
+          "z_um": {
+            "type": "number",
+            "x-mhs-unit": "um"
+          },
+          "score": {
+            "type": "number",
+            "x-mhs-unit": "1",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "focused",
+          "z_um"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "method": "autofocus",
+          "search_range": 50
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 120000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 5000
+    },
+    {
+      "capability_id": "cap.imaging.illumination.v1",
+      "title": "Set illumination",
+      "verb": "write",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "instrument.microscope",
+        "light.source"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Set the illumination channel and intensity used for subsequent imaging or observation, with an optional bounded on-duration after which the light is turned off.",
+      "tags": [
+        "illumination",
+        "light source",
+        "led",
+        "fluorescence excitation",
+        "brightness"
+      ],
+      "units": {
+        "duration_ms": "ms",
+        "intensity": "%"
+      },
+      "effects": [
+        "energy.emission",
+        "configuration.write"
+      ],
+      "hazards": [
+        "photobleaching",
+        "eye_exposure"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "imaging",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "intensity": {
+            "type": "number",
+            "x-mhs-unit": "%",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "duration_ms": {
+            "type": "number",
+            "x-mhs-unit": "ms",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "channel",
+          "intensity"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "applied": {
+            "type": "boolean"
+          },
+          "channel": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "intensity": {
+            "type": "number",
+            "x-mhs-unit": "%"
+          }
+        },
+        "required": [
+          "applied"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "channel": "488nm",
+          "intensity": 20,
+          "duration_ms": 500
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 10000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 100,
+      "limits": {
+        "intensity": {
+          "min": 0,
+          "max": 100,
+          "unit": "%",
+          "reason": "emission power limits are declared per binding"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.optics.set_power.v1",
+      "title": "Set optical output power",
+      "verb": "write",
+      "status": "experimental",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "optics.laser",
+        "optics.source"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Set the emitted optical power of a laser or light source to a declared setpoint, optionally ramping over a declared duration. Bindings for class 3B+ sources raise the risk class to R3.",
+      "tags": [
+        "laser power",
+        "optical power",
+        "excitation",
+        "setpoint",
+        "emission control"
+      ],
+      "units": {
+        "power": "mW",
+        "ramp_ms": "ms",
+        "set_power_mw": "mW"
+      },
+      "effects": [
+        "energy.emission",
+        "configuration.write"
+      ],
+      "hazards": [
+        "laser_radiation",
+        "eye_exposure",
+        "burns"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R2",
+      "domain": "optics",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "power": {
+            "type": "number",
+            "x-mhs-unit": "mW",
+            "minimum": 0
+          },
+          "channel": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "ramp_ms": {
+            "type": "number",
+            "x-mhs-unit": "ms",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "power"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "set_power_mw": {
+            "type": "number",
+            "x-mhs-unit": "mW",
+            "minimum": 0
+          },
+          "channel": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "ramped": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "set_power_mw"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "power": 5,
+          "channel": "488nm",
+          "ramp_ms": 100
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 30000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 200,
+      "limits": {
+        "power": {
+          "min": 0,
+          "max": 1000,
+          "unit": "mW",
+          "reason": "class-dependent maximum emission; the binding MUST narrow this"
+        }
+      },
+      "requires_permit": true,
+      "notes": "Requires a permit for R2 and above on hardware. The permit is bound to the exact input_digest."
+    },
+    {
+      "capability_id": "cap.optics.shutter.v1",
+      "title": "Open or close an optical shutter",
+      "verb": "invoke",
+      "status": "experimental",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "optics.shutter"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Open or close a mechanical or electronic shutter in the optical path, reporting the resulting state and, for an open shutter, the open duration.",
+      "tags": [
+        "shutter",
+        "beam block",
+        "optical path",
+        "exposure control",
+        "safety shutter"
+      ],
+      "units": {
+        "open_duration_ms": "ms"
+      },
+      "effects": [
+        "energy.emission"
+      ],
+      "hazards": [
+        "laser_radiation",
+        "eye_exposure"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R2",
+      "domain": "optics",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "open",
+              "closed"
+            ]
+          }
+        },
+        "required": [
+          "state"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "open",
+              "closed"
+            ]
+          },
+          "open_duration_ms": {
+            "type": "number",
+            "x-mhs-unit": "ms",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "state"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "state": "open"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 5000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 100,
+      "notes": "Closing a shutter is the declared safe state for optical sources; it MUST NOT require a permit."
+    },
+    {
+      "capability_id": "cap.optics.align.v1",
+      "title": "Align an optical element",
+      "verb": "invoke",
+      "status": "experimental",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "optics.stage",
+        "optics.mirror"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Adjust an optical element along declared axes until a target coupling or position is reached, reporting the achieved offset and alignment quality.",
+      "tags": [
+        "alignment",
+        "optical alignment",
+        "coupling",
+        "mirror adjustment",
+        "beam steering"
+      ],
+      "units": {
+        "offset_mm": "mm",
+        "quality": "1",
+        "target": "mm"
+      },
+      "effects": [
+        "motion.cartesian",
+        "energy.emission"
+      ],
+      "hazards": [
+        "laser_radiation",
+        "eye_exposure",
+        "misalignment"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R2",
+      "domain": "optics",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "axis": {
+            "type": "string",
+            "enum": [
+              "x",
+              "y",
+              "z",
+              "theta",
+              "phi"
+            ]
+          },
+          "target": {
+            "type": "number",
+            "x-mhs-unit": "mm"
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "hill_climb",
+              "manual",
+              "lookup"
+            ]
+          }
+        },
+        "required": [
+          "axis",
+          "target"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "aligned": {
+            "type": "boolean"
+          },
+          "offset_mm": {
+            "type": "number",
+            "x-mhs-unit": "mm"
+          },
+          "quality": {
+            "type": "number",
+            "x-mhs-unit": "1",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "required": [
+          "aligned",
+          "offset_mm"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "axis": "x",
+          "target": 0.25,
+          "method": "hill_climb"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 600000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 30000,
+      "requires_permit": true
+    },
+    {
+      "capability_id": "cap.measure.voltage.v1",
+      "title": "Measure voltage",
+      "verb": "read",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "instrument.dmm",
+        "instrument.smu",
+        "sensor"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Measure a DC or RMS voltage on a declared channel or terminal pair and return the value with its sampling timestamp and measurement range.",
+      "tags": [
+        "voltage",
+        "dmm",
+        "electrical measurement",
+        "potential difference",
+        "read channel"
+      ],
+      "units": {
+        "range_v": "V",
+        "voltage": "V"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "high_voltage"
+      ],
+      "determinism": "statistical",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "measure",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "range_v": {
+            "type": "number",
+            "x-mhs-unit": "V",
+            "minimum": 0
+          },
+          "dc": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "voltage": {
+            "type": "number",
+            "x-mhs-unit": "V"
+          },
+          "sampled_at": {
+            "type": "string"
+          },
+          "range_v": {
+            "type": "number",
+            "x-mhs-unit": "V",
+            "minimum": 0
+          },
+          "saturated": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "voltage",
+          "sampled_at"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "channel": "ch1",
+          "range_v": 10,
+          "dc": true
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 5000,
+        "cancellable": false
+      }
+    },
+    {
+      "capability_id": "cap.measure.current.v1",
+      "title": "Measure current",
+      "verb": "read",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "instrument.dmm",
+        "instrument.smu",
+        "sensor"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Measure current on a declared channel and return the value with its timestamp and range.",
+      "tags": [
+        "current",
+        "amperage",
+        "dmm",
+        "electrical measurement",
+        "read channel"
+      ],
+      "units": {
+        "current": "A",
+        "range_a": "A"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "high_voltage",
+        "overcurrent"
+      ],
+      "determinism": "statistical",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "measure",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "range_a": {
+            "type": "number",
+            "x-mhs-unit": "A",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "number",
+            "x-mhs-unit": "A"
+          },
+          "sampled_at": {
+            "type": "string"
+          },
+          "range_a": {
+            "type": "number",
+            "x-mhs-unit": "A",
+            "minimum": 0
+          },
+          "saturated": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "current",
+          "sampled_at"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "channel": "ch1",
+          "range_a": 0.1
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 5000,
+        "cancellable": false
+      }
+    },
+    {
+      "capability_id": "cap.measure.resistance.v1",
+      "title": "Measure resistance",
+      "verb": "read",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "instrument.dmm",
+        "sensor"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Measure resistance or impedance on a declared channel and return the value with its timestamp and excitation method.",
+      "tags": [
+        "resistance",
+        "ohmmeter",
+        "impedance",
+        "continuity",
+        "electrical measurement"
+      ],
+      "units": {
+        "resistance": "Ohm"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "high_voltage"
+      ],
+      "determinism": "statistical",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "measure",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "four_wire": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "resistance": {
+            "type": "number",
+            "x-mhs-unit": "Ohm",
+            "minimum": 0
+          },
+          "sampled_at": {
+            "type": "string"
+          },
+          "four_wire": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "resistance",
+          "sampled_at"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "channel": "ch1",
+          "four_wire": true
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 5000,
+        "cancellable": false
+      }
+    },
+    {
+      "capability_id": "cap.measure.spectrum.v1",
+      "title": "Acquire a spectrum",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "instrument.spectrometer",
+        "instrument.spectrophotometer"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Acquire an optical or mass spectrum over a declared wavelength or mass range and return the axis and intensity arrays, or an artifact reference for large spectra.",
+      "tags": [
+        "spectrum",
+        "spectroscopy",
+        "absorbance",
+        "wavelength scan",
+        "spectral acquisition"
+      ],
+      "units": {
+        "integration_ms": "ms",
+        "intensities": "1",
+        "step_nm": "nm",
+        "wavelength_max": "nm",
+        "wavelength_min": "nm",
+        "wavelengths": "nm"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "laser_radiation",
+        "sample_loss"
+      ],
+      "determinism": "statistical",
+      "concurrency": "exclusive",
+      "risk_class": "R0",
+      "domain": "measure",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "wavelength_min": {
+            "type": "number",
+            "x-mhs-unit": "nm",
+            "minimum": 200
+          },
+          "wavelength_max": {
+            "type": "number",
+            "x-mhs-unit": "nm",
+            "minimum": 0
+          },
+          "step_nm": {
+            "type": "number",
+            "x-mhs-unit": "nm",
+            "minimum": 0.0001
+          },
+          "integration_ms": {
+            "type": "number",
+            "x-mhs-unit": "ms",
+            "minimum": 0
+          },
+          "artifact": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "wavelength_min",
+          "wavelength_max"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "wavelengths": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "nm"
+            }
+          },
+          "intensities": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "1"
+            }
+          },
+          "artifact_ref": {
+            "type": "string"
+          },
+          "sampled_at": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "sampled_at"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "wavelength_min": 300,
+          "wavelength_max": 800,
+          "step_nm": 1,
+          "integration_ms": 100
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 300000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 5000,
+      "limits": {
+        "wavelength_min": {
+          "min": 200,
+          "max": 2500,
+          "unit": "nm",
+          "reason": "detector range is declared per binding"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.measure.intensity.v1",
+      "title": "Measure intensity",
+      "verb": "read",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "instrument.spectrometer",
+        "sensor.optical"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Measure optical or radiant intensity at a declared wavelength or channel and return the value with its unit and integration time.",
+      "tags": [
+        "intensity",
+        "photometry",
+        "optical power",
+        "fluorescence intensity",
+        "detector count"
+      ],
+      "units": {
+        "integration_ms": "ms",
+        "intensity": "1",
+        "wavelength_nm": "nm"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "laser_radiation"
+      ],
+      "determinism": "statistical",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "measure",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "wavelength_nm": {
+            "type": "number",
+            "x-mhs-unit": "nm",
+            "minimum": 0
+          },
+          "integration_ms": {
+            "type": "number",
+            "x-mhs-unit": "ms",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "intensity": {
+            "type": "number",
+            "x-mhs-unit": "1"
+          },
+          "sampled_at": {
+            "type": "string"
+          },
+          "integration_ms": {
+            "type": "number",
+            "x-mhs-unit": "ms",
+            "minimum": 0
+          },
+          "saturated": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "intensity",
+          "sampled_at"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "channel": "ch1",
+          "wavelength_nm": 520,
+          "integration_ms": 100
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 10000,
+        "cancellable": false
+      }
+    },
+    {
+      "capability_id": "cap.measure.mass.v1",
+      "title": "Measure mass",
+      "verb": "read",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "instrument.balance",
+        "sensor"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Measure the mass on a balance or load cell and report the value and stability flag.",
+      "tags": [
+        "mass",
+        "weighing",
+        "balance",
+        "gravimetry",
+        "load cell"
+      ],
+      "units": {
+        "mass": "mg"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "sample_loss"
+      ],
+      "determinism": "statistical",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "measure",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "settle": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "mass": {
+            "type": "number",
+            "x-mhs-unit": "mg"
+          },
+          "stable": {
+            "type": "boolean"
+          },
+          "sampled_at": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "mass",
+          "stable",
+          "sampled_at"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "settle": true
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 30000,
+        "cancellable": false
+      }
+    },
+    {
+      "capability_id": "cap.measure.temperature.v1",
+      "title": "Measure temperature",
+      "verb": "read",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "instrument.thermometer",
+        "sensor.temperature",
+        "instrument.incubator"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Measure temperature at a declared location and return the value with its timestamp and stability flag.",
+      "tags": [
+        "temperature",
+        "thermometer",
+        "thermal measurement",
+        "probe",
+        "sensor"
+      ],
+      "units": {
+        "temperature": "Cel"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "thermal_burn"
+      ],
+      "determinism": "statistical",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "measure",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "probe": {
+            "type": "string",
+            "maxLength": 64
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "temperature": {
+            "type": "number",
+            "x-mhs-unit": "Cel"
+          },
+          "stable": {
+            "type": "boolean"
+          },
+          "sampled_at": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "temperature",
+          "sampled_at"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "probe": "bath"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 5000,
+        "cancellable": false
+      }
+    },
+    {
+      "capability_id": "cap.measure.pressure.v1",
+      "title": "Measure pressure",
+      "verb": "read",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "sensor.pressure",
+        "instrument.gauge"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Measure absolute, gauge or differential pressure at a declared port and return the value with its reference and timestamp.",
+      "tags": [
+        "pressure",
+        "gauge",
+        "vacuum",
+        "baratron",
+        "process sensor"
+      ],
+      "units": {
+        "pressure": "Pa"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "pressure_hazard",
+        "chemical_exposure"
+      ],
+      "determinism": "statistical",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "measure",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "port": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "reference": {
+            "type": "string",
+            "enum": [
+              "absolute",
+              "gauge",
+              "differential"
+            ]
+          }
+        },
+        "required": [
+          "reference"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "pressure": {
+            "type": "number",
+            "x-mhs-unit": "Pa"
+          },
+          "reference": {
+            "type": "string",
+            "enum": [
+              "absolute",
+              "gauge",
+              "differential"
+            ]
+          },
+          "sampled_at": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "pressure",
+          "sampled_at"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "reference": "absolute"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 5000,
+        "cancellable": false
+      }
+    },
+    {
+      "capability_id": "cap.measure.flow.v1",
+      "title": "Measure flow",
+      "verb": "read",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "sensor.flow",
+        "instrument.flowmeter"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Measure volumetric or mass flow at a declared line and optionally the accumulated volume since a declared instant.",
+      "tags": [
+        "flow",
+        "flow rate",
+        "flowmeter",
+        "liquid flow",
+        "gas flow"
+      ],
+      "units": {
+        "flow_rate": "uL/s",
+        "total_volume": "uL"
+      },
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [
+        "pressure_hazard",
+        "spill"
+      ],
+      "determinism": "statistical",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "measure",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "line": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "quantity": {
+            "type": "string",
+            "enum": [
+              "volume",
+              "mass"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "flow_rate": {
+            "type": "number",
+            "x-mhs-unit": "uL/s"
+          },
+          "total_volume": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0
+          },
+          "sampled_at": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "flow_rate",
+          "sampled_at"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "line": "line_1",
+          "quantity": "volume"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 5000,
+        "cancellable": false
+      }
+    },
+    {
+      "capability_id": "cap.thermal.setpoint.v1",
+      "title": "Set a thermal setpoint",
+      "verb": "write",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "thermal.zone",
+        "instrument.incubator",
+        "lab.thermal_block"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Set the target temperature of a thermal zone and optionally wait for the zone to reach the setpoint within a declared tolerance.",
+      "tags": [
+        "temperature control",
+        "setpoint",
+        "heater",
+        "thermal zone",
+        "ramp"
+      ],
+      "units": {
+        "actual_temperature": "Cel",
+        "rate": "K/min",
+        "setpoint": "Cel",
+        "target_temperature": "Cel",
+        "tolerance": "K"
+      },
+      "effects": [
+        "energy.heating",
+        "energy.cooling",
+        "configuration.write"
+      ],
+      "hazards": [
+        "thermal_burn",
+        "sample_loss",
+        "overheating"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R2",
+      "domain": "thermal",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "target_temperature": {
+            "type": "number",
+            "x-mhs-unit": "Cel"
+          },
+          "rate": {
+            "type": "number",
+            "x-mhs-unit": "K/min",
+            "x-mhs-delta": true,
+            "minimum": 0
+          },
+          "wait": {
+            "type": "boolean"
+          },
+          "tolerance": {
+            "type": "number",
+            "x-mhs-unit": "K",
+            "x-mhs-delta": true,
+            "minimum": 0
+          }
+        },
+        "required": [
+          "target_temperature"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "setpoint": {
+            "type": "number",
+            "x-mhs-unit": "Cel"
+          },
+          "reached": {
+            "type": "boolean"
+          },
+          "actual_temperature": {
+            "type": "number",
+            "x-mhs-unit": "Cel"
+          }
+        },
+        "required": [
+          "setpoint"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "target_temperature": 37,
+          "rate": 2,
+          "wait": true,
+          "tolerance": 0.5
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 3600000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 60000,
+      "limits": {
+        "target_temperature": {
+          "min": -50,
+          "max": 300,
+          "unit": "Cel",
+          "reason": "device thermal limits; bindings narrow them"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.actuation.gpio.v1",
+      "title": "Drive a digital or analog output",
+      "verb": "write",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "io.gpio",
+        "io.digital"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Drive a general-purpose output pin to a declared digital or analog value, reporting the applied value. The pin's electrical limits are declared per binding.",
+      "tags": [
+        "gpio",
+        "digital output",
+        "relay",
+        "trigger",
+        "analog output"
+      ],
+      "units": {
+        "value": "1"
+      },
+      "effects": [
+        "configuration.write"
+      ],
+      "hazards": [
+        "high_voltage",
+        "unexpected_actuation"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "actuation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "pin": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "value": {
+            "type": "number",
+            "x-mhs-unit": "1"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "digital",
+              "analog",
+              "pwm"
+            ]
+          }
+        },
+        "required": [
+          "pin",
+          "value"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "pin": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "value": {
+            "type": "number",
+            "x-mhs-unit": "1"
+          },
+          "applied": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "pin",
+          "value",
+          "applied"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "pin": 13,
+          "value": 1,
+          "mode": "digital"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 2000,
+        "cancellable": false
+      }
+    },
+    {
+      "capability_id": "cap.actuation.valve.v1",
+      "title": "Set a valve position",
+      "verb": "write",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "actuation.valve",
+        "fluid.valve"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Open, close or position a valve to a declared state, reporting the achieved position. The port routing map is declared per binding.",
+      "tags": [
+        "valve",
+        "open valve",
+        "close valve",
+        "fluid routing",
+        "flow control"
+      ],
+      "units": {
+        "position": "%"
+      },
+      "effects": [
+        "configuration.write",
+        "material.transfer"
+      ],
+      "hazards": [
+        "chemical_exposure",
+        "spill",
+        "overpressure"
+      ],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "actuation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "number",
+            "x-mhs-unit": "%",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "outlet": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "open",
+              "closed"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "number",
+            "x-mhs-unit": "%",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "open",
+              "closed"
+            ]
+          }
+        },
+        "required": [
+          "position"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "state": "open",
+          "outlet": "port_2"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 10000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 500
+    },
+    {
+      "capability_id": "cap.actuation.pump.v1",
+      "title": "Run a pump",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "actuation.pump",
+        "fluid.pump"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Run a pump at a declared flow rate for a declared duration or volume in a declared direction, reporting the volume moved.",
+      "tags": [
+        "pump",
+        "infuse",
+        "withdraw",
+        "flow control",
+        "dosing"
+      ],
+      "units": {
+        "dispensed_volume": "uL",
+        "duration_s": "s",
+        "flow_rate": "uL/s",
+        "volume": "uL"
+      },
+      "effects": [
+        "material.transfer",
+        "energy.emission"
+      ],
+      "hazards": [
+        "chemical_exposure",
+        "spill",
+        "overpressure"
+      ],
+      "determinism": "statistical",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "actuation",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "flow_rate": {
+            "type": "number",
+            "x-mhs-unit": "uL/s",
+            "minimum": 0
+          },
+          "volume": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0
+          },
+          "duration_s": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 0
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "forward",
+              "reverse"
+            ]
+          }
+        },
+        "required": [
+          "flow_rate",
+          "direction"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "dispensed_volume": {
+            "type": "number",
+            "x-mhs-unit": "uL",
+            "minimum": 0
+          },
+          "duration_s": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "dispensed_volume"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "flow_rate": 50,
+          "volume": 500,
+          "direction": "forward"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 3600000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 10000,
+      "limits": {
+        "flow_rate": {
+          "min": 0,
+          "max": 10000,
+          "unit": "uL/s",
+          "reason": "pump and tubing limits are declared per binding"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.compute.submit.v1",
+      "title": "Submit a bounded compute job",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "compute.node",
+        "host.process"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Run a bounded command-line computation on the device host with a declared timeout and return exit code and stdout/stderr artifact references. Always R1 or higher.",
+      "tags": [
+        "compute job",
+        "run command",
+        "analysis",
+        "script execution",
+        "bounded process"
+      ],
+      "units": {
+        "timeout_s": "s"
+      },
+      "effects": [
+        "computation.execute"
+      ],
+      "hazards": [
+        "arbitrary_code",
+        "resource_exhaustion"
+      ],
+      "determinism": "none",
+      "concurrency": "serialized",
+      "risk_class": "R1",
+      "domain": "compute",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 4096
+            },
+            "minItems": 1,
+            "maxItems": 256
+          },
+          "cwd": {
+            "type": "string",
+            "maxLength": 4096
+          },
+          "env": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          },
+          "timeout_s": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 1,
+            "maximum": 86400
+          },
+          "input_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 512
+            },
+            "maxItems": 256
+          }
+        },
+        "required": [
+          "command",
+          "timeout_s"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "exit_code": {
+            "type": "integer",
+            "minimum": -256
+          },
+          "stdout_ref": {
+            "type": "string"
+          },
+          "stderr_ref": {
+            "type": "string"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "exit_code"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "command": [
+            "python3",
+            "analyse.py",
+            "--input",
+            "run_42.csv"
+          ],
+          "timeout_s": 600
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 86400000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 60000,
+      "notes": "The endpoint MUST NOT accept shell metacharacter expansion; command is an argv vector. The binding MUST declare which executable allowlist applies."
+    },
+    {
+      "capability_id": "cap.compute.cancel.v1",
+      "title": "Cancel a compute job",
+      "verb": "invoke",
+      "status": "deprecated",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "compute.node",
+        "host.process"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Cancel a previously submitted compute job and report the signal used and whether the job terminated.",
+      "tags": [
+        "cancel job",
+        "kill process",
+        "abort compute",
+        "interrupt",
+        "stop analysis"
+      ],
+      "units": {
+        "grace_s": "s"
+      },
+      "effects": [
+        "computation.execute"
+      ],
+      "hazards": [
+        "resource_exhaustion"
+      ],
+      "determinism": "none",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "compute",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "target_job_id": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "grace_s": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 0,
+            "maximum": 300
+          }
+        },
+        "required": [
+          "target_job_id"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "cancelled": {
+            "type": "boolean"
+          },
+          "signal": {
+            "type": "string",
+            "maxLength": 32
+          }
+        },
+        "required": [
+          "cancelled"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "target_job_id": "job_01",
+          "grace_s": 5
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 60000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 1000,
+      "notes": "Deprecated in 0.9: Duplicate of the protocol method mhs.operations.cancel. The class stays valid and callable for its deprecation window; new drivers use the protocol method.",
+      "x-mhs-replaced-by": "mhs.operations.cancel"
+    },
+    {
+      "capability_id": "cap.process.run.v1",
+      "title": "Run a process recipe",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "process.controller"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Execute a named, versioned process recipe on a process controller with declared parameters and return the exit status and a report artifact.",
+      "tags": [
+        "process recipe",
+        "unit operation",
+        "batch process",
+        "recipe execution",
+        "process control"
+      ],
+      "units": {},
+      "effects": [
+        "computation.execute",
+        "configuration.write"
+      ],
+      "hazards": [
+        "sample_loss",
+        "thermal_burn",
+        "pressure_hazard"
+      ],
+      "determinism": "none",
+      "concurrency": "exclusive",
+      "risk_class": "R2",
+      "domain": "process",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "recipe_ref": {
+            "type": "string",
+            "maxLength": 512
+          },
+          "parameters": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          },
+          "dry_run": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "recipe_ref"
+        ],
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "exit_code": {
+            "type": "integer",
+            "minimum": -256
+          },
+          "report_ref": {
+            "type": "string"
+          },
+          "measurements": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          }
+        },
+        "required": [
+          "exit_code"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "recipe_ref": "recipes/purge.v2",
+          "parameters": {
+            "duration_s": 60
+          },
+          "dry_run": true
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 86400000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 600000,
+      "notes": "The recipe is content-addressed: recipe_ref MUST resolve to an immutable document whose digest is recorded in the receipt."
+    },
+    {
+      "capability_id": "cap.device.describe.v1",
+      "title": "Describe the device",
+      "verb": "read",
+      "status": "deprecated",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "device",
+        "world.sim",
+        "robot.arm",
+        "instrument"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Return the device's generated profile, identity, mode, capability list and the digest of its manifest, so an agent can re-orient without re-discovering the endpoint.",
+      "tags": [
+        "device description",
+        "capabilities",
+        "self description",
+        "manifest",
+        "orientation"
+      ],
+      "units": {},
+      "effects": [
+        "measurement.capture"
+      ],
+      "hazards": [],
+      "determinism": "exact",
+      "concurrency": "shared",
+      "risk_class": "R0",
+      "domain": "device",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "detail": {
+            "type": "string",
+            "enum": [
+              "summary",
+              "full"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "device_id": {
+            "type": "string"
+          },
+          "instance_id": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "hardware",
+              "simulated",
+              "hybrid",
+              "replay"
+            ]
+          },
+          "manifest_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "profile": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true
+          }
+        },
+        "required": [
+          "device_id",
+          "mode",
+          "manifest_digest",
+          "capabilities"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "detail": "summary"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 5000,
+        "cancellable": false
+      },
+      "notes": "Deprecated in 0.9: Duplicate of the protocol method mhs.devices.get (and the generated reference file). The class stays valid and callable for its deprecation window; new drivers use the protocol method. The manifest digest allows a host to detect that a device profile changed under it between sessions.",
+      "x-mhs-replaced-by": "mhs.devices.get"
+    },
+    {
+      "capability_id": "cap.device.calibrate.v1",
+      "title": "Calibrate the device",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "robot.arm",
+        "instrument",
+        "sensor",
+        "optics.laser"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Run the device's calibration procedure against a declared reference or standard and return a calibration artifact reference and validity window.",
+      "tags": [
+        "calibration",
+        "reference standard",
+        "zeroing",
+        "accuracy",
+        "metrology"
+      ],
+      "units": {},
+      "effects": [
+        "configuration.write"
+      ],
+      "hazards": [
+        "misalignment",
+        "sample_loss"
+      ],
+      "determinism": "none",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "device",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "targets": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "maxItems": 64
+          },
+          "standard_ref": {
+            "type": "string",
+            "maxLength": 512
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 1000
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "calibrated": {
+            "type": "boolean"
+          },
+          "calibration_ref": {
+            "type": "string"
+          },
+          "valid_until": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "calibrated",
+          "calibration_ref"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "targets": [
+            "z_axis"
+          ],
+          "standard_ref": "gauge_block_10mm"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 3600000,
+        "cancellable": true
+      },
+      "typical_duration_ms": 120000,
+      "requires_permit": true
+    },
+    {
+      "capability_id": "cap.device.self_test.v1",
+      "title": "Run a device self-test",
+      "verb": "invoke",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "device",
+        "instrument",
+        "robot.arm"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid",
+        "replay"
+      ],
+      "summary": "Run the device's built-in self-test and return a pass/fail verdict with per-check results and a report artifact reference. Self-test does not certify safety.",
+      "tags": [
+        "self test",
+        "diagnostics",
+        "bist",
+        "health check",
+        "fault detection"
+      ],
+      "units": {},
+      "effects": [
+        "computation.execute"
+      ],
+      "hazards": [
+        "unexpected_actuation"
+      ],
+      "determinism": "none",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "device",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "basic",
+              "full"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "passed": {
+            "type": "boolean"
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "maxLength": 64
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "skip",
+                    "warn"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "status"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "report_ref": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "passed",
+          "checks"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "level": "basic"
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 600000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 30000,
+      "notes": "A passing self-test is evidence about the device's own checks, not an MHS safety certification."
+    },
+    {
+      "capability_id": "cap.device.configure.v1",
+      "title": "Configure named device parameters",
+      "verb": "write",
+      "status": "stable",
+      "profile": "core",
+      "since": "0.9.0",
+      "resource_kinds": [
+        "*"
+      ],
+      "modes": [
+        "hardware",
+        "simulated",
+        "hybrid"
+      ],
+      "summary": "Write one or more named parameters of a resource (setpoints, ranges, modes, gains) as a partial patch and report what was applied. The binding's effective input schema is derived from the writable properties of the bound resource's state_schema.",
+      "tags": [
+        "configure",
+        "set parameter",
+        "write setting",
+        "named parameter",
+        "setpoint"
+      ],
+      "units": {},
+      "effects": [
+        "state.write"
+      ],
+      "hazards": [],
+      "determinism": "exact",
+      "concurrency": "exclusive",
+      "risk_class": "R1",
+      "domain": "device",
+      "input_schema": {
+        "type": "object",
+        "minProperties": 1,
+        "properties": {},
+        "additionalProperties": true,
+        "x-mhs-open": true
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "applied": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": true,
+            "x-mhs-open": true,
+            "description": "The parameters as applied, keyed like the patch (values after any device rounding)."
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "applied",
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "setpoint": 37.0
+        }
+      ],
+      "constraints": {
+        "max_duration_ms": 30000,
+        "cancellable": false
+      },
+      "typical_duration_ms": 100,
+      "notes": "Served by mhs.resource.write: a write is routed to the cap.device.configure.v1 binding of the target resource and its receipt carries this class id. The effective input schema of a binding is the set of state_schema properties that are not readOnly; each keeps its type, x-mhs-unit and bounds, and binding limits are keyed by state paths. A patch key outside the state schema fails with MHS.RESOURCE.FIELD_UNKNOWN; a readOnly key with MHS.RESOURCE.NOT_WRITABLE. resource_kinds '*' means any resource kind the device declares. The class floor is R1; a binding raises the risk to that of its most hazardous parameter."
+    }
+  ]
+}

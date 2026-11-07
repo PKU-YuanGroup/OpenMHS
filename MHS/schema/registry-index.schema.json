@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/registry-index.schema.json",
+  "title": "OpenMHS registry index",
+  "description": "Static, mirrorable registry document consumed by hosts, the CLI and the website explorer. `records` are derived summary projections of the authoritative per-package records (registry-record.schema.json, one file per package under repos/); they are deliberately lighter and MUST NOT be treated as a full record. `site` is a further projection for browser search.",
+  "type": "object",
+  "required": [
+    "registry_version",
+    "generated_at",
+    "records"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "registry_version": {
+      "$ref": "defs.schema.json#/$defs/semver"
+    },
+    "generated_at": {
+      "$ref": "defs.schema.json#/$defs/rfc3339"
+    },
+    "source_manifest": {
+      "type": "object"
+    },
+    "stats": {
+      "type": "object"
+    },
+    "records": {
+      "type": "array",
+      "description": "Derived summary records (see repos/<track>/<owner>__<repo>.json for the authoritative record).",
+      "items": {
+        "type": "object",
+        "required": [
+          "package_id",
+          "repo_url",
+          "track",
+          "families",
+          "tier",
+          "ring",
+          "evidence"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "package_id": {
+            "type": "string"
+          },
+          "repo_url": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "repo": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "track": {
+            "type": "string",
+            "enum": [
+              "labs",
+              "robots",
+              "shared"
+            ]
+          },
+          "families": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "tier": {
+            "type": "string",
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "X"
+            ]
+          },
+          "ring": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          },
+          "modes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "interfaces": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "license": {
+            "type": "string"
+          },
+          "has_manifest": {
+            "type": "boolean"
+          },
+          "adapter": {
+            "type": "object"
+          },
+          "capabilities_offered": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "effort": {
+            "type": "string"
+          },
+          "next_action": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "object",
+            "required": [
+              "state",
+              "read_by"
+            ]
+          },
+          "stars": {
+            "type": "integer"
+          },
+          "local_path": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "site": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Derived projection for fast website search."
+    }
+  }
+}

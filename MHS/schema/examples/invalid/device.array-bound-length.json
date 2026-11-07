@@ -1,0 +1,200 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/device.schema.json",
+  "mhs_version": "1.0",
+  "device_id": "mhs://localhost:7400/robot/arm-6dof",
+  "instance_id": "01JB2C3D4E5F6G7H8J9KAMBNCQ",
+  "display_name": "Six-axis arm (illustrative example)",
+  "vendor": {
+    "name": "Example Robotics"
+  },
+  "model": "ARM-6",
+  "mode": "hardware",
+  "resources": [
+    {
+      "resource_id": "arm",
+      "kind": "robot.arm",
+      "state_schema": {
+        "type": "object",
+        "properties": {
+          "joint_positions": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "rad"
+            },
+            "minItems": 6,
+            "maxItems": 6,
+            "readOnly": true
+          }
+        }
+      }
+    }
+  ],
+  "capabilities": [
+    {
+      "capability_id": "cap.motion.joint_position.v1",
+      "resource": "arm",
+      "verb": "invoke",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "joint_positions"
+        ],
+        "properties": {
+          "joint_positions": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "x-mhs-unit": "rad"
+            },
+            "minItems": 6,
+            "maxItems": 6
+          },
+          "duration_s": {
+            "type": "number",
+            "x-mhs-unit": "s",
+            "minimum": 0,
+            "maximum": 30
+          }
+        }
+      },
+      "constraints": {
+        "long_running": true,
+        "cancellable": true,
+        "max_duration_ms": 30000
+      },
+      "limits": {
+        "joint_positions": {
+          "min": [
+            -6.28,
+            -2.09,
+            -3.92,
+            -6.28,
+            -1.69,
+            -6.28
+          ],
+          "max": [
+            6.28,
+            2.09,
+            0.19,
+            6.28,
+            3.14
+          ],
+          "unit": "rad",
+          "names": [
+            "j1",
+            "j2",
+            "j3",
+            "j4",
+            "j5",
+            "j6"
+          ],
+          "source": "vendor_doc",
+          "ref": "ARM-6 datasheet, joint range table"
+        },
+        "duration_s": {
+          "min": 0.5,
+          "unit": "s",
+          "source": "vendor_doc",
+          "ref": "ARM-6 datasheet, motion timing"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.motion.joint_velocity.v1",
+      "resource": "arm",
+      "verb": "invoke",
+      "limits": {
+        "joint_velocities": {
+          "min": -1.0,
+          "max": 1.0,
+          "unit": "rad/s",
+          "source": "vendor_doc",
+          "ref": "ARM-6 datasheet, speed table"
+        },
+        "joint_velocities[0]": {
+          "min": -0.5,
+          "max": 0.5,
+          "unit": "rad/s",
+          "source": "operator",
+          "reason": "base joint near a wall"
+        },
+        "duration_s": {
+          "max": 2,
+          "unit": "s",
+          "source": "operator"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.motion.cartesian_pose.v1",
+      "resource": "arm",
+      "verb": "invoke",
+      "limits": {
+        "position.x": {
+          "min": -700,
+          "max": 700,
+          "unit": "mm",
+          "source": "vendor_doc",
+          "ref": "ARM-6 datasheet, reach"
+        },
+        "position.y": {
+          "min": -700,
+          "max": 700,
+          "unit": "mm",
+          "source": "vendor_doc",
+          "ref": "ARM-6 datasheet, reach"
+        },
+        "position.z": {
+          "min": 50,
+          "max": 900,
+          "unit": "mm",
+          "source": "vendor_doc",
+          "ref": "ARM-6 datasheet, reach"
+        }
+      }
+    },
+    {
+      "capability_id": "cap.motion.stop.v1",
+      "resource": "arm",
+      "verb": "invoke"
+    }
+  ],
+  "safety": {
+    "risk_class": "R1",
+    "envelope": {
+      "cap.motion.cartesian_pose.v1": {
+        "position.z": {
+          "min": 100,
+          "unit": "mm",
+          "source": "operator",
+          "reason": "table clearance"
+        }
+      }
+    },
+    "interlocks": [
+      {
+        "id": "cell_door",
+        "description": "Cell door closed",
+        "source": "hardware",
+        "required_for": [
+          "cap.motion.*"
+        ]
+      }
+    ],
+    "estop": {
+      "kind": "both",
+      "latching": true,
+      "latency_ms": 100,
+      "physical_ref": "mushroom button on the teach pendant"
+    },
+    "safe_state": {
+      "description": "Arm stopped and holding position",
+      "achieved_by": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  },
+  "watchdog_ms": 500
+}

@@ -1,0 +1,680 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/bindings.schema.json",
+  "title": "OpenMHS capability bindings (mhs/bindings.json)",
+  "description": "Normative shape of the adapter capability-binding document in MHS-006 \u00a74. Args entries use from/value, type, enum_map/map, unit{from,to,factor|offset} and clamp; result.map maps capability output fields to native result paths; errors is an ordered array of native regex -> MHS code rules (first match wins). Every object is closed.",
+  "type": "object",
+  "required": [
+    "mhs_bindings",
+    "adapter_id",
+    "bindings"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "mhs_bindings": {
+      "type": "string",
+      "pattern": "^1\\.[0-9]+$",
+      "description": "Version of the bindings document shape (1.0)."
+    },
+    "adapter_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_.-]{2,127}$"
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "bindings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/bindingEntry"
+      }
+    }
+  },
+  "$defs": {
+    "bindingEntry": {
+      "type": "object",
+      "required": [
+        "device_id",
+        "capability_id",
+        "resource",
+        "binding"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "$ref": "defs.schema.json#/$defs/deviceId"
+        },
+        "capability_id": {
+          "$ref": "defs.schema.json#/$defs/capabilityId"
+        },
+        "resource": {
+          "$ref": "defs.schema.json#/$defs/resourceId"
+        },
+        "binding": {
+          "$ref": "#/$defs/binding"
+        }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "required": [
+        "bridge",
+        "kind",
+        "native",
+        "concurrency",
+        "timeout_ms"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "bridge": {
+          "type": "string",
+          "enum": [
+            "python-object",
+            "gymnasium",
+            "dm-env",
+            "mujoco",
+            "pybullet",
+            "isaac-sim",
+            "isaac-lab",
+            "isaac-gym",
+            "gazebo",
+            "ros2",
+            "ros1",
+            "webots",
+            "unity",
+            "sapien",
+            "drake",
+            "brax-mjx",
+            "habitat",
+            "airsim",
+            "lerobot-real",
+            "http-api",
+            "mcp-proxy",
+            "scpi-visa",
+            "serial",
+            "sila2",
+            "opentrons",
+            "micromanager",
+            "flowchem",
+            "madsci",
+            "pylabrobot",
+            "bluesky-ophyd",
+            "qcodes",
+            "cli-process",
+            "docker",
+            "replay",
+            "other"
+          ]
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "declarative",
+            "shim"
+          ]
+        },
+        "native": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^[^\\s]+$",
+          "description": "Precise native symbol: module/class/function or protocol command/register (ADPT-020). No prose."
+        },
+        "args": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/arg"
+          }
+        },
+        "result": {
+          "type": "object",
+          "required": [
+            "map"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "map": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "$ref": "#/$defs/resultSource"
+              },
+              "description": "Capability output field -> native result path."
+            }
+          }
+        },
+        "constants": {
+          "type": "object",
+          "additionalProperties": {},
+          "description": "Fixed native arguments injected by the binding (constant injection)."
+        },
+        "units": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/unit"
+          },
+          "description": "Target path or native argument name -> explicit unit conversion."
+        },
+        "clamp": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/clamp"
+          },
+          "description": "Target path or native argument name -> declared limits."
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/errorRule"
+          },
+          "description": "Ordered native-regex -> MHS code rules; first match wins."
+        },
+        "concurrency": {
+          "$ref": "defs.schema.json#/$defs/concurrency"
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400000
+        },
+        "positional": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "inputs": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/inputDeclaration"
+          },
+          "description": "Capability input declarations used for ADPT-040 totality."
+        },
+        "required_inputs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "unsupported": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "reason"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "reason": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "input",
+                      "reason"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "input": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "reason": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "shim": {
+          "type": "string",
+          "pattern": "^[^\\s]+:[^\\s]+$",
+          "description": "REQUIRED for kind \"shim\": path:function inside the adapter's mhs/ directory (ADPT-041)."
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1024
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "declarative"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "result"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "shim"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "shim"
+            ]
+          }
+        }
+      ]
+    },
+    "arg": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^input(\\..*)?$"
+        },
+        "value": {},
+        "type": {
+          "type": "string",
+          "enum": [
+            "integer",
+            "number",
+            "string",
+            "boolean",
+            "array",
+            "object"
+          ]
+        },
+        "enum_map": {
+          "type": "object",
+          "minProperties": 1
+        },
+        "map": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Alias of enum_map from MHS-006 \u00a77.2."
+        },
+        "unit": {
+          "$ref": "#/$defs/unit"
+        },
+        "clamp": {
+          "$ref": "#/$defs/clamp"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "default": {},
+        "unsupported": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1024
+        },
+        "units": {
+          "$ref": "#/$defs/unit"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "from"
+          ],
+          "not": {
+            "required": [
+              "value"
+            ]
+          }
+        },
+        {
+          "required": [
+            "value"
+          ]
+        },
+        {
+          "required": [
+            "default"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "from"
+                ]
+              },
+              {
+                "required": [
+                  "value"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "required": [
+            "unsupported",
+            "reason"
+          ],
+          "properties": {
+            "unsupported": {
+              "const": true
+            }
+          }
+        }
+      ],
+      "not": {
+        "required": [
+          "unit",
+          "units"
+        ]
+      }
+    },
+    "resultSource": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^output(\\..*)?$"
+        },
+        {
+          "$ref": "#/$defs/resultTransform"
+        }
+      ]
+    },
+    "resultTransform": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^output(\\..*)?$"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^output(\\..*)?$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "integer",
+            "number",
+            "string",
+            "boolean",
+            "array",
+            "object"
+          ]
+        },
+        "enum_map": {
+          "type": "object",
+          "minProperties": 1
+        },
+        "map": {
+          "type": "object",
+          "minProperties": 1
+        },
+        "unit": {
+          "$ref": "#/$defs/unit"
+        },
+        "clamp": {
+          "$ref": "#/$defs/clamp"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1024
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "from"
+          ]
+        },
+        {
+          "required": [
+            "path"
+          ]
+        }
+      ]
+    },
+    "unit": {
+      "type": "object",
+      "required": [
+        "from",
+        "to"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "$ref": "defs.schema.json#/$defs/ucum"
+        },
+        "to": {
+          "$ref": "defs.schema.json#/$defs/ucum"
+        },
+        "factor": {
+          "type": "number"
+        },
+        "offset": {
+          "type": "number"
+        }
+      }
+    },
+    "clamp": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "envelope": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "anyOf": [
+            {
+              "required": [
+                "min"
+              ]
+            },
+            {
+              "required": [
+                "max"
+              ]
+            }
+          ]
+        },
+        "limits": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          },
+          "anyOf": [
+            {
+              "required": [
+                "min"
+              ]
+            },
+            {
+              "required": [
+                "max"
+              ]
+            }
+          ]
+        },
+        "unit": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "min"
+          ]
+        },
+        {
+          "required": [
+            "max"
+          ]
+        }
+      ]
+    },
+    "errorRule": {
+      "type": "object",
+      "required": [
+        "native",
+        "mhs_code"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "native": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "description": "Regex tested against the native exception type name, message, and 'Type: message'."
+        },
+        "mhs_code": {
+          "type": "string",
+          "pattern": "^MHS\\.[A-Z0-9_]+\\.[A-Z0-9_]+$"
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1024
+        }
+      }
+    },
+    "inputDeclaration": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "unsupported": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "integer",
+            "number",
+            "string",
+            "boolean",
+            "array",
+            "object"
+          ]
+        },
+        "unit": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1024
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "unsupported": {
+                "const": true
+              }
+            },
+            "required": [
+              "unsupported"
+            ]
+          },
+          "then": {
+            "required": [
+              "reason"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

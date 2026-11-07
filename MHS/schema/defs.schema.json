@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/defs.schema.json",
+  "title": "OpenMHS common definitions",
+  "description": "Shared definitions for OpenMHS 0.9 documents (wire revision 1, mhs_version 1.x). OpenMHS schemas are closed by default; extension members use the x- prefix wherever a schema declares patternProperties ^x-.",
+  "$defs": {
+    "mhsVersion": { "type": "string", "pattern": "^1\\.[0-9]+$", "description": "MHS protocol version (MAJOR.MINOR)." },
+    "ulid": { "type": "string", "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$" },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "endpointId": { "type": "string", "pattern": "^mhs://[^\\s/]+(/[^\\s]*)?$" },
+    "deviceId": { "type": "string", "pattern": "^mhs://[^\\s/]+(/[^\\s]+)+$" },
+    "resourceId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_.-]{0,63}$" },
+    "capabilityId": { "type": "string", "pattern": "^(cap|x-cap)\\.[a-z0-9_.-]+\\.v[0-9]+$" },
+    "capabilityPattern": { "type": "string", "pattern": "^(cap|x-cap)\\.[a-z0-9_.-]+(\\.\\*|\\.v[0-9]+)?$", "description": "A capability id (cap.<class>.v<major>) or a trailing-glob pattern (cap.<class>.*)." },
+    "semver": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+([-+][0-9A-Za-z.-]+)?$" },
+    "ucum": { "type": "string", "minLength": 1, "description": "UCUM unit code." },
+    "rfc3339": { "type": "string", "format": "date-time" },
+    "tags": { "type": "array", "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9 -]{0,79}$" }, "maxItems": 40 },
+    "uri": { "type": "string", "pattern": "^[a-z][a-z0-9+.-]*:" },
+    "principal": {
+      "type": "object",
+      "required": ["id", "kind"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "kind": { "type": "string", "enum": ["human", "agent", "service"] },
+        "display_name": { "type": "string", "maxLength": 200 },
+        "contact": { "type": "string", "maxLength": 200 },
+        "x-meta": { "type": "object" }
+      }
+    },
+    "mode": { "type": "string", "enum": ["hardware", "simulated", "hybrid", "replay"] },
+    "riskClass": { "type": "string", "enum": ["R0", "R1", "R2", "R3"] },
+    "verdict": { "type": "string", "enum": ["pass", "fail", "skip", "warn"] },
+    "conformanceLevel": { "type": "string", "enum": ["CL0", "CL1", "CL2", "CL3", "CL4", "CL5"] },
+    "profile": { "type": "string", "enum": ["MHS-Device", "MHS-Sim", "MHS-Bridge", "MHS-Host", "MHS-Registry"] },
+    "trust": { "type": "string", "enum": ["unsigned", "self_signed", "registry_verified", "manufacturer_signed"] },
+    "concurrency": { "type": "string", "enum": ["exclusive", "shared", "serialized"] },
+    "determinism": { "type": "string", "enum": ["exact", "seeded", "statistical", "none"] },
+    "unitField": {
+      "type": "object",
+      "description": "Numeric field annotated with a UCUM unit at schema level (x-mhs-unit) or as {value, unit}.",
+      "properties": {
+        "value": { "type": "number" },
+        "unit": { "$ref": "#/$defs/ucum" }
+      },
+      "required": ["value", "unit"],
+      "additionalProperties": false
+    },
+    "error": {
+      "type": "object",
+      "required": ["mhs_code", "message"],
+      "additionalProperties": false,
+      "properties": {
+        "mhs_code": { "type": "string", "pattern": "^MHS\\.[A-Z]+\\.[A-Z0-9_]+$" },
+        "message": { "type": "string", "minLength": 1 },
+        "retryable": { "type": "boolean" },
+        "current_revision": { "type": "integer", "minimum": 0 },
+        "details": { "type": "object" },
+        "interlocks": { "type": "array", "items": { "$ref": "#/$defs/interlockState" } },
+        "remediation": { "type": "string" }
+      }
+    },
+    "interlockState": {
+      "type": "object",
+      "required": ["id", "state"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "state": { "type": "string", "enum": ["closed", "open", "unknown"] },
+        "description": { "type": "string" }
+      }
+    },
+    "effect": {
+      "type": "object",
+      "required": ["kind", "summary"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string" },
+        "reversible": { "type": "boolean" },
+        "severity": { "$ref": "#/$defs/riskClass" },
+        "irreversible_reason": { "type": "string" }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "required": ["permit_id", "principal"],
+      "additionalProperties": false,
+      "properties": {
+        "permit_id": { "type": "string" },
+        "principal": { "type": "string" },
+        "approved_at": { "$ref": "#/$defs/rfc3339" },
+        "method": { "type": "string", "enum": ["human_click", "policy_rule", "dual_control", "auto"] },
+        "evidence_ref": { "type": "string" }
+      }
+    },
+    "evidenceLink": {
+      "type": "object",
+      "required": ["seq", "digest"],
+      "additionalProperties": false,
+      "properties": {
+        "seq": { "type": "integer", "minimum": 0 },
+        "prev_digest": { "type": "string" },
+        "digest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "receiptStatus": {
+      "type": "string",
+      "enum": ["accepted", "running", "completed", "failed", "rejected", "cancelled", "unknown"]
+    },
+    "revision": { "type": "integer", "minimum": 0, "description": "Monotone uint64 revision; JSON numbers may lose precision above 2^53, so endpoints above that MUST emit strings. Validators accept both." },
+    "revisionValue": { "type": ["integer", "string"], "pattern": "^[0-9]+$" },
+    "specVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$", "description": "OpenMHS specification line, e.g. 0.9 (distinct from the wire mhsVersion)." },
+    "verb": { "type": "string", "enum": ["read", "write", "invoke"], "description": "Binding verb. read never changes device state or the revision; write sets named parameters; invoke performs an action. The capability class fixes the verb; a binding that declares one must repeat the class verb." },
+    "limitPath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*(\\[(\\*|[0-9]+)\\])*(\\.[A-Za-z_][A-Za-z0-9_]*(\\[(\\*|[0-9]+)\\])*)*$",
+      "description": "Limit path into a capability input (or a resource state document): identifier segments joined by dots, each optionally followed by [*] (every element) or [N] (one element), e.g. ticks, position.x, joints[*], joints[2]. A path that does not resolve in the effective input schema is a load error."
+    },
+    "limitBound": {
+      "type": ["number", "array"],
+      "items": { "type": "number" },
+      "minItems": 1,
+      "description": "A scalar bound, or one bound per array element (the array length must equal the field's fixed length)."
+    },
+    "limitRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "description": "One closed limit rule. Unknown members (for example a misspelled 'maxx') are schema errors, so a typo can never silently remove a bound. A scalar min/max applies to every element of a numeric array; an array min/max applies per index. Sources combine by intersection (class, binding, device envelope, operator overlay); an overlay may only narrow.",
+      "properties": {
+        "min": { "$ref": "#/$defs/limitBound" },
+        "max": { "$ref": "#/$defs/limitBound" },
+        "allowed": { "type": "array", "minItems": 1, "items": { "type": ["string", "number", "integer", "boolean"] }, "description": "Closed set of allowed values (enum-like)." },
+        "unit": { "$ref": "#/$defs/ucum", "description": "Unit of min/max; must equal the field's x-mhs-unit." },
+        "reason": { "type": "string", "maxLength": 500 },
+        "source": { "type": "string", "enum": ["vendor_doc", "upstream_code", "class_default", "operator"], "description": "Where the bound comes from. vendor_doc and upstream_code require ref." },
+        "ref": { "type": "string", "minLength": 1, "maxLength": 500, "description": "Provenance reference, e.g. path/in/clone.py:88 at the pinned commit, or a manual page." },
+        "names": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1, "maxLength": 64 }, "description": "Element names for an array field (e.g. joint names), used in violation details; its length must equal the field length." },
+        "per": { "type": "string", "enum": ["rolling_1h", "rolling_24h", "rolling_7d", "session"], "description": "Advanced limits (compatibility): max is a cumulative budget over this window, enforced by the runtime's cumulative check rather than per call." }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "source": { "enum": ["vendor_doc", "upstream_code"] } }, "required": ["source"] },
+          "then": { "required": ["ref"] }
+        }
+      ]
+    },
+    "limitValue": {
+      "description": "A limit rule, or the literal string operator_required: the bound must come from an operator overlay (site-limits.json) before hardware use; without one the runtime refuses with MHS.SAFETY.LIMITS_UNSET.",
+      "if": { "type": "string" },
+      "then": { "const": "operator_required" },
+      "else": { "$ref": "#/$defs/limitRule" }
+    },
+    "limitMap": {
+      "type": "object",
+      "description": "Limits keyed by limit path.",
+      "propertyNames": { "$ref": "#/$defs/limitPath" },
+      "additionalProperties": { "$ref": "#/$defs/limitValue" }
+    },
+    "packageId": { "type": "string", "pattern": "^gh\\.[a-z0-9_.-]+/[a-z0-9_.-]+$" },
+    "commitSha": { "type": "string", "pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$", "description": "Full git commit id (SHA-1, or SHA-256 object format)." },
+    "spdxExpression": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9(][A-Za-z0-9.+() -]*$", "description": "SPDX license expression (e.g. MIT, Apache-2.0, GPL-3.0-or-later, LicenseRef-x, NOASSERTION)." },
+    "licenseClass": { "type": "string", "enum": ["permissive", "weak-copyleft", "copyleft", "network-copyleft", "source-available", "proprietary", "unknown"] },
+    "pep440": { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)*((a|b|rc)[0-9]+)?(\\.post[0-9]+)?(\\.dev[0-9]+)?$", "description": "Python package version (PEP 440), e.g. 0.9.0.dev0." },
+    "dateOrDateTime": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\\.[0-9]+)?)?(Z|[+-][0-9]{2}:[0-9]{2}))?$" },
+    "relPath": { "type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!/)(?!.*(^|/)\\.\\.(/|$))[A-Za-z0-9._@+/-]+$", "description": "Relative POSIX path inside a package directory: no leading slash, no .. segment, no backslash." },
+    "authoredBy": {
+      "type": "object",
+      "required": ["kind"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "type": "string", "enum": ["human", "model"] },
+        "name": { "type": "string", "maxLength": 200 },
+        "model_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "run_id": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "date": { "$ref": "#/$defs/dateOrDateTime" }
+      },
+      "allOf": [
+        { "if": { "properties": { "kind": { "const": "model" } }, "required": ["kind"] }, "then": { "required": ["model_id"] } }
+      ]
+    },
+    "reviewedBy": {
+      "type": ["object", "null"],
+      "description": "null until a human reviewer signs. scope contract covers the code and limits on fakes; scope hardware covers a reviewed hardware run. Model-authored hardware R2+ drivers cannot start a hardware backend while this is null.",
+      "required": ["reviewer", "date", "scope"],
+      "additionalProperties": false,
+      "properties": {
+        "reviewer": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "date": { "$ref": "#/$defs/dateOrDateTime" },
+        "scope": { "type": "string", "enum": ["contract", "hardware"] },
+        "notes": { "type": "string", "maxLength": 2000 }
+      }
+    },
+    "gateId": { "type": "string", "enum": ["G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9"] },
+    "blockedCode": {
+      "type": "string",
+      "enum": ["ENTRY_UNVERIFIED", "INSTALL_FAILED", "NO_HARDWARE_FREE_PATH", "HELPER_MISSING", "LICENSE_BLOCKED", "NOT_A_DEVICE", "QUARANTINE", "PLATFORM_UNSUPPORTED", "NEEDS_ARTIFACTS", "CATALOGUE_GAP", "SDK_BUG", "GATE_TIMEOUT"],
+      "description": "Why a per-repo driver package cannot pass the gate (handoff kit, blocked codes)."
+    },
+    "factSource": { "type": "string", "enum": ["vendor_doc", "upstream_code", "operator", "interview"] }
+  }
+}

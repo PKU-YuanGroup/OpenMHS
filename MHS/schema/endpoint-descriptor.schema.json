@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/endpoint-descriptor.schema.json",
+  "title": "OpenMHS endpoint descriptor (/.well-known/mhs.json)",
+  "description": "Served by HTTP endpoints so hosts can discover transports, devices and conformance without out-of-band configuration.",
+  "type": "object",
+  "required": ["mhs_version", "endpoint_id", "transports", "devices"],
+  "additionalProperties": false,
+  "properties": {
+    "mhs_version": { "$ref": "defs.schema.json#/$defs/mhsVersion" },
+    "endpoint_id": { "$ref": "defs.schema.json#/$defs/endpointId" },
+    "display_name": { "type": "string" },
+    "transports": {
+      "type": "object",
+      "required": ["http"],
+      "additionalProperties": false,
+      "properties": {
+        "http": { "type": "string", "description": "Path or absolute URL of the JSON-RPC endpoint." },
+        "sse": { "type": "string" },
+        "ws": { "type": "string" },
+        "stdio": { "type": "string", "description": "Optional launch command for a local endpoint." },
+        "mcp": { "type": "string", "description": "MCP projection endpoint, e.g. /mhs/v1/mcp." }
+      }
+    },
+    "auth": { "type": "array", "items": { "type": "string", "enum": ["bearer", "mtls", "local", "none"] } },
+    "devices": { "type": "array", "items": { "$ref": "defs.schema.json#/$defs/deviceId" } },
+    "registry": { "type": "string" },
+    "conformance": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["profile", "level"],
+        "additionalProperties": false,
+        "properties": {
+          "profile": { "$ref": "defs.schema.json#/$defs/profile" },
+          "level": { "$ref": "defs.schema.json#/$defs/conformanceLevel" },
+          "report_digest": { "$ref": "defs.schema.json#/$defs/digest" }
+        }
+      }
+    },
+    "features": { "type": "array", "items": { "type": "string" }, "description": "Advertised feature strings, including MHS.SAFETY.NOT_CERTIFIED." },
+    "contact": { "type": "string" },
+    "signature": { "type": "object" }
+  }
+}

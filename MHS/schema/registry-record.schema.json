@@ -1,0 +1,438 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/registry-record.schema.json",
+  "title": "OpenMHS registry package record",
+  "description": "One record per repository/package that can provide or contain OpenMHS-capable devices. The record says what the package is, which adapter family it belongs to, how it is integrated (strategy, role, wave, rank) and the exact next action. A package is never described as 'supported' without an evidence state. Every record carries the MHS-007 §2/§4.1 common envelope: `id` is the stable record id and MUST equal `package_id` for `record_type: package`; `registry_id` identifies the publishing registry (a DNS name or a `<name>-registry` label; this project publishes as `openmhs-registry`, mhs._ids.REGISTRY_ID).",
+  "type": "object",
+  "required": [
+    "record_type",
+    "id",
+    "registry_id",
+    "package_id",
+    "repo_url",
+    "track",
+    "families",
+    "tier",
+    "ring",
+    "evidence"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "record_type": {
+      "type": "string",
+      "const": "package"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^gh\\.[a-z0-9_.-]+/[a-z0-9_.-]+$",
+      "description": "Stable record id (MHS-007 REG-003/REG-004). For record_type=package it MUST equal package_id; the equality is checked by MHS/registry/validate.py."
+    },
+    "registry_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 253,
+      "pattern": "^(?:(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?|[a-z0-9](?:[a-z0-9-]{0,52}[a-z0-9])?-registry)$",
+      "description": "Identifier of the publishing registry (MHS-007 REG-003a): a DNS name, or a single lowercase label ending in -registry such as openmhs-registry (mhs._ids.REGISTRY_ID, used until the project has a domain). It is deployment policy, not a schema constant: federation has no privileged central registry and merged records retain their originating registry_id (REG-034/REG-035)."
+    },
+    "package_id": {
+      "type": "string",
+      "pattern": "^gh\\.[a-z0-9_.-]+/[a-z0-9_.-]+$"
+    },
+    "repo_url": {
+      "type": "string"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Pinned upstream source the registry and task cards were generated from.",
+      "properties": {
+        "repo_url": {
+          "type": "string"
+        },
+        "commit": {
+          "$ref": "defs.schema.json#/$defs/commitSha"
+        },
+        "ref": {
+          "type": "string",
+          "description": "Branch or tag the commit was read from, informative."
+        }
+      }
+    },
+    "track": {
+      "type": "string",
+      "enum": [
+        "labs",
+        "robots",
+        "shared"
+      ]
+    },
+    "owner": {
+      "type": "string"
+    },
+    "repo": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1200
+    },
+    "tags": {
+      "$ref": "defs.schema.json#/$defs/tags"
+    },
+    "domains": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "families": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "MHS adapter families, most specific first."
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "X"
+      ]
+    },
+    "ring": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3,
+      "description": "0 runtime-verified, 1 agent-reviewed manifest, 2 static manifest, 3 family recipe only."
+    },
+    "modes": {
+      "type": "array",
+      "items": {
+        "$ref": "defs.schema.json#/$defs/mode"
+      }
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "build_systems": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "interfaces": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Detected integration interfaces (ROS2, PyVISA, Gymnasium, MCP, HTTP, ...)."
+    },
+    "license": {
+      "type": "string"
+    },
+    "license_spdx": {
+      "$ref": "defs.schema.json#/$defs/spdxExpression",
+      "description": "SPDX expression of the upstream licence (from the LICENSE file when the catalogue says unknown)."
+    },
+    "license_class": {
+      "$ref": "defs.schema.json#/$defs/licenseClass",
+      "description": "Licence class; network-copyleft, source-available, proprietary and unknown need a publication review."
+    },
+    "simulation": {
+      "type": "boolean"
+    },
+    "hardware_free": {
+      "type": "boolean"
+    },
+    "stars": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "last_commit_at": {
+      "type": "string"
+    },
+    "adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "present": {
+          "type": "boolean",
+          "description": "True when the repo itself ships MHS adapter files."
+        },
+        "manifest_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Relative path to a generated adapter manifest in the registry; null when none is published (skeleton manifests are archived)."
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "none",
+            "declared",
+            "packaged",
+            "runnable",
+            "conformant",
+            "certified"
+          ]
+        },
+        "bridge": {
+          "type": "string",
+          "description": "Recommended bridge family."
+        },
+        "entry_points": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "shim_required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "capabilities_offered": {
+      "type": "array",
+      "items": {
+        "$ref": "defs.schema.json#/$defs/capabilityId"
+      },
+      "description": "Capability classes this package can plausibly expose through an adapter; empty for tier D/X."
+    },
+    "conformance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "profile": {
+          "$ref": "defs.schema.json#/$defs/profile"
+        },
+        "level": {
+          "$ref": "defs.schema.json#/$defs/conformanceLevel"
+        },
+        "issuer_kind": {
+          "type": "string",
+          "enum": [
+            "none",
+            "self",
+            "verified"
+          ]
+        },
+        "report_digest": {
+          "$ref": "defs.schema.json#/$defs/digest"
+        },
+        "suite_version": {
+          "$ref": "defs.schema.json#/$defs/semver"
+        },
+        "issued_at": {
+          "$ref": "defs.schema.json#/$defs/rfc3339"
+        }
+      }
+    },
+    "integration": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "enum": [
+            "direct-driver",
+            "family-config",
+            "bridge-runtime",
+            "reference",
+            "skip",
+            "untriaged"
+          ],
+          "description": "How the package is integrated: a Driver class (direct-driver), a family helper subclass (family-config), an SDK bridge task (bridge-runtime), prior art or host (reference), not integrated (skip) or not yet decided (untriaged)."
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "device-driver",
+            "driver-pack",
+            "sim-env",
+            "twin-candidate",
+            "framework",
+            "transport",
+            "tooling",
+            "host",
+            "prior-art",
+            "docs",
+            "not-device"
+          ]
+        },
+        "reason_code": {
+          "type": "string",
+          "maxLength": 64,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "description": "Triage outcome code that chose the strategy, e.g. PY_SDK_WITH_ENTRY or skip:duplicate_of."
+        },
+        "recipe": {
+          "type": "string",
+          "description": "Family recipe id this package follows."
+        },
+        "effort": {
+          "type": "string",
+          "enum": [
+            "E1",
+            "E2",
+            "E3",
+            "E4",
+            "EX"
+          ]
+        },
+        "estimated_days": {
+          "type": "number",
+          "minimum": 0
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "next_action": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "scenario_required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "blocked_on": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "defs.schema.json#/$defs/blockedCode"
+          },
+          {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.-]+$"
+          }
+        ]
+      },
+      "description": "Why the package cannot be dispatched yet: a blocked code or a namespaced prerequisite such as helper:ros."
+    },
+    "wave": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9,
+      "description": "Rollout wave (0 = done before handoff, 1 = pilot, ...)."
+    },
+    "rank": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Deterministic rank within the wave (1 = first)."
+    },
+    "quarantine": {
+      "type": "boolean",
+      "description": "True for download lures and installers; quarantined packages are never dispatched."
+    },
+    "variant_of": {
+      "anyOf": [
+        {
+          "$ref": "defs.schema.json#/$defs/packageId"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "package_id of the canonical package when this one is a fork or duplicate."
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "state",
+        "read_by"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "declared",
+            "static_scan",
+            "agent_read",
+            "runtime_tested",
+            "contract_checked",
+            "hardware_checked"
+          ],
+          "description": "contract_checked: the driver gate passed on a fake or simulated backend (never an MHS-Device level); hardware_checked: an operator ran the hardware check with --allow-hardware."
+        },
+        "read_by": {
+          "type": "string",
+          "enum": [
+            "catalog",
+            "static_analysis",
+            "agent",
+            "runtime"
+          ]
+        },
+        "files_read": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notes": {
+          "type": "string"
+        },
+        "verified_at": {
+          "$ref": "defs.schema.json#/$defs/rfc3339"
+        },
+        "provenance_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "repo": {
+          "type": "string"
+        },
+        "docs": {
+          "type": "string"
+        },
+        "site": {
+          "type": "string"
+        },
+        "manifest": {
+          "type": "string"
+        }
+      }
+    },
+    "trust": {
+      "$ref": "defs.schema.json#/$defs/trust"
+    },
+    "local_path": {
+      "type": "string"
+    },
+    "catalog_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Provenance ids from the OpenAI4S backend catalog."
+    },
+    "updated_at": {
+      "$ref": "defs.schema.json#/$defs/rfc3339"
+    },
+    "x-vendor": {
+      "type": "object"
+    }
+  }
+}

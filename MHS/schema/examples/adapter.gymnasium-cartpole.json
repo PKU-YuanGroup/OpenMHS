@@ -1,0 +1,127 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/adapter.schema.json",
+  "mhs_adapter": "1.0",
+  "adapter_id": "com.example.gymnasium-cartpole",
+  "title": "Gymnasium CartPole as an MHS simulated device",
+  "family": "gymnasium",
+  "source": {
+    "repo": "https://github.com/Farama-Foundation/Gymnasium",
+    "commit": "5f2f9d3",
+    "license": "MIT",
+    "redistributable": true,
+    "path": "mhs/"
+  },
+  "runtime": {
+    "kind": "python",
+    "python": ">=3.10",
+    "install": ["pip install gymnasium==1.0.0"],
+    "entry": "mhs.bridge.gym:main",
+    "requirements": ["gymnasium"],
+    "gpu": false
+  },
+  "lifecycle": {
+    "start": { "kind": "process", "command": ["python", "-m", "mhs.bridge.gym", "--adapter", "mhs/mhs-adapter.json"] },
+    "ready": { "method": "mhs.hello", "deadline_ms": 30000 },
+    "stop": { "kind": "terminate", "grace_s": 5 }
+  },
+  "devices": [
+    {
+      "$schema": "https://openmhs.invalid/schema/0.9/device.schema.json",
+      "mhs_version": "1.0",
+      "device_id": "mhs://localhost:7401/gym/CartPole-v1",
+      "instance_id": "01J8ZQ3V6Y7M2N4P6R8S0T2V4X",
+      "display_name": "CartPole-v1 (Gymnasium simulator)",
+      "mode": "simulated",
+      "profile": {
+        "title": "Cart-pole balancing",
+        "summary": "Classic control benchmark: push a cart left or right to keep a pole upright. Demonstrates the MHS world.* capability family and seeded determinism.",
+        "tags": ["classic control", "cartpole", "reinforcement learning", "benchmark", "seeded simulation"]
+      },
+      "resources": [
+        {
+          "resource_id": "world",
+          "kind": "world.sim",
+          "title": "CartPole world",
+          "revision": 0,
+          "hash_exclusions": ["/mono_ms"],
+          "state_schema": {
+            "type": "object",
+            "required": ["cart_position", "pole_angle", "terminated", "truncated"],
+            "properties": {
+              "cart_position": { "type": "number", "x-mhs-unit": "m" },
+              "cart_velocity": { "type": "number", "x-mhs-unit": "m/s" },
+              "pole_angle": { "type": "number", "x-mhs-unit": "rad" },
+              "pole_angular_velocity": { "type": "number", "x-mhs-unit": "rad/s" },
+              "terminated": { "type": "boolean" },
+              "truncated": { "type": "boolean" }
+            }
+          },
+          "state": { "cart_position": 0, "cart_velocity": 0, "pole_angle": 0, "pole_angular_velocity": 0, "terminated": false, "truncated": false }
+        }
+      ],
+      "capabilities": [
+        {
+          "capability_id": "cap.world.step.v1",
+          "resource": "world",
+          "native": "gym.make('CartPole-v1').step(action)",
+          "input_schema": {
+            "type": "object",
+            "required": ["action"],
+            "properties": { "action": { "type": "integer", "enum": [0, 1] } }
+          },
+          "output_schema": { "type": "object", "required": ["observation", "reward", "terminated", "truncated"] },
+          "constraints": { "concurrency": "exclusive", "max_duration_ms": 1000 },
+          "determinism": "seeded",
+          "exclusive": true
+        },
+        {
+          "capability_id": "cap.world.reset.v1",
+          "resource": "world",
+          "native": "gym.make('CartPole-v1').reset(seed=seed)",
+          "input_schema": { "type": "object", "properties": { "seed": { "type": "integer", "minimum": 0 } } },
+          "output_schema": { "type": "object", "required": ["observation"] },
+          "determinism": "seeded"
+        },
+        {
+          "capability_id": "cap.world.state.v1",
+          "resource": "world",
+          "native": "env.unwrapped.state",
+          "input_schema": { "type": "object", "properties": {} },
+          "output_schema": { "type": "object" },
+          "determinism": "seeded"
+        }
+      ],
+      "safety": {
+        "risk_class": "R0",
+        "envelope": {},
+        "interlocks": [],
+        "estop": { "kind": "software", "latching": false, "latency_ms": 10, "reset": "mhs.safety.reset" },
+        "safe_state": { "description": "Simulation paused; no physical effect", "achieved_by": [] }
+      },
+      "fidelity": {
+        "engine": "gymnasium-classic-control",
+        "fidelity_level": "F0",
+        "determinism": { "kind": "seeded", "seed_control": "reset_required", "notes": "Seed must be supplied on reset; no internal RNG isolation." },
+        "timestep_ms": 20,
+        "realtime_factor": 0,
+        "reset": "full",
+        "snapshot_restore": false,
+        "gaps": ["Rigid-body approximation only", "No actuator saturation model", "Observation noise not modeled"]
+      }
+    }
+  ],
+  "conformance_target": { "profile": "MHS-Sim", "level": "CL2" },
+  "evidence": {
+    "state": "declared",
+    "read_by": "static_analysis",
+    "entry_points": ["gymnasium/envs/classic_control/cartpole.py:CartPoleEnv.step", "gymnasium/envs/classic_control/cartpole.py:CartPoleEnv.reset"]
+  },
+  "stability": "stable",
+  "tier": "A",
+  "redaction": [],
+  "registry": {
+    "package_id": "gh.farama-foundation/gymnasium",
+    "homepage": "https://gymnasium.farama.org",
+    "maintainers": ["Farama Foundation"]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/evidence-bundle.schema.json",
+  "title": "OpenMHS evidence bundle",
+  "description": "A self-contained, offline-verifiable export of an endpoint's receipt chain (mhs.evidence.export). Verification re-derives digest_0 from genesis.genesis_document, then each receipt digest from JCS(receipt without evidence) + prev_digest, and compares the last digest with head_digest.",
+  "type": "object",
+  "required": ["bundle_version", "endpoint_info", "created_at", "receipts", "head_digest"],
+  "additionalProperties": true,
+  "properties": {
+    "bundle_version": { "$ref": "defs.schema.json#/$defs/semver" },
+    "mhs_version": { "$ref": "defs.schema.json#/$defs/mhsVersion" },
+    "endpoint_info": {
+      "type": "object",
+      "required": ["endpoint_id", "mhs_version", "genesis_digest"],
+      "additionalProperties": true,
+      "properties": {
+        "endpoint_id": { "$ref": "defs.schema.json#/$defs/endpointId" },
+        "mhs_version": { "$ref": "defs.schema.json#/$defs/mhsVersion" },
+        "server": { "type": "object" },
+        "genesis_digest": { "$ref": "defs.schema.json#/$defs/digest" }
+      }
+    },
+    "created_at": { "$ref": "defs.schema.json#/$defs/rfc3339" },
+    "genesis": {
+      "type": "object",
+      "required": ["kind", "seq", "genesis_document", "digest"],
+      "additionalProperties": true,
+      "properties": {
+        "kind": { "type": "string", "const": "genesis" },
+        "seq": { "type": "integer", "const": 0 },
+        "genesis_document": {
+          "type": "object",
+          "required": ["endpoint_id", "created_at", "mhs_version", "instance_salt"],
+          "additionalProperties": true,
+          "properties": {
+            "endpoint_id": { "$ref": "defs.schema.json#/$defs/endpointId" },
+            "created_at": { "$ref": "defs.schema.json#/$defs/rfc3339" },
+            "mhs_version": { "$ref": "defs.schema.json#/$defs/mhsVersion" },
+            "instance_salt": { "type": "string" }
+          }
+        },
+        "digest": { "$ref": "defs.schema.json#/$defs/digest" }
+      }
+    },
+    "receipts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["receipt_id", "command_id", "status", "evidence"],
+        "additionalProperties": true,
+        "properties": {
+          "receipt_id": { "$ref": "defs.schema.json#/$defs/ulid" },
+          "command_id": { "type": "string" },
+          "status": { "$ref": "defs.schema.json#/$defs/receiptStatus" },
+          "evidence": { "$ref": "defs.schema.json#/$defs/evidenceLink" }
+        }
+      }
+    },
+    "head_digest": { "$ref": "defs.schema.json#/$defs/digest" },
+    "telemetry": { "type": "array", "items": { "type": "object" } },
+    "truncation": { "type": ["object", "null"] },
+    "selection": { "type": "object" },
+    "signature": { "type": ["object", "null"] },
+    "count": { "type": "integer", "minimum": 0 }
+  }
+}

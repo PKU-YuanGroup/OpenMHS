@@ -1,0 +1,1750 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/errors.schema.json",
+  "mhs_error_registry": "1.0",
+  "spec_version": "0.9",
+  "generated_artifacts": [
+    "MHS/spec/appendix-b-errors.md",
+    "MHS/sdk/src/mhs/errors.py"
+  ],
+  "error_count": 144,
+  "areas": [
+    {
+      "area": "PROTOCOL",
+      "jsonrpc_codes": [
+        -32700,
+        -32600,
+        -32601,
+        -32602,
+        -32000
+      ],
+      "summary": "Framing, method, parameter, negotiation, batch structure."
+    },
+    {
+      "area": "SESSION",
+      "jsonrpc_codes": [
+        -32011
+      ],
+      "summary": "Session lifecycle and grants."
+    },
+    {
+      "area": "AUTH",
+      "jsonrpc_codes": [
+        -32012
+      ],
+      "summary": "Authentication, authorisation, transport security."
+    },
+    {
+      "area": "DEVICE",
+      "jsonrpc_codes": [
+        -32013
+      ],
+      "summary": "Device identity, readiness, busyness, preconditions."
+    },
+    {
+      "area": "RESOURCE",
+      "jsonrpc_codes": [
+        -32014
+      ],
+      "summary": "Resource identity and state validation."
+    },
+    {
+      "area": "CAPABILITY",
+      "jsonrpc_codes": [
+        -32015
+      ],
+      "summary": "Class identity, binding and input/output validation."
+    },
+    {
+      "area": "CONFLICT",
+      "jsonrpc_codes": [
+        -32016
+      ],
+      "summary": "Idempotency, revision and lease conflicts."
+    },
+    {
+      "area": "OUTCOME",
+      "jsonrpc_codes": [
+        -32017
+      ],
+      "summary": "Unknown, timeout and aborted outcomes."
+    },
+    {
+      "area": "OPERATION",
+      "jsonrpc_codes": [
+        -32018
+      ],
+      "summary": "Operation handles and cancellation."
+    },
+    {
+      "area": "MODE",
+      "jsonrpc_codes": [
+        -32019
+      ],
+      "summary": "Mode declaration, read-only replay, snapshot/restore availability."
+    },
+    {
+      "area": "FIDELITY",
+      "jsonrpc_codes": [
+        -32020
+      ],
+      "summary": "Fidelity contract, determinism and replay verification."
+    },
+    {
+      "area": "LIMIT",
+      "jsonrpc_codes": [
+        -32021
+      ],
+      "summary": "Rate, size, concurrency and backpressure limits."
+    },
+    {
+      "area": "EVIDENCE",
+      "jsonrpc_codes": [
+        -32022
+      ],
+      "summary": "Evidence chain, bundles, signatures and retention."
+    },
+    {
+      "area": "SAFETY",
+      "jsonrpc_codes": [
+        -32010
+      ],
+      "summary": "Envelope, limits, interlocks, permits, e-stop, risk classes."
+    },
+    {
+      "area": "ADAPTER",
+      "jsonrpc_codes": [
+        -32023
+      ],
+      "summary": "Adapter manifests, drivers, bridges, shims, licensing."
+    },
+    {
+      "area": "REGISTRY",
+      "jsonrpc_codes": [
+        -32024
+      ],
+      "summary": "Registry records, trust, federation."
+    },
+    {
+      "area": "COMPOSITION",
+      "jsonrpc_codes": [
+        -32025
+      ],
+      "summary": "Compositions and their children (reserved profile)."
+    },
+    {
+      "area": "TRANSPORT",
+      "jsonrpc_codes": [
+        -32026
+      ],
+      "summary": "Transport availability and framing failures not covered by PROTOCOL."
+    },
+    {
+      "area": "BRIDGE",
+      "jsonrpc_codes": [
+        -32023
+      ],
+      "summary": "Declarative binding execution failures."
+    },
+    {
+      "area": "HOST",
+      "jsonrpc_codes": [
+        -32027
+      ],
+      "summary": "Host-side integration failures: policy, journal, reconciliation and the host evidence ledger (MHS-009)."
+    },
+    {
+      "area": "INTERNAL",
+      "jsonrpc_codes": [
+        -32603
+      ],
+      "summary": "Server faults; never a client error."
+    }
+  ],
+  "errors": [
+    {
+      "code": "MHS.PROTOCOL.PARSE_ERROR",
+      "area": "PROTOCOL",
+      "jsonrpc_code": -32700,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The frame is not valid JSON.",
+      "remediation": "Fix framing; send one JSON value per line/message.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.PROTOCOL.INVALID_REQUEST",
+      "area": "PROTOCOL",
+      "jsonrpc_code": -32600,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Not a JSON-RPC 2.0 request (missing `jsonrpc`, `method`, bad `id`).",
+      "remediation": "Send a valid JSON-RPC request.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.PROTOCOL.METHOD_NOT_FOUND",
+      "area": "PROTOCOL",
+      "jsonrpc_code": -32601,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Method unknown or not implemented by this endpoint/profile.",
+      "remediation": "Check `hello.features` and the profile's method matrix.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.PROTOCOL.INVALID_PARAMS",
+      "area": "PROTOCOL",
+      "jsonrpc_code": -32602,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Params missing or malformed (not an input-schema failure \u2014 see `CAPABILITY.INPUT_INVALID`).",
+      "remediation": "Check the method reference in [MHS-002](02-wire-protocol.md).",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.PROTOCOL.DEADLINE_INVALID",
+      "area": "PROTOCOL",
+      "jsonrpc_code": -32602,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Blocking method called without a valid `deadline_ms`.",
+      "remediation": "Supply `deadline_ms` \u2265 1.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.PROTOCOL.VERSION_UNSUPPORTED",
+      "area": "PROTOCOL",
+      "jsonrpc_code": -32000,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "No mutually supported protocol MAJOR.MINOR.",
+      "remediation": "Upgrade client or connect to an endpoint supporting your version.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.PROTOCOL.BATCH_NOT_ATOMIC",
+      "area": "PROTOCOL",
+      "jsonrpc_code": -32000,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Batch mixes mutations the endpoint cannot order safely.",
+      "remediation": "Split the batch or order the mutations as separate requests.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.PROTOCOL.BATCH_TOO_LARGE",
+      "area": "PROTOCOL",
+      "jsonrpc_code": -32000,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Batch exceeds the advertised maximum.",
+      "remediation": "Split into smaller batches.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.PROTOCOL.UNSUPPORTED_FEATURE",
+      "area": "PROTOCOL",
+      "jsonrpc_code": -32000,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A feature the client requested in `hello` is not implemented.",
+      "remediation": "Do not request the feature; re-read `hello.features`.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SESSION.UNKNOWN",
+      "area": "SESSION",
+      "jsonrpc_code": -32011,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "`session_id` does not exist.",
+      "remediation": "Open a session.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SESSION.EXPIRED",
+      "area": "SESSION",
+      "jsonrpc_code": -32011,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Session passed `expires_at`.",
+      "remediation": "Open a new session; re-read state; re-check permits.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SESSION.CLOSED",
+      "area": "SESSION",
+      "jsonrpc_code": -32011,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Session was closed.",
+      "remediation": "Open a new session.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SESSION.CAPABILITY_NOT_GRANTED",
+      "area": "SESSION",
+      "jsonrpc_code": -32011,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Capability not in the session grant.",
+      "remediation": "Open a new session requesting the capability (least privilege).",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SESSION.DEVICE_NOT_GRANTED",
+      "area": "SESSION",
+      "jsonrpc_code": -32011,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Device not covered by the session.",
+      "remediation": "Open a session including the device.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SESSION.MODE_MISMATCH",
+      "area": "SESSION",
+      "jsonrpc_code": -32011,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Requested mode \u2260 device mode.",
+      "remediation": "Request the declared mode; never fall back.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.AUTH.UNAUTHENTICATED",
+      "area": "AUTH",
+      "jsonrpc_code": -32012,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "No or invalid credentials.",
+      "remediation": "Authenticate per the endpoint descriptor's `auth`.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.AUTH.TOKEN_EXPIRED",
+      "area": "AUTH",
+      "jsonrpc_code": -32012,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Token expired.",
+      "remediation": "Refresh the token; retry is safe only for reads.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.AUTH.FORBIDDEN",
+      "area": "AUTH",
+      "jsonrpc_code": -32012,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Principal not allowed to perform this action.",
+      "remediation": "Use a principal with the required grant/approval.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.AUTH.SCOPE_INSUFFICIENT",
+      "area": "AUTH",
+      "jsonrpc_code": -32012,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Token scope does not cover the endpoint/device/capability.",
+      "remediation": "Request a narrower-scope-compatible token.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.AUTH.PRINCIPAL_REQUIRED",
+      "area": "AUTH",
+      "jsonrpc_code": -32012,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Operation requires an authenticated principal (human principal for approvals).",
+      "remediation": "Authenticate as the required principal kind.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.AUTH.TRANSPORT_INSECURE",
+      "area": "AUTH",
+      "jsonrpc_code": -32012,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Plaintext transport to a non-loopback endpoint.",
+      "remediation": "Use TLS or a loopback/stdio binding.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.AUTH.HARDWARE_DISABLED",
+      "area": "AUTH",
+      "jsonrpc_code": -32012,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Hardware operation refused because the deployment policy disallows hardware.",
+      "remediation": "Set allow_hardware=true through a trusted operator configuration, or use a simulated endpoint.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.DEVICE.UNKNOWN",
+      "area": "DEVICE",
+      "jsonrpc_code": -32013,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "`device_id` not served by this endpoint.",
+      "remediation": "Re-run `devices.list`.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.DEVICE.BUSY",
+      "area": "DEVICE",
+      "jsonrpc_code": -32013,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Exclusive capability is held by another operation.",
+      "remediation": "Wait for the operation to finish or cancel it; retry with backoff.",
+      "driver_subset": true
+    },
+    {
+      "code": "MHS.DEVICE.OFFLINE",
+      "area": "DEVICE",
+      "jsonrpc_code": -32013,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Device is unreachable or powered down.",
+      "remediation": "Bring it online; check the adapter's lifecycle state.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.DEVICE.NOT_READY",
+      "area": "DEVICE",
+      "jsonrpc_code": -32013,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Device initialising; commands not accepted yet.",
+      "remediation": "Retry after readiness (`hello`).",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.DEVICE.FAULTED",
+      "area": "DEVICE",
+      "jsonrpc_code": -32013,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Device reports a fault state.",
+      "remediation": "Clear the fault (self-test/reset) before further commands.",
+      "driver_subset": true
+    },
+    {
+      "code": "MHS.DEVICE.PRECONDITION_UNMET",
+      "area": "DEVICE",
+      "jsonrpc_code": -32013,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A declared physical precondition is false (tip attached, plate present, homed).",
+      "remediation": "Satisfy the precondition, then retry.",
+      "driver_subset": true
+    },
+    {
+      "code": "MHS.DEVICE.FAILED",
+      "area": "DEVICE",
+      "jsonrpc_code": -32013,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Device reported a terminal failure unrelated to the request shape.",
+      "remediation": "Observe state, recover the device, then re-plan.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.RESOURCE.UNKNOWN",
+      "area": "RESOURCE",
+      "jsonrpc_code": -32014,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "`resource_id` not present on the device.",
+      "remediation": "Re-read `devices.get`.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.RESOURCE.FIELD_UNKNOWN",
+      "area": "RESOURCE",
+      "jsonrpc_code": -32014,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Write/read referenced a field not in the resource state schema.",
+      "remediation": "Use declared fields only.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.RESOURCE.NOT_WRITABLE",
+      "area": "RESOURCE",
+      "jsonrpc_code": -32014,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Resource does not accept writes.",
+      "remediation": "Use a capability of verb `invoke`/`write`.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.RESOURCE.STATE_INVALID",
+      "area": "RESOURCE",
+      "jsonrpc_code": -32014,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Resource state failed its own schema (driver bug).",
+      "remediation": "Report to the adapter maintainer; do not retry blindly.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.CAPABILITY.UNKNOWN",
+      "area": "CAPABILITY",
+      "jsonrpc_code": -32015,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Class id not implemented by this endpoint/device.",
+      "remediation": "Re-read the manifest; check class MAJOR.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.CAPABILITY.NOT_BOUND",
+      "area": "CAPABILITY",
+      "jsonrpc_code": -32015,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Class known but not bound to this device/resource.",
+      "remediation": "Use a bound capability.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.CAPABILITY.KIND_MISMATCH",
+      "area": "CAPABILITY",
+      "jsonrpc_code": -32015,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Binding resource kind is not in the class `resource_kinds`.",
+      "remediation": "Adapter defect; report it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.CAPABILITY.INPUT_INVALID",
+      "area": "CAPABILITY",
+      "jsonrpc_code": -32015,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Input failed the binding/class JSON Schema.",
+      "remediation": "Fix the input; `data.details.errors[]` lists violations.",
+      "driver_subset": true
+    },
+    {
+      "code": "MHS.CAPABILITY.OUTPUT_INVALID",
+      "area": "CAPABILITY",
+      "jsonrpc_code": -32015,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Native result did not produce a valid capability output.",
+      "remediation": "Adapter/shim defect; the receipt is `failed`.",
+      "driver_subset": true
+    },
+    {
+      "code": "MHS.CAPABILITY.EXPERIMENTAL_PRESENT",
+      "area": "CAPABILITY",
+      "jsonrpc_code": null,
+      "retryable": null,
+      "status": "feature",
+      "since": "0.9.0",
+      "meaning": "Not an error: feature marker that an experimental class is bound.",
+      "remediation": "Treat experimental classes as unstable.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.CONFLICT.REVISION",
+      "area": "CONFLICT",
+      "jsonrpc_code": -32016,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "`expected_revision` \u2260 current revision.",
+      "remediation": "Read state, re-plan, retry with the current revision.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.CONFLICT.COMMAND_ID_REUSE",
+      "area": "CONFLICT",
+      "jsonrpc_code": -32016,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "`command_id` reused with a different input digest.",
+      "remediation": "Use a new ULID for a new command.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.CONFLICT.LEASE_CONFLICT",
+      "area": "CONFLICT",
+      "jsonrpc_code": -32016,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Concurrency lease is held by another operation.",
+      "remediation": "Wait for release; do not force.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.CONFLICT.SNAPSHOT_MISMATCH",
+      "area": "CONFLICT",
+      "jsonrpc_code": -32016,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Snapshot does not belong to the target device/instance.",
+      "remediation": "Take a snapshot from this device.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.CONFLICT.STATE_HASH",
+      "area": "CONFLICT",
+      "jsonrpc_code": -32016,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Declared state hash does not recompute from the supplied state document.",
+      "remediation": "Recapture the state/snapshot; do not trust the hash.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.OUTCOME.UNKNOWN",
+      "area": "OUTCOME",
+      "jsonrpc_code": -32017,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Effect may have occurred; outcome not observable.",
+      "remediation": "Observe state and the retained receipt; never retry blindly.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.OUTCOME.TIMEOUT",
+      "area": "OUTCOME",
+      "jsonrpc_code": -32017,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Deadline exceeded; the effect may be in flight, so observe state first.",
+      "remediation": "Observe state; retry only idempotently with the same `command_id`.",
+      "driver_subset": true
+    },
+    {
+      "code": "MHS.OUTCOME.ABORTED",
+      "area": "OUTCOME",
+      "jsonrpc_code": -32017,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Operation aborted by a device-level event (power loss, watchdog).",
+      "remediation": "Recover device state, then re-plan.",
+      "driver_subset": true
+    },
+    {
+      "code": "MHS.OPERATION.UNKNOWN",
+      "area": "OPERATION",
+      "jsonrpc_code": -32018,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "`operation_id` not known (or retention expired).",
+      "remediation": "Use `operations.list`; retain receipts.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.OPERATION.NOT_CANCELLABLE",
+      "area": "OPERATION",
+      "jsonrpc_code": -32018,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Capability is declared non-cancellable.",
+      "remediation": "Use `mhs.safety.estop` for emergencies.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.OPERATION.ALREADY_FINISHED",
+      "area": "OPERATION",
+      "jsonrpc_code": -32018,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Operation reached a terminal state.",
+      "remediation": "Read the final receipt; no cancellation needed.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.MODE.READ_ONLY",
+      "area": "MODE",
+      "jsonrpc_code": -32019,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Mutation attempted in `replay` mode.",
+      "remediation": "Replay is read-only; use the source endpoint for live actions.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.MODE.SNAPSHOT_UNSUPPORTED",
+      "area": "MODE",
+      "jsonrpc_code": -32019,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Device does not support snapshots.",
+      "remediation": "Check `fidelity.snapshot_restore`.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.MODE.RESTORE_UNSUPPORTED",
+      "area": "MODE",
+      "jsonrpc_code": -32019,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Device/snapshot cannot be restored (hardware or unsupported).",
+      "remediation": "Use a simulator with snapshot support.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.MODE.SWITCH_FORBIDDEN",
+      "area": "MODE",
+      "jsonrpc_code": -32019,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A mode change was attempted on a live session/device.",
+      "remediation": "Open a session on the device with the correct declared mode.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.FIDELITY.CONTRACT_REQUIRED",
+      "area": "FIDELITY",
+      "jsonrpc_code": -32020,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Simulated/hybrid device lacks a valid fidelity contract.",
+      "remediation": "Fix the manifest; a simulator without a contract is CL0 only.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.FIDELITY.SEED_REQUIRED",
+      "area": "FIDELITY",
+      "jsonrpc_code": -32020,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Deterministic replay claimed but no seed supplied on reset.",
+      "remediation": "Call `world.reset` with a seed.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.FIDELITY.REPLAY_DIVERGENCE",
+      "area": "FIDELITY",
+      "jsonrpc_code": -32020,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Replay state hashes diverged from the recording.",
+      "remediation": "Treat the replay claim as invalid; investigate the model/seed.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.FIDELITY.GAP_UNDISCLOSED",
+      "area": "FIDELITY",
+      "jsonrpc_code": -32020,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Host/endpoint detected a known gap not shown to the agent.",
+      "remediation": "Disclose gaps before actuation.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.FIDELITY.DETERMINISM_UNSUPPORTED",
+      "area": "FIDELITY",
+      "jsonrpc_code": -32020,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Requested determinism-based operation on a `statistical`/`none` device.",
+      "remediation": "Use repeated trials, not replay equality.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.FIDELITY.VALIDATION_MISSING",
+      "area": "FIDELITY",
+      "jsonrpc_code": -32020,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "F3 claimed without a validation record.",
+      "remediation": "Provide or downgrade to F2.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.LIMIT.BACKPRESSURE",
+      "area": "LIMIT",
+      "jsonrpc_code": -32021,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Consumer cannot keep up; buffering would be unbounded.",
+      "remediation": "Slow down, reduce `rate_hz`, resume from a gap/state read.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.LIMIT.RATE_EXCEEDED",
+      "area": "LIMIT",
+      "jsonrpc_code": -32021,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Rate limit exceeded.",
+      "remediation": "Wait `data.details.retry_after_ms`; batch or reduce rate.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.LIMIT.SUBSCRIPTION_LIMIT",
+      "area": "LIMIT",
+      "jsonrpc_code": -32021,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Max concurrent subscriptions reached.",
+      "remediation": "Close a subscription first.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.LIMIT.OPERATION_LIMIT",
+      "area": "LIMIT",
+      "jsonrpc_code": -32021,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Max concurrent operations reached.",
+      "remediation": "Finish/cancel operations; wait.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.LIMIT.PAYLOAD_TOO_LARGE",
+      "area": "LIMIT",
+      "jsonrpc_code": -32021,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Frame/request exceeds the size limit.",
+      "remediation": "Reduce payload; use artifact references for large data.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.LIMIT.CONNECTION_LIMIT",
+      "area": "LIMIT",
+      "jsonrpc_code": -32021,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Too many concurrent connections.",
+      "remediation": "Close idle connections; reconnect with backoff.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.EVIDENCE.CHAIN_BROKEN",
+      "area": "EVIDENCE",
+      "jsonrpc_code": -32022,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Receipt chain does not recompute.",
+      "remediation": "Re-export from the endpoint; investigate tampering.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.EVIDENCE.SIGNATURE_INVALID",
+      "area": "EVIDENCE",
+      "jsonrpc_code": -32022,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Detached JWS does not verify or key unknown/revoked.",
+      "remediation": "Treat as unsigned; resolve the key in the registry.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.EVIDENCE.TRUNCATED",
+      "area": "EVIDENCE",
+      "jsonrpc_code": -32022,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "History was truncated by retention; marker present.",
+      "remediation": "Continue from `first_retained_seq`; do not assume continuity.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.EVIDENCE.UNKNOWN",
+      "area": "EVIDENCE",
+      "jsonrpc_code": -32022,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Bundle/endpoint evidence not available.",
+      "remediation": "Check `include_telemetry`/retention; export a smaller range.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.EVIDENCE.EXPORT_TOO_LARGE",
+      "area": "EVIDENCE",
+      "jsonrpc_code": -32022,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Export would exceed the advertised size.",
+      "remediation": "Page with `since_receipt`.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.EVIDENCE.RETENTION_EXCEEDED",
+      "area": "EVIDENCE",
+      "jsonrpc_code": -32022,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Requested receipt is outside retention.",
+      "remediation": "Use the oldest retained receipt or the truncated marker.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.EVIDENCE.SCHEMA_INVALID",
+      "area": "EVIDENCE",
+      "jsonrpc_code": -32022,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A receipt in the evidence bundle violates receipt.schema.json.",
+      "remediation": "Re-export from the endpoint and investigate the producer.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.EVIDENCE.SCHEMA_UNAVAILABLE",
+      "area": "EVIDENCE",
+      "jsonrpc_code": -32022,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Receipt schemas were unavailable, so schema verification could not complete.",
+      "remediation": "Install the MHS schema set and verify again; do not treat as validated.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.EVIDENCE.SIGNATURE_UNVERIFIABLE",
+      "area": "EVIDENCE",
+      "jsonrpc_code": -32022,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A detached signature exists but no key resolver is available.",
+      "remediation": "Resolve the signing key through the registry and verify offline.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SAFETY.INTERLOCK_OPEN",
+      "area": "SAFETY",
+      "jsonrpc_code": -32010,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A required interlock reads `open`.",
+      "remediation": "Close/clear the interlock, then reset if latched.",
+      "driver_subset": true
+    },
+    {
+      "code": "MHS.SAFETY.ENVELOPE_VIOLATION",
+      "area": "SAFETY",
+      "jsonrpc_code": -32010,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Input outside declared limits/allowed values.",
+      "remediation": "Adjust the input to the declared envelope.",
+      "driver_subset": true
+    },
+    {
+      "code": "MHS.SAFETY.CUMULATIVE_LIMIT",
+      "area": "SAFETY",
+      "jsonrpc_code": -32010,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Cumulative budget (time/travel/volume/dose) exhausted.",
+      "remediation": "Wait for the window to reset or obtain a new authorization.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SAFETY.PERMIT_INVALID",
+      "area": "SAFETY",
+      "jsonrpc_code": -32010,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Missing, expired, consumed or mismatched permit.",
+      "remediation": "Obtain a permit for exactly this input via approval.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SAFETY.APPROVAL_REQUIRED",
+      "area": "SAFETY",
+      "jsonrpc_code": -32010,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Human approval required (R3, R2 policy, human presence).",
+      "remediation": "Collect the required approval; retry with permit.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SAFETY.RESET_REFUSED",
+      "area": "SAFETY",
+      "jsonrpc_code": -32010,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Reset while interlock open/unknown or not latched.",
+      "remediation": "Clear interlocks; reset only a latched device.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SAFETY.SAFE_STATE_UNREACHED",
+      "area": "SAFETY",
+      "jsonrpc_code": -32010,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Device could not reach the declared safe state in time.",
+      "remediation": "Use the physical e-stop; inspect the device.",
+      "driver_subset": true
+    },
+    {
+      "code": "MHS.SAFETY.ESTOP_ENGAGED",
+      "area": "SAFETY",
+      "jsonrpc_code": -32010,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Device is e-stopped/latched and refuses actuation.",
+      "remediation": "Reset after clearing interlocks; issue a new start command.",
+      "driver_subset": true
+    },
+    {
+      "code": "MHS.SAFETY.RISK_CLASS_BLOCKED",
+      "area": "SAFETY",
+      "jsonrpc_code": -32010,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Session/action not permitted at the device's risk class.",
+      "remediation": "Use an authorized session with the required approvals.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SAFETY.NOT_CERTIFIED",
+      "area": "SAFETY",
+      "jsonrpc_code": null,
+      "retryable": null,
+      "status": "feature",
+      "since": "0.9.0",
+      "meaning": "Not an error: mandatory `hello.features` disclosure.",
+      "remediation": "Display it; never treat MHS as a safety channel.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SAFETY.ESTOP_UNAVAILABLE",
+      "area": "SAFETY",
+      "jsonrpc_code": -32010,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The endpoint exposes no software e-stop path for this device.",
+      "remediation": "Use the hardware e-stop; software conformance never replaces it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SAFETY.SAFE_STATE",
+      "area": "SAFETY",
+      "jsonrpc_code": -32010,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A safe-state attempt failed or could not be verified.",
+      "remediation": "Inspect safety.status and the bridge stop path.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.SAFETY.LIMITS_UNSET",
+      "area": "SAFETY",
+      "jsonrpc_code": -32010,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A hardware or hybrid write/invoke at risk R1 or above has a numeric input with no declared limit, or a limit declared `operator_required` that no operator overlay fills.",
+      "remediation": "Declare a sourced limit in the driver or have the operator supply `site-limits.json`; never invent a bound.",
+      "driver_subset": true
+    },
+    {
+      "code": "MHS.ADAPTER.MANIFEST_INVALID",
+      "area": "ADAPTER",
+      "jsonrpc_code": -32023,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Adapter manifest/bindings fail schema or reference checks.",
+      "remediation": "Fix the manifest; see `data.details.errors[]`.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.ADAPTER.LICENSE_BLOCKED",
+      "area": "ADAPTER",
+      "jsonrpc_code": -32023,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Upstream licence incompatible with use/redistribution.",
+      "remediation": "Change use, obtain a licence, or do not use the adapter.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.ADAPTER.SOURCE_UNPINNED",
+      "area": "ADAPTER",
+      "jsonrpc_code": -32023,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Runnable adapter has no pinned source commit.",
+      "remediation": "Pin `source.commit` and regenerate evidence.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.ADAPTER.BRIDGE_UNAVAILABLE",
+      "area": "ADAPTER",
+      "jsonrpc_code": -32023,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Bridge runtime/dependency not installed.",
+      "remediation": "Run `runtime.install`; check the lifecycle.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.ADAPTER.SHIM_FAILED",
+      "area": "ADAPTER",
+      "jsonrpc_code": -32023,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Shim raised or returned an uninterpretable result.",
+      "remediation": "Inspect the redacted message; fix the shim; do not report success.",
+      "driver_subset": true
+    },
+    {
+      "code": "MHS.ADAPTER.NATIVE_SYMBOL_MISSING",
+      "area": "ADAPTER",
+      "jsonrpc_code": -32023,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Declared native symbol does not exist at runtime.",
+      "remediation": "Fix the binding; mark `stability: fragile` if private.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.ADAPTER.CONTRACT_MISMATCH",
+      "area": "ADAPTER",
+      "jsonrpc_code": -32023,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Served manifest differs from the adapter declaration.",
+      "remediation": "Regenerate from the adapter; report drift.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.REGISTRY.UNAVAILABLE",
+      "area": "REGISTRY",
+      "jsonrpc_code": -32024,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Registry not reachable.",
+      "remediation": "Use a local mirror; retry with backoff.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.REGISTRY.RECORD_INVALID",
+      "area": "REGISTRY",
+      "jsonrpc_code": -32024,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Record fails its schema or reference checks.",
+      "remediation": "Fix the record; re-publish.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.REGISTRY.SIGNATURE_INVALID",
+      "area": "REGISTRY",
+      "jsonrpc_code": -32024,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Record/claim signature invalid or key revoked.",
+      "remediation": "Treat as unsigned; resolve keys.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.REGISTRY.FEDERATION_FAILED",
+      "area": "REGISTRY",
+      "jsonrpc_code": -32024,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A federated peer failed; partial results.",
+      "remediation": "Retry if `require_all_peers`; otherwise use partial results.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.REGISTRY.CLAIM_INVALID",
+      "area": "REGISTRY",
+      "jsonrpc_code": -32024,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Claim does not match its report (subject/profile/level/digest).",
+      "remediation": "Re-run the suite and re-issue the claim.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.COMPOSITION.UNKNOWN",
+      "area": "COMPOSITION",
+      "jsonrpc_code": -32025,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "`composition_ref` does not resolve.",
+      "remediation": "Publish/serve the composition document.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.COMPOSITION.INVALID",
+      "area": "COMPOSITION",
+      "jsonrpc_code": -32025,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Composition document invalid or exceeds session grants.",
+      "remediation": "Fix the composition; request the needed grants.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.COMPOSITION.CYCLE",
+      "area": "COMPOSITION",
+      "jsonrpc_code": -32025,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Composition includes itself (directly or transitively).",
+      "remediation": "Remove the cycle.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.COMPOSITION.CHILD_FAILED",
+      "area": "COMPOSITION",
+      "jsonrpc_code": -32025,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A child receipt failed and the composition stops on failure.",
+      "remediation": "Inspect the embedded child receipt.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.COMPOSITION.CANCELLED",
+      "area": "COMPOSITION",
+      "jsonrpc_code": -32025,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The composition was cancelled.",
+      "remediation": "Inspect child safe-state results.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.COMPOSITION.GRANT_EXCEEDED",
+      "area": "COMPOSITION",
+      "jsonrpc_code": -32025,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A child requested a capability beyond the session grants.",
+      "remediation": "Open a session with the required grants; compositions cannot escalate.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.TRANSPORT.UNAVAILABLE",
+      "area": "TRANSPORT",
+      "jsonrpc_code": -32026,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Transport cannot connect.",
+      "remediation": "Check the endpoint address/process; retry with backoff.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.TRANSPORT.CLOSED",
+      "area": "TRANSPORT",
+      "jsonrpc_code": -32026,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Connection closed by the peer.",
+      "remediation": "Reconnect; re-read state; never retry unknown outcomes blindly.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.TRANSPORT.TLS_REQUIRED",
+      "area": "TRANSPORT",
+      "jsonrpc_code": -32026,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "TLS required but not negotiated.",
+      "remediation": "Use TLS.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.TRANSPORT.PROTOCOL_ERROR",
+      "area": "TRANSPORT",
+      "jsonrpc_code": -32026,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Framing error not covered by `MHS.PROTOCOL.*` (e.g. SSE corruption).",
+      "remediation": "Fix the transport; reconnect.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.BRIDGE.CAPABILITY_NOT_SUPPORTED",
+      "area": "BRIDGE",
+      "jsonrpc_code": -32023,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The bridge does not implement the requested capability.",
+      "remediation": "Inspect the adapter manifest; declare the capability unsupported or add a mapping.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.BRIDGE.MAPPING_ERROR",
+      "area": "BRIDGE",
+      "jsonrpc_code": -32023,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A declarative binding mapping could not be applied.",
+      "remediation": "Fix the binding; unmapped values are never guessed.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.CAPABILITY_REQUIRED",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A capability id is required for this host operation.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.CONFIG_REQUIRED",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A trusted MHS host configuration file is required.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.DEVICE_AMBIGUOUS",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The device is ambiguous; bind it explicitly in policy.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.DEVICE_NOT_ALLOWED",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The device is not on the trusted host allow-list.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.DEVICE_NOT_FOUND",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The requested device is unknown to the host.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.DEVICE_REQUIRED",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A device id is required for this host operation.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.ENDPOINT_NOT_ALLOWED",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The endpoint is not on the trusted host allow-list.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.ENDPOINT_UNAVAILABLE",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The configured endpoint could not be reached.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.EVIDENCE_EXPORT_FAILED",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The endpoint evidence bundle could not be exported.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.EVIDENCE_WRITE_FAILED",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The durable host evidence store could not be written.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.HARDWARE_GATED",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The host requires allow_hardware=true for this hardware call.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.INVALID_ARGUMENT",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The host call arguments are invalid.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.NO_CAPABILITIES",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The endpoint exposes no callable capability for the host policy.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.NO_ENDPOINTS",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "No MHS endpoint is configured for the host.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.NO_READ_CAPABILITY",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The device exposes no read capability for reconciliation.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.NO_RESOURCES",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The device exposes no resource to read.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.OPENAI4S_MISSING",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "deprecated",
+      "since": "0.9.0",
+      "meaning": "Deprecated alias of `MHS.HOST.ADAPTER_MISSING` (the OpenAI4S host package is not importable).",
+      "remediation": "The OpenAI4S host package (its MCP client) is not importable in the host process: install OpenAI4S in that environment or add its source tree to PYTHONPATH, or disable the OpenAI4S integration, then retry. Handle it exactly like MHS.HOST.ADAPTER_MISSING, which replaces this deprecated alias in 0.10.",
+      "driver_subset": false,
+      "replaced_by": "MHS.HOST.ADAPTER_MISSING"
+    },
+    {
+      "code": "MHS.HOST.OPERATION_NOT_FOUND",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The host operation id is unknown.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.OPERATION_REQUIRED",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "An operation id is required for reconciliation.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.PROTOCOL_ERROR",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The host received an invalid MCP/MHS protocol response.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.READ_FAILED",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The host could not read device state for reconciliation.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.RECONCILE_REQUIRED",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "A prior ambiguous outcome must be reconciled before a new command.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.SDK_MISSING",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The MHS SDK is not importable in the host environment.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.SESSION_FAILED",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The host could not open an MHS session.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.TOOL_ERROR",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "An MCP tool call failed at the host boundary.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.UNEXPECTED",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "An unexpected host integration failure occurred.",
+      "remediation": "Inspect the host policy/configuration and retry after fixing it.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.ADAPTER_MISSING",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The host-integration package for the configured host is not importable.",
+      "remediation": "Install the host integration package in the host environment, or disable the integration.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.HOST.JOURNAL_CORRUPT",
+      "area": "HOST",
+      "jsonrpc_code": -32027,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "The host's durable command journal is unreadable or fails its integrity check; the affected record is never skipped.",
+      "remediation": "Repair or restore the journal and reconcile pending commands before issuing new ones.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.INTERNAL.ERROR",
+      "area": "INTERNAL",
+      "jsonrpc_code": -32603,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Unexpected server fault.",
+      "remediation": "Report with the request id; do not retry mutations.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.INTERNAL.NOT_IMPLEMENTED",
+      "area": "INTERNAL",
+      "jsonrpc_code": -32603,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Code path not implemented (endpoint defect).",
+      "remediation": "Implement or avoid; report to maintainer.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.INTERNAL.OVERLOADED",
+      "area": "INTERNAL",
+      "jsonrpc_code": -32603,
+      "retryable": true,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Server overloaded (queue full).",
+      "remediation": "Retry with backoff.",
+      "driver_subset": false
+    },
+    {
+      "code": "MHS.INTERNAL.SCHEMA_DRIFT",
+      "area": "INTERNAL",
+      "jsonrpc_code": -32603,
+      "retryable": false,
+      "status": "stable",
+      "since": "0.9.0",
+      "meaning": "Served schema differs from validated schema.",
+      "remediation": "Restart/regenerate endpoint; report adapter defect.",
+      "driver_subset": false
+    }
+  ]
+}

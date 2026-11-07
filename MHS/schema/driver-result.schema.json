@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/driver-result.schema.json",
+  "title": "OpenMHS driver result (RESULT.json)",
+  "description": "The outcome a driver author records for one per-repo package: pass (with the digest of the passing check report), blocked or skip-proposed (with blocked codes). CI re-runs the gate and never trusts this file; it is an index for the registry overlay and for humans.",
+  "type": "object",
+  "required": ["status"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "openmhs": { "$ref": "defs.schema.json#/$defs/specVersion" },
+    "status": { "type": "string", "enum": ["pass", "blocked", "skip-proposed"] },
+    "blocked_on": { "type": "array", "uniqueItems": true, "items": { "$ref": "defs.schema.json#/$defs/blockedCode" } },
+    "gate": {
+      "type": "object",
+      "required": ["digest", "failed"],
+      "additionalProperties": false,
+      "properties": {
+        "digest": { "$ref": "defs.schema.json#/$defs/digest", "description": "The digest line the gate printed for the last run (mhs.driver.check.stable_digest: the check report without its clock). The report's own report_digest is accepted too." },
+        "failed": { "type": "array", "uniqueItems": true, "items": { "$ref": "defs.schema.json#/$defs/gateId" } },
+        "report": { "$ref": "defs.schema.json#/$defs/relPath" }
+      }
+    },
+    "catalogue_requests": {
+      "type": "array",
+      "description": "Capabilities the catalogue lacks; the package used an x-cap id with an inline schema meanwhile.",
+      "items": {
+        "type": "object",
+        "required": ["capability_id", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "capability_id": { "$ref": "defs.schema.json#/$defs/capabilityId" },
+          "reason": { "type": "string", "minLength": 1, "maxLength": 2000 },
+          "verb": { "$ref": "defs.schema.json#/$defs/verb" },
+          "summary": { "type": "string", "maxLength": 800 },
+          "similar": { "type": "array", "items": { "$ref": "defs.schema.json#/$defs/capabilityId" } }
+        }
+      }
+    },
+    "notes": { "type": "string", "maxLength": 8000 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "enum": ["blocked", "skip-proposed"] } }, "required": ["status"] },
+      "then": { "required": ["blocked_on"], "properties": { "blocked_on": { "minItems": 1 } } }
+    },
+    {
+      "if": { "properties": { "status": { "const": "pass" } }, "required": ["status"] },
+      "then": { "required": ["gate"], "properties": { "gate": { "properties": { "failed": { "maxItems": 0 } } }, "blocked_on": { "maxItems": 0 } } }
+    }
+  ]
+}
