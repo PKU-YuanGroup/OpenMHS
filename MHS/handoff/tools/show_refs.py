@@ -41,7 +41,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_ROOT = HERE.parents[2]
+DEFAULT_ROOT = HERE.parent.parent.parent
 REF = re.compile(r"^(?P<path>.+?):(?P<start>\d+)(?:-(?P<end>\d+))?$")
 COMPANION = re.compile(r"^companion:(?P<alias>[a-z][a-z0-9_-]{1,39})/(?P<rest>.+)$")
 BINDING_REFS = ("source_ref", "type_ref", "state_ref")

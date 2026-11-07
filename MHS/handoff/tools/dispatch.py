@@ -34,7 +34,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_ROOT = HERE.parents[2]  # MHS/handoff/tools -> repository root
+DEFAULT_ROOT = HERE.parent.parent.parent  # MHS/handoff/tools -> repository root
 DISPATCH_DECISIONS = ("direct-driver", "family-config")
 OPEN_STATUSES = ("none", "in_progress")
 # Pilot files ship with the kit; pilot-20.json is the one the playbook names.

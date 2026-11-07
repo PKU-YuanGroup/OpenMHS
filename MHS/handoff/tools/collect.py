@@ -59,7 +59,7 @@ sys.dont_write_bytecode = True
 from facts_limits import facts_limits_notes
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_ROOT = HERE.parents[2]
+DEFAULT_ROOT = HERE.parent.parent.parent
 
 #: Family and helper vocabulary: it names a kind of driver, not an exemplar's identity, so it is never residue.
 #: ``RobotEnv`` is the generic robot-environment class name of gym-style libraries (``MujocoRobotEnv``, robel's

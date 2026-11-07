@@ -38,7 +38,7 @@ sys.dont_write_bytecode = True  # importing dispatch must not leave a __pycache_
 sys.path.insert(0, str(HERE))
 import dispatch  # noqa: E402  (same directory)
 
-DEFAULT_ROOT = HERE.parents[2]
+DEFAULT_ROOT = HERE.parent.parent.parent
 
 
 def find_card(cards: list[dict], package_id: str) -> dict | None:
