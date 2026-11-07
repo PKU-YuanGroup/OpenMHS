@@ -1,0 +1,174 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_e3da93eb80ec9a8c",
+    "https://github.com/vraj130/open-mhs"
+  ],
+  "description": "vraj130/open-mhs: protocol implementation/bridge (lab instrumentation track). OpenMHS plan: reference only (prior-art). Language: Python. Catalog keywords: Anthropic, YAML, confirm, MHSDevice, describe, read.",
+  "domains": [],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 41 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "mcp-proxy"
+  ],
+  "hardware_free": false,
+  "id": "gh.vraj130/open-mhs",
+  "integration": {
+    "blockers": [
+      "REFERENCE_ONLY: role prior-art"
+    ],
+    "effort": "EX",
+    "next_action": "Reference only: an earlier MHS implementation to compare with, not a device to integrate.",
+    "reason_code": "reference:prior-art",
+    "role": "prior-art",
+    "scenario_required": false,
+    "strategy": "reference"
+  },
+  "interfaces": [
+    "MCP stdio",
+    "Typer CLI",
+    "Python library (Registry.load(simulate=True))",
+    "CLI",
+    "MCP",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-08-31T11:45:15-07:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/vraj130/open-mhs"
+  },
+  "local_path": "labs/vraj130/open-mhs",
+  "modes": [],
+  "owner": "vraj130",
+  "package_id": "gh.vraj130/open-mhs",
+  "quarantine": false,
+  "rank": 1110,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "open-mhs",
+  "repo_url": "https://github.com/vraj130/open-mhs",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "a344e38d46113d1d5ef15a7233d2eee627a4f02d",
+    "repo_url": "https://github.com/vraj130/open-mhs"
+  },
+  "stars": 0,
+  "tags": [
+    "mcp-proxy",
+    "lab instrumentation",
+    "simulated",
+    "reference"
+  ],
+  "tier": "D",
+  "title": "vraj130/open-mhs",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "mcp-server",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 64.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "false",
+      "backend_family_raw": "自研 Python 驱动框架 + MCP Python SDK 2.x(MCPServer)",
+      "blockers_raw": "官方 MHS 规范未公开，无法验证一致性",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "对 Anthropic MHS 公开概念的非官方开源重建(README 明言“This is not MHS”)：YAML 设备清单(参数/单位/限值/状态/前置条件/速率/跨参数约束/confirm)、MHSDevice 的 describe/read/write/invoke/estop/connect/disconnect 原语、SafeDevice 安全联锁+JSONL 审计、由清单生成的 MCP 服务器(stdio、elicitation 人工确认)、CLI；含模拟恒温器与 Pico 2 实体恒温器驱动/固件。",
+      "join": "exact",
+      "license_raw": "MIT(pyproject)",
+      "mhs_support_raw": "仅声称支持",
+      "priority": "P1",
+      "row": 2826,
+      "rows_all": [
+        2826
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument | shared_infrastructure",
+      "verification_level": "已核源码"
+    },
+    "classification": {
+      "catalog_family": "mcp-proxy",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bmcp\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_note": "tier B -> D: triage reference (reference:prior-art)",
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": null,
+      "file_spdx": null,
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 3,
+      "files": 41,
+      "markers": {
+        "cli": 19,
+        "mcp": 21,
+        "serial": 3
+      }
+    },
+    "triage": {
+      "evidence": [
+        "README title names MHS"
+      ],
+      "family": null,
+      "hardware_transport": "class open_mhs.drivers.pico_thermostat.driver:PicoThermostatDriver uses the hardware transport serial",
+      "helper": null,
+      "reason_code": "reference:prior-art",
+      "rule": 4,
+      "version": "0.9.4"
+    }
+  }
+}

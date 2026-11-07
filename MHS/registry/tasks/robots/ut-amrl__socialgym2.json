@@ -1,0 +1,75 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ut-amrl/socialgym2",
+  "track": "robots",
+  "local_path": "robots/ut-amrl/socialgym2",
+  "driver_dir": "MHS/drivers/robots/ut-amrl__socialgym2",
+  "upstream": {
+    "repo_url": "https://github.com/ut-amrl/socialgym2",
+    "commit": "09a84865b8e22c86dd16658f403b18c3bbc67572",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:source-review",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "ENTRY_UNVERIFIED"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 37,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "environment.ros_social_gym:RosSocialEnv",
+      "file": "src/environment/ros_social_gym.py",
+      "line": 46,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/environment/environment_types/manual_zone.py:110 ManualZoneEnv environment class",
+      "src/environment/ros_social_gym.py:46 RosSocialEnv environment class"
+    ],
+    "upstream_tests": "src/templates/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ut-amrl__socialgym2 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

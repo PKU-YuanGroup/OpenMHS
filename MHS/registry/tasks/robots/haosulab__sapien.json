@@ -1,0 +1,92 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.haosulab/sapien",
+  "track": "robots",
+  "local_path": "robots/haosulab/sapien",
+  "driver_dir": "MHS/drivers/robots/haosulab__sapien",
+  "upstream": {
+    "repo_url": "https://github.com/haosulab/sapien",
+    "commit": "788fd0afb009ad48558ff1e51243cb92a1573c73",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:engine",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1138,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "py_package.sensor.stereodepth:StereoDepthSensor",
+      "file": "python/py_package/sensor/stereodepth.py",
+      "line": 205,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "py_package.wrapper.scene:Scene",
+      "file": "python/py_package/wrapper/scene.py",
+      "line": 37,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "py_package.wrapper.urdf_loader:URDFLoader",
+      "file": "python/py_package/wrapper/urdf_loader.py",
+      "line": 60,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "py_package.wrapper.urchin.urdf:Joint",
+      "file": "python/py_package/wrapper/urchin/urdf.py",
+      "line": 2213,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "py_package.sensor.activelight:ActiveLightSensor",
+      "file": "python/py_package/sensor/activelight.py",
+      "line": 35,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "python/py_package/sensor/simsense_component.py:25 SimSenseComponent"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/haosulab__sapien --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

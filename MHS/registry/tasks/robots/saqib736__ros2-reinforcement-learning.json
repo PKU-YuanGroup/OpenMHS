@@ -1,0 +1,74 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.saqib736/ros2-reinforcement-learning",
+  "track": "robots",
+  "local_path": "robots/saqib736/ros2-reinforcement-learning",
+  "driver_dir": "MHS/drivers/robots/saqib736__ros2-reinforcement-learning",
+  "upstream": {
+    "repo_url": "https://github.com/saqib736/ros2-reinforcement-learning",
+    "commit": "c17f9055076f72d91be6a628a2a5db084dacd7d1",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 184,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "rl_racing.gazebo_env:GazeboEnv",
+      "file": "rl_racing/rl_racing/gazebo_env.py",
+      "line": 11,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "rl_racing/rl_racing/start_learning.py:36 gym env RacingBotEnv-v0"
+    ],
+    "upstream_tests": "rl_racing/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env RacingBotEnv-v0 registered at rl_racing/rl_racing/start_learning.py:36"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/saqib736__ros2-reinforcement-learning --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

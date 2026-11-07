@@ -1,0 +1,179 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.novog93/sjtu_drone",
+  "track": "robots",
+  "local_path": "robots/novog93/sjtu_drone",
+  "driver_dir": "MHS/drivers/robots/novog93__sjtu_drone",
+  "upstream": {
+    "repo_url": "https://github.com/novog93/sjtu_drone",
+    "commit": "3f8627ebddf390fd35ffb84b8654b62e0b66fca2",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 128,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "sjtu_drone_bringup/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "DronePositionControl.land",
+      "DronePositionControl.move",
+      "DronePositionControl.moveTo",
+      "DronePositionControl.move_drone_to_pose",
+      "DronePositionControl.reset",
+      "DronePositionControl.takeOff",
+      "DroneController.land",
+      "DroneController.move",
+      "DroneController.moveTo",
+      "DroneController.reset",
+      "DroneController.takeOff"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.motion.cartesian_pose.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/novog93__sjtu_drone --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required",
+  "companions": [
+    {
+      "alias": "gazebo_ros_pkgs",
+      "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+      "commit": "ae6e5793a31f5927df89cb58007d2a5eb567baa8",
+      "profile": "ros2-humble-gazebo11",
+      "reason": "pause_physics, its get_model_list stall read-back (the world's sim time in header.stamp) and unpause_physics are served by gazebo_ros 3.9.0 (ROS 2 Humble, Gazebo 11).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:3",
+          "token": "Humble"
+        },
+        {
+          "side": "package",
+          "ref": "README.md:11",
+          "token": "Gazebo 11"
+        },
+        {
+          "side": "package",
+          "ref": "run_docker.sh:12",
+          "token": "humble"
+        },
+        {
+          "side": "package",
+          "ref": "sjtu_drone_description/package.xml:10",
+          "token": "ament_cmake"
+        },
+        {
+          "side": "package",
+          "ref": "sjtu_drone_bringup/launch/sjtu_drone_gazebo.launch.py:100",
+          "token": "gzserver.launch.py"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/package.xml:5",
+          "token": "3.9.0"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/package.xml:23",
+          "token": "ament_cmake"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_dev/package.xml:23",
+          "token": "libgazebo11-dev"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_msgs/cmake/gazebo_msgs-extras.cmake:4-5",
+          "token": "humble"
+        }
+      ],
+      "lock": "ros-simulation__gazebo_ros_pkgs@3.9.0",
+      "ref": "3.9.0",
+      "local_path": "work/companions/ros-simulation__gazebo_ros_pkgs@ae6e5793a31f",
+      "repo_url": "https://github.com/ros-simulation/gazebo_ros_pkgs.git",
+      "license_spdx": "NOASSERTION",
+      "licence_note": "Apache-2.0 AND BSD (per package.xml; no licence file in the repository)"
+    },
+    {
+      "alias": "gazebo_classic",
+      "package_id": "gh.gazebosim/gazebo-classic",
+      "commit": "b22c6e15e52299865b31093b8feebc9ca19e26e8",
+      "profile": "ros2-humble-gazebo11",
+      "reason": "World::Step advances sim time and runs every model and controller update only while the world is not paused (Gazebo 11.15.1; facts only).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:3",
+          "token": "Humble"
+        },
+        {
+          "side": "package",
+          "ref": "README.md:11",
+          "token": "Gazebo 11"
+        },
+        {
+          "side": "companion:gazebo_ros_pkgs",
+          "ref": "gazebo_msgs/cmake/gazebo_msgs-extras.cmake:4-5",
+          "token": "humble"
+        },
+        {
+          "side": "companion:gazebo_ros_pkgs",
+          "ref": "gazebo_dev/package.xml:23",
+          "token": "libgazebo11-dev"
+        },
+        {
+          "side": "companion",
+          "ref": "CMakeLists.txt:20",
+          "token": "GAZEBO_MAJOR_VERSION 11"
+        },
+        {
+          "side": "companion",
+          "ref": "Changelog.md:3",
+          "token": "Gazebo 11.15.1"
+        }
+      ],
+      "local_path": "robots/gazebosim/gazebo-classic",
+      "repo_url": "https://github.com/gazebosim/gazebo-classic",
+      "license_spdx": "Apache-2.0"
+    }
+  ]
+}

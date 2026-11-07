@@ -1,0 +1,100 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.asig-x/jeplo",
+  "track": "robots",
+  "local_path": "robots/asig-x/jeplo",
+  "driver_dir": "MHS/drivers/robots/asig-x__jeplo",
+  "upstream": {
+    "repo_url": "https://github.com/asig-x/jeplo",
+    "commit": "460e2272907af053d6e66b57fec71fdbe6ca1774",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 63,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "go2_parkour.tasks.go2_loco_env:Go2LocoEnv",
+      "file": "training/go2_parkour/go2_parkour/tasks/go2_loco_env.py",
+      "line": 78,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "training/resources/go2/boxes.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "training/resources/go2/flat.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "training/resources/go2/stairs.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "training/resources/go2/stairs_and_slope.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "deployment/unitree_mujoco/unitree_robots/b2/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "training/go2_parkour/go2_parkour/tasks/__init__.py:6 gym env Unitree-Go2-Locomotion"
+    ],
+    "upstream_tests": "training/lejepa/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Unitree-Go2-Locomotion registered at training/go2_parkour/go2_parkour/tasks/__init__.py:6"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/asig-x__jeplo --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

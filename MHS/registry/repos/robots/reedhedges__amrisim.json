@@ -1,0 +1,212 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "make",
+    "autotools"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_0c9b4c17a978514e",
+    "https://github.com/reedhedges/amrisim"
+  ],
+  "description": "reedhedges/amrisim: mobile navigation for mobile navigation (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: direct simulation backend. Declared backend: AMRISim/Stage. Language: C. Catalog keywords: Stage, MobileSim, Pioneer, TCP, ROS1.",
+  "domains": [
+    "mobile navigation"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 259 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "ros1"
+  ],
+  "hardware_free": true,
+  "id": "gh.reedhedges/amrisim",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs a future engine bridge; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/ros1.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "Pioneer TCP8101",
+    "ARIA/AriaCoda",
+    "ROS1 cmd_vel",
+    "ROS 1",
+    "other:Pioneer protocol",
+    "C++ API",
+    "CLI",
+    "ROS 2",
+    "Serial"
+  ],
+  "languages": [
+    "C",
+    "C++",
+    "Shell"
+  ],
+  "last_commit_at": "2023-05-30T17:22:41Z",
+  "license": "GPL-2.0",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-2.0",
+  "links": {
+    "docs": "https://github.com/reedhedges/AMRISim/commit/26e07b925ca9f6e81e1399e0102cb2049b2beeea",
+    "repo": "https://github.com/reedhedges/amrisim"
+  },
+  "local_path": "robots/reedhedges/amrisim",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "reedhedges",
+  "package_id": "gh.reedhedges/amrisim",
+  "quarantine": false,
+  "rank": 64,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "amrisim",
+  "repo_url": "https://github.com/reedhedges/amrisim",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "26e07b925ca9f6e81e1399e0102cb2049b2beeea",
+    "repo_url": "https://github.com/reedhedges/amrisim"
+  },
+  "stars": 16,
+  "tags": [
+    "ros1",
+    "robotics",
+    "mobile navigation",
+    "direct simulation backend",
+    "simulated",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "A",
+  "title": "reedhedges/amrisim",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "gazebo",
+      "family_confidence": 0.74,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 65.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "AMRISim/Stage",
+      "category_zh": "移动导航",
+      "description_zh": "基于 Stage/MobileSim 的抽象二维多机器人模拟，模拟 Pioneer TCP 协议并提供 ROS1 接口。",
+      "join": "exact",
+      "license_raw": "GPL-2.0",
+      "mhs_support_raw": "需开发适配（仅核公开文档/API；未确认可复用MHS适配器，不据此断言不存在）",
+      "priority": "P2",
+      "row": 2165,
+      "rows_all": [
+        2165
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "ros1",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bros ?1\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/reedhedges__amrisim/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/reedhedges__amrisim/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/reedhedges__amrisim/hardware"
+        ],
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-2.0",
+      "declared_spdx": null,
+      "file": "LICENSE.txt",
+      "file_spdx": "GPL-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "make",
+        "autotools"
+      ],
+      "entry_evidence_count": 1,
+      "files": 259,
+      "markers": {
+        "cli": 7,
+        "laser": 10,
+        "microscopy": 81,
+        "ros1": 40,
+        "ros2": 2,
+        "serial": 3
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): AMRISim is a native C++ 2-D Stage/MobileSim simulator that emulates Pioneer robots over TCP and offers a ROS1 node, not a Python device library, so it is bridge-runtime/framework.",
+        "rules alone: untriaged (untriaged:no_entry_class, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "AMRISim is a native C++ 2-D Stage/MobileSim simulator that emulates Pioneer robots over TCP and offers a ROS1 node, not a Python device library, so it is bridge-runtime/framework.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

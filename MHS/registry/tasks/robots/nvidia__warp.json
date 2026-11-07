@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nvidia/warp",
+  "track": "robots",
+  "local_path": "robots/nvidia/warp",
+  "driver_dir": "MHS/drivers/robots/nvidia__warp",
+  "upstream": {
+    "repo_url": "https://github.com/nvidia/warp",
+    "commit": "0c62b194dbf651702365fce3d7eb112a98a6d453",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:engine",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 618,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "warp._src.codegen:Adjoint",
+      "file": "warp/_src/codegen.py",
+      "line": 1884,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "warp._src.deterministic:DeterministicMeta",
+      "file": "warp/_src/deterministic.py",
+      "line": 303,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "warp._src.render.render_opengl:OpenGLRenderer",
+      "file": "warp/_src/render/render_opengl.py",
+      "line": 948,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "warp._src.types:Volume",
+      "file": "warp/_src/types.py",
+      "line": 6384,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "warp._src.fem.geometry.partition:LinearGeometryPartition",
+      "file": "warp/_src/fem/geometry/partition.py",
+      "line": 364,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "warp/_src/fem/field/virtual.py:1",
+      "skills/warp-debug-gradients/evals/files/replaycounter/sim.py:1",
+      "skills/warp-debug-gradients/evals/files/stiffcontrol/sim.py:1",
+      "skills/warp-debug-gradients/evals/files/structwar/sim.py:1",
+      "skills/warp-debug-gradients/evals/files/tapescope/sim.py:1",
+      "skills/warp-debug-gradients/evals/files/walker/sim.py:1"
+    ],
+    "upstream_tests": "warp/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nvidia__warp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

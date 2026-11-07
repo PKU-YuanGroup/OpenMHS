@@ -1,0 +1,74 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mindspaceinc/spot-mujoco-ros2",
+  "track": "robots",
+  "local_path": "robots/mindspaceinc/spot-mujoco-ros2",
+  "driver_dir": "MHS/drivers/robots/mindspaceinc__spot-mujoco-ros2",
+  "upstream": {
+    "repo_url": "https://github.com/mindspaceinc/spot-mujoco-ros2",
+    "commit": "1e07b87745ab623dab7ab79c4fbc61e62e4e829e",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 395,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "description/model/xml/spot_mini/spot_mini.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "description/model/xml/spot_mini/spot_mini.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model description/model/xml/spot_mini/spot_mini.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/mindspaceinc__spot-mujoco-ros2 --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

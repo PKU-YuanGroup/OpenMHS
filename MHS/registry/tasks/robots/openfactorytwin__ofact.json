@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.openfactorytwin/ofact",
+  "track": "robots",
+  "local_path": "robots/openfactorytwin/ofact",
+  "driver_dir": "MHS/drivers/robots/openfactorytwin__ofact",
+  "upstream": {
+    "repo_url": "https://github.com/openfactorytwin/ofact",
+    "commit": "45d044da62e7e3f993845c41b37471ea16bb2771",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 444,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ofact/twin/agent_control/simulate.py:106 SimulationStarter",
+      "ofact/twin/change_handler/change_handler.py:425 ChangeHandlerSimulation",
+      "ofact/planning_services/scenario_analytics/interface/controller.py:716 SimulationParameters",
+      "ofact/planning_services/scenario_analytics/interface/controller.py:736 StartSimulation",
+      "ofact/planning_services/scenario_analytics/interface/controller.py:817 ProgressTrackerSimulation",
+      "projects/bicycle_world/twin/agent_control/simulate.py:28 SimulationStarterBicycleWorld"
+    ],
+    "upstream_tests": "ofact/twin/state_model/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/openfactorytwin__ofact --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

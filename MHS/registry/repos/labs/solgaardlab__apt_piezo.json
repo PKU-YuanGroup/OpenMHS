@@ -1,0 +1,219 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "interface.controller:Controller (interface/controller.py:5)",
+      "interface.module:Module (interface/module.py:6)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.motion.joint_position.v1",
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_7cbec038331bfa3f",
+    "https://github.com/solgaardlab/apt_piezo"
+  ],
+  "description": "solgaardlab/apt_piezo: device backend for optics (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 3. Catalog role: device SDK. Language: Python. Catalog keywords: PyFTDI, Thorlabs, APT, BPC-303.",
+  "domains": [
+    "optics"
+  ],
+  "evidence": {
+    "files_read": 1,
+    "notes": "bounded static scan: 9 files enumerated (max depth 3), 1 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/solgaardlab__apt_piezo/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.solgaardlab/apt_piezo",
+  "integration": {
+    "blockers": [
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/solgaardlab__apt_piezo: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/solgaardlab__apt_piezo --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "other:USB/FTDI"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2019-06-30T20:38:15+02:00",
+  "license": "NOASSERTION",
+  "license_class": "unknown",
+  "license_spdx": "NOASSERTION",
+  "links": {
+    "repo": "https://github.com/solgaardlab/apt_piezo"
+  },
+  "local_path": "labs/solgaardlab/apt_piezo",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "solgaardlab",
+  "package_id": "gh.solgaardlab/apt_piezo",
+  "quarantine": false,
+  "rank": 316,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "apt_piezo",
+  "repo_url": "https://github.com/solgaardlab/apt_piezo",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "677eb8f632b6b1d7c84c1fd83a5821239331e4a5",
+    "repo_url": "https://github.com/solgaardlab/apt_piezo"
+  },
+  "stars": 3,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "solgaardlab/apt_piezo",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.74,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 44.0,
+      "quality_flags": [
+        "license_unknown"
+      ],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "通过PyFTDI与Thorlabs APT控制器(如BPC-303)通信的Python子集实现",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 2534,
+      "rows_all": [
+        2534
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/solgaardlab__apt_piezo/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": null,
+      "file_spdx": null,
+      "review": true,
+      "source": "none"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "677eb8f632b6b1d7c84c1fd83a5821239331e4a5",
+      "driver_dir": "MHS/drivers/labs/solgaardlab__apt_piezo",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:c40591edb6a7fa7626d9435f2569359f93c54f5a6dadaf05c2d03f94d071f1a8",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 3,
+      "files": 9,
+      "markers": {}
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Thorlabs APT protocol subset over pyftdi for the BPC-303 piezo controller (interface.controller:Controller); a VISA power-supply helper (pps.py) led rule 9 to the SCPI family.",
+        "rules alone: family-config (family:scpi, rule 9)"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class interface.controller:Controller uses the hardware transport pyftdi",
+      "helper": "PythonObjectDriver",
+      "justification": "Thorlabs APT protocol subset over pyftdi for the BPC-303 piezo controller (interface.controller:Controller); a VISA power-supply helper (pps.py) led rule 9 to the SCPI family.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

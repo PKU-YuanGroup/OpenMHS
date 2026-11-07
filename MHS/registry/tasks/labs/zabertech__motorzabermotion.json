@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.zabertech/motorzabermotion",
+  "track": "labs",
+  "local_path": "labs/zabertech/motorzabermotion",
+  "driver_dir": "MHS/drivers/labs/zabertech__motorzabermotion",
+  "upstream": {
+    "repo_url": "https://github.com/zabertech/motorzabermotion",
+    "commit": "c899bb533147b041fc7f629cac023285564a5fdc",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "prior-art",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1858,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.12,<3.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/zabertech__motorzabermotion --backend fake",
+  "skip_reason": "override (labs.json): Skip: this is a C++ EPICS motor module for Zaber devices whose Python is only test/build tooling, so it is prior art, not an importable driver.",
+  "publish_review": "required"
+}

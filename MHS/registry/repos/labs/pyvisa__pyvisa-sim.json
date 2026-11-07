@@ -1,0 +1,219 @@
+{
+  "adapter": {
+    "bridge": "scpi",
+    "entry_points": [
+      "pyvisa_sim.sessions.gpib:GPIBInstrumentSession (pyvisa_sim/sessions/gpib.py:15)",
+      "pyvisa_sim.sessions.serial:SerialInstrumentSession (pyvisa_sim/sessions/serial.py:18)",
+      "pyvisa_sim.sessions.tcpip:TCPIPInstrumentSession (pyvisa_sim/sessions/tcpip.py:19)",
+      "pyvisa_sim.sessions.tcpip:TCPIPSocketSession (pyvisa_sim/sessions/tcpip.py:33)",
+      "pyvisa_sim.sessions.usb:USBInstrumentSession (pyvisa_sim/sessions/usb.py:36)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python",
+    "make"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_46a41b1187d70a57",
+    "https://github.com/pyvisa/pyvisa-sim"
+  ],
+  "description": "pyvisa/pyvisa-sim: electronic instrument protocol simulation for microscopy imaging; optics; electronic measurement and DAQ (lab instrumentation track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: direct simulation backend. Declared backend: VISA/SCPI. Language: Python.",
+  "domains": [
+    "microscopy imaging",
+    "optics",
+    "electronic measurement and DAQ"
+  ],
+  "evidence": {
+    "files_read": 20,
+    "notes": "bounded static scan: 43 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB); agent-read source notes in work/recon/labs/pyvisa__pyvisa-sim.md (entry points with file:line; not executed)",
+    "provenance_refs": [
+      "work/recon/labs/pyvisa__pyvisa-sim.md"
+    ],
+    "read_by": "agent",
+    "state": "agent_read",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "scpi-visa"
+  ],
+  "hardware_free": true,
+  "id": "gh.pyvisa/pyvisa-sim",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this transport backs the scpi helper; it is not a per-repo driver task.",
+    "reason_code": "bridge-runtime:scpi",
+    "recipe": "families/scpi-visa.md",
+    "role": "transport",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "Python",
+    "VISA",
+    "CLI",
+    "SCPI/VISA",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-10-05T21:59:42+02:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "docs": "https://github.com/pyvisa/pyvisa-sim/commit/bb678155efcf3523f5ac67162c6937158ecc0171",
+    "repo": "https://github.com/pyvisa/pyvisa-sim"
+  },
+  "local_path": "labs/pyvisa/pyvisa-sim",
+  "modes": [
+    "simulated",
+    "replay"
+  ],
+  "owner": "pyvisa",
+  "package_id": "gh.pyvisa/pyvisa-sim",
+  "quarantine": false,
+  "rank": 383,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pyvisa-sim",
+  "repo_url": "https://github.com/pyvisa/pyvisa-sim",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "bb678155efcf3523f5ac67162c6937158ecc0171",
+    "repo_url": "https://github.com/pyvisa/pyvisa-sim"
+  },
+  "stars": 95,
+  "tags": [
+    "scpi-visa",
+    "lab instrumentation",
+    "electronic instrument protocol simulation",
+    "direct simulation backend",
+    "simulated",
+    "bridge runtime"
+  ],
+  "tier": "A",
+  "title": "pyvisa/pyvisa-sim",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 90.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "VISA/SCPI",
+      "blockers_raw": "需为每种目标仪器手写 YAML；缺少物理/测量模型，不能产生有科学意义的数据",
+      "category_zh": "电子仪器协议仿真",
+      "description_zh": "通过@sim切换PyVISA后端，使用YAML定义设备对话、属性、错误寄存器和随机读数。",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "需开发适配；本次官方README/API核验未确认MHS支持，不能据此断言不存在",
+      "priority": "P0",
+      "row": 2108,
+      "rows_all": [
+        2108
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument | shared_infrastructure",
+      "verification_level": "已核源码"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bscpi\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "mode_override": {
+        "evidence": "work/recon/labs/pyvisa__pyvisa-sim.md:84 (Mode: simulated/replay; no hardware); labs/pyvisa/pyvisa-sim/README.rst:34-39 (implements Message Based communication in a simulated environment); catalog adapter_role=直接模拟后端",
+        "modes": [
+          "simulated",
+          "replay"
+        ],
+        "rule": "package-specific-pure-simulator"
+      },
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/pyvisa__pyvisa-sim/simulated",
+        "mode": "simulated",
+        "resources": [],
+        "risk_floor": "R0"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/pyvisa__pyvisa-sim/replay",
+        "mode": "replay",
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE.txt",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python",
+        "make"
+      ],
+      "entry_evidence_count": 5,
+      "files": 43,
+      "markers": {
+        "cli": 1,
+        "scpi_visa": 54,
+        "serial": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): YAML-defined simulated VISA instruments; a test fixture for the SCPI helper (registry mode simulated/replay only).",
+        "rules alone: bridge-runtime (bridge-runtime:scpi, rule 6)"
+      ],
+      "family": "scpi",
+      "flagship": true,
+      "hardware_transport": "class pyvisa_sim.sessions.gpib:GPIBInstrumentSession uses the hardware transport pyvisa",
+      "helper": null,
+      "justification": "YAML-defined simulated VISA instruments; a test fixture for the SCPI helper (registry mode simulated/replay only).",
+      "reason_code": "bridge-runtime:scpi",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

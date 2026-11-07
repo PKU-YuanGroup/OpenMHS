@@ -1,0 +1,109 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.t-wagner/pymeasure",
+  "track": "labs",
+  "local_path": "labs/t--wagner/pymeasure",
+  "driver_dir": "MHS/drivers/labs/t--wagner__pymeasure",
+  "upstream": {
+    "repo_url": "https://github.com/t--wagner/pymeasure",
+    "commit": "d9c552f3a3fabd51c9fb4b76cd1e095f738e96bf",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 104,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "instruments.oxford_ps_120:QxfordPS120",
+      "file": "instruments/oxford_ps_120.py",
+      "line": 175,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instruments.keithley2000_multimeter:Keithley2000Multimeter",
+      "file": "instruments/keithley2000_multimeter.py",
+      "line": 639,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instruments.adwin_pro2_feedback:AdwinPro2DaqChannel",
+      "file": "instruments/adwin_pro2_feedback.py",
+      "line": 52,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instruments.oxford_ips:QxfordIPS",
+      "file": "instruments/oxford_ips.py",
+      "line": 224,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instruments.oxford_ilm:QxfordILM",
+      "file": "instruments/oxford_ilm.py",
+      "line": 48,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "QxfordPS120.status",
+      "Keithley2000Multimeter.identification",
+      "AdwinPro2DaqChannel.beating_freq (attribute)",
+      "AdwinPro2DaqChannel.c_qg1_m (attribute)",
+      "AdwinPro2DaqChannel.c_qg1_y (attribute)",
+      "AdwinPro2DaqChannel.c_tg3_m (attribute)",
+      "AdwinPro2DaqChannel.c_tg3_y (attribute)",
+      "AdwinPro2DaqChannel.c_tg4_m (attribute)",
+      "AdwinPro2DaqChannel.c_tg4_y (attribute)",
+      "AdwinPro2DaqChannel.count_window (attribute)",
+      "AdwinPro2DaqChannel.fb_counter0 (attribute)",
+      "AdwinPro2DaqChannel.fb_counter1 (attribute)"
+    ],
+    "writes": [],
+    "actions": [
+      "QxfordPS120.reset",
+      "Keithley2000Multimeter.reset",
+      "AdwinPro2DaqChannel.reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/t--wagner__pymeasure --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,105 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.huggingface/lerobot-humanoid",
+  "track": "robots",
+  "local_path": "robots/huggingface/lerobot-humanoid",
+  "driver_dir": "MHS/drivers/robots/huggingface__lerobot-humanoid",
+  "upstream": {
+    "repo_url": "https://github.com/huggingface/lerobot-humanoid",
+    "commit": "d0b0d9c51853a1e821a12186e9796cded1b79b4b",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:partner-twin",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 11,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "lerobot-humanoid-model/models/bipedal_plateform/mjcf/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "lerobot-humanoid-model/models/bipedal_plateform_no_arms/mjcf/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "lerobot-humanoid-model/models/bipedal_plateform_no_arms/mjcf/scene_fixed_base.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "lerobot-humanoid-model/models/lerobot_humanoide/mjcf/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "lerobot-humanoid-identification/lerobot-humanoid-models/models/bipedal_plateform/mjcf/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "lerobot-humanoid-model/models/bipedal_plateform/mjcf/scene.xml:1 MJCF scene model",
+      "lerobot-humanoid-model/models/bipedal_plateform_no_arms/mjcf/scene.xml:1 MJCF scene model",
+      "lerobot-humanoid-model/models/bipedal_plateform_no_arms/mjcf/scene_fixed_base.xml:2 MJCF scene model",
+      "lerobot-humanoid-model/models/lerobot_humanoide/mjcf/scene.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "lerobot-humanoid-runtime/lerobot/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model lerobot-humanoid-model/models/bipedal_plateform/mjcf/scene.xml:1",
+      "MJCF scene model lerobot-humanoid-model/models/bipedal_plateform_no_arms/mjcf/scene.xml:1",
+      "MJCF scene model lerobot-humanoid-model/models/bipedal_plateform_no_arms/mjcf/scene_fixed_base.xml:2",
+      "MJCF scene model lerobot-humanoid-model/models/lerobot_humanoide/mjcf/scene.xml:1",
+      "MJCF scene model lerobot-humanoid-identification/lerobot-humanoid-models/models/bipedal_plateform/mjcf/scene.xml:1",
+      "MJCF scene model lerobot-humanoid-identification/lerobot-humanoid-models/models/bipedal_plateform_no_arms/mjcf/scene.xml:1",
+      "MJCF scene model lerobot-humanoid-identification/lerobot-humanoid-models/models/bipedal_plateform_no_arms/mjcf/scene_fixed_base.xml:2",
+      "MJCF scene model lerobot-humanoid-identification/lerobot-humanoid-models/models/lerobot_humanoide/mjcf/scene.xml:1",
+      "MJCF scene model lerobot-humanoid-runtime/robot/lerobot-humanoid-model/models/bipedal_plateform/mjcf/scene.xml:1",
+      "MJCF scene model lerobot-humanoid-runtime/robot/lerobot-humanoid-model/models/bipedal_plateform_no_arms/mjcf/scene.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/huggingface__lerobot-humanoid --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.emdem/modbussim",
+  "track": "labs",
+  "local_path": "labs/emdem/modbussim",
+  "driver_dir": "MHS/drivers/labs/emdem__modbussim",
+  "upstream": {
+    "repo_url": "https://github.com/emdem/modbussim",
+    "commit": "5394bd7acbf26798ac4ecbbdfa99481bfc09d60b",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "transport",
+  "family": "tag-bridge",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 50,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "modbussim.modbussim:ModbusSim",
+      "file": "src/modbussim/modbussim.py",
+      "line": 83,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/modbussim/modbussim.py:18 ModbusSimError",
+      "src/modbussim/modbussim.py:83 ModbusSim"
+    ],
+    "upstream_tests": "src/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/emdem__modbussim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

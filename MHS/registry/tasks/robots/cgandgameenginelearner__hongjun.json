@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cgandgameenginelearner/hongjun",
+  "track": "robots",
+  "local_path": "robots/cgandgameenginelearner/hongjun",
+  "driver_dir": "MHS/drivers/robots/cgandgameenginelearner__hongjun",
+  "upstream": {
+    "repo_url": "https://github.com/cgandgameenginelearner/hongjun",
+    "commit": "81d89f5ceb92c3d705bddba56a95988353adabab",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 349,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": "==3.9.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "HongJun/SimulatorControlDriver/SimulatorConnector.py:53 SimulatorConnector",
+      "HongJun/SimulatorControlDriver/SimulatorController.py:27 SimulatorController",
+      "HongJun/SimulatorControlDriver/dcontrol/algorithm/baseline.py:38 DummyAlgorithm",
+      "HongJun/SimulatorControlDriver/dcontrol/core/runner.py:15 AirSimRunner",
+      "HongJun/SimulatorControlDriver/dcontrol/core/server.py:15 AirSimInterServer",
+      "HongJun/SimulatorControlDriver/SimulatorConnector.py:1"
+    ],
+    "upstream_tests": "HongJun/Tasks/Libraries/Gym/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cgandgameenginelearner__hongjun --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

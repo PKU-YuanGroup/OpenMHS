@@ -1,0 +1,57 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.radarku/px4-sitl-docker",
+  "track": "robots",
+  "local_path": "robots/radarku/px4-sitl-docker",
+  "driver_dir": "MHS/drivers/robots/radarku__px4-sitl-docker",
+  "upstream": {
+    "repo_url": "https://github.com/radarku/px4-sitl-docker",
+    "commit": "20463cf2dca1d7b35085bdb065e06b1b7c46166d",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mavlink",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1913,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/radarku__px4-sitl-docker --backend fake",
+  "skip_reason": "override (robots.json): Skip: this Docker image only builds and runs external PX4 SITL with Gazebo and ships no Python source; a driver author should use pymavlink against the MAVLink TCP endpoint on port 5760.",
+  "publish_review": "required"
+}

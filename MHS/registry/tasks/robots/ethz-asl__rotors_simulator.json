@@ -1,0 +1,153 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ethz-asl/rotors_simulator",
+  "track": "robots",
+  "local_path": "robots/ethz-asl/rotors_simulator",
+  "driver_dir": "MHS/drivers/robots/ethz-asl__rotors_simulator",
+  "upstream": {
+    "repo_url": "https://github.com/ethz-asl/rotors_simulator",
+    "commit": "cd813b7a8c375d677352aa20ad20047feb661126",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 300,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install",
+    "capabilities",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ethz-asl__rotors_simulator --backend fake",
+  "skip_reason": null,
+  "publish_review": "required",
+  "companions": [
+    {
+      "alias": "gazebo_ros_pkgs",
+      "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+      "commit": "98bb3d0a0afc65725deaa1633e21ff6f5322b564",
+      "profile": "ros1-kinetic-gazebo7",
+      "reason": "pause_physics and its get_physics_properties read-back (pause) are served by gazebo_ros 2.5.21 (Kinetic), whose empty_world.launch the clone's hovering launch includes.",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:32",
+          "token": "ROS Kinetic"
+        },
+        {
+          "side": "package",
+          "ref": "rotors_gazebo/package.xml:20",
+          "token": "catkin"
+        },
+        {
+          "side": "package",
+          "ref": "rotors_gazebo/launch/mav_hovering_example.launch:16",
+          "token": "$(find gazebo_ros)/launch/empty_world.launch"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/package.xml:4",
+          "token": "2.5.21"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/package.xml:22",
+          "token": "catkin"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_dev/package.xml:22",
+          "token": "libgazebo7-dev"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/CHANGELOG.rst:130-136",
+          "token": "kinetic"
+        }
+      ],
+      "lock": "ros-simulation__gazebo_ros_pkgs@2.5.21",
+      "ref": "2.5.21",
+      "local_path": "work/companions/ros-simulation__gazebo_ros_pkgs@98bb3d0a0afc",
+      "repo_url": "https://github.com/ros-simulation/gazebo_ros_pkgs.git",
+      "license_spdx": "NOASSERTION",
+      "licence_note": "Apache-2.0 AND BSD (per package.xml; no licence file in the repository)"
+    },
+    {
+      "alias": "gazebo_classic",
+      "package_id": "gh.gazebosim/gazebo-classic",
+      "commit": "6fea5977c4518f6d722855c0e342e1e5acf64bac",
+      "profile": "ros1-kinetic-gazebo7",
+      "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (Gazebo 7.16.1; facts only).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:32",
+          "token": "ROS Kinetic"
+        },
+        {
+          "side": "companion:gazebo_ros_pkgs",
+          "ref": "gazebo_ros/CHANGELOG.rst:130-136",
+          "token": "kinetic"
+        },
+        {
+          "side": "companion:gazebo_ros_pkgs",
+          "ref": "gazebo_dev/package.xml:22",
+          "token": "libgazebo7-dev"
+        },
+        {
+          "side": "companion",
+          "ref": "CMakeLists.txt:12",
+          "token": "GAZEBO_MAJOR_VERSION 7"
+        },
+        {
+          "side": "companion",
+          "ref": "Changelog.md:5",
+          "token": "Gazebo 7.16.1"
+        }
+      ],
+      "lock": "gazebosim__gazebo-classic@gazebo7_7.16.1",
+      "ref": "gazebo7_7.16.1",
+      "local_path": "work/companions/gazebosim__gazebo-classic@6fea5977c451",
+      "repo_url": "https://github.com/gazebosim/gazebo-classic.git",
+      "license_spdx": "Apache-2.0"
+    }
+  ]
+}

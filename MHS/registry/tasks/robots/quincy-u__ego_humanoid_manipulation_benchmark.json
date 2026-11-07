@@ -1,0 +1,113 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.quincy-u/ego_humanoid_manipulation_benchmark",
+  "track": "robots",
+  "local_path": "robots/quincy-u/ego_humanoid_manipulation_benchmark",
+  "driver_dir": "MHS/drivers/robots/quincy-u__ego_humanoid_manipulation_benchmark",
+  "upstream": {
+    "repo_url": "https://github.com/quincy-u/ego_humanoid_manipulation_benchmark",
+    "commit": "4489a673153d40f0dcba84c9210c426edfc62812",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 85,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "humanoid.tasks.base_env:BaseEnv",
+      "file": "source/extensions/humanoid.tasks/humanoid/tasks/base_env/base_env.py",
+      "line": 134,
+      "confidence": "override"
+    },
+    {
+      "symbol": "humanoid.tasks.close_drawer:CloseDrawerEnv",
+      "file": "source/extensions/humanoid.tasks/humanoid/tasks/close_drawer/close_drawer.py",
+      "line": 35,
+      "confidence": "override"
+    },
+    {
+      "symbol": "humanoid.tasks.flip_mug:FlipMugEnv",
+      "file": "source/extensions/humanoid.tasks/humanoid/tasks/flip_mug/flip_mug.py",
+      "line": 48,
+      "confidence": "override"
+    },
+    {
+      "symbol": "humanoid.tasks.insert_and_unload_cans:InsertAndUnloadCansEnv",
+      "file": "source/extensions/humanoid.tasks/humanoid/tasks/insert_and_unload_cans/insert_and_unload_cans.py",
+      "line": 27,
+      "confidence": "override"
+    },
+    {
+      "symbol": "humanoid.tasks.insert_cans:InsertCansEnv",
+      "file": "source/extensions/humanoid.tasks/humanoid/tasks/insert_cans/insert_cans_env.py",
+      "line": 27,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/extensions/humanoid.tasks/humanoid/tasks/base_env/__init__.py:13 gym env Humanoid-Base-v0",
+      "source/extensions/humanoid.tasks/humanoid/tasks/close_drawer/__init__.py:13 gym env Humanoid-Close-Drawer-v0",
+      "source/extensions/humanoid.tasks/humanoid/tasks/flip_mug/__init__.py:13 gym env Humanoid-Flip-Mug-v0",
+      "source/extensions/humanoid.tasks/humanoid/tasks/insert_and_unload_cans/__init__.py:13 gym env Humanoid-Insert-And-Unload-Cans-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Humanoid-Base-v0 registered at source/extensions/humanoid.tasks/humanoid/tasks/base_env/__init__.py:13",
+      "gym env Humanoid-Close-Drawer-v0 registered at source/extensions/humanoid.tasks/humanoid/tasks/close_drawer/__init__.py:13",
+      "gym env Humanoid-Flip-Mug-v0 registered at source/extensions/humanoid.tasks/humanoid/tasks/flip_mug/__init__.py:13",
+      "gym env Humanoid-Insert-And-Unload-Cans-v0 registered at source/extensions/humanoid.tasks/humanoid/tasks/insert_and_unload_cans/__init__.py:13",
+      "gym env Humanoid-Insert-Cans-v0 registered at source/extensions/humanoid.tasks/humanoid/tasks/insert_cans/__init__.py:13",
+      "gym env Humanoid-Open-Drawer-v0 registered at source/extensions/humanoid.tasks/humanoid/tasks/open_drawer/__init__.py:13",
+      "gym env Humanoid-Open-Laptop-v0 registered at source/extensions/humanoid.tasks/humanoid/tasks/open_laptop/__init__.py:13",
+      "gym env Humanoid-Pour-Balls-v0 registered at source/extensions/humanoid.tasks/humanoid/tasks/pour_balls/__init__.py:13",
+      "gym env Humanoid-Push-Box-v0 registered at source/extensions/humanoid.tasks/humanoid/tasks/push_box/__init__.py:13",
+      "gym env Humanoid-Sort-Cans-v0 registered at source/extensions/humanoid.tasks/humanoid/tasks/sort_cans/__init__.py:13",
+      "gym env Humanoid-Stack-Can-v0 registered at source/extensions/humanoid.tasks/humanoid/tasks/stack_can/__init__.py:13",
+      "gym env Humanoid-Stack-Can-Into-Drawer-v0 registered at source/extensions/humanoid.tasks/humanoid/tasks/stack_can_into_drawer/__init__.py:12"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/quincy-u__ego_humanoid_manipulation_benchmark --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

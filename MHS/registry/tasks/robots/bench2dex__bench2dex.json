@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.bench2dex/bench2dex",
+  "track": "robots",
+  "local_path": "robots/bench2dex/bench2dex",
+  "driver_dir": "MHS/drivers/robots/bench2dex__bench2dex",
+  "upstream": {
+    "repo_url": "https://github.com/bench2dex/bench2dex",
+    "commit": "fd90dcc625b66c2e535a8b25bcf75bc81c7b080d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1346,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "benchmark/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/bench2dex__bench2dex --backend fake",
+  "skip_reason": "override (robots.json): Bench2Dex is an Isaac Lab benchmark and data-collection stack, not a device driver.",
+  "publish_review": "not_required"
+}

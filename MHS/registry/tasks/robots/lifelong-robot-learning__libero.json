@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.lifelong-robot-learning/libero",
+  "track": "robots",
+  "local_path": "robots/lifelong-robot-learning/libero",
+  "driver_dir": "MHS/drivers/robots/lifelong-robot-learning__libero",
+  "upstream": {
+    "repo_url": "https://github.com/lifelong-robot-learning/libero",
+    "commit": "8f1084e3132a39270c3a13ebe37270a43ece2a01",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 151,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "libero.libero.envs.env_wrapper:OffScreenRenderEnv",
+      "file": "libero/libero/envs/env_wrapper.py",
+      "line": 152,
+      "confidence": "override"
+    },
+    {
+      "symbol": "libero.libero.envs.bddl_base_domain:BDDLBaseDomain",
+      "file": "libero/libero/envs/bddl_base_domain.py",
+      "line": 37,
+      "confidence": "override"
+    },
+    {
+      "symbol": "libero.libero.envs.problems.libero_kitchen_tabletop_manipulation:Libero_Kitchen_Tabletop_Manipulation",
+      "file": "libero/libero/envs/problems/libero_kitchen_tabletop_manipulation.py",
+      "line": 12,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "libero/libero/envs/problems/libero_coffee_table_manipulation.py:12 Libero_Coffee_Table_Manipulation environment class",
+      "libero/libero/envs/problems/libero_floor_manipulation.py:12 Libero_Floor_Manipulation environment class",
+      "libero/libero/envs/problems/libero_kitchen_tabletop_manipulation.py:12 Libero_Kitchen_Tabletop_Manipulation environment class",
+      "libero/libero/envs/problems/libero_living_room_tabletop_manipulation.py:12 Libero_Living_Room_Tabletop_Manipulation environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "model"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/lifelong-robot-learning__libero --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

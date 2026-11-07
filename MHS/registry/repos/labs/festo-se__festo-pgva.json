@@ -1,0 +1,239 @@
+{
+  "adapter": {
+    "bridge": "tag-bridge",
+    "entry_points": [
+      "pgva.pgva:PGVA (src/pgva/pgva.py:16)",
+      "pgva.pgva_communication:PGVAModbusTCP (src/pgva/pgva_communication.py:672)",
+      "pgva.pgva_communication:PGVAModbusClient (src/pgva/pgva_communication.py:24)",
+      "pgva.pgva_communication:PGVAModbusSerial (src/pgva/pgva_communication.py:733)",
+      "pgva.pgva_interface:PGVAInterface (src/pgva/pgva_interface.py:10)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.measure.pressure.v1",
+    "cap.actuation.pump.v1",
+    "cap.actuation.valve.v1"
+  ],
+  "catalog_refs": [
+    "repo_523126d92e6015f3",
+    "https://github.com/festo-se/festo-pgva"
+  ],
+  "description": "festo-se/festo-pgva: device backend for liquid handling (lab instrumentation track). OpenMHS plan: family-config with TagDriver, wave 5. Catalog role: device SDK. Language: Python. Catalog keywords: Festo, PGVA-1, IP.",
+  "domains": [
+    "liquid handling"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 42 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "tag-bridge"
+  ],
+  "hardware_free": false,
+  "id": "gh.festo-se/festo-pgva",
+  "integration": {
+    "blockers": [
+      "NO_HARDWARE_FREE_PATH"
+    ],
+    "effort": "E1",
+    "next_action": "Review MHS/drivers/labs/festo-se__festo-pgva/RESULT.json: the package is blocked on NO_HARDWARE_FREE_PATH; clear the codes before MHS/registry/tasks/labs/festo-se__festo-pgva.json is dispatched again.",
+    "reason_code": "family:tag-bridge",
+    "recipe": "families/tag-bridge.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "Python SDK",
+    "Serial",
+    "Modbus"
+  ],
+  "languages": [
+    "Python",
+    "JavaScript"
+  ],
+  "last_commit_at": "2026-07-21T12:29:12-04:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/festo-se/festo-pgva"
+  },
+  "local_path": "labs/festo-se/festo-pgva",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "festo-se",
+  "package_id": "gh.festo-se/festo-pgva",
+  "quarantine": false,
+  "rank": 19,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "festo-pgva",
+  "repo_url": "https://github.com/festo-se/festo-pgva",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "dd18fb94bd5fe2569fb70606a9f57c861d1eee99",
+    "repo_url": "https://github.com/festo-se/festo-pgva"
+  },
+  "stars": 0,
+  "tags": [
+    "tag-bridge",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "family config"
+  ],
+  "tier": "B",
+  "title": "festo-se/festo-pgva",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 5,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "protocol-bridge",
+      "family_confidence": 0.74,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 44.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "Festo PGVA-1压力与真空发生器的Python驱动，通过IP通信",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 812,
+      "rows_all": [
+        812
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_note": "triage family tag-bridge (catalogue family python-object)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/festo-se__festo-pgva/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.measure.pressure.v1"
+            ],
+            "kind": "sensor.pressure"
+          },
+          {
+            "capabilities": [
+              "cap.actuation.pump.v1"
+            ],
+            "kind": "actuation.pump"
+          },
+          {
+            "capabilities": [
+              "cap.actuation.valve.v1"
+            ],
+            "kind": "actuation.valve"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "blocked_on": [
+        "NO_HARDWARE_FREE_PATH"
+      ],
+      "driver_dir": "MHS/drivers/labs/festo-se__festo-pgva",
+      "files": [
+        "RESULT.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:b3c37dd9b8d657bd6b20a75e8fe56f0c7b297af232123ce16a0f93d80b0b357c",
+      "reviewed": false,
+      "status": "blocked"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 4,
+      "files": 42,
+      "markers": {
+        "serial": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "structural marker: imports pymodbus",
+        "device-driver evidence: catalogue category 'device backend'"
+      ],
+      "family": "tag-bridge",
+      "hardware_transport": "class pgva.pgva_communication:PGVAModbusTCP uses the hardware transport pymodbus",
+      "helper": "TagDriver",
+      "reason_code": "family:tag-bridge",
+      "rule": 9,
+      "version": "0.9.4"
+    }
+  }
+}

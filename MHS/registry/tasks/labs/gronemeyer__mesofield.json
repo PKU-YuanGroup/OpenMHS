@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.gronemeyer/mesofield",
+  "track": "labs",
+  "local_path": "labs/gronemeyer/mesofield",
+  "driver_dir": "MHS/drivers/labs/gronemeyer__mesofield",
+  "upstream": {
+    "repo_url": "https://github.com/gronemeyer/mesofield",
+    "commit": "afccdfcaaac4d63d319bce889e1c3f254fefb73f",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:skip",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 992,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "mesofield/devices/mocks.py:70 MockEncoderDevice",
+      "mesofield/devices/mocks.py:142 MockTreadmillDevice",
+      "mesofield/devices/mocks.py:233 MockFrameProducer",
+      "mesofield/devices/mocks.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/gronemeyer__mesofield --backend fake",
+  "skip_reason": "override (waiting-routing.json): Model review of the waiting cards, 2026-11-05: skip, framework: a PyQt6 framework for multi-camera experiments (README.md:9); its devices are registry plugins over generic MM, NI-DAQ and serial backends (cameras.py:28, daq.py:32).",
+  "publish_review": "not_required"
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jiyunjang-24/humanoidbench-pbrl",
+  "track": "robots",
+  "local_path": "robots/jiyunjang-24/humanoidbench-pbrl",
+  "driver_dir": "MHS/drivers/robots/jiyunjang-24__humanoidbench-pbrl",
+  "upstream": {
+    "repo_url": "https://github.com/jiyunjang-24/humanoidbench-pbrl",
+    "commit": "695dc50f3fc24058ea23702e2853882a0295208c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:duplicate_of",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": "gh.carlosferrazza/humanoid-bench",
+  "package_status": "none",
+  "wave": 9,
+  "rank": 582,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "humanoid_bench/__init__.py:13 gym env {}-{}-v0",
+      "humanoid_bench/env.py:229 gym env temp-v0",
+      "humanoid_bench/assets/kitchen/__init__.py:5 gym env kitchen-complete-v0",
+      "humanoid_bench/assets/kitchen/__init__.py:18 gym env kitchen-partial-v0"
+    ],
+    "upstream_tests": "dreamerv3/embodied/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jiyunjang-24__humanoidbench-pbrl --backend fake",
+  "skip_reason": "duplicate of gh.carlosferrazza/humanoid-bench: override (robots.json): Model review of recon wave B: a copy of HumanoidBench bundled with Preference Transformer for preference-based RL; the humanoid-bench card carries the environments and passes as a package.",
+  "publish_review": "not_required"
+}

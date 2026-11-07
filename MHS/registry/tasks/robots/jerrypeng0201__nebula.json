@@ -1,0 +1,80 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jerrypeng0201/nebula",
+  "track": "robots",
+  "local_path": "robots/jerrypeng0201/nebula",
+  "driver_dir": "MHS/drivers/robots/jerrypeng0201__nebula",
+  "upstream": {
+    "repo_url": "https://github.com/jerrypeng0201/nebula",
+    "commit": "2d16ad04e9825b4a6212847ba847e5ae910feed4",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 135,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "nebula.core.simulation.scenes.base_env:SceneManipulationEnv",
+      "file": "nebula/core/simulation/scenes/base_env.py",
+      "line": 20,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "nebula/assets/robots/humanoid/humanoid.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "nebula/core/simulation/scenes/base_env.py:20 gym env SceneManipulation-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env SceneManipulation-v1 registered at nebula/core/simulation/scenes/base_env.py:20"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jerrypeng0201__nebula --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.thunlp/legent",
+  "track": "robots",
+  "local_path": "robots/thunlp/legent",
+  "driver_dir": "MHS/drivers/robots/thunlp__legent",
+  "upstream": {
+    "repo_url": "https://github.com/thunlp/legent",
+    "commit": "f98cc13ff36c9bb4d6a1cf0f35ecb5968f77dc6c",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 601,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "legent.environment.communicator:RpcCommunicator",
+      "file": "legent/environment/communicator.py",
+      "line": 29,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "legent.scene_generation.llm_gen.doorway:DoorwayGenerator",
+      "file": "legent/scene_generation/llm_gen/doorway.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "legent.scene_generation.llm_gen.floor_object_selection:FloorObjectGenerator",
+      "file": "legent/scene_generation/llm_gen/floor_object_selection.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "legent.model.llava.train.train:ModelArguments",
+      "file": "legent/model/llava/train/train.py",
+      "line": 49,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "legent.scene_generation.asset_groups:Asset",
+      "file": "legent/scene_generation/asset_groups.py",
+      "line": 22,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.6.0",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/thunlp__legent --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

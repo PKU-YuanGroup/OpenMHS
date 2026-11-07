@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.yongxb/keithley-smu-controls",
+  "track": "labs",
+  "local_path": "labs/yongxb/keithley-smu-controls",
+  "driver_dir": "MHS/drivers/labs/yongxb__keithley-smu-controls",
+  "upstream": {
+    "repo_url": "https://github.com/yongxb/keithley-smu-controls",
+    "commit": "6afb567c29125beb133facbbe62bb88c37d8529f",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 325,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "Keithley_control_2450:keithley",
+      "file": "Keithley_control_2450.py",
+      "line": 40,
+      "confidence": "override"
+    },
+    {
+      "symbol": "keithley_control_2657A:keithley",
+      "file": "keithley_control_2657A.py",
+      "line": 38,
+      "confidence": "override"
+    },
+    {
+      "symbol": "Keithley2400_source_current_v2:sourcemeter",
+      "file": "Keithley2400_source_current_v2.py",
+      "line": 45,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": [
+      "Keithley2400_source_current_v2.py:22 voltage_limit = 210",
+      "Keithley2400_source_current_v2.py:26 current_limit = 1.05",
+      "Keithley_control_2450.py:13 voltage_limit = 210",
+      "Keithley_control_2450.py:17 current_limit = 0.0001",
+      "keithley_control_2657A.py:13 voltage_limit = 200",
+      "keithley_control_2657A.py:17 current_limit = 0.001"
+    ]
+  },
+  "needs_recon": [
+    "install",
+    "capabilities",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/yongxb__keithley-smu-controls --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

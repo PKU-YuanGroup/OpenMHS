@@ -1,0 +1,101 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ari1127/sr830",
+  "track": "labs",
+  "local_path": "labs/ari1127/sr830",
+  "driver_dir": "MHS/drivers/labs/ari1127__sr830",
+  "upstream": {
+    "repo_url": "https://github.com/ari1127/sr830",
+    "commit": "930c9c5dcd8016b19e8c0988599f8f76cd928a12",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 295,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "SR830:device",
+      "file": "SR830.py",
+      "line": 5,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "device.get_R",
+      "device.get_Theta",
+      "device.get_X",
+      "device.get_Y",
+      "device.get_all",
+      "device.get_ampl",
+      "device.get_couple",
+      "device.get_disp_rat",
+      "device.get_exp_off",
+      "device.get_filter",
+      "device.get_freq",
+      "device.get_ground"
+    ],
+    "writes": [
+      "device.set_ampl",
+      "device.set_aux",
+      "device.set_couple",
+      "device.set_disp_rat",
+      "device.set_exp_off",
+      "device.set_filter",
+      "device.set_freq",
+      "device.set_ground",
+      "device.set_input",
+      "device.set_mode",
+      "device.set_phase",
+      "device.set_reserve"
+    ],
+    "actions": [
+      "device.disable_front_panel",
+      "device.enable_front_panel",
+      "device.reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ari1127__sr830 --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

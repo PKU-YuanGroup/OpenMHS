@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.lhy6900/mujoco-viewer-plus",
+  "track": "robots",
+  "local_path": "robots/lhy6900/mujoco-viewer-plus",
+  "driver_dir": "MHS/drivers/robots/lhy6900__mujoco-viewer-plus",
+  "upstream": {
+    "repo_url": "https://github.com/lhy6900/mujoco-viewer-plus",
+    "commit": "3d2555369ab990cef6f29d8e65f099468c151fe8",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "skip:tooling",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1648,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "deploy_robot/sim/mujoco_multisimulator.py:33 HardwareSimConfig",
+      "deploy_robot/sim/mujoco_multisimulator.py:46 MultiMujocoSimulatorConfig",
+      "deploy_robot/sim/mujoco_multisimulator.py:62 MultiMujocoSimulator",
+      "deploy_robot/sim/mujoco_simulator.py:30 HardwareSimConfig",
+      "deploy_robot/sim/mujoco_simulator.py:43 MujocoSimulatorConfig",
+      "deploy_robot/sim/mujoco_simulator.py:59 MujocoSimulator"
+    ],
+    "upstream_tests": "unitree_sdk2_python/unitree_sdk2py/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/lhy6900__mujoco-viewer-plus --backend fake",
+  "skip_reason": "catalogue category auxiliary tool, role peripheral tool",
+  "publish_review": "required"
+}

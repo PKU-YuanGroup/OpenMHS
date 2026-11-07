@@ -1,0 +1,86 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.vikashplus/franka_sim",
+  "track": "robots",
+  "local_path": "robots/vikashplus/franka_sim",
+  "driver_dir": "MHS/drivers/robots/vikashplus__franka_sim",
+  "upstream": {
+    "repo_url": "https://github.com/vikashplus/franka_sim",
+    "commit": "b54d271388cf9b179d3fb6cff7a430040afca33f",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 234,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "bi-franka_panda.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "franka_panda.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "franka_panda_teleop.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "bi-franka_panda.xml:1 MJCF scene model",
+      "franka_panda.xml:1 MJCF scene model",
+      "franka_panda_teleop.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model bi-franka_panda.xml:1",
+      "MJCF scene model franka_panda.xml:1",
+      "MJCF scene model franka_panda_teleop.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/vikashplus__franka_sim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

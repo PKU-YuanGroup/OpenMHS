@@ -1,0 +1,109 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pycroscopy/dtmicroscope",
+  "track": "labs",
+  "local_path": "labs/pycroscopy/dtmicroscope",
+  "driver_dir": "MHS/drivers/labs/pycroscopy__dtmicroscope",
+  "upstream": {
+    "repo_url": "https://github.com/pycroscopy/dtmicroscope",
+    "commit": "17245ba6df4299aa3f13e2a8f33d9ba48a8000b4",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "twin-candidate",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 21,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "DTMicroscope.base.twisted_client:TEMClient",
+      "file": "DTMicroscope/base/twisted_client.py",
+      "line": 8,
+      "confidence": "override"
+    },
+    {
+      "symbol": "DTMicroscope.server.twisted_server:TEMServer",
+      "file": "DTMicroscope/server/twisted_server.py",
+      "line": 126,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "DTMicroscope/test"
+  },
+  "hints": {
+    "reads": [
+      "TEMClient.get_detectors",
+      "TEMClient.get_microscope_status",
+      "TEMClient.get_stage",
+      "TEMClient.get_vacuum",
+      "AFM_Microscope.get_dataset_info",
+      "AFM_Microscope.get_grid_data",
+      "AFM_Microscope.get_point_data",
+      "AFM_Microscope.get_scan",
+      "AFM_Microscope.get_spectrum",
+      "TEMServer.get_detectors",
+      "TEMServer.get_microscope_status",
+      "TEMServer.get_stage"
+    ],
+    "writes": [
+      "TEMClient.set_beam_position",
+      "TEMClient.set_stage",
+      "AFM_Microscope.set_probe_position",
+      "TEMServer.set_beam_position",
+      "TEMServer.set_stage"
+    ],
+    "actions": [
+      "TEMClient.acquire_image",
+      "TEMClient.acquire_image_stack",
+      "TEMClient.acquire_spectrum",
+      "TEMClient.acquire_spectrum_points",
+      "TEMServer.acquire_image",
+      "TEMServer.acquire_image_stack",
+      "TEMServer.acquire_spectrum",
+      "TEMServer.acquire_spectrum_points",
+      "TEMServer.run_tableau"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.measure.spectrum.v1",
+      "cap.sensing.image.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pycroscopy__dtmicroscope --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

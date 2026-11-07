@@ -1,0 +1,213 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "korad:KC3405P (korad.py:28)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.measure.voltage.v1",
+    "cap.measure.current.v1"
+  ],
+  "catalog_refs": [
+    "repo_b26a45ce94dd8cae",
+    "https://github.com/steinkohl/korad_powersupply"
+  ],
+  "description": "steinkohl/korad_powersupply: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 3. Catalog role: device SDK. Language: Python. Catalog keywords: Korad, KC3405.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 4 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/steinkohl__korad_powersupply/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.steinkohl/korad_powersupply",
+  "integration": {
+    "blockers": [
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/steinkohl__korad_powersupply: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/steinkohl__korad_powersupply --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2024-05-30T11:11:00+02:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/steinkohl/korad_powersupply"
+  },
+  "local_path": "labs/steinkohl/korad_powersupply",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "steinkohl",
+  "package_id": "gh.steinkohl/korad_powersupply",
+  "quarantine": false,
+  "rank": 121,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "korad_powersupply",
+  "repo_url": "https://github.com/steinkohl/korad_powersupply",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "fd2e8b7c59a4dd9f9e609bdacf15b3d7bc1b3d5e",
+    "repo_url": "https://github.com/steinkohl/korad_powersupply"
+  },
+  "stars": 0,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "steinkohl/korad_powersupply",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.74,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 31.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "经以太网控制Korad KC3405电源的Python脚本",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "参考",
+      "row": 2582,
+      "rows_all": [
+        2582
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "serial",
+      "catalog_tier": "B",
+      "family_matches": [
+        "analyst-profile:lab-serial"
+      ],
+      "family_note": "triage family python-object (catalogue family serial)",
+      "family_rule": "analyst-profile",
+      "family_score": 74,
+      "tier_rule": "B6-role-without-entry"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/steinkohl__korad_powersupply/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.measure.voltage.v1",
+              "cap.measure.current.v1"
+            ],
+            "kind": "instrument.dmm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "fd2e8b7c59a4dd9f9e609bdacf15b3d7bc1b3d5e",
+      "driver_dir": "MHS/drivers/labs/steinkohl__korad_powersupply",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:1a74dc5b3967dbb3eb1397a3599e18de7b9fff3d2b789d122595e1125fb27edd",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 0,
+      "files": 4,
+      "markers": {}
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class korad:KC3405P (korad.py:28, score 14)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

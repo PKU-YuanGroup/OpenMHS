@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.um-arm-lab/mfr_benchmark",
+  "track": "robots",
+  "local_path": "robots/um-arm-lab/mfr_benchmark",
+  "driver_dir": "MHS/drivers/robots/um-arm-lab__mfr_benchmark",
+  "upstream": {
+    "repo_url": "https://github.com/um-arm-lab/mfr_benchmark",
+    "commit": "bf459f50d2ab6aa5982fec4a58967406f8fbb6ae",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 2141,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "MFR_benchmark/tasks/allegro.py:523 AllegroValveTurningEnv environment class",
+      "MFR_benchmark/tasks/allegro.py:629 AllegroScrewdriverTurningEnv environment class",
+      "MFR_benchmark/tasks/allegro.py:771 AllegroScrewdriverEnv environment class",
+      "MFR_benchmark/tasks/allegro.py:852 AllegroCuboidAlignmentEnv environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/um-arm-lab__mfr_benchmark --backend fake",
+  "skip_reason": "override (robots.json): Skip: a simulation-only benchmark of Allegro-hand manipulation tasks on external NVIDIA IsaacGym, not a device or a Gymnasium/MuJoCo environment.",
+  "publish_review": "required"
+}

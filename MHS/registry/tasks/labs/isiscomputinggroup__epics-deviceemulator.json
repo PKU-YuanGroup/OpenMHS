@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.isiscomputinggroup/epics-deviceemulator",
+  "track": "labs",
+  "local_path": "labs/isiscomputinggroup/epics-deviceemulator",
+  "driver_dir": "MHS/drivers/labs/isiscomputinggroup__epics-deviceemulator",
+  "upstream": {
+    "repo_url": "https://github.com/isiscomputinggroup/epics-deviceemulator",
+    "commit": "cb76a17ae8f87dc447570b3380b01da366cd2971",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 624,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "lewis_emulators/Lksh218/device.py:11 SimulatedLakeshore218",
+      "lewis_emulators/ag33220a/device.py:4 SimulatedAG33220A",
+      "lewis_emulators/amint2l/device.py:8 SimulatedAmint2l",
+      "lewis_emulators/attocube_anc350/device.py:8 SimulatedAttocubeANC350",
+      "lewis_emulators/chtobisr/device.py:92 SimulatedChtobisr",
+      "lewis_emulators/cryogenic_sms/device.py:12 SimulatedCRYOSMS"
+    ],
+    "upstream_tests": "lewis_emulators/ngpspsu/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/isiscomputinggroup__epics-deviceemulator --backend fake",
+  "skip_reason": "override (labs.json): DeviceEmulator is a collection of Lewis device simulators, not a driver: it answers serial commands as the instrument.",
+  "publish_review": "not_required"
+}

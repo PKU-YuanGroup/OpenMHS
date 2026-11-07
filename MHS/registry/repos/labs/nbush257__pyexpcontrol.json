@@ -1,0 +1,236 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "olfactometer:Olfactometer (python/olfactometer.py:40)",
+      "nebPod:Controller (python/nebPod.py:223)",
+      "ArCOM.Python2.ArCOM:ArCOMObject (ArCOM/Python2/ArCOM.py:23)",
+      "ArCOM.Python3.ArCOM:ArCOMObject (ArCOM/Python3/ArCOM.py:23)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.actuation.gpio.v1",
+    "cap.device.calibrate.v1"
+  ],
+  "catalog_refs": [
+    "repo_034e4d5af4e6c5d1",
+    "https://github.com/nbush257/pyexpcontrol"
+  ],
+  "description": "nbush257/pyexpcontrol: device backend for biology (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 3. Catalog role: device SDK. Language: Python. Catalog keywords: Teensy, Arduino, nebPod.",
+  "domains": [
+    "biology"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 44 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/nbush257__pyexpcontrol/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.nbush257/pyexpcontrol",
+  "integration": {
+    "blockers": [
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/nbush257__pyexpcontrol: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/nbush257__pyexpcontrol --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "serial",
+    "Python SDK",
+    "Serial"
+  ],
+  "languages": [
+    "Python",
+    "Arduino",
+    "C",
+    "C++"
+  ],
+  "last_commit_at": "2025-07-28T19:22:36-07:00",
+  "license": "NOASSERTION",
+  "license_class": "unknown",
+  "license_spdx": "NOASSERTION",
+  "links": {
+    "repo": "https://github.com/nbush257/pyexpcontrol"
+  },
+  "local_path": "labs/nbush257/pyexpcontrol",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "nbush257",
+  "package_id": "gh.nbush257/pyexpcontrol",
+  "quarantine": false,
+  "rank": 206,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pyexpcontrol",
+  "repo_url": "https://github.com/nbush257/pyexpcontrol",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "06e94c4d22ac2d9fc542a3ebee035a8b9e360ea7",
+    "repo_url": "https://github.com/nbush257/pyexpcontrol"
+  },
+  "stars": 4,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "nbush257/pyexpcontrol",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 48.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "经串口控制Teensy、激光、阀门的神经生理实验Python/Arduino代码(nebPod)",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 1744,
+      "rows_all": [
+        1744
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/nbush257__pyexpcontrol/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.actuation.gpio.v1"
+            ],
+            "kind": "io.gpio"
+          },
+          {
+            "capabilities": [
+              "cap.device.calibrate.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": null,
+      "file_spdx": null,
+      "review": true,
+      "source": "none"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "06e94c4d22ac2d9fc542a3ebee035a8b9e360ea7",
+      "driver_dir": "MHS/drivers/labs/nbush257__pyexpcontrol",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:2c617dea0e2b1fb353f06455ce30c441986affb88db9b614668b7158e4b1ec50",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 0,
+      "files": 44,
+      "markers": {
+        "balance": 1,
+        "laser": 4,
+        "serial": 4
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class olfactometer:Olfactometer (python/olfactometer.py:40, score 17)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class ArCOM.Python2.ArCOM:ArCOMObject uses the hardware transport serial",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

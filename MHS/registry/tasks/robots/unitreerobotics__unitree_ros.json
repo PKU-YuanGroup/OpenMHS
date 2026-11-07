@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.unitreerobotics/unitree_ros",
+  "track": "robots",
+  "local_path": "robots/unitreerobotics/unitree_ros",
+  "driver_dir": "MHS/drivers/robots/unitreerobotics__unitree_ros",
+  "upstream": {
+    "repo_url": "https://github.com/unitreerobotics/unitree_ros",
+    "commit": "5994d4faef0a9cadd3287f8de0199a67eeb2a259",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "twin-candidate",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 24,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "robots/h1_description/mjcf/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "robots/b2_description_mujoco/xml/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "robots/a2_description/a2.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "robots/as2_description/as2.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "robots/g1_description/g1_23dof.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robots/h1_description/mjcf/scene.xml:1 MJCF scene model",
+      "robots/b2_description_mujoco/xml/scene.xml:1 MJCF scene model",
+      "robots/a2_description/a2.xml:1 MJCF robot model",
+      "robots/as2_description/as2.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "unitree_ros_to_real/unitree_legged_sdk/python_wrapper/third-party/pybind11/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "capabilities"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/unitreerobotics__unitree_ros --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

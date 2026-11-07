@@ -1,0 +1,80 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.semitable/robotic-warehouse",
+  "track": "robots",
+  "local_path": "robots/semitable/robotic-warehouse",
+  "driver_dir": "MHS/drivers/robots/semitable__robotic-warehouse",
+  "upstream": {
+    "repo_url": "https://github.com/semitable/robotic-warehouse",
+    "commit": "96fbc64e3eae5fee915e0d390f864fa06ddccd47",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 70,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "rware.warehouse:Warehouse",
+      "file": "rware/warehouse.py",
+      "line": 140,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "rware/__init__.py:24 gym env rware-{}-{}ag{}-v2",
+      "rware/__init__.py:63 gym env rware{}{}-{}-{}ag{}-v2",
+      "rware/__init__.py:110 gym env rware{}{}{}-{}-{}h-{}ag{}-v2",
+      "rware/__init__.py:158 gym env rware{}{}{}-{}x{}-{}h-{}ag-{}req-{}-v2"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env rware-{}-{}ag{}-v2 (id template, built at run time) registered at rware/__init__.py:24",
+      "gym env rware{}{}-{}-{}ag{}-v2 (id template, built at run time) registered at rware/__init__.py:63",
+      "gym env rware{}{}{}-{}-{}h-{}ag{}-v2 (id template, built at run time) registered at rware/__init__.py:110",
+      "gym env rware{}{}{}-{}x{}-{}h-{}ag-{}req-{}-v2 (id template, built at run time) registered at rware/__init__.py:158"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/semitable__robotic-warehouse --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

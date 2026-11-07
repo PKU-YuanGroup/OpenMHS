@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.spikelab-jhu/isaac-sim-event-camera-plugin",
+  "track": "robots",
+  "local_path": "robots/spikelab-jhu/isaac-sim-event-camera-plugin",
+  "driver_dir": "MHS/drivers/robots/spikelab-jhu__isaac-sim-event-camera-plugin",
+  "upstream": {
+    "repo_url": "https://github.com/spikelab-jhu/isaac-sim-event-camera-plugin",
+    "commit": "d6fe47923fad09c4bfa2fd2cb13f82520114cfae",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1639,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/spikelab-jhu__isaac-sim-event-camera-plugin --backend fake",
+  "skip_reason": "override (robots.json): Skip/sim-env: an Isaac Sim/Lab plugin that synthesizes DVS events from rendered scene cameras, not a device; reuse it only as a synthetic event source under Isaac Sim/Lab with GPU rendering.",
+  "publish_review": "not_required"
+}

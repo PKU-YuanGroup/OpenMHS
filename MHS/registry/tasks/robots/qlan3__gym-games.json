@@ -1,0 +1,105 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.qlan3/gym-games",
+  "track": "robots",
+  "local_path": "robots/qlan3/gym-games",
+  "driver_dir": "MHS/drivers/robots/qlan3__gym-games",
+  "upstream": {
+    "repo_url": "https://github.com/qlan3/gym-games",
+    "commit": "0220815982456a20f02887b20a7d9a5fbeeedd55",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 118,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_exploration.envs.diabolical_comb_lock:DiabolicalCombLockEnv",
+      "file": "gym_exploration/envs/diabolical_comb_lock.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_exploration.envs.diabolical_comb_lock:OneDiabolicalCombinationLock",
+      "file": "gym_exploration/envs/diabolical_comb_lock.py",
+      "line": 68,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_exploration.envs.lockbernoulli:LockBernoulliEnv",
+      "file": "gym_exploration/envs/lockbernoulli.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_exploration.envs.lockgaussian:LockGaussianEnv",
+      "file": "gym_exploration/envs/lockgaussian.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_exploration.envs.nchain:NChainEnv",
+      "file": "gym_exploration/envs/nchain.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_exploration/__init__.py:4 gym env {}-v0",
+      "gym_exploration/__init__.py:9 gym env {}-v1",
+      "gym_minatar/__init__.py:6 gym env {}-MinAtar-v0",
+      "gym_minatar/__init__.py:11 gym env {}-MinAtar-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env {}-v0 (id template, built at run time) registered at gym_exploration/__init__.py:4",
+      "gym env {}-v1 (id template, built at run time) registered at gym_exploration/__init__.py:9",
+      "gym env {}-MinAtar-v0 (id template, built at run time) registered at gym_minatar/__init__.py:6",
+      "gym env {}-MinAtar-v1 (id template, built at run time) registered at gym_minatar/__init__.py:11",
+      "gym env {}-PLE-v0 (id template, built at run time) registered at gym_pygame/__init__.py:4"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/qlan3__gym-games --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

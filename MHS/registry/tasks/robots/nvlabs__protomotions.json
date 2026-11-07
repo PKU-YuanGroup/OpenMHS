@@ -1,0 +1,94 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nvlabs/protomotions",
+  "track": "robots",
+  "local_path": "robots/nvlabs/protomotions",
+  "driver_dir": "MHS/drivers/robots/nvlabs__protomotions",
+  "upstream": {
+    "repo_url": "https://github.com/nvlabs/protomotions",
+    "commit": "7a8417a9f55b1586b0d6e8f46578c5bc9d7ce1f1",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 797,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "protomotions.components.scene_lib:SceneLib",
+      "file": "protomotions/components/scene_lib.py",
+      "line": 1107,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "protomotions.envs.utils.path_generator:PathGenerator",
+      "file": "protomotions/envs/utils/path_generator.py",
+      "line": 31,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "protomotions.envs.base_env.env:BaseEnv",
+      "file": "protomotions/envs/base_env/env.py",
+      "line": 101,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "protomotions.envs.context_views:EnvContext",
+      "file": "protomotions/envs/context_views.py",
+      "line": 559,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "protomotions.components.motion_lib:MotionLib",
+      "file": "protomotions/components/motion_lib.py",
+      "line": 303,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "deployment/export_bm_tracker_onnx.py:139 MockContext",
+      "deployment/export_tracker_onnx.py:130 MockContext",
+      "protomotions/robot_configs/base.py:42 SimulatorParams"
+    ],
+    "upstream_tests": "protomotions/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nvlabs__protomotions --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

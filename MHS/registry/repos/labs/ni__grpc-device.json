@@ -1,0 +1,206 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "cmake",
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_0f4c99dc93f0ce89",
+    "https://github.com/ni/grpc-device"
+  ],
+  "description": "ni/grpc-device: device backend; protocol implementation/bridge for NI test measurement and RF / data acquisition (lab instrumentation track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: protocol bridge; device SDK. Language: C/C++ header, C, C++. Catalog keywords: NI,.",
+  "domains": [
+    "NI test measurement and RF   data acquisition"
+  ],
+  "evidence": {
+    "files_read": 5,
+    "notes": "bounded static scan: 926 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "http-api"
+  ],
+  "hardware_free": true,
+  "id": "gh.ni/grpc-device",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver",
+      "LICENSE_REVIEW: permissive; the user decides before a driver is published"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs a future engine bridge; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/http-api.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "TLS",
+    "server_config.json",
+    "HTTP/REST",
+    "SCPI/VISA",
+    "gRPC",
+    "CLI"
+  ],
+  "languages": [
+    "C/C++ header",
+    "C",
+    "C++",
+    "Python"
+  ],
+  "last_commit_at": "2026-10-02T15:57:57-05:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/ni/grpc-device"
+  },
+  "local_path": "labs/ni/grpc-device",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "ni",
+  "package_id": "gh.ni/grpc-device",
+  "quarantine": false,
+  "rank": 99,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "grpc-device",
+  "repo_url": "https://github.com/ni/grpc-device",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "58be73d176c2e297d0b4bf14b0e27c89667aee2e",
+    "repo_url": "https://github.com/ni/grpc-device"
+  },
+  "stars": 0,
+  "tags": [
+    "http-api",
+    "lab instrumentation",
+    "protocol bridge device sdk",
+    "simulated",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "ni/grpc-device",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "protocol-bridge",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 33.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接 | 设备SDK",
+      "archived": "unknown",
+      "backend_family_raw": "NI C 驱动（IVI 风格会话）经 gRPC 远程化",
+      "blockers_raw": "NI 专有驱动/许可；Linux 上多数 RFmx 不支持；无法在本环境无硬件验证",
+      "category_zh": "设备后端 | 协议实现/桥接",
+      "description_zh": "NI 官方 gRPC 设备服务器：把 NI-DAQmx、DMM、DCPower、SCOPE、FGEN、RFSA/RFSG、RFmx、SWITCH、VISA、XNET、FPGA 等 C 驱动 API 逐函数暴露为 .proto 定义的远程服务，客户端用任意 gRPC 语言调用。",
+      "join": "exact",
+      "license_raw": "MIT（运行需 NI 专有驱动；RFmx 等需软件许可，许可在服务器端签出）",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 1759,
+      "rows_all": [
+        1759
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument | shared_infrastructure",
+      "verification_level": "已核源码"
+    },
+    "classification": {
+      "catalog_family": "http-api",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bgrpc\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/ni__grpc-device/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/labs/ni__grpc-device/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/ni__grpc-device/hardware"
+        ],
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": true,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "cmake",
+        "python"
+      ],
+      "entry_evidence_count": 3,
+      "files": 926,
+      "markers": {
+        "http": 86,
+        "scpi_visa": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): NI gRPC Device Server is a C++ gRPC middleware stack over many NI driver C APIs, not a Python driver; a driver author needs per-driver Python stubs, the server and the NI driver.",
+        "rules alone: untriaged (untriaged:no_entry_class, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "NI gRPC Device Server is a C++ gRPC middleware stack over many NI driver C APIs, not a Python driver; a driver author needs per-driver Python stubs, the server and the NI driver.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

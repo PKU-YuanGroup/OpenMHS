@@ -1,0 +1,186 @@
+{
+  "adapter": {
+    "bridge": "tag-bridge",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_123cb7f6623f7cfd",
+    "https://github.com/ppp-one/alpaca-simulators"
+  ],
+  "description": "ppp-one/alpaca-simulators: complete environment for optics (lab instrumentation track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: direct simulation backend. Language: Python. Catalog keywords: ASCOM, Alpaca, RESTful.",
+  "domains": [
+    "optics"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 51 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "tag-bridge"
+  ],
+  "hardware_free": true,
+  "id": "gh.ppp-one/alpaca-simulators",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this twin-candidate backs the tag-bridge helper; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/tag-bridge.md",
+    "role": "twin-candidate",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "HTTP/REST",
+    "CLI"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-10-07T23:21:34+02:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/ppp-one/alpaca-simulators"
+  },
+  "local_path": "labs/ppp-one/alpaca-simulators",
+  "modes": [
+    "simulated"
+  ],
+  "owner": "ppp-one",
+  "package_id": "gh.ppp-one/alpaca-simulators",
+  "quarantine": false,
+  "rank": 627,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "alpaca-simulators",
+  "repo_url": "https://github.com/ppp-one/alpaca-simulators",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "91395ce226599573d84dc7c8407ff920c1d6cd02",
+    "repo_url": "https://github.com/ppp-one/alpaca-simulators"
+  },
+  "stars": 6,
+  "tags": [
+    "tag-bridge",
+    "lab instrumentation",
+    "complete environment",
+    "direct simulation backend",
+    "simulated",
+    "bridge runtime"
+  ],
+  "tier": "A",
+  "title": "ppp-one/alpaca-simulators",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "http-api",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 84.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "完整环境",
+      "description_zh": "基于Python的ASCOM Alpaca设备模拟器，提供符合Alpaca规范的RESTful API，覆盖相机、望远镜、圆顶、调焦器、滤镜轮等",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P1",
+      "row": 2019,
+      "rows_all": [
+        2019
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "cli-process",
+      "catalog_tier": "A",
+      "family_matches": [
+        "command[- ]line",
+        "\\bcli\\b"
+      ],
+      "family_note": "triage family tag-bridge (catalogue family cli-process)",
+      "family_rule": "scored",
+      "family_score": 4,
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/ppp-one__alpaca-simulators/simulated",
+        "mode": "simulated",
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 3,
+      "files": 51,
+      "markers": {
+        "camera": 7,
+        "cli": 1,
+        "http": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): This FastAPI server simulates the major ASCOM Alpaca device types, a hardware-free twin for the tag bridge rather than a driver; drive its /api/v1 HTTP endpoints, do not import it.",
+        "rules alone: untriaged (untriaged:no_entry_class, rule 11)"
+      ],
+      "family": "tag-bridge",
+      "helper": null,
+      "justification": "This FastAPI server simulates the major ASCOM Alpaca device types, a hardware-free twin for the tag bridge rather than a driver; drive its /api/v1 HTTP endpoints, do not import it.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

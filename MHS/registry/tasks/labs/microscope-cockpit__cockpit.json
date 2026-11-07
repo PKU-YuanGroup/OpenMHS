@@ -1,0 +1,65 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.microscope-cockpit/cockpit",
+  "track": "labs",
+  "local_path": "labs/microscope-cockpit/cockpit",
+  "driver_dir": "MHS/drivers/labs/microscope-cockpit__cockpit",
+  "upstream": {
+    "repo_url": "https://github.com/microscope-cockpit/cockpit",
+    "commit": "c37a23de9c0e454d24a7fc7f686032fac757c7f6",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "reference",
+  "reason_code": "reference:host",
+  "role": "host",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1031,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "cockpit/devices/dummies.py:67 DummyCamera",
+      "cockpit/devices/dummies.py:76 DummyDSP",
+      "cockpit/devices/dummies.py:85 DummyLaser",
+      "cockpit/devices/dummies.py:94 DummyStage",
+      "cockpit/devices/dummyAnalog.py:27 DummyAnalogDevice"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/microscope-cockpit__cockpit --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

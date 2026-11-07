@@ -1,0 +1,92 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.omnilink-tech/omnisim",
+  "track": "robots",
+  "local_path": "robots/omnilink-tech/omnisim",
+  "driver_dir": "MHS/drivers/robots/omnilink-tech__omnisim",
+  "upstream": {
+    "repo_url": "https://github.com/omnilink-tech/omnisim",
+    "commit": "5193feadadb98e5236c8738f162ea352919cfef8",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": "http",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1272,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "controller.python.omnisim.motor:Motor",
+      "file": "lib/controller/python/omnisim/motor.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "controller.python.omnisim.vacuum_gripper:VacuumGripper",
+      "file": "lib/controller/python/omnisim/vacuum_gripper.py",
+      "line": 20,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "controller.python.omnisim.camera:Camera",
+      "file": "lib/controller/python/omnisim/camera.py",
+      "line": 64,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "controller.python.omnisim.lidar:Lidar",
+      "file": "lib/controller/python/omnisim/lidar.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "controller.python.omnisim.display:Display",
+      "file": "lib/controller/python/omnisim/display.py",
+      "line": 22,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "agents/bridges/arm_bridge_stub.py:59 MockArmDriver",
+      "agents/bridges/mobile_bridge_stub.py:46 MockMobileDriver",
+      "omnisim/damage/headless_test.py:163 HeadlessOmniSim"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/omnilink-tech__omnisim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,229 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "pycozmo.client:Client (pycozmo/client.py:41)",
+      "pycozmo.conn:Connection (pycozmo/conn.py:341)",
+      "pycozmo.brain:Brain (pycozmo/brain.py:27)",
+      "pycozmo.procedural_face:ProceduralLid (pycozmo/procedural_face.py:73)",
+      "pycozmo.util:Matrix44 (pycozmo/util.py:316)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.sensing.read.v1",
+    "cap.motion.joint_position.v1",
+    "cap.motion.stop.v1"
+  ],
+  "catalog_refs": [
+    "repo_209a2f52fa174b64",
+    "https://github.com/zayfod/pycozmo"
+  ],
+  "description": "zayfod/pycozmo: device backend for mobile robots (robotics track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 1. Catalog role: device SDK. Language: Python. Catalog keywords: Cozmo.",
+  "domains": [
+    "mobile robots"
+  ],
+  "evidence": {
+    "files_read": 5,
+    "notes": "bounded static scan: 125 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/robots/zayfod__pycozmo/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.zayfod/pycozmo",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/robots/zayfod__pycozmo: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/zayfod__pycozmo --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "CLI",
+    "Replay",
+    "ROS 2"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2020-11-12T09:39:52-05:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/zayfod/pycozmo"
+  },
+  "local_path": "robots/zayfod/pycozmo",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "zayfod",
+  "package_id": "gh.zayfod/pycozmo",
+  "quarantine": false,
+  "rank": 32,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pycozmo",
+  "repo_url": "https://github.com/zayfod/pycozmo",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "1b6dcd9b869a3784f1d8b02e820bb033f95fd13a",
+    "repo_url": "https://github.com/zayfod/pycozmo"
+  },
+  "stars": 0,
+  "tags": [
+    "python-object",
+    "robotics",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "zayfod/pycozmo",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 1,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "sdk-library",
+      "family_confidence": 0.62,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 50.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "unknown",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "纯Python的Cozmo机器人通信库与替代SDK，直接控制实体机器人",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "参考",
+      "row": 2936,
+      "rows_all": [
+        2936
+      ],
+      "scope": "peripheral",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "cli-process",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bcli\\b"
+      ],
+      "family_note": "triage family python-object (catalogue family cli-process)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/zayfod__pycozmo/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": "MIT",
+      "file": "LICENSE.md",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "1b6dcd9b869a3784f1d8b02e820bb033f95fd13a",
+      "driver_dir": "MHS/drivers/robots/zayfod__pycozmo",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:a041821a2b331f56f2274d2b44d0d4624c5ba0a1990a09ec3c6b999c5da51d5e",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 9,
+      "files": 125,
+      "markers": {
+        "camera": 9,
+        "cli": 11,
+        "replay": 1,
+        "ros2": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class pycozmo.client:Client (pycozmo/client.py:41, score 13)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

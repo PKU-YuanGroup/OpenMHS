@@ -1,0 +1,60 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.klowrey/mujoco_bridge",
+  "track": "robots",
+  "local_path": "robots/klowrey/mujoco_bridge",
+  "driver_dir": "MHS/drivers/robots/klowrey__mujoco_bridge",
+  "upstream": {
+    "repo_url": "https://github.com/klowrey/mujoco_bridge",
+    "commit": "7b6aad5a7d026672ed01bf522777a8efd198c0f1",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1234,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "models/skydio_x2/scene.xml:1 MJCF scene model",
+      "models/skydio_x2/x2.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/klowrey__mujoco_bridge --backend fake",
+  "skip_reason": "override (robots.json): Skip: this is a C++ MuJoCo-to-PX4 SITL bridge with no Python package or importable device API, so its MJCF models are simulator assets, not a driver.",
+  "publish_review": "not_required"
+}

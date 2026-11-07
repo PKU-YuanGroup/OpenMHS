@@ -1,0 +1,239 @@
+{
+  "adapter": {
+    "bridge": "scpi",
+    "entry_points": [
+      "drivers.SignalGenerator.KeysightN5182B:KeysightN5182B (drivers/SignalGenerator/KeysightN5182B.py:5)",
+      "transport.SerialTransport:SerialTransport (transport/SerialTransport.py:4)",
+      "transport.VisaTransport:VisaTransport (transport/VisaTransport.py:7)",
+      "transport.TcpSocketTransport:TcpSocketTransport (transport/TcpSocketTransport.py:4)",
+      "transport.ScpiTransport:ScpiTransport (transport/ScpiTransport.py:4)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.device.configure.v1"
+  ],
+  "catalog_refs": [
+    "repo_61f5506f019ca5c4",
+    "https://github.com/feifanphys/instrumentdriver"
+  ],
+  "description": "feifanphys/instrumentdriver: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: family-config with ScpiDriver, wave 3. Catalog role: device SDK. Declared backend: PyVISA. Language: Python. Catalog keywords: SCPI, Mock, VISA, TCP, USB, GPIB.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 15 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/feifanphys__instrumentdriver/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "scpi-visa"
+  ],
+  "hardware_free": true,
+  "id": "gh.feifanphys/instrumentdriver",
+  "integration": {
+    "blockers": [
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata"
+    ],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/labs/feifanphys__instrumentdriver: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/feifanphys__instrumentdriver --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "family:scpi",
+    "recipe": "families/scpi-visa.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "Python SDK",
+    "SCPI/VISA",
+    "serial",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-05-12T17:11:19-04:00",
+  "license": "NOASSERTION",
+  "license_class": "unknown",
+  "license_spdx": "NOASSERTION",
+  "links": {
+    "repo": "https://github.com/feifanphys/instrumentdriver"
+  },
+  "local_path": "labs/feifanphys/instrumentdriver",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "feifanphys",
+  "package_id": "gh.feifanphys/instrumentdriver",
+  "quarantine": false,
+  "rank": 230,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "instrumentdriver",
+  "repo_url": "https://github.com/feifanphys/instrumentdriver",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "749c845066b5a0e5ac30a1f9f55ff36e76ca24e1",
+    "repo_url": "https://github.com/feifanphys/instrumentdriver"
+  },
+  "stars": 1,
+  "tags": [
+    "scpi-visa",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "simulated",
+    "hardware interface",
+    "family config"
+  ],
+  "tier": "B",
+  "title": "feifanphys/instrumentdriver",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.89,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 45.0,
+      "quality_flags": [
+        "license_unknown"
+      ],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "PyVISA",
+      "category_zh": "设备后端",
+      "description_zh": "模块化SCPI仪器驱动框架，支持Mock模拟仪器与VISA/TCP/串口/USB/GPIB传输，含信号源驱动",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 805,
+      "rows_all": [
+        805
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bpyvisa\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/feifanphys__instrumentdriver/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.device.configure.v1"
+            ],
+            "kind": "device"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/labs/feifanphys__instrumentdriver/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/feifanphys__instrumentdriver/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.device.configure.v1"
+            ],
+            "kind": "device"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": null,
+      "file_spdx": null,
+      "review": true,
+      "source": "none"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "749c845066b5a0e5ac30a1f9f55ff36e76ca24e1",
+      "driver_dir": "MHS/drivers/labs/feifanphys__instrumentdriver",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:8dc0202fea6e813143250ed54d5fd9a722a738a95b9b7b46b4d5f3a7e9fafc73",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 4,
+      "files": 15,
+      "markers": {
+        "scpi_visa": 10,
+        "serial": 3
+      }
+    },
+    "triage": {
+      "evidence": [
+        "structural marker: imports pyvisa",
+        "device-driver evidence: catalogue category 'device backend'"
+      ],
+      "family": "scpi",
+      "hardware_transport": "class transport.SerialTransport:SerialTransport uses the hardware transport serial",
+      "helper": "ScpiDriver",
+      "reason_code": "family:scpi",
+      "rule": 9,
+      "version": "0.9.4"
+    }
+  }
+}

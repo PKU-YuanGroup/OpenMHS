@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.turagalab/flybody",
+  "track": "robots",
+  "local_path": "robots/turagalab/flybody",
+  "driver_dir": "MHS/drivers/robots/turagalab__flybody",
+  "upstream": {
+    "repo_url": "https://github.com/turagalab/flybody",
+    "commit": "d015e9bfe441bd90ae431bac24c55cb74bdbce26",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 40,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "flybody/fruitfly/assets/floor.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "flybody/fruitfly/build_fruitfly/floor.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "flybody/fruitfly/assets/fruitfly.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "flybody/fruitfly/build_fruitfly/fruitfly.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "flybody/fruitfly/assets/floor.xml:1 MJCF scene model",
+      "flybody/fruitfly/build_fruitfly/floor.xml:1 MJCF scene model",
+      "flybody/fruitfly/assets/fruitfly.xml:1 MJCF robot model",
+      "flybody/fruitfly/build_fruitfly/fruitfly.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model flybody/fruitfly/assets/floor.xml:1",
+      "MJCF scene model flybody/fruitfly/build_fruitfly/floor.xml:1",
+      "MJCF robot model flybody/fruitfly/assets/fruitfly.xml:1",
+      "MJCF robot model flybody/fruitfly/build_fruitfly/fruitfly.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/turagalab__flybody --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

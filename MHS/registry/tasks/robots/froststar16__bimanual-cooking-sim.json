@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.froststar16/bimanual-cooking-sim",
+  "track": "robots",
+  "local_path": "robots/froststar16/bimanual-cooking-sim",
+  "driver_dir": "MHS/drivers/robots/froststar16__bimanual-cooking-sim",
+  "upstream": {
+    "repo_url": "https://github.com/froststar16/bimanual-cooking-sim",
+    "commit": "6ca8f1c83378d1e3fe39a4cc9083eefe6540c5ec",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 128,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "models/kitchen_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/bottle_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/cook_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/omelette_cook_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/omelette_mix_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "models/kitchen_scene.xml:1 MJCF scene model",
+      "models/bottle_scene.xml:1 MJCF scene model",
+      "models/cook_scene.xml:1 MJCF scene model",
+      "models/omelette_cook_scene.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model models/kitchen_scene.xml:1",
+      "MJCF scene model models/bottle_scene.xml:1",
+      "MJCF scene model models/cook_scene.xml:1",
+      "MJCF scene model models/omelette_cook_scene.xml:1",
+      "MJCF scene model models/omelette_mix_scene.xml:1",
+      "MJCF scene model models/omelette_transfer_scene.xml:1",
+      "MJCF scene model models/pan_flip_scene.xml:1",
+      "MJCF scene model models/pan_pour_scene.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/froststar16__bimanual-cooking-sim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

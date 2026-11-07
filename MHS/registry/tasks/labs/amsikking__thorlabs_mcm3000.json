@@ -1,0 +1,74 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.amsikking/thorlabs_mcm3000",
+  "track": "labs",
+  "local_path": "labs/amsikking/thorlabs_mcm3000",
+  "driver_dir": "MHS/drivers/labs/amsikking__thorlabs_mcm3000",
+  "upstream": {
+    "repo_url": "https://github.com/amsikking/thorlabs_mcm3000",
+    "commit": "390cd97e44abe04945db9b73ec8dc34a099d9f96",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 39,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "thorlabs_MCM3000:Controller",
+      "file": "thorlabs_MCM3000.py",
+      "line": 4,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Controller.get_position_um"
+    ],
+    "writes": [],
+    "actions": [
+      "Controller.move_um"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/amsikking__thorlabs_mcm3000 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,435 @@
+{
+  "$schema": "../schema/overrides.schema.json",
+  "overrides_version": "0.9",
+  "title": "Reviewed wave C routing (Claude continuation, 2026-11-05)",
+  "description": "Routing corrections from the model review of the DeepSeek ROS wave C (claude-opus-5-5, a model and not a human). They change the family, strategy or role of a card whose package showed another shape; they do not change source pins, package status, signatures or publication.",
+  "overrides": [
+    {
+      "package_id": "gh.aau-cns/ardupilot_multiagent_simulation",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Model review of wave C: skip, a ROS 2 launch environment for multi-drone Gazebo plus ArduPilot SITL whose only control code is a pymavlink Tk GUI; the vehicles fly through ArduPilot SITL, the gh.ardupilot/ardupilot card."
+    },
+    {
+      "package_id": "gh.agilexrobotics/piper_isaac_sim",
+      "strategy": "family-config",
+      "role": "twin-candidate",
+      "family": "mujoco",
+      "reason_code": "family:mujoco",
+      "justification": "Model review of wave C: MujocoDriver, not RosDriver: the clone is a description and asset repository (USD, URDF, MJCF) with no ROS node, topic, service or action; the card's models[0] piper_description.xml is the served MJCF."
+    },
+    {
+      "package_id": "gh.ammar-n-abbas/sim2real-ur-gym-gazebo",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "family:gymnasium",
+      "entry_symbols": [
+        {
+          "symbol": "ur_openai.task_envs.ur5_task_space:UR5TaskSpaceEnv",
+          "file": "ur_openai_gym/ur_openai/src/ur_openai/task_envs/ur5_task_space.py",
+          "line": 17
+        }
+      ],
+      "justification": "Model review of wave C: UR5TaskSpaceEnv is a gymnasium.Env (ur5_task_space.py:17) served by reset/step, so GymnasiumDriver; it drives whatever UR controller ROS runs, and UR5PickAndPlaceRealEnv is out of scope."
+    },
+    {
+      "package_id": "gh.andykofman/flightmare-reinforcement-learning",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "family:gymnasium",
+      "entry_symbols": [
+        {
+          "symbol": "flightrl_v2.flightrl_v2.envs.flight_env_vec:FlightEnvVec",
+          "file": "flightrl_v2/flightrl_v2/envs/flight_env_vec.py",
+          "line": 20
+        }
+      ],
+      "justification": "Model review of wave C: FlightEnvVec (flight_env_vec.py:20) is a Gymnasium env over the compiled flightgym VecEnv, served by reset/step/seed as for gh.uzh-rpg/flightmare; flightros holds Unity and ROS demos, not the RL interface."
+    },
+    {
+      "package_id": "gh.applied-ai-lab/ramp",
+      "strategy": "skip",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "Model review of wave C: skip, prior art: a real-Franka assembly baseline over the external panda_ros_interface (core/action_interface.py:16, 56) with no simulator or stop; it does not run as shipped (main.py:13)."
+    },
+    {
+      "package_id": "gh.ardupilot/ardupilot_gazebo",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Model review of wave C: skip, as gh.khancyr/ardupilot_gazebo, which this plugin replaces (README.md:7-9): a C++ Gazebo Sim plugin library for ArduPilot SITL over UDP with no ROS or Python API."
+    },
+    {
+      "package_id": "gh.aurelienroy/ardupilot_sitl_gazebo_plugin",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "reason_code": "override:licence-review",
+      "publish_review": "required",
+      "justification": "Model review of wave C: licence conflict (GPL-3.0-or-later ArduPilot files compiled into an Apache-2.0-carded plugin); routing unchanged; the owner decides publication.",
+      "family": "ros"
+    },
+    {
+      "package_id": "gh.blackcoffeerobotics/bcr_bot",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "family:mujoco",
+      "justification": "Model review of wave C: MujocoDriver, not RosDriver: the card's models are the shipped MJCF scenes; the configured small_warehouse.xml (mujoco_ros2_control.xacro:7) steps in MuJoCo and the clone implements no ROS node."
+    },
+    {
+      "package_id": "gh.botianhao/humanoid_control",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "family:mujoco",
+      "justification": "Model review of wave C: MujocoDriver, not RosDriver: the card's only model is the MJCF humanoid_legged_control_.xml, which humanoid_sim.py steps with mj_step; its ROS 2 node only carries target and state topics."
+    },
+    {
+      "package_id": "gh.caelan/ltamp",
+      "strategy": "direct-driver",
+      "role": "sim-env",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "plan_tools.ros_world:ROSWorld",
+          "file": "plan_tools/ros_world.py",
+          "line": 15
+        },
+        {
+          "symbol": "control_tools.pb_controller:PBController",
+          "file": "control_tools/pb_controller.py",
+          "line": 18
+        }
+      ],
+      "justification": "Model review of wave C: the hardware-free scope is PBController in ROSWorld(sim_only=True) (plan_tools/ros_world.py:35-38); ROSController is the retired real-PR2 ROS path with no acknowledged stop."
+    },
+    {
+      "package_id": "gh.catachiii/crl-humanoid-ros",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "family:mujoco",
+      "justification": "Model review of wave C: MujocoDriver, not RosDriver: the card's first model is the MJCF scene_crl.xml, which the repository's G1 simulator loads with mj_loadXML; its ROS 2 graph carries controller and monitor traffic."
+    },
+    {
+      "package_id": "gh.ctu-mrs/mrs_uav_flightforge_simulator",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "reason_code": "override:licence-review",
+      "publish_review": "required",
+      "justification": "Model review of wave C: licence conflict (GPL-2.0 LICENSE but BSD 3-Clause package.xml); routing unchanged; the owner decides publication.",
+      "family": "ros"
+    },
+    {
+      "package_id": "gh.ctu-vras/husky_nav",
+      "strategy": "skip",
+      "role": "sim-env",
+      "family": "ros",
+      "reason_code": "override:recon",
+      "justification": "Model review of wave C: skip, a Gazebo scenario composition: launch files, worlds and a Husky xacro wiring external control and navigation packages (README.md:11-16); no command, step or stop endpoint in the clone."
+    },
+    {
+      "package_id": "gh.cursedrock17/gazebo_gymnasium",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "family:gymnasium",
+      "entry_symbols": [
+        {
+          "symbol": "gazebo_gymnasium_bridge.gazebo_gymnasium_bridge.envs.gym_env:GazeboEnv",
+          "file": "gazebo_gymnasium_bridge/gazebo_gymnasium_bridge/envs/gym_env.py",
+          "line": 49
+        }
+      ],
+      "justification": "Model review of wave C: GazeboCartPole-v0 is a gymnasium.Env (gym_env.py:49) that steps an in-process gz-sim world in lockstep; the repository's ROS 2 packages only wrap it, so GymnasiumDriver, not RosDriver."
+    },
+    {
+      "package_id": "gh.gazebosim/gz-sensors",
+      "strategy": "skip",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "Model review of wave C: skip, not a device: gz-sensors is the C++ Gazebo sensor-model library over gz-transport (README.md:18-20, package.xml:26-28); it ships no ROS endpoint and needs a host simulator."
+    },
+    {
+      "package_id": "gh.geo-jtao/unitree_robot_sim",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "family:mujoco",
+      "justification": "Model review of wave C: MujocoDriver, not RosDriver: the card's models and world.* candidates are the vendored Unitree MJCF scenes; the package steps the B2 scene (b2_description_mujoco/xml/scene.xml) with mj_step."
+    },
+    {
+      "package_id": "gh.geonhee-lee/ur5_ros_gym",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "family:gymnasium",
+      "entry_symbols": [
+        {
+          "symbol": "rl_gym.envs:UnscrewingEnv",
+          "file": "rl_unscrew/rl-gym/rl_gym/envs/unscrewing_env.py",
+          "line": 14
+        }
+      ],
+      "justification": "Model review of wave C: UnscrewingEnv is a legacy gym.Env (unscrewing_env.py:14) registered as gym_unscrewing_env-v0 and served by reset/step; its ROS topics and /reset_robot calls are internal, so GymnasiumDriver."
+    },
+    {
+      "package_id": "gh.hanshangzhu/collab_qrc",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "family:mujoco",
+      "justification": "Model review of wave C: MujocoDriver, not RosDriver: the VLM launch's default scene go2_gazebo_sim/mujoco/vlm_exploration_scene.xml (single_vlm_mujoco_far.launch.py:142-146) is an MJCF that mujoco_ros2_control steps."
+    },
+    {
+      "package_id": "gh.karthik0497/ros2-amr-simulation",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "reason_code": "override:licence-review",
+      "publish_review": "required",
+      "justification": "Model review of wave C: licence conflict (MIT LICENSE but Apache-2.0 package.xml); routing unchanged; the owner decides publication.",
+      "family": "ros"
+    },
+    {
+      "package_id": "gh.keerthanx9/bot_sim_ros2",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Model review of wave C: skip, not a device: the pin is an unmodified ROS 2 robot-package template (README.md:1-3) with one empty base_link and only robot_state_publisher; no sensor, Gazebo launch or bridge exists."
+    },
+    {
+      "package_id": "gh.leekwoon/nav-gym",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "family:gymnasium",
+      "entry_symbols": [
+        {
+          "symbol": "nav_gym_env.env:NavGymEnv",
+          "file": "nav_gym/src/nav_gym_env/env.py",
+          "line": 30
+        }
+      ],
+      "justification": "Model review of wave C: NavGym-v0 is a legacy gym.Env (env.py:30) served by reset/step and the nav_gym_ros nodes only wrap it, so GymnasiumDriver; CrowdSim-v0 needs configure() before reset and is out of scope."
+    },
+    {
+      "package_id": "gh.limxdynamics/humanoid-description",
+      "strategy": "family-config",
+      "role": "twin-candidate",
+      "family": "mujoco",
+      "reason_code": "family:mujoco",
+      "justification": "Model review of wave C: MujocoDriver, not RosDriver: the clone is a description repository (URDF, MJCF, USD) with no ROS node, topic, service or action; the card's models[0] HU_D03_03.xml is the served MJCF.",
+      "publish_review": "required"
+    },
+    {
+      "package_id": "gh.linqi-ye/robot-universe",
+      "strategy": "family-config",
+      "role": "twin-candidate",
+      "family": "mujoco",
+      "reason_code": "family:mujoco",
+      "justification": "Model review of wave C: MujocoDriver, not RosDriver: the clone is a robot description collection whose ROS files only display, spawn or visualise models; the card's models[0] go_bdx/scene.xml is an MJCF scene with 16 position actuators."
+    },
+    {
+      "package_id": "gh.lionlai1989/stalkerdronerl",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "family:gymnasium",
+      "entry_symbols": [
+        {
+          "symbol": "sdrl_rl_controller.sdrl_rl_controller.train_sac:QuadcopterTrackingEnv",
+          "file": "src/sdrl_rl_controller/sdrl_rl_controller/train_sac.py",
+          "line": 50
+        }
+      ],
+      "justification": "Model review of wave C: QuadcopterTrackingEnv is a gym.Env (train_sac.py:50) served by reset/step; its ROS 2 topics and gz-transport calls are internal, so GymnasiumDriver; no gym.register id exists."
+    },
+    {
+      "package_id": "gh.malintha/multi_uav_simulator",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "reason_code": "override:licence-review",
+      "publish_review": "required",
+      "justification": "Model review of wave C: licence conflict (GPL-3.0 LICENSE, Apache-2.0 source headers and a TODO package.xml); routing unchanged; the owner decides publication.",
+      "family": "ros"
+    },
+    {
+      "package_id": "gh.markusbuchholz/gazebosim_blueboat_ardupilot_sitl",
+      "strategy": "direct-driver",
+      "role": "sim-env",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "ros2_blueboat_interface:BlueboatROSInterface",
+          "file": "gz_ws/extras_interface/ros2_blueboat_interface.py",
+          "line": 34
+        }
+      ],
+      "justification": "Model review of wave C: the node's ROS surface has only topics; the package binds the BlueboatROSInterface class (ros2_blueboat_interface.py:34), whose MAVLink calls carry arm, disarm and thrust, as a direct Driver."
+    },
+    {
+      "package_id": "gh.micro-ros/micro_ros_zephyr_module",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "ros",
+      "reason_code": "override:recon",
+      "justification": "Model review of wave C: as gh.micro-ros/micro_ros_arduino, this is the firmware-side micro-ROS client and transport stack for Zephyr (README.md:4) with only an Int32 demo publisher, not a device driver."
+    },
+    {
+      "package_id": "gh.mobile-robots-group-uc3m/adamsim",
+      "strategy": "direct-driver",
+      "role": "sim-env",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "scripts.adam:ADAM",
+          "file": "scripts/adam.py",
+          "line": 20
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver over scripts.adam:ADAM, not RosDriver: ADAMSim is a PyBullet Python simulator; its ROS layer (scripts/ros_connection.py) is a bridge to the real ADAM robot, not a simulator control node."
+    },
+    {
+      "package_id": "gh.ncbdrck/uniros",
+      "strategy": "skip",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "Model review of wave C: skip, framework: UniROS ships only MultiROS/RealROS base classes and copy-me templates whose hooks raise NotImplementedError; the concrete environments live in rl_environments (docs/envs/index.rst:4-9)."
+    },
+    {
+      "package_id": "gh.optimaero/optimaeropx4sil",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Model review of wave C: skip, a MATLAB/Simulink SIL example that connects a modified PX4 submodule to Simulink plant models (README.md:18); no Python, ROS or callable API; PX4 itself is the gh.px4/px4-autopilot card."
+    },
+    {
+      "package_id": "gh.pocketxjl/humanoid-control",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "family:mujoco",
+      "justification": "Model review of wave C: MujocoDriver, not RosDriver: the card's only model is the MJCF humanoid_legged.xml, which the repository's own humanoid_sim.py steps with mj_step; ROS carries only the controller loop."
+    },
+    {
+      "package_id": "gh.px4/px4-sitl_gazebo-classic",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Model review of wave C: skip, the PX4 Gazebo Classic plugin suite for MAVLink SITL and HITL with no dependency on ROS (README.md:1-12); vehicles fly through PX4 over MAVLink, the gh.px4/px4-autopilot card."
+    },
+    {
+      "package_id": "gh.rvl-lab-utoronto/panda_robot",
+      "strategy": "skip",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "Model review of wave C: skip, prior art: Gym envs for a real Franka Panda over franka_ros with no simulator; gym_panda_robot.envs imports a missing panda_reacher_manga (envs/__init__.py:1-2), so no env loads as shipped."
+    },
+    {
+      "package_id": "gh.saqib736/ros2-reinforcement-learning",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "family:gymnasium",
+      "entry_symbols": [
+        {
+          "symbol": "rl_racing.gazebo_env:GazeboEnv",
+          "file": "rl_racing/rl_racing/gazebo_env.py",
+          "line": 11
+        }
+      ],
+      "justification": "Model review of wave C: RacingBotEnv-v0 is a gymnasium.Env (gazebo_env.py:11) served by reset/step; its /cmd_vel, /odom and laser topics are internal transport, so GymnasiumDriver over a free-running Gazebo."
+    },
+    {
+      "package_id": "gh.sea-bass/pyrobosim",
+      "strategy": "direct-driver",
+      "role": "sim-env",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "pyrobosim.core.world:World",
+          "file": "pyrobosim/pyrobosim/core/world.py",
+          "line": 26
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver over pyrobosim.core.world:World, not RosDriver: PyRoboSim is a Python 2D simulator whose ROS 2 interface is an optional wrapper (docs/source/index.rst:6)."
+    },
+    {
+      "package_id": "gh.shadow-robot/smart_grasping_sandbox",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "reason_code": "override:licence-review",
+      "publish_review": "required",
+      "justification": "Model review of wave C: licence conflict (GPL-3.0 repository with \"Proprietary and Confidential\" helper files); routing unchanged; the owner decides publication.",
+      "family": "ros"
+    },
+    {
+      "package_id": "gh.simple-robotics/simple",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "family:mujoco",
+      "justification": "Model review of wave C: MujocoDriver, not RosDriver: the clone has no ROS endpoint; the card's model sandbox/robots/humanoid.xml is DeepMind's MuJoCo Humanoid, which the sandbox steps with mj_step (sim_utils.py:253-279)."
+    },
+    {
+      "package_id": "gh.tenfoldpaper/multipanda_ros2",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "family:mujoco",
+      "justification": "Model review after MUJOCO-UNBOUNDED-ACTUATORS: MujocoDriver, not RosDriver: device plan world.sim; the dual-arm launch passes franka_description/mujoco/franka/dual_scene.xml to the MuJoCo server (mujoco_ros_pkgs submodule not at the pin)."
+    },
+    {
+      "package_id": "gh.tesseract-robotics/tesseract",
+      "strategy": "skip",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "Model review of wave C: skip, not a device: Tesseract is a ROS-agnostic motion-planning library (README.md:25); its ROS integration lives in the separate tesseract_ros and tesseract_ros2 repositories."
+    },
+    {
+      "package_id": "gh.tetheria/aero-hand-open",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "aero_open_sdk.aero_hand:AeroHand",
+          "file": "sdk/src/aero_open_sdk/aero_hand.py",
+          "line": 53
+        }
+      ],
+      "justification": "Model review of wave C: the device interface is the serial SDK class AeroHand (aero_hand.py:53); the ROS 2 node only relays topics to it, and the card's other entry symbols lie in git submodules absent at the pin."
+    },
+    {
+      "package_id": "gh.vincekurtz/quadruped_drake",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Model review of wave C: skip: a Drake and LCM quadruped simulation script (simulate.py:160-182) with no environment API, ROS node or Drake helper; its only package.xml files belong to the vendored TOWR library and a model description."
+    },
+    {
+      "package_id": "gh.wuji-technology/wuji-description",
+      "strategy": "family-config",
+      "role": "twin-candidate",
+      "family": "mujoco",
+      "reason_code": "family:mujoco",
+      "justification": "Model review of wave C: MujocoDriver, not RosDriver: the clone is a model description package with no ROS command interface; the card's model hand/body-with-soft/mjcf/left.xml is an MJCF with 20 position actuators."
+    },
+    {
+      "package_id": "gh.xwavex/py-flex-assembly",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Model review of wave C: skip: FlexAssemblyEnv is an unfinished PyBullet gym scaffold whose constructor never returns (flex_assembly_env.py:76, env_interface.py:125-139), with no action or observation space and its registration disabled."
+    }
+  ]
+}

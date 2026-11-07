@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.avslab/basilisk",
+  "track": "robots",
+  "local_path": "robots/avslab/basilisk",
+  "driver_dir": "MHS/drivers/robots/avslab__basilisk",
+  "upstream": {
+    "repo_url": "https://github.com/avslab/basilisk",
+    "commit": "1c89eed20c98ef36f3fcac10d6516d12d3307d80",
+    "license_spdx": "ISC",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 244,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "utilities.tleHandling:TleData",
+      "file": "src/utilities/tleHandling.py",
+      "line": 40,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9,<3.15",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/utilities/SimulationBaseClass.py:563 SimBaseClass",
+      "src/utilities/simulationProgessBar.py:5 SimulationProgressBar",
+      "src/utilities/SimulationBaseClass.py:1",
+      "src/utilities/simulationArchTypes.py:1",
+      "src/utilities/simulationProgessBar.py:1"
+    ],
+    "upstream_tests": "benchmarks/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/avslab__basilisk --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

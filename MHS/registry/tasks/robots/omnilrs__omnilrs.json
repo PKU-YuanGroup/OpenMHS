@@ -1,0 +1,95 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.omnilrs/omnilrs",
+  "track": "robots",
+  "local_path": "robots/omnilrs/omnilrs",
+  "driver_dir": "MHS/drivers/robots/omnilrs__omnilrs",
+  "upstream": {
+    "repo_url": "https://github.com/omnilrs/omnilrs",
+    "commit": "630916dc6df3d73ed286242954bfbb4dd5b7befd",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1244,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "environments.large_scale_lunar:LargeScaleController",
+      "file": "src/environments/large_scale_lunar.py",
+      "line": 21,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "environments_wrappers.sdg.lunalab_sdg:SDG_Lunalab",
+      "file": "src/environments_wrappers/sdg/lunalab_sdg.py",
+      "line": 32,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "environments_wrappers.sdg.lunaryard_sdg:SDG_Lunaryard",
+      "file": "src/environments_wrappers/sdg/lunaryard_sdg.py",
+      "line": 32,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "environments.lunalab:LunalabController",
+      "file": "src/environments/lunalab.py",
+      "line": 21,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "environments.lunaryard:LunaryardController",
+      "file": "src/environments/lunaryard.py",
+      "line": 20,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/environments/large_scale_lunar.py:21 LargeScaleController environment class",
+      "src/environments_wrappers/sdg/lunalab_sdg.py:32 SDG_Lunalab environment class",
+      "src/environments_wrappers/sdg/lunaryard_sdg.py:32 SDG_Lunaryard environment class",
+      "src/environments/lunalab.py:21 LunalabController environment class"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/omnilrs__omnilrs --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

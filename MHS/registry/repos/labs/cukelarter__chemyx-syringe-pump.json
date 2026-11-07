@@ -1,0 +1,223 @@
+{
+  "adapter": {
+    "bridge": "serial",
+    "entry_points": [
+      "python_dist.CHEMYX_python.core.connect:Connection (python_dist/CHEMYX_python/core/connect.py:47)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [
+    "cap.actuation.pump.v1",
+    "cap.device.configure.v1",
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_aa10adabb5cc16ee",
+    "https://github.com/cukelarter/chemyx-syringe-pump"
+  ],
+  "description": "cukelarter/chemyx-syringe-pump: device backend for liquid handling (lab instrumentation track). OpenMHS plan: direct-driver with SerialDriver, wave 3. Catalog role: device SDK. Language: Python. Catalog keywords: Chemyx, PySerial, MATLAB.",
+  "domains": [
+    "liquid handling"
+  ],
+  "evidence": {
+    "files_read": 1,
+    "notes": "bounded static scan: 42 files enumerated (max depth 3), 1 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/cukelarter__chemyx-syringe-pump/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "serial"
+  ],
+  "hardware_free": false,
+  "id": "gh.cukelarter/chemyx-syringe-pump",
+  "integration": {
+    "blockers": [
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/cukelarter__chemyx-syringe-pump: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/cukelarter__chemyx-syringe-pump --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/serial.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "serial",
+    "Serial"
+  ],
+  "languages": [
+    "Python",
+    "MATLAB"
+  ],
+  "last_commit_at": "2022-12-11T05:39:28-05:00",
+  "license": "NOASSERTION",
+  "license_class": "unknown",
+  "license_spdx": "NOASSERTION",
+  "links": {
+    "repo": "https://github.com/cukelarter/chemyx-syringe-pump"
+  },
+  "local_path": "labs/cukelarter/chemyx-syringe-pump",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "cukelarter",
+  "package_id": "gh.cukelarter/chemyx-syringe-pump",
+  "quarantine": false,
+  "rank": 301,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "chemyx-syringe-pump",
+  "repo_url": "https://github.com/cukelarter/chemyx-syringe-pump",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "14011ba2aeb2fcedff7a9b1718e58dc9acefb97f",
+    "repo_url": "https://github.com/cukelarter/chemyx-syringe-pump"
+  },
+  "stars": 5,
+  "tags": [
+    "serial",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "cukelarter/chemyx-syringe-pump",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 42.0,
+      "quality_flags": [
+        "license_unknown"
+      ],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "Chemyx注射泵控制软件，含PySerial连接模块、GUI及MATLAB版本",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 557,
+      "rows_all": [
+        557
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_note": "triage family serial (catalogue family python-object)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/cukelarter__chemyx-syringe-pump/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.actuation.pump.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "actuation.pump"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": null,
+      "file_spdx": null,
+      "review": true,
+      "source": "none"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "14011ba2aeb2fcedff7a9b1718e58dc9acefb97f",
+      "driver_dir": "MHS/drivers/labs/cukelarter__chemyx-syringe-pump",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:0d797c9ba1adccff48c4305ae053b3da321cbe1bded04693a87856a170a4fd5e",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 1,
+      "files": 42,
+      "markers": {
+        "liquid_handling": 1,
+        "serial": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of the PUB batch: a direct Driver over the Chemyx Connection, not a SerialDriver table: methods return multi-line replies and the only parameter report is 'view parameter'.",
+        "rules alone: family-config (family:serial, rule 9)"
+      ],
+      "family": "serial",
+      "helper": "SerialDriver",
+      "justification": "Model review of the PUB batch: a direct Driver over the Chemyx Connection, not a SerialDriver table: methods return multi-line replies and the only parameter report is 'view parameter'.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ntnu-arl/aerial_gym_simulator",
+  "track": "robots",
+  "local_path": "robots/ntnu-arl/aerial_gym_simulator",
+  "driver_dir": "MHS/drivers/robots/ntnu-arl__aerial_gym_simulator",
+  "upstream": {
+    "repo_url": "https://github.com/ntnu-arl/aerial_gym_simulator",
+    "commit": "f0d0f05283f7897bab5a1bcc7b19b91cebbab218",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1553,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "aerial_gym/env_manager/warp_env_manager.py:19 WarpEnv environment class",
+      "aerial_gym/rl_training/rl_games/runner.py:51 AERIALRLGPUEnv environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ntnu-arl__aerial_gym_simulator --backend fake",
+  "skip_reason": "override (robots.json): Skip: Aerial Gym is an Isaac Gym RL simulator for aerial robots, not a device and not a registered Gymnasium or MuJoCo environment.",
+  "publish_review": "not_required"
+}

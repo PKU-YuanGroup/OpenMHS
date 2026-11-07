@@ -1,0 +1,180 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_1d3580c71806465e",
+    "https://github.com/umfieldrobotics/oceansim"
+  ],
+  "description": "umfieldrobotics/oceansim: complete environment for underwater robotics (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: task environment. Declared backend: Isaac Sim. Language: Python, Shell. Catalog keywords: Isaac, Sim.",
+  "domains": [
+    "underwater robotics"
+  ],
+  "evidence": {
+    "files_read": 1,
+    "notes": "bounded static scan: 70 files enumerated (max depth 3), 1 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "isaac-sim"
+  ],
+  "hardware_free": true,
+  "id": "gh.umfieldrobotics/oceansim",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver",
+      "NEEDS_GPU: an import or the catalogue requires a GPU"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this sim-env backs a future engine bridge; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/isaac-sim.md",
+    "role": "sim-env",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "Isaac Sim",
+    "CLI"
+  ],
+  "languages": [
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2026-10-04T12:24:35-04:00",
+  "license": "BSD-3-Clause",
+  "license_class": "permissive",
+  "license_spdx": "BSD-3-Clause",
+  "links": {
+    "repo": "https://github.com/umfieldrobotics/oceansim"
+  },
+  "local_path": "robots/umfieldrobotics/oceansim",
+  "modes": [
+    "simulated"
+  ],
+  "owner": "umfieldrobotics",
+  "package_id": "gh.umfieldrobotics/oceansim",
+  "quarantine": false,
+  "rank": 1907,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "oceansim",
+  "repo_url": "https://github.com/umfieldrobotics/oceansim",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "7ab3a3abb8b0f904ac6028b4fa4ad86896e870b5",
+    "repo_url": "https://github.com/umfieldrobotics/oceansim"
+  },
+  "stars": 0,
+  "tags": [
+    "isaac-sim",
+    "robotics",
+    "complete environment",
+    "task environment",
+    "simulated",
+    "bridge runtime"
+  ],
+  "tier": "A",
+  "title": "umfieldrobotics/oceansim",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "isaac-sim",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 42.0,
+      "quality_flags": [],
+      "tier": "C",
+      "tier_confidence": 0.7
+    },
+    "catalog": {
+      "adapter_role_zh": "任务环境",
+      "archived": "unknown",
+      "backend_family_raw": "Isaac Sim",
+      "category_zh": "完整环境",
+      "description_zh": "水下机器人仿真(基于Isaac Sim)，README缺失",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 2734,
+      "rows_all": [
+        2734
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "仅简介"
+    },
+    "classification": {
+      "catalog_family": "isaac-sim",
+      "catalog_tier": "A",
+      "family_matches": [
+        "isaac sim"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "A2-task-env-entry"
+    },
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/umfieldrobotics__oceansim/simulated",
+        "mode": "simulated",
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "BSD-3-Clause",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 1,
+      "files": 70,
+      "markers": {
+        "isaac_sim": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): Isaac Sim extension that simulates underwater sensors and publishes them over ROS 2, not a device; a driver needs Isaac Sim 5.0, a GPU and external USD assets, and would bridge the ROS 2 topics.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "Isaac Sim extension that simulates underwater sensors and publishes them over ROS 2, not a device; a driver needs Isaac Sim 5.0, a GPU and external USD assets, and would bridge the ROS 2 topics.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

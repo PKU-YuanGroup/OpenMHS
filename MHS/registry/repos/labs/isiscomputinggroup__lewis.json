@@ -1,0 +1,214 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [
+      "lewis.core.control_client:ControlClient (lewis/core/control_client.py:68)",
+      "lewis.core.control_server:ExposedObjectCollection (lewis/core/control_server.py:169)",
+      "lewis.adapters.epics:PropertyExposingDriver (lewis/adapters/epics.py:417)",
+      "lewis.adapters.modbus:ModbusServer (lewis/adapters/modbus.py:580)",
+      "lewis.adapters.stream:StreamServer (lewis/adapters/stream.py:213)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_7c5ae207a5a2455d",
+    "https://github.com/isiscomputinggroup/lewis"
+  ],
+  "description": "isiscomputinggroup/lewis: repository for shared access and protocol infrastructure (lab instrumentation track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: direct simulation backend. Declared backend: Lewis. Language: Python. Catalog keywords: Julabo, chopper, Linkam.",
+  "domains": [
+    "shared access and protocol infrastructure"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 108 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "scpi-visa"
+  ],
+  "hardware_free": true,
+  "id": "gh.isiscomputinggroup/lewis",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs a future engine bridge; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/scpi-visa.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "Python Simulation/Device",
+    "TCP stream",
+    "Modbus",
+    "EPICS",
+    "JSON-RPC control",
+    "Python SDK",
+    "CLI",
+    "EPICS CA/PVA",
+    "other:TCP stream",
+    "other:JSON RPC",
+    "HTTP/REST",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-08-25T14:51:00Z",
+  "license": "GPL-3.0-or-later",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-3.0-or-later",
+  "links": {
+    "docs": "https://github.com/ISISComputingGroup/lewis",
+    "repo": "https://github.com/isiscomputinggroup/lewis"
+  },
+  "local_path": "labs/isiscomputinggroup/lewis",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "isiscomputinggroup",
+  "package_id": "gh.isiscomputinggroup/lewis",
+  "quarantine": false,
+  "rank": 60,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "lewis",
+  "repo_url": "https://github.com/isiscomputinggroup/lewis",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "1b2086d6ce5eda9a46c264067f3e6d66d15ac8cf",
+    "repo_url": "https://github.com/isiscomputinggroup/lewis"
+  },
+  "stars": 24,
+  "tags": [
+    "scpi-visa",
+    "lab instrumentation",
+    "direct simulation backend",
+    "simulated",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "A",
+  "title": "isiscomputinggroup/lewis",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "protocol-bridge",
+      "family_confidence": 0.74,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 86.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "Lewis",
+      "category_zh": "状态化仪器模拟框架",
+      "description_zh": "可把状态机/渐变过程暴露为真实设备协议的仪器模拟框架，内置 Julabo/chopper/Linkam",
+      "join": "exact",
+      "license_raw": "GPL-3.0-or-later（README及源文件明确）",
+      "mhs_support_raw": "需开发适配；所核材料未证实官方 MHS 兼容，官方公开 API/schema 尚未核到，不能据未提及断言无支持",
+      "priority": "P0",
+      "row": 1142,
+      "rows_all": [
+        1142
+      ],
+      "scope": "core",
+      "track_raw": "shared_infrastructure | lab_instrument",
+      "verification_level": "已核源码"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\blewis\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/isiscomputinggroup__lewis/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/labs/isiscomputinggroup__lewis/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/isiscomputinggroup__lewis/hardware"
+        ],
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-3.0-or-later",
+      "declared_spdx": "GPL-3.0-only",
+      "file": "LICENSE",
+      "file_spdx": "GPL-3.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 7,
+      "files": 108,
+      "markers": {
+        "cli": 1,
+        "epics": 5,
+        "http": 2,
+        "serial": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Lewis is a framework for simulating hardware devices, not a device driver: its Simulation engine, protocol adapters and ZMQ JSON-RPC control server expose simulated devices.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "Lewis is a framework for simulating hardware devices, not a device driver: its Simulation engine, protocol adapters and ZMQ JSON-RPC control server expose simulated devices.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

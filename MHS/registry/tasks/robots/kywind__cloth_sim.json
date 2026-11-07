@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.kywind/cloth_sim",
+  "track": "robots",
+  "local_path": "robots/kywind/cloth_sim",
+  "driver_dir": "MHS/drivers/robots/kywind__cloth_sim",
+  "upstream": {
+    "repo_url": "https://github.com/kywind/cloth_sim",
+    "commit": "d7bf60fc40ba8442478909bad8daee83e4aec4e9",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1976,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "rl_games/rl_games/common/wrappers.py:45 NoopResetEnv environment class",
+      "rl_games/rl_games/common/wrappers.py:75 FireResetEnv environment class",
+      "rl_games/rl_games/common/wrappers.py:96 EpisodicLifeEnv environment class",
+      "rl_games/rl_games/common/wrappers.py:154 MaxAndSkipEnv environment class"
+    ],
+    "upstream_tests": "rl_games/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/kywind__cloth_sim --backend fake",
+  "skip_reason": "override (robots.json): Skip: cloth_sim is a Newton GPU simulation of two ARX arms draping cloth, exposed as an rl_games IVecEnv rather than a Gymnasium/MuJoCo environment.",
+  "publish_review": "required"
+}

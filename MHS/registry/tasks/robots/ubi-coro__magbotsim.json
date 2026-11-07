@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ubi-coro/magbotsim",
+  "track": "robots",
+  "local_path": "robots/ubi-coro/magbotsim",
+  "driver_dir": "MHS/drivers/robots/ubi-coro__magbotsim",
+  "upstream": {
+    "repo_url": "https://github.com/ubi-coro/magbotsim",
+    "commit": "694e8582164de71fe58c7ef36c68fd4f2b57e054",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 106,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "magbotsim.rl_envs.trajectory_planning.long_horizon_global_trajectory_planning_env:LongHorizonGlobalTrajectoryPlanningEnv",
+      "file": "magbotsim/rl_envs/trajectory_planning/long_horizon_global_trajectory_planning_env.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "magbotsim.rl_envs.object_manipulation.pushing.state_based_static_obstacle_env:StateBasedStaticObstaclePushingEnv",
+      "file": "magbotsim/rl_envs/object_manipulation/pushing/state_based_static_obstacle_env.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "magbotsim.rl_envs.object_manipulation.pushing.state_based_global_pushing_env:StateBasedGlobalPushingEnv",
+      "file": "magbotsim/rl_envs/object_manipulation/pushing/state_based_global_pushing_env.py",
+      "line": 37,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "magbotsim.rl_envs.object_manipulation.pushing.state_based_push_box_env:StateBasedPushBoxEnv",
+      "file": "magbotsim/rl_envs/object_manipulation/pushing/state_based_push_box_env.py",
+      "line": 16,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11,<3.15",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "magbotsim/__init__.py:31 gym env LongHorizonGlobalTrajectoryPlanningEnv-v0",
+      "magbotsim/__init__.py:38 gym env LongHorizonGlobalTrajectoryPlanningEnvB{}-v0",
+      "magbotsim/__init__.py:46 gym env StateBasedStaticObstaclePushingEnv-v0",
+      "magbotsim/__init__.py:52 gym env StateBasedGlobalPushingEnv-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env LongHorizonGlobalTrajectoryPlanningEnv-v0 registered at magbotsim/__init__.py:31",
+      "gym env LongHorizonGlobalTrajectoryPlanningEnvB{}-v0 (id template, built at run time) registered at magbotsim/__init__.py:38",
+      "gym env StateBasedStaticObstaclePushingEnv-v0 registered at magbotsim/__init__.py:46",
+      "gym env StateBasedGlobalPushingEnv-v0 registered at magbotsim/__init__.py:52",
+      "gym env StateBasedPushBoxEnv-v0 registered at magbotsim/__init__.py:58",
+      "gym env StateBasedPushBoxEnvB{}-v0 (id template, built at run time) registered at magbotsim/__init__.py:66",
+      "gym env {}-v0 (id template, built at run time) registered at magbotsim/__init__.py:77",
+      "gym env {}B{}-v0 (id template, built at run time) registered at magbotsim/__init__.py:85"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ubi-coro__magbotsim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

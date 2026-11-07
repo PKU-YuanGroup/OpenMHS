@@ -1,0 +1,98 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.learnsyslab/crazyflow",
+  "track": "robots",
+  "local_path": "robots/learnsyslab/crazyflow",
+  "driver_dir": "MHS/drivers/robots/learnsyslab__crazyflow",
+  "upstream": {
+    "repo_url": "https://github.com/learnsyslab/crazyflow",
+    "commit": "70d09e455859580c45b0e4a06ee4a92efbbc2d6f",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 82,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "crazyflow.envs.reach_pos_env:ReachPosEnv",
+      "file": "crazyflow/envs/reach_pos_env.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "crazyflow.envs.reach_vel_env:ReachVelEnv",
+      "file": "crazyflow/envs/reach_vel_env.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "crazyflow.envs.landing_env:LandingEnv",
+      "file": "crazyflow/envs/landing_env.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "crazyflow.envs.figure_8_env:FigureEightEnv",
+      "file": "crazyflow/envs/figure_8_env.py",
+      "line": 15,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "crazyflow/envs/__init__.py:11 gym env DroneReachPos-v0",
+      "crazyflow/envs/__init__.py:13 gym env DroneReachVel-v0",
+      "crazyflow/envs/__init__.py:15 gym env DroneLanding-v0",
+      "crazyflow/envs/__init__.py:17 gym env DroneFigureEightTrajectory-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env DroneReachPos-v0 registered at crazyflow/envs/__init__.py:11",
+      "gym env DroneReachVel-v0 registered at crazyflow/envs/__init__.py:13",
+      "gym env DroneLanding-v0 registered at crazyflow/envs/__init__.py:15",
+      "gym env DroneFigureEightTrajectory-v0 registered at crazyflow/envs/__init__.py:17"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/learnsyslab__crazyflow --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,186 @@
+{
+  "adapter": {
+    "bridge": "scpi",
+    "entry_points": [
+      "usbtmc.usbtmc:Instrument (usbtmc/usbtmc.py:236)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python",
+    "make"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_77eb9d80aba591b8",
+    "https://github.com/python-ivi/python-usbtmc"
+  ],
+  "description": "python-ivi/python-usbtmc: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: protocol bridge. Declared backend: PyVISA. Language: Python. Catalog keywords: USBTMC, USB.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 5,
+    "notes": "bounded static scan: 20 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "scpi-visa"
+  ],
+  "hardware_free": false,
+  "id": "gh.python-ivi/python-usbtmc",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this transport backs the scpi helper; it is not a per-repo driver task.",
+    "reason_code": "bridge-runtime:scpi",
+    "recipe": "families/scpi-visa.md",
+    "role": "transport",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "SCPI/VISA",
+    "Python SDK",
+    "CLI"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2017-10-30T22:07:44-07:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/python-ivi/python-usbtmc"
+  },
+  "local_path": "labs/python-ivi/python-usbtmc",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "python-ivi",
+  "package_id": "gh.python-ivi/python-usbtmc",
+  "quarantine": false,
+  "rank": 291,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "python-usbtmc",
+  "repo_url": "https://github.com/python-ivi/python-usbtmc",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "d9bfb20b2ef002da787adb6b093e1679705c00e2",
+    "repo_url": "https://github.com/python-ivi/python-usbtmc"
+  },
+  "stars": 0,
+  "tags": [
+    "scpi-visa",
+    "lab instrumentation",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "python-ivi/python-usbtmc",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 47.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "unknown",
+      "backend_family_raw": "PyVISA",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "纯Python的USBTMC驱动，用于经USB控制仪器",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 2100,
+      "rows_all": [
+        2100
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bpyvisa\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/python-ivi__python-usbtmc/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": "MIT",
+      "file": "COPYING",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python",
+        "make"
+      ],
+      "entry_evidence_count": 5,
+      "files": 20,
+      "markers": {
+        "cli": 1,
+        "scpi_visa": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "protocol stack or framework behind the scpi helper; an SDK bridge task, not a repo task"
+      ],
+      "family": "scpi",
+      "hardware_transport": "class usbtmc.usbtmc:Instrument uses the hardware transport usb",
+      "helper": null,
+      "reason_code": "bridge-runtime:scpi",
+      "rule": 6,
+      "version": "0.9.4"
+    }
+  }
+}

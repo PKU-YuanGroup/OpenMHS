@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.shanpenghui/robomimicdeploy_g1",
+  "track": "robots",
+  "local_path": "robots/shanpenghui/robomimicdeploy_g1",
+  "driver_dir": "MHS/drivers/robots/shanpenghui__robomimicdeploy_g1",
+  "upstream": {
+    "repo_url": "https://github.com/shanpenghui/robomimicdeploy_g1",
+    "commit": "8e5ab747a4c847e28d41d3084ff9822f877b147c",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 393,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "g1_description/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "g1_description/g1_29dof_LieDown.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "g1_description/g1_29dof_rev_1_0.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "g1_description/scene.xml:1 MJCF scene model",
+      "g1_description/g1_29dof_LieDown.xml:1 MJCF robot model",
+      "g1_description/g1_29dof_rev_1_0.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model g1_description/scene.xml:1",
+      "MJCF robot model g1_description/g1_29dof_LieDown.xml:1",
+      "MJCF robot model g1_description/g1_29dof_rev_1_0.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/shanpenghui__robomimicdeploy_g1 --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

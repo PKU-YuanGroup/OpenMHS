@@ -1,0 +1,101 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.barisyazici/libfranka-sim",
+  "track": "robots",
+  "local_path": "robots/barisyazici/libfranka-sim",
+  "driver_dir": "MHS/drivers/robots/barisyazici__libfranka-sim",
+  "upstream": {
+    "repo_url": "https://github.com/barisyazici/libfranka-sim",
+    "commit": "d893e17dc77a338a92a1673a8e616c8b251cc5a9",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "twin-candidate",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 62,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "franka_sim.gripper.physics:FrankaHandPhysics",
+      "file": "franka_sim/gripper/physics.py",
+      "line": 20,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "franka_sim.mobile.runner:MobileDuoRunner",
+      "file": "franka_sim/mobile/runner.py",
+      "line": 54,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "franka_sim.mobile.spine_stub:SpineStubServer",
+      "file": "franka_sim/mobile/spine_stub.py",
+      "line": 250,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "franka_sim.gripper.server:FrankaGripperServer",
+      "file": "franka_sim/gripper/server.py",
+      "line": 35,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "FrankaHandPhysics.get_state"
+    ],
+    "writes": [],
+    "actions": [
+      "FrankaHandPhysics.grasp",
+      "FrankaHandPhysics.homing",
+      "FrankaHandPhysics.move",
+      "FrankaHandPhysics.stop",
+      "MobileDuoRunner.run_forever",
+      "MobileDuoRunner.start_servers",
+      "MobileDuoRunner.stop",
+      "SpineStubServer.start",
+      "SpineStubServer.stop"
+    ],
+    "candidate_classes": [
+      "cap.manipulation.grasp.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/barisyazici__libfranka-sim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

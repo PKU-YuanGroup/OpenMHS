@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.troxid/vrep-api-python",
+  "track": "robots",
+  "local_path": "robots/troxid/vrep-api-python",
+  "driver_dir": "MHS/drivers/robots/troxid__vrep-api-python",
+  "upstream": {
+    "repo_url": "https://github.com/troxid/vrep-api-python",
+    "commit": "b4b5718f5074bf752f67cc34f4719c29bd1200a9",
+    "license_spdx": "GPL-2.0",
+    "license_class": "copyleft"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1148,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "pyrep.joints:AnyJoint",
+      "file": "pyrep/joints.py",
+      "line": 5,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyrep.joints:SpringJoint",
+      "file": "pyrep/joints.py",
+      "line": 108,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyrep.joints:JointWithVelocityControl",
+      "file": "pyrep/joints.py",
+      "line": 48,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyrep.joints:JointWithPositionControl",
+      "file": "pyrep/joints.py",
+      "line": 66,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pyrep/simulationstate.py:5 SimulationState",
+      "pyrep/simulationstate.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/troxid__vrep-api-python --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

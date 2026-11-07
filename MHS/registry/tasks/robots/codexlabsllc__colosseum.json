@@ -1,0 +1,73 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.codexlabsllc/colosseum",
+  "track": "robots",
+  "local_path": "robots/codexlabsllc/colosseum",
+  "driver_dir": "MHS/drivers/robots/codexlabsllc__colosseum",
+  "upstream": {
+    "repo_url": "https://github.com/codexlabsllc/colosseum",
+    "commit": "c2703d0ccd15d5e72911461af0d064e671c8a29d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 954,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "airgym.envs:AirSimDroneEnv",
+      "file": "PythonClient/reinforcement_learning/airgym/envs/drone_env.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "airgym.envs:AirSimCarEnv",
+      "file": "PythonClient/reinforcement_learning/airgym/envs/car_env.py",
+      "line": 12,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "PythonClient/reinforcement_learning/airgym/__init__.py:3 gym env airsim-drone-sample-v0",
+      "PythonClient/reinforcement_learning/airgym/__init__.py:7 gym env airsim-car-sample-v0"
+    ],
+    "upstream_tests": "ExternalRepositories/Colosseum_Eigen/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/codexlabsllc__colosseum --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

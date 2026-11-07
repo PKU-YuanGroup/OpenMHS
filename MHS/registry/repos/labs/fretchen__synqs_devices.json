@@ -1,0 +1,257 @@
+{
+  "adapter": {
+    "bridge": "serial",
+    "entry_points": [
+      "AndorSolis.blacs_workers:AndorCamera (AndorSolis/blacs_workers.py:16)",
+      "MakoCamera.blacs_workers:Mako_Camera (MakoCamera/blacs_workers.py:26)",
+      "CustomArduinoDevice.labscript_devices:CustomArduinoDevice (CustomArduinoDevice/labscript_devices.py:7)",
+      "SynthHDDevice.labscript_devices:SynthHDDevice (SynthHDDevice/labscript_devices.py:7)",
+      "AndorSolis.andor_sdk.andor_utils:AndorCam (AndorSolis/andor_sdk/andor_utils.py:11)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "make"
+  ],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.sensing.image.v1",
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_dee70282685a61ef",
+    "https://github.com/fretchen/synqs_devices"
+  ],
+  "description": "fretchen/synqs_devices: device backend for physics experiment (lab instrumentation track). OpenMHS plan: direct-driver with SerialDriver, wave 1. Catalog role: device SDK. Language: Python. Catalog keywords: SynQS, labscript, Mako, SynthHD, YunTemp, Arduino.",
+  "domains": [
+    "physics experiment"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 127 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/fretchen__synqs_devices/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "serial"
+  ],
+  "hardware_free": true,
+  "id": "gh.fretchen/synqs_devices",
+  "integration": {
+    "blockers": [
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml",
+      "ARCHIVED: the upstream repository is archived"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/fretchen__synqs_devices: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/fretchen__synqs_devices --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/serial.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "CLI",
+    "SCPI/VISA",
+    "Serial",
+    "HTTP/REST"
+  ],
+  "languages": [
+    "Python",
+    "JavaScript"
+  ],
+  "last_commit_at": "2020-04-20T11:47:20+02:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/fretchen/synqs_devices"
+  },
+  "local_path": "labs/fretchen/synqs_devices",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "fretchen",
+  "package_id": "gh.fretchen/synqs_devices",
+  "quarantine": false,
+  "rank": 45,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "synqs_devices",
+  "repo_url": "https://github.com/fretchen/synqs_devices",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "ec4bb24639e9d0d4cb707e1c2a6296a47dfe9f02",
+    "repo_url": "https://github.com/fretchen/synqs_devices"
+  },
+  "stars": 1,
+  "tags": [
+    "serial",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "fretchen/synqs_devices",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 1,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.86,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 51.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "true",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "SynQS使用的labscript设备集合：Mako相机、SynthHD、YunTemp温控、Arduino自定义设备",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 853,
+      "rows_all": [
+        853
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_note": "triage family serial (catalogue family python-object)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/fretchen__synqs_devices/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.image.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor.camera"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/fretchen__synqs_devices/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/fretchen__synqs_devices/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.image.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor.camera"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "ec4bb24639e9d0d4cb707e1c2a6296a47dfe9f02",
+      "driver_dir": "MHS/drivers/labs/fretchen__synqs_devices",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:bdb26f2fc1b50e1b5eabed78895aeec898de3501ea7bdd192d3414c16fb74d68",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "make"
+      ],
+      "entry_evidence_count": 4,
+      "files": 127,
+      "markers": {
+        "camera": 3,
+        "cli": 1,
+        "scpi_visa": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of wave B: a direct Driver over the AndorSolis AndorCamera, not a SerialDriver: a dictionary of acquisition attributes plus native SDK calls, with no serial command words.",
+        "rules alone: family-config (family:serial, rule 9)"
+      ],
+      "family": "serial",
+      "helper": "SerialDriver",
+      "justification": "Model review of wave B: a direct Driver over the AndorSolis AndorCamera, not a SerialDriver: a dictionary of acquisition attributes plus native SDK calls, with no serial command words.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

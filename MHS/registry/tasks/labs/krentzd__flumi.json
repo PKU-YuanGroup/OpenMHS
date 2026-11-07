@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.krentzd/flumi",
+  "track": "labs",
+  "local_path": "labs/krentzd/flumi",
+  "driver_dir": "MHS/drivers/labs/krentzd__flumi",
+  "upstream": {
+    "repo_url": "https://github.com/krentzd/flumi",
+    "commit": "f37fa5400980f13fc1b78d50ff34828d5117e56b",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 2051,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "main.py:36 Simulator"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/krentzd__flumi --backend fake",
+  "skip_reason": "override (labs.json): FLUMI is an offline fluorescence-microscopy image simulator, not a device: it reads a point cloud and PSF TIFF, computes a z-stack and writes images, with no serial, VISA, USB, socket or SDK I/O.",
+  "publish_review": "required"
+}

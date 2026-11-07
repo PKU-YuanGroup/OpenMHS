@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tud-phi/soromox",
+  "track": "robots",
+  "local_path": "robots/tud-phi/soromox",
+  "driver_dir": "MHS/drivers/robots/tud-phi__soromox",
+  "upstream": {
+    "repo_url": "https://github.com/tud-phi/soromox",
+    "commit": "79f8bf0f9cc78bc911b47bb98cc8fa1aef737839",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1548,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "paper_results/secVf_parallel_rl/code/parallel_soromox_env.py:478 ParallelSoromoxEnv environment class"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/tud-phi__soromox --backend fake",
+  "skip_reason": "override (robots.json): Skip: SoRoMoX is a JAX soft-robot modeling library, not a device or packaged Gymnasium environment; its paper-only SB3 VecEnv simulates a PCS arm, so driver authors must supply all hardware I/O.",
+  "publish_review": "not_required"
+}

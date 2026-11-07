@@ -1,0 +1,89 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.machineagency/science-jubilee",
+  "track": "labs",
+  "local_path": "labs/machineagency/science-jubilee",
+  "driver_dir": "MHS/drivers/labs/machineagency__science-jubilee",
+  "upstream": {
+    "repo_url": "https://github.com/machineagency/science-jubilee",
+    "commit": "bb918fa78f300f57cc379a80731cfca7bdb55c66",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 19,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "science_jubilee.Machine:Machine",
+      "file": "src/science_jubilee/Machine.py",
+      "line": 101,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Machine.get_position"
+    ],
+    "writes": [
+      "Machine.set_tool_offset"
+    ],
+    "actions": [
+      "Machine.home_all",
+      "Machine.home_e",
+      "Machine.home_in_place",
+      "Machine.home_u",
+      "Machine.home_v",
+      "Machine.home_x",
+      "Machine.home_xyu",
+      "Machine.home_y",
+      "Machine.home_z",
+      "Machine.move",
+      "Machine.move_to",
+      "Machine.reset"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/machineagency__science-jubilee --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

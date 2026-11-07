@@ -1,0 +1,276 @@
+{
+  "adapter": {
+    "bridge": "ros",
+    "entry_points": [
+      "ur_control.arm:Arm (ur_control/ur_control/arm.py:49)",
+      "ur_control.fzi_cartesian_compliance_controller:CompliantController (ur_control/ur_control/fzi_cartesian_compliance_controller.py:90)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "pixi",
+    "docker",
+    "ros",
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.motion.joint_position.v1",
+    "cap.motion.cartesian_pose.v1",
+    "cap.motion.stop.v1"
+  ],
+  "catalog_refs": [
+    "repo_2a346c1be353253b",
+    "https://github.com/cambel/ur3"
+  ],
+  "description": "cambel/ur3: catalog/discovery tooling (robotics track). OpenMHS plan: family-config with RosDriver, wave 3. Catalog role: controller. Language: Python. Catalog keywords: ROS-based, Universal, Robots, e.g., UR3, UR5.",
+  "domains": [],
+  "evidence": {
+    "files_read": 10,
+    "notes": "bounded static scan: 123 files enumerated (max depth 3), 10 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/robots/cambel__ur3/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "gazebo"
+  ],
+  "hardware_free": true,
+  "id": "gh.cambel/ur3",
+  "integration": {
+    "blockers": [
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/cambel__ur3: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/cambel__ur3 --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gazebo.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "CLI",
+    "Docker",
+    "Gazebo",
+    "MuJoCo",
+    "ROS 1",
+    "ROS 2"
+  ],
+  "languages": [
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2026-07-07T09:44:25Z",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "docs": "https://github.com/cambel/ur3",
+    "repo": "https://github.com/cambel/ur3"
+  },
+  "local_path": "robots/cambel/ur3",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "cambel",
+  "package_id": "gh.cambel/ur3",
+  "quarantine": false,
+  "rank": 129,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "ur3",
+  "repo_url": "https://github.com/cambel/ur3",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "10f96dc362a7700b14e4a2469c8025134ef3e4f7",
+    "repo_url": "https://github.com/cambel/ur3"
+  },
+  "stars": 175,
+  "tags": [
+    "gazebo",
+    "robotics",
+    "catalog discovery tooling",
+    "controller",
+    "simulated",
+    "family config"
+  ],
+  "tier": "B",
+  "title": "cambel/ur3",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "ros2",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 68.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "控制器",
+      "archived": "false",
+      "backend_family_raw": "unknown",
+      "category_zh": "自动分类/发现",
+      "description_zh": "ROS-based Universal Robots (e.g., UR3/e UR5/5, ...) with simulation in Gazebo.",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "需开发适配",
+      "priority": "参考",
+      "row": 422,
+      "rows_all": [
+        422
+      ],
+      "scope": "unknown",
+      "track_raw": "robotics | shared_infrastructure",
+      "verification_level": "仅简介"
+    },
+    "classification": {
+      "catalog_family": "gazebo",
+      "catalog_tier": "B",
+      "family_matches": [
+        "gazebo",
+        "gazebo",
+        "gazebo"
+      ],
+      "family_rule": "scored",
+      "family_score": 4,
+      "served_mode": {
+        "evidence": "override (companion-sources-lock.json): User decision 2026-11-05: serve only the ur_gripper_gz gz-sim bringup (Jazzy, Harmonic). Hardware stays on the record because a real UR path exists and is not served. The stop is the companion world pause.",
+        "mode": "simulated",
+        "rule": "override:served-mode"
+      },
+      "tier_rule": "B4-controller"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/cambel__ur3/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.cartesian_pose.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/robots/cambel__ur3/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/cambel__ur3/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.cartesian_pose.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "10f96dc362a7700b14e4a2469c8025134ef3e4f7",
+      "driver_dir": "MHS/drivers/robots/cambel__ur3",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:ee9747232bb25c2314e366d1fea27f47e211f97666ebdc98543597988fb04b99",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "pixi",
+        "docker",
+        "ros",
+        "python"
+      ],
+      "entry_evidence_count": 8,
+      "files": 123,
+      "markers": {
+        "cli": 1,
+        "docker": 22,
+        "force_torque": 5,
+        "gazebo": 12,
+        "gpu": 11,
+        "mujoco": 1,
+        "ros1": 4,
+        "ros2": 60
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (companion-sources-lock.json): User decision 2026-11-05: serve only the ur_gripper_gz gz-sim bringup (Jazzy, Harmonic). Hardware stays on the record because a real UR path exists and is not served. The stop is the companion world pause.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": "ros",
+      "helper": "RosDriver",
+      "justification": "User decision 2026-11-05: serve only the ur_gripper_gz gz-sim bringup (Jazzy, Harmonic). Hardware stays on the record because a real UR path exists and is not served. The stop is the companion world pause.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

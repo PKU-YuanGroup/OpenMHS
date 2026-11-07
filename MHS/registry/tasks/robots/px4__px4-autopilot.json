@@ -1,0 +1,77 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.px4/px4-autopilot",
+  "track": "robots",
+  "local_path": "robots/px4/px4-autopilot",
+  "driver_dir": "MHS/drivers/robots/px4__px4-autopilot",
+  "upstream": {
+    "repo_url": "https://github.com/px4/px4-autopilot",
+    "commit": "32d864618182f9b3b5c0fd48cd8b02e085bb161e",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:flagship-driver",
+  "role": "device-driver",
+  "family": "mavlink",
+  "helper": null,
+  "helper_status": "blocked",
+  "blocked_on": [
+    "HELPER_MISSING",
+    "helper:mavlink"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 3,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "platforms.nuttx.NuttX.apps.system.ymodem.sbrb:ymodem",
+      "file": "platforms/nuttx/NuttX/apps/system/ymodem/sbrb.py",
+      "line": 381,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "colcon build"
+    ],
+    "system_deps": [
+      "ament/colcon workspace and the ROS dependencies declared in package.xml"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "msg/translation_node/test"
+  },
+  "hints": {
+    "reads": [
+      "ymodem.get_pkt_size"
+    ],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "motion"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/px4__px4-autopilot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.robotis-git/open_manipulator",
+  "track": "robots",
+  "local_path": "robots/robotis-git/open_manipulator",
+  "driver_dir": "MHS/drivers/robots/robotis-git__open_manipulator",
+  "upstream": {
+    "repo_url": "https://github.com/robotis-git/open_manipulator",
+    "commit": "d31000d90c679af9c982e73de8b12d777c5ff7dd",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "device-driver",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 8,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [
+    {
+      "symbol": "open_manipulator_teleop.open_manipulator_teleop.omx_f_teleop:KeyboardController",
+      "file": "open_manipulator_teleop/open_manipulator_teleop/omx_f_teleop.py",
+      "line": 35,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "KeyboardController.get_key"
+    ],
+    "writes": [],
+    "actions": [
+      "KeyboardController.run",
+      "KeyboardController.send_arm_command"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "motion"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/robotis-git__open_manipulator --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

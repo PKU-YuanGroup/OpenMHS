@@ -1,0 +1,138 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.farama-foundation/gymnasium-robotics",
+  "track": "robots",
+  "local_path": "robots/farama-foundation/gymnasium-robotics",
+  "driver_dir": "MHS/drivers/robots/farama-foundation__gymnasium-robotics",
+  "upstream": {
+    "repo_url": "https://github.com/farama-foundation/gymnasium-robotics",
+    "commit": "b8da02a89191daf8f004e7f7510ff655f7a90100",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 50,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gymnasium_robotics.envs.fetch.slide:MujocoPyFetchSlideEnv",
+      "file": "gymnasium_robotics/envs/fetch/slide.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gymnasium_robotics.envs.fetch.slide:MujocoFetchSlideEnv",
+      "file": "gymnasium_robotics/envs/fetch/slide.py",
+      "line": 39,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gymnasium_robotics.envs.fetch.pick_and_place:MujocoPyFetchPickAndPlaceEnv",
+      "file": "gymnasium_robotics/envs/fetch/pick_and_place.py",
+      "line": 165,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gymnasium_robotics.envs.fetch.pick_and_place:MujocoFetchPickAndPlaceEnv",
+      "file": "gymnasium_robotics/envs/fetch/pick_and_place.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gymnasium_robotics.envs.fetch.reach:MujocoPyFetchReachEnv",
+      "file": "gymnasium_robotics/envs/fetch/reach.py",
+      "line": 150,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "gymnasium_robotics/envs/assets/adroit_hand/adroit_door.xml",
+      "line": 19,
+      "kind": "scene"
+    },
+    {
+      "file": "gymnasium_robotics/envs/assets/adroit_hand/adroit_hammer.xml",
+      "line": 19,
+      "kind": "scene"
+    },
+    {
+      "file": "gymnasium_robotics/envs/assets/adroit_hand/adroit_pen.xml",
+      "line": 19,
+      "kind": "scene"
+    },
+    {
+      "file": "gymnasium_robotics/envs/assets/adroit_hand/adroit_relocate.xml",
+      "line": 19,
+      "kind": "scene"
+    },
+    {
+      "file": "gymnasium_robotics/envs/assets/fetch/pick_and_place.xml",
+      "line": 2,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gymnasium_robotics/__init__.py:26 gym env FetchSlide{}-v1",
+      "gymnasium_robotics/__init__.py:33 gym env FetchSlide{}-v4",
+      "gymnasium_robotics/__init__.py:40 gym env FetchPickAndPlace{}-v1",
+      "gymnasium_robotics/__init__.py:47 gym env FetchPickAndPlace{}-v4"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env FetchSlide{}-v1 (id template, built at run time) registered at gymnasium_robotics/__init__.py:26",
+      "gym env FetchSlide{}-v4 (id template, built at run time) registered at gymnasium_robotics/__init__.py:33",
+      "gym env FetchPickAndPlace{}-v1 (id template, built at run time) registered at gymnasium_robotics/__init__.py:40",
+      "gym env FetchPickAndPlace{}-v4 (id template, built at run time) registered at gymnasium_robotics/__init__.py:47",
+      "gym env FetchReach{}-v1 (id template, built at run time) registered at gymnasium_robotics/__init__.py:54",
+      "gym env FetchReach{}-v4 (id template, built at run time) registered at gymnasium_robotics/__init__.py:61",
+      "gym env FetchPush{}-v1 (id template, built at run time) registered at gymnasium_robotics/__init__.py:68",
+      "gym env FetchPush{}-v4 (id template, built at run time) registered at gymnasium_robotics/__init__.py:75",
+      "gym env HandReach{}-v0 (id template, built at run time) registered at gymnasium_robotics/__init__.py:83",
+      "gym env HandReach{}-v3 (id template, built at run time) registered at gymnasium_robotics/__init__.py:90",
+      "gym env HandManipulateBlockRotateZ{}-v0 (id template, built at run time) registered at gymnasium_robotics/__init__.py:97",
+      "gym env HandManipulateBlockRotateZ{}-v1 (id template, built at run time) registered at gymnasium_robotics/__init__.py:110"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/farama-foundation__gymnasium-robotics --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.bluesky/ophyd",
+  "track": "labs",
+  "local_path": "labs/bluesky/ophyd",
+  "driver_dir": "MHS/drivers/labs/bluesky__ophyd",
+  "upstream": {
+    "repo_url": "https://github.com/bluesky/ophyd",
+    "commit": "114a9241983b81a69163b6d57650cf257368ad5b",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:ophyd",
+  "role": "framework",
+  "family": "ophyd",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 46,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "ophyd.epics_motor:EpicsMotor",
+      "file": "ophyd/epics_motor.py",
+      "line": 20,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd.areadetector.detectors:AreaDetector",
+      "file": "ophyd/areadetector/detectors.py",
+      "line": 146,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd.quadem:TetrAMM",
+      "file": "ophyd/quadem.py",
+      "line": 128,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd.quadem:NSLS_EM",
+      "file": "ophyd/quadem.py",
+      "line": 124,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd.scaler:EpicsScaler",
+      "file": "ophyd/scaler.py",
+      "line": 24,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ophyd/_dummy_shim.py:4 DummyDispatcherThreadContext",
+      "ophyd/_dummy_shim.py:15 DummyDispatcher",
+      "ophyd/sim.py:804 MockFlyer",
+      "ophyd/sim.py:1314 FakeEpicsSignal",
+      "ophyd/sim.py:1480 FakeEpicsSignalRO",
+      "ophyd/sim.py:1488 FakeEpicsSignalWithRBV"
+    ],
+    "upstream_tests": "ophyd/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/bluesky__ophyd --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

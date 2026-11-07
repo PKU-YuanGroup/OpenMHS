@@ -1,0 +1,98 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.chuanyune/maniskill-vitac2025",
+  "track": "robots",
+  "local_path": "robots/chuanyune/maniskill-vitac2025",
+  "driver_dir": "MHS/drivers/robots/chuanyune__maniskill-vitac2025",
+  "upstream": {
+    "repo_url": "https://github.com/chuanyune/maniskill-vitac2025",
+    "commit": "a3d7df54bca9a2e57f34b37be3a3df36dc218915",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 90,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "envs.peg_insertion:PegInsertionSimMarkerFLowEnv",
+      "file": "Track_1/envs/peg_insertion.py",
+      "line": 1138,
+      "confidence": "override"
+    },
+    {
+      "symbol": "envs.long_open_lock:LongOpenLockRandPointFlowEnv",
+      "file": "Track_1/envs/long_open_lock.py",
+      "line": 990,
+      "confidence": "override"
+    },
+    {
+      "symbol": "envs.peg_insertion_v2:PegInsertionSimMarkerFLowEnvV2",
+      "file": "Track_2/envs/peg_insertion_v2.py",
+      "line": 1206,
+      "confidence": "override"
+    },
+    {
+      "symbol": "envs.peg_insertion:PegInsertionSimMarkerFLowEnv",
+      "file": "Track_3/envs/peg_insertion.py",
+      "line": 1137,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "Track_1/envs/__init__.py:3 gym env PegInsertionRandomizedMarkerEnv-v1",
+      "Track_1/envs/__init__.py:8 gym env LongOpenLockRandPointFlowEnv-v1",
+      "Track_2/envs/__init__.py:3 gym env PegInsertionSimMarkerFLowEnvV2",
+      "Track_3/envs/__init__.py:3 gym env PegInsertionRandomizedMarkerEnv-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env PegInsertionRandomizedMarkerEnv-v1 registered at Track_1/envs/__init__.py:3",
+      "gym env LongOpenLockRandPointFlowEnv-v1 registered at Track_1/envs/__init__.py:8",
+      "gym env PegInsertionSimMarkerFLowEnvV2 registered at Track_2/envs/__init__.py:3",
+      "gym env PegInsertionRandomizedMarkerEnv-v1 registered at Track_3/envs/__init__.py:3"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/chuanyune__maniskill-vitac2025 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

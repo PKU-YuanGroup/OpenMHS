@@ -1,0 +1,94 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.dimensionalos/dimos",
+  "track": "robots",
+  "local_path": "robots/dimensionalos/dimos",
+  "driver_dir": "MHS/drivers/robots/dimensionalos__dimos",
+  "upstream": {
+    "repo_url": "https://github.com/dimensionalos/dimos",
+    "commit": "1e7b4918bc626de4fa6592fb023d4b3aee932754",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 579,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "dimos.agents.mcp.mcp_client:McpClient",
+      "file": "dimos/agents/mcp/mcp_client.py",
+      "line": 96,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dimos.agents.mcp.mcp_server:McpServer",
+      "file": "dimos/agents/mcp/mcp_server.py",
+      "line": 355,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dimos.robot.drone.connection_module:DroneConnectionModule",
+      "file": "dimos/robot/drone/connection_module.py",
+      "line": 53,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dimos.agents.typesafe.navigation:TypeSafeNavigationAgent",
+      "file": "dimos/agents/typesafe/navigation.py",
+      "line": 89,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dimos.imitation.policy.lerobot.module:LeRobotPolicyModule",
+      "file": "dimos/imitation/policy/lerobot/module.py",
+      "line": 113,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10,<3.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "dimos/core/testing.py:30 MockRobotClient",
+      "dimos/e2e_tests/dim_sim_client.py:22 DimSimClient",
+      "dimos/e2e_tests/dim_sim_client.py:1"
+    ],
+    "upstream_tests": "native/cpp/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/dimensionalos__dimos --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

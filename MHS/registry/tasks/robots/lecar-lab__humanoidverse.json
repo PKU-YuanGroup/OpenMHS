@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.lecar-lab/humanoidverse",
+  "track": "robots",
+  "local_path": "robots/lecar-lab/humanoidverse",
+  "driver_dir": "MHS/drivers/robots/lecar-lab__humanoidverse",
+  "upstream": {
+    "repo_url": "https://github.com/lecar-lab/humanoidverse",
+    "commit": "101492b3cdd85afdf2b996acc4fe76327aa272b5",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1571,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "humanoidverse/data/robots/g1/g1_29dof.xml:1 MJCF robot model",
+      "humanoidverse/data/robots/h1/h1.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/lecar-lab__humanoidverse --backend fake",
+  "skip_reason": "override (robots.json): Skip: a multi-simulator RL training framework for simulated humanoids, not a device or Gymnasium/MuJoCo env; no hardware I/O exists, so a driver would need a Gymnasium wrapper and a real robot SDK.",
+  "publish_review": "not_required"
+}

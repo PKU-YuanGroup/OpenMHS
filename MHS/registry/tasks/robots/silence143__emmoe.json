@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.silence143/emmoe",
+  "track": "robots",
+  "local_path": "robots/silence143/emmoe",
+  "driver_dir": "MHS/drivers/robots/silence143__emmoe",
+  "upstream": {
+    "repo_url": "https://github.com/silence143/emmoe",
+    "commit": "377c14dff75f125f7edc88d30b53bc79896697c5",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 506,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "hab-mobile-manipulation/habitat_extensions/tasks/rearrange/env.py:25 gym env RearrangeRLEnv-v0"
+    ],
+    "upstream_tests": "hab-mobile-manipulation/habitat-lab/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/silence143__emmoe --backend fake",
+  "skip_reason": "override (robots.json): EMMOE is a benchmark with a Video-LLaVA planner and a Habitat-based low-level executor, not a Gymnasium or MuJoCo environment; a driver author needs external habitat-sim and episode datasets.",
+  "publish_review": "not_required"
+}

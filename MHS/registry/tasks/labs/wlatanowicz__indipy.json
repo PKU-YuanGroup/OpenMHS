@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.wlatanowicz/indipy",
+  "track": "labs",
+  "local_path": "labs/wlatanowicz/indipy",
+  "driver_dir": "MHS/drivers/labs/wlatanowicz__indipy",
+  "upstream": {
+    "repo_url": "https://github.com/wlatanowicz/indipy",
+    "commit": "1f6a1a04f27c42ed8c47a550267236be1714bcd4",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 633,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "indi.device.proxy:Proxy",
+      "file": "indi/device/proxy.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "indi.message.defs:DefLightVector",
+      "file": "indi/message/defs.py",
+      "line": 67,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "indi.message.del_property:DelProperty",
+      "file": "indi/message/del_property.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "indi.message.enable_blob:EnableBLOB",
+      "file": "indi/message/enable_blob.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "indi.message.get_properties:GetProperties",
+      "file": "indi/message/get_properties.py",
+      "line": 7,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "docker-examples/server/indilib/devices/camera_simulator.py:17",
+      "docker-examples/server/indilib/devices/focuser_simulator.py:18",
+      "docker-examples/server/standalone/devices/camera_simulator.py:17",
+      "docker-examples/server/standalone/devices/focuser_simulator.py:18",
+      "docker-examples/server/indilib/devices/camera_simulator.py:1",
+      "docker-examples/server/indilib/devices/focuser_simulator.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/wlatanowicz__indipy --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

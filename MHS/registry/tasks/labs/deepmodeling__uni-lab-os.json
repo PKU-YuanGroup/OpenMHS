@@ -1,0 +1,126 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.deepmodeling/uni-lab-os",
+  "track": "labs",
+  "local_path": "labs/deepmodeling/uni-lab-os",
+  "driver_dir": "MHS/drivers/labs/deepmodeling__uni-lab-os",
+  "upstream": {
+    "repo_url": "https://github.com/deepmodeling/uni-lab-os",
+    "commit": "43923ec9473e2f6d33d3ca1ebca4bf4d507e06b2",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 14,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "unilabos.devices.pump_and_valve.runze_backbone:RunzeSyringePump",
+      "file": "unilabos/devices/pump_and_valve/runze_backbone.py",
+      "line": 80,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "unilabos/devices/cnc/mock.py:18 MockCNCAsync",
+      "unilabos/devices/gripper/mock.py:4 MockGripper",
+      "unilabos/devices/motor/FakeSerial.py:1 FakeSerial",
+      "unilabos/devices/pump_and_valve/solenoid_valve_mock.py:4 SolenoidValveMock",
+      "unilabos/devices/pump_and_valve/vacuum_pump_mock.py:4 VacuumPumpMock",
+      "unilabos/devices/cnc/mock.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "RunzeSyringePump.get_max_velocity",
+      "RunzeSyringePump.get_plunger_position",
+      "RunzeSyringePump.get_position",
+      "RunzeSyringePump.get_status",
+      "RunzeSyringePump.get_valve_position",
+      "RunzeSyringePump.get_velocity_end",
+      "RunzeSyringePump.get_velocity_grade",
+      "RunzeSyringePump.get_velocity_init",
+      "RunzeSyringePump.query_aux_input_status_1",
+      "RunzeSyringePump.query_aux_input_status_2",
+      "RunzeSyringePump.query_backlash_position",
+      "RunzeSyringePump.query_command_buffer_status"
+    ],
+    "writes": [
+      "RunzeSyringePump.set_baudrate",
+      "RunzeSyringePump.set_max_velocity",
+      "RunzeSyringePump.set_position",
+      "RunzeSyringePump.set_valve_position",
+      "RunzeSyringePump.set_velocity_grade",
+      "RunzeMultiplePump.set_max_velocity",
+      "RunzeMultiplePump.set_position",
+      "RunzeMultiplePump.set_valve_position",
+      "RunzeMultiplePump.set_velocity_grade"
+    ],
+    "actions": [
+      "RunzeSyringePump.stop_operation",
+      "RunzeMultiplePump.stop_operation",
+      "LaiYuLiquidBackend.aspirate",
+      "LaiYuLiquidBackend.aspirate96",
+      "LaiYuLiquidBackend.dispense",
+      "LaiYuLiquidBackend.dispense96",
+      "LaiYuLiquidBackend.drop_tips",
+      "LaiYuLiquidBackend.home_device",
+      "LaiYuLiquidBackend.move_picked_up_resource",
+      "LaiYuLiquidBackend.move_to",
+      "LaiYuLiquidBackend.pick_up_tips",
+      "LaiYuLiquidBackend.stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.actuation.valve.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": [
+      "unilabos/registry/ast_registry_scanner.py:33 MAX_SCAN_DEPTH = 10",
+      "unilabos/registry/ast_registry_scanner.py:34 MAX_SCAN_FILES = 1000",
+      "unilabos/devices/pump_and_valve/runze_backbone.py:73 max_volume = 25.0",
+      "unilabos/devices/pump_and_valve/runze_multiple_backbone.py:102 max_volume = 25.0",
+      "unilabos/devices/workstation/coin_cell_assembly/YB_YH_materials.py:469 max_tips = 100",
+      "unilabos/devices/liquid_handling/laiyu/controllers/xyz_controller.py:52 max_travel_x = 340.0",
+      "unilabos/devices/liquid_handling/laiyu/controllers/xyz_controller.py:53 max_travel_y = 250.0",
+      "unilabos/devices/liquid_handling/laiyu/controllers/xyz_controller.py:54 max_travel_z = 200.0"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/deepmodeling__uni-lab-os --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

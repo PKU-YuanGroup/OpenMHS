@@ -1,0 +1,65 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.gateeit-ifgw/comfylab",
+  "track": "labs",
+  "local_path": "labs/gateeit-ifgw/comfylab",
+  "driver_dir": "MHS/drivers/labs/gateeit-ifgw__comfylab",
+  "upstream": {
+    "repo_url": "https://github.com/gateeit-ifgw/comfylab",
+    "commit": "25097c33a5215b4d96d575e57124351642976400",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 570,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "comfylab/virtual/manager.py:31 VirtualInstrumentManager",
+      "comfylab/virtual/oscilloscope.py:20 VirtualOscilloscope",
+      "comfylab/virtual/rc_circuit.py:20 VirtualRCCircuit",
+      "comfylab/virtual/scpi_base.py:23 VirtualSCPIInstrument",
+      "comfylab/virtual/signal_generator.py:19 VirtualSignalGenerator"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/gateeit-ifgw__comfylab --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

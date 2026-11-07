@@ -1,0 +1,184 @@
+{
+  "adapter": {
+    "bridge": "ros",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "maven"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_48a550adc17189f2",
+    "https://github.com/rctoris/jrosbridge"
+  ],
+  "description": "rctoris/jrosbridge: protocol implementation/bridge for general (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: protocol bridge. Declared backend: ROS 1. Language: Java. Catalog keywords: Java, EE, rosbridge.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 7 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "ros1"
+  ],
+  "hardware_free": false,
+  "id": "gh.rctoris/jrosbridge",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this transport backs the ros helper; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/ros1.md",
+    "role": "transport",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "WebSocket",
+    "Python SDK",
+    "ROS 2"
+  ],
+  "languages": [
+    "Java"
+  ],
+  "last_commit_at": "2020-05-20T09:16:44-07:00",
+  "license": "BSD-3-Clause",
+  "license_class": "permissive",
+  "license_spdx": "BSD-3-Clause",
+  "links": {
+    "repo": "https://github.com/rctoris/jrosbridge"
+  },
+  "local_path": "robots/rctoris/jrosbridge",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "rctoris",
+  "package_id": "gh.rctoris/jrosbridge",
+  "quarantine": false,
+  "rank": 45,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "jrosbridge",
+  "repo_url": "https://github.com/rctoris/jrosbridge",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "52c5fea041038ae85b920a648c6347012de76626",
+    "repo_url": "https://github.com/rctoris/jrosbridge"
+  },
+  "stars": 78,
+  "tags": [
+    "ros1",
+    "robotics",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "rctoris/jrosbridge",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "ros1",
+      "family_confidence": 0.77,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 31.0,
+      "quality_flags": [
+        "no_source_code"
+      ],
+      "tier": "B",
+      "tier_confidence": 0.55
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "false",
+      "backend_family_raw": "ROS 1",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "Java EE原生rosbridge客户端库",
+      "join": "exact",
+      "license_raw": "NOASSERTION",
+      "mhs_support_raw": "unknown",
+      "priority": "参考",
+      "row": 2157,
+      "rows_all": [
+        2157
+      ],
+      "scope": "peripheral",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "ros1",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bros ?1\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/rctoris__jrosbridge/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "BSD-3-Clause",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "maven"
+      ],
+      "entry_evidence_count": 0,
+      "files": 7,
+      "markers": {
+        "ros2": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): This Java Maven rosbridge WebSocket client is a ROS transport, not a device driver or a Python package, so it is bridge-runtime.",
+        "rules alone: untriaged (untriaged:non_python, rule 11)"
+      ],
+      "family": "ros",
+      "helper": null,
+      "justification": "This Java Maven rosbridge WebSocket client is a ROS transport, not a device driver or a Python package, so it is bridge-runtime.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

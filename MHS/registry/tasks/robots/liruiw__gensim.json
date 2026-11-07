@@ -1,0 +1,65 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.liruiw/gensim",
+  "track": "robots",
+  "local_path": "robots/liruiw/gensim",
+  "driver_dir": "MHS/drivers/robots/liruiw__gensim",
+  "upstream": {
+    "repo_url": "https://github.com/liruiw/gensim",
+    "commit": "1a203b7259ac8af840e8db8f17a69ec8a1cd255c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 253,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gensim/sim_runner.py:25 SimulationRunner",
+      "gensim/topdown_sim_runner.py:31 TopDownSimulationRunner",
+      "gensim/run_simulation.py:1",
+      "gensim/sim_runner.py:1",
+      "gensim/topdown_sim_runner.py:1"
+    ],
+    "upstream_tests": "cliport/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/liruiw__gensim --backend fake",
+  "skip_reason": "override (robots.json): GenSim is an LLM task-generation research pipeline over a vendored CLIPort PyBullet benchmark, not a hardware device or a Gymnasium environment.",
+  "publish_review": "not_required"
+}

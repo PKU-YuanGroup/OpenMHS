@@ -1,0 +1,122 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.kist-csrc/batchsynthesismodule",
+  "track": "labs",
+  "local_path": "labs/kist-csrc/batchsynthesismodule",
+  "driver_dir": "MHS/drivers/labs/kist-csrc__batchsynthesismodule",
+  "upstream": {
+    "repo_url": "https://github.com/kist-csrc/batchsynthesismodule",
+    "commit": "5d0e9bb2ae49758f478021be35d7e5f6c2deac8f",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 231,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "Stirrer.hotplate:Hotplate_custom",
+      "file": "Stirrer/hotplate.py",
+      "line": 20,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Stirrer.IKA_RET_Control_Visc:IKARETControlVisc",
+      "file": "Stirrer/IKA_RET_Control_Visc.py",
+      "line": 46,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Stirrer.serial_labware.serial_labware:SerialDevice",
+      "file": "Stirrer/serial_labware/serial_labware.py",
+      "line": 60,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Hotplate_custom.get_hot_plate_temp_current",
+      "Hotplate_custom.get_ph",
+      "Hotplate_custom.get_viscosity_trend",
+      "Hotplate_custom.get_weight",
+      "IKARETControlVisc.get_hot_plate_temp_current",
+      "IKARETControlVisc.get_ph",
+      "IKARETControlVisc.get_viscosity_trend",
+      "IKARETControlVisc.get_weight"
+    ],
+    "writes": [
+      "Hotplate_custom.set_watch_dog_stir_rate",
+      "Hotplate_custom.set_watch_dog_temp",
+      "IKARETControlVisc.set_watch_dog_stir_rate",
+      "IKARETControlVisc.set_watch_dog_temp"
+    ],
+    "actions": [
+      "Hotplate_custom.controlStop",
+      "Hotplate_custom.reset_hot_plate",
+      "Hotplate_custom.start_heater",
+      "Hotplate_custom.start_ph_meter",
+      "Hotplate_custom.start_stirrer",
+      "Hotplate_custom.start_weighing",
+      "Hotplate_custom.stop_heater",
+      "Hotplate_custom.stop_ph_meter",
+      "Hotplate_custom.stop_stirrer",
+      "Hotplate_custom.stop_weighing",
+      "Hotplate_custom.temperature_heat_transfer_medium_sp",
+      "IKARETControlVisc.reset_hot_plate"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.mass.v1",
+      "cap.measure.temperature.v1",
+      "cap.thermal.setpoint.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": [
+      "doosan-robot/Robot_Arm/common/imp/DSR_ROBOT.py:188 DR_SOL_MIN = 0",
+      "doosan-robot/Robot_Arm/common/imp/DSR_ROBOT.py:189 DR_SOL_MAX = 7",
+      "doosan-robot/Robot_Arm/common/imp/DSR_ROBOT.py:199 DR_TC_USER_MIN = 101",
+      "doosan-robot/Robot_Arm/common/imp/DSR_ROBOT.py:200 DR_TC_USER_MAX = 200",
+      "doosan-robot/Robot_Arm/common/imp/DSR_ROBOT.py:237 DR_COLSENS_MIN = 1",
+      "doosan-robot/Robot_Arm/common/imp/DSR_ROBOT.py:238 DR_COLSENS_MAX = 300",
+      "doosan-robot/Robot_Arm/common/imp/DSR_ROBOT.py:241 DR_OP_SPEED_MIN = 1",
+      "doosan-robot/Robot_Arm/common/imp/DSR_ROBOT.py:242 DR_OP_SPEED_MAX = 100"
+    ]
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/kist-csrc__batchsynthesismodule --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

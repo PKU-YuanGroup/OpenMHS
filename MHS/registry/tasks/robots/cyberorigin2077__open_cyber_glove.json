@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cyberorigin2077/open_cyber_glove",
+  "track": "robots",
+  "local_path": "robots/cyberorigin2077/open_cyber_glove",
+  "driver_dir": "MHS/drivers/robots/cyberorigin2077__open_cyber_glove",
+  "upstream": {
+    "repo_url": "https://github.com/cyberorigin2077/open_cyber_glove",
+    "commit": "88910bec8433658ffe8e181f23fb259f5376bb88",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 42,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "open_cyber_glove.glove:Glove",
+      "file": "open_cyber_glove/glove.py",
+      "line": 43,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "open_cyber_glove.sdk:OpenCyberGlove",
+      "file": "open_cyber_glove/sdk.py",
+      "line": 7,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Glove.get_data",
+      "Glove.get_raw_data",
+      "OpenCyberGlove.get_angles",
+      "OpenCyberGlove.get_data"
+    ],
+    "writes": [],
+    "actions": [
+      "Glove.advanced_calibrate",
+      "Glove.calibrate",
+      "Glove.start_reader",
+      "Glove.stop_reader",
+      "OpenCyberGlove.calibrate",
+      "OpenCyberGlove.experimental_advanced_calibrate",
+      "OpenCyberGlove.start",
+      "OpenCyberGlove.stop"
+    ],
+    "candidate_classes": [
+      "cap.device.calibrate.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "artifacts",
+    "motion"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cyberorigin2077__open_cyber_glove --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

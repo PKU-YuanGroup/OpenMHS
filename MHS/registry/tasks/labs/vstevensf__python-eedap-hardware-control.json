@@ -1,0 +1,75 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.vstevensf/python-eedap-hardware-control",
+  "track": "labs",
+  "local_path": "labs/vstevensf/python-eedap-hardware-control",
+  "driver_dir": "MHS/drivers/labs/vstevensf__python-eedap-hardware-control",
+  "upstream": {
+    "repo_url": "https://github.com/vstevensf/python-eedap-hardware-control",
+    "commit": "a4f9f918b6908eac7305cc4aa55f7a32bcc86e6b",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 55,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "app.hardware_control.proscan:PriorStage",
+      "file": "app/hardware_control/proscan.py",
+      "line": 147,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "PriorStage.move_abs",
+      "PriorStage.move_rel"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/vstevensf__python-eedap-hardware-control --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

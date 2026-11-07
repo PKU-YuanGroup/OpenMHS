@@ -1,0 +1,130 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.labjack/labjackpython",
+  "track": "labs",
+  "local_path": "labs/labjack/labjackpython",
+  "driver_dir": "MHS/drivers/labs/labjack__labjackpython",
+  "upstream": {
+    "repo_url": "https://github.com/labjack/labjackpython",
+    "commit": "a2f13eb548cca6416b1d44b08b63f7c5fd7f943b",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 16,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "ue9:UE9",
+      "file": "src/ue9.py",
+      "line": 66,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "u12:U12",
+      "file": "src/u12.py",
+      "line": 412,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "u3:U3",
+      "file": "src/u3.py",
+      "line": 63,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "u6:U6",
+      "file": "src/u6.py",
+      "line": 179,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "LabJackPython:Device",
+      "file": "src/LabJackPython.py",
+      "line": 189,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "UE9.getAIN",
+      "UE9.getCalibrationData",
+      "UE9.getName",
+      "UE9.getTemperature",
+      "UE9.readCurrent",
+      "UE9.readDefaults",
+      "UE9.readDefaultsConfig",
+      "UE9.readMem",
+      "UE9.readRegister",
+      "UE9.name (attribute)",
+      "UE9.validDefaultBlocks (attribute)",
+      "U12.getDriverVersion"
+    ],
+    "writes": [
+      "UE9.setDIOState",
+      "UE9.setDefaults",
+      "UE9.setName",
+      "UE9.setToFactoryDefaults",
+      "U3.configAnalog",
+      "U3.configDigital",
+      "U3.configIO",
+      "U3.configTimerClock",
+      "U3.configU3"
+    ],
+    "actions": [
+      "UE9.reset",
+      "U12.aiStreamStart",
+      "U12.pulseOutStart",
+      "U12.reset",
+      "U3.reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.current.v1",
+      "cap.measure.temperature.v1",
+      "cap.actuation.gpio.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/LabJackPython.py:3250 LJ_ioPUT_AIN_RANGE = 2000",
+      "src/LabJackPython.py:3251 LJ_ioGET_AIN_RANGE = 2001",
+      "src/LabJackPython.py:3701 LJE_INVALID_AIN_RANGE = 12",
+      "src/LabJackPython.py:3745 LJE_DSP_SIGNAL_OUT_OF_RANGE = 72"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/labjack__labjackpython --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

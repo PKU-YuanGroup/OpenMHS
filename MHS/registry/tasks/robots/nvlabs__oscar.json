@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nvlabs/oscar",
+  "track": "robots",
+  "local_path": "robots/nvlabs/oscar",
+  "driver_dir": "MHS/drivers/robots/nvlabs__oscar",
+  "upstream": {
+    "repo_url": "https://github.com/nvlabs/oscar",
+    "commit": "5a2ede63de9b0ca5f578ce0c3457123ad544d831",
+    "license_spdx": "LicenseRef-NVIDIA-Source-Code",
+    "license_class": "source-available"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1295,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.6,<3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "oscar/train.py:74 RLGPUEnv environment class",
+      "oscar/rl_games/rl_games/common/wrappers.py:45 NoopResetEnv environment class",
+      "oscar/rl_games/rl_games/common/wrappers.py:75 FireResetEnv environment class",
+      "oscar/rl_games/rl_games/common/wrappers.py:96 EpisodicLifeEnv environment class"
+    ],
+    "upstream_tests": "oscar/rl_games/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nvlabs__oscar --backend fake",
+  "skip_reason": "override (robots.json): Skip: OSCAR is a deprecated Isaac Gym robot-learning framework of simulated manipulation tasks, not a device or a Gymnasium/MuJoCo environment.",
+  "publish_review": "required"
+}

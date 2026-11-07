@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.robotwin-platform/robotwin",
+  "track": "robots",
+  "local_path": "robots/robotwin-platform/robotwin",
+  "driver_dir": "MHS/drivers/robots/robotwin-platform__robotwin",
+  "upstream": {
+    "repo_url": "https://github.com/robotwin-platform/robotwin",
+    "commit": "ea8b21121ebb3cd201ff5b3fe361944ac94eda3f",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 778,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "envs/adjust_bottle.py:7 adjust_bottle environment class",
+      "envs/beat_block_hammer.py:7 beat_block_hammer environment class",
+      "envs/blocks_ranking_rgb.py:8 blocks_ranking_rgb environment class",
+      "envs/blocks_ranking_size.py:8 blocks_ranking_size environment class"
+    ],
+    "upstream_tests": "XPolicyLab/policy/EventVLA/source_eventvla/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/robotwin-platform__robotwin --backend fake",
+  "skip_reason": "override (robots.json): RoboTwin is a SAPIEN benchmark and data generator, not a device: its task classes subclass gym.Env but override neither reset nor step, providing scripted setup_demo/play_once and a take_action loop.",
+  "publish_review": "not_required"
+}

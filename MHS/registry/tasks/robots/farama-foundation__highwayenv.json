@@ -1,0 +1,112 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.farama-foundation/highwayenv",
+  "track": "robots",
+  "local_path": "robots/farama-foundation/highwayenv",
+  "driver_dir": "MHS/drivers/robots/farama-foundation__highwayenv",
+  "upstream": {
+    "repo_url": "https://github.com/farama-foundation/highwayenv",
+    "commit": "2a268f348f10f4d1ac83f96bc8a53d2fa50dd3b0",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 33,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "highway_env.envs.exit_env:ExitEnv",
+      "file": "highway_env/envs/exit_env.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "highway_env.envs.exit_env:ConnectedLaneExitEnv",
+      "file": "highway_env/envs/exit_env.py",
+      "line": 202,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "highway_env.envs.highway_env:HighwayEnv",
+      "file": "highway_env/envs/highway_env.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "highway_env.envs.highway_env:HighwayEnvFast",
+      "file": "highway_env/envs/highway_env.py",
+      "line": 154,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "highway_env.envs.intersection_env:IntersectionEnv",
+      "file": "highway_env/envs/intersection_env.py",
+      "line": 13,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "highway_env/__init__.py:36 gym env exit-v0",
+      "highway_env/__init__.py:40 gym env exit-v1",
+      "highway_env/__init__.py:46 gym env highway-v0",
+      "highway_env/__init__.py:51 gym env highway-fast-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env exit-v0 registered at highway_env/__init__.py:36",
+      "gym env exit-v1 registered at highway_env/__init__.py:40",
+      "gym env highway-v0 registered at highway_env/__init__.py:46",
+      "gym env highway-fast-v0 registered at highway_env/__init__.py:51",
+      "gym env intersection-v0 registered at highway_env/__init__.py:57",
+      "gym env intersection-v1 registered at highway_env/__init__.py:62",
+      "gym env intersection-v2 registered at highway_env/__init__.py:66",
+      "gym env intersection-multi-agent-v0 registered at highway_env/__init__.py:71",
+      "gym env intersection-multi-agent-v1 registered at highway_env/__init__.py:76",
+      "gym env intersection-multi-agent-v2 registered at highway_env/__init__.py:81",
+      "gym env lane-keeping-v0 registered at highway_env/__init__.py:88",
+      "gym env merge-v0 registered at highway_env/__init__.py:95"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/farama-foundation__highwayenv --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

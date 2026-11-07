@@ -1,0 +1,140 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.vikashplus/robohive",
+  "track": "robots",
+  "local_path": "robots/vikashplus/robohive",
+  "driver_dir": "MHS/drivers/robots/vikashplus__robohive",
+  "upstream": {
+    "repo_url": "https://github.com/vikashplus/robohive",
+    "commit": "6c14798e48b9904dd8c9151837a1d2468b87bcf3",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 96,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robohive.envs.arms.reach_base_v0:ReachBaseV0",
+      "file": "robohive/envs/arms/reach_base_v0.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robohive.envs.arms.push_base_v0:PushBaseV0",
+      "file": "robohive/envs/arms/push_base_v0.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robohive.envs.arms.pick_place_v0:PickPlaceV0",
+      "file": "robohive/envs/arms/pick_place_v0.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robohive.envs.claws.reorient_v0:ReorientBaseV0",
+      "file": "robohive/envs/claws/reorient_v0.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robohive.envs.fm.franka_ee_pose_v0:FrankaEEPose",
+      "file": "robohive/envs/fm/franka_ee_pose_v0.py",
+      "line": 16,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "robohive/simhive/Adroit/Adroit_hand.xml",
+      "line": 19,
+      "kind": "scene"
+    },
+    {
+      "file": "robohive/simhive/Adroit/Adroit_hand_withOverlay.xml",
+      "line": 19,
+      "kind": "scene"
+    },
+    {
+      "file": "robohive/simhive/dmanus_sim/dmanus.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "robohive/simhive/fetch_sim/fetch_pole.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "robohive/simhive/franka_sim/bi-franka_panda.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robohive/envs/arms/__init__.py:21 gym env FrankaReachFixed-v0",
+      "robohive/envs/arms/__init__.py:80 gym env FrankaPushFixed-v0",
+      "robohive/envs/arms/__init__.py:124 gym env FrankaPickPlaceFixed-v0",
+      "robohive/envs/arms/__init__.py:169 gym env FetchReachFixed-v0"
+    ],
+    "upstream_tests": "robohive/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env FrankaReachFixed-v0 registered at robohive/envs/arms/__init__.py:21",
+      "gym env FrankaPushFixed-v0 registered at robohive/envs/arms/__init__.py:80",
+      "gym env FrankaPickPlaceFixed-v0 registered at robohive/envs/arms/__init__.py:124",
+      "gym env FetchReachFixed-v0 registered at robohive/envs/arms/__init__.py:169",
+      "gym env TrifingerReachFixed-v0 registered at robohive/envs/claws/__init__.py:19",
+      "gym env TrifingerReachRandom-v0 registered at robohive/envs/claws/__init__.py:33",
+      "gym env rpFrankaDmanusPoseFixed-v0 registered at robohive/envs/fm/__init__.py:20",
+      "gym env rpFrankaDmanusPoseRandom-v0 registered at robohive/envs/fm/__init__.py:32",
+      "gym env rpFrankaRobotiqPoseFixed-v0 registered at robohive/envs/fm/__init__.py:45",
+      "gym env rpFrankaRobotiqPoseRandom-v0 registered at robohive/envs/fm/__init__.py:57",
+      "gym env rpFrankaRobotiqData-v0 registered at robohive/envs/fm/__init__.py:72",
+      "gym env door-v1 registered at robohive/envs/hands/__init__.py:24"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/vikashplus__robohive --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

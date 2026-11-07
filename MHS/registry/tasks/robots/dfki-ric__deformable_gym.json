@@ -1,0 +1,135 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.dfki-ric/deformable_gym",
+  "track": "robots",
+  "local_path": "robots/dfki-ric/deformable_gym",
+  "driver_dir": "MHS/drivers/robots/dfki-ric__deformable_gym",
+  "upstream": {
+    "repo_url": "https://github.com/dfki-ric/deformable_gym",
+    "commit": "5b67bc9eb28f3c4356c49d0192906fec1752d1a1",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 93,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "deformable_gym.envs.floating_mia_grasp_env:FloatingMiaGraspEnv",
+      "file": "deformable_gym/envs/floating_mia_grasp_env.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "deformable_gym.envs.floating_shadow_grasp_env:FloatingShadowGraspEnv",
+      "file": "deformable_gym/envs/floating_shadow_grasp_env.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "deformable_gym.envs.ur5_mia_grasp_env:UR5MiaGraspEnv",
+      "file": "deformable_gym/envs/ur5_mia_grasp_env.py",
+      "line": 26,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "deformable_gym.envs.ur10_shadow_grasp_env:UR10ShadowGraspEnv",
+      "file": "deformable_gym/envs/ur10_shadow_grasp_env.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "deformable_gym.envs.mujoco.grasp_env:GraspEnv",
+      "file": "deformable_gym/envs/mujoco/grasp_env.py",
+      "line": 14,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "deformable_gym/assets/robots/mjcf/mia_hand.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "deformable_gym/assets/robots/mjcf/mia_hand_on_ur10.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "deformable_gym/assets/robots/mjcf/mia_hand_on_ur10_ft.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "deformable_gym/assets/robots/mjcf/mia_hand_on_ur10e.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "deformable_gym/assets/robots/mjcf/mia_hand_on_ur5.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "deformable_gym/__init__.py:6 gym env FloatingMiaGraspInsole-v0",
+      "deformable_gym/__init__.py:16 gym env FloatingMiaGraspPillow-v0",
+      "deformable_gym/__init__.py:26 gym env FloatingShadowGraspInsole-v0",
+      "deformable_gym/__init__.py:36 gym env FloatingShadowGraspPillow-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env FloatingMiaGraspInsole-v0 registered at deformable_gym/__init__.py:6",
+      "gym env FloatingMiaGraspPillow-v0 registered at deformable_gym/__init__.py:16",
+      "gym env FloatingShadowGraspInsole-v0 registered at deformable_gym/__init__.py:26",
+      "gym env FloatingShadowGraspPillow-v0 registered at deformable_gym/__init__.py:36",
+      "gym env URMiaGraspInsole-v0 registered at deformable_gym/__init__.py:46",
+      "gym env URMiaGraspPillow-v0 registered at deformable_gym/__init__.py:56",
+      "gym env URShadowGraspInsole-v0 registered at deformable_gym/__init__.py:66",
+      "gym env URShadowGraspPillow-v0 registered at deformable_gym/__init__.py:76",
+      "gym env Mj{}Grasp{}-v{} (id template, built at run time) registered at deformable_gym/__init__.py:138"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/dfki-ric__deformable_gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

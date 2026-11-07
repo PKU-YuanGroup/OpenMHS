@@ -1,0 +1,109 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.anguyen-23/sila-testing",
+  "track": "labs",
+  "local_path": "labs/anguyen-23/sila-testing",
+  "driver_dir": "MHS/drivers/labs/anguyen-23__sila-testing",
+  "upstream": {
+    "repo_url": "https://github.com/anguyen-23/sila-testing",
+    "commit": "0b572380e06977c1920510773b4bfee7bcd0eec5",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:family-config",
+  "role": "device-driver",
+  "family": "sila2",
+  "helper": "Sila2Driver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 36,
+  "exemplar": "MHS/drivers/labs/anguyen-23__sila-testing",
+  "entry_symbols": [
+    {
+      "symbol": "phenix_imager.feature_implementations.pheniximager_impl:PhenixImagerImpl",
+      "file": "servers/phenix_imager/phenix_imager/feature_implementations/pheniximager_impl.py",
+      "line": 54,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "servers/venus_api/venus_api/venus_client.py:202 SimulatedVenusClient",
+      "archive/servers/venus_api_v1/venus_api/venus_client.py:202 SimulatedVenusClient",
+      "servers/barcode_scanner/barcode_scanner/feature_implementations/simulationcontroller_impl.py:22 SimulationControllerImpl",
+      "servers/micronic_tube_scanner/micronic_tube_scanner/feature_implementations/simulationcontroller_impl.py:22 SimulationControllerImpl",
+      "servers/phenix_imager/phenix_imager/feature_implementations/simulationcontroller_impl.py:22 SimulationControllerImpl",
+      "servers/temperature_controller/temperature_controller/feature_implementations/simulationcontroller_impl.py:22 SimulationControllerImpl"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "PhenixImagerImpl.get_AvailableProtocols",
+      "PhenixImagerImpl.get_DeviceDescription",
+      "PhenixImagerImpl.get_DeviceState",
+      "PhenixImagerImpl.get_DisplayIcon",
+      "PhenixImagerImpl.get_IsConnected",
+      "PhenixImagerImpl.get_PlateDetected",
+      "PhenixImagerImpl.get_StagePosition",
+      "PhenixImagerImpl._lock.is_expired",
+      "PhenixImagerImpl._transport.get_status",
+      "PhenixImagerImpl._transport.is_connected",
+      "PhenixImagerImpl._transport.query_protocols",
+      "PhenixImagerImpl._transport.status"
+    ],
+    "writes": [
+      "MicronicTubeScannerImpl.SetLayout",
+      "MicronicTubeScannerImpl._transport.set_current_layout"
+    ],
+    "actions": [
+      "PhenixImagerImpl.RunAcquisitionProtocol",
+      "PhenixImagerImpl.Stop",
+      "PhenixImagerImpl._transport.send_run",
+      "PhenixImagerImpl._transport.send_stop",
+      "VenusClient.abort_method",
+      "VenusClient.off",
+      "VenusClient.on",
+      "VenusClient.pause_method",
+      "VenusClient.resume_method",
+      "VenusClient.start_method"
+    ],
+    "candidate_classes": [
+      "cap.process.run.v1",
+      "cap.sample.move.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": [
+      "servers/pump_controller/pump_controller/feature_implementations/pumpcontroller_impl.py:29 MAX_FLOW_RATE = 10.0",
+      "servers/temperature_controller/temperature_controller/feature_implementations/temperaturecontroller_impl.py:33 MAX_SAFE_TEMPERATURE = 200.0",
+      "servers/temperature_controller/temperature_controller/feature_implementations/temperaturecontroller_impl.py:34 MIN_SAFE_TEMPERATURE = -20.0"
+    ]
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/anguyen-23__sila-testing --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

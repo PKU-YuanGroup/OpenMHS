@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jjgoings/gym-muller_brown",
+  "track": "labs",
+  "local_path": "labs/jjgoings/gym-muller_brown",
+  "driver_dir": "MHS/drivers/labs/jjgoings__gym-muller_brown",
+  "upstream": {
+    "repo_url": "https://github.com/jjgoings/gym-muller_brown",
+    "commit": "41467f4137008045c759a499cdcbb3aadf04f70c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 145,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_muller_brown.envs:MullerBrownDiscreteEnv",
+      "file": "gym_muller_brown/envs/muller_brown_discrete.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_muller_brown.envs:MullerBrownContinuousEnv",
+      "file": "gym_muller_brown/envs/muller_brown_continuous.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_muller_brown/__init__.py:3 gym env MullerBrownDiscrete-v0",
+      "gym_muller_brown/__init__.py:9 gym env MullerBrownContinuous-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env MullerBrownDiscrete-v0 registered at gym_muller_brown/__init__.py:3",
+      "gym env MullerBrownContinuous-v0 registered at gym_muller_brown/__init__.py:9"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/jjgoings__gym-muller_brown --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

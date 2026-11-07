@@ -1,0 +1,199 @@
+{
+  "adapter": {
+    "bridge": "ros",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "cmake",
+    "ros"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_a4649143c69e1f3e",
+    "https://github.com/ros-controls/ros2_controllers"
+  ],
+  "description": "ros-controls/ros2_controllers: repository for shared access and protocol infrastructure (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: controller. Declared backend: ros2_control controllers. Language: C++. Catalog keywords: ROS2, JointTrajectoryController.",
+  "domains": [
+    "shared access and protocol infrastructure"
+  ],
+  "evidence": {
+    "files_read": 10,
+    "notes": "bounded static scan: 486 files enumerated (max depth 3), 10 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "ros2"
+  ],
+  "hardware_free": true,
+  "id": "gh.ros-controls/ros2_controllers",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs the ros helper; it is not a per-repo driver task.",
+    "reason_code": "bridge-runtime:ros",
+    "recipe": "families/ros2.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "control_msgs/FollowJointTrajectory action",
+    "trajectory_msgs/JointTrajectory topic",
+    "controller_state/query_state",
+    "ROS 2",
+    "CLI"
+  ],
+  "languages": [
+    "C++",
+    "Python"
+  ],
+  "last_commit_at": "2026-10-05T16:55:13Z",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "docs": "https://github.com/ros-controls/ros2_controllers",
+    "repo": "https://github.com/ros-controls/ros2_controllers"
+  },
+  "local_path": "robots/ros-controls/ros2_controllers",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "ros-controls",
+  "package_id": "gh.ros-controls/ros2_controllers",
+  "quarantine": false,
+  "rank": 18,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "ros2_controllers",
+  "repo_url": "https://github.com/ros-controls/ros2_controllers",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "40098c5efa0736500437c3fb50677716b0f71421",
+    "repo_url": "https://github.com/ros-controls/ros2_controllers"
+  },
+  "stars": 842,
+  "tags": [
+    "ros2",
+    "robotics",
+    "controller",
+    "simulated",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "ros-controls/ros2_controllers",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "ros2",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 92.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "控制器",
+      "archived": "false",
+      "backend_family_raw": "ros2_control controllers",
+      "category_zh": "轨迹与低层控制器",
+      "description_zh": "ROS2可复用控制器集合，JointTrajectoryController可执行有时序的关节轨迹/动作块",
+      "join": "exact",
+      "license_raw": "Apache-2.0代码；所读JTC文档声明部分改编自ROS1 wiki CC-BY-3.0，需分别归属",
+      "mhs_support_raw": "需开发适配；所核材料未证实官方 MHS 兼容，官方公开 API/schema 尚未核到，不能据未提及断言无支持",
+      "priority": "P0",
+      "row": 2311,
+      "rows_all": [
+        2311
+      ],
+      "scope": "core",
+      "track_raw": "shared_infrastructure | robotics",
+      "verification_level": "已核源码"
+    },
+    "classification": {
+      "catalog_family": "ros2",
+      "catalog_tier": "B",
+      "family_matches": [
+        "ros2_control"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B4-controller"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/ros-controls__ros2_controllers/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/robots/ros-controls__ros2_controllers/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/ros-controls__ros2_controllers/hardware"
+        ],
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "cmake",
+        "ros"
+      ],
+      "entry_evidence_count": 8,
+      "files": 486,
+      "markers": {
+        "ros2": 56
+      }
+    },
+    "triage": {
+      "evidence": [
+        "protocol stack or framework behind the ros helper; an SDK bridge task, not a repo task"
+      ],
+      "family": "ros",
+      "helper": null,
+      "reason_code": "bridge-runtime:ros",
+      "rule": 6,
+      "version": "0.9.4"
+    }
+  }
+}

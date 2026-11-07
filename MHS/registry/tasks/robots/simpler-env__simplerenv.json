@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.simpler-env/simplerenv",
+  "track": "robots",
+  "local_path": "robots/simpler-env/simplerenv",
+  "driver_dir": "MHS/drivers/robots/simpler-env__simplerenv",
+  "upstream": {
+    "repo_url": "https://github.com/simpler-env/simplerenv",
+    "commit": "eddb5690749a1e34267807c0f7b5eede323918d7",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:duplicate_of",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [
+    "NOT_A_DEVICE"
+  ],
+  "quarantine": false,
+  "variant_of": "gh.simpler-env/maniskill2_real2sim",
+  "package_status": "skip-proposed",
+  "wave": 9,
+  "rank": 907,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ManiSkill2_real2sim/mani_skill2_real2sim/envs/custom_scenes/grasp_single_in_scene.py:470 gym env GraspSingleCustomInScene-v0",
+      "ManiSkill2_real2sim/mani_skill2_real2sim/envs/custom_scenes/grasp_single_in_scene.py:519 gym env GraspSingleCustomOrientationInScene-v0",
+      "ManiSkill2_real2sim/mani_skill2_real2sim/envs/custom_scenes/grasp_single_in_scene.py:591 gym env GraspSingleRandomObjectInScene-v0",
+      "ManiSkill2_real2sim/mani_skill2_real2sim/envs/custom_scenes/grasp_single_in_scene.py:614 gym env GraspSingleCokeCanInScene-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/simpler-env__simplerenv --backend fake",
+  "skip_reason": "duplicate of gh.simpler-env/maniskill2_real2sim: override (robots.json): Model review of wave B: the SimplerEnv superproject; its environments are the ManiSkill2_real2sim git submodule, a passing package of its own.",
+  "publish_review": "not_required"
+}

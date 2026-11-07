@@ -1,0 +1,92 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.automatedchemistry/flowchem",
+  "track": "labs",
+  "local_path": "labs/automatedchemistry/flowchem",
+  "driver_dir": "MHS/drivers/labs/automatedchemistry__flowchem",
+  "upstream": {
+    "repo_url": "https://github.com/automatedchemistry/flowchem",
+    "commit": "271b3d8fbc2238e2a4cafccabdf82b3fc6dff7fb",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:http",
+  "role": "framework",
+  "family": "http",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 62,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "flowchem.devices.runze.runze_syringe_pump:RunzeSyringePump",
+      "file": "src/flowchem/devices/runze/runze_syringe_pump.py",
+      "line": 39,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "flowchem.devices.manson.manson_power_supply:MansonPowerSupply",
+      "file": "src/flowchem/devices/manson/manson_power_supply.py",
+      "line": 20,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "flowchem.devices.knauer.knauer_autosampler:KnauerAutosampler",
+      "file": "src/flowchem/devices/knauer/knauer_autosampler.py",
+      "line": 341,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "flowchem.devices.magritek.spinsolve:Spinsolve",
+      "file": "src/flowchem/devices/magritek/spinsolve.py",
+      "line": 33,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "flowchem.devices.oceanoptics.flame:FlameOptical",
+      "file": "src/flowchem/devices/oceanoptics/flame.py",
+      "line": 97,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/flowchem/sim/__main__.py:61 SimFlowchem"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/automatedchemistry__flowchem --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

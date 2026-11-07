@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.di-omics/bay-hack",
+  "track": "labs",
+  "local_path": "labs/di-omics/bay-hack",
+  "driver_dir": "MHS/drivers/labs/di-omics__bay-hack",
+  "upstream": {
+    "repo_url": "https://github.com/di-omics/bay-hack",
+    "commit": "c5ae808e4f752f95eaae4f249ac6793520b3cdd9",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "reference",
+  "reason_code": "override:recon",
+  "role": "prior-art",
+  "family": "pylabrobot",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 963,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "bayhack/track_c.py:110 SimulatedTubeCell",
+      "bayhack/track_c.py:230 SimulatedCapCamera"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/di-omics__bay-hack --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

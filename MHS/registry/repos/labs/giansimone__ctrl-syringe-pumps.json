@@ -1,0 +1,215 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "ctrl_syringe_pumps.control:Control (ctrl_syringe_pumps/control.py:14)",
+      "ctrl_syringe_pumps.interface:Interface (ctrl_syringe_pumps/interface.py:24)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.actuation.pump.v1"
+  ],
+  "catalog_refs": [
+    "repo_75445c2aeaae621e",
+    "https://github.com/giansimone/ctrl-syringe-pumps"
+  ],
+  "description": "giansimone/ctrl-syringe-pumps: device backend for liquid handling (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 1. Catalog role: device SDK. Language: Python. Catalog keywords: pySerial.",
+  "domains": [
+    "liquid handling"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 7 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/giansimone__ctrl-syringe-pumps/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.giansimone/ctrl-syringe-pumps",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/giansimone__ctrl-syringe-pumps: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/giansimone__ctrl-syringe-pumps --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "serial",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2025-05-11T17:40:52+01:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/giansimone/ctrl-syringe-pumps"
+  },
+  "local_path": "labs/giansimone/ctrl-syringe-pumps",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "giansimone",
+  "package_id": "gh.giansimone/ctrl-syringe-pumps",
+  "quarantine": false,
+  "rank": 51,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "ctrl-syringe-pumps",
+  "repo_url": "https://github.com/giansimone/ctrl-syringe-pumps",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "3b0d3154003498f65150d8f04905f3a27cdd9017",
+    "repo_url": "https://github.com/giansimone/ctrl-syringe-pumps"
+  },
+  "stars": 0,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "giansimone/ctrl-syringe-pumps",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 1,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 45.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "基于pySerial的注射泵控制接口，可设流速、体积与方向",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 909,
+      "rows_all": [
+        909
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/giansimone__ctrl-syringe-pumps/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.actuation.pump.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "actuation.pump"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "3b0d3154003498f65150d8f04905f3a27cdd9017",
+      "driver_dir": "MHS/drivers/labs/giansimone__ctrl-syringe-pumps",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:699ecb173984d60638a0410a152652626bd60c6717ca6aab3b80910a8a89943d",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 1,
+      "files": 7,
+      "markers": {
+        "liquid_handling": 3,
+        "serial": 5
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of wave B: a direct Driver, not the card's SerialDriver table (the upstream wire line is a zero-padded two-digit pump address followed by the command and a carriage return (ctrl_syringe_pumps/control.py:33, interface.py:17)...)",
+        "rules alone: family-config (family:serial, rule 9)"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class ctrl_syringe_pumps.control:Control uses the hardware transport serial",
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of wave B: a direct Driver, not the card's SerialDriver table (the upstream wire line is a zero-padded two-digit pump address followed by the command and a carriage return (ctrl_syringe_pumps/control.py:33, interface.py:17)...)",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

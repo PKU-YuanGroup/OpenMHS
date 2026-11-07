@@ -1,0 +1,222 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "leicacam.cam:CAM (src/leicacam/cam.py:107)",
+      "leicacam.async_cam:AsyncCAM (src/leicacam/async_cam.py:12)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python",
+    "make"
+  ],
+  "capabilities_offered": [
+    "cap.imaging.focus.v1",
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_313fd123c99cf46e",
+    "https://github.com/martinhjelmare/leicacam"
+  ],
+  "description": "martinhjelmare/leicacam: device backend for microscopy imaging (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 1. Catalog role: device SDK. Language: Python. Catalog keywords: Leica.",
+  "domains": [
+    "microscopy imaging"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 36 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/martinhjelmare__leicacam/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.martinhjelmare/leicacam",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/martinhjelmare__leicacam: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/martinhjelmare__leicacam --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:partner-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "CLI"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-10-09T05:09:19+00:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/martinhjelmare/leicacam"
+  },
+  "local_path": "labs/martinhjelmare/leicacam",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "martinhjelmare",
+  "package_id": "gh.martinhjelmare/leicacam",
+  "quarantine": false,
+  "rank": 1,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "leicacam",
+  "repo_url": "https://github.com/martinhjelmare/leicacam",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "5c33a0d6daa179377390eccf40f1fc3e584b2dad",
+    "repo_url": "https://github.com/martinhjelmare/leicacam"
+  },
+  "stars": 22,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "martinhjelmare/leicacam",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 1,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "sdk-library",
+      "family_confidence": 0.56,
+      "family_source": "catalog",
+      "merged": true,
+      "priority_score": 44.0,
+      "quality_flags": [
+        "family_catalog_only"
+      ],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "控制Leica显微镜的Python库(README缺失)",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "参考",
+      "row": 1555,
+      "rows_all": [
+        1555
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "仅简介"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/martinhjelmare__leicacam/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.imaging.focus.v1"
+            ],
+            "kind": "instrument.microscope"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "5c33a0d6daa179377390eccf40f1fc3e584b2dad",
+      "driver_dir": "MHS/drivers/labs/martinhjelmare__leicacam",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:93cb0efb6fc61c0cc783309242247819e458807504ebf7119485b7158d55c892",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python",
+        "make"
+      ],
+      "entry_evidence_count": 3,
+      "files": 36,
+      "markers": {
+        "cli": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (partners.json): Python client for Leica microscope CAM (computer-assisted microscopy) socket control; a direct Driver over its socket client class.",
+        "rules alone: direct-driver (PY_SDK_WITH_ENTRY, rule 10)"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "justification": "Python client for Leica microscope CAM (computer-assisted microscopy) socket control; a direct Driver over its socket client class.",
+      "partner": "Danaher / Leica",
+      "reason_code": "override:partner-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

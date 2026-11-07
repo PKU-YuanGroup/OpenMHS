@@ -1,0 +1,65 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.galaxygeneralrobotics/humanoid-gpt",
+  "track": "robots",
+  "local_path": "robots/galaxygeneralrobotics/humanoid-gpt",
+  "driver_dir": "MHS/drivers/robots/galaxygeneralrobotics__humanoid-gpt",
+  "upstream": {
+    "repo_url": "https://github.com/galaxygeneralrobotics/humanoid-gpt",
+    "commit": "9f9e7b74ecadb532abbb34b6a779d87191a9bbb6",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1195,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.11,<3.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "tracking/infer_utils.py:90 G1TrackMjSim",
+      "utils/sim_base.py:17 BaseSim",
+      "utils/sim_base.py:1",
+      "utils/sim_mj.py:1",
+      "utils/sim_mjx.py:1"
+    ],
+    "upstream_tests": "gmr/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/galaxygeneralrobotics__humanoid-gpt --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

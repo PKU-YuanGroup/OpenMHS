@@ -1,0 +1,195 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [
+      "physics.sim.simulator:Simulator (physics/sim/simulator.py:31)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "make",
+    "docker",
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_ef632cd38be106a1",
+    "https://github.com/msdemers/roboremote"
+  ],
+  "description": "msdemers/roboremote: complete environment for robot arm manipulation (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: direct simulation backend. Language: Python. Catalog keywords: roboremote, SO-101, Pinocchio, Go, gR.",
+  "domains": [
+    "robot arm manipulation"
+  ],
+  "evidence": {
+    "files_read": 10,
+    "notes": "bounded static scan: 109 files enumerated (max depth 3), 10 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "http-api"
+  ],
+  "hardware_free": true,
+  "id": "gh.msdemers/roboremote",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs a future engine bridge; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/http-api.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "gRPC",
+    "CLI",
+    "Docker",
+    "HTTP/REST"
+  ],
+  "languages": [
+    "Python",
+    "Go"
+  ],
+  "last_commit_at": "2026-09-12T14:11:04-04:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/msdemers/roboremote"
+  },
+  "local_path": "robots/msdemers/roboremote",
+  "modes": [
+    "simulated"
+  ],
+  "owner": "msdemers",
+  "package_id": "gh.msdemers/roboremote",
+  "quarantine": false,
+  "rank": 833,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "roboremote",
+  "repo_url": "https://github.com/msdemers/roboremote",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "7c300baa992d72b5684dd23c6f6173a3af3cc0bb",
+    "repo_url": "https://github.com/msdemers/roboremote"
+  },
+  "stars": 1,
+  "tags": [
+    "http-api",
+    "robotics",
+    "complete environment",
+    "direct simulation backend",
+    "simulated",
+    "bridge runtime"
+  ],
+  "tier": "A",
+  "title": "msdemers/roboremote",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "protocol-bridge",
+      "family_confidence": 0.74,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 80.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "完整环境",
+      "description_zh": "roboremote：可网络指令的SO-101机械臂力矩控制实时仿真，Python物理(Pinocchio)+Go gR",
+      "join": "exact",
+      "license_raw": "Apache-2.0",
+      "mhs_support_raw": "unknown",
+      "priority": "P1",
+      "row": 1700,
+      "rows_all": [
+        1700
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "http-api",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bgrpc\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/msdemers__roboremote/simulated",
+        "mode": "simulated",
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "make",
+        "docker",
+        "python"
+      ],
+      "entry_evidence_count": 6,
+      "files": 109,
+      "markers": {
+        "cli": 1,
+        "docker": 13,
+        "gpu": 1,
+        "http": 12,
+        "microscopy": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): Roboremote is a Pinocchio-based robotic-arm simulator served over gRPC, not a hardware device driver, so bridge-runtime framework work fits.",
+        "rules alone: untriaged (untriaged:no_entry_class, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "Roboremote is a Pinocchio-based robotic-arm simulator served over gRPC, not a hardware device driver, so bridge-runtime framework work fits.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.freespace/pyapt",
+  "track": "labs",
+  "local_path": "labs/freespace/pyapt",
+  "driver_dir": "MHS/drivers/labs/freespace__pyapt",
+  "upstream": {
+    "repo_url": "https://github.com/freespace/pyapt",
+    "commit": "914a6f618cacce6aa9ce42d371a895989e092b59",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 54,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pyAPT.mts50:MTS50",
+      "file": "pyAPT/mts50.py",
+      "line": 4,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyAPT.prm1:PRM1",
+      "file": "pyAPT/prm1.py",
+      "line": 4,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyAPT.lts300:LTS300",
+      "file": "pyAPT/lts300.py",
+      "line": 4,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyAPT.controller:Controller",
+      "file": "pyAPT/controller.py",
+      "line": 17,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "MTS50.identify",
+      "MTS50.status",
+      "PRM1.identify",
+      "PRM1.status",
+      "LTS300.identify",
+      "LTS300.status"
+    ],
+    "writes": [
+      "MTS50.set_soft_limits",
+      "MTS50.set_velocity_parameters",
+      "PRM1.set_soft_limits",
+      "PRM1.set_velocity_parameters",
+      "LTS300.set_soft_limits",
+      "LTS300.set_velocity_parameters"
+    ],
+    "actions": [
+      "MTS50.goto",
+      "MTS50.home",
+      "MTS50.move",
+      "MTS50.request_home_params",
+      "MTS50.reset_parameters",
+      "MTS50.resume_end_of_move_messages",
+      "MTS50.stop",
+      "MTS50.suspend_end_of_move_messages",
+      "PRM1.goto",
+      "PRM1.home",
+      "PRM1.move",
+      "PRM1.request_home_params"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/freespace__pyapt --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

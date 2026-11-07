@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.snhobbs/hp894xx",
+  "track": "labs",
+  "local_path": "labs/snhobbs/hp894xx",
+  "driver_dir": "MHS/drivers/labs/snhobbs__hp894xx",
+  "upstream": {
+    "repo_url": "https://github.com/snhobbs/hp894xx",
+    "commit": "6745a53c20fb02b1a178fde70b1975b6b86f3518",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 103,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "HP894xx.HP89400Device:HP89400Device",
+      "file": "python/HP894xx/HP89400Device.py",
+      "line": 55,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "HP89400Device.GetDataLength",
+      "HP89400Device.GetReadDataPoints",
+      "HP89400Device.GetXCenter",
+      "HP89400Device.GetXSpan",
+      "HP89400Device.GetXUnits",
+      "HP89400Device.GetYUnits",
+      "HP89400Device.ReadConfiguration",
+      "HP89400Device.get_error_code",
+      "HP89400Device.get_operating_condition",
+      "HP89400Device.read_data",
+      "HP89400Device.read_error_code",
+      "HP89400Device.read_errors"
+    ],
+    "writes": [],
+    "actions": [
+      "HP89400Device.RunCommands",
+      "HP89400Device.StartDataRead",
+      "HP89400Device.abort",
+      "HP89400Device.enable_autorange",
+      "HP89400Device.reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/snhobbs__hp894xx --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

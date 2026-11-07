@@ -1,0 +1,222 @@
+{
+  "adapter": {
+    "bridge": "tag-bridge",
+    "entry_points": [
+      "device.APOAshDome:APOAshDome (device/APOAshDome.py:57)",
+      "device.tcube:TCube (device/tcube.py:6)",
+      "device.eshel:K8056 (device/eshel.py:30)",
+      "device.tc300:TC300 (device/tc300.py:6)",
+      "device.lts150:LTS150 (device/lts150.py:24)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python",
+    "make"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1"
+  ],
+  "catalog_refs": [
+    "repo_e49a3502b612b28e",
+    "https://github.com/holtzmanjon/apoalpyca"
+  ],
+  "description": "holtzmanjon/apoalpyca: device backend for optics (lab instrumentation track). OpenMHS plan: family-config with TagDriver, wave 2. Catalog role: device SDK. Language: Python. Catalog keywords: APO, Alpyca, Thorlabs.",
+  "domains": [
+    "optics"
+  ],
+  "evidence": {
+    "files_read": 5,
+    "notes": "bounded static scan: 54 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/holtzmanjon__apoalpyca/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "tag-bridge"
+  ],
+  "hardware_free": false,
+  "id": "gh.holtzmanjon/apoalpyca",
+  "integration": {
+    "blockers": [],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/labs/holtzmanjon__apoalpyca: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/holtzmanjon__apoalpyca --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "family:tag-bridge",
+    "recipe": "families/tag-bridge.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "HTTP/REST",
+    "CLI",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-07-15T15:18:54-07:00",
+  "license": "GPL-3.0",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-3.0",
+  "links": {
+    "repo": "https://github.com/holtzmanjon/apoalpyca"
+  },
+  "local_path": "labs/holtzmanjon/apoalpyca",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "holtzmanjon",
+  "package_id": "gh.holtzmanjon/apoalpyca",
+  "quarantine": false,
+  "rank": 76,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "apoalpyca",
+  "repo_url": "https://github.com/holtzmanjon/apoalpyca",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "3d4c48ec092c7dfd095f47b30efe9eb29ca2d031",
+    "repo_url": "https://github.com/holtzmanjon/apoalpyca"
+  },
+  "stars": 0,
+  "tags": [
+    "tag-bridge",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "family config"
+  ],
+  "tier": "B",
+  "title": "holtzmanjon/apoalpyca",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 41.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "unknown",
+      "category_zh": "设备后端",
+      "description_zh": "APO天文台用Alpyca驱动:圆顶、安全监视器、Thorlabs平台与温控器",
+      "join": "exact",
+      "license_raw": "GPL-3.0",
+      "mhs_support_raw": "unknown",
+      "priority": "参考",
+      "row": 1024,
+      "rows_all": [
+        1024
+      ],
+      "scope": "peripheral",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "cli-process",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bcli\\b"
+      ],
+      "family_note": "triage family tag-bridge (catalogue family cli-process)",
+      "family_rule": "scored",
+      "family_score": 4,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/holtzmanjon__apoalpyca/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-3.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "GPL-3.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "3d4c48ec092c7dfd095f47b30efe9eb29ca2d031",
+      "driver_dir": "MHS/drivers/labs/holtzmanjon__apoalpyca",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:5390edd94be9d3ac62c631b4855574320183f6ee6203e2d71179ddd8e431708b",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python",
+        "make"
+      ],
+      "entry_evidence_count": 0,
+      "files": 54,
+      "markers": {
+        "cli": 1,
+        "microscopy": 2,
+        "serial": 1,
+        "thermal": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "structural marker: imports alpaca",
+        "device-driver evidence: catalogue category 'device backend'"
+      ],
+      "family": "tag-bridge",
+      "hardware_transport": "class device.tcube:TCube uses the hardware transport serial",
+      "helper": "TagDriver",
+      "reason_code": "family:tag-bridge",
+      "rule": 9,
+      "version": "0.9.4"
+    }
+  }
+}

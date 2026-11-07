@@ -1,0 +1,138 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.openai/roboschool",
+  "track": "robots",
+  "local_path": "robots/openai/roboschool",
+  "driver_dir": "MHS/drivers/robots/openai__roboschool",
+  "upstream": {
+    "repo_url": "https://github.com/openai/roboschool",
+    "commit": "d32bcb2b35b94168b5ce27233ca62f3c8678886f",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 131,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "roboschool:RoboschoolInvertedPendulum",
+      "file": "roboschool/gym_pendulums.py",
+      "line": 69,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "roboschool:RoboschoolInvertedPendulumSwingup",
+      "file": "roboschool/gym_pendulums.py",
+      "line": 125,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "roboschool:RoboschoolInvertedDoublePendulum",
+      "file": "roboschool/gym_pendulums.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "roboschool:RoboschoolReacher",
+      "file": "roboschool/gym_reacher.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "roboschool:RoboschoolHopper",
+      "file": "roboschool/gym_mujoco_walkers.py",
+      "line": 14,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "roboschool/mujoco_assets/ant.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "roboschool/mujoco_assets/half_cheetah.xml",
+      "line": 35,
+      "kind": "robot"
+    },
+    {
+      "file": "roboschool/mujoco_assets/hopper.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "roboschool/mujoco_assets/humanoid_symmetric.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "roboschool/mujoco_assets/inverted_double_pendulum.xml",
+      "line": 16,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "roboschool/__init__.py:11 gym env RoboschoolInvertedPendulum-v1",
+      "roboschool/__init__.py:18 gym env RoboschoolInvertedPendulumSwingup-v1",
+      "roboschool/__init__.py:25 gym env RoboschoolInvertedDoublePendulum-v1",
+      "roboschool/__init__.py:33 gym env RoboschoolReacher-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env RoboschoolInvertedPendulum-v1 registered at roboschool/__init__.py:11",
+      "gym env RoboschoolInvertedPendulumSwingup-v1 registered at roboschool/__init__.py:18",
+      "gym env RoboschoolInvertedDoublePendulum-v1 registered at roboschool/__init__.py:25",
+      "gym env RoboschoolReacher-v1 registered at roboschool/__init__.py:33",
+      "gym env RoboschoolHopper-v1 registered at roboschool/__init__.py:41",
+      "gym env RoboschoolWalker2d-v1 registered at roboschool/__init__.py:48",
+      "gym env RoboschoolHalfCheetah-v1 registered at roboschool/__init__.py:55",
+      "gym env RoboschoolAnt-v1 registered at roboschool/__init__.py:63",
+      "gym env RoboschoolHumanoid-v1 registered at roboschool/__init__.py:71",
+      "gym env RoboschoolHumanoidFlagrun-v1 registered at roboschool/__init__.py:78",
+      "gym env RoboschoolHumanoidFlagrunHarder-v1 registered at roboschool/__init__.py:85",
+      "gym env RoboschoolAtlasForwardWalk-v1 registered at roboschool/__init__.py:95"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/openai__roboschool --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

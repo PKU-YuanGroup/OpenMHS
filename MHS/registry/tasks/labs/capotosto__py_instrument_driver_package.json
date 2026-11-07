@@ -1,0 +1,131 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.capotosto/py_instrument_driver_package",
+  "track": "labs",
+  "local_path": "labs/capotosto/py_instrument_driver_package",
+  "driver_dir": "MHS/drivers/labs/capotosto__py_instrument_driver_package",
+  "upstream": {
+    "repo_url": "https://github.com/capotosto/py_instrument_driver_package",
+    "commit": "1512bb3c1d76a16ada54cf042019a88710b7e12f",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 339,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "instrument_module.keysight_E4980A:KeysightE4980A",
+      "file": "instrument_module/keysight_E4980A.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instrument_module.rigol_dl3000:DL3000",
+      "file": "instrument_module/rigol_dl3000.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instrument_module.rigol_dp800:DP800",
+      "file": "instrument_module/rigol_dp800.py",
+      "line": 24,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instrument_module.Tek_DPO4000:DPO4000",
+      "file": "instrument_module/Tek_DPO4000.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instrument_module.keithley_6221:Keithley6221",
+      "file": "instrument_module/keithley_6221.py",
+      "line": 15,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "KeysightE4980A.fetch_corrected_impedance",
+      "KeysightE4980A.fetch_formatted",
+      "KeysightE4980A.fetch_formatted_with_status",
+      "KeysightE4980A.fetch_iac",
+      "KeysightE4980A.fetch_idc",
+      "KeysightE4980A.fetch_vac",
+      "KeysightE4980A.fetch_vdc",
+      "KeysightE4980A.get_alc",
+      "KeysightE4980A.get_all_system_errors",
+      "KeysightE4980A.get_aperture",
+      "KeysightE4980A.get_ascii_long",
+      "KeysightE4980A.get_cable_length"
+    ],
+    "writes": [
+      "KeysightE4980A.set_alc",
+      "KeysightE4980A.set_aperture",
+      "KeysightE4980A.set_ascii_long",
+      "KeysightE4980A.set_cable_length",
+      "KeysightE4980A.set_correction_method",
+      "KeysightE4980A.set_current_level",
+      "KeysightE4980A.set_data_format",
+      "KeysightE4980A.set_dc_bias_autorange",
+      "KeysightE4980A.set_dc_bias_state",
+      "KeysightE4980A.set_dc_bias_voltage",
+      "KeysightE4980A.set_exponent_digits",
+      "KeysightE4980A.set_frequency"
+    ],
+    "actions": [
+      "KeysightE4980A.abort",
+      "KeysightE4980A.reset",
+      "DL3000.factory_reset",
+      "DL3000.trigger",
+      "DP800.factory_reset"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.measure.voltage.v1",
+      "cap.measure.resistance.v1",
+      "cap.measure.current.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/capotosto__py_instrument_driver_package --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

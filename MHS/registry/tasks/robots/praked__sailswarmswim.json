@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.praked/sailswarmswim",
+  "track": "robots",
+  "local_path": "robots/praked/sailswarmswim",
+  "driver_dir": "MHS/drivers/robots/praked__sailswarmswim",
+  "upstream": {
+    "repo_url": "https://github.com/praked/sailswarmswim",
+    "commit": "a33fc63f563674aa5091f649bc0b13e81f23f69f",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1939,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "SwarmSwIM/swarmswim_examples/ML_examples/marl_env.py:32 SimWrapperEnv environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/praked__sailswarmswim --backend fake",
+  "skip_reason": "override (robots.json): Skip: in-process sailing-swarm simulator, not a device or Gymnasium/MuJoCo env, so no transport to drive.",
+  "publish_review": "required"
+}

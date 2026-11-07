@@ -1,0 +1,106 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.hsp-iit/pybullet-robot-envs",
+  "track": "robots",
+  "local_path": "robots/hsp-iit/pybullet-robot-envs",
+  "driver_dir": "MHS/drivers/robots/hsp-iit__pybullet-robot-envs",
+  "upstream": {
+    "repo_url": "https://github.com/hsp-iit/pybullet-robot-envs",
+    "commit": "8fb3f9ba1f1a0dec4cd1e96e26556afbd89cbd59",
+    "license_spdx": "LGPL-2.1",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 81,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "pybullet_robot_envs.envs:iCubReachGymEnv",
+      "file": "pybullet_robot_envs/envs/icub_envs/icub_reach_gym_env.py",
+      "line": 23,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pybullet_robot_envs.envs:iCubPushGymEnv",
+      "file": "pybullet_robot_envs/envs/icub_envs/icub_push_gym_env.py",
+      "line": 23,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pybullet_robot_envs.envs:iCubPushGymGoalEnv",
+      "file": "pybullet_robot_envs/envs/icub_envs/icub_push_gym_goal_env.py",
+      "line": 20,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pybullet_robot_envs.envs:pandaReachGymEnv",
+      "file": "pybullet_robot_envs/envs/panda_envs/panda_reach_gym_env.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pybullet_robot_envs.envs:pandaPushGymEnv",
+      "file": "pybullet_robot_envs/envs/panda_envs/panda_push_gym_env.py",
+      "line": 24,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.5",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pybullet_robot_envs/__init__.py:7 gym env iCubReach-v0",
+      "pybullet_robot_envs/__init__.py:19 gym env iCubPush-v0",
+      "pybullet_robot_envs/__init__.py:33 gym env iCubPushGoal-v0",
+      "pybullet_robot_envs/__init__.py:47 gym env pandaReach-v0"
+    ],
+    "upstream_tests": "pybullet_robot_envs/examples/algos/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env iCubReach-v0 registered at pybullet_robot_envs/__init__.py:7",
+      "gym env iCubPush-v0 registered at pybullet_robot_envs/__init__.py:19",
+      "gym env iCubPushGoal-v0 registered at pybullet_robot_envs/__init__.py:33",
+      "gym env pandaReach-v0 registered at pybullet_robot_envs/__init__.py:47",
+      "gym env pandaPush-v0 registered at pybullet_robot_envs/__init__.py:58",
+      "gym env pandaPushGoal-v0 registered at pybullet_robot_envs/__init__.py:70"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/hsp-iit__pybullet-robot-envs --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

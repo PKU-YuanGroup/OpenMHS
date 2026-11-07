@@ -1,0 +1,98 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.uwrobotlearning/wheeledlab",
+  "track": "robots",
+  "local_path": "robots/uwrobotlearning/wheeledlab",
+  "driver_dir": "MHS/drivers/robots/uwrobotlearning__wheeledlab",
+  "upstream": {
+    "repo_url": "https://github.com/uwrobotlearning/wheeledlab",
+    "commit": "a5017ce0696032805190448b2addb8077e458387",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 49,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "wheeledlab_tasks.drifting.mushr_drift_env_cfg:MushrDriftRLEnvCfg",
+      "file": "source/wheeledlab_tasks/wheeledlab_tasks/drifting/mushr_drift_env_cfg.py",
+      "line": 369,
+      "confidence": "override"
+    },
+    {
+      "symbol": "wheeledlab_tasks.visual.mushr_visual_env_cfg:MushrVisualRLEnvCfg",
+      "file": "source/wheeledlab_tasks/wheeledlab_tasks/visual/mushr_visual_env_cfg.py",
+      "line": 412,
+      "confidence": "override"
+    },
+    {
+      "symbol": "wheeledlab_tasks.elevation.mushr_elevation_env_cfg:MushrElevationRLEnvCfg",
+      "file": "source/wheeledlab_tasks/wheeledlab_tasks/elevation/mushr_elevation_env_cfg.py",
+      "line": 438,
+      "confidence": "override"
+    },
+    {
+      "symbol": "wheeledlab_tasks.drifting.f1tenth_drift_env_cfg:F1TenthDriftRLEnvCfg",
+      "file": "source/wheeledlab_tasks/wheeledlab_tasks/drifting/f1tenth_drift_env_cfg.py",
+      "line": 132,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/wheeledlab_tasks/wheeledlab_tasks/__init__.py:14 gym env Isaac-MushrDriftRL-v0",
+      "source/wheeledlab_tasks/wheeledlab_tasks/__init__.py:26 gym env Isaac-MushrVisualRL-v0",
+      "source/wheeledlab_tasks/wheeledlab_tasks/__init__.py:37 gym env Isaac-MushrElevationRL-v0",
+      "source/wheeledlab_tasks/wheeledlab_tasks/__init__.py:55 gym env Isaac-F1TenthDriftRL-v0"
+    ],
+    "upstream_tests": "source/wheeledlab_assets/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Isaac-MushrDriftRL-v0 registered at source/wheeledlab_tasks/wheeledlab_tasks/__init__.py:14",
+      "gym env Isaac-MushrVisualRL-v0 registered at source/wheeledlab_tasks/wheeledlab_tasks/__init__.py:26",
+      "gym env Isaac-MushrElevationRL-v0 registered at source/wheeledlab_tasks/wheeledlab_tasks/__init__.py:37",
+      "gym env Isaac-F1TenthDriftRL-v0 registered at source/wheeledlab_tasks/wheeledlab_tasks/__init__.py:55"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/uwrobotlearning__wheeledlab --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

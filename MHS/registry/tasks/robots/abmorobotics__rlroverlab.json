@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.abmorobotics/rlroverlab",
+  "track": "robots",
+  "local_path": "robots/abmorobotics/rlroverlab",
+  "driver_dir": "MHS/drivers/robots/abmorobotics__rlroverlab",
+  "upstream": {
+    "repo_url": "https://github.com/abmorobotics/rlroverlab",
+    "commit": "578906ad5c3383087aeec038be82b87e05d4ee2c",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 83,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "rover_envs.envs.navigation.entrypoints:RoverEnv",
+      "file": "rover_envs/envs/navigation/entrypoints/rover_env.py",
+      "line": 12,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.12,<3.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "rover_envs/envs/manipulation/config/ar4/__init__.py:5 gym env AR4CubeLift-v0",
+      "rover_envs/envs/manipulation/config/franka/__init__.py:5 gym env FrankaCubeLift-v0",
+      "rover_envs/envs/manipulation/config/franka/__init__.py:15 gym env FrankaCubeLift_REL-v0",
+      "rover_envs/envs/manipulation/config/franka/__init__.py:25 gym env FrankaCubeLift_ABS-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env AR4CubeLift-v0 registered at rover_envs/envs/manipulation/config/ar4/__init__.py:5",
+      "gym env FrankaCubeLift-v0 registered at rover_envs/envs/manipulation/config/franka/__init__.py:5",
+      "gym env FrankaCubeLift_REL-v0 registered at rover_envs/envs/manipulation/config/franka/__init__.py:15",
+      "gym env FrankaCubeLift_ABS-v0 registered at rover_envs/envs/manipulation/config/franka/__init__.py:25",
+      "gym env AAURoverEnv-v0 registered at rover_envs/envs/navigation/robots/aau_rover/__init__.py:7",
+      "gym env AAURoverEnvSimple-v0 registered at rover_envs/envs/navigation/robots/aau_rover/__init__.py:24",
+      "gym env AAURoverEnvDict-v0 registered at rover_envs/envs/navigation/robots/aau_rover/__init__.py:41",
+      "gym env AAURoverEnvCamera-v0 registered at rover_envs/envs/navigation/robots/aau_rover/__init__.py:54",
+      "gym env AAURoverEnvRGBDRaw-v0 registered at rover_envs/envs/navigation/robots/aau_rover/__init__.py:67",
+      "gym env AAURoverEnvRGBDRawHD720-v0 registered at rover_envs/envs/navigation/robots/aau_rover/__init__.py:80",
+      "gym env AAURoverEnvRGBDRawHD1080-v0 registered at rover_envs/envs/navigation/robots/aau_rover/__init__.py:93",
+      "gym env AAURoverEnvRGBDRawWVGA-v0 registered at rover_envs/envs/navigation/robots/aau_rover/__init__.py:106"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/abmorobotics__rlroverlab --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

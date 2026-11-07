@@ -1,0 +1,67 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.drkirkm/syringepump",
+  "track": "labs",
+  "local_path": "labs/drkirkm/syringepump",
+  "driver_dir": "MHS/drivers/labs/drkirkm__syringepump",
+  "upstream": {
+    "repo_url": "https://github.com/drkirkm/syringepump",
+    "commit": "6a39723535c339f24b0eeb7332c2dfe96e5a7afb",
+    "license_spdx": "CC0-1.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 100,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "pumpcontroller:Pumps",
+      "file": "pumpcontroller.py",
+      "line": 15,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "capabilities"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/drkirkm__syringepump --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

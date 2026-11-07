@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.libero-safety/libero-safety",
+  "track": "robots",
+  "local_path": "robots/libero-safety/libero-safety",
+  "driver_dir": "MHS/drivers/robots/libero-safety__libero-safety",
+  "upstream": {
+    "repo_url": "https://github.com/libero-safety/libero-safety",
+    "commit": "19ec8df23eedfbb9265bafd3e56495fcebfcfcd0",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:duplicate_of",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": "gh.lifelong-robot-learning/libero",
+  "package_status": "none",
+  "wave": 9,
+  "rank": 431,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "libero/libero/envs/problems/libero_coffee_table_manipulation.py:125 Libero_Coffee_Table_Manipulation environment class",
+      "templates/problem_class_template.py:12 YOUR_CLASS_NAME environment class",
+      "libero/libero/envs/env_wrapper.py:382 RandomOffScreenRenderEnv environment class",
+      "libero/libero/envs/env_wrapper.py:395 SegmentationRenderEnv environment class"
+    ],
+    "upstream_tests": "third_party/robosuite-1.4/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/libero-safety__libero-safety --backend fake",
+  "skip_reason": "duplicate of gh.lifelong-robot-learning/libero: override (robots.json): Model review of recon wave A: safety task suites (BDDL files and assets) over a copy of the LIBERO environment code; one LIBERO driver serves its task files.",
+  "publish_review": "not_required"
+}

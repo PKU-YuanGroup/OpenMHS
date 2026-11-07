@@ -1,0 +1,106 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nicrusso7/rex-gym",
+  "track": "robots",
+  "local_path": "robots/nicrusso7/rex-gym",
+  "driver_dir": "MHS/drivers/robots/nicrusso7__rex-gym",
+  "upstream": {
+    "repo_url": "https://github.com/nicrusso7/rex-gym",
+    "commit": "26663048bd3c3da307714da4458b1a2a9dc81824",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 97,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "rex_gym.envs.gym.gallop_env:RexReactiveEnv",
+      "file": "rex_gym/envs/gym/gallop_env.py",
+      "line": 29,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rex_gym.envs.gym.walk_env:RexWalkEnv",
+      "file": "rex_gym/envs/gym/walk_env.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rex_gym.envs.gym.turn_env:RexTurnEnv",
+      "file": "rex_gym/envs/gym/turn_env.py",
+      "line": 20,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rex_gym.envs.gym.standup_env:RexStandupEnv",
+      "file": "rex_gym/envs/gym/standup_env.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rex_gym.envs.gym.poses_env:RexPosesEnv",
+      "file": "rex_gym/envs/gym/poses_env.py",
+      "line": 21,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "rex_gym/playground/__init__.py:17 gym env RexGalloping-v0",
+      "rex_gym/playground/__init__.py:24 gym env RexWalk-v0",
+      "rex_gym/playground/__init__.py:31 gym env RexTurn-v0",
+      "rex_gym/playground/__init__.py:38 gym env RexStandup-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env RexGalloping-v0 registered at rex_gym/playground/__init__.py:17",
+      "gym env RexWalk-v0 registered at rex_gym/playground/__init__.py:24",
+      "gym env RexTurn-v0 registered at rex_gym/playground/__init__.py:31",
+      "gym env RexStandup-v0 registered at rex_gym/playground/__init__.py:38",
+      "gym env RexGo-v0 registered at rex_gym/playground/__init__.py:45",
+      "gym env RexPoses-v0 registered at rex_gym/playground/__init__.py:52"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nicrusso7__rex-gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

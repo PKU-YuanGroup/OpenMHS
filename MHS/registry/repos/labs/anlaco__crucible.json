@@ -1,0 +1,202 @@
+{
+  "adapter": {
+    "bridge": "scpi",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "cargo"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_131521cb23983a09",
+    "https://github.com/anlaco/crucible"
+  ],
+  "description": "anlaco/crucible: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: direct simulation backend. Language: Rust. Catalog keywords: YAML, SCPI.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 121 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "scpi-visa"
+  ],
+  "hardware_free": true,
+  "id": "gh.anlaco/crucible",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs the scpi helper; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/scpi-visa.md",
+    "role": "framework",
+    "scenario_required": true,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "SCPI/VISA",
+    "other:TCP",
+    "CLI",
+    "Serial"
+  ],
+  "languages": [
+    "Rust",
+    "Python",
+    "Shell",
+    "JavaScript"
+  ],
+  "last_commit_at": "2026-09-24T10:48:03+02:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/anlaco/crucible"
+  },
+  "local_path": "labs/anlaco/crucible",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "anlaco",
+  "package_id": "gh.anlaco/crucible",
+  "quarantine": false,
+  "rank": 92,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "crucible",
+  "repo_url": "https://github.com/anlaco/crucible",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "bb110c8c669e98cf93876f6b87def24f30b0c4f6",
+    "repo_url": "https://github.com/anlaco/crucible"
+  },
+  "stars": 0,
+  "tags": [
+    "scpi-visa",
+    "lab instrumentation",
+    "device backend",
+    "direct simulation backend",
+    "simulated",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "C",
+  "title": "anlaco/crucible",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 81.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "用YAML描述测试台仪器行为并通过真实协议(SCPI等)提供的开放标准与模拟运行时",
+      "join": "exact",
+      "license_raw": "Apache-2.0",
+      "mhs_support_raw": "unknown",
+      "priority": "P1",
+      "row": 213,
+      "rows_all": [
+        213
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "C",
+      "family_matches": [
+        "\\bscpi\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "C3-backend-needs-scenario"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/anlaco__crucible/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/labs/anlaco__crucible/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/anlaco__crucible/hardware"
+        ],
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "cargo"
+      ],
+      "entry_evidence_count": 0,
+      "files": 121,
+      "markers": {
+        "cli": 3,
+        "scpi_visa": 19,
+        "serial": 3
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Crucible is a Rust runtime that simulates SCPI test benches, not a device driver, so bridge-runtime framework fits.",
+        "rules alone: untriaged (untriaged:no_entry_class, rule 11)"
+      ],
+      "family": "scpi",
+      "helper": null,
+      "justification": "Crucible is a Rust runtime that simulates SCPI test benches, not a device driver, so bridge-runtime framework fits.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

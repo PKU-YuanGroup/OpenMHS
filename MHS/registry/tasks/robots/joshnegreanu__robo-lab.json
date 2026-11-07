@@ -1,0 +1,80 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.joshnegreanu/robo-lab",
+  "track": "robots",
+  "local_path": "robots/joshnegreanu/robo-lab",
+  "driver_dir": "MHS/drivers/robots/joshnegreanu__robo-lab",
+  "upstream": {
+    "repo_url": "https://github.com/joshnegreanu/robo-lab",
+    "commit": "f7d677dd46324e1805ad13057e1cf3359a166443",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 421,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "assets/trlc_dk1/scene_blocks.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/trlc_dk1/scene_dishes.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "assets/trlc_dk1/scene_blocks.xml:1 MJCF scene model",
+      "assets/trlc_dk1/scene_dishes.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model assets/trlc_dk1/scene_blocks.xml:1",
+      "MJCF scene model assets/trlc_dk1/scene_dishes.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/joshnegreanu__robo-lab --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

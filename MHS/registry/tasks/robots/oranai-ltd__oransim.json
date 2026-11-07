@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.oranai-ltd/oransim",
+  "track": "robots",
+  "local_path": "robots/oranai-ltd/oransim",
+  "driver_dir": "MHS/drivers/robots/oranai-ltd__oransim",
+  "upstream": {
+    "repo_url": "https://github.com/oranai-ltd/oransim",
+    "commit": "99a0a59227bb383b288a7df3c4a7f0e9acec8b63",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 180,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "backend/oransim/diffusion/legacy_hawkes.py:77 HawkesSimulator"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/oranai-ltd__oransim --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

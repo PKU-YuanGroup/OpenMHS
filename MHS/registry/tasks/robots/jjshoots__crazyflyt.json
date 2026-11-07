@@ -1,0 +1,89 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jjshoots/crazyflyt",
+  "track": "robots",
+  "local_path": "robots/jjshoots/crazyflyt",
+  "driver_dir": "MHS/drivers/robots/jjshoots__crazyflyt",
+  "upstream": {
+    "repo_url": "https://github.com/jjshoots/crazyflyt",
+    "commit": "85d99afa21cb5b90fd130cd480f0589a2b700b58",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 45,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "CrazyFlyt.drone_controller:DroneController",
+      "file": "CrazyFlyt/drone_controller.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "CrazyFlyt.swarm_controller:SwarmController",
+      "file": "CrazyFlyt/swarm_controller.py",
+      "line": 11,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "CrazyFlyt/simulator.py:11 Simulator",
+      "CrazyFlyt/simulator.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [
+      "DroneController.set_pos_control",
+      "DroneController.set_setpoint",
+      "SwarmController.set_pos_control",
+      "SwarmController.set_setpoints"
+    ],
+    "actions": [
+      "DroneController.start",
+      "DroneController.stop",
+      "SwarmController.arm"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "motion"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jjshoots__crazyflyt --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

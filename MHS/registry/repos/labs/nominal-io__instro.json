@@ -1,0 +1,263 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "instro.daq.daq:InstroDAQ (instro/daq/daq.py:432)",
+      "instro.awg.drivers.keysight_33521b:Keysight33521B (instro/awg/drivers/keysight_33521b.py:99)",
+      "instro.scope.drivers.keysight_1200x:Keysight1200X (instro/scope/drivers/keysight_1200x.py:86)",
+      "instro.scope.drivers.tektronix_2series:Tektronix2SeriesMSO (instro/scope/drivers/tektronix_2series.py:85)",
+      "instro.psu.drivers.siglent_spd3303:SiglentSPD3303 (instro/psu/drivers/siglent_spd3303.py:8)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "cargo",
+    "just",
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.actuation.gpio.v1"
+  ],
+  "catalog_refs": [
+    "repo_5ac8172f2f33c4f6",
+    "https://github.com/nominal-io/instro"
+  ],
+  "description": "nominal-io/instro: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 6. Catalog role: device SDK. Declared backend: PyVISA. Language: Python. Catalog keywords: instro, AWG, DAQ, Modbus.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 5,
+    "notes": "bounded static scan: 536 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/nominal-io__instro/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.nominal-io/instro",
+  "integration": {
+    "blockers": [
+      "PLATFORM_WINDOWS: Windows-only imports"
+    ],
+    "effort": "E3",
+    "next_action": "Maintain MHS/drivers/labs/nominal-io__instro: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/nominal-io__instro --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "driver-pack",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "SCPI/VISA",
+    "Modbus",
+    "CLI",
+    "OPC UA",
+    "Serial"
+  ],
+  "languages": [
+    "Python",
+    "Rust"
+  ],
+  "last_commit_at": "2026-10-07T15:47:32-07:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/nominal-io/instro"
+  },
+  "local_path": "labs/nominal-io/instro",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "nominal-io",
+  "package_id": "gh.nominal-io/instro",
+  "quarantine": false,
+  "rank": 3,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "instro",
+  "repo_url": "https://github.com/nominal-io/instro",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "311aee4ae227205b773e6cc9c523df9ea7e7ce03",
+    "repo_url": "https://github.com/nominal-io/instro"
+  },
+  "stars": 718,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "simulated",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "nominal-io/instro",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 6,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 81.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "PyVISA",
+      "category_zh": "设备后端",
+      "description_zh": "instro：厂商无关的测试设备Python库，覆盖电源、万用表、AWG、示波器、DAQ、Modbus等，部分驱动含模拟",
+      "join": "exact",
+      "license_raw": "Apache-2.0",
+      "mhs_support_raw": "unknown",
+      "priority": "P1",
+      "row": 1784,
+      "rows_all": [
+        1784
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bpyvisa\\b"
+      ],
+      "family_note": "triage family python-object (catalogue family scpi-visa)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/nominal-io__instro/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.actuation.gpio.v1"
+            ],
+            "kind": "io.gpio"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/nominal-io__instro/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/nominal-io__instro/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.actuation.gpio.v1"
+            ],
+            "kind": "io.gpio"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": "Apache-2.0",
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "311aee4ae227205b773e6cc9c523df9ea7e7ce03",
+      "driver_dir": "MHS/drivers/labs/nominal-io__instro",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:0ddaf2b71c0a53ff68df61954e9b1c5867de58968ecf7ce87ff0c5805ad5c16c",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "cargo",
+        "just",
+        "python"
+      ],
+      "entry_evidence_count": 8,
+      "files": 536,
+      "markers": {
+        "cli": 1,
+        "opcua": 6,
+        "scpi_visa": 7,
+        "serial": 7
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class instro.lib.transports.modbus:ModbusTCPTransport (instro/lib/transports/modbus.py:361, score 17)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class instro.lib.transports.modbus:ModbusTCPTransport uses the hardware transport pymodbus",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

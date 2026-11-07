@@ -1,0 +1,239 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "ue9:UE9 (src/ue9.py:66)",
+      "u12:U12 (src/u12.py:412)",
+      "u3:U3 (src/u3.py:63)",
+      "u6:U6 (src/u6.py:179)",
+      "LabJackPython:Device (src/LabJackPython.py:189)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.measure.current.v1",
+    "cap.measure.temperature.v1",
+    "cap.actuation.gpio.v1"
+  ],
+  "catalog_refs": [
+    "repo_9a6ac46ad1590c76",
+    "https://github.com/labjack/labjackpython"
+  ],
+  "description": "labjack/labjackpython: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Language: Python. Catalog keywords: LabJack, U3, U6, UE9, U12.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 35 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/labjack__labjackpython/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.labjack/labjackpython",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/labjack__labjackpython: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/labjack__labjackpython --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "Modbus",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-07-30T14:16:53-06:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/labjack/labjackpython"
+  },
+  "local_path": "labs/labjack/labjackpython",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "labjack",
+  "package_id": "gh.labjack/labjackpython",
+  "quarantine": false,
+  "rank": 16,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "labjackpython",
+  "repo_url": "https://github.com/labjack/labjackpython",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "a2f13eb548cca6416b1d44b08b63f7c5fd7f943b",
+    "repo_url": "https://github.com/labjack/labjackpython"
+  },
+  "stars": 124,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "labjack/labjackpython",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.74,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 42.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "LabJack U3/U6/UE9/U12的官方Python模块",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 1370,
+      "rows_all": [
+        1370
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "serial",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bmodbus\\b"
+      ],
+      "family_note": "triage family python-object (catalogue family serial)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/labjack__labjackpython/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.measure.current.v1"
+            ],
+            "kind": "instrument.dmm"
+          },
+          {
+            "capabilities": [
+              "cap.measure.temperature.v1"
+            ],
+            "kind": "instrument.thermometer"
+          },
+          {
+            "capabilities": [
+              "cap.actuation.gpio.v1"
+            ],
+            "kind": "io.gpio"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "a2f13eb548cca6416b1d44b08b63f7c5fd7f943b",
+      "driver_dir": "MHS/drivers/labs/labjack__labjackpython",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:67b7f6dd0c0dca403b4ef615f3c51c0d53db5ddb7300de23c8dbb3c34593f928",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 0,
+      "files": 35,
+      "markers": {
+        "serial": 5
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Official LabJack Python module for U3/U6/UE9/U12 DAQ devices; a direct Driver over its device classes.",
+        "rules alone: direct-driver (PY_SDK_WITH_ENTRY, rule 10)"
+      ],
+      "family": "python-object",
+      "flagship": true,
+      "helper": "PythonObjectDriver",
+      "justification": "Official LabJack Python module for U3/U6/UE9/U12 DAQ devices; a direct Driver over its device classes.",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

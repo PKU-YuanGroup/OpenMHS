@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.vimalabs/vimabench",
+  "track": "robots",
+  "local_path": "robots/vimalabs/vimabench",
+  "driver_dir": "MHS/drivers/robots/vimalabs__vimabench",
+  "upstream": {
+    "repo_url": "https://github.com/vimalabs/vimabench",
+    "commit": "97e0af11e126fd477c9d81eeabfb6c739021c680",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 193,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "vima_bench:make",
+      "file": "vima_bench/__init__.py",
+      "line": 14,
+      "confidence": "override"
+    },
+    {
+      "symbol": "vima_bench.env.base:VIMAEnvBase",
+      "file": "vima_bench/env/base.py",
+      "line": 25,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/vimalabs__vimabench --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jasapp/rigol",
+  "track": "labs",
+  "local_path": "labs/jasapp/rigol",
+  "driver_dir": "MHS/drivers/labs/jasapp__rigol",
+  "upstream": {
+    "repo_url": "https://github.com/jasapp/rigol",
+    "commit": "602b8623f820f6b4db4d225b1d66f11b3bbb6d6a",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 328,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "rigol:RigolDP832A",
+      "file": "rigol.py",
+      "line": 27,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "RigolDP832A.get_current_setpoint",
+      "RigolDP832A.get_output",
+      "RigolDP832A.get_voltage_setpoint",
+      "RigolDP832A.measure_current",
+      "RigolDP832A.measure_power",
+      "RigolDP832A.measure_voltage",
+      "RigolDP832A.status"
+    ],
+    "writes": [
+      "RigolDP832A.set_current",
+      "RigolDP832A.set_ocp",
+      "RigolDP832A.set_ovp",
+      "RigolDP832A.set_voltage"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.current.v1",
+      "cap.measure.voltage.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/jasapp__rigol --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

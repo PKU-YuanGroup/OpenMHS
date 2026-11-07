@@ -1,0 +1,183 @@
+{
+  "adapter": {
+    "bridge": "ros",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_7620369ff362495f",
+    "https://github.com/kaiaai/micro_ros_arduino_kaiaai"
+  ],
+  "description": "kaiaai/micro_ros_arduino_kaiaai: device backend for mobile robots (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: device SDK. Declared backend: ROS 2. Language: C/C++ header, C, Arduino. Catalog keywords: Kaia.ai, Micro-ROS, Arduino.",
+  "domains": [
+    "mobile robots"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 656 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "ros2"
+  ],
+  "hardware_free": false,
+  "id": "gh.kaiaai/micro_ros_arduino_kaiaai",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this transport backs the ros helper; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/ros2.md",
+    "role": "transport",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "ROS 2",
+    "Docker"
+  ],
+  "languages": [
+    "C/C++ header",
+    "C",
+    "Arduino",
+    "C++"
+  ],
+  "last_commit_at": "2024-10-28T03:10:59-07:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/kaiaai/micro_ros_arduino_kaiaai"
+  },
+  "local_path": "robots/kaiaai/micro_ros_arduino_kaiaai",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "kaiaai",
+  "package_id": "gh.kaiaai/micro_ros_arduino_kaiaai",
+  "quarantine": false,
+  "rank": 286,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "micro_ros_arduino_kaiaai",
+  "repo_url": "https://github.com/kaiaai/micro_ros_arduino_kaiaai",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "84cd55b83aa12d87bb1c886481fa32637625b379",
+    "repo_url": "https://github.com/kaiaai/micro_ros_arduino_kaiaai"
+  },
+  "stars": 0,
+  "tags": [
+    "ros2",
+    "robotics",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "kaiaai/micro_ros_arduino_kaiaai",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "ros2",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 31.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.66
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "unknown",
+      "backend_family_raw": "ROS 2",
+      "category_zh": "设备后端",
+      "description_zh": "面向Kaia.ai宠物机器人的Micro-ROS Arduino库分支",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "参考",
+      "row": 1278,
+      "rows_all": [
+        1278
+      ],
+      "scope": "peripheral",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "ros2",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bros ?2\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/kaiaai__micro_ros_arduino_kaiaai/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 0,
+      "files": 656,
+      "markers": {
+        "docker": 6,
+        "ros2": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): This C++ Arduino micro-ROS library is firmware-side ROS 2 middleware, so bridge-runtime/transport, not a Python driver.",
+        "rules alone: untriaged (untriaged:non_python, rule 11)"
+      ],
+      "family": "ros",
+      "helper": null,
+      "justification": "This C++ Arduino micro-ROS library is firmware-side ROS 2 middleware, so bridge-runtime/transport, not a Python driver.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

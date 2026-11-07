@@ -1,0 +1,225 @@
+{
+  "adapter": {
+    "bridge": "serial",
+    "entry_points": [
+      "hardware.pump:PumpController (fluidics-control/hardware/pump.py:786)",
+      "hardware.valve:ValveController (fluidics-control/hardware/valve.py:118)",
+      "hardware.solenoids:SolenoidController (fluidics-control/hardware/solenoids.py:160)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_4bc61877aa1f187f",
+    "https://github.com/jasegehring/spamb"
+  ],
+  "description": "jasegehring/spamb: repository for wet-lab automation and chemistry (lab instrumentation track). OpenMHS plan: direct-driver with SerialDriver, wave 3. Catalog role: direct simulation backend; controller. Declared backend: Fluidics OS Python/FastAPI. Language: Python. Catalog keywords: Fluidics, OS,.",
+  "domains": [
+    "wet-lab automation and chemistry"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 127 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/jasegehring__spamb/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "serial"
+  ],
+  "hardware_free": true,
+  "id": "gh.jasegehring/spamb",
+  "integration": {
+    "blockers": [
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E3",
+    "next_action": "Maintain MHS/drivers/labs/jasegehring__spamb: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/jasegehring__spamb --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/serial.md",
+    "role": "driver-pack",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "REST",
+    "WebSocket",
+    "YAML",
+    "Python",
+    "HTTP/REST",
+    "Serial",
+    "CLI"
+  ],
+  "languages": [
+    "Python",
+    "JavaScript"
+  ],
+  "last_commit_at": "2026-07-30T07:51:52Z",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "docs": "https://github.com/jasegehring/SPAMB",
+    "repo": "https://github.com/jasegehring/spamb"
+  },
+  "local_path": "labs/jasegehring/spamb",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "jasegehring",
+  "package_id": "gh.jasegehring/spamb",
+  "quarantine": false,
+  "rank": 48,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "spamb",
+  "repo_url": "https://github.com/jasegehring/spamb",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "06a404c1879d0d1f926ba59470f81f9b7e7987cb",
+    "repo_url": "https://github.com/jasegehring/spamb"
+  },
+  "stars": 0,
+  "tags": [
+    "serial",
+    "lab instrumentation",
+    "direct simulation backend controller",
+    "simulated",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "A",
+  "title": "jasegehring/spamb",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.86,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 74.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端 | 控制器",
+      "archived": "false",
+      "backend_family_raw": "Fluidics OS Python/FastAPI",
+      "category_zh": "微流控工作站",
+      "description_zh": "Fluidics OS微流控控制系统，mock模式支持真实时长的泵、旋转阀和电磁阀工作流。",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "需开发适配；已核材料未建立官方或第三方 MHS 集成证据",
+      "priority": "P1",
+      "row": 1179,
+      "rows_all": [
+        1179
+      ],
+      "scope": "unknown",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "http-api",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bfastapi\\b"
+      ],
+      "family_note": "triage family serial (catalogue family http-api)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/jasegehring__spamb/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/jasegehring__spamb/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/jasegehring__spamb/hardware"
+        ],
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "06a404c1879d0d1f926ba59470f81f9b7e7987cb",
+      "driver_dir": "MHS/drivers/labs/jasegehring__spamb",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:b4f7ad9126ef623e01dfaa2e9b1b2ec78f9155501cdc838ee904bfcb113a45da",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 5,
+      "files": 127,
+      "markers": {
+        "http": 6,
+        "liquid_handling": 2,
+        "serial": 6
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of wave C: a direct Driver over PumpController, not a SerialDriver table: the pump, valve and solenoid controllers are Python objects over pyserial with their own replies.",
+        "rules alone: untriaged (untriaged:no_entry_class, rule 11)"
+      ],
+      "family": "serial",
+      "helper": "SerialDriver",
+      "justification": "Model review of wave C: a direct Driver over PumpController, not a SerialDriver table: the pump, valve and solenoid controllers are Python objects over pyserial with their own replies.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

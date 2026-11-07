@@ -1,0 +1,124 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.isaac-sim/isaacgymenvs",
+  "track": "robots",
+  "local_path": "robots/isaac-sim/isaacgymenvs",
+  "driver_dir": "MHS/drivers/robots/isaac-sim__isaacgymenvs",
+  "upstream": {
+    "repo_url": "https://github.com/isaac-sim/isaacgymenvs",
+    "commit": "aeed298638a1f7b5421b38f5f3cc2d1079b6d9c3",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 29,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "isaacgymenvs:make",
+      "file": "isaacgymenvs/__init__.py",
+      "line": 14,
+      "confidence": "override"
+    },
+    {
+      "symbol": "isaacgymenvs.tasks.base.vec_task:VecTask",
+      "file": "isaacgymenvs/tasks/base/vec_task.py",
+      "line": 207,
+      "confidence": "override"
+    },
+    {
+      "symbol": "isaacgymenvs.tasks.ant:Ant",
+      "file": "isaacgymenvs/tasks/ant.py",
+      "line": 41,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "assets/mjcf/open_ai_assets/fetch/pick_and_place.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/mjcf/open_ai_assets/hand/manipulate_block.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/mjcf/open_ai_assets/hand/manipulate_block_touch_sensors.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/mjcf/open_ai_assets/hand/manipulate_egg.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/mjcf/open_ai_assets/hand/manipulate_egg_touch_sensors.xml",
+      "line": 2,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "assets/mjcf/open_ai_assets/fetch/pick_and_place.xml:2 MJCF scene model",
+      "assets/mjcf/open_ai_assets/hand/manipulate_block.xml:2 MJCF scene model",
+      "assets/mjcf/open_ai_assets/hand/manipulate_block_touch_sensors.xml:2 MJCF scene model",
+      "assets/mjcf/open_ai_assets/hand/manipulate_egg.xml:2 MJCF scene model"
+    ],
+    "upstream_tests": "isaacgymenvs/tasks/amp/poselib/poselib/core/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model assets/mjcf/open_ai_assets/fetch/pick_and_place.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/manipulate_block.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/manipulate_block_touch_sensors.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/manipulate_egg.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/manipulate_egg_touch_sensors.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/manipulate_pen.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/manipulate_pen_touch_sensors.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/pen.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/reach.xml:2",
+      "MJCF scene model assets/mjcf/open_ai_assets/hand/shadow_hand.xml:2"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/isaac-sim__isaacgymenvs --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.colinkohler/bulletarm",
+  "track": "robots",
+  "local_path": "robots/colinkohler/bulletarm",
+  "driver_dir": "MHS/drivers/robots/colinkohler__bulletarm",
+  "upstream": {
+    "repo_url": "https://github.com/colinkohler/bulletarm",
+    "commit": "dbe0a42d5c724d283f5d643856ad65b82265a556",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1341,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "tutorials/train_dummy_agent.py:4 DummyAgent",
+      "tutorials/train_dummy_agent.py:1",
+      "bulletarm/pybullet/urdf/object/GraspNet1B_object/sim_mesh.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/colinkohler__bulletarm --backend fake",
+  "skip_reason": "override (robots.json): BulletArm is a PyBullet manipulation benchmark, not a device or Gymnasium/MuJoCo environment, so no driver applies; use env_factory.createEnvs, whose custom BaseEnv step returns (obs, reward, done).",
+  "publish_review": "not_required"
+}

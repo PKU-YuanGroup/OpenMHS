@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.linden713/humanoid_amp",
+  "track": "robots",
+  "local_path": "robots/linden713/humanoid_amp",
+  "driver_dir": "MHS/drivers/robots/linden713__humanoid_amp",
+  "upstream": {
+    "repo_url": "https://github.com/linden713/humanoid_amp",
+    "commit": "99efa6d60e351ec3def0dc6e983baf143fd31328",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 43,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "humanoid_amp.humanoid_amp_env:HumanoidAmpEnv",
+      "file": "humanoid_amp_env.py",
+      "line": 22,
+      "confidence": "override"
+    },
+    {
+      "symbol": "humanoid_amp.g1_amp_env:G1AmpEnv",
+      "file": "g1_amp_env.py",
+      "line": 22,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "__init__.py:18 gym env Isaac-Humanoid-AMP-Dance-Direct-v0",
+      "__init__.py:29 gym env Isaac-Humanoid-AMP-Run-Direct-v0",
+      "__init__.py:40 gym env Isaac-Humanoid-AMP-Walk-Direct-v0",
+      "__init__.py:51 gym env Isaac-G1-AMP-Dance-Direct-v0"
+    ],
+    "upstream_tests": "motions/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Isaac-Humanoid-AMP-Dance-Direct-v0 registered at __init__.py:18",
+      "gym env Isaac-Humanoid-AMP-Run-Direct-v0 registered at __init__.py:29",
+      "gym env Isaac-Humanoid-AMP-Walk-Direct-v0 registered at __init__.py:40",
+      "gym env Isaac-G1-AMP-Dance-Direct-v0 registered at __init__.py:51",
+      "gym env Isaac-G1-AMP-Walk-Direct-v0 registered at __init__.py:62"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/linden713__humanoid_amp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

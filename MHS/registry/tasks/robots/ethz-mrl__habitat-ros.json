@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ethz-mrl/habitat-ros",
+  "track": "robots",
+  "local_path": "robots/ethz-mrl/habitat-ros",
+  "driver_dir": "MHS/drivers/robots/ethz-mrl__habitat-ros",
+  "upstream": {
+    "repo_url": "https://github.com/ethz-mrl/habitat-ros",
+    "commit": "18c3f60a18c0201768a1fcbbabe792d30c996688",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": "ros",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 539,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "habitat_sim.habitat_sim.robots.fetch_robot:FetchRobot",
+      "file": "habitat_sim/habitat_sim/robots/fetch_robot.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "habitat_sim.habitat_sim.utils.data.data_extractor:ImageExtractor",
+      "file": "habitat_sim/habitat_sim/utils/data/data_extractor.py",
+      "line": 28,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "habitat_sim.habitat_sim.agent.controls.pyrobot_noisy_controls:PyRobotNoisyActuationSpec",
+      "file": "habitat_sim/habitat_sim/agent/controls/pyrobot_noisy_controls.py",
+      "line": 163,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "habitat_sim.habitat_sim.agent.agent:Agent",
+      "file": "habitat_sim/habitat_sim/agent/agent.py",
+      "line": 116,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "habitat_sim.habitat_sim.agent.controls.object_controls:ObjectControls",
+      "file": "habitat_sim/habitat_sim/agent/controls/object_controls.py",
+      "line": 28,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "catkin_make"
+    ],
+    "system_deps": [
+      "Catkin workspace with this package in src; run catkin_make from the workspace root"
+    ],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "habitat_sim/habitat_sim/simulator.py:63 Simulator",
+      "habitat_mav_sim_node.py:1",
+      "habitat_sim/habitat_sim/sim.py:1",
+      "habitat_sim/habitat_sim/simulator.py:1"
+    ],
+    "upstream_tests": "habitat_sim/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ethz-mrl__habitat-ros --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

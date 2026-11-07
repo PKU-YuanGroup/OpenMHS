@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.abenor-labs/open-mhs",
+  "track": "robots",
+  "local_path": "robots/abenor-labs/open-mhs",
+  "driver_dir": "MHS/drivers/robots/abenor-labs__open-mhs",
+  "upstream": {
+    "repo_url": "https://github.com/abenor-labs/open-mhs",
+    "commit": "92b04b023915ba7cdf2cac55eb58e86a3c94cc0d",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "reference",
+  "reason_code": "reference:prior-art",
+  "role": "prior-art",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 648,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "open_mhs/drivers/mock_pump.py:20 MockPump",
+      "open_mhs/drivers/mock_robotic_arm.py:27 MockRoboticArm",
+      "open_mhs/drivers/mock_temp_sensor.py:26 MockTempSensor",
+      "open_mhs/drivers/mock_pump.py:1",
+      "open_mhs/drivers/mock_robotic_arm.py:1",
+      "open_mhs/drivers/mock_temp_sensor.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/abenor-labs__open-mhs --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

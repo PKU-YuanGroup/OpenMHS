@@ -1,0 +1,78 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.davehe929/scopebench-mcp",
+  "track": "labs",
+  "local_path": "labs/davehe929/scopebench-mcp",
+  "driver_dir": "MHS/drivers/labs/davehe929__scopebench-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/davehe929/scopebench-mcp",
+    "commit": "3f0abc87a2839e816744a7d867c1ef06ed721f7a",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 34,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "scopebench_mcp.transports.visa:VisaTransport",
+      "file": "src/scopebench_mcp/transports/visa.py",
+      "line": 125,
+      "confidence": "override"
+    },
+    {
+      "symbol": "scopebench_mcp.transports.tcp:TCPTransport",
+      "file": "src/scopebench_mcp/transports/tcp.py",
+      "line": 14,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "TCPTransport.read_binary_block",
+      "VisaTransport.read_binary_block",
+      "BaseTransport.read_binary_block"
+    ],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/davehe929__scopebench-mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

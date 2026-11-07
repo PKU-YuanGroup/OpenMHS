@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.harvard-edge/mavbench",
+  "track": "robots",
+  "local_path": "robots/harvard-edge/mavbench",
+  "driver_dir": "MHS/drivers/robots/harvard-edge__mavbench",
+  "upstream": {
+    "repo_url": "https://github.com/harvard-edge/mavbench",
+    "commit": "552894327ce705f921b800d3e80adde42b3d248c",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1589,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/AirSim/PythonClient/AirSimClient.py:31 AirSimImageType",
+      "src/AirSim/PythonClient/AirSimClient.py:213 AirSimClientBase",
+      "src/opencv/samples/python/video_threaded.py:31 DummyTask"
+    ],
+    "upstream_tests": "src/pcl/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/harvard-edge__mavbench --backend fake",
+  "skip_reason": "override (robots.json): MAVBench is a research benchmark and closed-loop MAV simulator harness, not a device driver.",
+  "publish_review": "required"
+}

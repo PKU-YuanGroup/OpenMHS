@@ -1,0 +1,213 @@
+{
+  "adapter": {
+    "bridge": "scpi",
+    "entry_points": [
+      "instruments.keysight33210A:keysight33210A (instruments/keysight33210A.py:11)",
+      "instruments._temp_keysight:keysight33210A (instruments/_temp_keysight.py:11)",
+      "instruments.agilentU272xA:agilentU272xA (instruments/agilentU272xA.py:11)",
+      "instruments.keithley24XX:keithley24XX (instruments/keithley24XX.py:11)",
+      "ivl_snapshots.tasks:SweepMyLEC (ivl_snapshots/tasks.py:41)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_d4c9d5ad2e06aa2b",
+    "https://github.com/jrafolsr/pyinstruments"
+  ],
+  "description": "jrafolsr/pyinstruments: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: family-config with ScpiDriver, wave 3. Catalog role: device SDK. Declared backend: PyVISA. Language: Python. Catalog keywords: PyVISA, Keithley, XX, Agilent, Keysight.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 77 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/jrafolsr__pyinstruments/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "scpi-visa"
+  ],
+  "hardware_free": false,
+  "id": "gh.jrafolsr/pyinstruments",
+  "integration": {
+    "blockers": [
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/labs/jrafolsr__pyinstruments: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/jrafolsr__pyinstruments --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "family:scpi",
+    "recipe": "families/scpi-visa.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "Python SDK",
+    "SCPI/VISA"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-06-22T11:45:40+02:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/jrafolsr/pyinstruments"
+  },
+  "local_path": "labs/jrafolsr/pyinstruments",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "jrafolsr",
+  "package_id": "gh.jrafolsr/pyinstruments",
+  "quarantine": false,
+  "rank": 65,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pyinstruments",
+  "repo_url": "https://github.com/jrafolsr/pyinstruments",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "631eb6fe6e61ca83e0d065aa3e36b04244c952b4",
+    "repo_url": "https://github.com/jrafolsr/pyinstruments"
+  },
+  "stars": 9,
+  "tags": [
+    "scpi-visa",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "family config"
+  ],
+  "tier": "B",
+  "title": "jrafolsr/pyinstruments",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 45.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "PyVISA",
+      "category_zh": "设备后端",
+      "description_zh": "基于PyVISA的实验仪器控制库(Keithley 24XX、Agilent电源、Keysight函数发生器、万用表等)",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 1244,
+      "rows_all": [
+        1244
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bpyvisa\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/jrafolsr__pyinstruments/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "631eb6fe6e61ca83e0d065aa3e36b04244c952b4",
+      "driver_dir": "MHS/drivers/labs/jrafolsr__pyinstruments",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:f4d16a36ee9353e6e951d37f234370099b784515070afade10a46084992bd4b8",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 3,
+      "files": 77,
+      "markers": {
+        "scpi_visa": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "structural marker: imports pyvisa",
+        "device-driver evidence: catalogue category 'device backend'"
+      ],
+      "family": "scpi",
+      "hardware_transport": "class instruments.keysight33210A:keysight33210A uses the hardware transport pyvisa",
+      "helper": "ScpiDriver",
+      "reason_code": "family:scpi",
+      "rule": 9,
+      "version": "0.9.4"
+    }
+  }
+}

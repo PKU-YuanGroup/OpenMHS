@@ -1,0 +1,133 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.prathameshnium/pica-python-instrument-control-and-automation",
+  "track": "labs",
+  "local_path": "labs/prathameshnium/pica-python-instrument-control-and-automation",
+  "driver_dir": "MHS/drivers/labs/prathameshnium__pica-python-instrument-control-and-automation",
+  "upstream": {
+    "repo_url": "https://github.com/prathameshnium/pica-python-instrument-control-and-automation",
+    "commit": "17ce57d76e679841379bcc13d33f77fe046f9c87",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 5,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pica.cryocon.T_Control_CC34_DirectControl_GUI:Cryocon34Backend",
+      "file": "pica/cryocon/T_Control_CC34_DirectControl_GUI.py",
+      "line": 547,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pica.cryocon.Sensor_Curve_Loader_CC34_GUI:CurveLoaderBackend",
+      "file": "pica/cryocon/Sensor_Curve_Loader_CC34_GUI.py",
+      "line": 2288,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pica.lakeshore.Sensor_Curve_Loader_L340_L350_GUI:CurveLoaderBackend",
+      "file": "pica/lakeshore/Sensor_Curve_Loader_L340_L350_GUI.py",
+      "line": 1980,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pica.lockin.sr830.RT_AC_K6221_SR830_CC34_T_Sensing_GUI:SR830Lockin",
+      "file": "pica/lockin/sr830/RT_AC_K6221_SR830_CC34_T_Sensing_GUI.py",
+      "line": 380,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pica.keithley.k6221_k197a.RT_AC_K6221_K197A_L340_T_Control_GUI:Lakeshore340Controller",
+      "file": "pica/keithley/k6221_k197a/RT_AC_K6221_K197A_L340_T_Control_GUI.py",
+      "line": 852,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Cryocon34Backend.get_alarm",
+      "Cryocon34Backend.get_alarm_status",
+      "Cryocon34Backend.get_ambient",
+      "Cryocon34Backend.get_control_status",
+      "Cryocon34Backend.get_display_resolution",
+      "Cryocon34Backend.get_display_time_constant",
+      "Cryocon34Backend.get_error_queue",
+      "Cryocon34Backend.get_factory_sensor_index",
+      "Cryocon34Backend.get_heater_readback",
+      "Cryocon34Backend.get_idn",
+      "Cryocon34Backend.get_input_name",
+      "Cryocon34Backend.get_load"
+    ],
+    "writes": [
+      "Cryocon34Backend.set_alarm",
+      "Cryocon34Backend.set_display_resolution",
+      "Cryocon34Backend.set_display_time_constant",
+      "Cryocon34Backend.set_factory_sensor_index",
+      "Cryocon34Backend.set_input_name",
+      "Cryocon34Backend.set_load",
+      "Cryocon34Backend.set_lockout",
+      "Cryocon34Backend.set_loop_source",
+      "Cryocon34Backend.set_loop_type",
+      "Cryocon34Backend.set_manual_power",
+      "Cryocon34Backend.set_max_power",
+      "Cryocon34Backend.set_max_setpoint"
+    ],
+    "actions": [
+      "Cryocon34Backend.control_stop",
+      "Cryocon34Backend.reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.temperature.v1",
+      "cap.thermal.setpoint.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": [
+      "pica/main_v2.py:1564 MAX_CARD_COLS = 4",
+      "pica/main_v2.py:1576 SEARCH_LIMIT = 24",
+      "pica/cryocon/Sensor_Curve_Loader_CC34_GUI.py:401 MIN_USER_CURVE = 1",
+      "pica/cryocon/Sensor_Curve_Loader_CC34_GUI.py:402 MAX_USER_CURVE = 12",
+      "pica/cryocon/Sensor_Curve_Loader_CC34_GUI.py:403 MIN_CURVE_POINTS = 2",
+      "pica/cryocon/Sensor_Curve_Loader_CC34_GUI.py:404 MAX_CURVE_POINTS = 200",
+      "pica/cryocon/Sensor_Curve_Loader_CC34_GUI.py:405 MIN_NAME_CHARS = 4",
+      "pica/cryocon/Sensor_Curve_Loader_CC34_GUI.py:406 MAX_NAME_CHARS = 15"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/prathameshnium__pica-python-instrument-control-and-automation --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

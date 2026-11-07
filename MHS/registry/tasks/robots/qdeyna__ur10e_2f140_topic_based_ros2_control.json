@@ -1,0 +1,132 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.qdeyna/ur10e_2f140_topic_based_ros2_control",
+  "track": "robots",
+  "local_path": "robots/qdeyna/ur10e_2f140_topic_based_ros2_control",
+  "driver_dir": "MHS/drivers/robots/qdeyna__ur10e_2f140_topic_based_ros2_control",
+  "upstream": {
+    "repo_url": "https://github.com/qdeyna/ur10e_2f140_topic_based_ros2_control",
+    "commit": "7db5397edae2795c8366d1ac1581f277124bde98",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 405,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "src/Universal_Robots_ROS2_Description/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install",
+    "capabilities",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/qdeyna__ur10e_2f140_topic_based_ros2_control --backend fake",
+  "skip_reason": null,
+  "publish_review": "required",
+  "companions": [
+    {
+      "alias": "ros2_control",
+      "package_id": "gh.ros-controls/ros2_control",
+      "commit": "7f26da889aa0898442d1c0a135ae001add1a9878",
+      "profile": "ros2-humble-gzsim6",
+      "reason": "controller_manager 2.54.4 (Humble) serves switch_controller (the stop and the re-enable) and list_controllers, whose one scaled_joint_trajectory_controller element confirms the stop.",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:105",
+          "token": "ROS 2 Humble"
+        },
+        {
+          "side": "package",
+          "ref": "src/ur_robotiq_description/launch/ur_robotiq_control.launch.py:194",
+          "token": "controller_manager"
+        },
+        {
+          "side": "companion",
+          "ref": "controller_manager/package.xml:5",
+          "token": "2.54.4"
+        },
+        {
+          "side": "companion",
+          "ref": "README.md:22",
+          "token": "Humble"
+        }
+      ],
+      "lock": "ros-controls__ros2_control@2.54.4",
+      "ref": "2.54.4",
+      "local_path": "work/companions/ros-controls__ros2_control@7f26da889aa0",
+      "repo_url": "https://github.com/ros-controls/ros2_control.git",
+      "license_spdx": "Apache-2.0"
+    },
+    {
+      "alias": "ros2_controllers",
+      "package_id": "gh.ros-controls/ros2_controllers",
+      "commit": "65db73628ebac1948833f0fbdc60973c74d6cd0e",
+      "profile": "ros2-humble-gzsim6",
+      "reason": "joint_trajectory_controller 2.54.1 (Humble): deactivation drops the trajectory and activation holds the measured position for this position-only command with position and velocity state (facts only).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:105",
+          "token": "ROS 2 Humble"
+        },
+        {
+          "side": "package",
+          "ref": "src/Universal_Robots_ROS2_Driver/ur_controllers/include/ur_controllers/scaled_joint_trajectory_controller.hpp:43",
+          "token": "joint_trajectory_controller"
+        },
+        {
+          "side": "companion",
+          "ref": "joint_trajectory_controller/package.xml:4",
+          "token": "2.54.1"
+        },
+        {
+          "side": "companion",
+          "ref": "README.md:21",
+          "token": "Humble"
+        }
+      ],
+      "lock": "ros-controls__ros2_controllers@2.54.1",
+      "ref": "2.54.1",
+      "local_path": "work/companions/ros-controls__ros2_controllers@65db73628eba",
+      "repo_url": "https://github.com/ros-controls/ros2_controllers.git",
+      "license_spdx": "Apache-2.0"
+    }
+  ]
+}

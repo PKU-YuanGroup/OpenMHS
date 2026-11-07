@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/overrides.schema.json",
+  "overrides_version": "0.9",
+  "title": "PF400 re-author route (grok-4.7, 2026-11-05)",
+  "description": "Routing for gh.ad-sdl/pf400_module_ros under the user's decision of 2026-11-05 (Grok authors, Codex reviews). The card's ros/RosDriver route is replaced by a direct Driver over pf400_driver.pf400_driver.tcp_driver:PF400. The status-port halt and the single-client status-port precondition are in the justification, which the registry stores as the card's decision evidence. Modes and capability classes are left to the scan: an arm stays hardware, and a joint-position class would publish an R1 floor.",
+  "overrides": [
+    {
+      "package_id": "gh.ad-sdl/pf400_module_ros",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "pf400_driver.pf400_driver.tcp_driver:PF400",
+          "file": "pf400_driver/pf400_driver/tcp_driver.py",
+          "line": 12
+        }
+      ],
+      "justification": "Re-author (grok-4.7): status-port halt (Cmd.gpl:1840) because the robot port blocks during motion (Main.gpl:203-209). The status port serves one client (Main.gpl:88-90); a busy or unreachable port fails the stop."
+    }
+  ]
+}

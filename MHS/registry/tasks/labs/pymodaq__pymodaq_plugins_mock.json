@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pymodaq/pymodaq_plugins_mock",
+  "track": "labs",
+  "local_path": "labs/pymodaq/pymodaq_plugins_mock",
+  "driver_dir": "MHS/drivers/labs/pymodaq__pymodaq_plugins_mock",
+  "upstream": {
+    "repo_url": "https://github.com/pymodaq/pymodaq_plugins_mock",
+    "commit": "0192ea563eb48a8aad6f51101636f38df809264e",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 690,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/pymodaq_plugins_mock/daq_move_plugins/daq_move_Mock.py:9 DAQ_Move_Mock",
+      "src/pymodaq_plugins_mock/daq_viewer_plugins/plugins_0D/daq_0Dviewer_Mock.py:23 MockScalableGroup",
+      "src/pymodaq_plugins_mock/daq_viewer_plugins/plugins_0D/daq_0Dviewer_Mock.py:55 DAQ_0DViewer_Mock",
+      "src/pymodaq_plugins_mock/daq_viewer_plugins/plugins_1D/daq_1Dviewer_Mock.py:13 DAQ_1DViewer_Mock",
+      "src/pymodaq_plugins_mock/daq_viewer_plugins/plugins_2D/daq_2Dviewer_Mock.py:9 DAQ_2DViewer_Mock",
+      "src/pymodaq_plugins_mock/daq_viewer_plugins/plugins_ND/daq_NDviewer_Mock.py:13 DAQ_NDViewer_Mock"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymodaq__pymodaq_plugins_mock --backend fake",
+  "skip_reason": "override (labs.json): The package is a PyMoDAQ plugin pack of mock virtual instruments that generates synthetic data and emulates a positioner, not a device driver.",
+  "publish_review": "not_required"
+}

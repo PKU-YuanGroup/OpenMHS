@@ -1,0 +1,103 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.soltanilara/gym_av_aloha",
+  "track": "robots",
+  "local_path": "robots/soltanilara/gym_av_aloha",
+  "driver_dir": "MHS/drivers/robots/soltanilara__gym_av_aloha",
+  "upstream": {
+    "repo_url": "https://github.com/soltanilara/gym_av_aloha",
+    "commit": "3e8edfdf5e2ff9cfc6e330ab9f970417e0e2a77d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 201,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "gym_av_aloha/assets/aloha.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym_av_aloha/assets/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym_av_aloha/assets/task_color_cubes.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym_av_aloha/assets/task_cube_transfer.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym_av_aloha/assets/task_hook_package.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_av_aloha/__init__.py:3 gym env gym_av_aloha/av-aloha-v1",
+      "gym_av_aloha/__init__.py:11 gym env gym_av_aloha/peg-insertion-v1",
+      "gym_av_aloha/__init__.py:19 gym env gym_av_aloha/cube-transfer-v1",
+      "gym_av_aloha/__init__.py:27 gym env gym_av_aloha/color-cubes-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env gym_av_aloha/av-aloha-v1 registered at gym_av_aloha/__init__.py:3",
+      "gym env gym_av_aloha/peg-insertion-v1 registered at gym_av_aloha/__init__.py:11",
+      "gym env gym_av_aloha/cube-transfer-v1 registered at gym_av_aloha/__init__.py:19",
+      "gym env gym_av_aloha/color-cubes-v1 registered at gym_av_aloha/__init__.py:27",
+      "gym env gym_av_aloha/thread-needle-v1 registered at gym_av_aloha/__init__.py:35",
+      "gym env gym_av_aloha/hook-package-v1 registered at gym_av_aloha/__init__.py:43",
+      "gym env gym_av_aloha/pour-test-tube-v1 registered at gym_av_aloha/__init__.py:51",
+      "gym env gym_av_aloha/slot-insertion-v1 registered at gym_av_aloha/__init__.py:59"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/soltanilara__gym_av_aloha --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

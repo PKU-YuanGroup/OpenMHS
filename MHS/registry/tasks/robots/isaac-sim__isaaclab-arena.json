@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.isaac-sim/isaaclab-arena",
+  "track": "robots",
+  "local_path": "robots/isaac-sim/isaaclab-arena",
+  "driver_dir": "MHS/drivers/robots/isaac-sim__isaaclab-arena",
+  "upstream": {
+    "repo_url": "https://github.com/isaac-sim/isaaclab-arena",
+    "commit": "2cc9e9766f1f62a500b85c92207192d8c60fcce5",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 39,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "isaaclab_arena.environments.isaaclab_arena_manager_based_env:IsaacLabArenaManagerBasedRLEnv",
+      "file": "isaaclab_arena/environments/isaaclab_arena_manager_based_env.py",
+      "line": 34,
+      "confidence": "override"
+    },
+    {
+      "symbol": "isaaclab_arena.environments.arena_env_builder:ArenaEnvBuilder",
+      "file": "isaaclab_arena/environments/arena_env_builder.py",
+      "line": 88,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.12,<3.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "isaaclab_arena/embodiments/agibot/agibot.py:178 AgibotMimicEnv environment class",
+      "isaaclab_arena/embodiments/g1/g1.py:803 G1MimicEnv environment class",
+      "isaaclab_arena/embodiments/gr1t2/gr1t2.py:413 GR1T2MimicEnv environment class",
+      "isaaclab_arena/environments/isaaclab_arena_manager_based_env.py:34 IsaacLabArenaManagerBasedRLEnv environment class"
+    ],
+    "upstream_tests": "isaaclab_arena/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/isaac-sim__isaaclab-arena --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

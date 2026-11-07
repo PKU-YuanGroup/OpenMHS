@@ -1,0 +1,220 @@
+{
+  "adapter": {
+    "bridge": "serial",
+    "entry_points": [
+      "asi_MS_2000_500_CP:Controller (asi_MS_2000_500_CP.py:3)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.measure.intensity.v1",
+    "cap.motion.joint_position.v1"
+  ],
+  "catalog_refs": [
+    "repo_97516ad3e7327554",
+    "https://github.com/amsikking/asi_ms_2000_500_cp"
+  ],
+  "description": "amsikking/asi_ms_2000_500_cp: device backend for microscopy imaging (lab instrumentation track). OpenMHS plan: direct-driver with SerialDriver, wave 1. Catalog role: device SDK. Language: Python. Catalog keywords: ASI, MS-2000.",
+  "domains": [
+    "microscopy imaging"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 9 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/amsikking__asi_ms_2000_500_cp/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "serial"
+  ],
+  "hardware_free": false,
+  "id": "gh.amsikking/asi_ms_2000_500_cp",
+  "integration": {
+    "blockers": [
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/amsikking__asi_ms_2000_500_cp: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/amsikking__asi_ms_2000_500_cp --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/serial.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "serial",
+    "Python SDK",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2025-03-17T15:13:58-07:00",
+  "license": "GPL-3.0",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-3.0",
+  "links": {
+    "repo": "https://github.com/amsikking/asi_ms_2000_500_cp"
+  },
+  "local_path": "labs/amsikking/asi_ms_2000_500_cp",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "amsikking",
+  "package_id": "gh.amsikking/asi_ms_2000_500_cp",
+  "quarantine": false,
+  "rank": 41,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "asi_ms_2000_500_cp",
+  "repo_url": "https://github.com/amsikking/asi_ms_2000_500_cp",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "5f1f6d2cad545d5ae20359fd01e014dfdd21f11f",
+    "repo_url": "https://github.com/amsikking/asi_ms_2000_500_cp"
+  },
+  "stars": 2,
+  "tags": [
+    "serial",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "amsikking/asi_ms_2000_500_cp",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 1,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 45.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "ASI MS-2000多轴台控制器的Python设备适配器",
+      "join": "exact",
+      "license_raw": "GPL-3.0",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 181,
+      "rows_all": [
+        181
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_note": "triage family serial (catalogue family python-object)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/amsikking__asi_ms_2000_500_cp/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.measure.intensity.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "instrument.spectrometer"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-3.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "GPL-3.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "5f1f6d2cad545d5ae20359fd01e014dfdd21f11f",
+      "driver_dir": "MHS/drivers/labs/amsikking__asi_ms_2000_500_cp",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:2f56c9b8e98fe4aa5449980128216c3d87a0f8c505d4cac3a23264c5eb712e60",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 0,
+      "files": 9,
+      "markers": {
+        "microscopy": 6,
+        "serial": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of wave B: a direct Driver, not a SerialDriver table: the upstream assembles its S, AC, WT, PC, J and M lines from the configured axis tuple at run time.",
+        "rules alone: family-config (family:serial, rule 9)"
+      ],
+      "family": "serial",
+      "hardware_transport": "class asi_MS_2000_500_CP:Controller uses the hardware transport serial",
+      "helper": "SerialDriver",
+      "justification": "Model review of wave B: a direct Driver, not a SerialDriver table: the upstream assembles its S, AC, WT, PC, J and M lines from the configured axis tuple at run time.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

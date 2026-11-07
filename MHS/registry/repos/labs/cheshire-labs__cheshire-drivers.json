@@ -1,0 +1,180 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_d4a6986d80d09268",
+    "https://github.com/cheshire-labs/cheshire-drivers"
+  ],
+  "description": "cheshire-labs/cheshire-drivers: multi device simulation SDK for wet-lab automation and chemistry (lab instrumentation track). OpenMHS plan: reference only (host). Declared backend: Cheshire typed drivers+PLR. Language: Python.",
+  "domains": [
+    "wet-lab automation and chemistry"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 170 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "pylabrobot"
+  ],
+  "hardware_free": false,
+  "id": "gh.cheshire-labs/cheshire-drivers",
+  "integration": {
+    "blockers": [
+      "REFERENCE_ONLY: role host",
+      "LICENSE_REVIEW: source-available; the user decides before a driver is published"
+    ],
+    "effort": "EX",
+    "next_action": "Reference only: a host, orchestrator or MCP wrapper of a covered backend; integrate the backend instead.",
+    "reason_code": "override:recon",
+    "role": "host",
+    "scenario_required": false,
+    "strategy": "reference"
+  },
+  "interfaces": [
+    "Python async",
+    "PLR wrappers",
+    "Python SDK",
+    "Python",
+    "Opentrons",
+    "PyLabRobot"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-10-06T21:09:12Z",
+  "license": "SSPL-1.0",
+  "license_class": "source-available",
+  "license_spdx": "SSPL-1.0",
+  "links": {
+    "docs": "https://github.com/Cheshire-Labs/cheshire-drivers",
+    "repo": "https://github.com/cheshire-labs/cheshire-drivers"
+  },
+  "local_path": "labs/cheshire-labs/cheshire-drivers",
+  "modes": [],
+  "owner": "cheshire-labs",
+  "package_id": "gh.cheshire-labs/cheshire-drivers",
+  "quarantine": false,
+  "rank": 952,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "cheshire-drivers",
+  "repo_url": "https://github.com/cheshire-labs/cheshire-drivers",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "7e8a225a34e975527ed1cb48466fe2377d931b1c",
+    "repo_url": "https://github.com/cheshire-labs/cheshire-drivers"
+  },
+  "stars": 0,
+  "tags": [
+    "pylabrobot",
+    "lab instrumentation",
+    "multi device simulation sdk",
+    "direct simulation backend device sdk",
+    "simulated",
+    "hardware interface",
+    "reference"
+  ],
+  "tier": "D",
+  "title": "cheshire-labs/cheshire-drivers",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-pylabrobot",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 29.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端 | 设备 SDK",
+      "archived": "false",
+      "backend_family_raw": "Cheshire typed drivers+PLR",
+      "category_zh": "多设备模拟 SDK",
+      "description_zh": "多种实验仪器接口和模拟驱动；移液/机械臂保留资源状态，热循环有状态，读板等仍是日志。",
+      "join": "exact",
+      "license_raw": "SSPL-1.0（README：1.0.0起）；早期版本AGPL-3.0",
+      "mhs_support_raw": "需开发适配；已核材料未建立官方或第三方 MHS 集成证据",
+      "priority": "P2",
+      "row": 471,
+      "rows_all": [
+        471
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已核源码"
+    },
+    "classification": {
+      "catalog_family": "pylabrobot",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bplr\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_note": "tier A -> D: triage reference (override:recon)",
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "SSPL-1.0",
+      "declared_spdx": "SSPL-1.0",
+      "file": "LICENSE",
+      "file_spdx": "SSPL-1.0",
+      "review": true,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 5,
+      "files": 170,
+      "markers": {
+        "opentrons": 7,
+        "pylabrobot": 15
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of recon wave A: its liquid-handler classes wrap PyLabRobot backends (STARBackend, OpentronsOT2Backend), which own the device protocol, so this driver layer is a reference for its Orca host.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "Model review of recon wave A: its liquid-handler classes wrap PyLabRobot backends (STARBackend, OpentronsOT2Backend), which own the device protocol, so this driver layer is a reference for its Orca host.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

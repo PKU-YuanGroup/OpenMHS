@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pylabrobot/pylabrobot",
+  "track": "labs",
+  "local_path": "labs/pylabrobot/pylabrobot",
+  "driver_dir": "MHS/drivers/labs/pylabrobot__pylabrobot",
+  "upstream": {
+    "repo_url": "https://github.com/pylabrobot/pylabrobot",
+    "commit": "b297f1ca8343dd313beb791667c786de7694a2cf",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:pylabrobot",
+  "role": "framework",
+  "family": "pylabrobot",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 20,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "pylabrobot.high_res.sample_storage.ambi_store:AmbiStore",
+      "file": "pylabrobot/high_res/sample_storage/ambi_store.py",
+      "line": 4,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylabrobot.mettler_toledo.scales.driver:MTSICSDriver",
+      "file": "pylabrobot/mettler_toledo/scales/driver.py",
+      "line": 34,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylabrobot.opentrons.flex.flex:Flex",
+      "file": "pylabrobot/opentrons/flex/flex.py",
+      "line": 110,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylabrobot.resources.end_effector:MechanicalGripper",
+      "file": "pylabrobot/resources/end_effector.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylabrobot.high_res.sample_storage.steri_store:SteriStore",
+      "file": "pylabrobot/high_res/sample_storage/steri_store.py",
+      "line": 4,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pylabrobot/agrowpumps/agrow_pump_array_tests.py:12 SimulatedModbusClient",
+      "pylabrobot/high_res/lid_valet_tests.py:14 FakeLidValetSocket",
+      "pylabrobot/kbiosystems/sealer_tests.py:16 FakeSealerSerial",
+      "pylabrobot/visualizer3D/browser_tests.py:732 SimulationTests",
+      "pylabrobot/visualizer3D/server_tests.py:323 SimulatedAspirateTests",
+      "pylabrobot/azenta/fluidx/intellixcap96_tests.py:18 FakeXcapSerial"
+    ],
+    "upstream_tests": "pylabrobot/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pylabrobot__pylabrobot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

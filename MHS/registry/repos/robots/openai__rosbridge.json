@@ -1,0 +1,193 @@
+{
+  "adapter": {
+    "bridge": "ros",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "make"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_13bc7177beb99300",
+    "https://github.com/openai/rosbridge"
+  ],
+  "description": "openai/rosbridge: protocol implementation/bridge for robot arm manipulation (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: protocol bridge. Declared backend: ROS 1. Language: Python. Catalog keywords: Gym, Fetch.",
+  "domains": [
+    "robot arm manipulation"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 18 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "ros1"
+  ],
+  "hardware_free": false,
+  "id": "gh.openai/rosbridge",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver",
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
+      "ARCHIVED: the upstream repository is archived"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this transport backs the ros helper; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/ros1.md",
+    "role": "transport",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "ROS 1",
+    "other:socket",
+    "Gymnasium",
+    "ROS 2",
+    "ZeroMQ",
+    "CLI"
+  ],
+  "languages": [
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2018-11-21T16:34:00-08:00",
+  "license": "NOASSERTION",
+  "license_class": "unknown",
+  "license_spdx": "NOASSERTION",
+  "links": {
+    "repo": "https://github.com/openai/rosbridge"
+  },
+  "local_path": "robots/openai/rosbridge",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "openai",
+  "package_id": "gh.openai/rosbridge",
+  "quarantine": false,
+  "rank": 414,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "rosbridge",
+  "repo_url": "https://github.com/openai/rosbridge",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "983313dc67b6e2aa7434b569a8afc99c619be833",
+    "repo_url": "https://github.com/openai/rosbridge"
+  },
+  "stars": 74,
+  "tags": [
+    "ros1",
+    "robotics",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "openai/rosbridge",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "ros1",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 51.0,
+      "quality_flags": [
+        "license_unknown"
+      ],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "true",
+      "backend_family_raw": "ROS 1",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "把Gym接口桥接到ROS(Fetch)机器人的服务，2016年废弃",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "参考",
+      "row": 1886,
+      "rows_all": [
+        1886
+      ],
+      "scope": "peripheral",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "ros1",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bros ?1\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/openai__rosbridge/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": null,
+      "file_spdx": null,
+      "review": true,
+      "source": "none"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "make"
+      ],
+      "entry_evidence_count": 0,
+      "files": 18,
+      "markers": {
+        "gymnasium": 2,
+        "ros1": 5,
+        "ros2": 2,
+        "zeromq": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): ROS 1 Gym-to-ROS bridge middleware, not a device driver: Gym RPC over ZMQ is translated to Fetch ROS topics and actions.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": "ros",
+      "helper": null,
+      "justification": "ROS 1 Gym-to-ROS bridge middleware, not a device driver: Gym RPC over ZMQ is translated to Fetch ROS topics and actions.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

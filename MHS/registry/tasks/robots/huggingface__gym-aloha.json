@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.huggingface/gym-aloha",
+  "track": "robots",
+  "local_path": "robots/huggingface/gym-aloha",
+  "driver_dir": "MHS/drivers/robots/huggingface__gym-aloha",
+  "upstream": {
+    "repo_url": "https://github.com/huggingface/gym-aloha",
+    "commit": "bd3325740ea8d1c97411c41ea1e0f4ce0a7de8da",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:partner-sim",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 3,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_aloha.env:AlohaEnv",
+      "file": "gym_aloha/env.py",
+      "line": 21,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "gym_aloha/assets/bimanual_viperx_end_effector_insertion.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym_aloha/assets/bimanual_viperx_end_effector_transfer_cube.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym_aloha/assets/bimanual_viperx_insertion.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym_aloha/assets/bimanual_viperx_transfer_cube.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_aloha/__init__.py:3 gym env gym_aloha/AlohaInsertion-v0",
+      "gym_aloha/__init__.py:13 gym env gym_aloha/AlohaTransferCube-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env gym_aloha/AlohaInsertion-v0 registered at gym_aloha/__init__.py:3",
+      "gym env gym_aloha/AlohaTransferCube-v0 registered at gym_aloha/__init__.py:13"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/huggingface__gym-aloha --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

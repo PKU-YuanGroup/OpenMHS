@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cukelarter/chemyx-syringe-pump",
+  "track": "labs",
+  "local_path": "labs/cukelarter/chemyx-syringe-pump",
+  "driver_dir": "MHS/drivers/labs/cukelarter__chemyx-syringe-pump",
+  "upstream": {
+    "repo_url": "https://github.com/cukelarter/chemyx-syringe-pump",
+    "commit": "14011ba2aeb2fcedff7a9b1718e58dc9acefb97f",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 301,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "python_dist.CHEMYX_python.core.connect:Connection",
+      "file": "python_dist/CHEMYX_python/core/connect.py",
+      "line": 47,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Connection.getDisplacedVolume",
+      "Connection.getElapsedTime",
+      "Connection.getParameterLimits",
+      "Connection.getParameters",
+      "Connection.getPumpStatus",
+      "Connection.getResponse"
+    ],
+    "writes": [
+      "Connection.setDelay",
+      "Connection.setDiameter",
+      "Connection.setPump",
+      "Connection.setRate",
+      "Connection.setTime",
+      "Connection.setUnits",
+      "Connection.setVolume"
+    ],
+    "actions": [
+      "Connection.addPump",
+      "Connection.pausePump",
+      "Connection.restartPump",
+      "Connection.startPump",
+      "Connection.stopPump"
+    ],
+    "candidate_classes": [
+      "cap.actuation.pump.v1",
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/cukelarter__chemyx-syringe-pump --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

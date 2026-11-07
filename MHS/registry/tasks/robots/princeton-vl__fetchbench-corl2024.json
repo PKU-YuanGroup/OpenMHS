@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.princeton-vl/fetchbench-corl2024",
+  "track": "robots",
+  "local_path": "robots/princeton-vl/fetchbench-corl2024",
+  "driver_dir": "MHS/drivers/robots/princeton-vl__fetchbench-corl2024",
+  "upstream": {
+    "repo_url": "https://github.com/princeton-vl/fetchbench-corl2024",
+    "commit": "2ed02606aff62372e842d6238517ebc248500da6",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1904,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "InfiniGym/isaacgymenvs/utils/rlgames_utils.py:242 RLGPUEnv environment class",
+      "InfiniGym/isaacgymenvs/utils/rlgames_utils.py:298 ComplexObsRLGPUEnv environment class",
+      "InfiniGym/isaacgymenvs/utils/rlgames_utils.py:425 MPGPUEnv environment class",
+      "InfiniGym/isaacgymenvs/tasks/fetch/fetch_mesh_curobo_datagen.py:45 FetchCuroboDataGen environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/princeton-vl__fetchbench-corl2024 --backend fake",
+  "skip_reason": "override (robots.json): Skip: this is an Isaac Gym simulation benchmark, not a device or Gymnasium/MuJoCo environment; a driver author needs Isaac Gym 4.0.0, cuRobo and external assets, and would use isaacgymenvs.make.",
+  "publish_review": "not_required"
+}

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ansh1113/humanoid-motion-planning",
+  "track": "robots",
+  "local_path": "robots/ansh1113/humanoid-motion-planning",
+  "driver_dir": "MHS/drivers/robots/ansh1113__humanoid-motion-planning",
+  "upstream": {
+    "repo_url": "https://github.com/ansh1113/humanoid-motion-planning",
+    "commit": "47decd53d6fc04ce0418d96b8731b97e6103e25d",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1623,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/locomotion/continue_training.py:13 G1WalkEnv environment class",
+      "src/locomotion/eval_rl.py:11 G1WalkEnv environment class",
+      "src/locomotion/train_fresh.py:15 G1WalkEnv environment class",
+      "src/locomotion/train_rl_walking.py:15 G1WalkEnv environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ansh1113__humanoid-motion-planning --backend fake",
+  "skip_reason": "override (robots.json): Model review of recon wave A: a Unitree G1 walking-policy project whose only environment class sits in a training script and loads a MuJoCo model that the clone does not contain.",
+  "publish_review": "required"
+}

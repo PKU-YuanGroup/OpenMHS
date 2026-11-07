@@ -1,0 +1,94 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.madhankumar623/instruments_automation_scpi_commands",
+  "track": "labs",
+  "local_path": "labs/madhankumar623/instruments_automation_scpi_commands",
+  "driver_dir": "MHS/drivers/labs/madhankumar623__instruments_automation_scpi_commands",
+  "upstream": {
+    "repo_url": "https://github.com/madhankumar623/instruments_automation_scpi_commands",
+    "commit": "2080effa969d0a911188f24e92f5d9551f1b22c9",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 347,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "PowerSupply_Automation:Set_Voltage",
+      "file": "PowerSupply_Automation.py",
+      "line": 99,
+      "confidence": "override"
+    },
+    {
+      "symbol": "PowerSupply_Automation:Set_Current",
+      "file": "PowerSupply_Automation.py",
+      "line": 105,
+      "confidence": "override"
+    },
+    {
+      "symbol": "PowerSupply_Automation:Get_Voltage",
+      "file": "PowerSupply_Automation.py",
+      "line": 111,
+      "confidence": "override"
+    },
+    {
+      "symbol": "PowerSupply_Automation:Get_Current",
+      "file": "PowerSupply_Automation.py",
+      "line": 117,
+      "confidence": "override"
+    },
+    {
+      "symbol": "PowerSupply_Automation:ON_OFF_Voltage",
+      "file": "PowerSupply_Automation.py",
+      "line": 123,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": [
+      "PowerSupply_Automation.py:28 DEFAULT_CURRENT_LIMIT = 0.1"
+    ]
+  },
+  "needs_recon": [
+    "install",
+    "capabilities",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/madhankumar623__instruments_automation_scpi_commands --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

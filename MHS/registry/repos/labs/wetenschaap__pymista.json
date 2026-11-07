@@ -1,0 +1,247 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "pymista.zaber:ZaberStage (pymista/zaber.py:7)",
+      "pymista.universal:UniversalStage (pymista/universal.py:3)",
+      "pymista.universal:UniversalAxis (pymista/universal.py:148)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.motion.joint_position.v1",
+    "cap.motion.stop.v1"
+  ],
+  "catalog_refs": [
+    "repo_db7eb3d39f087ed0",
+    "https://github.com/wetenschaap/pymista"
+  ],
+  "description": "wetenschaap/pymista: device backend for microscopy imaging (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Language: Python. Catalog keywords: Zaber, Dummystage.",
+  "domains": [
+    "microscopy imaging"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 12 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/wetenschaap__pymista/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.wetenschaap/pymista",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/wetenschaap__pymista: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/wetenschaap__pymista --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-07-28T16:14:18+02:00",
+  "license": "GPL-3.0",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-3.0",
+  "links": {
+    "repo": "https://github.com/wetenschaap/pymista"
+  },
+  "local_path": "labs/wetenschaap/pymista",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "wetenschaap",
+  "package_id": "gh.wetenschaap/pymista",
+  "quarantine": false,
+  "rank": 32,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pymista",
+  "repo_url": "https://github.com/wetenschaap/pymista",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "b30040a192c329b6144a120f0dfea2ca68060760",
+    "repo_url": "https://github.com/wetenschaap/pymista"
+  },
+  "stars": 1,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "simulated",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "wetenschaap/pymista",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 63.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "统一Python接口控制电动位移台(Zaber等)，含虚拟Dummystage",
+      "join": "exact",
+      "license_raw": "GPL-3.0",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P1",
+      "row": 2847,
+      "rows_all": [
+        2847
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/wetenschaap__pymista/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/wetenschaap__pymista/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/wetenschaap__pymista/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-3.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "GPL-3.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "b30040a192c329b6144a120f0dfea2ca68060760",
+      "driver_dir": "MHS/drivers/labs/wetenschaap__pymista",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:174a399084eee48c8fac39f0ec917f66ccd14377b5b611fa376385634dc1257a",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 3,
+      "files": 12,
+      "markers": {
+        "microscopy": 20,
+        "serial": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class pymista.zaber:ZaberStage (pymista/zaber.py:7, score 12)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class pymista.zaber:ZaberStage uses the hardware transport serial",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

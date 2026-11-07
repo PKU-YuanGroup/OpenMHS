@@ -1,0 +1,57 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.osrf/lrauv",
+  "track": "robots",
+  "local_path": "robots/osrf/lrauv",
+  "driver_dir": "MHS/drivers/robots/osrf__lrauv",
+  "upstream": {
+    "repo_url": "https://github.com/osrf/lrauv",
+    "commit": "8cf77021c2e6b6727592f1d952c97349823ecc94",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1046,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "lrauv_system_tests/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/osrf__lrauv --backend fake",
+  "skip_reason": "override (robots.json): LRAUV is a C++ Gazebo vehicle simulation package with no Python device API, so it is skip/sim-env; a driver needs gz-sim and a Python gz-transport client for the TethysCommPlugin topics.",
+  "publish_review": "not_required"
+}

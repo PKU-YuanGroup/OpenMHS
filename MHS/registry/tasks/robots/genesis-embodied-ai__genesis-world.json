@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.genesis-embodied-ai/genesis-world",
+  "track": "robots",
+  "local_path": "robots/genesis-embodied-ai/genesis-world",
+  "driver_dir": "MHS/drivers/robots/genesis-embodied-ai__genesis-world",
+  "upstream": {
+    "repo_url": "https://github.com/genesis-embodied-ai/genesis-world",
+    "commit": "a649105285d30bb9cd3464e753bc5270f3f43d4b",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:engine",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 498,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "genesis.engine.entities.rigid_entity.drone_entity:DroneEntity",
+      "file": "genesis/engine/entities/rigid_entity/drone_entity.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "genesis.engine.entities.rigid_entity.terrain_entity:TerrainEntity",
+      "file": "genesis/engine/entities/rigid_entity/terrain_entity.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "genesis.engine.entities.mpm_entity:MPMEntity",
+      "file": "genesis/engine/entities/mpm_entity.py",
+      "line": 24,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "genesis.engine.entities.tool_entity.tool_entity:ToolEntity",
+      "file": "genesis/engine/entities/tool_entity/tool_entity.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "genesis.engine.entities.fem_entity:FEMEntity",
+      "file": "genesis/engine/entities/fem_entity.py",
+      "line": 121,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10,<3.14",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "genesis/engine/simulator.py:42 Simulator",
+      "genesis/options/solvers.py:18 SimOptions",
+      "genesis/utils/array_class.py:2967 RigidSimStaticConfig",
+      "genesis/vis/visualizer.py:19 DummyViewerLock",
+      "genesis/engine/states/solvers.py:57 SimulatorCheckpoint",
+      "genesis/engine/states/solvers.py:68 SimState"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/genesis-embodied-ai__genesis-world --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

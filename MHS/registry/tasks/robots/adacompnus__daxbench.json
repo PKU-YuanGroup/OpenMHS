@@ -1,0 +1,95 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.adacompnus/daxbench",
+  "track": "robots",
+  "local_path": "robots/adacompnus/daxbench",
+  "driver_dir": "MHS/drivers/robots/adacompnus__daxbench",
+  "upstream": {
+    "repo_url": "https://github.com/adacompnus/daxbench",
+    "commit": "bc73c58134b004e5fbe9131639d06e8e052566cd",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 855,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "daxbench.core.envs.shape_elasto_plastic:ShapeRopeEnv",
+      "file": "daxbench/core/envs/shape_elasto_plastic.py",
+      "line": 57,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "daxbench.core.envs.fold_cloth1_env:FoldCloth1Env",
+      "file": "daxbench/core/envs/fold_cloth1_env.py",
+      "line": 39,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "daxbench.core.envs.fold_cloth3_env:FoldCloth3Env",
+      "file": "daxbench/core/envs/fold_cloth3_env.py",
+      "line": 43,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "daxbench.core.envs.fold_cloth_tshirt_env:FoldTshirtEnv",
+      "file": "daxbench/core/envs/fold_cloth_tshirt_env.py",
+      "line": 44,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "daxbench.core.envs.unfold_cloth1_env:UnfoldCloth1Env",
+      "file": "daxbench/core/envs/unfold_cloth1_env.py",
+      "line": 40,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "exp/policy_server.py:34 MockPolicyHandler",
+      "daxbench/core/engine/cloth_simulator.py:26 ClothSimulator",
+      "daxbench/core/engine/cloth_simulator.py:1",
+      "daxbench/core/engine/mpm_simulator.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/adacompnus__daxbench --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,229 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "pycss45:CSS45 (pycss45.py:438)",
+      "pycss45_gui:DemoCSS45 (pycss45_gui.py:124)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.measure.spectrum.v1",
+    "cap.measure.temperature.v1"
+  ],
+  "catalog_refs": [
+    "repo_80baa6e0f86492e5",
+    "https://github.com/xylophoneengine/pycss45"
+  ],
+  "description": "xylophoneengine/pycss45: device backend for optics (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Language: Python. Catalog keywords: Gigahertz-Optik, CSS45, USB, HID, DLL.",
+  "domains": [
+    "optics"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 10 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/xylophoneengine__pycss45/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.xylophoneengine/pycss45",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/xylophoneengine__pycss45: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/xylophoneengine__pycss45 --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "serial",
+    "other:USB HID",
+    "Serial",
+    "CLI"
+  ],
+  "languages": [
+    "Python",
+    "Jupyter Notebook"
+  ],
+  "last_commit_at": "2026-10-08T20:27:46+02:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/xylophoneengine/pycss45"
+  },
+  "local_path": "labs/xylophoneengine/pycss45",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "xylophoneengine",
+  "package_id": "gh.xylophoneengine/pycss45",
+  "quarantine": false,
+  "rank": 33,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pycss45",
+  "repo_url": "https://github.com/xylophoneengine/pycss45",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "e4364bae4d889efd579ffb3c4947099405becb27",
+    "repo_url": "https://github.com/xylophoneengine/pycss45"
+  },
+  "stars": 1,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "xylophoneengine/pycss45",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 54.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "Gigahertz-Optik CSS45光谱仪的跨平台Python驱动(USB HID，免厂商DLL)",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 2888,
+      "rows_all": [
+        2888
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/xylophoneengine__pycss45/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.measure.spectrum.v1"
+            ],
+            "kind": "instrument.spectrometer"
+          },
+          {
+            "capabilities": [
+              "cap.measure.temperature.v1"
+            ],
+            "kind": "instrument.thermometer"
+          }
+        ],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "e4364bae4d889efd579ffb3c4947099405becb27",
+      "driver_dir": "MHS/drivers/labs/xylophoneengine__pycss45",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:1adf22a0a32119fe733a1558b563030e4af3bca5edd4fdd8708f054530766220",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 8,
+      "files": 10,
+      "markers": {
+        "serial": 9,
+        "spectrometer": 13
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class pycss45:CSS45 (pycss45.py:438, score 17)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class pycss45:CSS45 uses the hardware transport hid",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

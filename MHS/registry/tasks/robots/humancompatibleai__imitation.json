@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.humancompatibleai/imitation",
+  "track": "robots",
+  "local_path": "robots/humancompatibleai/imitation",
+  "driver_dir": "MHS/drivers/robots/humancompatibleai__imitation",
+  "upstream": {
+    "repo_url": "https://github.com/humancompatibleai/imitation",
+    "commit": "e5ef18806c449ca47153b494a02471c5e2ae3a14",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 152,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.8.0",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/humancompatibleai__imitation --backend fake",
+  "skip_reason": "override (robots.json): Skip: an imitation/reward-learning library over external Gymnasium environments, not a device or simulator; its CnnRewardNet hint is only a reward-model shape helper, so nothing is drivable.",
+  "publish_review": "not_required"
+}

@@ -1,0 +1,180 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python",
+    "make"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_001d100567970f41",
+    "https://github.com/labscript-suite/labscript"
+  ],
+  "description": "labscript-suite/labscript: repository for microscopy imaging; optics; electronic measurement and DAQ (lab instrumentation track). OpenMHS plan: reference only (framework). Declared backend: labscript. Language: Python.",
+  "domains": [
+    "microscopy imaging",
+    "optics",
+    "electronic measurement and DAQ"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 48 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "scpi-visa"
+  ],
+  "hardware_free": false,
+  "id": "gh.labscript-suite/labscript",
+  "integration": {
+    "blockers": [
+      "REFERENCE_ONLY: role framework"
+    ],
+    "effort": "EX",
+    "next_action": "Reference only: a host, orchestrator or MCP wrapper of a covered backend; integrate the backend instead.",
+    "reason_code": "override:recon",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "reference"
+  },
+  "interfaces": [
+    "Python",
+    "Python SDK",
+    "CLI",
+    "SCPI/VISA"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-03-20T09:19:52-04:00",
+  "license": "BSD-2-Clause",
+  "license_class": "permissive",
+  "license_spdx": "BSD-2-Clause",
+  "links": {
+    "docs": "https://github.com/labscript-suite/labscript/commit/a0787c40dd3b5ec2ce452141758bc523b1d187c5",
+    "repo": "https://github.com/labscript-suite/labscript"
+  },
+  "local_path": "labs/labscript-suite/labscript",
+  "modes": [],
+  "owner": "labscript-suite",
+  "package_id": "gh.labscript-suite/labscript",
+  "quarantine": false,
+  "rank": 1242,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "labscript",
+  "repo_url": "https://github.com/labscript-suite/labscript",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "a0787c40dd3b5ec2ce452141758bc523b1d187c5",
+    "repo_url": "https://github.com/labscript-suite/labscript"
+  },
+  "stars": 10,
+  "tags": [
+    "scpi-visa",
+    "lab instrumentation",
+    "controller",
+    "hardware interface",
+    "reference"
+  ],
+  "tier": "D",
+  "title": "labscript-suite/labscript",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-orchestrator",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 51.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "控制器",
+      "archived": "false",
+      "backend_family_raw": "labscript",
+      "category_zh": "硬件定时编译",
+      "description_zh": "将Python实验逻辑编译成设备定时输出指令。",
+      "join": "exact",
+      "license_raw": "BSD-2-Clause",
+      "mhs_support_raw": "需开发适配；本次官方README/API核验未确认MHS支持，不能据此断言不存在",
+      "priority": "P2",
+      "row": 1374,
+      "rows_all": [
+        1374
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\blabscript\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_note": "tier B -> D: triage reference (override:recon)",
+      "tier_rule": "B4-controller"
+    },
+    "device_plan": [],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "BSD-2-Clause",
+      "declared_spdx": null,
+      "file": "LICENSE.txt",
+      "file_spdx": "BSD-2-Clause",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python",
+        "make"
+      ],
+      "entry_evidence_count": 8,
+      "files": 48,
+      "markers": {
+        "cli": 1,
+        "laser": 1,
+        "scpi_visa": 34
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): labscript compiles hardware-timed experiments, not a device driver: Shutter/DDS are generic output channels, real devices live in labscript_devices; subclass them and implement generate_code.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "labscript compiles hardware-timed experiments, not a device driver: Shutter/DDS are generic output channels, real devices live in labscript_devices; subclass them and implement generate_code.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

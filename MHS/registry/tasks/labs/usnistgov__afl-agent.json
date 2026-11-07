@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.usnistgov/afl-agent",
+  "track": "labs",
+  "local_path": "labs/usnistgov/afl-agent",
+  "driver_dir": "MHS/drivers/labs/usnistgov__afl-agent",
+  "upstream": {
+    "repo_url": "https://github.com/usnistgov/afl-agent",
+    "commit": "a1cc6e53438f6b0135c2e73d71fc260b9191029d",
+    "license_spdx": "NIST-PD",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 563,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "AFL/agent/GaussianProcess.py:18 DummyGP",
+      "AFL/agent/HscedGaussianProcess.py:56 DummyGP",
+      "AFL/agent/Metric.py:93 Dummy",
+      "AFL/double_agent/Extrapolator.py:158 DummyExtrapolator",
+      "AFL/double_agent/PairMetric.py:131 Dummy",
+      "server_scripts/virtual_instrument/Virtual_Multimodal_SampleServer.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/usnistgov__afl-agent --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

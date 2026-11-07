@@ -1,0 +1,222 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "thorlabs_apt.core:Motor (thorlabs_apt/core.py:135)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.motion.joint_position.v1",
+    "cap.motion.stop.v1"
+  ],
+  "catalog_refs": [
+    "repo_9b30545f33db2972",
+    "https://github.com/qpit/thorlabs_apt"
+  ],
+  "description": "qpit/thorlabs_apt: device backend for optics (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Language: Python. Catalog keywords: Thorlabs, APT.dll, K10CR1.",
+  "domains": [
+    "optics"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 9 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/qpit__thorlabs_apt/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.qpit/thorlabs_apt",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/qpit__thorlabs_apt: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/qpit__thorlabs_apt --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "other:vendor DLL"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2019-04-12T09:27:38+02:00",
+  "license": "GPL-2.0",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-2.0",
+  "links": {
+    "repo": "https://github.com/qpit/thorlabs_apt"
+  },
+  "local_path": "labs/qpit/thorlabs_apt",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "qpit",
+  "package_id": "gh.qpit/thorlabs_apt",
+  "quarantine": false,
+  "rank": 23,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "thorlabs_apt",
+  "repo_url": "https://github.com/qpit/thorlabs_apt",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "7b5c84607c22684cc896e3c337045b9358ee7c47",
+    "repo_url": "https://github.com/qpit/thorlabs_apt"
+  },
+  "stars": 86,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "qpit/thorlabs_apt",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "sdk-library",
+      "family_confidence": 0.59,
+      "family_source": "catalog",
+      "merged": true,
+      "priority_score": 37.0,
+      "quality_flags": [
+        "family_catalog_only"
+      ],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "封装Thorlabs APT.dll的Python包，主要在K10CR1旋转台上测试",
+      "join": "exact",
+      "license_raw": "GPL-2.0",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 2126,
+      "rows_all": [
+        2126
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/qpit__thorlabs_apt/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-2.0",
+      "declared_spdx": "GPL-2.0",
+      "file": "LICENSE",
+      "file_spdx": "GPL-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "7b5c84607c22684cc896e3c337045b9358ee7c47",
+      "driver_dir": "MHS/drivers/labs/qpit__thorlabs_apt",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:798116f3b8b9fa104bfc2213deedc54ffd3a17aabcf8b9ca0c5be879c556a988",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 1,
+      "files": 9,
+      "markers": {
+        "microscopy": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Thorlabs APT.dll wrapper whose Motor class controls APT stages (tested on K10CR1); a direct Driver with a recording fake.",
+        "rules alone: direct-driver (PY_SDK_WITH_ENTRY, rule 10)"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "justification": "Thorlabs APT.dll wrapper whose Motor class controls APT stages (tested on K10CR1); a direct Driver with a recording fake.",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

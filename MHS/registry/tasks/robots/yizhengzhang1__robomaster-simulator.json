@@ -1,0 +1,98 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.yizhengzhang1/robomaster-simulator",
+  "track": "robots",
+  "local_path": "robots/yizhengzhang1/robomaster-simulator",
+  "driver_dir": "MHS/drivers/robots/yizhengzhang1__robomaster-simulator",
+  "upstream": {
+    "repo_url": "https://github.com/yizhengzhang1/robomaster-simulator",
+    "commit": "ff085e4109a980e482a388f135e9fefcee92becc",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 133,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [
+    {
+      "symbol": "openai_ros.openai_ros.templates.template_my_robot_env:MyRobotEnv",
+      "file": "src/openai_ros/openai_ros/templates/template_my_robot_env.py",
+      "line": 4,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "openai_ros.task_envs.cartpole_stay_up.stay_up:CartPoleStayUpEnv",
+      "file": "src/openai_ros/openai_ros/src/openai_ros/task_envs/cartpole_stay_up/stay_up.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "openai_ros.task_envs.fetch.fetch_pick_and_place_task:FetchPickAndPlaceEnv",
+      "file": "src/openai_ros/openai_ros/src/openai_ros/task_envs/fetch/fetch_pick_and_place_task.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "openai_ros.task_envs.fetch.fetch_push:FetchPushEnv",
+      "file": "src/openai_ros/openai_ros/src/openai_ros/task_envs/fetch/fetch_push.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "openai_ros.task_envs.fetch.fetch_simple_task:FetchSimpleTestEnv",
+      "file": "src/openai_ros/openai_ros/src/openai_ros/task_envs/fetch/fetch_simple_task.py",
+      "line": 13,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/openai_ros/openai_ros/src/openai_ros/task_envs/task_envs_list.py:150 gym env SumitXlRoom-v0"
+    ],
+    "upstream_tests": "src/puma_motor_driver/puma_motor_driver/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env SumitXlRoom-v0 registered at src/openai_ros/openai_ros/src/openai_ros/task_envs/task_envs_list.py:150"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/yizhengzhang1__robomaster-simulator --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

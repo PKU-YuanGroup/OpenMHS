@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.combra-lab/pop-spiking-deep-rl",
+  "track": "robots",
+  "local_path": "robots/combra-lab/pop-spiking-deep-rl",
+  "driver_dir": "MHS/drivers/robots/combra-lab__pop-spiking-deep-rl",
+  "upstream": {
+    "repo_url": "https://github.com/combra-lab/pop-spiking-deep-rl",
+    "commit": "5e5b9047899e9f5282d14c8b8212073aa12742ce",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 421,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/combra-lab__pop-spiking-deep-rl --backend fake",
+  "skip_reason": "override (robots.json): PopSAN is a PyTorch DRL algorithm library run on Gym MuJoCo benchmark tasks, not a device or environment, so no driver applies; its optional Loihi path needs Intel's external NxSDK.",
+  "publish_review": "not_required"
+}

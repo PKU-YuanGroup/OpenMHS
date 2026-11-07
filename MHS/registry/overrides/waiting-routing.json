@@ -1,0 +1,392 @@
+{
+  "$schema": "../schema/overrides.schema.json",
+  "overrides_version": "0.9",
+  "title": "Reviewed routing of the waiting-helper and recon cards (Claude continuation, 2026-11-05)",
+  "description": "Model review (claude-opus-5-5, a model and not a human) of the 25 cards that were neither done nor dispatchable: direct-driver routes where a driver can honestly be written, skip and bridge-runtime routes for frameworks, tooling, twins and prior art. Six entries carry reviewed capability classes that raise a name-scanned risk floor to the hazard-table R2 (pipetting, dispensing, heating, running instrument protocols), and the sila-testing entry names the class its exemplar serves. The sila2 family itself became available with that exemplar; the MAVLink and LeRobot cards keep their overrides and hold code-less blocked records. Nothing here changes source pins, package status, signatures or publication.",
+  "overrides": [
+    {
+      "package_id": "gh.accelerationconsortium/opentrons-flex",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "unitelabs.opentrons_flex.io.flex_motion:FlexMotionController",
+          "file": "src/unitelabs/opentrons_flex/io/flex_motion.py",
+          "line": 99
+        },
+        {
+          "symbol": "unitelabs.opentrons_flex.io.heater_shaker:HeaterShakerController",
+          "file": "src/unitelabs/opentrons_flex/io/heater_shaker.py",
+          "line": 15
+        },
+        {
+          "symbol": "unitelabs.opentrons_flex.io.thermocycler:ThermocyclerController",
+          "file": "src/unitelabs/opentrons_flex/io/thermocycler.py",
+          "line": 15
+        }
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: Sila2Driver proves only the Phenix pin (sila2_check.py:19-30) and this UniteLabs connector ships no FDL; a direct Driver over FlexMotionController (flex_motion.py:99, stop :291)."
+    },
+    {
+      "package_id": "gh.accelerationconsortium/opentrons-ot2",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "unitelabs.opentrons_ot2.io.motion:OT2MotionController",
+          "file": "src/unitelabs/opentrons_ot2/io/motion.py",
+          "line": 182
+        },
+        {
+          "symbol": "unitelabs.opentrons_ot2.io.heater_shaker:HeaterShakerController",
+          "file": "src/unitelabs/opentrons_ot2/io/heater_shaker.py",
+          "line": 14
+        },
+        {
+          "symbol": "unitelabs.opentrons_ot2.io.thermocycler:ThermocyclerController",
+          "file": "src/unitelabs/opentrons_ot2/io/thermocycler.py",
+          "line": 13
+        }
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: Sila2Driver proves only the Phenix pin (sila2_check.py:19-30) and this UniteLabs connector ships no FDL; a direct Driver over OT2MotionController (motion.py:182, stop :775-778)."
+    },
+    {
+      "package_id": "gh.ad-sdl/bmg_module",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "sidecar.bmg_interface:BmgCom",
+          "file": "sidecar/bmg_interface.py",
+          "line": 15
+        }
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: HttpDriver has only the OT-2 profile; BmgCom (sidecar/bmg_interface.py:15) is the COM client of the BMG reader (plate_in/out, set_temp, run_assay :64-146), served as a direct Driver."
+    },
+    {
+      "package_id": "gh.ad-sdl/ot2_module",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "ot2_interface.ot2_driver_http:OT2_Driver",
+          "file": "src/ot2_interface/ot2_driver_http.py",
+          "line": 42
+        }
+      ],
+      "capability_classes": [
+        "cap.fluid.aspirate.v1",
+        "cap.fluid.dispense.v1"
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: HttpDriver's OT-2 profile fails G6/G8 without an owned run; OT2_Driver (ot2_driver_http.py:42) transfers and runs protocols (:132-258) that pipette (protopiler.py:608-609)."
+    },
+    {
+      "package_id": "gh.ad-sdl/pal_module",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "PAL3_driver:PALService",
+          "file": "PAL3_driver.py",
+          "line": 512
+        }
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: no HTTP API to profile (the node action is a stub, src/pal_module.py:29-33); PALService (PAL3_driver.py:512) drives the PAL3 through .NET and scripts outside the clone (:12-22)."
+    },
+    {
+      "package_id": "gh.ad-sdl/ur_module",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "ur_interface.ur:UR",
+          "file": "src/ur_interface/ur.py",
+          "line": 70
+        },
+        {
+          "symbol": "ur_interface.ur_dashboard:UR_DASHBOARD",
+          "file": "src/ur_interface/ur_dashboard.py",
+          "line": 10
+        }
+      ],
+      "justification": "Model review of helper wave 2: routing kept (UR ur.py:70, UR_DASHBOARD ur_dashboard.py:10); publication review: the MIT clone ships UR's manual (no reproduction without approval) and Robotiq PDF and URCap files.",
+      "publish_review": "required"
+    },
+    {
+      "package_id": "gh.anguyen-23/sila-testing",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "sila2",
+      "reason_code": "override:family-config",
+      "entry_symbols": [
+        {
+          "symbol": "phenix_imager.feature_implementations.pheniximager_impl:PhenixImagerImpl",
+          "file": "servers/phenix_imager/phenix_imager/feature_implementations/pheniximager_impl.py",
+          "line": 54
+        }
+      ],
+      "capability_classes": [
+        "cap.process.run.v1",
+        "cap.sample.move.v1"
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: the sila2 exemplar serves PhenixImager, the one feature Sila2Driver proves (sila2_check.py:19-30); PhenixImagerImpl (pheniximager_impl.py:54) runs protocols and moves the plate (FDL 61-212)."
+    },
+    {
+      "package_id": "gh.automatedchemistry/flowchem-virtual",
+      "strategy": "bridge-runtime",
+      "role": "twin-candidate",
+      "family": "http",
+      "reason_code": "override:bridge-runtime",
+      "justification": "Model review of the waiting cards, 2026-11-05: bridge-runtime twin: virtual devices for the flowchem server (README.md:3-5) that subclass flowchem classes (vapourtec/virtuals.py:1-22), like opentrons-emulation; no device."
+    },
+    {
+      "package_id": "gh.czbiohub-sf/python-fish-sorter",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "fish_sorter.hardware.picking_pipette:PickingPipette",
+          "file": "fish_sorter/hardware/picking_pipette.py",
+          "line": 15
+        },
+        {
+          "symbol": "fish_sorter.hardware.valve_controller:ValveController",
+          "file": "fish_sorter/hardware/valve_controller.py",
+          "line": 7
+        },
+        {
+          "symbol": "fish_sorter.hardware.zaber_controller:ZaberController",
+          "file": "fish_sorter/hardware/zaber_controller.py",
+          "line": 11
+        }
+      ],
+      "capability_classes": [
+        "cap.motion.joint_position.v1",
+        "cap.fluid.aspirate.v1",
+        "cap.fluid.dispense.v1"
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: the picking hardware is not a pymmcore-plus camera: PickingPipette (picking_pipette.py:15) drives Zaber stages (zaber_controller.py:11) and a Wago Modbus valve box (valve_controller.py:7)."
+    },
+    {
+      "package_id": "gh.dayr3n33/instruments",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "instruments.ismatec.ismatec:Ismatec",
+          "file": "src/instruments/ismatec/ismatec.py",
+          "line": 20
+        },
+        {
+          "symbol": "instruments.ika.ika:Ika",
+          "file": "src/instruments/ika/ika.py",
+          "line": 20
+        },
+        {
+          "symbol": "instruments.bronkhorst.bronkhorst:Bronkhorst",
+          "file": "src/instruments/bronkhorst/bronkhorst.py",
+          "line": 19
+        }
+      ],
+      "capability_classes": [
+        "cap.actuation.pump.v1",
+        "cap.fluid.dispense.v1",
+        "cap.device.configure.v1"
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: serial instruments; Ismatec (ismatec.py:20) builds pump commands from parts (1S plus a number, :50-53) with a 1I stop (:48-49), so a direct Driver; Ika and Bronkhorst are other devices."
+    },
+    {
+      "package_id": "gh.florianbauer/ot2-controller",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "ot2_controller.feature_implementations.ot2controller_impl:Ot2ControllerImpl",
+          "file": "ot2_controller/feature_implementations/ot2controller_impl.py",
+          "line": 21
+        }
+      ],
+      "capability_classes": [
+        "cap.process.run.v1"
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: Sila2Driver proves only the Phenix pin; Ot2ControllerImpl (ot2controller_impl.py:21) runs any uploaded protocol file as root over SSH, with no stop (:16-18, 110-133): a direct Driver at R2."
+    },
+    {
+      "package_id": "gh.fredrik-qi/fork_fluent_sila2_connector",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:partner-driver",
+      "partner": "Tecan",
+      "entry_symbols": [
+        {
+          "symbol": "tecan.__Fluent:Fluent",
+          "file": "Python/src/tecan/__Fluent.py",
+          "line": 15
+        }
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: Sila2Driver proves only the Phenix pin and the server is C#; Fluent (Python/src/tecan/__Fluent.py:15) is the Python client with run, pause and stop_method (:193-215)."
+    },
+    {
+      "package_id": "gh.gronemeyer/mesofield",
+      "strategy": "skip",
+      "role": "framework",
+      "reason_code": "override:skip",
+      "justification": "Model review of the waiting cards, 2026-11-05: skip, framework: a PyQt6 framework for multi-camera experiments (README.md:9); its devices are registry plugins over generic MM, NI-DAQ and serial backends (cameras.py:28, daq.py:32)."
+    },
+    {
+      "package_id": "gh.ianhi/raman-mda-engine",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:skip",
+      "justification": "Model review of the waiting cards, 2026-11-05: skip, tooling: a pymmcore-plus MDAEngine for one lab's Raman runs (README.md:9, _engine.py:47); spectra come from the external raman_control (:78), fakeAcquirer is a stub (:26)."
+    },
+    {
+      "package_id": "gh.jacopoabramo/ophyd-mmcore",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "pymmcore-plus",
+      "reason_code": "override:bridge-runtime",
+      "justification": "Model review of the waiting cards, 2026-11-05: bridge-runtime: a work-in-progress ophyd-async backend for pymmcore-plus (README.md:3-6) whose devices wrap any Micro-Manager device by label (_devices.py:580-674)."
+    },
+    {
+      "package_id": "gh.jdmax/epics-device-lib",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "instruments.ls336:DeviceConnection",
+          "file": "instruments/ls336.py",
+          "line": 99
+        }
+      ],
+      "justification": "Model review of helper wave 2: the reviewed package serves the Lake Shore 336 DeviceConnection (ls336.py:99), the entry the card's read/write hints and thermal class describe; DP832 and Zaber are other devices of this driver pack."
+    },
+    {
+      "package_id": "gh.jhu-lcsr/good_robot",
+      "strategy": "skip",
+      "role": "prior-art",
+      "reason_code": "override:skip",
+      "justification": "Model review of the waiting cards, 2026-11-05: skip, prior art: RL research code forked from visual-pushing-grasping (README.md:532); Robot (robot.py:100) sends raw URScript or drives V-REP and has no stop (:1300-1305, 2631-2634)."
+    },
+    {
+      "package_id": "gh.lewbert/talos-2d-transfer",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "talos.hal.devices.zolix:ZolixXYRStage",
+          "file": "talos/hal/devices/zolix.py",
+          "line": 99
+        },
+        {
+          "symbol": "talos.hal.devices.sigmakoki:SigmaKokiXYZStage",
+          "file": "talos/hal/devices/sigmakoki.py",
+          "line": 62
+        },
+        {
+          "symbol": "talos.hal.devices.focus:FocusStageDriver",
+          "file": "talos/hal/devices/focus.py",
+          "line": 59
+        },
+        {
+          "symbol": "talos.hal.devices.yudian:YudianTempController",
+          "file": "talos/hal/devices/yudian.py",
+          "line": 50
+        }
+      ],
+      "capability_classes": [
+        "cap.motion.joint_position.v1",
+        "cap.motion.stop.v1",
+        "cap.imaging.focus.v1",
+        "cap.thermal.setpoint.v1",
+        "cap.measure.temperature.v1"
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: TALOS drives its own stages, focus and Yudian hot stage (set_sv, yudian.py:143), not a pymmcore-plus camera; Zolix stop verifies and escalates (zolix.py:347-365); sim twins in talos/hal/sim."
+    },
+    {
+      "package_id": "gh.openscan-lsm/pymmcore-openscan",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:skip",
+      "justification": "Model review of the waiting cards, 2026-11-05: skip, tooling: an extension of pymmcore-gui (README.md:3) made of Qt widgets; the OpenScan and Becker & Hickl devices are Micro-Manager adapters outside the clone (README.md:46-50)."
+    },
+    {
+      "package_id": "gh.openuc2/imswitch",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "imswitch.imcontrol.model.managers.positioners.ESP32StageManager:ESP32StageManager",
+          "file": "imswitch/imcontrol/model/managers/positioners/ESP32StageManager.py",
+          "line": 33
+        },
+        {
+          "symbol": "imswitch.imcontrol.model.interfaces.standamotor:StandaMotor",
+          "file": "imswitch/imcontrol/model/interfaces/standamotor.py",
+          "line": 16
+        }
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: an ImSwitch driver pack like gh.imswitch/imswitch, not the pymmcore-plus camera route; ESP32StageManager (ESP32StageManager.py:33) moves the UC2 stage and stops it (:620-648)."
+    },
+    {
+      "package_id": "gh.rplab/wil_pycro_control_app",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "pyfile:WIL_Pycro_Control_App/hardware/stage.py#*",
+          "file": "WIL_Pycro_Control_App/hardware/stage.py",
+          "line": 1
+        },
+        {
+          "symbol": "pyfile:WIL_Pycro_Control_App/hardware/camera.py#*",
+          "file": "WIL_Pycro_Control_App/hardware/camera.py",
+          "line": 1
+        }
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: one microscope's control app: its ASI stage and camera are module functions over a pycromanager Core opened at import (stage.py:191, camera.py:117, pycro.py:25-26); no stop in the clone."
+    },
+    {
+      "package_id": "gh.vstevensf/python-eedap-hardware-control",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "app.hardware_control.proscan:PriorStage",
+          "file": "app/hardware_control/proscan.py",
+          "line": 147
+        }
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: a Prior ProScan III serial stage (PriorStage, proscan.py:147, G x,y with an R ack :152-177) that left Micro-Manager (README.md:33); no stop command in the clone."
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.laristizabal1/pv-emulator",
+  "track": "labs",
+  "local_path": "labs/laristizabal1/pv-emulator",
+  "driver_dir": "MHS/drivers/labs/laristizabal1__pv-emulator",
+  "upstream": {
+    "repo_url": "https://github.com/laristizabal1/pv-emulator",
+    "commit": "a2339189e88c80889a86ac67bcf98b5cc9fc4447",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 36,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "comm.scpi:SCPIController",
+      "file": "comm/scpi.py",
+      "line": 81,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "comm.bridge:EAPowerSupply",
+      "file": "comm/bridge.py",
+      "line": 132,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "comm.dl3000:DL3000Load",
+      "file": "comm/dl3000.py",
+      "line": 96,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "models.simplified:SimplifiedModel",
+      "file": "models/simplified.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "models.single_diode:SingleDiodeModel",
+      "file": "models/single_diode.py",
+      "line": 85,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "tools/bench/smoke_transition.py:28 FakeSerial",
+      "tools/bench/transition_bench.py:191 FakeSerial"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "SCPIController.query_fast",
+      "SCPIController.read_oper_cond",
+      "EAPowerSupply.get_error_code",
+      "EAPowerSupply.get_output_state",
+      "EAPowerSupply.read_meas_fast",
+      "DL3000Load.get_current_setpoint",
+      "DL3000Load.idn"
+    ],
+    "writes": [
+      "SCPIController.set_current_fast",
+      "SCPIController.set_output_fast",
+      "SCPIController.set_power_fast",
+      "SCPIController.set_protections",
+      "SCPIController.set_voltage_fast",
+      "EAPowerSupply.set_current_limit",
+      "EAPowerSupply.set_voltage",
+      "EAPowerSupply.write_batch",
+      "DL3000Load.set_cc_mode",
+      "DL3000Load.set_cp_mode",
+      "DL3000Load.set_cr_mode",
+      "DL3000Load.set_current"
+    ],
+    "actions": [
+      "SCPIController.run_profile",
+      "SCPIController.stop",
+      "DL3000Load.measure"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "config/hardware.py:28 V_MAX = 60.0",
+      "config/hardware.py:29 I_MAX = 170.0",
+      "config/hardware.py:30 P_MAX = 5000.0",
+      "config/hardware.py:31 DT_MIN = 200"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/laristizabal1__pv-emulator --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

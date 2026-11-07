@@ -1,0 +1,79 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.engineai-robotics/engineai_legged_gym",
+  "track": "robots",
+  "local_path": "robots/engineai-robotics/engineai_legged_gym",
+  "driver_dir": "MHS/drivers/robots/engineai-robotics__engineai_legged_gym",
+  "upstream": {
+    "repo_url": "https://github.com/engineai-robotics/engineai_legged_gym",
+    "commit": "1a659aa0aa77445766ecea6d95708a5812e9f290",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 42,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "legged_gym.scripts.sim2sim_zqsa01:run_mujoco",
+      "file": "legged_gym/scripts/sim2sim_zqsa01.py",
+      "line": 105,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "resources/robots/zq_humanoid/urdf/zq_sa01.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "resources/robots/zq_humanoid/urdf/zq_sa01.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "legged_gym/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model resources/robots/zq_humanoid/urdf/zq_sa01.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/engineai-robotics__engineai_legged_gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

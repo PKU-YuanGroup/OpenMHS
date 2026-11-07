@@ -1,0 +1,135 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.diamondlightsource/dodal",
+  "track": "labs",
+  "local_path": "labs/diamondlightsource/dodal",
+  "driver_dir": "MHS/drivers/labs/diamondlightsource__dodal",
+  "upstream": {
+    "repo_url": "https://github.com/diamondlightsource/dodal",
+    "commit": "f96fef4e72a734de6bb523b4229410254e7e8eab",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ophyd",
+  "role": "device-driver",
+  "family": "ophyd",
+  "helper": "OphydDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 8,
+  "exemplar": "MHS/drivers/labs/bcda-aps__apstools",
+  "entry_symbols": [
+    {
+      "symbol": "dodal.devices.eiger:EigerDetector",
+      "file": "src/dodal/devices/eiger.py",
+      "line": 48,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dodal.devices.tetramm.summing_tetramm:SummingTetrammDetector",
+      "file": "src/dodal/devices/tetramm/summing_tetramm.py",
+      "line": 74,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dodal.devices.eiger_odin:EigerOdin",
+      "file": "src/dodal/devices/eiger_odin.py",
+      "line": 119,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dodal.devices.insertion_device.apple2_undulator_gap:UndulatorGap",
+      "file": "src/dodal/devices/insertion_device/apple2_undulator_gap.py",
+      "line": 76,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dodal.devices.insertion_device.energy_motor_lookup:EpicsPolynomialEnergyMotorLookup",
+      "file": "src/dodal/devices/insertion_device/energy_motor_lookup.py",
+      "line": 132,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/dodal/devices/interlocks.py:87 MockIntPLCInterlock",
+      "src/dodal/devices/pressure_jump_cell.py:267 BusyMock",
+      "src/dodal/devices/scaler_card.py:21 MockScalerCardController"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "EigerDetector.is_armed",
+      "EigerDetector.arming_status (attribute)",
+      "EigerDetector.bit_depth (attribute)",
+      "EigerDetector.cam (attribute)",
+      "EigerDetector.do_arm (attribute)",
+      "EigerDetector.odin (attribute)",
+      "EigerDetector.stale_params (attribute)",
+      "SummingTetrammDetector.get_detector_trigger_logic",
+      "SummingTetrammDetector.get_shape",
+      "EigerOdin.fan (attribute)",
+      "EigerOdin.file_writer (attribute)",
+      "EigerOdin.meta (attribute)"
+    ],
+    "writes": [
+      "EigerDetector.set_cam_acquire",
+      "EigerDetector.set_cam_pvs",
+      "EigerDetector.set_detector_parameters",
+      "EigerDetector.set_detector_threshold",
+      "EigerDetector.set_mx_settings_pvs",
+      "EigerDetector.set_num_triggers_and_captures",
+      "EigerDetector.set_odin_number_of_frame_chunks",
+      "EigerDetector.set_odin_pvs"
+    ],
+    "actions": [
+      "EigerDetector.disable_roi_mode",
+      "EigerDetector.disarm_detector",
+      "EigerDetector.enable_roi_mode",
+      "EigerDetector.stop",
+      "EigerDetector.stop_odin_when_all_frames_collected",
+      "EigerOdin.stop"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/dodal/devices/insertion_device/apple2_controller.py:31 MAXIMUM_MOVE_TIME = 550",
+      "src/dodal/devices/insertion_device/apple2_controller.py:33 MAXIMUM_ROW_PHASE_MOTOR_POSITION = 24.0",
+      "src/dodal/devices/insertion_device/apple2_controller.py:34 MAXIMUM_GAP_MOTOR_POSITION = 100",
+      "src/dodal/devices/insertion_device/lookup_table_models.py:61 MAXIMUM_ROW_PHASE_MOTOR_POSITION = 24.0",
+      "src/dodal/devices/insertion_device/lookup_table_models.py:62 MAXIMUM_GAP_MOTOR_POSITION = 100",
+      "src/dodal/devices/beamlines/b07_1/ccmc.py:20 ccmc_lower_limit = 1500.0",
+      "src/dodal/devices/beamlines/b07_1/ccmc.py:21 ccmc_upper_limit = 3000.0",
+      "src/dodal/devices/beamlines/i06_shared/i06_epics_lookup.py:14 MINIMUM_GAP_MOTOR_POSITION = 15"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/diamondlightsource__dodal --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

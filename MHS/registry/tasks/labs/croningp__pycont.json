@@ -1,0 +1,127 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.croningp/pycont",
+  "track": "labs",
+  "local_path": "labs/croningp/pycont",
+  "driver_dir": "MHS/drivers/labs/croningp__pycont",
+  "upstream": {
+    "repo_url": "https://github.com/croningp/pycont",
+    "commit": "3f6dacb2a6ee82ce1806f6e471013a9ab809c0e6",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:flagship-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 6,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pycont.controller:C3000Controller",
+      "file": "pycont/controller.py",
+      "line": 339,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pycont.controller:MultiPumpController",
+      "file": "pycont/controller.py",
+      "line": 1319,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pycont.controller:PumpIO",
+      "file": "pycont/controller.py",
+      "line": 88,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pycont/controller.py:272 VirtualPumpIO",
+      "pycont/controller.py:1246 VirtualC3000Controller",
+      "pycont/controller.py:1755 VirtualMultiPumpController"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "C3000Controller.get_current_valve_config",
+      "C3000Controller.get_default_top_velocity",
+      "C3000Controller.get_eeprom_config",
+      "C3000Controller.get_plunger_position",
+      "C3000Controller.get_raw_valve_position",
+      "C3000Controller.get_top_velocity",
+      "C3000Controller.get_valve_position",
+      "C3000Controller.get_volume",
+      "C3000Controller.is_busy",
+      "C3000Controller.is_idle",
+      "C3000Controller.is_initialized",
+      "C3000Controller.is_volume_deliverable"
+    ],
+    "writes": [
+      "C3000Controller.set_default_top_velocity",
+      "C3000Controller.set_eeprom_config",
+      "C3000Controller.set_eeprom_lowlevel_config",
+      "C3000Controller.set_microstep_mode",
+      "C3000Controller.set_top_velocity",
+      "C3000Controller.set_valve_position",
+      "C3000Controller.write_and_read_from_pump",
+      "MultiPumpController.set_pumps_as_attributes",
+      "PumpIO.write_and_readline"
+    ],
+    "actions": [
+      "C3000Controller.init_all_pump_parameters",
+      "C3000Controller.pump",
+      "C3000Controller.transfer",
+      "C3000Controller._protocol.forge_move_to_packet",
+      "C3000Controller._protocol.forge_pump_packet",
+      "C3000Controller._protocol.forge_report_start_velocity_packet",
+      "MultiPumpController.default_pump_config",
+      "MultiPumpController.parallel_transfer",
+      "MultiPumpController.pump",
+      "MultiPumpController.transfer"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.actuation.pump.v1",
+      "cap.actuation.valve.v1",
+      "cap.motion.joint_position.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "pycont/controller.py:71 MAX_TOP_VELOCITY_MICRO_STEP_MODE_0 = 6000",
+      "pycont/controller.py:73 MAX_TOP_VELOCITY_MICRO_STEP_MODE_2 = 48000",
+      "pycont/controller.py:83 MAX_REPEAT_WRITE_AND_READ = 10",
+      "pycont/controller.py:85 MAX_REPEAT_OPERATION = 10"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/croningp__pycont --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

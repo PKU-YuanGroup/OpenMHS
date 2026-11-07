@@ -1,0 +1,258 @@
+{
+  "adapter": {
+    "bridge": "sila2",
+    "entry_points": [
+      "phenix_imager.feature_implementations.pheniximager_impl:PhenixImagerImpl (servers/phenix_imager/phenix_imager/feature_implementations/pheniximager_impl.py:54)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "docker",
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.process.run.v1",
+    "cap.sample.move.v1"
+  ],
+  "catalog_refs": [
+    "repo_412f88036220a520",
+    "https://github.com/anguyen-23/sila-testing"
+  ],
+  "description": "anguyen-23/sila-testing: protocol implementation/bridge for general (lab instrumentation track). OpenMHS plan: family-config with Sila2Driver, wave 6. Catalog role: protocol bridge. Declared backend: SiLA 2. Language: Python. Catalog keywords: SiLA.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 251 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/anguyen-23__sila-testing/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "sila2"
+  ],
+  "hardware_free": true,
+  "id": "gh.anguyen-23/sila-testing",
+  "integration": {
+    "blockers": [
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
+      "PLATFORM_WINDOWS: Windows-only imports"
+    ],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/labs/anguyen-23__sila-testing: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/anguyen-23__sila-testing --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:family-config",
+    "recipe": "families/sila2.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "SiLA 2",
+    "gRPC",
+    "Docker",
+    "HTTP/REST",
+    "Serial",
+    "WebSocket",
+    "CLI"
+  ],
+  "languages": [
+    "Python",
+    "Batchfile",
+    "Shell"
+  ],
+  "last_commit_at": "2026-04-20T14:46:00-07:00",
+  "license": "NOASSERTION",
+  "license_class": "unknown",
+  "license_spdx": "NOASSERTION",
+  "links": {
+    "repo": "https://github.com/anguyen-23/sila-testing"
+  },
+  "local_path": "labs/anguyen-23/sila-testing",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "anguyen-23",
+  "package_id": "gh.anguyen-23/sila-testing",
+  "quarantine": false,
+  "rank": 36,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "sila-testing",
+  "repo_url": "https://github.com/anguyen-23/sila-testing",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "0b572380e06977c1920510773b4bfee7bcd0eec5",
+    "repo_url": "https://github.com/anguyen-23/sila-testing"
+  },
+  "stars": 0,
+  "tags": [
+    "sila2",
+    "lab instrumentation",
+    "simulated",
+    "hardware interface",
+    "family config"
+  ],
+  "tier": "B",
+  "title": "anguyen-23/sila-testing",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 6,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-sila2",
+      "family_confidence": 0.89,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 61.0,
+      "quality_flags": [
+        "license_unknown"
+      ],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "false",
+      "backend_family_raw": "SiLA 2",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "SiLA 2仪器服务器开发与测试平台，带脚手架与示例温控器服务",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 207,
+      "rows_all": [
+        207
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "sila2",
+      "catalog_tier": "B",
+      "family_matches": [
+        "sila ?2"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/anguyen-23__sila-testing/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.process.run.v1"
+            ],
+            "kind": "process.controller"
+          },
+          {
+            "capabilities": [
+              "cap.sample.move.v1"
+            ],
+            "kind": "lab.sample"
+          }
+        ],
+        "risk_floor": "R2",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/anguyen-23__sila-testing/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/anguyen-23__sila-testing/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.process.run.v1"
+            ],
+            "kind": "process.controller"
+          },
+          {
+            "capabilities": [
+              "cap.sample.move.v1"
+            ],
+            "kind": "lab.sample"
+          }
+        ],
+        "risk_floor": "R2"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": null,
+      "file_spdx": null,
+      "review": true,
+      "source": "none"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "0b572380e06977c1920510773b4bfee7bcd0eec5",
+      "driver_dir": "MHS/drivers/labs/anguyen-23__sila-testing",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:53bc6ef9b5461cd4ccd2465c103ccd331e834c9a55d02c84c9e2c8b6ed09de97",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "docker",
+        "python"
+      ],
+      "entry_evidence_count": 10,
+      "files": 251,
+      "markers": {
+        "camera": 1,
+        "docker": 1,
+        "http": 10,
+        "serial": 4,
+        "sila2": 10
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (waiting-routing.json): Model review of the waiting cards, 2026-11-05: the sila2 exemplar serves PhenixImager, the one feature Sila2Driver proves (sila2_check.py:19-30); PhenixImagerImpl (pheniximager_impl.py:54) runs protocols and moves the plate (FDL 61-212).",
+        "rules alone: family-config (family:sila2, rule 9)"
+      ],
+      "family": "sila2",
+      "hardware_transport": "class servers.phenix_imager.phenix_imager.rci_transport:RCITransport uses the hardware transport comtypes",
+      "helper": "Sila2Driver",
+      "justification": "Model review of the waiting cards, 2026-11-05: the sila2 exemplar serves PhenixImager, the one feature Sila2Driver proves (sila2_check.py:19-30); PhenixImagerImpl (pheniximager_impl.py:54) runs protocols and moves the plate (FDL 61-212).",
+      "reason_code": "override:family-config",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

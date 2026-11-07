@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.rewarped/rewarped",
+  "track": "robots",
+  "local_path": "robots/rewarped/rewarped",
+  "driver_dir": "MHS/drivers/robots/rewarped__rewarped",
+  "upstream": {
+    "repo_url": "https://github.com/rewarped/rewarped",
+    "commit": "8500e645e2404a44bb6e83d112b1ec2b400ab792",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1612,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "rewarped.envs.isaacgymenvs.allegro_hand:AllegroHand",
+      "file": "rewarped/envs/isaacgymenvs/allegro_hand.py",
+      "line": 54,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rewarped.envs.isaacgymenvs.shadow_hand:ShadowHand",
+      "file": "rewarped/envs/isaacgymenvs/shadow_hand.py",
+      "line": 53,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rewarped.envs.dexdeform.flip:Flip",
+      "file": "rewarped/envs/dexdeform/flip.py",
+      "line": 5,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rewarped.envs.dexdeform.lift:Lift",
+      "file": "rewarped/envs/dexdeform/lift.py",
+      "line": 5,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rewarped.envs.isaacgymenvs.ant:Ant",
+      "file": "rewarped/envs/isaacgymenvs/ant.py",
+      "line": 49,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "rewarped/warp_mpm_sga/sim/interface.py:74 MPMDiffSim",
+      "rewarped/warp_mpm_sga/sim/interface.py:83 MPMCacheDiffSim",
+      "rewarped/warp_mpm_sga/sim/interface.py:101 MPMForwardSim",
+      "rewarped/warp_mpm_sga/config/physics/sim/base.py:5 BaseSimConfig",
+      "rewarped/warp_mpm_sga/config/physics/sim/dexdeform.py:5 DexDeformSimConfig",
+      "rewarped/warp_mpm_sga/config/physics/sim/low.py:5 LowSimConfig"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rewarped__rewarped --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

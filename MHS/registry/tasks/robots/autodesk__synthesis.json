@@ -1,0 +1,60 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.autodesk/synthesis",
+  "track": "robots",
+  "local_path": "robots/autodesk/synthesis",
+  "driver_dir": "MHS/drivers/robots/autodesk__synthesis",
+  "upstream": {
+    "repo_url": "https://github.com/autodesk/synthesis",
+    "commit": "d8c4ee2cb442683519e8a37bbd05f87d62fcd3d5",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 320,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "exporter/SynthesisFusionAddin/src/Parser/SynthesisParser/JointHierarchy.py:157 SimulationNode",
+      "exporter/SynthesisFusionAddin/src/Parser/SynthesisParser/JointHierarchy.py:186 SimulationEdge"
+    ],
+    "upstream_tests": "fission/src/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/autodesk__synthesis --backend fake",
+  "skip_reason": "override (robots.json): Synthesis is a TypeScript browser simulator (a GUI app) whose Python is Fusion 360 export/file-format tooling, not a simulator or device API, so it is skip/not-device with no entry class to wrap.",
+  "publish_review": "not_required"
+}

@@ -1,0 +1,79 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.baroobob/keithley2400",
+  "track": "labs",
+  "local_path": "labs/baroobob/keithley2400",
+  "driver_dir": "MHS/drivers/labs/baroobob__keithley2400",
+  "upstream": {
+    "repo_url": "https://github.com/baroobob/keithley2400",
+    "commit": "6491ff740bbdeac2f5cceca43a8b9133fb615399",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 73,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "keithley2400:open_connection",
+      "file": "keithley2400.py",
+      "line": 74,
+      "confidence": "override"
+    },
+    {
+      "symbol": "keithley2400:read",
+      "file": "keithley2400.py",
+      "line": 114,
+      "confidence": "override"
+    },
+    {
+      "symbol": "keithley2400:set_voltage_source",
+      "file": "keithley2400.py",
+      "line": 152,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "capabilities"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/baroobob__keithley2400 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

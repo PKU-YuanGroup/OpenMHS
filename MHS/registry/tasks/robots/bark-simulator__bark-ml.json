@@ -1,0 +1,108 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.bark-simulator/bark-ml",
+  "track": "robots",
+  "local_path": "robots/bark-simulator/bark-ml",
+  "driver_dir": "MHS/drivers/robots/bark-simulator__bark-ml",
+  "upstream": {
+    "repo_url": "https://github.com/bark-simulator/bark-ml",
+    "commit": "ea2ee58be406e71c5e95c80c0ffbe56c03d6ec60",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 127,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "bark_ml.environments.gym:ContinuousHighwayGym",
+      "file": "bark_ml/environments/gym.py",
+      "line": 25,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "bark_ml.environments.gym:DiscreteHighwayGym",
+      "file": "bark_ml/environments/gym.py",
+      "line": 38,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "bark_ml.environments.gym:ContinuousMergingGym",
+      "file": "bark_ml/environments/gym.py",
+      "line": 55,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "bark_ml.environments.gym:MediumContinuousMergingGym",
+      "file": "bark_ml/environments/gym.py",
+      "line": 86,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "bark_ml.environments.gym:DiscreteMergingGym",
+      "file": "bark_ml/environments/gym.py",
+      "line": 69,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "bark_ml/environments/gym.py:155 gym env highway-v0",
+      "bark_ml/environments/gym.py:159 gym env highway-v1",
+      "bark_ml/environments/gym.py:163 gym env merging-v0",
+      "bark_ml/environments/gym.py:167 gym env merging-medium-v0"
+    ],
+    "upstream_tests": "bark_ml/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env highway-v0 registered at bark_ml/environments/gym.py:155",
+      "gym env highway-v1 registered at bark_ml/environments/gym.py:159",
+      "gym env merging-v0 registered at bark_ml/environments/gym.py:163",
+      "gym env merging-medium-v0 registered at bark_ml/environments/gym.py:167",
+      "gym env merging-v1 registered at bark_ml/environments/gym.py:171",
+      "gym env intersection-v0 registered at bark_ml/environments/gym.py:175",
+      "gym env intersection-v1 registered at bark_ml/environments/gym.py:179",
+      "gym env singlelane-v0 registered at bark_ml/environments/gym.py:183"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/bark-simulator__bark-ml --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

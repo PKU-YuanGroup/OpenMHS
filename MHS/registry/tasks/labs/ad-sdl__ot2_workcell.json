@@ -1,0 +1,80 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ad-sdl/ot2_workcell",
+  "track": "labs",
+  "local_path": "labs/ad-sdl/ot2_workcell",
+  "driver_dir": "MHS/drivers/labs/ad-sdl__ot2_workcell",
+  "upstream": {
+    "repo_url": "https://github.com/ad-sdl/ot2_workcell",
+    "commit": "d0c59c0060e9f102916344d2504ba0dc473ff49c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "device-driver",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 11,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [
+    {
+      "symbol": "ot2_controller.ot2_controller.protocol_manager:OT2ProtocolManager",
+      "file": "ot2_controller/ot2_controller/protocol_manager.py",
+      "line": 50,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "arm_client/test"
+  },
+  "hints": {
+    "reads": [
+      "OT2ProtocolManager.get_next_protocol"
+    ],
+    "writes": [
+      "OT2ProtocolManager.set_state"
+    ],
+    "actions": [
+      "OT2ProtocolManager.run",
+      "OT2ProtocolManager.state_reset_callback",
+      "OT2ProtocolManager.transfer"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ad-sdl__ot2_workcell --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

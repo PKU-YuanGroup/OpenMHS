@@ -1,0 +1,91 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.picoquant/lumipy",
+  "track": "labs",
+  "local_path": "labs/picoquant/lumipy",
+  "driver_dir": "MHS/drivers/labs/picoquant__lumipy",
+  "upstream": {
+    "repo_url": "https://github.com/picoquant/lumipy",
+    "commit": "dc0fe266a55219811d171ccfc99a742e4eb4fffd",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 71,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "libs.pqlumi:Measurement",
+      "file": "libs/pqlumi.py",
+      "line": 502,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Measurement.get_analysis_curve",
+      "Measurement.get_analysis_curve_types",
+      "Measurement.get_analysis_image",
+      "Measurement.get_analysis_image_types",
+      "Measurement.get_analysis_names",
+      "Measurement.get_analysis_param",
+      "Measurement.get_analysis_param_types",
+      "Measurement.get_elapsed_meas_time"
+    ],
+    "writes": [
+      "Measurement.set_next_measurement_name",
+      "Measurement.write_ptu_file"
+    ],
+    "actions": [
+      "Measurement.start_meas",
+      "Measurement.stop_meas",
+      "Measurement._img_conf.stop_on_meas_time",
+      "Measurement._img_conf.stop_on_num_frames",
+      "Measurement._img_conf.stop_on_photons_in_brightest_px",
+      "Measurement._point_conf.stop_on_meas_time",
+      "Measurement._point_conf.stop_on_photons"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/picoquant__lumipy --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

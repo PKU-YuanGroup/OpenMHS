@@ -1,0 +1,219 @@
+{
+  "adapter": {
+    "bridge": "ros",
+    "entry_points": [
+      "moveit_configs_utils.moveit_configs_utils.moveit_configs_builder:MoveItConfigs (moveit_configs_utils/moveit_configs_utils/moveit_configs_builder.py:91)",
+      "moveit_py.moveit.policies.policy:Policy (moveit_py/moveit/policies/policy.py:54)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "cmake",
+    "ros",
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_479a9b6b1af2cd7d",
+    "https://github.com/moveit/moveit2"
+  ],
+  "description": "moveit/moveit2: motion planning and execution framework for shared access and protocol infrastructure (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: controller. Declared backend: MoveIt2/ROS2. Language: C++. Catalog keywords: ROS2, IK, planning, scene.",
+  "domains": [
+    "shared access and protocol infrastructure"
+  ],
+  "evidence": {
+    "files_read": 10,
+    "notes": "bounded static scan: 718 files enumerated (max depth 3), 10 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "ros2"
+  ],
+  "hardware_free": true,
+  "id": "gh.moveit/moveit2",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs the ros helper; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/ros2.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "MoveGroupInterface",
+    "setPoseTarget/setJointValueTarget",
+    "plan/execute/asyncExecute/stop",
+    "MoveGroup action",
+    "ROS 2",
+    "C++ API",
+    "Python",
+    "C++",
+    "CLI",
+    "Docker",
+    "ROS 1",
+    "HTTP/REST"
+  ],
+  "languages": [
+    "C++",
+    "Python",
+    "Shell",
+    "C"
+  ],
+  "last_commit_at": "2026-09-29T13:19:51Z",
+  "license": "BSD-3-Clause",
+  "license_class": "permissive",
+  "license_spdx": "BSD-3-Clause",
+  "links": {
+    "docs": "https://github.com/moveit/moveit2",
+    "repo": "https://github.com/moveit/moveit2"
+  },
+  "local_path": "robots/moveit/moveit2",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "moveit",
+  "package_id": "gh.moveit/moveit2",
+  "quarantine": false,
+  "rank": 11,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "moveit2",
+  "repo_url": "https://github.com/moveit/moveit2",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "a9004a43151b7d1fd50d462b8db6d4d280b0cc21",
+    "repo_url": "https://github.com/moveit/moveit2"
+  },
+  "stars": 2053,
+  "tags": [
+    "ros2",
+    "robotics",
+    "motion planning and execution framework",
+    "controller",
+    "simulated",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "moveit/moveit2",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "ros2",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 62.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "控制器",
+      "archived": "false",
+      "backend_family_raw": "MoveIt2/ROS2",
+      "category_zh": "运动规划与执行框架",
+      "description_zh": "ROS2机械臂运动规划、IK、planning scene与轨迹执行框架",
+      "join": "exact",
+      "license_raw": "BSD-3-Clause",
+      "mhs_support_raw": "需开发适配；所核材料未证实官方 MHS 兼容，官方公开 API/schema 尚未核到，不能据未提及断言无支持",
+      "priority": "P1",
+      "row": 1683,
+      "rows_all": [
+        1683
+      ],
+      "scope": "core",
+      "track_raw": "shared_infrastructure | robotics",
+      "verification_level": "已核源码"
+    },
+    "classification": {
+      "catalog_family": "ros2",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bros ?2\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B4-controller"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/moveit__moveit2/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/robots/moveit__moveit2/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/moveit__moveit2/hardware"
+        ],
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "BSD-3-Clause",
+      "declared_spdx": null,
+      "file": "LICENSE.txt",
+      "file_spdx": "BSD-3-Clause",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "cmake",
+        "ros",
+        "python"
+      ],
+      "entry_evidence_count": 8,
+      "files": 718,
+      "markers": {
+        "cli": 1,
+        "docker": 2,
+        "ros1": 1,
+        "ros2": 147
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): MoveIt 2 is a ROS 2 motion-planning framework that sends action goals to ros2_control controllers, not a per-device driver.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": "ros",
+      "helper": null,
+      "justification": "MoveIt 2 is a ROS 2 motion-planning framework that sends action goals to ros2_control controllers, not a per-device driver.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

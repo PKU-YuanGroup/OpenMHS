@@ -1,0 +1,78 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.amsikking/asi_ms_2000_500_cp",
+  "track": "labs",
+  "local_path": "labs/amsikking/asi_ms_2000_500_cp",
+  "driver_dir": "MHS/drivers/labs/amsikking__asi_ms_2000_500_cp",
+  "upstream": {
+    "repo_url": "https://github.com/amsikking/asi_ms_2000_500_cp",
+    "commit": "5f1f6d2cad545d5ae20359fd01e014dfdd21f11f",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 41,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "asi_MS_2000_500_CP:Controller",
+      "file": "asi_MS_2000_500_CP.py",
+      "line": 3,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Controller.get_pwm_intensity"
+    ],
+    "writes": [
+      "Controller.set_pwm_intensity",
+      "Controller.set_pwm_state"
+    ],
+    "actions": [
+      "Controller.move_um"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.measure.intensity.v1",
+      "cap.motion.joint_position.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/amsikking__asi_ms_2000_500_cp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

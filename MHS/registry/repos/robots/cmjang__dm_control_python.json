@@ -1,0 +1,219 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "DM_CAN:MotorControl (DM_CAN.py:66)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.motion.joint_position.v1",
+    "cap.device.configure.v1",
+    "cap.motion.joint_velocity.v1",
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_26ac127ff5dd721c",
+    "https://github.com/cmjang/dm_control_python"
+  ],
+  "description": "cmjang/dm_control_python: catalog/discovery tooling (robotics track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 1. Catalog role: peripheral tooling. Language: Python. Catalog keywords: Damiao, Motor, Control, controlling, motors, Windows.",
+  "domains": [],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 6 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/robots/cmjang__dm_control_python/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.cmjang/dm_control_python",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/robots/cmjang__dm_control_python: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/cmjang__dm_control_python --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:flagship-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2024-12-16T07:16:05Z",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "docs": "https://github.com/cmjang/DM_Control_Python",
+    "repo": "https://github.com/cmjang/dm_control_python"
+  },
+  "local_path": "robots/cmjang/dm_control_python",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "cmjang",
+  "package_id": "gh.cmjang/dm_control_python",
+  "quarantine": false,
+  "rank": 29,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "dm_control_python",
+  "repo_url": "https://github.com/cmjang/dm_control_python",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "7da93877ba844d9587149d6f3a6385453aa8379f",
+    "repo_url": "https://github.com/cmjang/dm_control_python"
+  },
+  "stars": 78,
+  "tags": [
+    "python-object",
+    "robotics",
+    "catalog discovery tooling",
+    "peripheral tooling",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "cmjang/dm_control_python",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 1,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 46.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "外围工具",
+      "archived": "false",
+      "backend_family_raw": "unknown",
+      "category_zh": "自动分类/发现",
+      "description_zh": "Damiao Motor Control Library – A Python library for controlling Damiao motors via CAN. Supports Windows, Linux, and macOS. Flexible control modes and real-time motor status feedback.  达妙电机控制库 – 一个用于通过CAN控制达妙电机的Python库。支持 Windows、Linux 和 macOS。提供灵活的控制模式和实时电机状态反馈。",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "需开发适配",
+      "priority": "参考",
+      "row": 501,
+      "rows_all": [
+        501
+      ],
+      "scope": "unknown",
+      "track_raw": "robotics",
+      "verification_level": "仅简介"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "D",
+      "family_matches": [
+        "python ?library",
+        "python ?library"
+      ],
+      "family_rule": "scored",
+      "family_score": 3,
+      "tier_note": "tier D -> B: triage direct-driver (override:flagship-driver)",
+      "tier_rule": "D1-peripheral-role"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/cmjang__dm_control_python/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.joint_velocity.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "7da93877ba844d9587149d6f3a6385453aa8379f",
+      "driver_dir": "MHS/drivers/robots/cmjang__dm_control_python",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:8a4a2d3a2f41bd60ad64246d732ae0df099cdd1542a5bf2a2df032c14c1bb989",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 2,
+      "files": 6,
+      "markers": {
+        "serial": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): Damiao motor driver over a USB-CAN serial bridge (Motor, MotorControl.controlMIT); a real device misfiled under dm_control and tier D (FIT-ROS-04).",
+        "rules alone: skip (skip:peripheral, rule 8)"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "justification": "Damiao motor driver over a USB-CAN serial bridge (Motor, MotorControl.controlMIT); a real device misfiled under dm_control and tier D (FIT-ROS-04).",
+      "reason_code": "override:flagship-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

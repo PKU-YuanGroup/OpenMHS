@@ -1,0 +1,101 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.enactic/openarm_mujoco",
+  "track": "robots",
+  "local_path": "robots/enactic/openarm_mujoco",
+  "driver_dir": "MHS/drivers/robots/enactic__openarm_mujoco",
+  "upstream": {
+    "repo_url": "https://github.com/enactic/openarm_mujoco",
+    "commit": "0e050bb5d3472b75c6bfa00b310a77c7c2c5be79",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 90,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "v1/scene.xml",
+      "line": 17,
+      "kind": "scene"
+    },
+    {
+      "file": "v0.3/openarm.mjcf.xml",
+      "line": 17,
+      "kind": "robot"
+    },
+    {
+      "file": "v0.3/openarm_bimanual.mjcf.xml",
+      "line": 17,
+      "kind": "robot"
+    },
+    {
+      "file": "v1/openarm.xml",
+      "line": 18,
+      "kind": "robot"
+    },
+    {
+      "file": "v1/openarm_bimanual.xml",
+      "line": 18,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "v1/scene.xml:17 MJCF scene model",
+      "v0.3/openarm.mjcf.xml:17 MJCF robot model",
+      "v0.3/openarm_bimanual.mjcf.xml:17 MJCF robot model",
+      "v1/openarm.xml:18 MJCF robot model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model v1/scene.xml:17",
+      "MJCF robot model v0.3/openarm.mjcf.xml:17",
+      "MJCF robot model v0.3/openarm_bimanual.mjcf.xml:17",
+      "MJCF robot model v1/openarm.xml:18",
+      "MJCF robot model v1/openarm_bimanual.xml:18",
+      "MJCF robot model v2/openarm_bimanual.xml:18",
+      "MJCF robot model v2/cell/cell.xml:17"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/enactic__openarm_mujoco --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

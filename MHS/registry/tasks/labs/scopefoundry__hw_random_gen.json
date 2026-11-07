@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.scopefoundry/hw_random_gen",
+  "track": "labs",
+  "local_path": "labs/scopefoundry/hw_random_gen",
+  "driver_dir": "MHS/drivers/labs/scopefoundry__hw_random_gen",
+  "upstream": {
+    "repo_url": "https://github.com/scopefoundry/hw_random_gen",
+    "commit": "e0675e1ba9e2b047e26eddccc3f8fc8f0859a406",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1526,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/scopefoundry__hw_random_gen --backend fake",
+  "skip_reason": "override (labs.json): RandomNumberGenDev is a dummy, returning numpy noise and a local-clock sine with no transport or vendor SDK, so this ScopeFoundry example is not a device and should not be wrapped as a driver.",
+  "publish_review": "not_required"
+}

@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sldesnoo-delft/q1simulator",
+  "track": "labs",
+  "local_path": "labs/sldesnoo-delft/q1simulator",
+  "driver_dir": "MHS/drivers/labs/sldesnoo-delft__q1simulator",
+  "upstream": {
+    "repo_url": "https://github.com/sldesnoo-delft/q1simulator",
+    "commit": "57b862c41190c2ac81ebeba9c982831175e1e8f7",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": "qcodes",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 71,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "q1simulator.cluster:Cluster",
+      "file": "q1simulator/cluster.py",
+      "line": 46,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "q1simulator.cluster:ClusterModule",
+      "file": "q1simulator/cluster.py",
+      "line": 23,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "q1simulator.q1sequencer:Q1Sequencer",
+      "file": "q1simulator/q1sequencer.py",
+      "line": 32,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "q1simulator.rt_renderer:Renderer",
+      "file": "q1simulator/rt_renderer.py",
+      "line": 128,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "q1simulator.q1module:Q1Module",
+      "file": "q1simulator/q1module.py",
+      "line": 20,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "q1simulator/q1sequencer.py:737 MockData",
+      "q1simulator/q1simulator.py:22 Q1Simulator"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/sldesnoo-delft__q1simulator --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

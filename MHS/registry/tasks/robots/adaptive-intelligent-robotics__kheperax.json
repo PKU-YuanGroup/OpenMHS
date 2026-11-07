@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.adaptive-intelligent-robotics/kheperax",
+  "track": "robots",
+  "local_path": "robots/adaptive-intelligent-robotics/kheperax",
+  "driver_dir": "MHS/drivers/robots/adaptive-intelligent-robotics__kheperax",
+  "upstream": {
+    "repo_url": "https://github.com/adaptive-intelligent-robotics/kheperax",
+    "commit": "052be06902baaf70cb0149e9058e3541edaf02e4",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1180,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "kheperax/tasks/final_distance.py:18 FinalDistKheperaxTask environment class",
+      "kheperax/tasks/target.py:42 TargetKheperaxTask environment class",
+      "kheperax/envs/env.py:10 Env environment class",
+      "kheperax/tasks/main.py:27 KheperaxTask environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/adaptive-intelligent-robotics__kheperax --backend fake",
+  "skip_reason": "override (robots.json): Skip: a JAX QD benchmark simulating Khepera-like robots in-process, not a hardware device or a Gymnasium/MuJoCo environment.",
+  "publish_review": "not_required"
+}

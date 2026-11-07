@@ -1,0 +1,96 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pmezydlo/oscilloscope_lan_data_capture",
+  "track": "labs",
+  "local_path": "labs/pmezydlo/oscilloscope_lan_data_capture",
+  "driver_dir": "MHS/drivers/labs/pmezydlo__oscilloscope_lan_data_capture",
+  "upstream": {
+    "repo_url": "https://github.com/pmezydlo/oscilloscope_lan_data_capture",
+    "commit": "f68c0b8d5acb7592ad21fd39b453d5a4d892a91e",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 308,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "oscilloscope_functions:oscilloscope",
+      "file": "oscilloscope_functions.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "oscilloscope_functions:multimeter",
+      "file": "oscilloscope_functions.py",
+      "line": 66,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "measure_interfaces:rs232",
+      "file": "measure_interfaces.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "measure_interfaces:usb",
+      "file": "measure_interfaces.py",
+      "line": 30,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "measure_interfaces:lan",
+      "file": "measure_interfaces.py",
+      "line": 80,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "oscilloscope.get_active_channel",
+      "oscilloscope.get_time"
+    ],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pmezydlo__oscilloscope_lan_data_capture --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

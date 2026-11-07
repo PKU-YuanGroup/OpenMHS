@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tiagocoutinho/sinstruments",
+  "track": "labs",
+  "local_path": "labs/tiagocoutinho/sinstruments",
+  "driver_dir": "MHS/drivers/labs/tiagocoutinho__sinstruments",
+  "upstream": {
+    "repo_url": "https://github.com/tiagocoutinho/sinstruments",
+    "commit": "da7c7235c59f8ac5117ea749264521c5e57374ff",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 55,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "sinstruments.pytest:server_context",
+      "file": "sinstruments/pytest.py",
+      "line": 78,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sinstruments.simulators.elettra:AH501D",
+      "file": "sinstruments/simulators/elettra.py",
+      "line": 232,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sinstruments.simulators.elettra:AH401D",
+      "file": "sinstruments/simulators/elettra.py",
+      "line": 217,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "sinstruments/simulator.py:126 SimulatorServerMixin",
+      "sinstruments/simulator.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/tiagocoutinho__sinstruments --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cheshire-labs/orca-client",
+  "track": "labs",
+  "local_path": "labs/cheshire-labs/orca-client",
+  "driver_dir": "MHS/drivers/labs/cheshire-labs__orca-client",
+  "upstream": {
+    "repo_url": "https://github.com/cheshire-labs/orca-client",
+    "commit": "65f0dda861a75106ace35709ad6b3b97f4ba01f6",
+    "license_spdx": "SSPL-1.0",
+    "license_class": "source-available"
+  },
+  "decision": "reference",
+  "reason_code": "override:recon",
+  "role": "host",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 953,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/orca_client/config/models.py:78 OpentronsSimServerConfig",
+      "src/orca_client/devices/sim_driver_types.py:33 SimDriverCtor",
+      "src/orca_client/devices/sim_driver_types.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/cheshire-labs__orca-client --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

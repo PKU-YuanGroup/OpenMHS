@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.shiki-ta/humanoid-terrain-bench",
+  "track": "robots",
+  "local_path": "robots/shiki-ta/humanoid-terrain-bench",
+  "driver_dir": "MHS/drivers/robots/shiki-ta__humanoid-terrain-bench",
+  "upstream": {
+    "repo_url": "https://github.com/shiki-ta/humanoid-terrain-bench",
+    "commit": "a23c1bf6ea8591005b95766377537a8059bbf3a9",
+    "license_spdx": "CC-BY-NC-4.0",
+    "license_class": "source-available"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1344,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "legged_gym/resources/robots/h1_2/scene.xml:1 MJCF scene model",
+      "legged_gym/resources/robots/g1/g1_23dof.xml:1 MJCF robot model",
+      "legged_gym/resources/robots/g1/g1_23dof_rev_1_0.xml:1 MJCF robot model",
+      "legged_gym/resources/robots/g1/g1_29dof.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "legged_gym/logs/parkour_new/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/shiki-ta__humanoid-terrain-bench --backend fake",
+  "skip_reason": "override (robots.json): This is an Isaac Gym/legged_gym RL benchmark, not a device: it trains and evaluates humanoid locomotion policies in simulation with URDF assets and exposes no serial, VISA, or vendor SDK transport.",
+  "publish_review": "required"
+}

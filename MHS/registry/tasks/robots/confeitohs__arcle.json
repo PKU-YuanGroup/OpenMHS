@@ -1,0 +1,99 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.confeitohs/arcle",
+  "track": "robots",
+  "local_path": "robots/confeitohs/arcle",
+  "driver_dir": "MHS/drivers/robots/confeitohs__arcle",
+  "upstream": {
+    "repo_url": "https://github.com/confeitohs/arcle",
+    "commit": "311be9db018ed5f17fff2f7891251f965ea7aa2e",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 88,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "arcle.envs.arcenv:RawARCEnv",
+      "file": "arcle/envs/arcenv.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "arcle.envs.arcenv:ARCEnv",
+      "file": "arcle/envs/arcenv.py",
+      "line": 78,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "arcle.envs.o2arcenv:O2ARCv2Env",
+      "file": "arcle/envs/o2arcenv.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "arcle.envs:O2ARCEnv",
+      "file": "arcle/envs/__init__.py",
+      "line": 17,
+      "confidence": "recon"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "agents/wrapper.py:61 gym env ARCLE/O2ARCNoFillEnv",
+      "arcle/envs/__init__.py:7 gym env ARCLE/RawARCEnv-v0",
+      "arcle/envs/__init__.py:12 gym env ARCLE/ARCEnv-v0",
+      "arcle/envs/__init__.py:17 gym env ARCLE/O2ARCEnv-v2"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env ARCLE/O2ARCNoFillEnv registered at agents/wrapper.py:61",
+      "gym env ARCLE/RawARCEnv-v0 registered at arcle/envs/__init__.py:7",
+      "gym env ARCLE/ARCEnv-v0 registered at arcle/envs/__init__.py:12",
+      "gym env ARCLE/O2ARCEnv-v2 registered at arcle/envs/__init__.py:17",
+      "gym env ARCLE/O2ARCv2Env-v0 registered at arcle/envs/__init__.py:22"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/confeitohs__arcle --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ap/python-oceanoptics",
+  "track": "labs",
+  "local_path": "labs/ap--/python-oceanoptics",
+  "driver_dir": "MHS/drivers/labs/ap--__python-oceanoptics",
+  "upstream": {
+    "repo_url": "https://github.com/ap--/python-oceanoptics",
+    "commit": "3df0c263e47c374dcd569681780cf5fc5faa2029",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 46,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "oceanoptics.base:OceanOpticsTEC",
+      "file": "oceanoptics/base.py",
+      "line": 312,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "OceanOpticsTEC.get_TEC_temperature",
+      "OceanOpticsTEC.get_temperatures"
+    ],
+    "writes": [
+      "OceanOpticsTEC.set_TEC_temperature"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.measure.temperature.v1",
+      "cap.sensing.read.v1",
+      "cap.thermal.setpoint.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ap--__python-oceanoptics --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

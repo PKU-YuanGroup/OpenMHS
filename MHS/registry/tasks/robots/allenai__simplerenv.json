@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.allenai/simplerenv",
+  "track": "robots",
+  "local_path": "robots/allenai/simplerenv",
+  "driver_dir": "MHS/drivers/robots/allenai__simplerenv",
+  "upstream": {
+    "repo_url": "https://github.com/allenai/simplerenv",
+    "commit": "c701ea271b16b80616d6fed9713c4a50a0adea3b",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:duplicate_of",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": "gh.simpler-env/simplerenv",
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1545,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ManiSkill2_real2sim/mani_skill2_real2sim/envs/custom_scenes/grasp_single_in_scene.py:470 gym env GraspSingleCustomInScene-v0",
+      "ManiSkill2_real2sim/mani_skill2_real2sim/envs/custom_scenes/grasp_single_in_scene.py:519 gym env GraspSingleCustomOrientationInScene-v0",
+      "ManiSkill2_real2sim/mani_skill2_real2sim/envs/custom_scenes/grasp_single_in_scene.py:591 gym env GraspSingleRandomObjectInScene-v0",
+      "ManiSkill2_real2sim/mani_skill2_real2sim/envs/custom_scenes/grasp_single_in_scene.py:614 gym env GraspSingleCokeCanInScene-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/allenai__simplerenv --backend fake",
+  "skip_reason": "file tree 0.98 similar to gh.simpler-env/simplerenv",
+  "publish_review": "not_required"
+}

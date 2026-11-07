@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.robot-robustness/robotwin2.0-plus",
+  "track": "robots",
+  "local_path": "robots/robot-robustness/robotwin2.0-plus",
+  "driver_dir": "MHS/drivers/robots/robot-robustness__robotwin2.0-plus",
+  "upstream": {
+    "repo_url": "https://github.com/robot-robustness/robotwin2.0-plus",
+    "commit": "8f077616e5c3c1cb29b88db2323212d51243438a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1566,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "envs/adjust_bottle.py:7 adjust_bottle environment class",
+      "envs/beat_block_hammer.py:7 beat_block_hammer environment class",
+      "envs/blocks_ranking_rgb.py:8 blocks_ranking_rgb environment class",
+      "envs/blocks_ranking_size.py:8 blocks_ranking_size environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/robot-robustness__robotwin2.0-plus --backend fake",
+  "skip_reason": "override (robots.json): Model review of recon wave A: its task classes subclass gym.Env but define no reset or step; they run scripted demonstrations (setup_demo, play_once) for data generation, so there is no environment interface to drive.",
+  "publish_review": "not_required"
+}

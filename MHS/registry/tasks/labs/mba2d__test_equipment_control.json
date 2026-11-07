@@ -1,0 +1,139 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mba2d/test_equipment_control",
+  "track": "labs",
+  "local_path": "labs/mba2d/test_equipment_control",
+  "driver_dir": "MHS/drivers/labs/mba2d__test_equipment_control",
+  "upstream": {
+    "repo_url": "https://github.com/mba2d/test_equipment_control",
+    "commit": "34bb54c13c766fdfe7e6260872a03e8dfefd3ad2",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 19,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "lab_equipment.Eload_A2D_Eload:A2D_Eload",
+      "file": "lab_equipment/Eload_A2D_Eload.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lab_equipment.A2D_DAQ_control:A2D_DAQ",
+      "file": "lab_equipment/A2D_DAQ_control.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lab_equipment.PSU_SPD1000:SPD1000",
+      "file": "lab_equipment/PSU_SPD1000.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lab_equipment.OTHER_Arduino_IO_Module:Arduino_IO",
+      "file": "lab_equipment/OTHER_Arduino_IO_Module.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lab_equipment.SMU_A2D_POWER_BOARD:A2D_POWER_BOARD",
+      "file": "lab_equipment/SMU_A2D_POWER_BOARD.py",
+      "line": 7,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "lab_equipment/DMM_Fake.py:4 Fake_DMM",
+      "lab_equipment/DMM_VIRTUAL.py:5 VirtualDMM",
+      "lab_equipment/Eload_Fake.py:4 Fake_Eload",
+      "lab_equipment/PSU_Fake.py:4 Fake_PSU",
+      "lab_equipment/VirtualDeviceTemplate.py:24 VirtualDeviceTemplate",
+      "lab_equipment/DMM_Fake.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "A2D_Eload.get_cal_i",
+      "A2D_Eload.get_cal_v",
+      "A2D_Eload.get_fan",
+      "A2D_Eload.get_led",
+      "A2D_Eload.get_output",
+      "A2D_Eload.get_rs485_addr",
+      "A2D_Eload.measure_current",
+      "A2D_Eload.measure_current_control",
+      "A2D_Eload.measure_temperature",
+      "A2D_Eload.measure_voltage_adc_supply",
+      "A2D_Eload.measure_voltage_supply",
+      "A2D_DAQ.get_analog_mv"
+    ],
+    "writes": [
+      "A2D_Eload.set_current",
+      "A2D_Eload.set_fan",
+      "A2D_Eload.set_led",
+      "A2D_Eload.set_rs485_addr",
+      "A2D_DAQ.configure_from_dict",
+      "A2D_DAQ.set_dig",
+      "A2D_DAQ.set_led",
+      "A2D_DAQ.set_read_delay_ms",
+      "SPD1000.set_current",
+      "SPD1000.set_voltage"
+    ],
+    "actions": [
+      "A2D_Eload.cal_i_reset",
+      "A2D_Eload.cal_v_reset",
+      "A2D_Eload.calibrate_current",
+      "A2D_Eload.calibrate_voltage",
+      "A2D_Eload.reset",
+      "A2D_DAQ.calibrate_pullup_v",
+      "A2D_DAQ.reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.voltage.v1",
+      "cap.device.calibrate.v1",
+      "cap.measure.current.v1",
+      "cap.imaging.illumination.v1",
+      "cap.measure.temperature.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "voltage_to_temp.py:9 max_temp = 9999"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/mba2d__test_equipment_control --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

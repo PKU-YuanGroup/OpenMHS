@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.martinhjelmare/leicacam",
+  "track": "labs",
+  "local_path": "labs/martinhjelmare/leicacam",
+  "driver_dir": "MHS/drivers/labs/martinhjelmare__leicacam",
+  "upstream": {
+    "repo_url": "https://github.com/martinhjelmare/leicacam",
+    "commit": "5c33a0d6daa179377390eccf40f1fc3e584b2dad",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:partner-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 1,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "leicacam.cam:CAM",
+      "file": "src/leicacam/cam.py",
+      "line": 107,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "leicacam.async_cam:AsyncCAM",
+      "file": "src/leicacam/async_cam.py",
+      "line": 12,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "CAM.get_information"
+    ],
+    "writes": [],
+    "actions": [
+      "CAM.autofocus_scan",
+      "CAM.disable",
+      "CAM.disable_all",
+      "CAM.enable",
+      "CAM.enable_all",
+      "CAM.pause_scan",
+      "CAM.start_scan",
+      "CAM.stop_scan"
+    ],
+    "candidate_classes": [
+      "cap.imaging.focus.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/martinhjelmare__leicacam --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

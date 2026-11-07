@@ -1,0 +1,108 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.darshmenon/quadruped-robotics-stack",
+  "track": "robots",
+  "local_path": "robots/darshmenon/quadruped-robotics-stack",
+  "driver_dir": "MHS/drivers/robots/darshmenon__quadruped-robotics-stack",
+  "upstream": {
+    "repo_url": "https://github.com/darshmenon/quadruped-robotics-stack",
+    "commit": "fe3c2e7457f9caaaa30b5669daba184394173a5f",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 108,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "training.envs.go2_mujoco_env:Go2MujocoEnv",
+      "file": "training/envs/go2_mujoco_env.py",
+      "line": 206,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "training/envs/go2_parkour_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "training/envs/go2_rough_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "training/envs/go2_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "training/envs/go2_stairs_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ros2/quad_sdk/quad_simulator/go2_description/models/go2/go2_mjc/go2.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "training/envs/go2_parkour_scene.xml:1 MJCF scene model",
+      "training/envs/go2_rough_scene.xml:1 MJCF scene model",
+      "training/envs/go2_scene.xml:1 MJCF scene model",
+      "training/envs/go2_stairs_scene.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "ros2/quad_sdk/quad_utils/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model training/envs/go2_parkour_scene.xml:1",
+      "MJCF scene model training/envs/go2_rough_scene.xml:1",
+      "MJCF scene model training/envs/go2_scene.xml:1",
+      "MJCF scene model training/envs/go2_stairs_scene.xml:1",
+      "MJCF robot model ros2/quad_sdk/quad_simulator/go2_description/models/go2/go2_mjc/go2.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/darshmenon__quadruped-robotics-stack --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

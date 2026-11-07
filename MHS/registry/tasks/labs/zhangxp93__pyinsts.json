@@ -1,0 +1,128 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.zhangxp93/pyinsts",
+  "track": "labs",
+  "local_path": "labs/zhangxp93/pyinsts",
+  "driver_dir": "MHS/drivers/labs/zhangxp93__pyinsts",
+  "upstream": {
+    "repo_url": "https://github.com/zhangxp93/pyinsts",
+    "commit": "3bcaa2acbea14bb3ed30de140808e9d0de70c96a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 23,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "pyinsts.instrument_drivers.rohde_schwarz.fsv3030:FSV3030Sp",
+      "file": "src/pyinsts/instrument_drivers/rohde_schwarz/fsv3030.py",
+      "line": 239,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyinsts.instrument_drivers.rohde_schwarz.fswp:FswpSp",
+      "file": "src/pyinsts/instrument_drivers/rohde_schwarz/fswp.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyinsts.instrument_drivers.rsa6000.rsa6000:Rsa6000Sp",
+      "file": "src/pyinsts/instrument_drivers/rsa6000/rsa6000.py",
+      "line": 228,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyinsts.instrument_drivers.keysight.keysight_n9020b:KeysightN9020B",
+      "file": "src/pyinsts/instrument_drivers/keysight/keysight_n9020b.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyinsts.instrument_drivers.keysight.keysight_n9030a:KeysightN9030A",
+      "file": "src/pyinsts/instrument_drivers/keysight/keysight_n9030a.py",
+      "line": 9,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/pyinsts/instrument/sim/34461a.yaml:1 pyvisa-sim device file",
+      "src/pyinsts/instrument/sim/E36312a.yaml:1 pyvisa-sim device file",
+      "src/pyinsts/instrument/sim/E5052b.yaml:1 pyvisa-sim device file",
+      "src/pyinsts/instrument/sim/E8257d.yaml:1 pyvisa-sim device file",
+      "src/pyinsts/instrument/sim/Fsv3013.yaml:1 pyvisa-sim device file",
+      "src/pyinsts/instrument/sim/Fsv3030.yaml:1 pyvisa-sim device file"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "FSV3030Sp.query_delta_mkr_x",
+      "FSV3030Sp.query_delta_mkr_y",
+      "FSV3030Sp.query_marker_x",
+      "FSV3030Sp.query_marker_y",
+      "FSV3030Sp.query_trace_x",
+      "FSV3030Sp.query_trace_y",
+      "FswpSp.query_delta_mkr_x",
+      "FswpSp.query_delta_mkr_y",
+      "FswpSp.query_marker_x",
+      "FswpSp.query_marker_y",
+      "FswpSp.query_trace_x",
+      "FswpSp.query_trace_y"
+    ],
+    "writes": [
+      "FSV3030Sp.set_abort_meas",
+      "FSV3030Sp.set_all_markers_off",
+      "FSV3030Sp.set_auto_search_off",
+      "FSV3030Sp.set_clear_status",
+      "FSV3030Sp.set_continuous_peak",
+      "FSV3030Sp.set_err_disp",
+      "FSV3030Sp.set_freq_center",
+      "FSV3030Sp.set_freq_span",
+      "FSV3030Sp.set_freq_span_full",
+      "FSV3030Sp.set_mark_all_off",
+      "FSV3030Sp.set_mark_del",
+      "FSV3030Sp.set_mark_del_on"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/zhangxp93__pyinsts --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

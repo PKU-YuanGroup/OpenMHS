@@ -1,0 +1,216 @@
+{
+  "adapter": {
+    "bridge": "http",
+    "entry_points": [
+      "controller.python.omnisim.motor:Motor (lib/controller/python/omnisim/motor.py:22)",
+      "controller.python.omnisim.vacuum_gripper:VacuumGripper (lib/controller/python/omnisim/vacuum_gripper.py:20)",
+      "controller.python.omnisim.camera:Camera (lib/controller/python/omnisim/camera.py:64)",
+      "controller.python.omnisim.lidar:Lidar (lib/controller/python/omnisim/lidar.py:22)",
+      "controller.python.omnisim.display:Display (lib/controller/python/omnisim/display.py:22)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "make",
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_54a0294636926d05",
+    "https://github.com/omnilink-tech/omnisim"
+  ],
+  "description": "omnilink-tech/omnisim: digital twins for digital twins (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: direct simulation backend. Declared backend: OmniSim/Newton. Language: Python. Catalog keywords: Newton, JSON, MCP.",
+  "domains": [
+    "digital twins"
+  ],
+  "evidence": {
+    "files_read": 7,
+    "notes": "bounded static scan: 4045 files enumerated (max depth 3), 7 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "http-api"
+  ],
+  "hardware_free": true,
+  "id": "gh.omnilink-tech/omnisim",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver",
+      "NEEDS_GPU: an import or the catalogue requires a GPU"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs the http helper; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/http-api.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "HTTP/JSON",
+    "MCP",
+    "ROS2 sidecar",
+    "HTTP/REST",
+    "ROS 2",
+    "CLI",
+    "Docker",
+    "Gazebo",
+    "Isaac Sim",
+    "MuJoCo",
+    "Replay",
+    "Webots"
+  ],
+  "languages": [
+    "Python",
+    "C++",
+    "C",
+    "Shell"
+  ],
+  "last_commit_at": "2026-10-09T05:03:10Z",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "docs": "https://github.com/omnilink-tech/omnisim/commit/c8e0a262e5413ed4762e20e854733a349c5c6766",
+    "repo": "https://github.com/omnilink-tech/omnisim"
+  },
+  "local_path": "robots/omnilink-tech/omnisim",
+  "modes": [
+    "simulated"
+  ],
+  "owner": "omnilink-tech",
+  "package_id": "gh.omnilink-tech/omnisim",
+  "quarantine": false,
+  "rank": 1272,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "omnisim",
+  "repo_url": "https://github.com/omnilink-tech/omnisim",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "5193feadadb98e5236c8738f162ea352919cfef8",
+    "repo_url": "https://github.com/omnilink-tech/omnisim"
+  },
+  "stars": 187,
+  "tags": [
+    "http-api",
+    "robotics",
+    "digital twins",
+    "direct simulation backend",
+    "simulated",
+    "bridge runtime"
+  ],
+  "tier": "A",
+  "title": "omnilink-tech/omnisim",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "isaac-lab",
+      "family_confidence": 0.62,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 85.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "OmniSim/Newton",
+      "category_zh": "数字孪生",
+      "description_zh": "面向编程代理的机器人工作台，含 Newton 物理、HTTP/JSON/MCP 接口及事件流。",
+      "join": "exact",
+      "license_raw": "Apache-2.0",
+      "mhs_support_raw": "需开发适配（仅核公开文档/API；未确认可复用MHS适配器，不据此断言不存在）",
+      "priority": "P1",
+      "row": 1863,
+      "rows_all": [
+        1863
+      ],
+      "scope": "core",
+      "track_raw": "robotics | shared_infrastructure",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "other",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bnewton\\b"
+      ],
+      "family_note": "triage family http (catalogue family other)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/omnilink-tech__omnisim/simulated",
+        "mode": "simulated",
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "make",
+        "python"
+      ],
+      "entry_evidence_count": 8,
+      "files": 4045,
+      "markers": {
+        "cli": 4,
+        "docker": 2,
+        "gazebo": 2,
+        "gpu": 13,
+        "http": 1,
+        "isaac_sim": 4,
+        "mcp": 10,
+        "mujoco": 4,
+        "replay": 2,
+        "ros2": 13,
+        "webots": 3
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): OmniSim is a Webots-derived C++ simulator engine with an in-process Python controller API and an HTTP world harness, so it is bridge-runtime/framework (http), not a device driver.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": "http",
+      "helper": null,
+      "justification": "OmniSim is a Webots-derived C++ simulator engine with an in-process Python controller API and an HTTP world harness, so it is bridge-runtime/framework (http), not a device driver.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

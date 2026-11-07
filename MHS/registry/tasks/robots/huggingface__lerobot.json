@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.huggingface/lerobot",
+  "track": "robots",
+  "local_path": "robots/huggingface/lerobot",
+  "driver_dir": "MHS/drivers/robots/huggingface__lerobot",
+  "upstream": {
+    "repo_url": "https://github.com/huggingface/lerobot",
+    "commit": "b9cb121cb7d4e3e26ec5c906d08dda68d151ba52",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:partner-framework",
+  "role": "framework",
+  "family": "lerobot",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "lerobot.rollout.inference.rtc:RTCInferenceEngine",
+      "file": "src/lerobot/rollout/inference/rtc.py",
+      "line": 189,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lerobot.cameras.realsense.camera_realsense:RealSenseCamera",
+      "file": "src/lerobot/cameras/realsense/camera_realsense.py",
+      "line": 48,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lerobot.robots.lekiwi.lekiwi:LeKiwi",
+      "file": "src/lerobot/robots/lekiwi/lekiwi.py",
+      "line": 41,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lerobot.robots.reachy2.robot_reachy2:Reachy2Robot",
+      "file": "src/lerobot/robots/reachy2/robot_reachy2.py",
+      "line": 75,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lerobot.teleoperators.openarm_mini.openarm_mini:OpenArmMini",
+      "file": "src/lerobot/teleoperators/openarm_mini/openarm_mini.py",
+      "line": 46,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/huggingface__lerobot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

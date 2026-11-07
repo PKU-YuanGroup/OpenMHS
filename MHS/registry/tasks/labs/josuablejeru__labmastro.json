@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.josuablejeru/labmastro",
+  "track": "labs",
+  "local_path": "labs/josuablejeru/labmastro",
+  "driver_dir": "MHS/drivers/labs/josuablejeru__labmastro",
+  "upstream": {
+    "repo_url": "https://github.com/josuablejeru/labmastro",
+    "commit": "86db05e8dd4e37d66667e18e4d8e2fadbb864b18",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "family:tag-bridge",
+  "role": "device-driver",
+  "family": "tag-bridge",
+  "helper": "TagDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 26,
+  "exemplar": "MHS/drivers/labs/josuablejeru__labmastro",
+  "entry_symbols": [
+    {
+      "symbol": "labmastro.power_supply.hanmatek.hm.control:HanmatekHmControl",
+      "file": "labmastro/power_supply/hanmatek/hm/control.py",
+      "line": 6,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "HanmatekHmControl.get_current",
+      "HanmatekHmControl.get_power",
+      "HanmatekHmControl.get_power_status",
+      "HanmatekHmControl.get_voltage"
+    ],
+    "writes": [
+      "HanmatekHmControl.set_current",
+      "HanmatekHmControl.set_over_current_protection",
+      "HanmatekHmControl.set_over_power_protection",
+      "HanmatekHmControl.set_over_voltage_protection",
+      "HanmatekHmControl.set_voltage"
+    ],
+    "actions": [
+      "HanmatekHmControl.power_off",
+      "HanmatekHmControl.power_on"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.measure.current.v1",
+      "cap.measure.voltage.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/josuablejeru__labmastro --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

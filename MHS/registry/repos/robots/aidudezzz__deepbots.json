@@ -1,0 +1,192 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [
+      "deepbots.robots.controllers.csv_robot:CSVRobot (deepbots/robots/controllers/csv_robot.py:7)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python",
+    "docker"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_84197878348f450e",
+    "https://github.com/aidudezzz/deepbots"
+  ],
+  "description": "aidudezzz/deepbots: complete environment for general (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: task environment. Declared backend: Webots. Language: Python. Catalog keywords: Webots, Gym.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 7,
+    "notes": "bounded static scan: 32 files enumerated (max depth 3), 7 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "gymnasium"
+  ],
+  "hardware_free": true,
+  "id": "gh.aidudezzz/deepbots",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs a future engine bridge; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "Gymnasium",
+    "Python SDK",
+    "Docker",
+    "Webots"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2023-06-03T20:00:48+03:00",
+  "license": "GPL-3.0",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-3.0",
+  "links": {
+    "repo": "https://github.com/aidudezzz/deepbots"
+  },
+  "local_path": "robots/aidudezzz/deepbots",
+  "modes": [
+    "simulated"
+  ],
+  "owner": "aidudezzz",
+  "package_id": "gh.aidudezzz/deepbots",
+  "quarantine": false,
+  "rank": 637,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "deepbots",
+  "repo_url": "https://github.com/aidudezzz/deepbots",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "11104196c3cf4ca3264d8d51dc54ef9f62f1d75b",
+    "repo_url": "https://github.com/aidudezzz/deepbots"
+  },
+  "stars": 273,
+  "tags": [
+    "gymnasium",
+    "robotics",
+    "complete environment",
+    "task environment",
+    "simulated",
+    "bridge runtime"
+  ],
+  "tier": "A",
+  "title": "aidudezzz/deepbots",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "gym-env",
+      "family_confidence": 0.89,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 51.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.66
+    },
+    "catalog": {
+      "adapter_role_zh": "任务环境",
+      "archived": "false",
+      "backend_family_raw": "Webots",
+      "category_zh": "完整环境",
+      "description_zh": "Webots与强化学习之间的Gym风格中间件框架",
+      "join": "exact",
+      "license_raw": "GPL-3.0",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 111,
+      "rows_all": [
+        111
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "gymnasium",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bwebots\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "A2-task-env-entry"
+    },
+    "device_plan": [
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/robots/aidudezzz__deepbots/simulated",
+        "mode": "simulated",
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-3.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "GPL-3.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python",
+        "docker"
+      ],
+      "entry_evidence_count": 3,
+      "files": 32,
+      "markers": {
+        "camera": 3,
+        "docker": 2,
+        "gymnasium": 11,
+        "lidar": 1,
+        "webots": 16
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): Deepbots is Gym-style middleware that runs controllers inside the external Webots simulator, not a per-device driver, so bridge-runtime/framework fits.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "Deepbots is Gym-style middleware that runs controllers inside the external Webots simulator, not a per-device driver, so bridge-runtime/framework fits.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

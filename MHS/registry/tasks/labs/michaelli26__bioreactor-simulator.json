@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.michaelli26/bioreactor-simulator",
+  "track": "labs",
+  "local_path": "labs/michaelli26/bioreactor-simulator",
+  "driver_dir": "MHS/drivers/labs/michaelli26__bioreactor-simulator",
+  "upstream": {
+    "repo_url": "https://github.com/michaelli26/bioreactor-simulator",
+    "commit": "47df1b60fb7a457ee3e4f27a51abcd56eb3aa747",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1703,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "simulatorpyqt.py:24 BioreactorSimulator",
+      "simulatorpyqt.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/michaelli26__bioreactor-simulator --backend fake",
+  "skip_reason": "override (labs.json): Skip: a PyQt GUI that simulates a bioreactor via synthetic CSV rows with no serial, VISA, USB, socket or SDK I/O; a driver author needs hardware and its control protocol.",
+  "publish_review": "required"
+}

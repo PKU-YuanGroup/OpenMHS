@@ -1,0 +1,223 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "zaber.serial.ascii:AsciiAxis (zaber/serial/ascii.py:16)",
+      "zaber.serial.binary:BinaryDevice (zaber/serial/binary.py:82)",
+      "zaber.serial.ascii:AsciiDevice (zaber/serial/ascii.py:393)",
+      "zaber.serial.ascii:AsciiSerial (zaber/serial/ascii.py:809)",
+      "zaber.serial.binary:BinarySerial (zaber/serial/binary.py:311)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.motion.joint_position.v1",
+    "cap.sensing.read.v1",
+    "cap.motion.stop.v1"
+  ],
+  "catalog_refs": [
+    "repo_1f85050d6f9d06ed",
+    "https://github.com/ksunden/zaber.serial"
+  ],
+  "description": "ksunden/zaber.serial: device backend for general (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Language: Python. Catalog keywords: Zaber.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 9 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/ksunden__zaber.serial/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.ksunden/zaber.serial",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/ksunden__zaber.serial: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/ksunden__zaber.serial --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "serial",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2018-04-16T11:10:05-05:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/ksunden/zaber.serial"
+  },
+  "local_path": "labs/ksunden/zaber.serial",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "ksunden",
+  "package_id": "gh.ksunden/zaber.serial",
+  "quarantine": false,
+  "rank": 66,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "zaber.serial",
+  "repo_url": "https://github.com/ksunden/zaber.serial",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "4bd9e1103f6a057fd376edcdf574251637465fba",
+    "repo_url": "https://github.com/ksunden/zaber.serial"
+  },
+  "stars": 1,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "ksunden/zaber.serial",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 45.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "Zaber设备串口控制Python库镜像",
+      "join": "exact",
+      "license_raw": "Apache-2.0",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 1354,
+      "rows_all": [
+        1354
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/ksunden__zaber.serial/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": null,
+      "file": "LICENSE.txt",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "4bd9e1103f6a057fd376edcdf574251637465fba",
+      "driver_dir": "MHS/drivers/labs/ksunden__zaber.serial",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:68a6bc91c25c8ca685be3bf823e32cabd7f4afb72740d9393150ba5aeedbd846",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 3,
+      "files": 9,
+      "markers": {
+        "serial": 4
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class zaber.serial.ascii:AsciiAxis (zaber/serial/ascii.py:16, score 15)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class zaber.serial.ascii:AsciiAxis uses the hardware transport serial",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

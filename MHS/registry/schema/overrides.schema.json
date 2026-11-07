@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmhs.invalid/schema/0.9/overrides.schema.json",
+  "title": "OpenMHS registry triage overrides",
+  "description": "One file under MHS/registry/overrides/. Each entry fixes the triage decision of one corpus repo and wins over the ordered triage rules (MHS/registry/triage.py). Regeneration reads these files and never writes them. A justification is one line that says why the curated decision is right.",
+  "type": "object",
+  "required": ["overrides_version", "title", "overrides"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "overrides_version": { "const": "0.9" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "description": { "type": "string", "maxLength": 2000 },
+    "overrides": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/override" }
+    }
+  },
+  "$defs": {
+    "sourcePath": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!/)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)[A-Za-z0-9._@+ /-]+(?<!/)$(?![\\s\\S])", "description": "Source evidence only: normalized relative POSIX path; spaces allowed; no traversal or control characters. Package paths are unchanged."},
+    "override": {
+      "type": "object",
+      "required": ["package_id", "strategy", "role", "justification"],
+      "additionalProperties": false,
+      "properties": {
+        "package_id": { "$ref": "defs.schema.json#/$defs/packageId" },
+        "strategy": {
+          "type": "string",
+          "enum": ["direct-driver", "family-config", "bridge-runtime", "reference", "skip", "untriaged"]
+        },
+        "role": {
+          "type": "string",
+          "enum": ["device-driver", "driver-pack", "sim-env", "twin-candidate", "framework", "transport", "tooling", "host", "prior-art", "docs", "not-device"]
+        },
+        "family": {
+          "type": "string",
+          "enum": ["python-object", "serial", "scpi", "gymnasium", "mujoco", "ros", "http", "pylabrobot", "sila2", "qcodes", "ophyd", "pymmcore-plus", "lerobot", "mavlink", "tag-bridge", "mcp-client"],
+          "description": "Integration family; required for direct-driver and family-config, informative for bridge-runtime."
+        },
+        "reason_code": {
+          "type": "string",
+          "maxLength": 64,
+          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$",
+          "description": "Defaults to override:<strategy>."
+        },
+        "quarantine": { "type": "boolean" },
+        "variant_of": { "anyOf": [{ "$ref": "defs.schema.json#/$defs/packageId" }, { "type": "null" }] },
+        "partner": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Early-ecosystem partner whose product the repo drives (appendix D); adds the partner term of the rank formula. Records a product relationship, not an endorsement."
+        },
+        "flagship": { "type": "boolean", "description": "On the curated flagship list (rule 8 never skips it)." },
+        "wave": { "type": "integer", "minimum": 0, "maximum": 9 },
+        "entry_symbols": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "description": "Entry symbols confirmed in the clone at the card's commit (a recon proposal that tools/check_recon.py checked and a maintainer accepted). They replace the scan's entry symbols on the card, with confidence override. Only for direct-driver and family-config.",
+          "items": {
+            "type": "object",
+            "required": ["symbol", "file", "line"],
+            "additionalProperties": false,
+            "properties": {
+              "symbol": {"type": "string", "pattern": "^(?:[A-Za-z_][A-Za-z0-9_.]*:[A-Za-z_][A-Za-z0-9_.]*|pyfile:(?!/)(?!\\.{1,2}/)(?!.*\\/\\.{1,2}/)(?!.*//)[A-Za-z0-9._@+ /-]+\\.py#(?:\\*|[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*))$(?![\\s\\S])", "description": "Source-only dotted class or pyfile:path.py#Class / pyfile:path.py#* selector; never a runtime import target."},
+              "file": { "$ref": "#/$defs/sourcePath" },
+              "line": { "type": "integer", "minimum": 1 }
+            }
+          }
+        },
+        "capability_classes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "description": "Catalogue capability classes a reviewer confirmed in the clone's source. They replace the scan-derived candidate classes on the card, so the card's risk floor (the highest risk_class of the classes, CAP-017) follows them; build_registry.py refuses a class that is not a stable catalogue class. Only for direct-driver and family-config.",
+          "items": { "type": "string", "pattern": "^cap\\.[a-z0-9_]+(?:\\.[a-z0-9_]+)*\\.v[0-9]+$" }
+        },
+        "modes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["hardware", "simulated", "replay"] },
+          "description": "The record's complete mode set, a reviewer's reading of the source where the scan's modes are wrong (a real-hardware route recorded as simulated). It replaces the record's modes, so simulation, hardware_free, the device plan and the card's safety.expected_mode follow it; hardware comes first (triage.py checks the order). It never removes a hardware mode the scan found, and build_registry.py refuses it on a record of tier D or X, which has no modes."
+        },
+        "served_mode": {
+          "const": "simulated",
+          "description": "Serve the simulated form of a dual-mode record. The record keeps its modes (hardware first, simulated still present; a modes override still cannot drop hardware) and records x-vendor.classification.served_mode with rule override:served-mode. The card's safety.expected_mode becomes simulated. build_registry.py refuses it unless both modes are present and hardware is first. Only for direct-driver and family-config."
+        },
+        "publish_review": {
+          "const": "required",
+          "description": "A reviewer found licence evidence (a licence file and packaging metadata that disagree, or a custom licence the scan read as a standard one) that the owner must decide on before a driver is published: the card says publish_review required whatever its licence class. An override can add this review, never waive one."
+        },
+        "omit_sim_contract": {
+          "const": true,
+          "description": "A reviewer confirmed that the scan's gym registrations, environment classes and MJCF models are not the contract the driver serves (a vendored test scene beside a fake-hardware arm, for example). build_card then leaves models empty, does not take sim_hints, and does not prefer upstream-sim because of that scan. Candidate classes still come from capability_classes when that list is set, and otherwise from the device API. Only for direct-driver and family-config. capability_classes cannot say this: it requires 1 to 8 catalogue ids and does not drop models."
+        },
+        "companions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "description": "Reviewed companion sources (user decision 2026-11-05): corpus repositories cloned locally at their corpus-lock commit that the package's e-stop, its read-back, its declared re-enable and its facts may cite (companion:<alias>/<path>:<LINE>). build_registry.py copies them onto the card with the clone's local_path, repo_url and licence and stops when a package_id is not a corpus record, a commit is not its corpus-lock commit, an alias repeats or a companion is the repository itself. An entry with lock names a clone fetched under work/companions instead (the user's authorisation of 2026-11-05): its commit and profile must be the LOCK.json entry's, its package_id the one that entry's repo_url names, and the card's package must be in that entry's needed_by; build_registry.py copies the LOCK.json path, repo_url, ref and licence. version_evidence ties the package's stack to the companion's: each ref is path:LINE in the tree its side names and must show its token. Only for direct-driver and family-config. One further case (user decision 4, 2026-11-05), and only for a package the user named: hardware_stop true on a lock entry whose profile is not a ROS profile. That package's stop and its fresh read-back may cite it. The hardware backend still needs a human reviewed_by with scope hardware.",
+          "items": {
+            "type": "object",
+            "required": ["alias", "package_id", "commit", "profile", "reason", "version_evidence"],
+            "additionalProperties": false,
+            "properties": {
+              "alias": { "type": "string", "pattern": "^[a-z][a-z0-9_-]{1,39}$" },
+              "package_id": { "$ref": "defs.schema.json#/$defs/packageId" },
+              "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+              "lock": { "type": "string", "maxLength": 200, "pattern": "^[A-Za-z0-9_.-]+__[A-Za-z0-9_.-]+@[A-Za-z0-9_.+-]+$", "description": "The work/companions/LOCK.json alias (<owner>__<repo>@<ref>) of a fetched companion clone; absent for a corpus companion." },
+              "hardware_stop": { "const": true, "description": "User decision 4 of 2026-11-05: this lock companion may be cited by that one hardware package's stop and its fresh read-back. Exactly true, and only together with lock. A ROS companion never sets it." },
+              "profile": { "type": "string", "description": "A ROS generation-distro-simulator release (ros1-noetic-gazebo11), or, when hardware_stop is true, a non-ROS profile such as micromanager-2.0-gamma-20230120." },
+              "reason": { "type": "string", "minLength": 10, "maxLength": 240, "pattern": "^[^\\n]+$" },
+              "version_evidence": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 12,
+                "items": {
+                  "type": "object",
+                  "required": ["side", "ref", "token"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "side": { "type": "string", "pattern": "^(package|companion|companion:[a-z][a-z0-9_-]{1,39})$" },
+                    "ref": { "type": "string", "minLength": 3, "maxLength": 512, "pattern": "^[^:\\s][^:]*:[1-9][0-9]*(-[1-9][0-9]*)?$", "description": "path:LINE[-END] in the tree its side names" },
+                    "token": { "type": "string", "minLength": 2, "maxLength": 80, "description": "text the range shows (case-insensitive)" }
+                  }
+                }
+              }
+            },
+            "allOf": [
+              {
+                "if": { "properties": { "hardware_stop": { "const": true } }, "required": ["hardware_stop"] },
+                "then": {
+                  "required": ["lock"],
+                  "properties": { "profile": { "pattern": "^(?!ros[12]-)[a-z][a-z0-9.+-]{1,80}$" } }
+                },
+                "else": {
+                  "not": { "required": ["hardware_stop"] },
+                  "properties": { "profile": { "pattern": "^ros[12]-[a-z]+-[a-z0-9.+-]+$" } }
+                }
+              }
+            ]
+          }
+        },
+        "justification": { "type": "string", "minLength": 10, "maxLength": 240, "pattern": "^[^\\n]+$" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "strategy": { "enum": ["direct-driver", "family-config"] } }, "required": ["strategy"] },
+          "then": { "required": ["family"], "properties": { "quarantine": { "const": false } } }
+        },
+        {
+          "if": { "required": ["entry_symbols"] },
+          "then": { "properties": { "strategy": { "enum": ["direct-driver", "family-config"] } } }
+        },
+        {
+          "if": { "required": ["capability_classes"] },
+          "then": { "properties": { "strategy": { "enum": ["direct-driver", "family-config"] } } }
+        },
+        {
+          "if": { "required": ["omit_sim_contract"] },
+          "then": { "properties": { "strategy": { "enum": ["direct-driver", "family-config"] } } }
+        },
+        {
+          "if": { "required": ["companions"] },
+          "then": { "properties": { "strategy": { "enum": ["direct-driver", "family-config"] } } }
+        },
+        {
+          "if": { "required": ["served_mode"] },
+          "then": { "properties": { "strategy": { "enum": ["direct-driver", "family-config"] } } }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.aau-cns/ardupilot_multiagent_simulation",
+  "track": "robots",
+  "local_path": "robots/aau-cns/ardupilot_multiagent_simulation",
+  "driver_dir": "MHS/drivers/robots/aau-cns__ardupilot_multiagent_simulation",
+  "upstream": {
+    "repo_url": "https://github.com/aau-cns/ardupilot_multiagent_simulation",
+    "commit": "53f37bc3af9b24c41c732dbf46d9f32bd0a5c88d",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 9,
+  "rank": 926,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "src/multiagent_simulation/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/aau-cns__ardupilot_multiagent_simulation --backend fake",
+  "skip_reason": "override (ros-wave-c-routing.json): Model review of wave C: skip, a ROS 2 launch environment for multi-drone Gazebo plus ArduPilot SITL whose only control code is a pymavlink Tk GUI; the vehicles fly through ArduPilot SITL, the gh.ardupilot/ardupilot card.",
+  "publish_review": "not_required"
+}

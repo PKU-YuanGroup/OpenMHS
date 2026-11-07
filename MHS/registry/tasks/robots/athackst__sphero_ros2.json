@@ -1,0 +1,122 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.athackst/sphero_ros2",
+  "track": "robots",
+  "local_path": "robots/athackst/sphero_ros2",
+  "driver_dir": "MHS/drivers/robots/athackst__sphero_ros2",
+  "upstream": {
+    "repo_url": "https://github.com/athackst/sphero_ros2",
+    "commit": "bcbb7e12172c559eaa298484c94c1c6ed0ebcd14",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "device-driver",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 28,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [
+    {
+      "symbol": "sphero_driver.sphero_driver:Sphero",
+      "file": "sphero_driver/src/sphero_driver/sphero_driver.py",
+      "line": 224,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sphero_node.sphero:SpheroNode",
+      "file": "sphero_node/sphero.py",
+      "line": 23,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "sphero_driver.sphero_driver:BTInterface",
+      "file": "sphero_driver/src/sphero_driver/sphero_driver.py",
+      "line": 163,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Sphero.get_app_config_blk",
+      "Sphero.get_auto_reconnect",
+      "Sphero.get_bt_name",
+      "Sphero.get_power_state",
+      "Sphero.get_rgb_led",
+      "Sphero.get_version",
+      "SpheroNode.robot.get_app_config_blk",
+      "SpheroNode.robot.get_auto_reconnect",
+      "SpheroNode.robot.get_bt_name",
+      "SpheroNode.robot.get_power_state",
+      "SpheroNode.robot.get_rgb_led",
+      "SpheroNode.robot.get_version"
+    ],
+    "writes": [
+      "Sphero.config_collision_detect",
+      "Sphero.set_all_data_strm",
+      "Sphero.set_app_config_blk",
+      "Sphero.set_auto_reconnect",
+      "Sphero.set_back_led",
+      "Sphero.set_data_strm",
+      "Sphero.set_device_name",
+      "Sphero.set_filtered_data_strm",
+      "Sphero.set_heading",
+      "Sphero.set_power_notify",
+      "Sphero.set_raw_data_strm",
+      "Sphero.set_raw_motor_values"
+    ],
+    "actions": [
+      "Sphero.run",
+      "Sphero.run_l1_diags",
+      "Sphero.run_l2_diags",
+      "SpheroNode.spin",
+      "SpheroNode.start",
+      "SpheroNode.stop",
+      "SpheroNode.robot.run",
+      "SpheroNode.robot.run_l1_diags",
+      "SpheroNode.robot.run_l2_diags"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.imaging.illumination.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "motion"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/athackst__sphero_ros2 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

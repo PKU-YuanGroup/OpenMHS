@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.markusbuchholz/gazebosim_blueboat_ardupilot_sitl",
+  "track": "robots",
+  "local_path": "robots/markusbuchholz/gazebosim_blueboat_ardupilot_sitl",
+  "driver_dir": "MHS/drivers/robots/markusbuchholz__gazebosim_blueboat_ardupilot_sitl",
+  "upstream": {
+    "repo_url": "https://github.com/markusbuchholz/gazebosim_blueboat_ardupilot_sitl",
+    "commit": "96b01666d9f8e7ec19b25df3f8709c2aed2e1363",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "sim-env",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 59,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "ros2_blueboat_interface:BlueboatROSInterface",
+      "file": "gz_ws/extras_interface/ros2_blueboat_interface.py",
+      "line": 34,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "gz_ws/src/move_blueboat/test"
+  },
+  "hints": {
+    "reads": [
+      "BoatController.get_current_mode",
+      "CoordinateApp.get_coordinates",
+      "CoordinateApp.get_nearest_node",
+      "CoordinateApp.get_neighbors",
+      "CoordinateApp.is_colliding"
+    ],
+    "writes": [
+      "BoatController.set_auto_mode",
+      "BoatController.set_guided_mode",
+      "BoatController.set_loiter_mode",
+      "BoatController.set_manual_mode",
+      "BoatController.set_mode",
+      "BlueboatROSInterface.set_rc_channels_pwm",
+      "BlueboatROSInterface.set_servo_function",
+      "BlueboatROSInterface.set_stabilize_mode_and_arm",
+      "CoordinateApp.set_goal",
+      "CoordinateApp.set_start"
+    ],
+    "actions": [
+      "BoatController.arm_vehicle",
+      "BlueboatROSInterface.arm_vehicle",
+      "BlueboatROSInterface.disable_passthrough_mode",
+      "BlueboatROSInterface.disarm_vehicle",
+      "BlueboatROSInterface.enable_passthrough_mode",
+      "CoordinateApp.run_ros_program"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/markusbuchholz__gazebosim_blueboat_ardupilot_sitl --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

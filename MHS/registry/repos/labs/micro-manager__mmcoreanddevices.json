@@ -1,0 +1,220 @@
+{
+  "adapter": {
+    "bridge": "pymmcore-plus",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "just",
+    "dotnet",
+    "autotools",
+    "meson",
+    "maven"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_cbb182e8865e3f33",
+    "https://github.com/micro-manager/mmcoreanddevices"
+  ],
+  "description": "micro-manager/mmcoreanddevices: repository for microscopy imaging; optics; electronic measurement and DAQ (lab instrumentation track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: direct simulation backend. Declared backend: Micro-Manager/MMCore. Language: C++.",
+  "domains": [
+    "microscopy imaging",
+    "optics",
+    "electronic measurement and DAQ"
+  ],
+  "evidence": {
+    "files_read": 8,
+    "notes": "bounded static scan: 2671 files enumerated (max depth 3), 8 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "micromanager"
+  ],
+  "hardware_free": true,
+  "id": "gh.micro-manager/mmcoreanddevices",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver",
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs the pymmcore-plus helper; it is not a per-repo driver task.",
+    "reason_code": "bridge-runtime:pymmcore-plus",
+    "recipe": "families/micromanager.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "Python",
+    "C++ CMMCore API",
+    ".cfg system configuration file",
+    "CLI",
+    "Micro-Manager",
+    "Serial"
+  ],
+  "languages": [
+    "C++",
+    "C",
+    "Python",
+    "Arduino"
+  ],
+  "last_commit_at": "2026-10-08T08:18:40-05:00",
+  "license": "NOASSERTION",
+  "license_class": "unknown",
+  "license_spdx": "NOASSERTION",
+  "links": {
+    "docs": "https://github.com/micro-manager/mmCoreAndDevices/commit/d12e66eae5469d3548161e4e1d95058610826219",
+    "repo": "https://github.com/micro-manager/mmcoreanddevices"
+  },
+  "local_path": "labs/micro-manager/mmcoreanddevices",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "micro-manager",
+  "package_id": "gh.micro-manager/mmcoreanddevices",
+  "quarantine": false,
+  "rank": 430,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "mmcoreanddevices",
+  "repo_url": "https://github.com/micro-manager/mmcoreanddevices",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "d12e66eae5469d3548161e4e1d95058610826219",
+    "repo_url": "https://github.com/micro-manager/mmcoreanddevices"
+  },
+  "stars": 65,
+  "tags": [
+    "micromanager",
+    "lab instrumentation",
+    "direct simulation backend",
+    "simulated",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "A",
+  "title": "micro-manager/mmcoreanddevices",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-micromanager",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 61.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "Micro-Manager/MMCore",
+      "blockers_raw": "二进制构建与分发；Linux 适配器覆盖不全",
+      "category_zh": "显微设备核心",
+      "description_zh": "Micro-Manager的C++硬件抽象和设备适配器，DemoCamera/台等是离线测试基础。",
+      "join": "exact",
+      "license_raw": "MMCore/MMDevice：LGPL（license.txt）；DemoCamera：BSD-风格(UC Regents)；各适配器许可各异，部分依赖闭源厂商 SDK",
+      "mhs_support_raw": "需开发适配；本次官方README/API核验未确认MHS支持，不能据此断言不存在",
+      "priority": "P1",
+      "row": 1619,
+      "rows_all": [
+        1619
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "micromanager",
+      "catalog_tier": "A",
+      "family_matches": [
+        "micro[- ]?manager"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/micro-manager__mmcoreanddevices/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/micro-manager__mmcoreanddevices/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/micro-manager__mmcoreanddevices/hardware"
+        ],
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": null,
+      "file_spdx": null,
+      "review": true,
+      "source": "none"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "just",
+        "dotnet",
+        "autotools",
+        "meson",
+        "maven"
+      ],
+      "entry_evidence_count": 0,
+      "files": 2671,
+      "markers": {
+        "camera": 7,
+        "cli": 1,
+        "laser": 2,
+        "micromanager": 71,
+        "microscopy": 2,
+        "serial": 8
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): MMCore and the Micro-Manager device adapters (including DemoCamera); reached through pymmcore-plus.",
+        "rules alone: bridge-runtime (bridge-runtime:pymmcore-plus, rule 6)"
+      ],
+      "family": "pymmcore-plus",
+      "flagship": true,
+      "helper": null,
+      "justification": "MMCore and the Micro-Manager device adapters (including DemoCamera); reached through pymmcore-plus.",
+      "reason_code": "bridge-runtime:pymmcore-plus",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

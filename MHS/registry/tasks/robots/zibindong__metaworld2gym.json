@@ -1,0 +1,138 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.zibindong/metaworld2gym",
+  "track": "robots",
+  "local_path": "robots/zibindong/metaworld2gym",
+  "driver_dir": "MHS/drivers/robots/zibindong__metaworld2gym",
+  "upstream": {
+    "repo_url": "https://github.com/zibindong/metaworld2gym",
+    "commit": "9e7d3da16a86b6bed1353e1c2042115ed75edb1a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 318,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "metaworld2gym.metaworld_env:MetaWorldEnv",
+      "file": "metaworld2gym/metaworld_env.py",
+      "line": 93,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "metaworld.envs.mujoco.sawyer_xyz.v1.sawyer_assembly_peg:SawyerNutAssemblyEnv",
+      "file": "metaworld/envs/mujoco/sawyer_xyz/v1/sawyer_assembly_peg.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "metaworld.envs.mujoco.sawyer_xyz.v1.sawyer_basketball:SawyerBasketballEnv",
+      "file": "metaworld/envs/mujoco/sawyer_xyz/v1/sawyer_basketball.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "metaworld.envs.mujoco.sawyer_xyz.v1.sawyer_bin_picking:SawyerBinPickingEnv",
+      "file": "metaworld/envs/mujoco/sawyer_xyz/v1/sawyer_bin_picking.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "metaworld.envs.mujoco.sawyer_xyz.v1.sawyer_box_close:SawyerBoxCloseEnv",
+      "file": "metaworld/envs/mujoco/sawyer_xyz/v1/sawyer_box_close.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "metaworld/envs/assets_v2/sawyer_xyz/sawyer_assembly_peg.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "metaworld/envs/assets_v2/sawyer_xyz/sawyer_basketball.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "metaworld/envs/assets_v2/sawyer_xyz/sawyer_bin_picking.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "metaworld/envs/assets_v2/sawyer_xyz/sawyer_box.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "metaworld/envs/assets_v2/sawyer_xyz/sawyer_button_press.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "metaworld/envs/assets_v2/sawyer_xyz/sawyer_assembly_peg.xml:1 MJCF scene model",
+      "metaworld/envs/assets_v2/sawyer_xyz/sawyer_basketball.xml:1 MJCF scene model",
+      "metaworld/envs/assets_v2/sawyer_xyz/sawyer_bin_picking.xml:1 MJCF scene model",
+      "metaworld/envs/assets_v2/sawyer_xyz/sawyer_box.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model metaworld/envs/assets_v2/sawyer_xyz/sawyer_assembly_peg.xml:1",
+      "MJCF scene model metaworld/envs/assets_v2/sawyer_xyz/sawyer_basketball.xml:1",
+      "MJCF scene model metaworld/envs/assets_v2/sawyer_xyz/sawyer_bin_picking.xml:1",
+      "MJCF scene model metaworld/envs/assets_v2/sawyer_xyz/sawyer_box.xml:1",
+      "MJCF scene model metaworld/envs/assets_v2/sawyer_xyz/sawyer_button_press.xml:1",
+      "MJCF scene model metaworld/envs/assets_v2/sawyer_xyz/sawyer_button_press_topdown.xml:1",
+      "MJCF scene model metaworld/envs/assets_v2/sawyer_xyz/sawyer_button_press_topdown_wall.xml:1",
+      "MJCF scene model metaworld/envs/assets_v2/sawyer_xyz/sawyer_button_press_wall.xml:1",
+      "MJCF scene model metaworld/envs/assets_v2/sawyer_xyz/sawyer_coffee.xml:2",
+      "MJCF scene model metaworld/envs/assets_v2/sawyer_xyz/sawyer_dial.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/zibindong__metaworld2gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

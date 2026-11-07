@@ -1,0 +1,63 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cnpem/sophys-common",
+  "track": "labs",
+  "local_path": "labs/cnpem/sophys-common",
+  "driver_dir": "MHS/drivers/labs/cnpem__sophys-common",
+  "upstream": {
+    "repo_url": "https://github.com/cnpem/sophys-common",
+    "commit": "8bcf1e54511791b0f20ce1dc4d15a8cd6cc47eff",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "skip",
+  "reason_code": "skip:tooling",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 651,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/sophys/common/devices/motor.py:41 VirtualControllableMotorBaseClass",
+      "src/sophys/common/devices/simulated.py:1",
+      "src/sophys/common/plans/simulated_samples.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/cnpem__sophys-common --backend fake",
+  "skip_reason": "catalogue category auxiliary tool, role peripheral tool",
+  "publish_review": "not_required"
+}

@@ -1,0 +1,140 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.little-did-i-know/scpi-instrument-control",
+  "track": "labs",
+  "local_path": "labs/little-did-i-know/scpi-instrument-control",
+  "driver_dir": "MHS/drivers/labs/little-did-i-know__scpi-instrument-control",
+  "upstream": {
+    "repo_url": "https://github.com/little-did-i-know/scpi-instrument-control",
+    "commit": "e252a04dd33d57a543f5a65280cadfbaa634a4a5",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "twin-candidate",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 24,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "scpi_control.power_supply:PowerSupply",
+      "file": "scpi_control/power_supply.py",
+      "line": 35,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "scpi_control.oscilloscope:Oscilloscope",
+      "file": "scpi_control/oscilloscope.py",
+      "line": 53,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "scpi_control.function_generator:FunctionGenerator",
+      "file": "scpi_control/function_generator.py",
+      "line": 32,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "scpi_control.report_generator.models.template:ReportTemplate",
+      "file": "scpi_control/report_generator/models/template.py",
+      "line": 125,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "scpi_control.report_generator.models.report_data:WaveformData",
+      "file": "scpi_control/report_generator/models/report_data.py",
+      "line": 192,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "PowerSupply.get_error",
+      "PowerSupply.get_output",
+      "PowerSupply.identify",
+      "PowerSupply.is_connected",
+      "PowerSupply._scpi_commands.get_command",
+      "Oscilloscope.get_channel",
+      "Oscilloscope.get_error",
+      "Oscilloscope.get_waveform",
+      "Oscilloscope.identify",
+      "Oscilloscope.is_connected",
+      "Oscilloscope.measurement.get_cursor_value",
+      "Oscilloscope.measurement.measure_all"
+    ],
+    "writes": [
+      "PowerSupply.set_independent_mode",
+      "PowerSupply.set_parallel_mode",
+      "PowerSupply.set_series_mode",
+      "Oscilloscope.set_timebase",
+      "Oscilloscope.measurement.set_cursor_type",
+      "Oscilloscope.trigger.set_edge_trigger",
+      "Oscilloscope.trigger.set_level",
+      "Oscilloscope.trigger.set_mode",
+      "Oscilloscope.trigger.set_slope",
+      "Oscilloscope.trigger.set_source"
+    ],
+    "actions": [
+      "PowerSupply.reset",
+      "Oscilloscope.reset",
+      "Oscilloscope.run",
+      "Oscilloscope.stop",
+      "Oscilloscope.trigger_force",
+      "Oscilloscope.trigger_single",
+      "Oscilloscope.measurement.disable_statistics",
+      "Oscilloscope.measurement.enable_statistics",
+      "Oscilloscope.measurement.measure",
+      "Oscilloscope.measurement.reset_statistics",
+      "Oscilloscope.screen_capture.capture_screenshot",
+      "Oscilloscope.trigger.trigger_type"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "scpi_control/daq_models.py:43 max_voltage = 300.0",
+      "scpi_control/daq_models.py:44 max_current = 1.0",
+      "scpi_control/daq_models.py:71 max_sample_rate = 250.0",
+      "scpi_control/frequency_response/ranging.py:26 MIN_DIVISIONS = 0.1",
+      "scpi_control/frequency_response/ranging.py:30 MIN_DISTINCT_SAMPLES = 4",
+      "scpi_control/frequency_response/ranging.py:34 MIN_SAMPLES_PER_CYCLE = 20.0",
+      "scpi_control/server/compute.py:14 MAX_FFT_POINTS = 65536",
+      "scpi_control/server/compute.py:15 MAX_SPECTRUM_BINS = 2000"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/little-did-i-know__scpi-instrument-control --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

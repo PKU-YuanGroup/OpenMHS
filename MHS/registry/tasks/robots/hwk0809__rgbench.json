@@ -1,0 +1,63 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.hwk0809/rgbench",
+  "track": "robots",
+  "local_path": "robots/hwk0809/rgbench",
+  "driver_dir": "MHS/drivers/robots/hwk0809__rgbench",
+  "upstream": {
+    "repo_url": "https://github.com/hwk0809/rgbench",
+    "commit": "5cc3d07209362b3bfdbfbc067168dea9a791690a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 996,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "rgbench/envs/isaacsim/cloth_isaacsim_ros.py:43 IsaacSimRosController",
+      "tools/align_pcd_sim_to_real.py:1",
+      "tools/visualize_sim_pcd.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/hwk0809__rgbench --backend fake",
+  "skip_reason": "override (robots.json): RGBench is a cloth sim-to-real benchmark harness for pluggable simulator wrappers, not a device; its ROS node and RealSense helper are auxiliary tooling, so no OpenMHS driver is warranted.",
+  "publish_review": "not_required"
+}

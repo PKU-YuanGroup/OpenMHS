@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sail-sg/envpool",
+  "track": "robots",
+  "local_path": "robots/sail-sg/envpool",
+  "driver_dir": "MHS/drivers/robots/sail-sg__envpool",
+  "upstream": {
+    "repo_url": "https://github.com/sail-sg/envpool",
+    "commit": "9c31c5478eb61d8f67f8c9a1ec2b37568f2c7ca3",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 883,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "envpool/dummy/dummy_py_envpool_test.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/sail-sg__envpool --backend fake",
+  "skip_reason": "override (robots.json): Model review of recon wave A: a C++ batched executor that re-implements Gymnasium MuJoCo and Atari tasks for RL throughput; its tasks duplicate existing environments, so it is tooling.",
+  "publish_review": "not_required"
+}

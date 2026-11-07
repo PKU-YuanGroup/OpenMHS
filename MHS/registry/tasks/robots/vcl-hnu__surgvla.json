@@ -1,0 +1,112 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.vcl-hnu/surgvla",
+  "track": "robots",
+  "local_path": "robots/vcl-hnu/surgvla",
+  "driver_dir": "MHS/drivers/robots/vcl-hnu__surgvla",
+  "upstream": {
+    "repo_url": "https://github.com/vcl-hnu/surgvla",
+    "commit": "9446d6544757830c8ad184a5faadcde5cd2e4905",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 407,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "surrol.tasks.gauze_retrieve:GauzeRetrieve",
+      "file": "surrol/tasks/gauze_retrieve.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "surrol.tasks.peg_transfer:PegTransfer",
+      "file": "surrol/tasks/peg_transfer.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "surrol.tasks.ecm_reach:ECMReach",
+      "file": "surrol/tasks/ecm_reach.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "surrol.tasks.ecm_misorient:MisOrient",
+      "file": "surrol/tasks/ecm_misorient.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "surrol.tasks.ecm_static_track:StaticTrack",
+      "file": "surrol/tasks/ecm_static_track.py",
+      "line": 15,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "surrol/gym/__init__.py:5 gym env NeedleReach-v0",
+      "surrol/gym/__init__.py:11 gym env GauzeRetrieve-v0",
+      "surrol/gym/__init__.py:17 gym env NeedlePick-v0",
+      "surrol/gym/__init__.py:23 gym env PegTransfer-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env NeedleReach-v0 registered at surrol/gym/__init__.py:5",
+      "gym env GauzeRetrieve-v0 registered at surrol/gym/__init__.py:11",
+      "gym env NeedlePick-v0 registered at surrol/gym/__init__.py:17",
+      "gym env PegTransfer-v0 registered at surrol/gym/__init__.py:23",
+      "gym env NeedleRegrasp-v0 registered at surrol/gym/__init__.py:30",
+      "gym env BiPegTransfer-v0 registered at surrol/gym/__init__.py:36",
+      "gym env ECMReach-v0 registered at surrol/gym/__init__.py:43",
+      "gym env MisOrient-v0 registered at surrol/gym/__init__.py:49",
+      "gym env StaticTrack-v0 registered at surrol/gym/__init__.py:55",
+      "gym env ActiveTrack-v0 registered at surrol/gym/__init__.py:61"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/vcl-hnu__surgvla --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

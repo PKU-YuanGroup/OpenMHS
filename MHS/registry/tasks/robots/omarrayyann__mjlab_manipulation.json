@@ -1,0 +1,103 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.omarrayyann/mjlab_manipulation",
+  "track": "robots",
+  "local_path": "robots/omarrayyann/mjlab_manipulation",
+  "driver_dir": "MHS/drivers/robots/omarrayyann__mjlab_manipulation",
+  "upstream": {
+    "repo_url": "https://github.com/omarrayyann/mjlab_manipulation",
+    "commit": "7564cd633f4e13bb20a11b0c9f2ff187231cef8a",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 391,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "src/mjlab_manipulation/robots/droid/xmls/droid.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "src/mjlab_manipulation/robots/gen3/xmls/gen3.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "src/mjlab_manipulation/robots/kuka/xmls/kuka.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "src/mjlab_manipulation/robots/ur5e/xmls/ur5e.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "src/mjlab_manipulation/robots/xarm/xmls/hand.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.10,<3.14",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/mjlab_manipulation/robots/droid/xmls/droid.xml:1 MJCF robot model",
+      "src/mjlab_manipulation/robots/gen3/xmls/gen3.xml:1 MJCF robot model",
+      "src/mjlab_manipulation/robots/kuka/xmls/kuka.xml:1 MJCF robot model",
+      "src/mjlab_manipulation/robots/ur5e/xmls/ur5e.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model src/mjlab_manipulation/robots/droid/xmls/droid.xml:1",
+      "MJCF robot model src/mjlab_manipulation/robots/gen3/xmls/gen3.xml:1",
+      "MJCF robot model src/mjlab_manipulation/robots/kuka/xmls/kuka.xml:1",
+      "MJCF robot model src/mjlab_manipulation/robots/ur5e/xmls/ur5e.xml:1",
+      "MJCF robot model src/mjlab_manipulation/robots/xarm/xmls/hand.xml:1",
+      "MJCF robot model src/mjlab_manipulation/robots/xarm/xmls/xarm.xml:1",
+      "MJCF robot model src/mjlab_manipulation/robots/_robotiq/2f85/2f85.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/omarrayyann__mjlab_manipulation --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,225 @@
+{
+  "adapter": {
+    "bridge": "tag-bridge",
+    "entry_points": [
+      "labmastro.power_supply.hanmatek.hm.control:HanmatekHmControl (labmastro/power_supply/hanmatek/hm/control.py:6)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.sensing.read.v1",
+    "cap.measure.current.v1",
+    "cap.measure.voltage.v1"
+  ],
+  "catalog_refs": [
+    "repo_8151d7ecb6d34486",
+    "https://github.com/josuablejeru/labmastro"
+  ],
+  "description": "josuablejeru/labmastro: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: family-config with TagDriver, wave 2. Catalog role: controller. Language: Python. Catalog keywords: Web.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 9 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/josuablejeru__labmastro/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "tag-bridge"
+  ],
+  "hardware_free": false,
+  "id": "gh.josuablejeru/labmastro",
+  "integration": {
+    "blockers": [
+      "LICENSE_REVIEW: copyleft; the user decides before a driver is published"
+    ],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/labs/josuablejeru__labmastro: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/josuablejeru__labmastro --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "family:tag-bridge",
+    "recipe": "families/tag-bridge.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "HTTP/REST",
+    "Serial",
+    "Modbus"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2024-08-09T16:46:29+02:00",
+  "license": "GPL-3.0",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-3.0",
+  "links": {
+    "repo": "https://github.com/josuablejeru/labmastro"
+  },
+  "local_path": "labs/josuablejeru/labmastro",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "josuablejeru",
+  "package_id": "gh.josuablejeru/labmastro",
+  "quarantine": false,
+  "rank": 26,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "labmastro",
+  "repo_url": "https://github.com/josuablejeru/labmastro",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "86db05e8dd4e37d66667e18e4d8e2fadbb864b18",
+    "repo_url": "https://github.com/josuablejeru/labmastro"
+  },
+  "stars": 1,
+  "tags": [
+    "tag-bridge",
+    "lab instrumentation",
+    "device backend",
+    "controller",
+    "hardware interface",
+    "family config"
+  ],
+  "tier": "B",
+  "title": "josuablejeru/labmastro",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 48.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "控制器",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "通过Web应用控制电子实验仪器并创建/记录测试场景的项目",
+      "join": "exact",
+      "license_raw": "GPL-3.0",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 1238,
+      "rows_all": [
+        1238
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "serial",
+      "catalog_tier": "B",
+      "family_matches": [
+        "analyst-profile:lab-serial"
+      ],
+      "family_note": "triage family tag-bridge (catalogue family serial)",
+      "family_rule": "analyst-profile",
+      "family_score": 91,
+      "tier_rule": "B4-controller"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/josuablejeru__labmastro/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.measure.current.v1",
+              "cap.measure.voltage.v1"
+            ],
+            "kind": "instrument.dmm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-3.0",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "GPL-3.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "86db05e8dd4e37d66667e18e4d8e2fadbb864b18",
+      "driver_dir": "MHS/drivers/labs/josuablejeru__labmastro",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:b26ea08fdc555f40c7118c8f7b7f808a21005b307d618a80f92ce1909c64f2e6",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 2,
+      "files": 9,
+      "markers": {
+        "serial": 3
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of the helper integration, 2026-11-05: LICENSE is GPL-3.0 but pyproject.toml:6 declares MIT, so the licence is ambiguous and the owner decides before a driver is published.",
+        "rules alone: family-config (family:tag-bridge, rule 9)"
+      ],
+      "family": "tag-bridge",
+      "hardware_transport": "class labmastro.power_supply.hanmatek.hm.control:HanmatekHmControl uses the hardware transport minimalmodbus",
+      "helper": "TagDriver",
+      "justification": "Model review of the helper integration, 2026-11-05: LICENSE is GPL-3.0 but pyproject.toml:6 declares MIT, so the licence is ambiguous and the owner decides before a driver is published.",
+      "reason_code": "family:tag-bridge",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

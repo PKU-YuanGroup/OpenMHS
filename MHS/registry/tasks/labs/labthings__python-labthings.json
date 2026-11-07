@@ -1,0 +1,84 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.labthings/python-labthings",
+  "track": "labs",
+  "local_path": "labs/labthings/python-labthings",
+  "driver_dir": "MHS/drivers/labs/labthings__python-labthings",
+  "upstream": {
+    "repo_url": "https://github.com/labthings/python-labthings",
+    "commit": "d228f34e5a3ffc601661c2683923d38564c3dca0",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 526,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "labthings.wsgi:Server",
+      "file": "src/labthings/wsgi.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "labthings.actions.pool:Pool",
+      "file": "src/labthings/actions/pool.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "labthings.sync.lock:StrictLock",
+      "file": "src/labthings/sync/lock.py",
+      "line": 33,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "labthings.sync.lock:CompositeLock",
+      "file": "src/labthings/sync/lock.py",
+      "line": 103,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/labthings__python-labthings --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pyepics/newportxps",
+  "track": "labs",
+  "local_path": "labs/pyepics/newportxps",
+  "driver_dir": "MHS/drivers/labs/pyepics__newportxps",
+  "upstream": {
+    "repo_url": "https://github.com/pyepics/newportxps",
+    "commit": "5ee41fced858f2db7edec1f75d2de52f144c51e4",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 44,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "newportxps.newportxps:NewportXPS",
+      "file": "newportxps/newportxps.py",
+      "line": 51,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "newportxps.ftp_wrapper:SFTPWrapper",
+      "file": "newportxps/ftp_wrapper.py",
+      "line": 62,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "newportxps.ftp_wrapper:FTPWrapper",
+      "file": "newportxps/ftp_wrapper.py",
+      "line": 122,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "NewportXPS.get_group_status",
+      "NewportXPS.get_hardware_status",
+      "NewportXPS.get_positioner_errors",
+      "NewportXPS.get_stage_position",
+      "NewportXPS.get_trajectory",
+      "NewportXPS.get_tuning",
+      "NewportXPS.read_and_save",
+      "NewportXPS.read_gathering",
+      "NewportXPS.read_script",
+      "NewportXPS.read_systemini",
+      "NewportXPS._xps.GetLibraryVersion"
+    ],
+    "writes": [
+      "NewportXPS.set_trajectory_group",
+      "NewportXPS.set_tuning",
+      "NewportXPS.set_velocity"
+    ],
+    "actions": [
+      "NewportXPS.abort_group",
+      "NewportXPS.arm_trajectory",
+      "NewportXPS.disable_group",
+      "NewportXPS.enable_group",
+      "NewportXPS.home_allgroups",
+      "NewportXPS.home_group",
+      "NewportXPS.move_group",
+      "NewportXPS.move_stage",
+      "NewportXPS.move_to_trajectory_start",
+      "NewportXPS.run_line_trajectory_general",
+      "NewportXPS.run_trajectory",
+      "NewportXPS._xps.EventExtendedConfigurationTriggerGet"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pyepics__newportxps --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

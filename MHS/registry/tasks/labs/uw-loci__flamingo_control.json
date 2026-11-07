@@ -1,0 +1,133 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.uw-loci/flamingo_control",
+  "track": "labs",
+  "local_path": "labs/uw-loci/flamingo_control",
+  "driver_dir": "MHS/drivers/labs/uw-loci__flamingo_control",
+  "upstream": {
+    "repo_url": "https://github.com/uw-loci/flamingo_control",
+    "commit": "0eee5dac8e54edbb02ec0c4a18d3e362ad772310",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 21,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "py2flamingo.controllers.position_controller:PositionController",
+      "file": "src/py2flamingo/controllers/position_controller.py",
+      "line": 33,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "py2flamingo.core.socket_reader:CommandClient",
+      "file": "src/py2flamingo/core/socket_reader.py",
+      "line": 777,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "py2flamingo.tcp_client:TCPClient",
+      "file": "src/py2flamingo/tcp_client.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "py2flamingo.services.connection_manager:ConnectionManager",
+      "file": "src/py2flamingo/services/connection_manager.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "py2flamingo.services.connection_service:MVCConnectionService",
+      "file": "src/py2flamingo/services/connection_service.py",
+      "line": 462,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "PositionController.get_current_position",
+      "PositionController.get_home_position",
+      "PositionController.get_position_history",
+      "PositionController.get_stage_limits",
+      "PositionController.is_position_within_bounds",
+      "PositionController.preset_service.get_preset",
+      "PositionController.preset_service.get_preset_names",
+      "PositionController._motion_tracker.is_moving",
+      "CommandClient.get_stats",
+      "CommandClient.is_paused",
+      "CommandClient.is_running",
+      "TCPClient.is_connected"
+    ],
+    "writes": [
+      "PositionController.set_home_position",
+      "PositionController.set_motion_complete_callback"
+    ],
+    "actions": [
+      "PositionController.clear_emergency_stop",
+      "PositionController.emergency_stop",
+      "PositionController.go_home",
+      "PositionController.jog_rotation",
+      "PositionController.jog_x",
+      "PositionController.jog_y",
+      "PositionController.jog_z",
+      "PositionController.move_rotation",
+      "PositionController.move_to_position",
+      "PositionController.move_x",
+      "PositionController.move_y",
+      "PositionController.move_z"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/py2flamingo/configs/config_loader.py:81 max_frame_rate_hz_full_frame = 40.0",
+      "src/py2flamingo/core/tcp_protocol.py:92 MAX_PROJECTION = 4",
+      "src/py2flamingo/models/acquisition_timing.py:193 max_records = 100",
+      "src/py2flamingo/models/aslm_timing.py:90 MIN_USEFUL_SECTIONING = 2.0",
+      "src/py2flamingo/models/frame_delivery.py:52 MIN_FRAMES_FOR_ESTIMATE = 10",
+      "src/py2flamingo/models/microscope.py:117 x_min = 0.0",
+      "src/py2flamingo/models/microscope.py:118 x_max = 26.0",
+      "src/py2flamingo/models/microscope.py:119 y_min = 0.0"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/uw-loci__flamingo_control --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

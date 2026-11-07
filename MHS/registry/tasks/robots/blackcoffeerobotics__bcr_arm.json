@@ -1,0 +1,170 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.blackcoffeerobotics/bcr_arm",
+  "track": "robots",
+  "local_path": "robots/blackcoffeerobotics/bcr_arm",
+  "driver_dir": "MHS/drivers/robots/blackcoffeerobotics__bcr_arm",
+  "upstream": {
+    "repo_url": "https://github.com/blackcoffeerobotics/bcr_arm",
+    "commit": "9bd3d60b306bb2ed22f5cb1fd588aca99081a711",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 141,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install",
+    "capabilities"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/blackcoffeerobotics__bcr_arm --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required",
+  "companions": [
+    {
+      "alias": "ros2_control",
+      "package_id": "gh.ros-controls/ros2_control",
+      "commit": "7f26da889aa0898442d1c0a135ae001add1a9878",
+      "profile": "ros2-humble-gzsim6",
+      "reason": "controller_manager 2.54.4 (Humble) serves switch_controller (the stop and the re-enable) and list_controllers, whose controller states confirm the stop.",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:9",
+          "token": "ROS2 Humble + Gazebo Fortress"
+        },
+        {
+          "side": "package",
+          "ref": "bcr_arm_gazebo/package.xml:12",
+          "token": "ament_cmake"
+        },
+        {
+          "side": "package",
+          "ref": "bcr_arm_gazebo/package.xml:14-16",
+          "token": "gz_ros2_control"
+        },
+        {
+          "side": "companion",
+          "ref": "controller_manager/package.xml:5",
+          "token": "2.54.4"
+        },
+        {
+          "side": "companion",
+          "ref": "README.md:22",
+          "token": "Humble"
+        }
+      ],
+      "lock": "ros-controls__ros2_control@2.54.4",
+      "ref": "2.54.4",
+      "local_path": "work/companions/ros-controls__ros2_control@7f26da889aa0",
+      "repo_url": "https://github.com/ros-controls/ros2_control.git",
+      "license_spdx": "Apache-2.0"
+    },
+    {
+      "alias": "ros2_controllers",
+      "package_id": "gh.ros-controls/ros2_controllers",
+      "commit": "65db73628ebac1948833f0fbdc60973c74d6cd0e",
+      "profile": "ros2-humble-gzsim6",
+      "reason": "joint_trajectory_controller 2.54.1 (Humble): what deactivation does to a goal and the stored trajectory, and that activation starts by holding position (facts only).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:9",
+          "token": "ROS2 Humble + Gazebo Fortress"
+        },
+        {
+          "side": "package",
+          "ref": "bcr_arm_gazebo/launch/bcr_arm.gazebo.launch.py:234-241",
+          "token": "joint_trajectory_controller"
+        },
+        {
+          "side": "companion",
+          "ref": "joint_trajectory_controller/package.xml:4",
+          "token": "2.54.1"
+        },
+        {
+          "side": "companion",
+          "ref": "README.md:21",
+          "token": "Humble"
+        }
+      ],
+      "lock": "ros-controls__ros2_controllers@2.54.1",
+      "ref": "2.54.1",
+      "local_path": "work/companions/ros-controls__ros2_controllers@65db73628eba",
+      "repo_url": "https://github.com/ros-controls/ros2_controllers.git",
+      "license_spdx": "Apache-2.0"
+    },
+    {
+      "alias": "gz_ros2_control",
+      "package_id": "gh.ros-controls/gz_ros2_control",
+      "commit": "3f341cd49ed579cfb17422582eb14920c203f269",
+      "profile": "ros2-humble-gzsim6",
+      "reason": "gz_ros2_control 0.7.21 (Humble, Gazebo Fortress) runs the controller manager inside the simulation and loads the gz_ros2_control-system plugin the clone's URDF names (facts only).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:9",
+          "token": "ROS2 Humble + Gazebo Fortress"
+        },
+        {
+          "side": "package",
+          "ref": "bcr_arm_description/urdf/control/gazebo_sim_ros2_control.urdf.xacro:6",
+          "token": "gz_ros2_control-system"
+        },
+        {
+          "side": "companion",
+          "ref": "gz_ros2_control/package.xml:4",
+          "token": "0.7.21"
+        },
+        {
+          "side": "companion",
+          "ref": "README.md:20",
+          "token": "Humble | Fortress"
+        }
+      ],
+      "lock": "ros-controls__gz_ros2_control@0.7.21",
+      "ref": "0.7.21",
+      "local_path": "work/companions/ros-controls__gz_ros2_control@3f341cd49ed5",
+      "repo_url": "https://github.com/ros-controls/gz_ros2_control.git",
+      "license_spdx": "Apache-2.0"
+    }
+  ]
+}

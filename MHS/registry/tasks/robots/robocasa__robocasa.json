@@ -1,0 +1,83 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.robocasa/robocasa",
+  "track": "robots",
+  "local_path": "robots/robocasa/robocasa",
+  "driver_dir": "MHS/drivers/robots/robocasa__robocasa",
+  "upstream": {
+    "repo_url": "https://github.com/robocasa/robocasa",
+    "commit": "456174f62b89b8fca99eaaf33949c29fec9cfc2a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 70,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robocasa.wrappers.gym_wrapper:RoboCasaGymEnv",
+      "file": "robocasa/wrappers/gym_wrapper.py",
+      "line": 143,
+      "confidence": "override"
+    },
+    {
+      "symbol": "robocasa.environments.kitchen.kitchen:Kitchen",
+      "file": "robocasa/environments/kitchen/kitchen.py",
+      "line": 77,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robocasa/wrappers/gym_wrapper.py:143 RoboCasaGymEnv environment class",
+      "robocasa/utils/model_zoo/object_play_env.py:14 ObjectPlayEnv environment class",
+      "robocasa/environments/kitchen/atomic/kitchen_blender.py:4 OpenBlenderLid environment class",
+      "robocasa/environments/kitchen/atomic/kitchen_blender.py:45 CloseBlenderLid environment class"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/robocasa__robocasa --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

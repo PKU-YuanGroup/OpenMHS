@@ -1,0 +1,94 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.burhankarahasan/thorlabs-pico",
+  "track": "labs",
+  "local_path": "labs/burhankarahasan/thorlabs-pico",
+  "driver_dir": "MHS/drivers/labs/burhankarahasan__thorlabs-pico",
+  "upstream": {
+    "repo_url": "https://github.com/burhankarahasan/thorlabs-pico",
+    "commit": "91898e3a55a925ca36ce24d53997351c1b947779",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 23,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "stepper_controller:PicoStepperController",
+      "file": "stepper_controller.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lts_controller:ThorlabsLTSController",
+      "file": "lts_controller.py",
+      "line": 34,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "PicoStepperController.get_status",
+      "ThorlabsLTSController.get_position",
+      "ThorlabsLTSController.is_moving"
+    ],
+    "writes": [
+      "PicoStepperController.set_ramp_rate",
+      "PicoStepperController.set_speed_rps",
+      "PicoStepperController.set_speed_steps"
+    ],
+    "actions": [
+      "PicoStepperController.disable_motor",
+      "PicoStepperController.enable_motor",
+      "PicoStepperController.stop",
+      "ThorlabsLTSController.home",
+      "ThorlabsLTSController.move_absolute",
+      "ThorlabsLTSController.move_relative",
+      "ThorlabsLTSController.stop"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/burhankarahasan__thorlabs-pico --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,246 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "Go2Py.robot.interface:GO2Real (Go2Py/robot/interface.py:24)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "make",
+    "python",
+    "docker"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_42c1b020304c677a",
+    "https://github.com/machines-in-motion/go2py"
+  ],
+  "description": "machines-in-motion/go2py: device backend for legged robots (robotics track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 6. Catalog role: device SDK. Declared backend: MuJoCo. Language: C++. Catalog keywords: Unitree, Go2.",
+  "domains": [
+    "legged robots"
+  ],
+  "evidence": {
+    "files_read": 7,
+    "notes": "bounded static scan: 192 files enumerated (max depth 3), 7 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/robots/machines-in-motion__go2py/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.machines-in-motion/go2py",
+  "integration": {
+    "blockers": [
+      "NEEDS_GPU: an import or the catalogue requires a GPU"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/robots/machines-in-motion__go2py: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/machines-in-motion__go2py --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "Docker",
+    "MuJoCo",
+    "ROS 2",
+    "CLI"
+  ],
+  "languages": [
+    "C++",
+    "Python",
+    "Shell",
+    "Jupyter Notebook"
+  ],
+  "last_commit_at": "2025-12-03T14:47:53-05:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "docs": "https://github.com/machines-in-motion/Go2Py",
+    "repo": "https://github.com/machines-in-motion/go2py"
+  },
+  "local_path": "robots/machines-in-motion/go2py",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "machines-in-motion",
+  "package_id": "gh.machines-in-motion/go2py",
+  "quarantine": false,
+  "rank": 21,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "go2py",
+  "repo_url": "https://github.com/machines-in-motion/go2py",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "eff240b82b0ff6dae6ba5ee934a381f38fe64c0d",
+    "repo_url": "https://github.com/machines-in-motion/go2py"
+  },
+  "stars": 71,
+  "tags": [
+    "python-object",
+    "robotics",
+    "device backend",
+    "device sdk",
+    "simulated",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "machines-in-motion/go2py",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 6,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "ros2",
+      "family_confidence": 0.86,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 66.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "MuJoCo",
+      "category_zh": "设备后端",
+      "description_zh": "Unitree Go2四足的Python接口与仿真环境(真机与仿真统一)",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "需开发适配",
+      "priority": "P2",
+      "row": 1512,
+      "rows_all": [
+        1512
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "mujoco",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bmujoco"
+      ],
+      "family_note": "triage family python-object (catalogue family mujoco)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/machines-in-motion__go2py/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/machines-in-motion__go2py/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/machines-in-motion__go2py/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "eff240b82b0ff6dae6ba5ee934a381f38fe64c0d",
+      "driver_dir": "MHS/drivers/robots/machines-in-motion__go2py",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:1e93518391d0a71c89cdd024c96f43c9a3ff97c14014ff625805046c17d3a495",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "make",
+        "python",
+        "docker"
+      ],
+      "entry_evidence_count": 12,
+      "files": 192,
+      "markers": {
+        "camera": 3,
+        "docker": 23,
+        "gpu": 3,
+        "imu": 2,
+        "mujoco": 6,
+        "ros2": 11
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): Direct-driver: GO2Real is the Python object that reads Go2 state and writes low/high-level commands over CycloneDDS to a Unitree Go2.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "justification": "Direct-driver: GO2Real is the Python object that reads Go2 state and writes low/high-level commands over CycloneDDS to a Unitree Go2.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

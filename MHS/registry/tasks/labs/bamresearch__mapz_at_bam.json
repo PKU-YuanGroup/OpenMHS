@@ -1,0 +1,141 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.bamresearch/mapz_at_bam",
+  "track": "labs",
+  "local_path": "labs/bamresearch/mapz_at_bam",
+  "driver_dir": "MHS/drivers/labs/bamresearch__mapz_at_bam",
+  "upstream": {
+    "repo_url": "https://github.com/bamresearch/mapz_at_bam",
+    "commit": "ad4cd71528aa7d9fa1b74379dcf02266318081cb",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 27,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "Minerva.Hardware.OtherHardware.ESP32Camera:Camera",
+      "file": "Minerva/Hardware/OtherHardware/ESP32Camera.py",
+      "line": 48,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Minerva.Hardware.OtherHardware.MolecularDevices:SpectraMaxM3",
+      "file": "Minerva/Hardware/OtherHardware/MolecularDevices.py",
+      "line": 95,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Minerva.Hardware.Hotplates.IkaHotplate:RCTDigital5",
+      "file": "Minerva/Hardware/Hotplates/IkaHotplate.py",
+      "line": 45,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Minerva.Hardware.Centrifuges.Herolab:RobotCen",
+      "file": "Minerva/Hardware/Centrifuges/Herolab.py",
+      "line": 45,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Minerva.Hardware.Sonicators.Bandelin:SonorexDigitecHRC",
+      "file": "Minerva/Hardware/Sonicators/Bandelin.py",
+      "line": 48,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Camera.get_camera_status",
+      "SpectraMaxM3.get_data_copy",
+      "SpectraMaxM3.get_drawer_status",
+      "SpectraMaxM3.get_temperature",
+      "SpectraMaxM3.get_version",
+      "RCTDigital5.read_current_external_sensor_value",
+      "RCTDigital5.read_current_hotplate_sensor_value",
+      "RCTDigital5.read_current_stirring_speed_value",
+      "RCTDigital5.read_current_viscosity_trend_value",
+      "RCTDigital5.read_device_name",
+      "RCTDigital5.read_safety_temperature_value",
+      "RCTDigital5.read_stirring_speed_setpoint"
+    ],
+    "writes": [
+      "Camera.set_auto_white_balance",
+      "Camera.set_brightness",
+      "Camera.set_contrast",
+      "Camera.set_exposure",
+      "Camera.set_framesize",
+      "Camera.set_gain",
+      "Camera.set_horizontal_flip",
+      "Camera.set_saturation",
+      "Camera.set_sharpness",
+      "Camera.set_vertical_flip",
+      "Camera.set_white_balance_mode",
+      "SpectraMaxM3.set_temperature"
+    ],
+    "actions": [
+      "SpectraMaxM3.start_measurement",
+      "SpectraMaxM3.start_read",
+      "SpectraMaxM3.stop_read",
+      "RCTDigital5.emergency_stop",
+      "RCTDigital5.heat",
+      "RCTDigital5.start_heating",
+      "RCTDigital5.start_stirring",
+      "RCTDigital5.stop_heating",
+      "RCTDigital5.stop_stirring"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.thermal.setpoint.v1",
+      "cap.measure.temperature.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": [
+      "Minerva/API/HelperClassDefinitions.py:505 MIN_DISTANCE_FROM_Z_AXIS = 200",
+      "Minerva/API/HelperClassDefinitions.py:1628 TIME_LIMIT = 10",
+      "Minerva/API/HelperClassDefinitions.py:1629 ENERGY_LIMIT = 11",
+      "Minerva/API/HelperClassDefinitions.py:1631 POWER_LIMIT = 14",
+      "Minerva/API/HelperClassDefinitions.py:1633 TEMPERATURE_LIMIT = 20",
+      "Minerva/API/HelperClassDefinitions.py:1639 PRESSURE_LIMIT = 109",
+      "Minerva/Hardware/AdditionHardware/OpentronsOT2.py:63 X_LIMIT = 392.76",
+      "Minerva/Hardware/AdditionHardware/OpentronsOT2.py:64 Y_LIMIT = 356.98"
+    ]
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/bamresearch__mapz_at_bam --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

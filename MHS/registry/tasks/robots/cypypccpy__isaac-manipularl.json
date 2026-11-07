@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cypypccpy/isaac-manipularl",
+  "track": "robots",
+  "local_path": "robots/cypypccpy/isaac-manipularl",
+  "driver_dir": "MHS/drivers/robots/cypypccpy__isaac-manipularl",
+  "upstream": {
+    "repo_url": "https://github.com/cypypccpy/isaac-manipularl",
+    "commit": "11168d0a8c2db31a02ac8af8962cead64671c99b",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1340,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "assets/mjcf/open_ai_assets/fetch/pick_and_place.xml:2 MJCF scene model",
+      "assets/mjcf/open_ai_assets/hand/manipulate_block.xml:2 MJCF scene model",
+      "assets/mjcf/open_ai_assets/hand/manipulate_block_touch_sensors.xml:2 MJCF scene model",
+      "assets/mjcf/open_ai_assets/hand/manipulate_egg.xml:2 MJCF scene model"
+    ],
+    "upstream_tests": "assets/ur_assemble/model/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cypypccpy__isaac-manipularl --backend fake",
+  "skip_reason": "override (robots.json): Skip: an Isaac Gym RL codebase with custom task classes and no gym.make or env-id registration, not a device; ROS/Baxter scripts are add-ons.",
+  "publish_review": "not_required"
+}

@@ -1,0 +1,91 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.bennomeier/cetoni",
+  "track": "labs",
+  "local_path": "labs/bennomeier/cetoni",
+  "driver_dir": "MHS/drivers/labs/bennomeier__cetoni",
+  "upstream": {
+    "repo_url": "https://github.com/bennomeier/cetoni",
+    "commit": "b957067d56c2698ca4b77bfe2b445af4b1d92045",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 50,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "cetoniSerial:Syringe",
+      "file": "cetoniSerial.py",
+      "line": 33,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "cetoniSerial.py:472 FakeSyringe"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Syringe.readCurrentPosition",
+      "Syringe.readFrame",
+      "Syringe.readStatus",
+      "Syringe.readTargetPosition",
+      "Syringe.readVelocity"
+    ],
+    "writes": [
+      "Syringe.configurePositionRelative",
+      "Syringe.configurePositionRelativeByVolume",
+      "Syringe.setFlowRate",
+      "Syringe.setVelocity",
+      "Syringe.writeFrame",
+      "Syringe.writeTargetPosition"
+    ],
+    "actions": [
+      "Syringe.aspirate",
+      "Syringe.dispense"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/bennomeier__cetoni --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

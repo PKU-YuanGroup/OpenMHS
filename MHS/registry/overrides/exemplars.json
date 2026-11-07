@@ -1,0 +1,48 @@
+{
+  "$schema": "../schema/overrides.schema.json",
+  "overrides_version": "0.9",
+  "title": "WP-11 exemplar driver packages",
+  "description": "The four repos the exemplar driver packages are built from. They are done before the handoff (wave 0) and every DeepSeek card points at one of them as the structural template.",
+  "overrides": [
+    {
+      "package_id": "gh.farama-foundation/gymnasium",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:exemplar",
+      "flagship": true,
+      "wave": 0,
+      "justification": "Gymnasium core is the GymnasiumDriver runtime (rule 6 alone says bridge-runtime); its built-in CartPole-v1 env is the family-config exemplar MHS/drivers/robots/farama-foundation__gymnasium."
+    },
+    {
+      "package_id": "gh.thinksrs/srsinst.sr860",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:exemplar",
+      "flagship": true,
+      "wave": 0,
+      "justification": "SR860 lock-in amplifier over VXI-11/VISA; the ScpiDriver command-map exemplar with a transcript fake, limits sourced from the srsinst command definitions."
+    },
+    {
+      "package_id": "gh.tiagocoutinho/julabo",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:exemplar",
+      "flagship": true,
+      "wave": 0,
+      "justification": "Julabo circulator library with async JulaboCF/HL/MS/FC classes and its own simulator plugin; the async direct-Driver exemplar."
+    },
+    {
+      "package_id": "gh.xarm-developer/xarm-python-sdk",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:exemplar",
+      "flagship": true,
+      "wave": 0,
+      "justification": "Official UFACTORY xArm SDK (XArmAPI over TCP); the robot-SDK exemplar with per-joint array limits, return-code mapping and emergency_stop."
+    }
+  ]
+}

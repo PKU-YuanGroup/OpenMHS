@@ -1,0 +1,220 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "pyAPT.mts50:MTS50 (pyAPT/mts50.py:4)",
+      "pyAPT.prm1:PRM1 (pyAPT/prm1.py:4)",
+      "pyAPT.lts300:LTS300 (pyAPT/lts300.py:4)",
+      "pyAPT.controller:Controller (pyAPT/controller.py:17)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [
+    "cap.motion.joint_position.v1",
+    "cap.device.configure.v1",
+    "cap.sensing.read.v1",
+    "cap.motion.stop.v1"
+  ],
+  "catalog_refs": [
+    "repo_77ddc54a4d344d90",
+    "https://github.com/freespace/pyapt"
+  ],
+  "description": "freespace/pyapt: device backend for optics (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 3. Catalog role: device SDK. Language: Python. Catalog keywords: Thorlabs, APT.",
+  "domains": [
+    "optics"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 26 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/freespace__pyapt/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.freespace/pyapt",
+  "integration": {
+    "blockers": [
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/freespace__pyapt: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/freespace__pyapt --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2021-10-19T12:59:46+11:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/freespace/pyapt"
+  },
+  "local_path": "labs/freespace/pyapt",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "freespace",
+  "package_id": "gh.freespace/pyapt",
+  "quarantine": false,
+  "rank": 54,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pyapt",
+  "repo_url": "https://github.com/freespace/pyapt",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "914a6f618cacce6aa9ce42d371a895989e092b59",
+    "repo_url": "https://github.com/freespace/pyapt"
+  },
+  "stars": 32,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "freespace/pyapt",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "gazebo",
+      "family_confidence": 0.74,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 26.0,
+      "quality_flags": [],
+      "tier": "C",
+      "tier_confidence": 0.7
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "Thorlabs APT运动控制器的Python接口",
+      "join": "exact",
+      "license_raw": "NOASSERTION",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 851,
+      "rows_all": [
+        851
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/freespace__pyapt/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.stop.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "914a6f618cacce6aa9ce42d371a895989e092b59",
+      "driver_dir": "MHS/drivers/labs/freespace__pyapt",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:b190b0ce03c24ec8b0d3d2aa52e855fcb64917e9c959b073b5ba342cdf06e0e0",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 1,
+      "files": 26,
+      "markers": {
+        "microscopy": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class pyAPT.mts50:MTS50 (pyAPT/mts50.py:4, score 15)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

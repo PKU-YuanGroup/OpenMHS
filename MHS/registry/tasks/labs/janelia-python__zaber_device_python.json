@@ -1,0 +1,124 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.janelia-python/zaber_device_python",
+  "track": "labs",
+  "local_path": "labs/janelia-python/zaber_device_python",
+  "driver_dir": "MHS/drivers/labs/janelia-python__zaber_device_python",
+  "upstream": {
+    "repo_url": "https://github.com/janelia-python/zaber_device_python",
+    "commit": "2fec6746359b35acd4cf0c121cff03da8ae0a062",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 61,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "zaber_device.zaber_device:ZaberStage",
+      "file": "zaber_device/zaber_device.py",
+      "line": 721,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "zaber_device.zaber_device:ZaberDevice",
+      "file": "zaber_device/zaber_device.py",
+      "line": 53,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "ZaberStage.get_actuator_ids",
+      "ZaberStage.get_aliases",
+      "ZaberStage.get_positions",
+      "ZaberStage.get_positions_and_debug_info",
+      "ZaberStage.get_positions_percent",
+      "ZaberStage.get_stored_x_position",
+      "ZaberStage.get_stored_y_position",
+      "ZaberStage.get_stored_z_position",
+      "ZaberStage.get_x_microstep_size",
+      "ZaberStage.get_x_travel",
+      "ZaberStage.get_y_microstep_size",
+      "ZaberStage.get_y_travel"
+    ],
+    "writes": [
+      "ZaberStage.set_aliases",
+      "ZaberStage.set_x_axis",
+      "ZaberStage.set_x_microstep_size",
+      "ZaberStage.set_x_travel",
+      "ZaberStage.set_y_axis",
+      "ZaberStage.set_y_microstep_size",
+      "ZaberStage.set_y_travel",
+      "ZaberStage.set_z_axis",
+      "ZaberStage.set_z_microstep_size",
+      "ZaberStage.set_z_travel",
+      "ZaberDevice.set_acceleration",
+      "ZaberDevice.set_actuator_count"
+    ],
+    "actions": [
+      "ZaberStage.home",
+      "ZaberStage.move_to_stored_x_position",
+      "ZaberStage.move_to_stored_y_position",
+      "ZaberStage.move_to_stored_z_position",
+      "ZaberStage.move_x_absolute",
+      "ZaberStage.move_x_absolute_percent",
+      "ZaberStage.move_x_at_speed",
+      "ZaberStage.move_x_relative",
+      "ZaberStage.move_x_relative_percent",
+      "ZaberStage.move_y_absolute",
+      "ZaberStage.move_y_absolute_percent",
+      "ZaberStage.move_y_at_speed"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.measure.current.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "zaber_device/zaber_device.py:29 CURRENT_MIN = 1",
+      "zaber_device/zaber_device.py:30 CURRENT_MAX = 100",
+      "zaber_device/zaber_device.py:31 ZABER_CURRENT_MIN = 127",
+      "zaber_device/zaber_device.py:32 ZABER_CURRENT_MAX = 10",
+      "zaber_device/zaber_device.py:33 ALIAS_MIN = 0",
+      "zaber_device/zaber_device.py:34 ALIAS_MAX = 98"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/janelia-python__zaber_device_python --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

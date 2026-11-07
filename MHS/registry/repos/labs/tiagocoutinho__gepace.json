@@ -1,0 +1,241 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "gepace.pace:Pace (gepace/pace.py:293)",
+      "gepace.tango.server.pace:Pace (gepace/tango/server/pace.py:41)",
+      "gepace.pace:Module (gepace/pace.py:222)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.measure.pressure.v1"
+  ],
+  "catalog_refs": [
+    "repo_8922bc4b1356d155",
+    "https://github.com/tiagocoutinho/gepace"
+  ],
+  "description": "tiagocoutinho/gepace: instrument protocol simulation for microscopy imaging; optics; electronic measurement and DAQ (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: direct simulation backend. Declared backend: sinstruments/connio.",
+  "domains": [
+    "microscopy imaging",
+    "optics",
+    "electronic measurement and DAQ"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 18 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/tiagocoutinho__gepace/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.tiagocoutinho/gepace",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/tiagocoutinho__gepace: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/tiagocoutinho__gepace --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python",
+    "CLI",
+    "SCPI/VISA",
+    "Tango"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2025-01-05T21:50:33+01:00",
+  "license": "LGPL-3.0",
+  "license_class": "weak-copyleft",
+  "license_spdx": "LGPL-3.0",
+  "links": {
+    "docs": "https://github.com/tiagocoutinho/gepace/commit/4caa5f8c404277281033bc7f10b280d42941dfeb",
+    "repo": "https://github.com/tiagocoutinho/gepace"
+  },
+  "local_path": "labs/tiagocoutinho/gepace",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "tiagocoutinho",
+  "package_id": "gh.tiagocoutinho/gepace",
+  "quarantine": false,
+  "rank": 53,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "gepace",
+  "repo_url": "https://github.com/tiagocoutinho/gepace",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "4caa5f8c404277281033bc7f10b280d42941dfeb",
+    "repo_url": "https://github.com/tiagocoutinho/gepace"
+  },
+  "stars": 6,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "instrument protocol simulation",
+    "direct simulation backend",
+    "simulated",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "A",
+  "title": "tiagocoutinho/gepace",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 49.0,
+      "quality_flags": [
+        "license_unknown"
+      ],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "sinstruments/connio",
+      "category_zh": "专用仪器协议模拟",
+      "description_zh": "GE Pace 1000/5000/6000压力校准设备客户端与模拟插件。",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "需开发适配；本次官方README/API核验未确认MHS支持，不能据此断言不存在",
+      "priority": "P2",
+      "row": 2664,
+      "rows_all": [
+        2664
+      ],
+      "scope": "unknown",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "A",
+      "family_matches": [
+        "sinstruments"
+      ],
+      "family_note": "triage family python-object (catalogue family scpi-visa)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/tiagocoutinho__gepace/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.measure.pressure.v1"
+            ],
+            "kind": "sensor.pressure"
+          }
+        ],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/tiagocoutinho__gepace/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/tiagocoutinho__gepace/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.measure.pressure.v1"
+            ],
+            "kind": "sensor.pressure"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": "LGPL-3.0",
+      "file": null,
+      "file_spdx": null,
+      "review": false,
+      "source": "package-metadata"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "4caa5f8c404277281033bc7f10b280d42941dfeb",
+      "driver_dir": "MHS/drivers/labs/tiagocoutinho__gepace",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:8a1d592142f8d15fa7ba393bf75d6e993dfa31bb7a0854f04f8e3677a88a00c5",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 7,
+      "files": 18,
+      "markers": {
+        "cli": 2,
+        "scpi_visa": 1,
+        "tango": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): GE Pace pressure-controller library like the julabo exemplar: core gepace.pace:Pace class, optional simulator, optional Tango server extra (rule 9 took tango for a tag bridge).",
+        "rules alone: family-config (family:tag-bridge, rule 9)"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class gepace.tango.server.pace:Pace uses the hardware transport connio",
+      "helper": "PythonObjectDriver",
+      "justification": "GE Pace pressure-controller library like the julabo exemplar: core gepace.pace:Pace class, optional simulator, optional Tango server extra (rule 9 took tango for a tag bridge).",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

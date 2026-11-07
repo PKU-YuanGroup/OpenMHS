@@ -1,0 +1,115 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ksunden/zaber.serial",
+  "track": "labs",
+  "local_path": "labs/ksunden/zaber.serial",
+  "driver_dir": "MHS/drivers/labs/ksunden__zaber.serial",
+  "upstream": {
+    "repo_url": "https://github.com/ksunden/zaber.serial",
+    "commit": "4bd9e1103f6a057fd376edcdf574251637465fba",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 66,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "zaber.serial.ascii:AsciiAxis",
+      "file": "zaber/serial/ascii.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "zaber.serial.binary:BinaryDevice",
+      "file": "zaber/serial/binary.py",
+      "line": 82,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "zaber.serial.ascii:AsciiDevice",
+      "file": "zaber/serial/ascii.py",
+      "line": 393,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "zaber.serial.ascii:AsciiSerial",
+      "file": "zaber/serial/ascii.py",
+      "line": 809,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "zaber.serial.binary:BinarySerial",
+      "file": "zaber/serial/binary.py",
+      "line": 311,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "AsciiAxis.get_position",
+      "AsciiAxis.get_status",
+      "BinaryDevice.get_position",
+      "BinaryDevice.get_status",
+      "AsciiDevice.get_status"
+    ],
+    "writes": [],
+    "actions": [
+      "AsciiAxis.home",
+      "AsciiAxis.move_abs",
+      "AsciiAxis.move_rel",
+      "AsciiAxis.move_vel",
+      "AsciiAxis.stop",
+      "BinaryDevice.home",
+      "BinaryDevice.move_abs",
+      "BinaryDevice.move_rel",
+      "BinaryDevice.move_vel",
+      "BinaryDevice.stop",
+      "AsciiDevice.home",
+      "AsciiDevice.move_abs"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ksunden__zaber.serial --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

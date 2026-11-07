@@ -1,0 +1,243 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "microscope.lights.cobolt:CoboltLaser (microscope/lights/cobolt.py:31)",
+      "microscope.lights.sapphire:SapphireLaser (microscope/lights/sapphire.py:33)",
+      "microscope.lights.deepstar:DeepstarLaser (microscope/lights/deepstar.py:31)",
+      "microscope.lights.obis:ObisLaser (microscope/lights/obis.py:32)",
+      "microscope.cameras.picamera:PiCamera (microscope/cameras/picamera.py:49)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1"
+  ],
+  "catalog_refs": [
+    "repo_85cc963aca572d0c",
+    "https://github.com/python-microscope/microscope"
+  ],
+  "description": "python-microscope/microscope: microscope state and image simulation for microscopy imaging; optics; electronic measurement and DAQ (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 1. Catalog role: direct simulation backend. Declared backend: Python-Microscope.",
+  "domains": [
+    "microscopy imaging",
+    "optics",
+    "electronic measurement and DAQ"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 93 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/python-microscope__microscope/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.python-microscope/microscope",
+  "integration": {
+    "blockers": [],
+    "effort": "E3",
+    "next_action": "Maintain MHS/drivers/labs/python-microscope__microscope: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/python-microscope__microscope --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:driver-pack",
+    "recipe": "families/python-object.md",
+    "role": "driver-pack",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python",
+    "Python API(microscope.abc)",
+    "Pyro4 RPC device server (device_server)",
+    "Serial",
+    "CLI"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-09-09T15:42:19+02:00",
+  "license": "GPL-3.0",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-3.0",
+  "links": {
+    "docs": "https://github.com/python-microscope/microscope/commit/47c13d0342dca476a279f2de2da5b84ce2162326",
+    "repo": "https://github.com/python-microscope/microscope"
+  },
+  "local_path": "labs/python-microscope/microscope",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "python-microscope",
+  "package_id": "gh.python-microscope/microscope",
+  "quarantine": false,
+  "rank": 11,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "microscope",
+  "repo_url": "https://github.com/python-microscope/microscope",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "47c13d0342dca476a279f2de2da5b84ce2162326",
+    "repo_url": "https://github.com/python-microscope/microscope"
+  },
+  "stars": 85,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "microscope state and image simulation",
+    "direct simulation backend",
+    "simulated",
+    "direct driver"
+  ],
+  "tier": "A",
+  "title": "python-microscope/microscope",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 1,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 90.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "Python-Microscope",
+      "blockers_raw": "GPL-3.0 许可需进程隔离；无 MHS；相机数据需回调线程收集",
+      "category_zh": "显微镜状态与图像仿真",
+      "description_zh": "统一显微硬件抽象，包含模拟相机、台、滤轮、光源与基于样本图片的StageAwareCamera。",
+      "join": "exact",
+      "license_raw": "GPL-3.0",
+      "mhs_support_raw": "需开发适配；本次官方README/API核验未确认MHS支持，不能据此断言不存在",
+      "priority": "P0",
+      "row": 2102,
+      "rows_all": [
+        2102
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已核源码"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "A",
+      "family_matches": [
+        "python ?api"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/python-microscope__microscope/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/python-microscope__microscope/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/python-microscope__microscope/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-3.0",
+      "declared_spdx": "GPL-3.0",
+      "file": "COPYING",
+      "file_spdx": "GPL-3.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "47c13d0342dca476a279f2de2da5b84ce2162326",
+      "driver_dir": "MHS/drivers/labs/python-microscope__microscope",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:9d6e6c1ee5d1323e39955ee382b373556b0da69cf3899ebc0a14d249cd4ff989",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 8,
+      "files": 93,
+      "markers": {
+        "serial": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Device ABCs with Andor/Hamamatsu/Ximea cameras, Cobolt/Obis lasers and Linkam stages; its microscope.simulators devices are the fake backend.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": "python-object",
+      "flagship": true,
+      "hardware_transport": "class microscope.lights.cobolt:CoboltLaser uses the hardware transport serial",
+      "helper": "PythonObjectDriver",
+      "justification": "Device ABCs with Andor/Hamamatsu/Ximea cameras, Cobolt/Obis lasers and Linkam stages; its microscope.simulators devices are the fake backend.",
+      "reason_code": "override:driver-pack",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

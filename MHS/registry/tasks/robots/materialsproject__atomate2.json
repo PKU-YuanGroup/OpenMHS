@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.materialsproject/atomate2",
+  "track": "robots",
+  "local_path": "robots/materialsproject/atomate2",
+  "driver_dir": "MHS/drivers/robots/materialsproject__atomate2",
+  "upstream": {
+    "repo_url": "https://github.com/materialsproject/atomate2",
+    "commit": "a484c3106ec5b0ed84fa3310f5b0dd09eb1d0141",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 255,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/atomate2/torchsim/core.py:439 TorchSimOptimizeMaker",
+      "src/atomate2/torchsim/core.py:653 TorchSimIntegrateMaker",
+      "src/atomate2/torchsim/core.py:822 TorchSimStaticMaker",
+      "src/atomate2/torchsim/schema.py:20 TorchSimModelType",
+      "src/atomate2/torchsim/schema.py:178 TorchSimCalculation",
+      "src/atomate2/torchsim/schema.py:277 TorchSimTaskDoc"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/materialsproject__atomate2 --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

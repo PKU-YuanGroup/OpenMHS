@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.accelerationconsortium/ac-dev-lab",
+  "track": "labs",
+  "local_path": "labs/accelerationconsortium/ac-dev-lab",
+  "driver_dir": "MHS/drivers/labs/accelerationconsortium__ac-dev-lab",
+  "upstream": {
+    "repo_url": "https://github.com/accelerationconsortium/ac-dev-lab",
+    "commit": "ffbbb0132cbcdd11ae2bdcd43e459ca8af23374d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "reference",
+  "reason_code": "override:recon",
+  "role": "host",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 713,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/ac_training_lab/cobot280pi/dummy_cobot.py:6 DummyCobot",
+      "src/ac_training_lab/ot-2/_scripts/prefect_deploy/device.py:20",
+      "src/ac_training_lab/ot-2/_scripts/prefect_deploy/device.py:33",
+      "src/ac_training_lab/ot-2/_scripts/prefect_deploy/device.py:38",
+      "src/ac_training_lab/ot-2/_scripts/prefect_deploy/device.py:46",
+      "src/ac_training_lab/cobot280pi/dummy_cobot.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/accelerationconsortium__ac-dev-lab --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

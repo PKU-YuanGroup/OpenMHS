@@ -1,0 +1,233 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "components.motors:ZaberRotaryStage (src/components/motors.py:44)",
+      "components.motors:ZaberLinearStage (src/components/motors.py:109)",
+      "components.pyCCT.pyCCT:SpectrometerWrapper (src/components/pyCCT/pyCCT.py:222)",
+      "components.pyCCT.pyCCT:PyCCT (src/components/pyCCT/pyCCT.py:16)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.motion.joint_position.v1",
+    "cap.measure.spectrum.v1"
+  ],
+  "catalog_refs": [
+    "repo_ce801f540d19e79f",
+    "https://github.com/hslarson/speck-lab-goniometer"
+  ],
+  "description": "hslarson/speck-lab-goniometer: device backend for optics (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 6. Catalog role: device SDK. Language: Jupyter Notebook. Catalog keywords: USB2000+, Zaber.",
+  "domains": [
+    "optics"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 19 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/hslarson__speck-lab-goniometer/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.hslarson/speck-lab-goniometer",
+  "integration": {
+    "blockers": [
+      "PLATFORM_WINDOWS: Windows-only imports"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/hslarson__speck-lab-goniometer: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/hslarson__speck-lab-goniometer --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "Serial"
+  ],
+  "languages": [
+    "Jupyter Notebook",
+    "Python"
+  ],
+  "last_commit_at": "2025-06-22T06:34:34-07:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/hslarson/speck-lab-goniometer"
+  },
+  "local_path": "labs/hslarson/speck-lab-goniometer",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "hslarson",
+  "package_id": "gh.hslarson/speck-lab-goniometer",
+  "quarantine": false,
+  "rank": 24,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "speck-lab-goniometer",
+  "repo_url": "https://github.com/hslarson/speck-lab-goniometer",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "9ca84d8c8c6c6ec9f9f3a3bd3cd968fc6657a803",
+    "repo_url": "https://github.com/hslarson/speck-lab-goniometer"
+  },
+  "stars": 0,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "hslarson/speck-lab-goniometer",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 6,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 53.0,
+      "quality_flags": [
+        "no_readme"
+      ],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "用USB2000+光谱仪和Zaber平台记录光强随视角变化的软件(README缺失)",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 1031,
+      "rows_all": [
+        1031
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "仅简介"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/hslarson__speck-lab-goniometer/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.measure.spectrum.v1"
+            ],
+            "kind": "instrument.spectrometer"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "9ca84d8c8c6c6ec9f9f3a3bd3cd968fc6657a803",
+      "driver_dir": "MHS/drivers/labs/hslarson__speck-lab-goniometer",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:f7765444bc365e40b7c712b93dee37605602e53efdfd67db3bcc6005f4fe9503",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 1,
+      "files": 19,
+      "markers": {
+        "serial": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class components.pyCCT.pyCCT:SpectrometerWrapper (src/components/pyCCT/pyCCT.py:222, score 12)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class components.pyCCT.pyCCT:SpectrometerWrapper uses the hardware transport clr",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

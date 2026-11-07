@@ -1,0 +1,2273 @@
+{
+ "$schema": "../schema/overrides.schema.json",
+ "overrides_version": "0.9",
+ "title": "Companion sources fetched under work/companions: simulator packages whose stop lives in a companion at another version",
+ "description": "Reviewed companion sources (user decision of 2026-11-05: a stop may cite a locally cloned companion repository at a pinned commit; the user's authorisation of 2026-11-05: shallow clones of the companion versions the version-mismatch packages need, each at one commit, under work/companions with LOCK.json). Each entry restates the card's current decision and adds companions; an entry with lock names the LOCK.json alias of its clone (commit, profile, path and needed_by checked by build_registry.py, validate.py and gate G1), the others are corpus companions as in companion-sources.json. Records: MHS/changes/COMPANION-LOCKS.md and MHS/changes/COMPANION-TOPIC-READBACK.md.",
+ "overrides": [
+  {
+   "package_id": "gh.ad-sdl/sdl-simulation",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Repair 2026-11-05: the stop is the Melodic lock companions' pause_physics, confirmed by get_physics_properties pause true (reviewed needed_by widening; no network).",
+   "companions": [
+    {
+     "alias": "gazebo_ros_pkgs",
+     "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+     "commit": "0667c5e52e8afa1f478955d8a2569b473a5acdf1",
+     "profile": "ros1-melodic-gazebo9",
+     "reason": "pause_physics and its get_physics_properties read-back (pause) are served by gazebo_ros 2.8.7 (Melodic), whose empty_world.launch the clone's lab_world.launch includes.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:6",
+       "token": "ROS Melodic"
+      },
+      {
+       "side": "package",
+       "ref": "sdl_gazebo/package.xml:51",
+       "token": "catkin"
+      },
+      {
+       "side": "package",
+       "ref": "sdl_gazebo/launch/lab_world.launch:50",
+       "token": "$(find gazebo_ros)/launch/empty_world.launch"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:4",
+       "token": "2.8.7"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:22",
+       "token": "catkin"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_dev/package.xml:22",
+       "token": "libgazebo9-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "docs/RELEASE.md:19",
+       "token": "ROS Melodic: Gazebo 9"
+      }
+     ],
+     "lock": "ros-simulation__gazebo_ros_pkgs@2.8.7"
+    },
+    {
+     "alias": "gazebo_classic",
+     "package_id": "gh.gazebosim/gazebo-classic",
+     "commit": "e4400ae7e04e4859eec392ac67b813402703bab0",
+     "profile": "ros1-melodic-gazebo9",
+     "reason": "World::Step (Gazebo 9.19.0) advances simulation time and calls Update only when the world is not paused, a step is pending or a reset is due; facts only.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:6",
+       "token": "ROS Melodic"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "docs/RELEASE.md:19",
+       "token": "ROS Melodic: Gazebo 9"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:16",
+       "token": "GAZEBO_MAJOR_VERSION 9"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "Gazebo 9.19.0"
+      }
+     ],
+     "lock": "gazebosim__gazebo-classic@gazebo9_9.19.0"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.agilexrobotics/ugv_gazebo_sim",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Re-author of agilexrobotics/ugv_gazebo_sim (2026-11-05): the stop is the gazebo_ros world pause, fetched under work/companions at the Melodic pins already used for panda_simulation. Scout V2 only. No unpause.",
+   "companions": [
+    {
+     "alias": "gazebo_ros_pkgs",
+     "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+     "commit": "0667c5e52e8afa1f478955d8a2569b473a5acdf1",
+     "profile": "ros1-melodic-gazebo9",
+     "reason": "pause_physics and its get_physics_properties read-back (pause) are served by gazebo_ros 2.8.7 (Melodic), whose empty_world.launch the clone's scout_empty_world.launch includes.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "scout/README.md:23",
+       "token": "ROS Melodic"
+      },
+      {
+       "side": "package",
+       "ref": "scout/scout_gazebo_sim/package.xml:16",
+       "token": "catkin"
+      },
+      {
+       "side": "package",
+       "ref": "scout/scout_gazebo_sim/launch/scout_empty_world.launch:7",
+       "token": "$(find gazebo_ros)/launch/empty_world.launch"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:4",
+       "token": "2.8.7"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:22",
+       "token": "catkin"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_dev/package.xml:22",
+       "token": "libgazebo9-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "docs/RELEASE.md:19",
+       "token": "ROS Melodic: Gazebo 9"
+      }
+     ],
+     "lock": "ros-simulation__gazebo_ros_pkgs@2.8.7"
+    },
+    {
+     "alias": "gazebo_classic",
+     "package_id": "gh.gazebosim/gazebo-classic",
+     "commit": "e4400ae7e04e4859eec392ac67b813402703bab0",
+     "profile": "ros1-melodic-gazebo9",
+     "reason": "World::Step still calls Update while paused when stepInc > 0 or needsReset is set, and SetPaused does not clear stepInc (Gazebo 9.19.0 World.cc:691-697 and 1428-1436; facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "scout/README.md:23",
+       "token": "ROS Melodic"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "docs/RELEASE.md:19",
+       "token": "ROS Melodic: Gazebo 9"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:16",
+       "token": "GAZEBO_MAJOR_VERSION 9"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "Gazebo 9.19.0"
+      }
+     ],
+     "lock": "gazebosim__gazebo-classic@gazebo9_9.19.0"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.atharva-05/unitree_ros2_sim",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Model review of preflight 2 (claude-opus-5-5): the stop lives in a companion fetched under work/companions at a pinned commit (LOCK.json), matched to the package's ROS and simulator versions.",
+   "companions": [
+    {
+     "alias": "gazebo_ros_pkgs",
+     "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+     "commit": "ae6e5793a31f5927df89cb58007d2a5eb567baa8",
+     "profile": "ros2-humble-gazebo11",
+     "reason": "pause_physics, its get_model_list stall read-back (the world's sim time in header.stamp) and unpause_physics are served by gazebo_ros 3.9.0 (ROS 2 Humble, Gazebo 11).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:3",
+       "token": "tested with ROS Humble"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:3",
+       "token": "Gazebo 11"
+      },
+      {
+       "side": "package",
+       "ref": "go1_sim/go1_gazebo/package.xml:10",
+       "token": "ament_cmake"
+      },
+      {
+       "side": "package",
+       "ref": "go1_sim/go1_gazebo/launch/start_world.launch.py:47",
+       "token": "gazebo.launch.py"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:5",
+       "token": "3.9.0"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:23",
+       "token": "ament_cmake"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_dev/package.xml:23",
+       "token": "libgazebo11-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_msgs/cmake/gazebo_msgs-extras.cmake:4-5",
+       "token": "humble"
+      }
+     ],
+     "lock": "ros-simulation__gazebo_ros_pkgs@3.9.0"
+    },
+    {
+     "alias": "gazebo_ros2_control",
+     "package_id": "gh.ros-controls/gazebo_ros2_control",
+     "commit": "42d875b482f0b254d9032950a91b2c5cbd7d1c3d",
+     "profile": "ros2-humble-gazebo11",
+     "reason": "gazebo_ros2_control 0.4.12 (Humble) updates the controllers and writes their commands to the joints only from the world-update event (facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:3",
+       "token": "tested with ROS Humble"
+      },
+      {
+       "side": "package",
+       "ref": "go1_sim/go1_gazebo/package.xml:16-18",
+       "token": "gazebo_ros2_control"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros2_control/package.xml:4",
+       "token": "0.4.12"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:22",
+       "token": "Humble"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_dev/package.xml:23",
+       "token": "libgazebo11-dev"
+      }
+     ],
+     "lock": "ros-controls__gazebo_ros2_control@0.4.12"
+    },
+    {
+     "alias": "gazebo_classic",
+     "package_id": "gh.gazebosim/gazebo-classic",
+     "commit": "b22c6e15e52299865b31093b8feebc9ca19e26e8",
+     "profile": "ros2-humble-gazebo11",
+     "reason": "World::Step advances sim time and runs every model and controller update only while the world is not paused (Gazebo 11.15.1; facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:3",
+       "token": "tested with ROS Humble"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:3",
+       "token": "Gazebo 11"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_msgs/cmake/gazebo_msgs-extras.cmake:4-5",
+       "token": "humble"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_dev/package.xml:23",
+       "token": "libgazebo11-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:20",
+       "token": "GAZEBO_MAJOR_VERSION 11"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "Gazebo 11.15.1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "package_id": "gh.blackcoffeerobotics/bcr_arm",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Model review of preflight 2 (claude-opus-5-5): the stop lives in a companion fetched under work/companions at a pinned commit (LOCK.json), matched to the package's ROS and simulator versions.",
+   "companions": [
+    {
+     "alias": "ros2_control",
+     "package_id": "gh.ros-controls/ros2_control",
+     "commit": "7f26da889aa0898442d1c0a135ae001add1a9878",
+     "profile": "ros2-humble-gzsim6",
+     "reason": "controller_manager 2.54.4 (Humble) serves switch_controller (the stop and the re-enable) and list_controllers, whose controller states confirm the stop.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:9",
+       "token": "ROS2 Humble + Gazebo Fortress"
+      },
+      {
+       "side": "package",
+       "ref": "bcr_arm_gazebo/package.xml:12",
+       "token": "ament_cmake"
+      },
+      {
+       "side": "package",
+       "ref": "bcr_arm_gazebo/package.xml:14-16",
+       "token": "gz_ros2_control"
+      },
+      {
+       "side": "companion",
+       "ref": "controller_manager/package.xml:5",
+       "token": "2.54.4"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:22",
+       "token": "Humble"
+      }
+     ],
+     "lock": "ros-controls__ros2_control@2.54.4"
+    },
+    {
+     "alias": "ros2_controllers",
+     "package_id": "gh.ros-controls/ros2_controllers",
+     "commit": "65db73628ebac1948833f0fbdc60973c74d6cd0e",
+     "profile": "ros2-humble-gzsim6",
+     "reason": "joint_trajectory_controller 2.54.1 (Humble): what deactivation does to a goal and the stored trajectory, and that activation starts by holding position (facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:9",
+       "token": "ROS2 Humble + Gazebo Fortress"
+      },
+      {
+       "side": "package",
+       "ref": "bcr_arm_gazebo/launch/bcr_arm.gazebo.launch.py:234-241",
+       "token": "joint_trajectory_controller"
+      },
+      {
+       "side": "companion",
+       "ref": "joint_trajectory_controller/package.xml:4",
+       "token": "2.54.1"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:21",
+       "token": "Humble"
+      }
+     ],
+     "lock": "ros-controls__ros2_controllers@2.54.1"
+    },
+    {
+     "alias": "gz_ros2_control",
+     "package_id": "gh.ros-controls/gz_ros2_control",
+     "commit": "3f341cd49ed579cfb17422582eb14920c203f269",
+     "profile": "ros2-humble-gzsim6",
+     "reason": "gz_ros2_control 0.7.21 (Humble, Gazebo Fortress) runs the controller manager inside the simulation and loads the gz_ros2_control-system plugin the clone's URDF names (facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:9",
+       "token": "ROS2 Humble + Gazebo Fortress"
+      },
+      {
+       "side": "package",
+       "ref": "bcr_arm_description/urdf/control/gazebo_sim_ros2_control.urdf.xacro:6",
+       "token": "gz_ros2_control-system"
+      },
+      {
+       "side": "companion",
+       "ref": "gz_ros2_control/package.xml:4",
+       "token": "0.7.21"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:20",
+       "token": "Humble | Fortress"
+      }
+     ],
+     "lock": "ros-controls__gz_ros2_control@0.7.21"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.cambel/ur3",
+   "strategy": "family-config",
+   "role": "device-driver",
+   "family": "ros",
+   "reason_code": "override:recon",
+   "entry_symbols": [
+    {
+     "symbol": "ur_control.arm:Arm",
+     "file": "ur_control/ur_control/arm.py",
+     "line": 49
+    },
+    {
+     "symbol": "ur_control.fzi_cartesian_compliance_controller:CompliantController",
+     "file": "ur_control/ur_control/fzi_cartesian_compliance_controller.py",
+     "line": 90
+    }
+   ],
+   "served_mode": "simulated",
+   "justification": "User decision 2026-11-05: serve only the ur_gripper_gz gz-sim bringup (Jazzy, Harmonic). Hardware stays on the record because a real UR path exists and is not served. The stop is the companion world pause.",
+   "companions": [
+    {
+     "alias": "gz_sim",
+     "package_id": "gh.gazebosim/gz-sim",
+     "commit": "446a44335a45b704b4d36dabcc5508ee34eeb3d8",
+     "profile": "ros2-jazzy-gzsim8",
+     "reason": "gz-sim 8.15.0 (Harmonic) serves the WorldControl pause on /world/<name>/control and the paused flag in WorldStatistics on <world>/stats.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:6",
+       "token": "ROS 2 Jazzy"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:6",
+       "token": "gz-sim 8"
+      },
+      {
+       "side": "package",
+       "ref": "ur_gripper_gz/package.xml:16",
+       "token": "ament_cmake"
+      },
+      {
+       "side": "package",
+       "ref": "ur_gripper_gz/launch/ur_gz_control.launch.py:93",
+       "token": "gz_sim.launch.py"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:6",
+       "token": "project(gz-sim8 VERSION 8.15.0)"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "Gazebo Sim 8.15.0"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "README.md:9",
+       "token": "Jazzy | Harmonic | [jazzy]"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "ros_gz_sim/package.xml:32",
+       "token": "gz_sim_vendor"
+      }
+     ],
+     "lock": "gazebosim__gz-sim@gz-sim8_8.15.0"
+    },
+    {
+     "alias": "ros_gz",
+     "package_id": "gh.gazebosim/ros_gz",
+     "commit": "b87d7523400a695a10d47ca7b8cb5fa86d5b8d9d",
+     "profile": "ros2-jazzy-gzsim8",
+     "reason": "ros_gz_bridge 1.0.25 (Jazzy) maps ControlWorld to the gz WorldControl request and WorldStatistics to the ROS message; the operator runs its parameter_bridge.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:6",
+       "token": "ROS 2 Jazzy"
+      },
+      {
+       "side": "package",
+       "ref": "ur_gripper_gz/package.xml:33",
+       "token": "ros_gz_bridge"
+      },
+      {
+       "side": "package",
+       "ref": "ur_gripper_gz/package.xml:34",
+       "token": "ros_gz_sim"
+      },
+      {
+       "side": "companion",
+       "ref": "ros_gz_bridge/package.xml:5",
+       "token": "<version>1.0.25</version>"
+      },
+      {
+       "side": "companion",
+       "ref": "ros_gz_bridge/CHANGELOG.rst:5",
+       "token": "1.0.25 (2026-10-13)"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:56",
+       "token": "This branch supports ROS Jazzy"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:9",
+       "token": "Jazzy | Harmonic | [jazzy]"
+      }
+     ],
+     "lock": "gazebosim__ros_gz@1.0.25"
+    },
+    {
+     "alias": "gz_transport",
+     "package_id": "gh.gazebosim/gz-transport",
+     "commit": "35fef7ea10c2e133498e9010bd2e397a0ce0c3bf",
+     "profile": "ros2-jazzy-gzsim8",
+     "reason": "gz-transport 13.6.0 sends the bridge's gz service request asynchronously (facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:6",
+       "token": "gz-sim 8"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:6",
+       "token": "Gazebo Harmonic"
+      },
+      {
+       "side": "package",
+       "ref": "ur_gripper_gz/launch/ur_gz_control.launch.py:93",
+       "token": "gz_sim.launch.py"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:6",
+       "token": "project(gz-transport13 VERSION 13.6.0)"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "Gazebo Transport 13.6.0"
+      },
+      {
+       "side": "companion:gz_sim",
+       "ref": "CMakeLists.txt:87",
+       "token": "gz_find_package(gz-transport13"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "README.md:9",
+       "token": "Jazzy | Harmonic | [jazzy]"
+      }
+     ],
+     "lock": "gazebosim__gz-transport@gz-transport13_13.6.0"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.coppolam/ros_mav_swarm_simulator",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Reviewed lock companions (2026-11-05): gazebo_ros 2.8.7 pause_physics, confirmed by get_physics_properties pause==true, matched to this package's ROS Melodic / Gazebo 9 launch.",
+   "companions": [
+    {
+     "alias": "gazebo_ros_pkgs",
+     "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+     "commit": "0667c5e52e8afa1f478955d8a2569b473a5acdf1",
+     "profile": "ros1-melodic-gazebo9",
+     "reason": "pause_physics and its get_physics_properties read-back (pause) are served by gazebo_ros 2.8.7 (Melodic); the clone starts gazebo_ros gzserver as the node named gazebo.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:5",
+       "token": "ROS Melodic"
+      },
+      {
+       "side": "package",
+       "ref": "src/mav_controller/package.xml:13",
+       "token": "catkin"
+      },
+      {
+       "side": "package",
+       "ref": "src/mav_controller/worlds/normal.launch:32",
+       "token": "pkg=\"gazebo_ros\""
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:4",
+       "token": "2.8.7"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:22",
+       "token": "catkin"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_dev/package.xml:22",
+       "token": "libgazebo9-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "docs/RELEASE.md:19",
+       "token": "ROS Melodic: Gazebo 9"
+      }
+     ],
+     "lock": "ros-simulation__gazebo_ros_pkgs@2.8.7"
+    },
+    {
+     "alias": "gazebo_classic",
+     "package_id": "gh.gazebosim/gazebo-classic",
+     "commit": "e4400ae7e04e4859eec392ac67b813402703bab0",
+     "profile": "ros1-melodic-gazebo9",
+     "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (Gazebo 9.19.0; facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:5",
+       "token": "ROS Melodic"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "docs/RELEASE.md:19",
+       "token": "ROS Melodic: Gazebo 9"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:16",
+       "token": "GAZEBO_MAJOR_VERSION 9"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "Gazebo 9.19.0"
+      }
+     ],
+     "lock": "gazebosim__gazebo-classic@gazebo9_9.19.0"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.cpezzato/panda_simulation",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Model review of p5-gz-pause (grok-4.7, a model and not a human, 2026-11-05): the stop is the Gazebo world pause of gazebo_ros 2.5.21 fetched under work/companions. LOCK.json needed_by is widened for this already fetched clone.",
+   "companions": [
+    {
+     "alias": "gazebo_ros_pkgs",
+     "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+     "commit": "98bb3d0a0afc65725deaa1633e21ff6f5322b564",
+     "profile": "ros1-kinetic-gazebo7",
+     "reason": "pause_physics and its get_physics_properties read-back (pause) are served by gazebo_ros 2.5.21 (Kinetic), whose empty_world.launch the clone's simulation launch includes.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:41",
+       "token": "ros-kinetic-desktop-full"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:54",
+       "token": "/opt/ros/kinetic/setup.bash"
+      },
+      {
+       "side": "package",
+       "ref": "panda_simulation/package.xml:18",
+       "token": "catkin"
+      },
+      {
+       "side": "package",
+       "ref": "panda_simulation/launch/simulation.launch:13",
+       "token": "$(find gazebo_ros)/launch/empty_world.launch"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:4",
+       "token": "2.5.21"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:22",
+       "token": "catkin"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_dev/package.xml:22",
+       "token": "libgazebo7-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/CHANGELOG.rst:130-136",
+       "token": "kinetic"
+      }
+     ],
+     "lock": "ros-simulation__gazebo_ros_pkgs@2.5.21"
+    },
+    {
+     "alias": "gazebo_classic",
+     "package_id": "gh.gazebosim/gazebo-classic",
+     "commit": "6fea5977c4518f6d722855c0e342e1e5acf64bac",
+     "profile": "ros1-kinetic-gazebo7",
+     "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (Gazebo 7.16.1; facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:41",
+       "token": "ros-kinetic-desktop-full"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_ros/CHANGELOG.rst:130-136",
+       "token": "kinetic"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_dev/package.xml:22",
+       "token": "libgazebo7-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:12",
+       "token": "GAZEBO_MAJOR_VERSION 7"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:5",
+       "token": "Gazebo 7.16.1"
+      }
+     ],
+     "lock": "gazebosim__gazebo-classic@gazebo7_7.16.1"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.erdalpekel/panda_simulation",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Model review of preflight 2 (claude-opus-5-5): the stop lives in a companion fetched under work/companions at a pinned commit (LOCK.json), matched to the package's ROS and simulator versions.",
+   "companions": [
+    {
+     "alias": "gazebo_ros_pkgs",
+     "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+     "commit": "0667c5e52e8afa1f478955d8a2569b473a5acdf1",
+     "profile": "ros1-melodic-gazebo9",
+     "reason": "pause_physics and its get_physics_properties read-back (pause) are served by gazebo_ros 2.8.7 (Melodic), whose empty_world.launch the clone's simulation launch includes.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:5",
+       "token": "ROS melodic"
+      },
+      {
+       "side": "package",
+       "ref": "panda_simulation/package.xml:19",
+       "token": "catkin"
+      },
+      {
+       "side": "package",
+       "ref": "panda_simulation/launch/simulation.launch:15",
+       "token": "$(find gazebo_ros)/launch/empty_world.launch"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:4",
+       "token": "2.8.7"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:22",
+       "token": "catkin"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_dev/package.xml:22",
+       "token": "libgazebo9-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "docs/RELEASE.md:19",
+       "token": "ROS Melodic: Gazebo 9"
+      }
+     ],
+     "lock": "ros-simulation__gazebo_ros_pkgs@2.8.7"
+    },
+    {
+     "alias": "gazebo_classic",
+     "package_id": "gh.gazebosim/gazebo-classic",
+     "commit": "e4400ae7e04e4859eec392ac67b813402703bab0",
+     "profile": "ros1-melodic-gazebo9",
+     "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (Gazebo 9.19.0; facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:5",
+       "token": "ROS melodic"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "docs/RELEASE.md:19",
+       "token": "ROS Melodic: Gazebo 9"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:16",
+       "token": "GAZEBO_MAJOR_VERSION 9"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "Gazebo 9.19.0"
+      }
+     ],
+     "lock": "gazebosim__gazebo-classic@gazebo9_9.19.0"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.ethz-asl/rotors_simulator",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Model review of preflight 2 (claude-opus-5-5): the stop lives in a companion fetched under work/companions at a pinned commit (LOCK.json), matched to the package's ROS and simulator versions.",
+   "companions": [
+    {
+     "alias": "gazebo_ros_pkgs",
+     "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+     "commit": "98bb3d0a0afc65725deaa1633e21ff6f5322b564",
+     "profile": "ros1-kinetic-gazebo7",
+     "reason": "pause_physics and its get_physics_properties read-back (pause) are served by gazebo_ros 2.5.21 (Kinetic), whose empty_world.launch the clone's hovering launch includes.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:32",
+       "token": "ROS Kinetic"
+      },
+      {
+       "side": "package",
+       "ref": "rotors_gazebo/package.xml:20",
+       "token": "catkin"
+      },
+      {
+       "side": "package",
+       "ref": "rotors_gazebo/launch/mav_hovering_example.launch:16",
+       "token": "$(find gazebo_ros)/launch/empty_world.launch"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:4",
+       "token": "2.5.21"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:22",
+       "token": "catkin"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_dev/package.xml:22",
+       "token": "libgazebo7-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/CHANGELOG.rst:130-136",
+       "token": "kinetic"
+      }
+     ],
+     "lock": "ros-simulation__gazebo_ros_pkgs@2.5.21"
+    },
+    {
+     "alias": "gazebo_classic",
+     "package_id": "gh.gazebosim/gazebo-classic",
+     "commit": "6fea5977c4518f6d722855c0e342e1e5acf64bac",
+     "profile": "ros1-kinetic-gazebo7",
+     "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (Gazebo 7.16.1; facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:32",
+       "token": "ROS Kinetic"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_ros/CHANGELOG.rst:130-136",
+       "token": "kinetic"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_dev/package.xml:22",
+       "token": "libgazebo7-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:12",
+       "token": "GAZEBO_MAJOR_VERSION 7"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:5",
+       "token": "Gazebo 7.16.1"
+      }
+     ],
+     "lock": "gazebosim__gazebo-classic@gazebo7_7.16.1"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.evronix/quadruped_sim2sim",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Model review of preflight 2 (claude-opus-5-5): the stop lives in a companion fetched under work/companions at a pinned commit (LOCK.json), matched to the package's ROS and simulator versions.",
+   "companions": [
+    {
+     "alias": "gazebo_ros_pkgs",
+     "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+     "commit": "ae6e5793a31f5927df89cb58007d2a5eb567baa8",
+     "profile": "ros2-humble-gazebo11",
+     "reason": "pause_physics, its get_model_list stall read-back (the world's sim time in header.stamp) and unpause_physics are served by gazebo_ros 3.9.0 (ROS 2 Humble, Gazebo 11).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:41",
+       "token": "ROS2 Humble"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:46-49",
+       "token": "ros-humble-gazebo-ros"
+      },
+      {
+       "side": "package",
+       "ref": "robot_gazebo/package.xml:11",
+       "token": "ament_cmake"
+      },
+      {
+       "side": "package",
+       "ref": "robot_gazebo/launch/go1_gazebo.launch.py:23-25",
+       "token": "gazebo.launch.py"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:5",
+       "token": "3.9.0"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:23",
+       "token": "ament_cmake"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_dev/package.xml:23",
+       "token": "libgazebo11-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_msgs/cmake/gazebo_msgs-extras.cmake:4-5",
+       "token": "humble"
+      }
+     ],
+     "lock": "ros-simulation__gazebo_ros_pkgs@3.9.0"
+    },
+    {
+     "alias": "gazebo_ros2_control",
+     "package_id": "gh.ros-controls/gazebo_ros2_control",
+     "commit": "42d875b482f0b254d9032950a91b2c5cbd7d1c3d",
+     "profile": "ros2-humble-gazebo11",
+     "reason": "gazebo_ros2_control 0.4.12 (Humble) updates the controllers and writes their commands to the joints only from the world-update event (facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:41",
+       "token": "ROS2 Humble"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:46",
+       "token": "ros-humble-gazebo-ros2-control"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros2_control/package.xml:4",
+       "token": "0.4.12"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:22",
+       "token": "Humble"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_dev/package.xml:23",
+       "token": "libgazebo11-dev"
+      }
+     ],
+     "lock": "ros-controls__gazebo_ros2_control@0.4.12"
+    },
+    {
+     "alias": "gazebo_classic",
+     "package_id": "gh.gazebosim/gazebo-classic",
+     "commit": "b22c6e15e52299865b31093b8feebc9ca19e26e8",
+     "profile": "ros2-humble-gazebo11",
+     "reason": "World::Step advances sim time and runs every model and controller update only while the world is not paused (Gazebo 11.15.1; facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:41",
+       "token": "ROS2 Humble"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_msgs/cmake/gazebo_msgs-extras.cmake:4-5",
+       "token": "humble"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_dev/package.xml:23",
+       "token": "libgazebo11-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:20",
+       "token": "GAZEBO_MAJOR_VERSION 11"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "Gazebo 11.15.1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "package_id": "gh.gsilano/crazys",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Model review of preflight 2 (claude-opus-5-5): the stop lives in a companion fetched under work/companions at a pinned commit (LOCK.json), matched to the package's ROS and simulator versions.",
+   "companions": [
+    {
+     "alias": "gazebo_ros_pkgs",
+     "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+     "commit": "98bb3d0a0afc65725deaa1633e21ff6f5322b564",
+     "profile": "ros1-kinetic-gazebo7",
+     "reason": "pause_physics and its get_physics_properties read-back (pause) are served by gazebo_ros 2.5.21 (Kinetic), whose empty_world.launch the clone's Crazyflie launches include.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:11",
+       "token": "Kinetic + Gazebo 7"
+      },
+      {
+       "side": "package",
+       "ref": ".github/workflows/build-kinetic-gazebo7.yml:34",
+       "token": "ROS_DISTRO: kinetic"
+      },
+      {
+       "side": "package",
+       "ref": "rotors_gazebo/package.xml:24",
+       "token": "catkin"
+      },
+      {
+       "side": "package",
+       "ref": "rotors_gazebo/launch/crazyflie2_with_joy.launch:20",
+       "token": "$(find gazebo_ros)/launch/empty_world.launch"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:4",
+       "token": "2.5.21"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:22",
+       "token": "catkin"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_dev/package.xml:22",
+       "token": "libgazebo7-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/CHANGELOG.rst:130-136",
+       "token": "kinetic"
+      }
+     ],
+     "lock": "ros-simulation__gazebo_ros_pkgs@2.5.21"
+    },
+    {
+     "alias": "gazebo_classic",
+     "package_id": "gh.gazebosim/gazebo-classic",
+     "commit": "6fea5977c4518f6d722855c0e342e1e5acf64bac",
+     "profile": "ros1-kinetic-gazebo7",
+     "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (Gazebo 7.16.1; facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:11",
+       "token": "Kinetic + Gazebo 7"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_ros/CHANGELOG.rst:130-136",
+       "token": "kinetic"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_dev/package.xml:22",
+       "token": "libgazebo7-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:12",
+       "token": "GAZEBO_MAJOR_VERSION 7"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:5",
+       "token": "Gazebo 7.16.1"
+      }
+     ],
+     "lock": "gazebosim__gazebo-classic@gazebo7_7.16.1"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.justyx404/spot_gazebo_ros2",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "The pause and WorldStatistics read-back are ignition-gazebo 6.18.0 and ros_gz 0.244.27, already fetched for TortoiseBot; this package widens needed_by.",
+   "companions": [
+    {
+     "alias": "gz_sim",
+     "package_id": "gh.gazebosim/gz-sim",
+     "commit": "b90cd2c41a193102d6951857c2d83e13f59bb64b",
+     "profile": "ros2-humble-gzsim6",
+     "reason": "WorldControl pause of /world/simple_tunnel, the paused flag on its stats topic, and the unpause are ignition-gazebo 6.18.0 (Fortress).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:3",
+       "token": "ROS 2 Humble"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:53",
+       "token": "Gazebo Fortress"
+      },
+      {
+       "side": "package",
+       "ref": "spot_bringup/launch/spot.gazebo.launch.py:40",
+       "token": "'gz_args': ["
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:6",
+       "token": "project(ignition-gazebo6 VERSION 6.18.0)"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "### Gazebo Sim 6.18.0 (2026-06-09)"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "README.md:5",
+       "token": "Humble | Fortress | [humble]"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "ros_gz_sim/package.xml:31",
+       "token": "ignition-gazebo6</depend>"
+      }
+     ],
+     "lock": "gazebosim__gz-sim@ignition-gazebo6_6.18.0"
+    },
+    {
+     "alias": "ros_gz",
+     "package_id": "gh.gazebosim/ros_gz",
+     "commit": "856e319ee4da713609b3f6e58c74ac8db7662482",
+     "profile": "ros2-humble-gzsim6",
+     "reason": "ros_gz_bridge 0.244.27 (Humble) maps ControlWorld and WorldStatistics; the operator runs parameter_bridge for both.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:3",
+       "token": "ROS 2 Humble"
+      },
+      {
+       "side": "package",
+       "ref": "spot_bringup/launch/spot.gazebo.launch.py:53",
+       "token": "package='ros_gz_bridge'"
+      },
+      {
+       "side": "companion",
+       "ref": "ros_gz_bridge/package.xml:5",
+       "token": "<version>0.244.27</version>"
+      },
+      {
+       "side": "companion",
+       "ref": "ros_gz_bridge/CHANGELOG.rst:5",
+       "token": "0.244.27 (2026-10-13)"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:54",
+       "token": "This branch supports ROS Humble"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:5",
+       "token": "Humble | Fortress | [humble]"
+      }
+     ],
+     "lock": "gazebosim__ros_gz@0.244.27"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.lihuang3/ur5_ros-gazebo",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Model review of preflight 2 (claude-opus-5-5): the stop lives in a companion fetched under work/companions at a pinned commit (LOCK.json), matched to the package's ROS and simulator versions.",
+   "companions": [
+    {
+     "alias": "gazebo_ros_pkgs",
+     "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+     "commit": "98bb3d0a0afc65725deaa1633e21ff6f5322b564",
+     "profile": "ros1-kinetic-gazebo7",
+     "reason": "pause_physics and its get_physics_properties read-back (pause) are served by gazebo_ros 2.5.21 (Kinetic), whose empty_world.launch the clone includes; it also holds the vacuum gripper plugin.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:34",
+       "token": "ROS kinetic"
+      },
+      {
+       "side": "package",
+       "ref": "package.xml:41",
+       "token": "catkin"
+      },
+      {
+       "side": "package",
+       "ref": "launch/initialize.launch:12",
+       "token": "$(find gazebo_ros)/launch/empty_world.launch"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:4",
+       "token": "2.5.21"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:22",
+       "token": "catkin"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_dev/package.xml:22",
+       "token": "libgazebo7-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/CHANGELOG.rst:130-136",
+       "token": "kinetic"
+      }
+     ],
+     "lock": "ros-simulation__gazebo_ros_pkgs@2.5.21"
+    },
+    {
+     "alias": "gazebo_classic",
+     "package_id": "gh.gazebosim/gazebo-classic",
+     "commit": "6fea5977c4518f6d722855c0e342e1e5acf64bac",
+     "profile": "ros1-kinetic-gazebo7",
+     "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (Gazebo 7.16.1; facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:34",
+       "token": "ROS kinetic"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_ros/CHANGELOG.rst:130-136",
+       "token": "kinetic"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_dev/package.xml:22",
+       "token": "libgazebo7-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:12",
+       "token": "GAZEBO_MAJOR_VERSION 7"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:5",
+       "token": "Gazebo 7.16.1"
+      }
+     ],
+     "lock": "gazebosim__gazebo-classic@gazebo7_7.16.1"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.linorobot/linorobot2",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Model review of preflight 2 (claude-opus-5-5): the stop lives in a companion fetched under work/companions at a pinned commit (LOCK.json), matched to the package's ROS and simulator versions.",
+   "companions": [
+    {
+     "alias": "gz_sim",
+     "package_id": "gh.gazebosim/gz-sim",
+     "commit": "446a44335a45b704b4d36dabcc5508ee34eeb3d8",
+     "profile": "ros2-jazzy-gzsim8",
+     "reason": "The WorldControl pause (SimulationRunner OnWorldControl, applied by SetPaused in the step loop), its paused flag in WorldStatistics on <world>/stats and the unpause are gz-sim 8.15.0's (Harmonic).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:8",
+       "token": "**Jazzy**"
+      },
+      {
+       "side": "package",
+       "ref": "docker/Dockerfile:1",
+       "token": "ARG DOCKER_ROS_DISTRO=jazzy"
+      },
+      {
+       "side": "package",
+       "ref": "linorobot2_gazebo/package.xml:12",
+       "token": "<buildtool_depend>ament_cmake</buildtool_depend>"
+      },
+      {
+       "side": "package",
+       "ref": "linorobot2_gazebo/launch/gazebo.launch.py:31",
+       "token": "'gz_sim.launch.py'"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:6",
+       "token": "project(gz-sim8 VERSION 8.15.0)"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "### Gazebo Sim 8.15.0 (2026-08-11)"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "README.md:9",
+       "token": "Jazzy | Harmonic | [jazzy]"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "ros_gz_sim/package.xml:32",
+       "token": "<depend>gz_sim_vendor</depend>"
+      }
+     ],
+     "lock": "gazebosim__gz-sim@gz-sim8_8.15.0"
+    },
+    {
+     "alias": "ros_gz",
+     "package_id": "gh.gazebosim/ros_gz",
+     "commit": "b87d7523400a695a10d47ca7b8cb5fa86d5b8d9d",
+     "profile": "ros2-jazzy-gzsim8",
+     "reason": "ros_gz_bridge 1.0.25 (Jazzy) maps ros_gz_interfaces/srv/ControlWorld to the gz WorldControl request and WorldStatistics to the ROS message; the operator runs its parameter_bridge.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:8",
+       "token": "**Jazzy**"
+      },
+      {
+       "side": "package",
+       "ref": "linorobot2_gazebo/launch/gazebo.launch.py:136-138",
+       "token": "ros_gz_bridge"
+      },
+      {
+       "side": "companion",
+       "ref": "ros_gz_bridge/package.xml:5",
+       "token": "<version>1.0.25</version>"
+      },
+      {
+       "side": "companion",
+       "ref": "ros_gz_bridge/CHANGELOG.rst:5",
+       "token": "1.0.25 (2026-10-13)"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:56",
+       "token": "This branch supports ROS Jazzy"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:9",
+       "token": "Jazzy | Harmonic | [jazzy]"
+      }
+     ],
+     "lock": "gazebosim__ros_gz@1.0.25"
+    },
+    {
+     "alias": "gz_transport",
+     "package_id": "gh.gazebosim/gz-transport",
+     "commit": "35fef7ea10c2e133498e9010bd2e397a0ce0c3bf",
+     "profile": "ros2-jazzy-gzsim8",
+     "reason": "gz-transport 13.6.0 sends the bridge's gz service request asynchronously (facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "docker/Dockerfile:1",
+       "token": "ARG DOCKER_ROS_DISTRO=jazzy"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:6",
+       "token": "project(gz-transport13 VERSION 13.6.0)"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "### Gazebo Transport 13.6.0 (2026-08-15)"
+      },
+      {
+       "side": "companion:gz_sim",
+       "ref": "CMakeLists.txt:87",
+       "token": "gz_find_package(gz-transport13"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "README.md:9",
+       "token": "Jazzy | Harmonic | [jazzy]"
+      }
+     ],
+     "lock": "gazebosim__gz-transport@gz-transport13_13.6.0"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.novog93/sjtu_drone",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Model review of preflight 2 (claude-opus-5-5): the stop lives in a companion fetched under work/companions at a pinned commit (LOCK.json), matched to the package's ROS and simulator versions.",
+   "companions": [
+    {
+     "alias": "gazebo_ros_pkgs",
+     "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+     "commit": "ae6e5793a31f5927df89cb58007d2a5eb567baa8",
+     "profile": "ros2-humble-gazebo11",
+     "reason": "pause_physics, its get_model_list stall read-back (the world's sim time in header.stamp) and unpause_physics are served by gazebo_ros 3.9.0 (ROS 2 Humble, Gazebo 11).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:3",
+       "token": "Humble"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:11",
+       "token": "Gazebo 11"
+      },
+      {
+       "side": "package",
+       "ref": "run_docker.sh:12",
+       "token": "humble"
+      },
+      {
+       "side": "package",
+       "ref": "sjtu_drone_description/package.xml:10",
+       "token": "ament_cmake"
+      },
+      {
+       "side": "package",
+       "ref": "sjtu_drone_bringup/launch/sjtu_drone_gazebo.launch.py:100",
+       "token": "gzserver.launch.py"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:5",
+       "token": "3.9.0"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:23",
+       "token": "ament_cmake"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_dev/package.xml:23",
+       "token": "libgazebo11-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_msgs/cmake/gazebo_msgs-extras.cmake:4-5",
+       "token": "humble"
+      }
+     ],
+     "lock": "ros-simulation__gazebo_ros_pkgs@3.9.0"
+    },
+    {
+     "alias": "gazebo_classic",
+     "package_id": "gh.gazebosim/gazebo-classic",
+     "commit": "b22c6e15e52299865b31093b8feebc9ca19e26e8",
+     "profile": "ros2-humble-gazebo11",
+     "reason": "World::Step advances sim time and runs every model and controller update only while the world is not paused (Gazebo 11.15.1; facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:3",
+       "token": "Humble"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:11",
+       "token": "Gazebo 11"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_msgs/cmake/gazebo_msgs-extras.cmake:4-5",
+       "token": "humble"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_dev/package.xml:23",
+       "token": "libgazebo11-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:20",
+       "token": "GAZEBO_MAJOR_VERSION 11"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "Gazebo 11.15.1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "package_id": "gh.osrf/vrx",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Model review of preflight 2 (claude-opus-5-5): the stop lives in a companion fetched under work/companions at a pinned commit (LOCK.json), matched to the package's ROS and simulator versions.",
+   "companions": [
+    {
+     "alias": "gz_sim",
+     "package_id": "gh.gazebosim/gz-sim",
+     "commit": "446a44335a45b704b4d36dabcc5508ee34eeb3d8",
+     "profile": "ros2-jazzy-gzsim8",
+     "reason": "The WorldControl pause (SimulationRunner OnWorldControl, applied by SetPaused in the step loop), its paused flag in WorldStatistics on <world>/stats and the unpause are gz-sim 8.15.0's (Harmonic).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:7",
+       "token": "Gazebo Harmonic and ROS 2 Jazzy"
+      },
+      {
+       "side": "package",
+       "ref": "vrx_gz/CMakeLists.txt:16",
+       "token": "find_package(gz-sim8 REQUIRED)"
+      },
+      {
+       "side": "package",
+       "ref": "docker/Dockerfile.base:2",
+       "token": "FROM ros:jazzy-ros-base"
+      },
+      {
+       "side": "package",
+       "ref": "docker/Dockerfile.base:37",
+       "token": "gz-harmonic"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:6",
+       "token": "project(gz-sim8 VERSION 8.15.0)"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "### Gazebo Sim 8.15.0 (2026-08-11)"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "README.md:9",
+       "token": "Jazzy | Harmonic | [jazzy]"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "ros_gz_sim/package.xml:32",
+       "token": "<depend>gz_sim_vendor</depend>"
+      }
+     ],
+     "lock": "gazebosim__gz-sim@gz-sim8_8.15.0"
+    },
+    {
+     "alias": "ros_gz",
+     "package_id": "gh.gazebosim/ros_gz",
+     "commit": "b87d7523400a695a10d47ca7b8cb5fa86d5b8d9d",
+     "profile": "ros2-jazzy-gzsim8",
+     "reason": "ros_gz_bridge 1.0.25 (Jazzy) maps ros_gz_interfaces/srv/ControlWorld to the gz WorldControl request and WorldStatistics to the ROS message; the operator runs its parameter_bridge.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:7",
+       "token": "Gazebo Harmonic and ROS 2 Jazzy"
+      },
+      {
+       "side": "package",
+       "ref": "docker/Dockerfile.base:2",
+       "token": "FROM ros:jazzy-ros-base"
+      },
+      {
+       "side": "companion",
+       "ref": "ros_gz_bridge/package.xml:5",
+       "token": "<version>1.0.25</version>"
+      },
+      {
+       "side": "companion",
+       "ref": "ros_gz_bridge/CHANGELOG.rst:5",
+       "token": "1.0.25 (2026-10-13)"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:56",
+       "token": "This branch supports ROS Jazzy"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:9",
+       "token": "Jazzy | Harmonic | [jazzy]"
+      }
+     ],
+     "lock": "gazebosim__ros_gz@1.0.25"
+    },
+    {
+     "alias": "gz_transport",
+     "package_id": "gh.gazebosim/gz-transport",
+     "commit": "35fef7ea10c2e133498e9010bd2e397a0ce0c3bf",
+     "profile": "ros2-jazzy-gzsim8",
+     "reason": "gz-transport 13.6.0 sends the bridge's gz service request asynchronously (facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:7",
+       "token": "Gazebo Harmonic and ROS 2 Jazzy"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:6",
+       "token": "project(gz-transport13 VERSION 13.6.0)"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "### Gazebo Transport 13.6.0 (2026-08-15)"
+      },
+      {
+       "side": "companion:gz_sim",
+       "ref": "CMakeLists.txt:87",
+       "token": "gz_find_package(gz-transport13"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "README.md:9",
+       "token": "Jazzy | Harmonic | [jazzy]"
+      }
+     ],
+     "lock": "gazebosim__gz-transport@gz-transport13_13.6.0"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.qdeyna/ur10e_2f140_topic_based_ros2_control",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "omit_sim_contract": true,
+   "justification": "Fake-hardware RosDriver for the UR10e arm. omit_sim_contract: the vendored cartesian MJCF is not the served contract. Pins ros2_control 2.54.4 and ros2_controllers 2.54.1; ros2-humble-gzsim6 is the lock label.",
+   "companions": [
+    {
+     "alias": "ros2_control",
+     "package_id": "gh.ros-controls/ros2_control",
+     "commit": "7f26da889aa0898442d1c0a135ae001add1a9878",
+     "profile": "ros2-humble-gzsim6",
+     "reason": "controller_manager 2.54.4 (Humble) serves switch_controller (the stop and the re-enable) and list_controllers, whose one scaled_joint_trajectory_controller element confirms the stop.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:105",
+       "token": "ROS 2 Humble"
+      },
+      {
+       "side": "package",
+       "ref": "src/ur_robotiq_description/launch/ur_robotiq_control.launch.py:194",
+       "token": "controller_manager"
+      },
+      {
+       "side": "companion",
+       "ref": "controller_manager/package.xml:5",
+       "token": "2.54.4"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:22",
+       "token": "Humble"
+      }
+     ],
+     "lock": "ros-controls__ros2_control@2.54.4"
+    },
+    {
+     "alias": "ros2_controllers",
+     "package_id": "gh.ros-controls/ros2_controllers",
+     "commit": "65db73628ebac1948833f0fbdc60973c74d6cd0e",
+     "profile": "ros2-humble-gzsim6",
+     "reason": "joint_trajectory_controller 2.54.1 (Humble): deactivation drops the trajectory and activation holds the measured position for this position-only command with position and velocity state (facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:105",
+       "token": "ROS 2 Humble"
+      },
+      {
+       "side": "package",
+       "ref": "src/Universal_Robots_ROS2_Driver/ur_controllers/include/ur_controllers/scaled_joint_trajectory_controller.hpp:43",
+       "token": "joint_trajectory_controller"
+      },
+      {
+       "side": "companion",
+       "ref": "joint_trajectory_controller/package.xml:4",
+       "token": "2.54.1"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:21",
+       "token": "Humble"
+      }
+     ],
+     "lock": "ros-controls__ros2_controllers@2.54.1"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.rigbetellabs/tortoisebot",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Model review of preflight 2 (claude-opus-5-5): the stop lives in a companion fetched under work/companions at a pinned commit (LOCK.json), matched to the package's ROS and simulator versions.",
+   "companions": [
+    {
+     "alias": "gz_sim",
+     "package_id": "gh.gazebosim/gz-sim",
+     "commit": "b90cd2c41a193102d6951857c2d83e13f59bb64b",
+     "profile": "ros2-humble-gzsim6",
+     "reason": "The WorldControl pause (SimulationRunner OnWorldControl, applied by SetPaused in the step loop), its paused flag in WorldStatistics on <world>/stats and the unpause are ignition-gazebo 6.18.0's (Fortress).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:1",
+       "token": "ROS 2 Humble"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:36-38",
+       "token": "Ignition Fortress"
+      },
+      {
+       "side": "package",
+       "ref": "tortoisebot_gazebo/launch/ignition_sim.launch.py:111-112",
+       "token": "cmd=['ign', 'gazebo', '-r', world]"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:6",
+       "token": "project(ignition-gazebo6 VERSION 6.18.0)"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "### Gazebo Sim 6.18.0 (2026-06-09)"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "README.md:5",
+       "token": "Humble | Fortress | [humble]"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "ros_gz_sim/package.xml:31",
+       "token": "ignition-gazebo6</depend>"
+      }
+     ],
+     "lock": "gazebosim__gz-sim@ignition-gazebo6_6.18.0"
+    },
+    {
+     "alias": "ros_gz",
+     "package_id": "gh.gazebosim/ros_gz",
+     "commit": "856e319ee4da713609b3f6e58c74ac8db7662482",
+     "profile": "ros2-humble-gzsim6",
+     "reason": "ros_gz_bridge 0.244.27 (Humble) maps ros_gz_interfaces/srv/ControlWorld to the ignition WorldControl request and WorldStatistics to the ROS message; the operator runs its parameter_bridge.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:1",
+       "token": "ROS 2 Humble"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:69-71",
+       "token": "ros-humble-ros-gz-bridge"
+      },
+      {
+       "side": "companion",
+       "ref": "ros_gz_bridge/package.xml:5",
+       "token": "<version>0.244.27</version>"
+      },
+      {
+       "side": "companion",
+       "ref": "ros_gz_bridge/CHANGELOG.rst:5",
+       "token": "0.244.27 (2026-10-13)"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:54",
+       "token": "This branch supports ROS Humble"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:5",
+       "token": "Humble | Fortress | [humble]"
+      }
+     ],
+     "lock": "gazebosim__ros_gz@0.244.27"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.rodriguesrenato/warehouse_robot_simulation",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "The stop is gazebo_ros 2.8.7 pause_physics, confirmed by get_physics_properties pause true, from the Melodic lock clones fetched for panda_simulation; needed_by is widened for this package.",
+   "companions": [
+    {
+     "alias": "gazebo_ros_pkgs",
+     "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+     "commit": "0667c5e52e8afa1f478955d8a2569b473a5acdf1",
+     "profile": "ros1-melodic-gazebo9",
+     "reason": "pause_physics and its get_physics_properties read-back (pause) are served by gazebo_ros 2.8.7 (Melodic), whose empty_world.launch the clone's world.launch includes.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:16",
+       "token": "ROS Melodic"
+      },
+      {
+       "side": "package",
+       "ref": "package.xml:11",
+       "token": "catkin"
+      },
+      {
+       "side": "package",
+       "ref": "launch/world.launch:9",
+       "token": "$(find gazebo_ros)/launch/empty_world.launch"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:4",
+       "token": "2.8.7"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:22",
+       "token": "catkin"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_dev/package.xml:22",
+       "token": "libgazebo9-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "docs/RELEASE.md:19",
+       "token": "ROS Melodic: Gazebo 9"
+      }
+     ],
+     "lock": "ros-simulation__gazebo_ros_pkgs@2.8.7"
+    },
+    {
+     "alias": "gazebo_classic",
+     "package_id": "gh.gazebosim/gazebo-classic",
+     "commit": "e4400ae7e04e4859eec392ac67b813402703bab0",
+     "profile": "ros1-melodic-gazebo9",
+     "reason": "World::Step gates model and plugin updates on the paused flag that pause_physics sets and get_physics_properties reads (Gazebo 9.19.0; the README states Gazebo 9.17.0, the same major; facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:16",
+       "token": "ROS Melodic"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:17",
+       "token": "Gazebo 9.17.0"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "docs/RELEASE.md:19",
+       "token": "ROS Melodic: Gazebo 9"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:16",
+       "token": "GAZEBO_MAJOR_VERSION 9"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "Gazebo 9.19.0"
+      }
+     ],
+     "lock": "gazebosim__gazebo-classic@gazebo9_9.19.0"
+    }
+   ]
+  },
+  {
+   "package_id": "gh.uthiras/scara_robot_ros2",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "Grok repair (grok-4.7, 2026-11-05): the stop is gazebo_ros 3.9.0 pause_physics, fetched under work/companions (LOCK.json), matched to the clone's committed Humble colcon artifacts.",
+   "companions": [
+    {
+     "alias": "gazebo_ros_pkgs",
+     "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+     "commit": "ae6e5793a31f5927df89cb58007d2a5eb567baa8",
+     "profile": "ros2-humble-gazebo11",
+     "reason": "pause_physics and its get_model_list stall read-back (the world's sim time in header.stamp) are served by gazebo_ros 3.9.0 (ROS 2 Humble, Gazebo 11), which rrbot_world.launch.py includes.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "install/setup.bash:22",
+       "token": "/opt/ros/humble"
+      },
+      {
+       "side": "package",
+       "ref": "build/rrbot_description/colcon_command_prefix_build.sh.env:37",
+       "token": "ROS_DISTRO=humble"
+      },
+      {
+       "side": "package",
+       "ref": "build/rrbot_description/colcon_command_prefix_build.sh.env:13",
+       "token": "gazebo-11"
+      },
+      {
+       "side": "package",
+       "ref": "src/rrbot_simulation_files/rrbot_simulation_files/rrbot_gazebo/package.xml:19",
+       "token": "ament_cmake"
+      },
+      {
+       "side": "package",
+       "ref": "src/rrbot_simulation_files/rrbot_simulation_files/rrbot_gazebo/launch/rrbot_world.launch.py:42-44",
+       "token": "gazebo.launch.py"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:5",
+       "token": "3.9.0"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros/package.xml:23",
+       "token": "ament_cmake"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_dev/package.xml:23",
+       "token": "libgazebo11-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_msgs/cmake/gazebo_msgs-extras.cmake:4-5",
+       "token": "humble"
+      }
+     ],
+     "lock": "ros-simulation__gazebo_ros_pkgs@3.9.0"
+    },
+    {
+     "alias": "gazebo_ros2_control",
+     "package_id": "gh.ros-controls/gazebo_ros2_control",
+     "commit": "42d875b482f0b254d9032950a91b2c5cbd7d1c3d",
+     "profile": "ros2-humble-gazebo11",
+     "reason": "gazebo_ros2_control 0.4.12 (Humble) runs the controllers and writes their commands to the joints only from the world-update event, and only its plugin gives a GazeboSystem a model (facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "install/setup.bash:22",
+       "token": "/opt/ros/humble"
+      },
+      {
+       "side": "package",
+       "ref": "src/rrbot_simulation_files/rrbot_simulation_files/rrbot_gazebo/package.xml:25",
+       "token": "gazebo_ros2_control"
+      },
+      {
+       "side": "package",
+       "ref": "src/rrbot_simulation_files/rrbot_simulation_files/rrbot_description/gazebo/rrbot.gazebo.xacro:12",
+       "token": "libgazebo_ros2_control.so"
+      },
+      {
+       "side": "companion",
+       "ref": "gazebo_ros2_control/package.xml:4",
+       "token": "0.4.12"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:22",
+       "token": "Humble"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_dev/package.xml:23",
+       "token": "libgazebo11-dev"
+      }
+     ],
+     "lock": "ros-controls__gazebo_ros2_control@0.4.12"
+    },
+    {
+     "alias": "gazebo_classic",
+     "package_id": "gh.gazebosim/gazebo-classic",
+     "commit": "b22c6e15e52299865b31093b8feebc9ca19e26e8",
+     "profile": "ros2-humble-gazebo11",
+     "reason": "While paused, World::Step still advances sim time and calls Update when stepInc > 0 or a reset is due (World.cc:835-841); WorldControl step and multi_step schedule that (World.cc:1630-1639). Gazebo 11.15.1; facts only.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "install/setup.bash:22",
+       "token": "/opt/ros/humble"
+      },
+      {
+       "side": "package",
+       "ref": "build/rrbot_description/colcon_command_prefix_build.sh.env:13",
+       "token": "gazebo-11"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_msgs/cmake/gazebo_msgs-extras.cmake:4-5",
+       "token": "humble"
+      },
+      {
+       "side": "companion:gazebo_ros_pkgs",
+       "ref": "gazebo_dev/package.xml:23",
+       "token": "libgazebo11-dev"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:20",
+       "token": "GAZEBO_MAJOR_VERSION 11"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "Gazebo 11.15.1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "package_id": "gh.will0103/ros2-mobile-manipulator",
+   "strategy": "family-config",
+   "role": "sim-env",
+   "family": "ros",
+   "reason_code": "family:ros",
+   "justification": "The stop is the gz-sim 8.15.0 WorldControl pause, confirmed by fresh WorldStatistics.paused through ros_gz 1.0.25. needed_by of the three fetched jazzy clones gains this package; the orchestrator applies that LOCK.json edit.",
+   "companions": [
+    {
+     "alias": "gz_sim",
+     "package_id": "gh.gazebosim/gz-sim",
+     "commit": "446a44335a45b704b4d36dabcc5508ee34eeb3d8",
+     "profile": "ros2-jazzy-gzsim8",
+     "reason": "gz-sim 8.15.0 (Harmonic): WorldControl pause, WorldStatistics.paused on /world/empty/stats, the DiffDrive stored twist, and the default GUI world control.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:7",
+       "token": "ROS 2 Jazzy"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:88",
+       "token": "Gazebo Harmonic"
+      },
+      {
+       "side": "package",
+       "ref": "src/my_robot_bringup/launch/project_robot_gazebo.launch.xml:10-12",
+       "token": "gz_sim.launch.py"
+      },
+      {
+       "side": "package",
+       "ref": "src/my_robot_bringup/package.xml:14",
+       "token": "<exec_depend>ros_gz_sim</exec_depend>"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:6",
+       "token": "project(gz-sim8 VERSION 8.15.0)"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "### Gazebo Sim 8.15.0 (2026-08-11)"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "README.md:9",
+       "token": "Jazzy | Harmonic | [jazzy]"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "ros_gz_sim/package.xml:32",
+       "token": "<depend>gz_sim_vendor</depend>"
+      }
+     ],
+     "lock": "gazebosim__gz-sim@gz-sim8_8.15.0"
+    },
+    {
+     "alias": "ros_gz",
+     "package_id": "gh.gazebosim/ros_gz",
+     "commit": "b87d7523400a695a10d47ca7b8cb5fa86d5b8d9d",
+     "profile": "ros2-jazzy-gzsim8",
+     "reason": "ros_gz 1.0.25 (Jazzy) maps ControlWorld and WorldStatistics; the operator runs parameter_bridge for /world/empty/control and /world/empty/stats.",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:7",
+       "token": "ROS 2 Jazzy"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:103",
+       "token": "/opt/ros/jazzy"
+      },
+      {
+       "side": "package",
+       "ref": "src/my_robot_bringup/package.xml:16",
+       "token": "<exec_depend>ros_gz_bridge</exec_depend>"
+      },
+      {
+       "side": "package",
+       "ref": "src/my_robot_bringup/launch/project_robot_gazebo.launch.xml:19",
+       "token": "parameter_bridge"
+      },
+      {
+       "side": "companion",
+       "ref": "ros_gz_bridge/package.xml:5",
+       "token": "<version>1.0.25</version>"
+      },
+      {
+       "side": "companion",
+       "ref": "ros_gz_bridge/CHANGELOG.rst:5",
+       "token": "1.0.25 (2026-10-13)"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:56",
+       "token": "This branch supports ROS Jazzy"
+      },
+      {
+       "side": "companion",
+       "ref": "README.md:9",
+       "token": "Jazzy | Harmonic | [jazzy]"
+      }
+     ],
+     "lock": "gazebosim__ros_gz@1.0.25"
+    },
+    {
+     "alias": "gz_transport",
+     "package_id": "gh.gazebosim/gz-transport",
+     "commit": "35fef7ea10c2e133498e9010bd2e397a0ce0c3bf",
+     "profile": "ros2-jazzy-gzsim8",
+     "reason": "gz-transport 13.6.0 sends the bridge's gz service request asynchronously (facts only).",
+     "version_evidence": [
+      {
+       "side": "package",
+       "ref": "README.md:7",
+       "token": "ROS 2 Jazzy"
+      },
+      {
+       "side": "package",
+       "ref": "README.md:87",
+       "token": "ROS 2 Jazzy"
+      },
+      {
+       "side": "package",
+       "ref": "src/my_robot_bringup/package.xml:10",
+       "token": "<buildtool_depend>ament_cmake</buildtool_depend>"
+      },
+      {
+       "side": "companion",
+       "ref": "CMakeLists.txt:6",
+       "token": "project(gz-transport13 VERSION 13.6.0)"
+      },
+      {
+       "side": "companion",
+       "ref": "Changelog.md:3",
+       "token": "### Gazebo Transport 13.6.0 (2026-08-15)"
+      },
+      {
+       "side": "companion:gz_sim",
+       "ref": "CMakeLists.txt:87",
+       "token": "gz_find_package(gz-transport13"
+      },
+      {
+       "side": "companion:ros_gz",
+       "ref": "README.md:9",
+       "token": "Jazzy | Harmonic | [jazzy]"
+      }
+     ],
+     "lock": "gazebosim__gz-transport@gz-transport13_13.6.0"
+    }
+   ]
+  }
+ ]
+}

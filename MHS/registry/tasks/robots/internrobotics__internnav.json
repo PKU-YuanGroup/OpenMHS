@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.internrobotics/internnav",
+  "track": "robots",
+  "local_path": "robots/internrobotics/internnav",
+  "driver_dir": "MHS/drivers/robots/internrobotics__internnav",
+  "upstream": {
+    "repo_url": "https://github.com/internrobotics/internnav",
+    "commit": "7a5c62400ac45b313d9b709c740b64191556a242",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 909,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.8,<=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "internnav/model/encoder/diffusion_policy/model/diffusion/mask_generator.py:32 DummyMaskGenerator"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/internrobotics__internnav --backend fake",
+  "skip_reason": "catalogue category 'policy/algorithm' with no env registration or device evidence",
+  "publish_review": "not_required"
+}

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.openai/robogym",
+  "track": "robots",
+  "local_path": "robots/openai/robogym",
+  "driver_dir": "MHS/drivers/robots/openai__robogym",
+  "upstream": {
+    "repo_url": "https://github.com/openai/robogym",
+    "commit": "9ff1111fd557b1a01911d7d8c9d59a453071c96e",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 108,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robogym.envs.dactyl.face_perpendicular:FacePerpendicularEnv",
+      "file": "robogym/envs/dactyl/face_perpendicular.py",
+      "line": 258,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robogym.envs.dactyl.full_perpendicular:FullPerpendicularEnv",
+      "file": "robogym/envs/dactyl/full_perpendicular.py",
+      "line": 156,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robogym.envs.dactyl.locked:LockedEnv",
+      "file": "robogym/envs/dactyl/locked.py",
+      "line": 126,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robogym.envs.dactyl.reach:ReachEnv",
+      "file": "robogym/envs/dactyl/reach.py",
+      "line": 146,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robogym.envs.rearrange.blocks_attached:AttachedBlockRearrangeEnv",
+      "file": "robogym/envs/rearrange/blocks_attached.py",
+      "line": 30,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "robogym/assets/xmls/robot/shadowhand/main.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "robogym/assets/xmls/robot/shadowhand/main_render.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "robogym/assets/xmls/robot/ur16e/gripper_main.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.7.4",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robogym/assets/xmls/robot/shadowhand/main.xml:2 MJCF scene model",
+      "robogym/assets/xmls/robot/shadowhand/main_render.xml:2 MJCF scene model",
+      "robogym/assets/xmls/robot/ur16e/gripper_main.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "robogym/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model robogym/assets/xmls/robot/shadowhand/main.xml:2",
+      "MJCF scene model robogym/assets/xmls/robot/shadowhand/main_render.xml:2",
+      "MJCF scene model robogym/assets/xmls/robot/ur16e/gripper_main.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/openai__robogym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

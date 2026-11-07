@@ -1,0 +1,63 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mittoalb/pmsim",
+  "track": "labs",
+  "local_path": "labs/mittoalb/pmsim",
+  "driver_dir": "MHS/drivers/labs/mittoalb__pmsim",
+  "upstream": {
+    "repo_url": "https://github.com/mittoalb/pmsim",
+    "commit": "1cd323fc6499f828edf72e9aeedc44275d176001",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1035,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/pmsim/simulator.py:35 SimulationResult",
+      "src/pmsim/simulator.py:43 Simulator",
+      "src/pmsim/simulator.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/mittoalb__pmsim --backend fake",
+  "skip_reason": "override (labs.json): pmsim is a pure numerical X-ray projection-image simulator, not a controllable device: it Fresnel-propagates voxel phantoms to TIFFs with no instrument I/O, so it is only an offline test oracle.",
+  "publish_review": "not_required"
+}

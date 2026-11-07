@@ -1,0 +1,3858 @@
+{
+  "$schema": "../schema/overrides.schema.json",
+  "overrides_version": "0.9",
+  "title": "Lab-automation and instrument flagships",
+  "description": "Curated decisions for the lab frameworks, transports and driver packs the per-repo work depends on. Most confirm what the rules decide; the rest correct a rule (each justification says which).",
+  "overrides": [
+    {
+      "package_id": "gh.aadeshh1607/optilab360",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "TypeScript/Vite React web UI for a Newton's Rings virtual lab; no Python, device-control code or simulator source ships in this commit, so it is not a device and cannot become an OpenMHS driver."
+    },
+    {
+      "package_id": "gh.aakafosfor/hameg_hm1507",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of the PUB batch: a direct Driver, not a SerialDriver table: commands join a prefix and a bit-field byte ('TB' + base + '=' + chr(settings), 'CH' + channel + '=' + ...)."
+    },
+    {
+      "package_id": "gh.aaron-mott/keithley-2200",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "justification": "PyVISA SCPI driver for the Keithley 2200 series, so family-config/scpi fits.",
+      "entry_symbols": [
+        {
+          "symbol": "pyfile:2220 Programmable DC Power Supplies.py#KEI2220S",
+          "file": "2220 Programmable DC Power Supplies.py",
+          "line": 11
+        }
+      ]
+    },
+    {
+      "package_id": "gh.aaron-mott/keithley-2230g",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "justification": "PyVISA SCPI driver class for the Keithley 2230G, so family-config/scpi fits.",
+      "entry_symbols": [
+        {
+          "symbol": "pyfile:2230G.py#KEI2230G",
+          "file": "2230G.py",
+          "line": 12
+        }
+      ]
+    },
+    {
+      "package_id": "gh.aarya1304/smart-lab-equipment-automation-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is a Flask REST demo around a localhost TCP stub that only echoes ACK for START/STOP, so it is a fake device backend, not a real instrument API."
+    },
+    {
+      "package_id": "gh.aayanamalik/reaction-kinetics-simulator",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Chemical-kinetics ODE models with matplotlib output, not a device: no serial, VISA, USB, socket or SDK I/O and no importable device class."
+    },
+    {
+      "package_id": "gh.abduznik/instrumation",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:direct-driver",
+      "wave": 2,
+      "justification": "Model review of the PUB batch: a direct Driver over RigolDS1054Z, not a ScpiDriver table: every channel command is assembled from parts (:CHANnel{channel}:SCALe, rigol.py:163-176)."
+    },
+    {
+      "package_id": "gh.accelerationconsortium/ac-dev-lab",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "AC Dev Lab is the lab's host/orchestration codebase, not one device driver: its device classes are MQTT clients or demo scripts over vendor SDKs, and the card's Picamera2 entry is a mock."
+    },
+    {
+      "package_id": "gh.accelerationconsortium/matterix",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "matterix.envs:MatterixBaseEnv",
+          "file": "source/matterix/matterix/envs/matterix_base_env.py",
+          "line": 48
+        }
+      ],
+      "justification": "Matterix is a Gymnasium environment layer over Isaac Lab, not a hardware client, so family-config/gymnasium/sim-env."
+    },
+    {
+      "package_id": "gh.acquire-project/pymmcore_plus_ros",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "pymmcore_plus_ros is a ROS 2 host application that runs a pymmcore-plus/Micro-Manager MDA and publishes images, not a device driver."
+    },
+    {
+      "package_id": "gh.ad-sdl/madsci",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "http",
+      "reason_code": "bridge-runtime:http",
+      "flagship": true,
+      "justification": "Argonne MADSci REST node standard and workcell manager; the HTTP helper talks to MADSci nodes."
+    },
+    {
+      "package_id": "gh.adancurusul/serial-mcp-server",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "serial-mcp-server is a Rust MCP server/CLI for generic serial list/open/read/write, not a device API, so skip/tooling."
+    },
+    {
+      "package_id": "gh.ahmads-agent/labbench-instrument-control-experiment-runner-c",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: SCPI/TCP control is C++20 (ScpiClient); Python only replays recordings and smoke-tests the C++ runner against its emulator."
+    },
+    {
+      "package_id": "gh.aicell-lab/hamilton-control",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "pylabrobot",
+      "reason_code": "family:pylabrobot",
+      "justification": "Controls a Hamilton Vantage through PyLabRobot from a Raspberry Pi 5; a PyLabRobot-helper member (the rule labels it a driver pack)."
+    },
+    {
+      "package_id": "gh.akurtz87/opc-ua_python_scada_simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "family": "tag-bridge",
+      "reason_code": "override:recon",
+      "justification": "Skip: a simulated OPC-UA chemical-plant server with a Flask HMI, not a device API."
+    },
+    {
+      "package_id": "gh.alba-synchrotron/sls-detector",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "justification": "Model review of the helper integration, 2026-11-05: the Mythen II runs over its own TCP client sls.client:Detector (sls/client.py:142) with a stop port and an upstream simulator; the Tango class is an optional Lima plugin.",
+      "publish_review": "required"
+    },
+    {
+      "package_id": "gh.alexlegoshin/idm-dnkmetr",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "drivers:ScpiInstrument",
+          "file": "drivers.py",
+          "line": 42
+        },
+        {
+          "symbol": "drivers:PowerSupply",
+          "file": "drivers.py",
+          "line": 117
+        },
+        {
+          "symbol": "drivers:Multimeter",
+          "file": "drivers.py",
+          "line": 138
+        },
+        {
+          "symbol": "drivers:SwitchController",
+          "file": "drivers.py",
+          "line": 146
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver, not a ScpiDriver table: the profile writes VSET1:<value> and ISET1:<value> with no separator, which the command-table tokenizer cannot match."
+    },
+    {
+      "package_id": "gh.alexshkarin/pylablib",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:driver-pack",
+      "flagship": true,
+      "justification": "Driver pack for cameras, stages, AWGs and oscilloscopes over several transports; one card for the pack, recon picks the device class."
+    },
+    {
+      "package_id": "gh.alexshkarin/pylablib-cam-control",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "reference:host",
+      "justification": "PyQt5 camera-control application with filter, trigger and server plugins; the camera drivers it runs are pylablib's, so the application is a host, not a driver (rule 10 saw its plugin classes and SimulatedCamera)."
+    },
+    {
+      "package_id": "gh.alexshkarin/pylablib-v0",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:direct-driver",
+      "wave": 2,
+      "justification": "Model review of wave B: a direct Driver over the pack's AWG33220A class, not a ScpiDriver table (its setters transform values, amplitude sent doubled in Vpp); the scpi family keeps the card's entry symbols."
+    },
+    {
+      "package_id": "gh.alongl/modbusplcsimulator",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "Skip: a C# WinForms Modbus TCP slave simulator with no Python wrapper, not a drivable device; a driver author can use it only as a fake PLC server to test client code."
+    },
+    {
+      "package_id": "gh.alphatra/vacuum-instrument-monitor",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of the PUB batch: a direct Driver over SerialClient, not a SerialDriver table: a write verifies the controller with IGB or DGS and rejects an INVALID reply."
+    },
+    {
+      "package_id": "gh.altinoren/utopia",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: Utopia is a C#/.NET 9 MCP server of simulated household devices, not a Python driver."
+    },
+    {
+      "package_id": "gh.amandavical/comunication-instrument",
+      "strategy": "direct-driver",
+      "role": "twin-candidate",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "Model review of wave B: a direct Driver, not the card's SerialDriver table (a direct Driver over Client instead of SerialDriver, and cap.sensing.read.v1 instead of the suggested cap.device.configure.v1)"
+    },
+    {
+      "package_id": "gh.ammerritt-gh/tavi-triple-axis-virtual-instrument",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "TAVI is a McStas-backed virtual TAS GUI, not a hardware driver or Gym/MuJoCo environment, so skip/sim-env."
+    },
+    {
+      "package_id": "gh.amsikking/asi_ms_2000_500_cp",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "Model review of wave B: a direct Driver, not a SerialDriver table: the upstream assembles its S, AC, WT, PC, J and M lines from the configured axis tuple at run time."
+    },
+    {
+      "package_id": "gh.amsikking/thorlabs_mcm3000",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "Model review of wave B: a direct Driver, not a SerialDriver table: the upstream builds framed binary commands per channel at run time (0A 04 <channel> ... for a position query)."
+    },
+    {
+      "package_id": "gh.amsikking/zaber_x_adr130",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "Model review of wave B: a direct Driver, not a SerialDriver table: each line is '/' plus the device address read at connect and an axis token ('1 move abs'), assembled at run time."
+    },
+    {
+      "package_id": "gh.andreagaucho88/serdes_simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is a physics-backed virtual SerDes instrument bench whose SCPI/TCP server controls an in-process simulated bench, so it is a fake backend for drivers, not a real DCA/BERT device."
+    },
+    {
+      "package_id": "gh.andrewvp41/lambda-physik-lpx200-lasercontroller",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "LPX200:main",
+          "file": "LPX200.py",
+          "line": 262
+        },
+        {
+          "symbol": "LPX200:commRes",
+          "file": "LPX200.py",
+          "line": 251
+        },
+        {
+          "symbol": "LPX200:Control",
+          "file": "LPX200.py",
+          "line": 84
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver, not a ScpiDriver table: LPX200.py builds each line from parts ('OPMODE=' + value, 'MODE=' + a mode name, 'REPRATE=' + a number)."
+    },
+    {
+      "package_id": "gh.angry-dad/e4407b-gpib-screen-capture",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "Model review of recon wave A: a one-function script that saves the E4407B screen as a GIF over GPIB; it sets and measures nothing, so there is no device interface to model."
+    },
+    {
+      "package_id": "gh.anlaco/crucible",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "justification": "Crucible is a Rust runtime that simulates SCPI test benches, not a device driver, so bridge-runtime framework fits."
+    },
+    {
+      "package_id": "gh.antdem/scpi-instrument-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "justification": "Skip: this SCPI-over-TCP/VXI-11 simulator is instrument-side, not a client driver."
+    },
+    {
+      "package_id": "gh.anupama29k/protocol-simulation",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Simulation-only FastAPI/Three.js web app, not a device: its PyLabRobot seam is an unimplemented scaffold, so a driver author can reuse only the bench geometry and hand-off schema."
+    },
+    {
+      "package_id": "gh.ap/python-seabreeze",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "flagship": true,
+      "justification": "Ocean Optics spectrometer API with a pure-Python pyseabreeze backend over pyUSB; a direct Driver over seabreeze.spectrometers.Spectrometer."
+    },
+    {
+      "package_id": "gh.areadetector/adcsimdetector",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: a C++ EPICS areaDetector IOC plugin simulating an 8-channel ADC, not a Python device API."
+    },
+    {
+      "package_id": "gh.areadetector/adsimdetector",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: a C++ EPICS areaDetector driver for a simulated detector, not a Python device API."
+    },
+    {
+      "package_id": "gh.ascominitiative/alpycadevice",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "tag-bridge",
+      "reason_code": "bridge-runtime:tag-bridge",
+      "justification": "SDK for writing ASCOM Alpaca device servers (with a simulated rotator); server-side Alpaca protocol for the tag bridge, not a device."
+    },
+    {
+      "package_id": "gh.ascominitiative/ascom.alpaca.simulators",
+      "strategy": "bridge-runtime",
+      "role": "twin-candidate",
+      "family": "tag-bridge",
+      "reason_code": "override:helper-fixture",
+      "justification": "Official OmniSim simulators for every ASCOM Alpaca device type; the hardware-free target for the tag bridge's Alpaca transport."
+    },
+    {
+      "package_id": "gh.asvela/tektronix-func-gen",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of wave B: a direct Driver over FuncGen, not a ScpiDriver table: every channel command is assembled from the channel number and a command word (SOURceN:...)."
+    },
+    {
+      "package_id": "gh.atmelfan/scpi-rs",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "scpi-rs is a Rust SCPI/IEEE488.2 parser for instrument-side command trees, with no transport, hardware object, or Python wrapper, so it is not a drivable device."
+    },
+    {
+      "package_id": "gh.atotto/rigol-scope-mcp",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "rigol-scope-mcp is a Go MCP server that controls Rigol scopes over raw TCP SCPI, so it is skip/tooling rather than a Python device driver."
+    },
+    {
+      "package_id": "gh.audrey-randall/droplet-robot-chemistry-simulation",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "This is old C firmware for Droplet robots, not a Python device driver, so it is skipped."
+    },
+    {
+      "package_id": "gh.autolab-project/autolab",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "reference:host",
+      "justification": "Experiment-automation framework with a GUI and a CLI; its instrument drivers live in autolab-project/autolab-drivers, so the package is a host (rule 9 saw its pyvisa connection helpers)."
+    },
+    {
+      "package_id": "gh.automatedchemistry/flowchem",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "http",
+      "reason_code": "bridge-runtime:http",
+      "flagship": true,
+      "justification": "flowchem serves pumps, valves, thermostats and analytics as one web API (with a flowchem-sim entry point); the HTTP helper's flowchem target."
+    },
+    {
+      "package_id": "gh.autoprotocol/autoprotocol-python",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Autoprotocol generates JSON protocol descriptions and has no device transport, so it is skip/not-device."
+    },
+    {
+      "package_id": "gh.azure-samples/iot-edge-opc-plc",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "This C# sample is an OPC-UA server that simulates a PLC, not a Python device driver."
+    },
+    {
+      "package_id": "gh.bahrant/marauders",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "BioReactorAgent is a hackathon host application, not a per-device driver: a CHO simulator and Flask/SCADA layer orchestrated around a DCS OPC-UA client."
+    },
+    {
+      "package_id": "gh.baroobob/keithley2400",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "keithley2400:open_connection",
+          "file": "keithley2400.py",
+          "line": 74
+        },
+        {
+          "symbol": "keithley2400:read",
+          "file": "keithley2400.py",
+          "line": 114
+        },
+        {
+          "symbol": "keithley2400:set_voltage_source",
+          "file": "keithley2400.py",
+          "line": 152
+        }
+      ],
+      "justification": "Python 2 SCPI function module (no class) for a Keithley 2400 at GPIB address 24 via Prologix GPIB-USB, so family-config/scpi fits; port to Python 3 and supply the missing prologixGPIBUSB transport."
+    },
+    {
+      "package_id": "gh.bcda-aps/apstools",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "ophyd",
+      "reason_code": "family:ophyd",
+      "entry_symbols": [
+        {
+          "symbol": "apstools.devices.aps_machine:ApsMachineParametersDevice",
+          "file": "apstools/devices/aps_machine.py",
+          "line": 38
+        }
+      ],
+      "publish_review": "required",
+      "justification": "Model review of the helper integration, 2026-11-05: entry ApsMachineParametersDevice (aps_machine.py:38, EpicsSignalRO only); the licence is Argonne's own (pyproject.toml:24), not BSD-3-Clause, so the owner decides publication."
+    },
+    {
+      "package_id": "gh.benevolentai/guacamol",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Guacamol is a benchmark library for de novo molecular design, not a device or simulator, so no driver applies."
+    },
+    {
+      "package_id": "gh.beniroquai/opentrons-microscope-platereader",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "Model review of wave B: a direct Driver, not the card's SerialDriver table (the card names family serial / SerialDriver, but pyGraver writes binary frames assembled at run time (0xFF prefix, 0x55 terminator, source lines 67, 74 and 128)...)"
+    },
+    {
+      "package_id": "gh.bennomeier/cetoni",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of wave B: a direct Driver, not a SerialDriver table: cetoniSerial builds framed binary commands (opcode, node id, CANopen index, CRC-16, DLE stuffing)."
+    },
+    {
+      "package_id": "gh.bernardokyotoku/pydcu",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "ueye:pycam",
+          "file": "ueye.py",
+          "line": 118
+        },
+        {
+          "symbol": "ueye:camera",
+          "file": "ueye.py",
+          "line": 140
+        }
+      ],
+      "justification": "pydcu is a Python 2 ctypes driver for one kind of device, IDS uEye cameras, exposing pycam and camera classes that call the vendor libueye_api."
+    },
+    {
+      "package_id": "gh.biosteamdevelopmentgroup/biosteam",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "BioSTEAM is an in-memory chemical-process simulation and techno-economic-analysis library with no serial, VISA, socket or vendor-SDK interface, so a driver author has no device to wrap."
+    },
+    {
+      "package_id": "gh.bkuschak/visa_serial_port_redirect_over_socket",
+      "strategy": "skip",
+      "role": "transport",
+      "reason_code": "override:recon",
+      "justification": "This is a shell/udev serial-to-TCP bridge, not a Python device driver: it only exposes an RS-232 instrument to pyvisa over a socket."
+    },
+    {
+      "package_id": "gh.black13/cmake-cpp-vxi11-scpi-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "justification": "Skip: a C/C++ VXI-11/ONC-RPC spectrum-analyzer emulator, not a Python driver; its Linux build needs libtirpc/rpcbind, and it ships no importable client, only a fake SCPI endpoint."
+    },
+    {
+      "package_id": "gh.bluehands/open-scpi-protocol-emulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: a C# .NET 5 Keysight 34465A/3458A SCPI-over-TCP emulator with no Python package, so it is a fake backend, not a drivable device."
+    },
+    {
+      "package_id": "gh.bluesky/bluesky",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "reference:host",
+      "flagship": true,
+      "justification": "Bluesky RunEngine orchestrates ophyd devices through plans; a host that calls devices, not a device."
+    },
+    {
+      "package_id": "gh.bluesky/bluesky-diffraction-demo",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip/sim-env: a school demo whose caproto IOC simulates the beamline, so it drives no hardware; reuse mini_beamline.py as a fake mini: EPICS upstream and startup.py's Spot as an ophyd client."
+    },
+    {
+      "package_id": "gh.bluesky/bluesky-queueserver",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "reference:host",
+      "flagship": true,
+      "justification": "Queue server that runs Bluesky plans remotely; a host above ophyd devices, not a device."
+    },
+    {
+      "package_id": "gh.bluesky/ophyd",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "ophyd",
+      "reason_code": "bridge-runtime:ophyd",
+      "flagship": true,
+      "justification": "ophyd hardware abstraction with SynAxis/SynGauss simulated devices; the post-pilot ophyd helper wraps its signals and devices."
+    },
+    {
+      "package_id": "gh.bluesky/ophyd-async",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "ophyd",
+      "reason_code": "bridge-runtime:ophyd",
+      "flagship": true,
+      "justification": "Async ophyd with built-in simulated motors and detectors; covered by the post-pilot ophyd helper."
+    },
+    {
+      "package_id": "gh.bluesky/ophyd-tango",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "ophyd",
+      "reason_code": "override:recon",
+      "justification": "ophyd-tango is an experimental Tango-to-ophyd bridge, not a device driver: its classes wrap pytango AttributeProxy and DeviceProxy handles and expose only generic reads and writes."
+    },
+    {
+      "package_id": "gh.bluesky/ophyd-websocket",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "ophyd-websocket is a FastAPI/WebSocket host for user-supplied Ophyd devices and EPICS PVs, not a device driver."
+    },
+    {
+      "package_id": "gh.buyaoxiangtale/labutopia-nav",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: LabUtopia is an Isaac Sim benchmark and simulation environment, not a device or a Gymnasium/MuJoCo environment."
+    },
+    {
+      "package_id": "gh.buyaoxiangtale/labutopia_nav",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: LabUtopia is an Isaac Sim simulation benchmark for scientific embodied agents, not a device SDK or a Gymnasium/MuJoCo environment."
+    },
+    {
+      "package_id": "gh.bytehamster/pse",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "This JavaFX/Maven OPC UA plant simulator is not a Python device library, so the proposal is skip/not-device."
+    },
+    {
+      "package_id": "gh.caproto/caproto",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "tag-bridge",
+      "reason_code": "bridge-runtime:tag-bridge",
+      "flagship": true,
+      "justification": "Pure-Python EPICS Channel Access client and server; the tag bridge's EPICS transport, not a device."
+    },
+    {
+      "package_id": "gh.cdbaird/tl-rotation-control",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of the PUB batch: a direct Driver over elliptec Motor, not a SerialDriver table: each command joins an address digit, a two-letter instruction and a hex data field."
+    },
+    {
+      "package_id": "gh.celestial-codeworks/telescope-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: a CLI app driving a simulated telescope in CoppeliaSim, not a device driver; no device API exists, but its .ttt scene can serve as a fake backend; README.md:52's MIT claim lacks a LICENSE file."
+    },
+    {
+      "package_id": "gh.cellprofiling/cam_acq",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "camacq is a microscopy control host that orchestrates a Leica microscope through the separate leicacam client library, not a device driver."
+    },
+    {
+      "package_id": "gh.cetuspcr/cetus-pcr",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of wave B: a direct Driver over ArduinoPCR, not a SerialDriver table: a framed <...> protocol with unsolicited multi-line replies and an experiment loop."
+    },
+    {
+      "package_id": "gh.cfpark00/smartem",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "smartem.online.microscope:ThermoFisherVerios",
+          "file": "smartem/online/microscope.py",
+          "line": 167
+        }
+      ],
+      "justification": "ThermoFisherVerios is a single-device driver for the Thermo Fisher Verios SEM over the proprietary autoscript SDK; install that SDK separately and use FakeRandomMicroscope for fake runs."
+    },
+    {
+      "package_id": "gh.ch4mundi/sila_test_client",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is a .NET 10 SiLA2 client test app with no Python and no device implementation, so a driver author should treat it as a SiLA2 client example, not hardware to drive."
+    },
+    {
+      "package_id": "gh.changyaochen/zi_daqs",
+      "strategy": "reference",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "These 2017 HF2LI measurement scripts call the vendor zhinst.utils/ziDAQServer API and define no device class, so this is prior art; a driver author would wrap that vendor SDK in one class."
+    },
+    {
+      "package_id": "gh.charkster/lecroy",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of wave B: a direct Driver, not a ScpiDriver table: the upstream methods assemble several VBS or SCPI lines from their arguments over a held pyvisa instrument."
+    },
+    {
+      "package_id": "gh.cheshire-labs/cheshire-drivers",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "Model review of recon wave A: its liquid-handler classes wrap PyLabRobot backends (STARBackend, OpentronsOT2Backend), which own the device protocol, so this driver layer is a reference for its Orca host."
+    },
+    {
+      "package_id": "gh.cheshire-labs/orca-client",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "orca-client is a WebSocket host that loads cheshire-drivers drivers from config and runs Orca runtime commands, not a device driver."
+    },
+    {
+      "package_id": "gh.choderalab/itctools",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "Skip/tooling: it writes Tecan .gwl worklists and Auto-iTC200 .xlsx files with no serial, VISA, USB or vendor SDK access; no license is declared."
+    },
+    {
+      "package_id": "gh.christofferkrook/laserphysics_devices",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "OSA.new_yokogawa_aq6374.yokogawa_driver:OSA",
+          "file": "OSA/new_yokogawa_aq6374/yokogawa_driver.py",
+          "line": 11
+        },
+        {
+          "symbol": "OSA.old_osa.Ando:Ando",
+          "file": "OSA/old_osa/Ando.py",
+          "line": 10
+        },
+        {
+          "symbol": "translation_stages.conex.conexstage:CONEX",
+          "file": "translation_stages/conex/conexstage.py",
+          "line": 19
+        },
+        {
+          "symbol": "translation_stages.newport.esp300driver:esp300stage",
+          "file": "translation_stages/newport/esp300driver.py",
+          "line": 10
+        },
+        {
+          "symbol": "spectrometer.avaspec.Spectrometer:SPEC",
+          "file": "spectrometer/avaspec/Spectrometer.py",
+          "line": 11
+        }
+      ],
+      "justification": "Unmaintained multi-device Python driver pack: VISA/GPIB OSA and Newport classes, a serial CONEX stage and an Avantes ctypes wrapper, so direct-driver/python-object/driver-pack fits."
+    },
+    {
+      "package_id": "gh.clarklabucb/newerapumps_python3",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "pump_control3:PumpControl",
+          "file": "pump_control3.py",
+          "line": 15
+        },
+        {
+          "symbol": "new_era3:find_pumps",
+          "file": "new_era3.py",
+          "line": 11
+        },
+        {
+          "symbol": "new_era3:set_rates",
+          "file": "new_era3.py",
+          "line": 43
+        },
+        {
+          "symbol": "new_era3:get_rate",
+          "file": "new_era3.py",
+          "line": 68
+        },
+        {
+          "symbol": "new_era3:set_diameter",
+          "file": "new_era3.py",
+          "line": 111
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver, not a SerialDriver table: new_era3.py assembles every command from a pump address and a token (<n>DIRINF, <n>RAT<value>UH, <n>STP)."
+    },
+    {
+      "package_id": "gh.cnpem-emi/motor-sim-docker",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: motor-sim-docker only builds the upstream EPICS motor IOC with motorMotorSim, not a Python driver."
+    },
+    {
+      "package_id": "gh.cnxy/visainstrument",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "VISAInstrument is a C# WinForms NI-VISA console, not a Python device library, so skip; a driver author needs Windows, the NI-VISA runtime, and each instrument's VISA address and command set."
+    },
+    {
+      "package_id": "gh.complight/fisbareadybeam",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "FISBA READYBeam laser: a framed protocol (address, sequence, parameter id, CRC16) the upstream builds per command needs a direct Driver, not a SerialDriver table."
+    },
+    {
+      "package_id": "gh.croningp/chemputeroptimizer",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "ChemputerOptimizer is an optimization host that delegates all hardware actions to a caller-supplied chempiler, so it is reference, not a driver; device drivers belong in chempiler/AnalyticalLabware."
+    },
+    {
+      "package_id": "gh.croningp/pycont",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:flagship-driver",
+      "flagship": true,
+      "justification": "Python controller for Tricontinent C3000 syringe-pump networks (DT protocol over serial) with valve actions; a direct Driver over its pump controller classes."
+    },
+    {
+      "package_id": "gh.croningp/pylabware",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:driver-pack",
+      "justification": "Thirteen chemistry instrument classes (pumps, stirrers, thermostats) over serial and Ethernet with simulated replies; one card for the pack."
+    },
+    {
+      "package_id": "gh.cryptsys/pharmapy",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "PharmaPy is a library for simulating pharmaceutical unit operations and flowsheets, not a device."
+    },
+    {
+      "package_id": "gh.csibug/microlink-mcp",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "MCP server for an Andonstar USB microscope camera, not a driver library: it is a host that captures with plain OpenCV."
+    },
+    {
+      "package_id": "gh.ctouchair/microscopy",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "Microscopy is a Raspberry Pi microscope web app hosting cameras, GPIO motors and an ADC, not a reusable device driver."
+    },
+    {
+      "package_id": "gh.cukelarter/chemyx-syringe-pump",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of the PUB batch: a direct Driver over the Chemyx Connection, not a SerialDriver table: methods return multi-line replies and the only parameter report is 'view parameter'."
+    },
+    {
+      "package_id": "gh.czbiohub-sf/copylot",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "Vortran laser of copylot: each command is built from parts (name, '=', value) at run time, so a direct Driver over the upstream class, not a SerialDriver table."
+    },
+    {
+      "package_id": "gh.czbiohub-sf/reglo-icc-pump-control",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "Model review of wave B: a direct Driver, not the card's SerialDriver table (a direct Driver with native.py instead of the SerialDriver helper)"
+    },
+    {
+      "package_id": "gh.daanwielens/research-python",
+      "strategy": "family-config",
+      "role": "driver-pack",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "Lake:UpdateValues",
+          "file": "Lake.py",
+          "line": 40
+        },
+        {
+          "symbol": "Lake:UpdatePID",
+          "file": "Lake.py",
+          "line": 154
+        },
+        {
+          "symbol": "SR830:ReadSettings",
+          "file": "SR830.py",
+          "line": 174
+        },
+        {
+          "symbol": "SR830:ReadValues",
+          "file": "SR830.py",
+          "line": 222
+        },
+        {
+          "symbol": "IPS120:UpdateValues",
+          "file": "IPS120.py",
+          "line": 126
+        }
+      ],
+      "justification": "A pack of five Tkinter instrument GUIs and one Tektronix CLI script drives PyVISA/GPIB, USB and serial devices, so family-config/scpi with role driver-pack fits, but no class or library API exists."
+    },
+    {
+      "package_id": "gh.dadamatth3w/opcuaserversimulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is the OPC-UA server side, not a device driver; run it as a fake upstream at opc.tcp://host:4840/opcua/ and write the client driver elsewhere (no LICENSE file is tracked)."
+    },
+    {
+      "package_id": "gh.daedalus/mcp-sigrok",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "mcp-sigrok is a FastMCP server that shells out to the external sigrok-cli binary, so it is a host reference rather than a logic-analyzer driver."
+    },
+    {
+      "package_id": "gh.danischober/labliquidvision",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "LabLiquidVision is a cell-culture automation application, not a device driver: its GUI orchestrates a UR5e, Robotiq gripper, microscope, Modbus decapper and serial thermowraps."
+    },
+    {
+      "package_id": "gh.dario-bassi/microscope-toolset",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "microscope-toolset is a napari MCP host that orchestrates pymmcore-plus cores, agent code execution and a viewer, not a device driver."
+    },
+    {
+      "package_id": "gh.davehe929/scopebench-mcp",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "scopebench_mcp.transports.visa:VisaTransport",
+          "file": "src/scopebench_mcp/transports/visa.py",
+          "line": 125
+        },
+        {
+          "symbol": "scopebench_mcp.transports.tcp:TCPTransport",
+          "file": "src/scopebench_mcp/transports/tcp.py",
+          "line": 14
+        }
+      ],
+      "justification": "scopebench-mcp is a Python SCPI driver for RIGOL DHO800/DHO804D scopes whose MCP front end owns the hardware transport, so family-config/scpi fits."
+    },
+    {
+      "package_id": "gh.davidlutton/instrumentmodels",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "This repository is a set of PyVISA-sim instrument models, not a device driver or an environment, so skip/tooling is the honest call."
+    },
+    {
+      "package_id": "gh.davidtjwrk/composer_serial_port_driver",
+      "strategy": "skip",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "C#/.NET Composer plugin for PHERAstar reader over serial, no Python wrapper or license file, so skip/prior-art."
+    },
+    {
+      "package_id": "gh.dcmcshan/hantek",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "hantek is an MCP host that imports the external PyHT6022 driver, not a device driver."
+    },
+    {
+      "package_id": "gh.dgretton/pyhamilton",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "flagship": true,
+      "justification": "HamiltonInterface drives Hamilton STAR/STARlet through VENUS and has OEM-window simulation and JSON-log-only modes for hardware-free runs."
+    },
+    {
+      "package_id": "gh.di-omics/bay-hack",
+      "strategy": "reference",
+      "role": "prior-art",
+      "family": "pylabrobot",
+      "reason_code": "override:recon",
+      "justification": "Reference, not a driver: a hackathon orchestrator that simulates the bench and tube cell and wraps plr-lab-robot/plr-mcp via seams."
+    },
+    {
+      "package_id": "gh.di-omics/plr-lab-robot",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is a kinematic simulation backend plus vision/skill layers for PyLabRobot's ExperimentalSCARA, not a hardware driver."
+    },
+    {
+      "package_id": "gh.diamondlightsource/fastcs-kds-legato",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "Model review of recon wave A: a FastCS copier scaffold for a KDS Legato syringe pump that opens the serial port but implements no pump command, so there is nothing to drive yet."
+    },
+    {
+      "package_id": "gh.diamondlightsource/pythonsoftioc",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "pythonSoftIOC is an EPICS IOC server framework that serves Python-backed records over Channel Access and PVAccess, not a device driver."
+    },
+    {
+      "package_id": "gh.directelectron/de-twin",
+      "strategy": "reference",
+      "role": "twin-candidate",
+      "reason_code": "override:recon",
+      "justification": "de-twin is a hardware-free digital twin and fake DE-Server, not a device driver, so reference/twin-candidate."
+    },
+    {
+      "package_id": "gh.diya-18/virtual-instrumentation-lab",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Not a device: a Tkinter/Matplotlib virtual lab plotting instrument physics equations, with no serial, VISA, USB, socket or vendor SDK."
+    },
+    {
+      "package_id": "gh.dmgav/ophyd-service",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "ophyd-service is an HTTP host for Ophyd devices, not a device driver: build_app mounts a REST API whose device-read handler only echoes the requested name and returns an empty value."
+    },
+    {
+      "package_id": "gh.dracusc/development-of-a-simulation-framework-for-digital-microfluidic-biochips",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: C# Blazor GUI simulator of a digital microfluidic biochip, not a Python device driver and with no Python wrapper."
+    },
+    {
+      "package_id": "gh.drkirkm/syringepump",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "pumpcontroller:Pumps",
+          "file": "pumpcontroller.py",
+          "line": 15
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver, not a SerialDriver table: a run is the pair 'set the rate' and 'RUN', and the stop is three lines (STP, 01STP, 02STP)."
+    },
+    {
+      "package_id": "gh.drmcnelson/linear-ccd-with-ltspice-kicad-firmware-and-python-library",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of the PUB batch: a direct Driver, not a SerialDriver table: the controller reads completed frames from a reader process's queue, which a command table cannot express."
+    },
+    {
+      "package_id": "gh.drusteeby/druopc",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "This C#/.NET toolkit is an OPC UA PLC simulator plus a browser client, not a Python device library, and it ships no Python wrapper."
+    },
+    {
+      "package_id": "gh.dvsproductions/rigol-mcp",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "rigol-mcp is a single-file FastMCP server whose only class, Scope, is a raw TCP/SCPI transport, so it is an MCP host reference rather than a device driver."
+    },
+    {
+      "package_id": "gh.dwinters42/liquidhandler",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "liquidhandler:Robot",
+          "file": "liquidhandler.py",
+          "line": 30
+        }
+      ],
+      "justification": "Robot is a Python-object driver for Waters 2700-compatible liquid handlers over framed serial; port its Python 2 code, make serial I/O injectable, and check the BSD/ISC license mismatch."
+    },
+    {
+      "package_id": "gh.eecsb/labequipmentcontroller",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "This is a C#/.NET SCPI instrument suite with no Python package or wrapper, so it is skip/tooling rather than a family-config driver."
+    },
+    {
+      "package_id": "gh.eez-open/modular-psu-firmware",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "C++ instrument-side BB3 firmware with embedded MicroPython, not a Python host driver, so skip/not-device; write a serial/USB or TCP 5025 SCPI client and use the SDL simulator as fake hardware."
+    },
+    {
+      "package_id": "gh.eez-open/psu-firmware",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "C++ Arduino firmware and a C++ SDL simulator for the EEZ H24005 PSU, with no Python driver; write a host SCPI client for serial or TCP 5025 and use the simulator as fake hardware."
+    },
+    {
+      "package_id": "gh.ekarademir/thorlabs-kinesis",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "The repository is a ctypes binding layer over the Thorlabs Kinesis DLLs that exposes module-level functions and data structures but no device class, so it is tooling, not an OpenMHS driver."
+    },
+    {
+      "package_id": "gh.elijahchang929/opentrons-to-pylabrobot",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "This is an Opentrons-to-PyLabRobot protocol converter that emits PyLabRobot scripts and graph JSON, so it is tooling rather than a device driver."
+    },
+    {
+      "package_id": "gh.emdem/modbussim",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "tag-bridge",
+      "reason_code": "override:recon",
+      "justification": "A programmable Modbus RTU/TCP slave simulator with a REST API, not a device driver: it is a protocol-level fixture for the tag bridge's Modbus transport."
+    },
+    {
+      "package_id": "gh.epics-containers/ioc-adsimdetector",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: a C++/Docker EPICS IOC packaging the ADSimDetector simulation plugin, not a Python device API."
+    },
+    {
+      "package_id": "gh.erikbgithub/python3-tecan-genesis",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "tecan_funcs:do_cmd",
+          "file": "tecan_funcs.py",
+          "line": 120
+        },
+        {
+          "symbol": "tecan_funcs:Cmd_delayed",
+          "file": "tecan_funcs.py",
+          "line": 50
+        },
+        {
+          "symbol": "tecan_funcs:do_action",
+          "file": "tecan_funcs.py",
+          "line": 224
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver over Cmd_delayed for a later run: frames are STX + sequence letter + device + command + ETX + XOR; the card stays blocked until a stop exists."
+    },
+    {
+      "package_id": "gh.eta-systems/labor-gpib",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of the PUB batch: a direct Driver over the R&S NGMO2 device, not a ScpiDriver table: channel commands join the channel letter at run time over the repo's Prologix GPIB transport."
+    },
+    {
+      "package_id": "gh.ethanchappel/alpyca",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "tag-bridge",
+      "reason_code": "override:recon",
+      "justification": "alpyca is the client-side Python SDK for the ASCOM Alpaca REST protocol and is transport-level work, not a per-device driver; a driver author needs a running Alpaca server and a device number."
+    },
+    {
+      "package_id": "gh.ethanjli/liquid-handling-robotics",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "Model review of wave B: a direct Driver, not the card's SerialDriver table (the card says family serial / SerialDriver, but the upstream host library builds a framed linear-actuator protocol from parts and has no text command table whos...)"
+    },
+    {
+      "package_id": "gh.evgla25/virtual-camera-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "VCamSim is an ONVIF/RTSP camera simulator serving fake camera endpoints, not a device driver."
+    },
+    {
+      "package_id": "gh.exopy/pyvisa-i3py-sim",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "justification": "A simulated pyvisa/i3py VISA backend, not a device: this WIP skeleton cannot import because highlevel.py and resources/sessions.py are missing and i3py is undeclared, so no driver can target it."
+    },
+    {
+      "package_id": "gh.fedeceri85/virtualmicroscope",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "It is a TypeScript/React browser viewer that plays pre-rendered z-stack frames and controls no hardware."
+    },
+    {
+      "package_id": "gh.filipdominec/rp2daq",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "rp2daq:Rp2daq",
+          "file": "rp2daq.py",
+          "line": 46
+        }
+      ],
+      "justification": "rp2daq is the Python object driver for one RP2DAQ-firmware Pico board over binary USB serial."
+    },
+    {
+      "package_id": "gh.firefly78/sila2-feature-lib",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "sila2-feature-lib is a library of SiLA2 feature templates for building device servers, not a device or simulator; SimulatorController only flips a global flag and opens no hardware."
+    },
+    {
+      "package_id": "gh.flooklab/casil",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "Casil is a C++ DAQ framework for YAML-configured multi-device setups, not one instrument."
+    },
+    {
+      "package_id": "gh.florian-lapp/nesp-lib-py",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "New Era syringe pump: nesp_lib builds and parses its framed commands itself, so a direct Driver over nesp_lib.pump:Pump, not a SerialDriver table."
+    },
+    {
+      "package_id": "gh.fmtechno/zaber-control-software",
+      "strategy": "reference",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "This is a PyQt5 GUI over the zaber_motion vendor SDK, so it is prior art, not a driver."
+    },
+    {
+      "package_id": "gh.foundry-mcp/team05-mcp-server",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "MCP/ZeroMQ host for the TEAM 0.5 TEM, not a reusable device library; a driver author needs Windows TEMScripting/TIA COM and DigitalMicrograph, or should treat its ZMQ protocol as prior art."
+    },
+    {
+      "package_id": "gh.freeopcua/opcua-asyncio",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "tag-bridge",
+      "reason_code": "bridge-runtime:tag-bridge",
+      "flagship": true,
+      "justification": "asyncua OPC UA client/server library; the tag bridge's OPC UA transport, not a device."
+    },
+    {
+      "package_id": "gh.freespace/pysmc100",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "smc100:SMC100",
+          "file": "smc100.py",
+          "line": 47
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver over SMC100, not a SerialDriver table: every line joins the controller ID, the command word and the argument (smc100.py:342-386)."
+    },
+    {
+      "package_id": "gh.fretchen/synqs_devices",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "Model review of wave B: a direct Driver over the AndorSolis AndorCamera, not a SerialDriver: a dictionary of acquisition attributes plus native SDK calls, with no serial command words."
+    },
+    {
+      "package_id": "gh.gddickinson/tirf_microscope_simulation",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "PyQt5 educational ray-optics simulation of a TIRF bench, not a hardware controller, so skip."
+    },
+    {
+      "package_id": "gh.gehelem/indi_cam86_ccd",
+      "strategy": "skip",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "indi_cam86_ccd is a C++ INDI driver for the CAM86 DIY CCD camera, opens it over libftdi USB and ships no Python wrapper, so it is skipped as prior art."
+    },
+    {
+      "package_id": "gh.georgia-longevity-alliance/argus-os1",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "ARGUS-OS1 is an MHS-style host/scaffold, not a device driver: its device classes wrap injected hardware and its CLI uses stubs."
+    },
+    {
+      "package_id": "gh.german-mesa/opcua-server",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: a simulated asyncua OPC UA server and external pymacnet Maccor spoofer, not a device."
+    },
+    {
+      "package_id": "gh.ghollyer/amadeus",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "AMADEUS is an MCP host that forwards microscope commands over ZMQ to a DigitalMicrograph-side dispatcher, not a per-device driver class."
+    },
+    {
+      "package_id": "gh.giansimone/ctrl-syringe-pumps",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "Model review of wave B: a direct Driver, not the card's SerialDriver table (the upstream wire line is a zero-padded two-digit pump address followed by the command and a carriage return (ctrl_syringe_pumps/control.py:33, interface.py:17)...)"
+    },
+    {
+      "package_id": "gh.google/putting-dune",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: an in-process dm_env STEM simulator for RL research, not a device driver or Gymnasium/MuJoCo env; no microscope transport exists, only simulated observations and tfrecords files."
+    },
+    {
+      "package_id": "gh.gsibabu/openflexure-mcp",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "openflexure-mcp is a one-file FastMCP host that delegates every microscope action to the external openflexure-microscope-client, so it is not a device driver."
+    },
+    {
+      "package_id": "gh.haesemeyer/matjes",
+      "strategy": "skip",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "Matjes is a C#/.NET WPF desktop application that controls a light-sheet microscope through vendor SDKs, not a Python driver, so it is skip/prior-art."
+    },
+    {
+      "package_id": "gh.han-k59/sky-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is a FreePascal/Lazarus GUI that simulates ASCOM Alpaca camera, mount, focuser, rotator and filter wheel devices and ships no Python package."
+    },
+    {
+      "package_id": "gh.hansastro/focuser",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Arduino C++ firmware for a Moonlite focuser, not a Python driver."
+    },
+    {
+      "package_id": "gh.hansgschossmann/azure-iot-connected-factory-cfsta",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip/sim-env: this is the C#/.NET OPC UA server that simulates a Connected Factory production station, not a Python device API."
+    },
+    {
+      "package_id": "gh.hendorog/vnasim",
+      "strategy": "skip",
+      "role": "sim-env",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "justification": "Skip: vnasim is a multi-VNA SCPI-over-TCP simulator that emulates instruments with synthetic data, not a driver for real hardware."
+    },
+    {
+      "package_id": "gh.hgomersall/pyzaber",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of the PUB batch: a direct Driver, not a SerialDriver table: commands are (device, command, data) binary frames packed with struct, from numeric tables of the clone."
+    },
+    {
+      "package_id": "gh.himbeles/newfocus-picomotor-cli",
+      "strategy": "reference",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "This 121-line Telnet CLI is not an importable driver class, so it is prior art for one New Focus picomotor controller."
+    },
+    {
+      "package_id": "gh.hinderling/pymmcore-proxy",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "pymmcore-proxy is an HTTP/WebSocket RPC proxy around a caller-supplied CMMCorePlus, not a device driver, so it is reference/host."
+    },
+    {
+      "package_id": "gh.hinderling/virtual-microscope",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: a fully simulated pymmcore-plus microscope whose device classes render synthetic specimens, not hardware."
+    },
+    {
+      "package_id": "gh.hinderling/virtual-microscope-teaching",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: a fully simulated pymmcore-plus microscope whose devices render a virtual specimen, not hardware."
+    },
+    {
+      "package_id": "gh.hrosiak/esp301",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of wave B: a direct Driver, not a SerialDriver table: every line joins an axis number and a command letter at run time ('<axis>PA<pos>;<axis>WS1;<axis>TP')."
+    },
+    {
+      "package_id": "gh.huangyan28/chemistry3d",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: Chemistry3D is an Isaac Sim chemistry-lab simulation benchmark, not a device or a Gymnasium/MuJoCo environment, and its only action surface is a simulated Franka inside omni_python."
+    },
+    {
+      "package_id": "gh.iakovoskritikos/source-meter-pymeasure",
+      "strategy": "reference",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "Reference app, not a driver: its scripts drive a Keithley 2400 only through pymeasure's Keithley2400 over GPIB, and its own classes are Tkinter windows; a driver must wrap pymeasure/SCPI directly."
+    },
+    {
+      "package_id": "gh.idc-milab/openlh",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of the PUB batch: a direct Driver over the uArm Swift API, not a SerialDriver table: G0 and G202 lines are assembled from run-time X/Y/Z/F and N/V values."
+    },
+    {
+      "package_id": "gh.imagine-uniandes/colivridigitaltwin",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: this Unity C# VR/AR app visualizes the Colivri lab over an HTTP server, not a Python device driver."
+    },
+    {
+      "package_id": "gh.instrumentkit/instrumentkit",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:driver-pack",
+      "flagship": true,
+      "justification": "Multi-vendor instrument driver pack with its own transports; one card for the pack, recon picks the instrument."
+    },
+    {
+      "package_id": "gh.into-cps-association/example_digital-twin_incubator",
+      "strategy": "reference",
+      "role": "twin-candidate",
+      "reason_code": "override:recon",
+      "justification": "Reference/twin-candidate: this is an incubator digital-twin case study, not a device library."
+    },
+    {
+      "package_id": "gh.inventors-way/labbench.devicehost",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "LabBench DeviceHost is a C# TCP text-command host that bridges a CPAR+ over the binary ECP serial protocol, not a Python device driver."
+    },
+    {
+      "package_id": "gh.isiscomputinggroup/epics-deviceemulator",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "DeviceEmulator is a collection of Lewis device simulators, not a driver: it answers serial commands as the instrument."
+    },
+    {
+      "package_id": "gh.isiscomputinggroup/epics-seabreeze",
+      "strategy": "skip",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is an EPICS build scaffold around the C++ SeaBreeze Ocean Optics spectrometer SDK, with no Python wrapper."
+    },
+    {
+      "package_id": "gh.isiscomputinggroup/lewis",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "Lewis is a framework for simulating hardware devices, not a device driver: its Simulation engine, protocol adapters and ZMQ JSON-RPC control server expose simulated devices."
+    },
+    {
+      "package_id": "gh.itdaniher/olin-smus",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "modconsmu.modconsmu:smu",
+          "file": "modconsmu/modconsmu.py",
+          "line": 7
+        }
+      ],
+      "justification": "Python pyusb driver for the Olin USB source-measure unit, so direct-driver/python-object."
+    },
+    {
+      "package_id": "gh.itom-project/itom",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "itom is a C++/Qt measurement host that loads separate hardware plugins, not a device driver."
+    },
+    {
+      "package_id": "gh.j123b567/onvif-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "family": "http",
+      "reason_code": "override:recon",
+      "justification": "Skip as a simulated ONVIF camera server: the Flask app answers device, media and PTZ SOAP requests with canned XML and never drives hardware."
+    },
+    {
+      "package_id": "gh.jamie-zaikov/n8n-nodes-lynx-method-manager",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "This TypeScript n8n community-node package controls a Dynamic Devices Lynx only through an external REST API, so it is skip/tooling, not a Python driver."
+    },
+    {
+      "package_id": "gh.jana-marie/temperature-logger",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "C firmware and KiCad PCB for a USB temperature logger, not a Python driver: it streams timestamped TSV rows over CDC and parses no commands."
+    },
+    {
+      "package_id": "gh.jandan138/labutopia",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: LabUtopia is an Isaac Sim scientific-lab simulation and benchmark, not a hardware device library."
+    },
+    {
+      "package_id": "gh.jasegehring/spamb",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "serial",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "hardware.pump:PumpController",
+          "file": "fluidics-control/hardware/pump.py",
+          "line": 786
+        },
+        {
+          "symbol": "hardware.valve:ValveController",
+          "file": "fluidics-control/hardware/valve.py",
+          "line": 118
+        },
+        {
+          "symbol": "hardware.solenoids:SolenoidController",
+          "file": "fluidics-control/hardware/solenoids.py",
+          "line": 160
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver over PumpController, not a SerialDriver table: the pump, valve and solenoid controllers are Python objects over pyserial with their own replies."
+    },
+    {
+      "package_id": "gh.jasonrorr/scpi-instrument-simulator",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Arduino C++ firmware simulates the instrument side of a SCPI serial port, with no Python package or wrapper."
+    },
+    {
+      "package_id": "gh.javahama-web/pyvisa_scpi_fsw43_sim",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Not a driver or simulator environment: a 62-line demo sends SCPI to a MagicMock and never opens VISA."
+    },
+    {
+      "package_id": "gh.jayasuryamahadevan/open_model_hardware_standard",
+      "strategy": "reference",
+      "role": "prior-art",
+      "reason_code": "reference:prior-art",
+      "justification": "LabBench, published as Open_Model_Hardware_Standard: a contract layer between AI models and lab instruments (capability model, safety kernel, provenance ledger); prior art, not a device (rule 4 needs an MHS mention)."
+    },
+    {
+      "package_id": "gh.jeonghanlee/tc32sim",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "TC-32 simulator IOC: a bash TCP emulator feeds synthetic temperatures to a C++ EPICS StreamDevice IOC, so this is a simulator, not a Python device driver."
+    },
+    {
+      "package_id": "gh.jimbwlah/owon-vds1022-mcp",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "This repository is an MCP host, not its own driver: its FastMCP tools wrap an unmodified vendored florentbr/OWON-VDS1022 USB driver."
+    },
+    {
+      "package_id": "gh.jkomppula/qcodesysnv",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "QCodesysNV is a C++/Qt UDP library for CODESYS network variables, not a Python device driver."
+    },
+    {
+      "package_id": "gh.jonathanvanschenck/python-seabreeze-server",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "This is a TCP server that hosts the external seabreeze.cseabreeze backend, not a device driver."
+    },
+    {
+      "package_id": "gh.jonathanvanschenck/python-seatease",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "SeaTease emulates python-seabreeze in software; it drives no hardware, so skip/sim-env, and can serve as an upstream fake for spectrometer tests (no serial, VISA or USB I/O; trigger mode is TODO)."
+    },
+    {
+      "package_id": "gh.josuablejeru/labmastro",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "tag-bridge",
+      "reason_code": "family:tag-bridge",
+      "publish_review": "required",
+      "justification": "Model review of the helper integration, 2026-11-05: LICENSE is GPL-3.0 but pyproject.toml:6 declares MIT, so the licence is ambiguous and the owner decides before a driver is published."
+    },
+    {
+      "package_id": "gh.jovanmarkov96/keysight-dsox1200-control",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 2,
+      "justification": "Model review of wave B: a direct Driver, not the card's ScpiDriver table (the card proposes a ScpiDriver, but this package is a direct Driver over keysight_dsox1200.instrument:DSOX1200 with a native.py factory, because every channel com...)"
+    },
+    {
+      "package_id": "gh.jpajaud/pyscope",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "pyscope is a PySide6 oscilloscope GUI host for an NI DAQ card, not a driver."
+    },
+    {
+      "package_id": "gh.jrrk2/originsimulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: this C++ Qt Celestron Origin simulator has no Python device wrapper, so it is not a driver."
+    },
+    {
+      "package_id": "gh.jumpstarter-dev/jumpstarter",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "Jumpstarter is a gRPC test-automation and hardware-leasing framework that ships many separate per-device driver packages, not a device driver itself."
+    },
+    {
+      "package_id": "gh.jwlodek/seabreeze",
+      "strategy": "skip",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "SeaBreeze is a C++ Ocean Optics spectrometer SDK with no Python wrapper, so it cannot be an OpenMHS driver as shipped."
+    },
+    {
+      "package_id": "gh.k4zuki/pipico-micropython-scpi",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Instrument-side MicroPython firmware that turns a Pi Pico into a SCPI/USB488 device, not a host driver; the pyvisa OLED helper is a demo, so drive the Pico with pyvisa/USBTMC."
+    },
+    {
+      "package_id": "gh.kagisokgwahla/capstone-molecule-environment",
+      "strategy": "direct-driver",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:direct-driver",
+      "wave": 2,
+      "justification": "Model review of wave B: a direct Driver, not a GymnasiumDriver: the env has no action or observation space, reset() returns None and seed() takes a SMILES string."
+    },
+    {
+      "package_id": "gh.kajalbiju/psi_bluesky_backend",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "Bluesky4.SR830:SR830",
+          "file": "Bluesky4/SR830.py",
+          "line": 9
+        },
+        {
+          "symbol": "Bluesky4.mercury_itc:MercuryITC",
+          "file": "Bluesky4/mercury_itc.py",
+          "line": 8
+        },
+        {
+          "symbol": "Bluesky4.sim928:SIM928",
+          "file": "Bluesky4/sim928.py",
+          "line": 6
+        },
+        {
+          "symbol": "Bluesky4.SR830_ophyd:SR830Device",
+          "file": "Bluesky4/SR830_ophyd.py",
+          "line": 5
+        },
+        {
+          "symbol": "Bluesky4.mercury_itc_ophyd:MercuryITCController",
+          "file": "Bluesky4/mercury_itc_ophyd.py",
+          "line": 8
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver over MercuryITC, not a ScpiDriver table: each command joins the fixed device address STILL_DB6.T1 and a loop register at run time."
+    },
+    {
+      "package_id": "gh.karimrayttu/ece-tool-suite",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "ece_suite.instruments.keysight:KeysightScope",
+          "file": "backend/ece_suite/instruments/keysight.py",
+          "line": 36
+        },
+        {
+          "symbol": "ece_suite.instruments.scope_drivers:TektronixScope",
+          "file": "backend/ece_suite/instruments/scope_drivers.py",
+          "line": 50
+        },
+        {
+          "symbol": "ece_suite.instruments.keysight:KeysightSpectrumAnalyzer",
+          "file": "backend/ece_suite/instruments/keysight.py",
+          "line": 263
+        },
+        {
+          "symbol": "ece_suite.instruments.dmm:ScpiDmm",
+          "file": "backend/ece_suite/instruments/dmm.py",
+          "line": 25
+        },
+        {
+          "symbol": "ece_suite.instruments.transport:VisaTransport",
+          "file": "backend/ece_suite/instruments/transport.py",
+          "line": 34
+        }
+      ],
+      "justification": "ECE Tool Suite's backend is a pip-installable Python object driver pack for SCPI scopes, DMMs and spectrum analyzers, so direct-driver/python-object with role driver-pack fits."
+    },
+    {
+      "package_id": "gh.kenosinc/dwf-mcp-server",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "dwf-mcp-server is a reference MCP host over the external dwfpy binding, not a device driver."
+    },
+    {
+      "package_id": "gh.klauer/hgvpu_sim",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: an instrument-side EPICS simulator of Animatics SmartMotors, not a device driver."
+    },
+    {
+      "package_id": "gh.klauer/pypvasync",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "tag-bridge",
+      "reason_code": "override:recon",
+      "justification": "pypvasync is a Python asyncio fork of pyepics that wraps the EPICS Channel Access library and addresses arbitrary PV names, so it is a protocol transport (tag-bridge), not a device driver."
+    },
+    {
+      "package_id": "gh.klemenv/pydevice",
+      "strategy": "skip",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "PyDevice is a C++ EPICS device-support module that embeds CPython so IOC records run Python code, not a Python package or device driver."
+    },
+    {
+      "package_id": "gh.kletternaut/scopemcp",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "ds1102_mcp:ScopeController",
+          "file": "ds1102_mcp.py",
+          "line": 41
+        }
+      ],
+      "justification": "ScopeController is the in-tree pyusb driver for one DS1102 scope, so direct-driver/python-object fits."
+    },
+    {
+      "package_id": "gh.knerlab/sim_control_software",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of wave B: a direct Driver, not a SerialDriver: the A8MRU motor opens no serial port; it calls USMC_Init, USMC_Start and USMC_Stop of USMCDLL.dll through ctypes."
+    },
+    {
+      "package_id": "gh.krentzd/flumi",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "FLUMI is an offline fluorescence-microscopy image simulator, not a device: it reads a point cloud and PSF TIFF, computes a z-stack and writes images, with no serial, VISA, USB, socket or SDK I/O."
+    },
+    {
+      "package_id": "gh.l-johnston/tekinstr",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 2,
+      "justification": "Model review of wave B: a direct Driver, not the card's ScpiDriver table (a direct Driver over tekinstr.mdo3000.oscilloscope:Oscilloscope with native.py, not the card's ScpiDriver; the upstream is an object with properties and its chann...)"
+    },
+    {
+      "package_id": "gh.labjack/exodriver",
+      "strategy": "skip",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "Exodriver is a C libusb library plus C examples for LabJack USB devices, not a Python package, so skip/prior-art."
+    },
+    {
+      "package_id": "gh.labjack/labjackpython",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "flagship": true,
+      "justification": "Official LabJack Python module for U3/U6/UE9/U12 DAQ devices; a direct Driver over its device classes."
+    },
+    {
+      "package_id": "gh.labpy/lantz",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:driver-pack",
+      "justification": "Lantz instrumentation toolkit (Feat, DictFeat, Action) with a driver pack under lantz/drivers; like pymeasure, one card for the pack, not a SCPI command map (rule 9 saw pyvisa)."
+    },
+    {
+      "package_id": "gh.labscript-suite/labscript",
+      "strategy": "reference",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "labscript compiles hardware-timed experiments, not a device driver: Shutter/DDS are generic output channels, real devices live in labscript_devices; subclass them and implement generate_code."
+    },
+    {
+      "package_id": "gh.labscript-suite/labscript-devices",
+      "strategy": "reference",
+      "role": "driver-pack",
+      "reason_code": "override:framework-plugins",
+      "justification": "Device classes that run inside the labscript/BLACS runtime, which has no helper; they serve as protocol references, so the SCPI marker rule does not apply."
+    },
+    {
+      "package_id": "gh.labscript-suite/prawnblaster",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "C++ firmware for the Raspberry Pi Pico pseudoclock, not a Python host driver, so skip/not-device."
+    },
+    {
+      "package_id": "gh.labthings/labthings-fastapi",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "reference:host",
+      "justification": "FastAPI framework for Web of Things servers of lab hardware (the base of OpenFlexure v3); the devices are the Things other repos define, so it is a host to bridge, not a driver (rule 10 took the Thing base class)."
+    },
+    {
+      "package_id": "gh.labthings/python-labthings",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "LabThings is a Flask HTTP framework for exposing instrument objects, not a device driver."
+    },
+    {
+      "package_id": "gh.lachlangunn/oic",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "Examples.Meter.test:ArduinoDAQ",
+          "file": "src/Examples/Meter/test.py",
+          "line": 7
+        }
+      ],
+      "justification": "OIC is mostly an embedded C++ SCPI stack, but its Python 2 ArduinoDAQ class drives the Meter firmware over a VISA resource with SCPI text commands, so family-config/scpi is the fitting shape."
+    },
+    {
+      "package_id": "gh.lando1784/pyagilis",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of wave B: a direct Driver over AGUC2, not a SerialDriver table: the controller builds '<axis>PR<n>', '<axis>ST' and its queries from parts at run time."
+    },
+    {
+      "package_id": "gh.lantzproject/lantz",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "The lantzproject/lantz repository is a metapackage that only re-exports lantz-core, installs lantz-drivers/lantz-sims and dispatches CLI subcommands, with no device driver."
+    },
+    {
+      "package_id": "gh.laristizabal1/pv-emulator",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 2,
+      "justification": "Model review of wave B: a direct Driver, not the card's ScpiDriver table (the family-config ScpiDriver helper is replaced by a direct Driver over comm.bridge:EAPowerSupply with native.py)"
+    },
+    {
+      "package_id": "gh.laszlofeher-v/fynescope",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "fynescope is a Go/Fyne PicoScope GUI app, not a Python driver, so skip/tooling."
+    },
+    {
+      "package_id": "gh.ledger-donjon/pypdm",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "PDM laser source: a binary frame (length, address, command id, data, XOR checksum) built at run time needs a direct Driver, not a SerialDriver table."
+    },
+    {
+      "package_id": "gh.liamsgithub/as7265x-spectrometer",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "pyfile:spectrometer.py#*",
+          "file": "spectrometer.py",
+          "line": 1
+        }
+      ],
+      "justification": "Model review of the blocked packages, 2026-11-04: spectrometer.py defines 17 module functions and no class, so the entry is the pinned module selector pyfile:spectrometer.py#* (MHS/changes/SOURCE-SURFACES.md)."
+    },
+    {
+      "package_id": "gh.linda-zheng/osa_webapp",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "osa_webapp is a Flask browser front end that proxies OSA START/STOP/TRACE commands to a remote Heroku service, so it is a host reference, not a device driver."
+    },
+    {
+      "package_id": "gh.lmsc-ntappy/pymodaq_plugins_oceanoptics_seabreeze",
+      "strategy": "skip",
+      "role": "prior-art",
+      "reason_code": "skip:duplicate_of",
+      "variant_of": "gh.pymodaq/pymodaq_plugins_oceaninsight",
+      "justification": "Model review of recon wave A: an older PyMoDAQ seabreeze viewer plugin; gh.pymodaq/pymodaq_plugins_oceaninsight ships the same DAQ_1DViewer_Seabreeze and passes as a package."
+    },
+    {
+      "package_id": "gh.lollcat/distillationtrain-gym",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Model review of recon wave A: a reinforcement-learning environment for a simulated distillation train that needs the Windows-only COCO/ChemSep simulator over COM; there is no device and no registered environment."
+    },
+    {
+      "package_id": "gh.lorencig/ua-opc-interface",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "Tkinter GUI host that drives two pumps through external OPC UA method nodes, not a device driver."
+    },
+    {
+      "package_id": "gh.lqg-epfl/labscript_rp_asg",
+      "strategy": "reference",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "This repo is a labscript/BLACS integration plugin that delegates hardware access and ASG commands to the external PyRPL driver, so it is prior art, not a device driver."
+    },
+    {
+      "package_id": "gh.ludwigregalado/lock-in_sr830",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "SR830:ask_device",
+          "file": "SR830.py",
+          "line": 11
+        },
+        {
+          "symbol": "SR830:set_device",
+          "file": "SR830.py",
+          "line": 22
+        }
+      ],
+      "justification": "Flat pyserial function module for the SR830 lock-in amplifier, so family-config/serial fits."
+    },
+    {
+      "package_id": "gh.lxi-tools/lxi-tools",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "lxi-tools is a C CLI/GUI toolbox for LXI instruments, not a Python driver, because it delegates all device I/O to the external liblxi C library."
+    },
+    {
+      "package_id": "gh.m4i-nanoscopy/insilicotem",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "InSilicoTEM is a MATLAB/DIPimage TEM simulator, not a Python hardware driver; a driver author would need MATLAB and DIPimage to run RunTEMsim.m on PDB inputs and produce simulated MRC micrographs."
+    },
+    {
+      "package_id": "gh.mabl/pymso5000",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 2,
+      "justification": "Model review of wave B: a direct Driver, not the card's ScpiDriver table (the card proposes a ScpiDriver (family-config, family scpi), but the upstream interface is the object pymso5000.scope:Scope with typed methods and read-back outco...)"
+    },
+    {
+      "package_id": "gh.machineagency/science-jubilee",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "science_jubilee.Machine:Machine",
+          "file": "src/science_jubilee/Machine.py",
+          "line": 101
+        }
+      ],
+      "justification": "Science Jubilee is the Python object driver for one Jubilee motion platform, so it is direct-driver/device-driver with family python-object."
+    },
+    {
+      "package_id": "gh.macro-consortium/legacy-pyscope",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "legacy-pyscope is an observatory control host that orchestrates ASCOM mount/focuser, MaxIm camera, autofocus and weather modules, not one device."
+    },
+    {
+      "package_id": "gh.madhankumar623/instruments_automation_scpi_commands",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "PowerSupply_Automation:Set_Voltage",
+          "file": "PowerSupply_Automation.py",
+          "line": 99
+        },
+        {
+          "symbol": "PowerSupply_Automation:Set_Current",
+          "file": "PowerSupply_Automation.py",
+          "line": 105
+        },
+        {
+          "symbol": "PowerSupply_Automation:Get_Voltage",
+          "file": "PowerSupply_Automation.py",
+          "line": 111
+        },
+        {
+          "symbol": "PowerSupply_Automation:Get_Current",
+          "file": "PowerSupply_Automation.py",
+          "line": 117
+        },
+        {
+          "symbol": "PowerSupply_Automation:ON_OFF_Voltage",
+          "file": "PowerSupply_Automation.py",
+          "line": 123
+        }
+      ],
+      "justification": "PyVISA SCPI script for three DC supplies and a Modbus Watlow F4, so family-config/scpi fits."
+    },
+    {
+      "package_id": "gh.magnusjohansson/siglent-sds-mcp",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "siglent-sds-mcp is a TypeScript MCP server that drives a Siglent SDS oscilloscope over TCP/SCPI, so it is skip/tooling rather than a Python driver."
+    },
+    {
+      "package_id": "gh.majidbenk/interfaz-virtual-control-remoto-instrumentos-rigol",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "interfaz_osciloscopio_v4:Osciloscopio",
+          "file": "interfaz_osciloscopio_v4.py",
+          "line": 29
+        },
+        {
+          "symbol": "intefaz_FuenteContinua_v2:FuenteContinua",
+          "file": "intefaz_FuenteContinua_v2.py",
+          "line": 32
+        }
+      ],
+      "justification": "PyVISA SCPI classes for the Rigol DS1000 scope and DP800 supply fit family-config/scpi, but they are Tkinter-bound and unlicensed; extract the commands and inject the VISA resource."
+    },
+    {
+      "package_id": "gh.malcolmsimgithub/chemos2.0",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "ChemOS 2.0 is a chemistry-lab orchestration framework that ships demonstrative SiLA2 simulators, not a single-device driver."
+    },
+    {
+      "package_id": "gh.maltemuetter/pypetting_extra",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "pypetting_extra generates EVOWare .gwl worklist text and opens no serial, socket or VISA link, so it is not a device driver; a driver author needs EVOWare or a transport to run the worklists."
+    },
+    {
+      "package_id": "gh.mattgbiz/velmex-xyz-stagecontrol-python",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "Model review of wave B: a direct Driver, not a SerialDriver table: commands join a prefix and a run-time number ('E,C,S1M' + speed + ',R'). Blocked: the upstream has no stop command."
+    },
+    {
+      "package_id": "gh.maximilianb2/pc-gym",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "pcgym.pcgym:make_env",
+          "file": "src/pcgym/pcgym.py",
+          "line": 32
+        }
+      ],
+      "justification": "pc-gym is a Gymnasium suite simulating process-control plants by ODE integration, not hardware, fitting a gymnasium sim-env."
+    },
+    {
+      "package_id": "gh.mb-it-engineering/microscope_environment",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is a synthetic numpy/OpenCV microscope simulator exposed through a FastAPI/MCP control surface, not a hardware device or a Gymnasium/MuJoCo environment."
+    },
+    {
+      "package_id": "gh.mcleu/pyapt",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "PyAPT.PyAPT:APTMotor",
+          "file": "PyAPT/PyAPT.py",
+          "line": 25
+        }
+      ],
+      "justification": "PyAPT is a Python object driver for Thorlabs APT motion controllers: APTMotor is the single device class, and it drives hardware through the vendor APT.dll."
+    },
+    {
+      "package_id": "gh.mede-erik/scpi_emu",
+      "strategy": "skip",
+      "role": "sim-env",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "justification": "Skip: a Python SCPI-over-TCP emulator of 14+ instruments, not a client driver for real hardware."
+    },
+    {
+      "package_id": "gh.mesospim/mesospim-control",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "mesoSPIM-control is a PyQt acquisition host for light-sheet microscopes, not one device driver."
+    },
+    {
+      "package_id": "gh.michaelli26/bioreactor-simulator",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: a PyQt GUI that simulates a bioreactor via synthetic CSV rows with no serial, VISA, USB, socket or SDK I/O; a driver author needs hardware and its control protocol."
+    },
+    {
+      "package_id": "gh.micro-manager/micro-manager",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "reference:host",
+      "flagship": true,
+      "justification": "Micro-Manager desktop application; its devices are reached through MMCore and the pymmcore-plus helper, so the application itself is a host."
+    },
+    {
+      "package_id": "gh.micro-manager/mmcoreanddevices",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "pymmcore-plus",
+      "reason_code": "bridge-runtime:pymmcore-plus",
+      "flagship": true,
+      "justification": "MMCore and the Micro-Manager device adapters (including DemoCamera); reached through pymmcore-plus."
+    },
+    {
+      "package_id": "gh.micro-manager/mmpycorex",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "mmpycorex is an access and launcher layer over Micro-Manager's pymmcore and MMCoreJ cores, not a driver for one device, so it is reference/host."
+    },
+    {
+      "package_id": "gh.micro-manager/pycro-manager",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "pymmcore-plus",
+      "reason_code": "bridge-runtime:pymmcore-plus",
+      "justification": "Python bridge to a running Micro-Manager; overlaps the pymmcore-plus helper path."
+    },
+    {
+      "package_id": "gh.microscope-cockpit/cockpit",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "reference:host",
+      "justification": "Cockpit is a microscope GUI that drives hardware through python-microscope device servers (gh.python-microscope/microscope); integrate those, not the GUI (rule 9 saw a pyserial import)."
+    },
+    {
+      "package_id": "gh.microsoft/qcodes",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "qcodes",
+      "reason_code": "bridge-runtime:qcodes",
+      "flagship": true,
+      "justification": "QCoDeS Instrument/Parameter framework with pyvisa-sim instrument simulations; the post-pilot QCoDeS helper introspects its parameters."
+    },
+    {
+      "package_id": "gh.miked63017/dinolite_uvc_led_control",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "dinoliteuvccontrol.dinoliteuvccontrol:DinoLiteUVCControl",
+          "file": "dinoliteuvccontrol/dinoliteuvccontrol.py",
+          "line": 8
+        }
+      ],
+      "justification": "Direct driver for Dino-Lite USB microscopes whose object methods call uvcdynctrl for LED, FLC and exposure; two model classes, needs Linux, uvcdynctrl, lsusb VID a168, and no license is declared."
+    },
+    {
+      "package_id": "gh.mittoalb/pmsim",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "pmsim is a pure numerical X-ray projection-image simulator, not a controllable device: it Fresnel-propagates voxel phantoms to TIFFs with no instrument I/O, so it is only an offline test oracle."
+    },
+    {
+      "package_id": "gh.morgendagen/riden-dongle",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is C++ ESP8266 firmware for the Riden WiFi dongle, not a Python package or host driver."
+    },
+    {
+      "package_id": "gh.mortego96/pdac-gemelo",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "An in-silico Streamlit/Mesa model of pancreatic cancer, not a device, with no serial, VISA, USB or socket transport."
+    },
+    {
+      "package_id": "gh.mp911de/siglent-scpi-mcp",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "siglent-scpi-mcp is a TypeScript SCPI-over-TCP MCP server for Siglent scopes and supplies, not a Python driver."
+    },
+    {
+      "package_id": "gh.mtoutai/ot_thermocycler_standalone",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "PySimpleGUI host, not a driver: pcr_gui.py imports the thermocycler driver symlinked from the separate Opentrons repository and delegates all hardware calls to driver.Thermocycler."
+    },
+    {
+      "package_id": "gh.mufpga/microfpga",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Lucid/Verilog FPGA gateware with no Python package or wrapper, so it is not a driver; a driver author should use the separate MicroFPGA-py serial client and this repo's register map."
+    },
+    {
+      "package_id": "gh.nadimest/silaphone-client",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: a Kotlin Android SiLA 2 client GUI for remote lab servers, not a Python driver and with no Python wrapper."
+    },
+    {
+      "package_id": "gh.nareshvasudevan-bit/enzyme-kinetics-simulator",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "A pure Michaelis-Menten curve simulation and fitting library, not a device driver."
+    },
+    {
+      "package_id": "gh.natlabrockies/multi-tube-od-reader",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "my_app.classes.device:Device",
+          "file": "my_app/classes/device.py",
+          "line": 34
+        }
+      ],
+      "justification": "This repository is the Python controller for one Multi-Tube-OD-Reader instrument and talks to it through the LabJack U3 SDK, so direct-driver/python-object fits."
+    },
+    {
+      "package_id": "gh.ni/grpc-device",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "NI gRPC Device Server is a C++ gRPC middleware stack over many NI driver C APIs, not a Python driver; a driver author needs per-driver Python stubs, the server and the NI driver."
+    },
+    {
+      "package_id": "gh.ni/nidaqmx-python",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "flagship": true,
+      "justification": "Official NI-DAQmx Python API (Task, channels); needs the NI driver, so the gate runs against a recording fake of nidaqmx.Task."
+    },
+    {
+      "package_id": "gh.nicholasmanha/mock-ophydws",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "This Flask HTTP server only ingests and serves Ophyd log POSTs; it defines no device class or hardware I/O."
+    },
+    {
+      "package_id": "gh.nicholasmorrow/zeus",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "zeus:ZeusModule",
+          "file": "zeus.py",
+          "line": 287
+        }
+      ],
+      "justification": "zeus.py's ZeusModule is a SocketCAN object driver for one ZEUS liquid-handling module."
+    },
+    {
+      "package_id": "gh.nion-software/nionswift-usim",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "This is a pure Nion Swift STEM simulator plugin, not a hardware device or an importable device driver, so it is skip/sim-env."
+    },
+    {
+      "package_id": "gh.nmgrl/pychron",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "Pychron is a PyQt application suite that orchestrates mass-spectrometry experiments, so it is a host that uses many devices rather than one device driver."
+    },
+    {
+      "package_id": "gh.norlovs/ot2-robotics-cv-control",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "src.ot2.ot2_gym_wrapper:OT2Env",
+          "file": "src/ot2/ot2_gym_wrapper.py",
+          "line": 7
+        },
+        {
+          "symbol": "src.ot2.sim_class:Simulation",
+          "file": "src/ot2/sim_class.py",
+          "line": 12
+        }
+      ],
+      "justification": "OT2Env is a Gymnasium wrapper over a PyBullet OT-2 digital twin, hence family-config sim-env, not a hardware driver."
+    },
+    {
+      "package_id": "gh.northriv/kame",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "KAME is a Qt/C++ measurement host, not a standalone Python device library; its Python API exists only inside the running app, so a driver author should target one module under modules/."
+    },
+    {
+      "package_id": "gh.nsls-ii-chx/syringe_pump_controller",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "pump_controler:pump",
+          "file": "pump_controler.py",
+          "line": 10
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver, not a SerialDriver table: every command joins a pump address and a keyword at run time (pump_controler.py)."
+    },
+    {
+      "package_id": "gh.nsls-ii-sst/sim_beamline",
+      "strategy": "bridge-runtime",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "sim_beamline is a caproto EPICS IOC simulating a whole beamline, not a device driver."
+    },
+    {
+      "package_id": "gh.nsls2/oceanoptics",
+      "strategy": "skip",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is a C++ EPICS IOC for the Ocean Optics QEPro, not a Python driver; a driver author needs SeaBreeze's device-index API, spectral acquisition calls and USB udev access."
+    },
+    {
+      "package_id": "gh.nsls2/ophyd-service",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "ophyd-service is a three-service host for user-supplied ophyd/ophyd-async devices, exposing their EPICS PVs over HTTP and WebSockets; it is not a device driver."
+    },
+    {
+      "package_id": "gh.oe-fet/jisa",
+      "strategy": "skip",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "JISA is a Java instrument-control framework whose regular-Python support is the separate PyJISA project, so it is not a Python driver."
+    },
+    {
+      "package_id": "gh.oelemento/star-sim",
+      "strategy": "family-config",
+      "role": "twin-candidate",
+      "family": "pylabrobot",
+      "reason_code": "family:pylabrobot",
+      "justification": "Hamilton STAR digital twin on the PyLabRobot ChatterBox backend; a PyLabRobot-helper member."
+    },
+    {
+      "package_id": "gh.open62541/open62541",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "tag-bridge",
+      "reason_code": "override:recon",
+      "justification": "open62541 is a C OPC UA client/server stack, the tag bridge's transport rather than a device; Python here is build-only, so a driver needs a Python OPC UA client, a server endpoint and node ids."
+    },
+    {
+      "package_id": "gh.opentrons/opentrons",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "http",
+      "reason_code": "bridge-runtime:http",
+      "flagship": true,
+      "justification": "Opentrons monorepo with robot-server, hardware control and opentrons_simulate; the HTTP helper talks to its robot-server API."
+    },
+    {
+      "package_id": "gh.opentrons/opentrons-emulation",
+      "strategy": "bridge-runtime",
+      "role": "twin-candidate",
+      "family": "http",
+      "reason_code": "override:helper-fixture",
+      "flagship": true,
+      "justification": "Electron and QEMU emulator of the OT-2/Flex robot OS and module firmware; the hardware-free target for testing the HTTP helper, not a repo task."
+    },
+    {
+      "package_id": "gh.opentrons/opentrons-modules",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:flagship-driver",
+      "flagship": true,
+      "entry_symbols": [
+        {
+          "symbol": "test_utils:Tempdeck",
+          "file": "stm32-modules/tempdeck-gen3/scripts/test_utils.py",
+          "line": 203
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver over test_utils:Tempdeck, not a SerialDriver table: the host object speaks the newline M-code protocol and parses M105.D and M103.D replies."
+    },
+    {
+      "package_id": "gh.opentrons/ot3-firmware",
+      "strategy": "skip",
+      "role": "device-driver",
+      "reason_code": "override:covered-by",
+      "flagship": true,
+      "justification": "Flex (OT-3) motion firmware; the Flex is integrated through robot-server in gh.opentrons/opentrons (HTTP helper)."
+    },
+    {
+      "package_id": "gh.opntec/open-spectrometer-python",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "TCD1304:TCD1304",
+          "file": "TCD1304.py",
+          "line": 24
+        }
+      ],
+      "justification": "TCD1304.py:24 is a genuine driver class for one TCD1304 linear CCD on a PSLab board, even though the README's main scripts only plot exported PNGs."
+    },
+    {
+      "package_id": "gh.oriolrius/opc-ua-demo-server",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: a YAML-configured simulated OPC-UA server for client testing, not a device."
+    },
+    {
+      "package_id": "gh.oumeanin/chemistry_lab",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: an Isaac Sim USD demo scene with ROS 2 test scripts, not a device library; it has no class or package."
+    },
+    {
+      "package_id": "gh.oxfordska/oskar",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "OSKAR simulates radio-telescope visibility data; it drives no device, so it is a skip."
+    },
+    {
+      "package_id": "gh.paulscherrerinstitute/pcaspy",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "tag-bridge",
+      "reason_code": "override:recon",
+      "justification": "pcaspy is a Python binding and server abstraction for the EPICS Channel Access protocol, not a device driver, so it is bridge-runtime/transport."
+    },
+    {
+      "package_id": "gh.paupier/simantha-opcua",
+      "strategy": "reference",
+      "role": "twin-candidate",
+      "reason_code": "override:recon",
+      "justification": "Reference/twin-candidate: a Simantha line digital twin serving read-only OPC UA data, not a device driver."
+    },
+    {
+      "package_id": "gh.pcdshub/sim-ioc",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: simioc defines simulated caproto PVGroups, not a device driver."
+    },
+    {
+      "package_id": "gh.pcdshub/sim_beamline",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip/sim-env: LclsDetector is an ophyd wrapper around a remote Sirepo SRW simulation, not a device."
+    },
+    {
+      "package_id": "gh.phamdangnguyen/control-kds-gemini-88-plus-dual-rate-syringe-pump-using-python-and-serial",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of the PUB batch: a direct Driver, not a SerialDriver table: a pump run is a sequence (irate, tvolume or ttime, then run) through a shared input buffer, not one line."
+    },
+    {
+      "package_id": "gh.pku-yuangroup/openai4s",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "openai4s is a scientific research agent host, not a device driver: it ships no serial, VISA, vendor-SDK or simulator transport, so instrument control belongs in user code or an MCP connector."
+    },
+    {
+      "package_id": "gh.plasmon360/python_newport_1918_powermeter",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "newport_1918c:Newport_1918c",
+          "file": "newport_1918c.py",
+          "line": 21
+        }
+      ],
+      "justification": "Python 2.7 ctypes driver for one Newport 1918-C power meter, so direct-driver/python-object; port to Python 3 and supply the Windows usbdll.dll and USB product_id; license is unknown."
+    },
+    {
+      "package_id": "gh.pmezydlo/oscilloscope_lan_data_capture",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of the PUB batch: a direct Driver over the oscilloscope class, not a SerialDriver table: channel commands are assembled at run time (':' + channel + ':SCAL?')."
+    },
+    {
+      "package_id": "gh.ppp-one/alpaca-simulators",
+      "strategy": "bridge-runtime",
+      "role": "twin-candidate",
+      "family": "tag-bridge",
+      "reason_code": "override:recon",
+      "justification": "This FastAPI server simulates the major ASCOM Alpaca device types, a hardware-free twin for the tag bridge rather than a driver; drive its /api/v1 HTTP endpoints, do not import it."
+    },
+    {
+      "package_id": "gh.ppp-one/gaia-camera-simulator",
+      "strategy": "reference",
+      "role": "twin-candidate",
+      "family": "tag-bridge",
+      "reason_code": "override:recon",
+      "justification": "A hardware-free ASCOM Alpaca camera simulator, not a camera driver: GaiaCameraSimulator launches a uvicorn server and wraps alpyca clients; use it as the tag-bridge twin fixture."
+    },
+    {
+      "package_id": "gh.purple-fr0g/ascom-alpaca-smartplug-switch",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "tag-bridge",
+      "reason_code": "override:recon",
+      "justification": "Model review of recon wave A: an ASCOM Alpaca switch server for smart power strips: server-side Alpaca protocol over two module-level HTTP plug helpers, not a class-based device driver."
+    },
+    {
+      "package_id": "gh.pyacq/pyacq",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "Pyacq is a ZeroMQ-based distributed acquisition framework with plug-in device Nodes, not one device, so a driver author should target an individual Node rather than wrap the repository."
+    },
+    {
+      "package_id": "gh.pycroscopy/dtmicroscope",
+      "strategy": "direct-driver",
+      "role": "twin-candidate",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "DTMicroscope.base.twisted_client:TEMClient",
+          "file": "DTMicroscope/base/twisted_client.py",
+          "line": 8
+        },
+        {
+          "symbol": "DTMicroscope.server.twisted_server:TEMServer",
+          "file": "DTMicroscope/server/twisted_server.py",
+          "line": 126
+        }
+      ],
+      "justification": "TEMClient/TEMServer control a real TEM through the proprietary AutoScript SDK, while AFM_Microscope, STEM and DTSTEM_proxy are simulators, so direct-driver/python-object/twin-candidate fits."
+    },
+    {
+      "package_id": "gh.pylabrobot/pylabrobot",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "pylabrobot",
+      "reason_code": "bridge-runtime:pylabrobot",
+      "flagship": true,
+      "justification": "Hardware-agnostic liquid-handler SDK (STAR, EVO, OT-2 backends plus ChatterBox and simulator backends) wrapped by the post-pilot PyLabRobot helper."
+    },
+    {
+      "package_id": "gh.pymeasure/pymeasure",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:driver-pack",
+      "flagship": true,
+      "justification": "Driver pack of about 80 vendor instrument classes on pyvisa adapters; one card for the pack, recon picks the instrument and pymeasure's ProtocolAdapter is the fake."
+    },
+    {
+      "package_id": "gh.pymeasure/python-lab-automation-landscape",
+      "strategy": "skip",
+      "role": "docs",
+      "reason_code": "override:recon",
+      "justification": "This is a static Jekyll catalog of third-party lab-automation packages, not device code; a driver author should target the listed projects, such as pymeasure or ophyd, in their own repositories."
+    },
+    {
+      "package_id": "gh.pymmcore-plus/mda-simulator",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "mda-simulator synthesizes microscopy frames by monkeypatching a pymmcore-plus CMMCorePlus camera and opens no serial, VISA, USB or vendor SDK, so it is a development tool, not a device driver."
+    },
+    {
+      "package_id": "gh.pymmcore-plus/pymmcore-nano",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "pymmcore-plus",
+      "reason_code": "override:recon",
+      "justification": "pymmcore-nano is a nanobind binding of MMCore, Micro-Manager's device-abstraction engine that loads many device adapters, not a driver for one instrument."
+    },
+    {
+      "package_id": "gh.pymmcore-plus/pymmcore-plus",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "pymmcore-plus",
+      "reason_code": "bridge-runtime:pymmcore-plus",
+      "flagship": true,
+      "justification": "Pythonic Micro-Manager core with the demo configuration as a simulator; the post-pilot pymmcore-plus helper maps device properties."
+    },
+    {
+      "package_id": "gh.pymmcore-plus/pymmcore-remote",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "pymmcore-remote is a Pyro5 RPC proxy for pymmcore-plus CMMCorePlus, not a device driver; put device support in pymmcore-plus/Micro-Manager adapters, as this adds no device protocol."
+    },
+    {
+      "package_id": "gh.pymodaq/pymodaq_plugins_demo",
+      "strategy": "skip",
+      "role": "docs",
+      "reason_code": "skip:not-device",
+      "justification": "PyMoDAQ demo plugins whose ActuatorWrapper and detector classes are mocks that emulate an instrument for plugin-development examples; no device behind them (rule 9 saw a pyserial port listing)."
+    },
+    {
+      "package_id": "gh.pymodaq/pymodaq_plugins_keithley",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:direct-driver",
+      "wave": 2,
+      "justification": "Model review of wave B: a direct Driver, not a ScpiDriver table: set_mode builds ':CONF:' plus the measurement function from parts (keithley2100_VISADriver.py:97-119)."
+    },
+    {
+      "package_id": "gh.pymodaq/pymodaq_plugins_mock",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "The package is a PyMoDAQ plugin pack of mock virtual instruments that generates synthetic data and emulates a positioner, not a device driver."
+    },
+    {
+      "package_id": "gh.pymodaq/pymodaq_plugins_mockexamples",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "This PyMoDAQ plugin provides mock virtual instruments that synthesize data; it is not a device driver."
+    },
+    {
+      "package_id": "gh.pymodaq/pymodaq_plugins_newport",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:direct-driver",
+      "wave": 6,
+      "justification": "Model review of wave B: a direct Driver over the SMC100 class, not a ScpiDriver table: every command is prefixed with the controller number and assembled at run time (1PA10, 1ST)."
+    },
+    {
+      "package_id": "gh.pymodaq/pymodaq_plugins_teaching",
+      "strategy": "skip",
+      "role": "docs",
+      "reason_code": "skip:not-device",
+      "justification": "PyMoDAQ plugins written to teach plugin authoring; its Keithley, spectrometer and Arduino classes are documented mocks of instruments (same case as pymodaq_plugins_demo)."
+    },
+    {
+      "package_id": "gh.pymodbus-dev/modbus-simulator",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "This is a Kivy GUI Modbus slave simulator, not a device driver: ModbusSimu starts a server and edits simulated register blocks, so it never controls hardware."
+    },
+    {
+      "package_id": "gh.pymodbus-dev/pymodbus",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "tag-bridge",
+      "reason_code": "bridge-runtime:tag-bridge",
+      "flagship": true,
+      "justification": "Modbus TCP/RTU client and server stack with simulators; the tag bridge's Modbus transport, not a device (FIT-01)."
+    },
+    {
+      "package_id": "gh.pyscada/pyscada",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "PyScada is a Django SCADA host that loads protocol drivers from separate pyscada-* packages, a reference not a device driver."
+    },
+    {
+      "package_id": "gh.python-microscope/microscope",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:driver-pack",
+      "flagship": true,
+      "justification": "Device ABCs with Andor/Hamamatsu/Ximea cameras, Cobolt/Obis lasers and Linkam stages; its microscope.simulators devices are the fake backend."
+    },
+    {
+      "package_id": "gh.python-microscopy/python-microscopy",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "PYME is a microscopy acquisition and analysis suite hosting many devices, not one driver."
+    },
+    {
+      "package_id": "gh.pyvisa/pyvisa",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "scpi",
+      "reason_code": "bridge-runtime:scpi",
+      "flagship": true,
+      "justification": "VISA transport behind the ScpiDriver helper's optional pyvisa backend; not a device."
+    },
+    {
+      "package_id": "gh.pyvisa/pyvisa-py",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "scpi",
+      "reason_code": "bridge-runtime:scpi",
+      "flagship": true,
+      "justification": "Pure-Python VISA backend (TCPIP, USB, serial, GPIB) for pyvisa; a transport the SCPI helper can use, not a device."
+    },
+    {
+      "package_id": "gh.pyvisa/pyvisa-sim",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "scpi",
+      "reason_code": "bridge-runtime:scpi",
+      "flagship": true,
+      "justification": "YAML-defined simulated VISA instruments; a test fixture for the SCPI helper (registry mode simulated/replay only)."
+    },
+    {
+      "package_id": "gh.qcodes/qcodes_contrib_drivers",
+      "strategy": "family-config",
+      "role": "driver-pack",
+      "family": "qcodes",
+      "reason_code": "family:qcodes",
+      "flagship": true,
+      "entry_symbols": [
+        {
+          "symbol": "qcodes_contrib_drivers.drivers.Thorlabs.PM100D:Thorlab_PM100D",
+          "file": "src/qcodes_contrib_drivers/drivers/Thorlabs/PM100D.py",
+          "line": 20
+        }
+      ],
+      "justification": "Community QCoDeS instrument drivers; QCoDeS-helper members. Model review for the QCoDeS exemplar: Thorlab_PM100D, an optical power meter whose explicit Parameter constructors the source proof accepts."
+    },
+    {
+      "package_id": "gh.qi2lab/opm-v2",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "opm-v2 is a pymmcore-gui host application, not a one-device driver."
+    },
+    {
+      "package_id": "gh.qnslab/labdaemon",
+      "strategy": "reference",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "LabDaemon is an orchestration framework, not a device, and ships no hardware driver."
+    },
+    {
+      "package_id": "gh.qpcr4vir/robotevo",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "RobotEvo models a TECAN Freedom EVO and only writes offline EVOware .esc scripts, with COM automation a stub, so it is skip/tooling; a driver author can reuse its labware model as prior art."
+    },
+    {
+      "package_id": "gh.qpillars/openapi-to-sila2",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "openapi-to-sila2 is a code generator that emits SiLA2 FDL XML and Python stubs, not a device driver."
+    },
+    {
+      "package_id": "gh.qpit/thorlabs_apt",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "justification": "Thorlabs APT.dll wrapper whose Motor class controls APT stages (tested on K10CR1); a direct Driver with a recording fake."
+    },
+    {
+      "package_id": "gh.qtimort/sila-nespresso",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Java-only SiLA2 demo that scrapes a Nespresso product page into an in-memory shopping list, has no hardware control or Python wrapper, so skip/not-device; a driver would need a real backend first."
+    },
+    {
+      "package_id": "gh.quantumllama/python-lab-drivers",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "func_gen_test:func_gen",
+          "file": "func_gen_test.py",
+          "line": 16
+        },
+        {
+          "symbol": "oscope_test:oscope",
+          "file": "oscope_test.py",
+          "line": 16
+        }
+      ],
+      "justification": "Two module-level PyVISA SCPI scripts for a Siglent SDG 2042X and SDS 1202X fit family-config/scpi, though neither has a class or function and the README lists no fully supported instrument."
+    },
+    {
+      "package_id": "gh.quantumquadrate/k10cr1",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "Thorlabs K10CR1 rotation mount: hex frames of the APT protocol assembled per move need a direct Driver, not a SerialDriver table."
+    },
+    {
+      "package_id": "gh.rfdeveloperkevin/virtual-rf-power-amplifier-command-controller-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "justification": "Skip: a C++ SCPI skeleton for a virtual RF power amplifier, not a Python driver; only a fixed power reply exists, so a driver author needs the transport and command set; no license is declared."
+    },
+    {
+      "package_id": "gh.rickbassham/indi-mqtt-bridge",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "reason_code": "override:recon",
+      "justification": "This Node.js daemon bridges INDI property vectors to and from MQTT topics, so it is transport middleware and not a driver for any one device."
+    },
+    {
+      "package_id": "gh.rickbassham/node-indi-client",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "reason_code": "override:recon",
+      "justification": "This Node.js library is an INDI protocol client and transport, not a driver for one device, so it is bridge-runtime work rather than a per-repository driver."
+    },
+    {
+      "package_id": "gh.rickwierenga/opentrons-python-api",
+      "strategy": "reference",
+      "role": "prior-art",
+      "family": "http",
+      "reason_code": "override:recon",
+      "justification": "Functional HTTP client for the Opentrons robot-server, not a class-based driver: reference/prior-art."
+    },
+    {
+      "package_id": "gh.righigor/erobot",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Pure Tkinter G-code generator for a CNC ELISA pipette; it opens no serial port and controls no hardware."
+    },
+    {
+      "package_id": "gh.rk-exxec/pymupump",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of wave B: a direct Driver, not a SerialDriver table: every command is the two-digit pump address, the command word and a carriage return, assembled at run time."
+    },
+    {
+      "package_id": "gh.rmorgan001/simscope",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: this Windows C# ASCOM telescope simulator is not a Python device library."
+    },
+    {
+      "package_id": "gh.roman-corgi/corgisim",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Corgisim simulates Roman Coronagraph optics and detector images in software and drives no hardware, so it is a skip."
+    },
+    {
+      "package_id": "gh.romerolab/praxis",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "PRAXIS is a laboratory orchestrator, not a device driver: it writes robot worklists and reads plate-reader output files, leaving all hardware control to external software."
+    },
+    {
+      "package_id": "gh.romerolab/syringe-pump-controller",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "new_era:set_rates",
+          "file": "new_era.py",
+          "line": 36
+        },
+        {
+          "symbol": "new_era:get_rate",
+          "file": "new_era.py",
+          "line": 58
+        },
+        {
+          "symbol": "new_era:find_pumps",
+          "file": "new_era.py",
+          "line": 4
+        },
+        {
+          "symbol": "pump_control:PumpControl",
+          "file": "pump_control.py",
+          "line": 14
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver, not a SerialDriver table: per-pump commands join an address number and letters ('<n>DIRINF', '<n>RAT<value>UH', new_era.py:42-53)."
+    },
+    {
+      "package_id": "gh.rorymb/simlab",
+      "strategy": "bridge-runtime",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Simlab is an Isaac Sim/MADSci simulation platform exposing seven simulated lab robots via ZMQ and one FastAPI gateway, so it is simulator-engine SDK work, not a single-device driver."
+    },
+    {
+      "package_id": "gh.roy-harmon/universalis",
+      "strategy": "skip",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "Skip: a C# .NET Windows-service LIS host/bridge for ASTM/CLSI lab analyzers over serial or TCP, not a Python driver."
+    },
+    {
+      "package_id": "gh.rplab/ls_pycro_app",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "LS_Pycro_App is a PyQt5 microscope-control host, not a reusable device driver: its hardware classes delegate cameras, stage and PLC to a running Micro-Manager server via pycromanager."
+    },
+    {
+      "package_id": "gh.rui-li023/labutopia",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "LabUtopia is an Isaac Sim benchmark for scientific embodied agents, not a hardware device: its robots are USD assets and its controllers are Isaac Sim articulation controllers, so no driver applies."
+    },
+    {
+      "package_id": "gh.rutherfurrd/science-jubilee-modular-equipment-system",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Mechanical and PCB design work for Jubilee modules, with no Python package or host API, so skip; a driver author needs the absent device protocol."
+    },
+    {
+      "package_id": "gh.saitoomituru/psycho-py800mcp",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "MCP host, not an oscilloscope driver: instrument I/O is gated closed and the device adapter is unimplemented."
+    },
+    {
+      "package_id": "gh.samariumdlh1927/chemlab-simulator",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "This is a Windows EXE teaching simulator of a flow-chemistry experiment, not a Python device driver, so skip it; a driver author should not wrap it and can at most reimplement its kinetics."
+    },
+    {
+      "package_id": "gh.samdejong86/agilent33600",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "AgilentControl:inst",
+          "file": "AgilentControl.py",
+          "line": 24
+        },
+        {
+          "symbol": "UploadArb:inst",
+          "file": "UploadArb.py",
+          "line": 65
+        }
+      ],
+      "justification": "Two one-off Python VISA scripts drive an Agilent 33600A arbitrary waveform generator with SCPI text over TCP, so family-config/scpi is the right shape."
+    },
+    {
+      "package_id": "gh.samdejong86/tektronix-serial-daq-python",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "tekdaq:tds",
+          "file": "tekdaq.py",
+          "line": 70
+        }
+      ],
+      "justification": "A PyVISA SCPI script that drives a Tektronix TDS 3052 scope over RS-232 fits family-config/scpi."
+    },
+    {
+      "package_id": "gh.sampleenvironment/secop-ophyd",
+      "strategy": "bridge-runtime",
+      "role": "transport",
+      "family": "ophyd",
+      "reason_code": "override:recon",
+      "justification": "SECoP-Ophyd is a SECoP-to-ophyd protocol bridge, not a device driver: it introspects a remote SECoP node and generates ophyd-async device objects."
+    },
+    {
+      "package_id": "gh.samueldeleglise/pyivi",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "skip:tooling",
+      "justification": "Model review of the PUB batch: a Windows-only wrapper layer over the IVI drivers a vendor installs, not a device of its own (README.rst:9-20)."
+    },
+    {
+      "package_id": "gh.sandraschi/oscilloscope-mcp",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "oscilloscope-mcp is an MCP host that wraps pyPicoSDK and PyHT6022 rather than implementing device I/O, so it is reference/host."
+    },
+    {
+      "package_id": "gh.sanket7941/pyinstrument",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:direct-driver",
+      "wave": 2,
+      "justification": "Model review of wave B: a direct Driver over PSupply, not a ScpiDriver table: the methods join a literal and a number at run time ('VOLT ' + str(Volt)) around a caller-supplied VISA resource."
+    },
+    {
+      "package_id": "gh.saryael/bioreactor-digital-twin-simulator",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is a Java Swing GUI that simulates Monod fermentation in-process, with no device I/O and no Python wrapper."
+    },
+    {
+      "package_id": "gh.scadawire/tango-ads-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: a Tango device server that emulates the Beckhoff ADS PLC side via pyads.testserver, not a client driver; use it only as an upstream-sim fake PLC on 127.0.0.1:48898; no license is declared."
+    },
+    {
+      "package_id": "gh.scadawire/tango-bacnet-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is the BACnet/IP device side, a Tango simulator of a BACnet device, not a client driver."
+    },
+    {
+      "package_id": "gh.scadawire/tango-canopen-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: a Tango device server that simulates a CANopen LocalNode over socketcan is not a driver; a driver author can only use it as a vcan fake backend and must supply an EDS (license NOASSERTION)."
+    },
+    {
+      "package_id": "gh.scadawire/tango-melsec-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is a Tango device server that simulates the PLC side of the MELSEC MC protocol, so it answers MC requests and never controls a device."
+    },
+    {
+      "package_id": "gh.scadawire/tango-modbus-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is the Modbus server/slave side, a Tango simulator of an industrial device, not a client driver."
+    },
+    {
+      "package_id": "gh.scadawire/tango-snap7-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: this Tango server runs snap7's mainloop to simulate the S7 PLC side, not to control one; use it as an upstream-sim fake PLC on port 10002; it has no Tango attributes and no declared license."
+    },
+    {
+      "package_id": "gh.scadawire/tango-visa-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "justification": "Skip: this Tango device server simulates the SCPI instrument side over TCP, not a client driver."
+    },
+    {
+      "package_id": "gh.scaxlibur/wavebench",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "Rigol DG4202 of wavebench: commands interpolate the channel and each setter reads a snapshot back, so a direct Driver, not a ScpiDriver table."
+    },
+    {
+      "package_id": "gh.schimmilab/pico-mcp",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "pico_mcp.scope:Scope",
+          "file": "src/pico_mcp/scope.py",
+          "line": 100
+        }
+      ],
+      "justification": "Scope is a direct PicoScope 5000A driver over the picosdk ps5000a SDK; the MCP server is only a thin front end."
+    },
+    {
+      "package_id": "gh.sciencecorp/science-device-api",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "science-device-api contains only protobuf service definitions for device authentication and system updates, with no Python code, hardware transport or runtime, so it is skipped as a non-device."
+    },
+    {
+      "package_id": "gh.scopefoundry/hw_random_gen",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "RandomNumberGenDev is a dummy, returning numpy noise and a local-clock sine with no transport or vendor SDK, so this ScopeFoundry example is not a device and should not be wrapped as a driver."
+    },
+    {
+      "package_id": "gh.septyawan24/epicssimulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: a LabVIEW detector simulator plus a C++ EPICS IOC and two Raspberry Pi scripts, not a Python device library."
+    },
+    {
+      "package_id": "gh.serhmarch/modbustools",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "ModbusTools is a C++/Qt graphical Modbus client/server simulator whose embedded Python scripts only access the simulator's shared-memory device registers, so it is not a Python device driver."
+    },
+    {
+      "package_id": "gh.shamroz12/biosimnext-next-gen-bioreactor-design-simulator",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: a bioreactor process simulator (SciPy ODE, dataset/web scaffolds) with no device I/O or SDK."
+    },
+    {
+      "package_id": "gh.shriya-arunkumar/dvs-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: a pure-Python DVS event-camera simulator and OpenCV viewer, not a drivable device; only EventSimulator.process_frame is reusable as a synthetic event source, and there is no SDK or transport."
+    },
+    {
+      "package_id": "gh.silab-bonn/basil",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "wave": 1,
+      "justification": "ISEG high-voltage supply of basil: commands are assembled from a letter, the channel and a value, so a direct Driver, not a ScpiDriver table."
+    },
+    {
+      "package_id": "gh.simonmeersschaut/stagecontroller",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of the PUB batch: a direct Driver, not a SerialDriver table: each request is framed as STX, the address byte, the ASCII command and ETX."
+    },
+    {
+      "package_id": "gh.simpledevicemodel/sdm",
+      "strategy": "skip",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "SDM is a C++/Qt framework with no Python wrapper or importable device API; skip/framework."
+    },
+    {
+      "package_id": "gh.singroup/pyvafm",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "PyVAFM is a Python 2 front end to the bundled vafmcore simulator, not a device, so it is bridge-runtime framework work."
+    },
+    {
+      "package_id": "gh.sirno/pypetting",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "Pypetting only writes EVOware .gwl worklist text and opens no serial, VISA or socket, so it is not a device driver."
+    },
+    {
+      "package_id": "gh.slaclab/simulacrum",
+      "strategy": "bridge-runtime",
+      "role": "sim-env",
+      "family": "tag-bridge",
+      "reason_code": "override:recon",
+      "justification": "Simulacrum is a simulator engine for the LCLS accelerator control system, serving simulated EPICS/PVA channels rather than driving a physical device."
+    },
+    {
+      "package_id": "gh.sldesnoo-delft/q1simulator",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "qcodes",
+      "reason_code": "override:recon",
+      "justification": "q1simulator is a simulator engine for Qblox QCM/QRM hardware, not a device driver, so bridge-runtime/framework fits."
+    },
+    {
+      "package_id": "gh.smguo/fluorescence-image-simulator",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "MATLAB-only Brownian-motion fluorescence image simulator with no device I/O or Python wrapper, so no driver applies."
+    },
+    {
+      "package_id": "gh.smithsonian/rxlab-instruments",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:direct-driver",
+      "wave": 2,
+      "justification": "Model review of wave B: a direct Driver over AgilentE8257D, not a ScpiDriver table: get_power sends ':UNIT:POW <units>' and then ':POW?', and get_id and reset are inherited."
+    },
+    {
+      "package_id": "gh.snatch59/simple-ocean-optics-spectrometer",
+      "strategy": "reference",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "This is a one-file pyusb example script for Ocean Optics spectrometers, not a class-based or packaged driver, so it is prior art rather than a new OpenMHS driver."
+    },
+    {
+      "package_id": "gh.sniemi/euclidvisibleinstrument",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "VIS-PP is an offline Euclid VIS image simulator and data-reduction library, not a device driver; it synthesises and analyses FITS images from configs and catalogues with no hardware transport."
+    },
+    {
+      "package_id": "gh.sniprbiome/pyvenus",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "Model review of recon wave A: PyVenus runs HSL code through Hamilton's Venus run control and implements no device function itself, so it is a Venus runtime bridge (SDK work), not a driver with fixed actions."
+    },
+    {
+      "package_id": "gh.solgaardlab/apt_piezo",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "justification": "Thorlabs APT protocol subset over pyftdi for the BPC-303 piezo controller (interface.controller:Controller); a VISA power-supply helper (pps.py) led rule 9 to the SCPI family."
+    },
+    {
+      "package_id": "gh.soso7885/modbus_simulator",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "C-only Modbus RTU/TCP CLI simulator with no Python wrapper, so skip: not a drivable device."
+    },
+    {
+      "package_id": "gh.spacetelescope/poppy",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Poppy is a physical-optics simulation library, not a device driver; its DMs and tip-tilt stage only compute wavefront OPD in software."
+    },
+    {
+      "package_id": "gh.spacetelescope/romanisim",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "romanisim simulates Wide Field Instrument images in software and drives no device, so it is a skip."
+    },
+    {
+      "package_id": "gh.sponchcafe/simfs-core",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "SiMFS-Tk simulates single-molecule fluorescence experiments in C++ and ships no Python wrapper or hardware interface, so it is not a device driver."
+    },
+    {
+      "package_id": "gh.srgblnch/linacds-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip/sim-env: a Python 2 PyTango/TCP server simulating the Alba linac Siemens S7 PLCs, not a hardware driver."
+    },
+    {
+      "package_id": "gh.starnight/modbus-server",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "This repository is a MODBUS TCP server simulator, not a device driver: it returns random register values over a listening socket and exposes no client-side device API."
+    },
+    {
+      "package_id": "gh.stevenrjanssens/alpacatelescopesimulator",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: C#/.NET ASCOM Alpaca telescope simulator with no Python wrapper and no license, so it cannot become a Python driver; its HTTP API is at most a mock peer for an Alpaca client."
+    },
+    {
+      "package_id": "gh.sustainable-processes/summit",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "SUMMIT is an optimization-algorithm and reaction-benchmark library, not a device driver or hardware simulator, so skip/not-device is correct."
+    },
+    {
+      "package_id": "gh.t-wagner/pymeasure",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of wave B: a direct Driver, not a ScpiDriver table: the per-channel requests of the PyVisa object are assembled from parts (SENS:<function>:...)."
+    },
+    {
+      "package_id": "gh.tango-controls/simulatords",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "SimulatorDS is a bridge-runtime/framework: a Tango device-server simulator engine, not a device driver; its Python 2 SimulatorDS class serves formula attributes and needs PyTango and fandango."
+    },
+    {
+      "package_id": "gh.tektronix/curvequery",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of wave B: a direct Driver over TekSeriesCurveFeat, not a ScpiDriver table: per-source commands are assembled from the source name and the curve is an IEEE binary block."
+    },
+    {
+      "package_id": "gh.thinksrs/srsgui",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "skip:tooling",
+      "justification": "Model review of wave B: the srsgui framework that organizes user-written instrument-control scripts as a GUI application; not a device (readme.md:3-7)."
+    },
+    {
+      "package_id": "gh.thorlabs/current_and_temperature_controller_examples",
+      "strategy": "skip",
+      "role": "docs",
+      "reason_code": "override:recon",
+      "justification": "This is a multi-language vendor sample-code collection, not a Python driver package, so it is a skip; port the per-device command sequences from the examples, as no Python class exists to wrap."
+    },
+    {
+      "package_id": "gh.thorlabs/light_analysis_examples",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "justification": "TLBC2.py:156 is a ctypes driver class for BC207/BC210 beam profilers, so this sample repo can yield a driver; package that module and require Windows, IVI VISA and the Thorlabs Beam SDK DLL.",
+      "entry_symbols": [
+        {
+          "symbol": "pyfile:Python/Thorlabs BC207 BC210 Beam Profiler/TLBC2.py#TLBC2",
+          "file": "Python/Thorlabs BC207 BC210 Beam Profiler/TLBC2.py",
+          "line": 156
+        }
+      ]
+    },
+    {
+      "package_id": "gh.tiagocoutinho/cryocon",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "justification": "CryoCon temperature-controller library like the julabo exemplar: core cryocon.cryocon:CryoCon class, optional simulator, optional Tango server extra (rule 9 took tango for a tag bridge)."
+    },
+    {
+      "package_id": "gh.tiagocoutinho/gepace",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "justification": "GE Pace pressure-controller library like the julabo exemplar: core gepace.pace:Pace class, optional simulator, optional Tango server extra (rule 9 took tango for a tag bridge)."
+    },
+    {
+      "package_id": "gh.tiagocoutinho/sinstruments",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "sinstruments is a simulator engine, not a device driver: Server opens TCP/UDP/pseudo-terminal endpoints and serves BaseDevice plugins."
+    },
+    {
+      "package_id": "gh.tiagocoutinho/vacuubrand",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "justification": "Vacuubrand vacuum-controller library like the julabo exemplar: core vacuubrand.dcp3000.dcp3000:DCP3000 class, optional simulator, optional Tango server extra (rule 9 took tango for a tag bridge)."
+    },
+    {
+      "package_id": "gh.tiagocoutinho/xia-pfcu",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "justification": "XIA PFCU filter-controller library like the julabo exemplar: core xia_pfcu.pfcu:PFCU class, optional simulator, optional Tango server extra (rule 9 took tango for a tag bridge)."
+    },
+    {
+      "package_id": "gh.tlnagy/fractionation",
+      "strategy": "skip",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "fractionation is a non-Python Julia script that drives a Marlin 3D printer over serial G-code, so it is skip/prior-art."
+    },
+    {
+      "package_id": "gh.tltmedia/microscope",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: a browser-based educational microscope simulator, not a device or Python driver."
+    },
+    {
+      "package_id": "gh.trash-hold/oscilloscope_dimserver",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "zmq_server.drivers.TDS3054C:TDS3054C",
+          "file": "zmq_server/drivers/TDS3054C.py",
+          "line": 89
+        }
+      ],
+      "justification": "TDS3054C is a Python class driver for one Tektronix TDS3054C scope over HTTP-wrapped SCPI, so direct-driver/python-object/device-driver fits; fake its socket and note that the tree states no license."
+    },
+    {
+      "package_id": "gh.trautsned/thorlabs_kenesis_python",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "One-off example script over the Thorlabs Kinesis .NET SDK, with no Python device class, so skip/tooling rather than a driver."
+    },
+    {
+      "package_id": "gh.trushintim/virtual-test-bench",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "This is a FastAPI test-bench host whose only instrument is an in-repo SCPI-like TCP simulator, not a device driver."
+    },
+    {
+      "package_id": "gh.umati/sample-server-asyncio",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "OPC UA sample server replaying demo CSV and random values into simulated machine nodes, so it is not a device driver."
+    },
+    {
+      "package_id": "gh.unine-chyn/thorpy",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of the PUB batch: a direct Driver over thorpy Port, not a SerialDriver table: the Thorlabs APT protocol is framed binary."
+    },
+    {
+      "package_id": "gh.urmel79/jupyter_pyvisa_lab",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:direct-driver",
+      "wave": 3,
+      "justification": "Model review of wave B: a direct Driver over the Benning MM12 class, not a ScpiDriver table: the meter speaks fixed binary frames (55 55 00 00 AA), not text commands."
+    },
+    {
+      "package_id": "gh.usnistgov/afl-hardware",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "AFL-hardware is CAD and labware designs plus Opentrons test protocols, not a device or library."
+    },
+    {
+      "package_id": "gh.usnistgov/labbench",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "skip:tooling",
+      "justification": "Model review of wave B: the labbench API for writing device wrappers; its wrappers live in ssmdevices, another repository (README.md:9-14, 53)."
+    },
+    {
+      "package_id": "gh.veerwang/octoaxes",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "hardware.serial_thread:SerialThread",
+          "file": "software/common/hardware/serial_thread.py",
+          "line": 21
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver, not a SerialDriver table: the host sends an 8-byte payload of a binary command id and an integer, not ASCII command words."
+    },
+    {
+      "package_id": "gh.vigneshvsv/oscilloscope-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is a hololinked example that simulates a four-channel oscilloscope with numpy, not a real instrument or vendor SDK."
+    },
+    {
+      "package_id": "gh.virtual-labs/virtual-chemistry-lab-dei",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is a PHP/WordPress virtual-chemistry lab website with a browser-side Rf calculator, not a device or Python driver library."
+    },
+    {
+      "package_id": "gh.vmehtacode/algaegrowth-simulator",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: an offline microalgal growth model with a Streamlit dashboard, not a device or simulator API."
+    },
+    {
+      "package_id": "gh.vstadnytskyi/caproto-sandbox",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "caproto-sandbox is a testground of caproto/pyepics demos with unimplemented pump/DI245 skeletons and random camera/DAQ data, so it drives no device; a driver author must implement all hardware access."
+    },
+    {
+      "package_id": "gh.webepics/basic_ioc_interface",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Demo web stack for EPICS test IOCs, not a device driver: BFStatusIOC is a generated constant-value caproto IOC; web_put proxies PV get/put."
+    },
+    {
+      "package_id": "gh.weihuajiang/sharphamilton",
+      "strategy": "skip",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "SharpHamilton is a C#/.NET library that drives Hamilton STAR liquid handlers through Hamilton Venus COM interop, so with no Python package or wrapper it is skip/prior-art."
+    },
+    {
+      "package_id": "gh.williamtsalter/fielddinomicroscopy",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "dnx64:DNX64",
+          "file": "dnx64.py",
+          "line": 41
+        }
+      ],
+      "justification": "DNX64 is a ctypes wrapper that drives Dino-Lite microscopes through the Windows-only DNX64.dll, so direct-driver/python-object fits."
+    },
+    {
+      "package_id": "gh.wlatanowicz/indipy",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "reason_code": "override:recon",
+      "justification": "INDIpy is an INDI protocol stack (server, client, driver base classes), not a driver for any device, so it is framework SDK work rather than a per-repository driver."
+    },
+    {
+      "package_id": "gh.wollmanlab/pyscope",
+      "strategy": "reference",
+      "role": "host",
+      "reason_code": "override:recon",
+      "justification": "pyScope is a GUI and experiment host that orchestrates Micro-Manager imaging and file-driven fluidics, not a single device driver."
+    },
+    {
+      "package_id": "gh.xpdacq/xpdsim",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: xpdsim is an ophyd simulation fixture of XPD devices, not a hardware driver."
+    },
+    {
+      "package_id": "gh.xzf89718/oscilloscope_scripts",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:direct-driver",
+      "wave": 2,
+      "justification": "Model review of wave B: a direct Driver, not a ScpiDriver table: each Measure* method writes a source and a measurement-type command, then queries :MEASUrement:IMMed:VALue?."
+    },
+    {
+      "package_id": "gh.yashswastik/mtp-opcua-simulator",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip: this C# .NET OPC UA simulation server is a fake MTP backend, not a Python device driver."
+    },
+    {
+      "package_id": "gh.yerbymatey/opentrons-mcp",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "Node.js MCP server wrapping the Opentrons HTTP API; it is non-Python, so skip/tooling, not a driver."
+    },
+    {
+      "package_id": "gh.ymzds/niscope-mcp",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "niscope_mcp.backends.direct:DirectBackend",
+          "file": "niscope_mcp/backends/direct.py",
+          "line": 20
+        }
+      ],
+      "justification": "niscope-mcp is a Python NI PXIe oscilloscope driver: DirectBackend wraps niscope.Session, and its MCP server is a front end."
+    },
+    {
+      "package_id": "gh.yongxb/keithley-smu-controls",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "Keithley_control_2450:keithley",
+          "file": "Keithley_control_2450.py",
+          "line": 40
+        },
+        {
+          "symbol": "keithley_control_2657A:keithley",
+          "file": "keithley_control_2657A.py",
+          "line": 38
+        },
+        {
+          "symbol": "Keithley2400_source_current_v2:sourcemeter",
+          "file": "Keithley2400_source_current_v2.py",
+          "line": 45
+        }
+      ],
+      "justification": "PyVISA/PyMeasure scripts drive Keithley 2400/2450/2657A SMUs via SCPI, fitting family-config/scpi."
+    },
+    {
+      "package_id": "gh.yuri-v-petrov/semsimulator",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "PyQt5 educational SEM image simulator that convolves stored TIFFs and has no hardware transport layer, so it is not a device; a driver author should not wrap it, only reuse its beam/image math."
+    },
+    {
+      "package_id": "gh.zabertech/motorzabermotion",
+      "strategy": "skip",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is a C++ EPICS motor module for Zaber devices whose Python is only test/build tooling, so it is prior art, not an importable driver."
+    },
+    {
+      "package_id": "gh.zabertech/zaber-motion-lib-swift",
+      "strategy": "skip",
+      "role": "prior-art",
+      "reason_code": "override:recon",
+      "justification": "The repository is a Swift library that operates Zaber devices, generated over a prebuilt native core, so it is skip/prior-art rather than a Python driver."
+    },
+    {
+      "package_id": "gh.zeelos/modbuspal",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "override:recon",
+      "justification": "Skip: a Java Swing Modbus TCP/serial slave simulator, not a Python library or wrapper; a driver author can only use it as a fake Modbus server for testing client code."
+    },
+    {
+      "package_id": "gh.zhinst/zhinst-qcodes",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "zhinst.qcodes.driver.devices.pqsc:PQSC",
+          "file": "src/zhinst/qcodes/driver/devices/pqsc.py",
+          "line": 10
+        }
+      ],
+      "justification": "Model review of helper wave 1: a direct Driver over the PQSC class (pqsc.py:10); init_nodetree generates its node Parameters (base.py:46), which QcodesDriver cannot prove. Replaces the family-config qcodes entry."
+    },
+    {
+      "package_id": "gh.zovcifzm/eels-simulator",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:recon",
+      "justification": "Skip: this is a numerical physics simulator of EELS optics in an electron microscope, not a device interface."
+    },
+    {
+      "package_id": "gh.zthurman/reactorsim",
+      "strategy": "skip",
+      "role": "sim-env",
+      "reason_code": "override:recon",
+      "justification": "Skip/sim-env: this is a systemd-timer-driven EPICS signal simulator that writes random PWR values through caput, not an importable device driver."
+    }
+  ]
+}

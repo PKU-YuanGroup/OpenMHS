@@ -1,0 +1,127 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.robotcontrolstack/robot-control-stack",
+  "track": "robots",
+  "local_path": "robots/robotcontrolstack/robot-control-stack",
+  "driver_dir": "MHS/drivers/robots/robotcontrolstack__robot-control-stack",
+  "upstream": {
+    "repo_url": "https://github.com/robotcontrolstack/robot-control-stack",
+    "commit": "afb3795ae9f49f9992bb61518eef6e7277b9011f",
+    "license_spdx": "AGPL-3.0",
+    "license_class": "network-copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 83,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "rcs.envs.base:SimEnv",
+      "file": "python/rcs/envs/base.py",
+      "line": 241,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rcs.envs.base:HardwareEnv",
+      "file": "python/rcs/envs/base.py",
+      "line": 211,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rcs.rpc.client:RcsClient",
+      "file": "python/rcs/rpc/client.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "rcs.envs.base:BaseEnv",
+      "file": "python/rcs/envs/base.py",
+      "line": 195,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "assets/robots/fr3/fr3.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "assets/robots/panda/panda.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "assets/robots/so101/so101.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "assets/robots/ur5e/ur5e.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "assets/robots/xarm7/xarm7.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "python/rcs/envs/configs.py:628 gym env rcs/fr3",
+      "python/rcs/envs/configs.py:629 gym env rcs/duo",
+      "python/rcs/envs/configs.py:630 gym env rcs/droid",
+      "python/rcs/envs/configs.py:631 gym env rcs/ur5e"
+    ],
+    "upstream_tests": "python/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env rcs/fr3 registered at python/rcs/envs/configs.py:628",
+      "gym env rcs/duo registered at python/rcs/envs/configs.py:629",
+      "gym env rcs/droid registered at python/rcs/envs/configs.py:630",
+      "gym env rcs/ur5e registered at python/rcs/envs/configs.py:631",
+      "gym env rcs/xarm7 registered at python/rcs/envs/configs.py:632",
+      "gym env rcs/so101 registered at python/rcs/envs/configs.py:633",
+      "gym env rcs/yam registered at python/rcs/envs/configs.py:634"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/robotcontrolstack__robot-control-stack --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

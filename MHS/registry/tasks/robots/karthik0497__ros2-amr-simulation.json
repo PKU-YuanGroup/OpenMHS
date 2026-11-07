@@ -1,0 +1,71 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.karthik0497/ros2-amr-simulation",
+  "track": "robots",
+  "local_path": "robots/karthik0497/ros2-amr-simulation",
+  "driver_dir": "MHS/drivers/robots/karthik0497__ros2-amr-simulation",
+  "upstream": {
+    "repo_url": "https://github.com/karthik0497/ros2-amr-simulation",
+    "commit": "202aad5cac8842dcf94385be4ed186fdd8b29718",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:licence-review",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 329,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [
+      "AMRController.set_angular_speed",
+      "AMRController.set_linear_speed"
+    ],
+    "actions": [
+      "AMRController.move_backward",
+      "AMRController.move_forward",
+      "AMRController.stop"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/karthik0497__ros2-amr-simulation --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

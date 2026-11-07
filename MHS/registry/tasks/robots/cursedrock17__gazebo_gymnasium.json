@@ -1,0 +1,112 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cursedrock17/gazebo_gymnasium",
+  "track": "robots",
+  "local_path": "robots/cursedrock17/gazebo_gymnasium",
+  "driver_dir": "MHS/drivers/robots/cursedrock17__gazebo_gymnasium",
+  "upstream": {
+    "repo_url": "https://github.com/cursedrock17/gazebo_gymnasium",
+    "commit": "a9d142db85b619a299a7eb29461532cade1c20ac",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 228,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gazebo_gymnasium_bridge.gazebo_gymnasium_bridge.envs.gym_env:GazeboEnv",
+      "file": "gazebo_gymnasium_bridge/gazebo_gymnasium_bridge/envs/gym_env.py",
+      "line": 49,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/ant.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/half_cheetah.xml",
+      "line": 35,
+      "kind": "robot"
+    },
+    {
+      "file": "gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/hopper.xml",
+      "line": 6,
+      "kind": "robot"
+    },
+    {
+      "file": "gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/humanoid.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/humanoidstandup.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/ant.xml:1 MJCF robot model",
+      "gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/half_cheetah.xml:35 MJCF robot model",
+      "gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/hopper.xml:6 MJCF robot model",
+      "gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/humanoid.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "gazebo_gymnasium_bridge/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/ant.xml:1",
+      "MJCF robot model gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/half_cheetah.xml:35",
+      "MJCF robot model gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/hopper.xml:6",
+      "MJCF robot model gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/humanoid.xml:1",
+      "MJCF robot model gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/humanoidstandup.xml:1",
+      "MJCF robot model gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/inverted_double_pendulum.xml:16",
+      "MJCF robot model gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/inverted_pendulum.xml:1",
+      "MJCF robot model gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/point.xml:1",
+      "MJCF robot model gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/pusher.xml:1",
+      "MJCF robot model gazebo_gymnasium_examples/gazebo_gymnasium_resources/models/mujoco_sources/pusher_v5.xml:7"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cursedrock17__gazebo_gymnasium --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,105 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.scopefoundry/hw_acton_spec",
+  "track": "labs",
+  "local_path": "labs/scopefoundry/hw_acton_spec",
+  "driver_dir": "MHS/drivers/labs/scopefoundry__hw_acton_spec",
+  "upstream": {
+    "repo_url": "https://github.com/scopefoundry/hw_acton_spec",
+    "commit": "a4e112406b7fd275a8d23048631a21f0a82758e7",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 94,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "acton_spec:ActonSpectrometerHW",
+      "file": "acton_spec.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "acton_spec_interface:ActonSpectrometer",
+      "file": "acton_spec_interface.py",
+      "line": 7,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "ActonSpectrometerHW.get_wl_calibration",
+      "ActonSpectrometerHW.acton_spectrometer.read_done_status",
+      "ActonSpectrometerHW.acton_spectrometer.read_entrance_slit",
+      "ActonSpectrometerHW.acton_spectrometer.read_exit_mirror",
+      "ActonSpectrometerHW.acton_spectrometer.read_exit_slit",
+      "ActonSpectrometerHW.acton_spectrometer.read_grating",
+      "ActonSpectrometerHW.acton_spectrometer.read_grating_info",
+      "ActonSpectrometerHW.acton_spectrometer.read_grating_name",
+      "ActonSpectrometerHW.acton_spectrometer.read_turret",
+      "ActonSpectrometerHW.acton_spectrometer.read_wl",
+      "ActonSpectrometer.read_done_status",
+      "ActonSpectrometer.read_entrance_slit"
+    ],
+    "writes": [
+      "ActonSpectrometerHW.acton_spectrometer.write_command",
+      "ActonSpectrometerHW.acton_spectrometer.write_entrance_slit",
+      "ActonSpectrometerHW.acton_spectrometer.write_exit_mirror",
+      "ActonSpectrometerHW.acton_spectrometer.write_exit_slit",
+      "ActonSpectrometerHW.acton_spectrometer.write_grating",
+      "ActonSpectrometerHW.acton_spectrometer.write_turret",
+      "ActonSpectrometerHW.acton_spectrometer.write_wl",
+      "ActonSpectrometerHW.acton_spectrometer.write_wl_fast",
+      "ActonSpectrometerHW.acton_spectrometer.write_wl_nonblock",
+      "ActonSpectrometer.write_command",
+      "ActonSpectrometer.write_entrance_slit",
+      "ActonSpectrometer.write_exit_mirror"
+    ],
+    "actions": [
+      "ActonSpectrometerHW.acton_spectrometer.home_entrance_slit",
+      "ActonSpectrometer.home_entrance_slit"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/scopefoundry__hw_acton_spec --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

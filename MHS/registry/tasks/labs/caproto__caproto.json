@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.caproto/caproto",
+  "track": "labs",
+  "local_path": "labs/caproto/caproto",
+  "driver_dir": "MHS/drivers/labs/caproto__caproto",
+  "upstream": {
+    "repo_url": "https://github.com/caproto/caproto",
+    "commit": "48de3a237a24c0dd402c81d544743f45d747d9d8",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:tag-bridge",
+  "role": "transport",
+  "family": "tag-bridge",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 468,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "caproto.ioc_examples.lakeshore:LakeshoreIOC",
+      "file": "caproto/ioc_examples/lakeshore.py",
+      "line": 252,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "caproto._data:ChannelAlarm",
+      "file": "caproto/_data.py",
+      "line": 79,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "caproto.threading.pyepics_compat:PV",
+      "file": "caproto/threading/pyepics_compat.py",
+      "line": 164,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "caproto.server.server:PvpropertyFloat",
+      "file": "caproto/server/server.py",
+      "line": 410,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "caproto.server.server:PvpropertyDouble",
+      "file": "caproto/server/server.py",
+      "line": 414,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "caproto/_circuit.py:54 VirtualCircuit",
+      "caproto/asyncio/client.py:936 VirtualCircuitManager",
+      "caproto/asyncio/server.py:41 VirtualCircuit",
+      "caproto/curio/server.py:66 VirtualCircuit",
+      "caproto/ioc_examples/fake_motor_record.py:114 FakeMotor",
+      "caproto/ioc_examples/fake_motor_record.py:146 FakeMotorIOC"
+    ],
+    "upstream_tests": "caproto/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/caproto__caproto --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

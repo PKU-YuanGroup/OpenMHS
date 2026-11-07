@@ -1,0 +1,114 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.carolzyy/modesuite",
+  "track": "robots",
+  "local_path": "robots/carolzyy/modesuite",
+  "driver_dir": "MHS/drivers/robots/carolzyy__modesuite",
+  "upstream": {
+    "repo_url": "https://github.com/carolzyy/modesuite",
+    "commit": "470681a7ff117e487060ad52bc4f199e3fa34474",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 115,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "task.Bend.spot_bend_env:SpotBendRodEnv",
+      "file": "task/Bend/spot_bend_env.py",
+      "line": 121,
+      "confidence": "override"
+    },
+    {
+      "symbol": "task.Bend.franka_bend_env:FrankaBendRodEnv",
+      "file": "task/Bend/franka_bend_env.py",
+      "line": 117,
+      "confidence": "override"
+    },
+    {
+      "symbol": "task.Cover.spot_cover_env:SpotCoverEnv",
+      "file": "task/Cover/spot_cover_env.py",
+      "line": 103,
+      "confidence": "override"
+    },
+    {
+      "symbol": "task.Cover.franka_cover_env:FrankaCoverEnv",
+      "file": "task/Cover/franka_cover_env.py",
+      "line": 132,
+      "confidence": "override"
+    },
+    {
+      "symbol": "task.Curtain.spot_curtain_env:SpotCurtainEnv",
+      "file": "task/Curtain/spot_curtain_env.py",
+      "line": 91,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "task/Bend/__init__.py:11 gym env MoDe-Spot-Bend-v0",
+      "task/Bend/__init__.py:20 gym env MoDe-Spot-Bend-SAC",
+      "task/Bend/__init__.py:29 gym env MoDe-Franka-Bend-v0",
+      "task/Bend/__init__.py:38 gym env MoDe-Franka-Bend-SAC"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env MoDe-Spot-Bend-v0 registered at task/Bend/__init__.py:11",
+      "gym env MoDe-Spot-Bend-SAC registered at task/Bend/__init__.py:20",
+      "gym env MoDe-Franka-Bend-v0 registered at task/Bend/__init__.py:29",
+      "gym env MoDe-Franka-Bend-SAC registered at task/Bend/__init__.py:38",
+      "gym env MoDe-Spot-Cover-v0 registered at task/Cover/__init__.py:11",
+      "gym env MoDe-Franka-Cover-v0 registered at task/Cover/__init__.py:21",
+      "gym env MoDe-Spot-Curtain-v0 registered at task/Curtain/__init__.py:11",
+      "gym env MoDe-Franka-Curtain-v0 registered at task/Curtain/__init__.py:21",
+      "gym env MoDe-Spot-Drag-v0 registered at task/Drag/__init__.py:11",
+      "gym env MoDe-Spot-Drag-SAC registered at task/Drag/__init__.py:21",
+      "gym env MoDe-Franka-Drag-v0 registered at task/Drag/__init__.py:31",
+      "gym env MoDe-Franka-Drag-SAC registered at task/Drag/__init__.py:41"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license",
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/carolzyy__modesuite --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

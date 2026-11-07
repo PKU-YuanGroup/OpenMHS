@@ -1,0 +1,277 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "pycont.controller:C3000Controller (pycont/controller.py:339)",
+      "pycont.controller:MultiPumpController (pycont/controller.py:1319)",
+      "pycont.controller:PumpIO (pycont/controller.py:88)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.actuation.pump.v1",
+    "cap.actuation.valve.v1",
+    "cap.motion.joint_position.v1"
+  ],
+  "catalog_refs": [
+    "repo_8e22ad74c97786bf",
+    "https://github.com/croningp/pycont"
+  ],
+  "description": "croningp/pycont: pump device SDK for wet-lab automation and chemistry (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Declared backend: PyCont serial controller. Language: Python. Catalog keywords: Tecan, Cavro, Tricont.",
+  "domains": [
+    "wet-lab automation and chemistry"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 44 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/croningp__pycont/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.croningp/pycont",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/croningp__pycont: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/croningp__pycont --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:flagship-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python",
+    "serial",
+    "Serial",
+    "CLI"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2020-06-30T22:43:34Z",
+  "license": "GPL-3.0",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-3.0",
+  "links": {
+    "docs": "https://github.com/croningp/pycont",
+    "repo": "https://github.com/croningp/pycont"
+  },
+  "local_path": "labs/croningp/pycont",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "croningp",
+  "package_id": "gh.croningp/pycont",
+  "quarantine": false,
+  "rank": 6,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pycont",
+  "repo_url": "https://github.com/croningp/pycont",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "3f6dacb2a6ee82ce1806f6e471013a9ab809c0e6",
+    "repo_url": "https://github.com/croningp/pycont"
+  },
+  "stars": 9,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "pump device sdk",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "croningp/pycont",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 30.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备 SDK",
+      "archived": "false",
+      "backend_family_raw": "PyCont serial controller",
+      "category_zh": "泵设备 SDK",
+      "description_zh": "Tecan Cavro/Tricont泵串口控制库，支持多泵网络及阀动作。",
+      "join": "exact",
+      "license_raw": "GPL-3.0",
+      "mhs_support_raw": "需开发适配；已核材料未建立官方或第三方 MHS 集成证据",
+      "priority": "P2",
+      "row": 543,
+      "rows_all": [
+        543
+      ],
+      "scope": "unknown",
+      "track_raw": "lab_instrument",
+      "verification_level": "已核源码"
+    },
+    "classification": {
+      "catalog_family": "serial",
+      "catalog_tier": "B",
+      "family_matches": [
+        "analyst-profile:lab-serial"
+      ],
+      "family_note": "triage family python-object (catalogue family serial)",
+      "family_rule": "analyst-profile",
+      "family_score": 91,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/croningp__pycont/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.actuation.pump.v1"
+            ],
+            "kind": "actuation.pump"
+          },
+          {
+            "capabilities": [
+              "cap.actuation.valve.v1"
+            ],
+            "kind": "actuation.valve"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/croningp__pycont/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/croningp__pycont/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.actuation.pump.v1"
+            ],
+            "kind": "actuation.pump"
+          },
+          {
+            "capabilities": [
+              "cap.actuation.valve.v1"
+            ],
+            "kind": "actuation.valve"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-3.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "GPL-3.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "3f6dacb2a6ee82ce1806f6e471013a9ab809c0e6",
+      "driver_dir": "MHS/drivers/labs/croningp__pycont",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:f65203998f3726c69833ed728f26bad8816e12392e7374c00483d5effcfde4a3",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 4,
+      "files": 44,
+      "markers": {
+        "serial": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Python controller for Tricontinent C3000 syringe-pump networks (DT protocol over serial) with valve actions; a direct Driver over its pump controller classes.",
+        "rules alone: direct-driver (PY_SDK_WITH_ENTRY, rule 10)"
+      ],
+      "family": "python-object",
+      "flagship": true,
+      "hardware_transport": "class pycont.controller:C3000Controller uses the hardware transport serial",
+      "helper": "PythonObjectDriver",
+      "justification": "Python controller for Tricontinent C3000 syringe-pump networks (DT protocol over serial) with valve actions; a direct Driver over its pump controller classes.",
+      "reason_code": "override:flagship-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

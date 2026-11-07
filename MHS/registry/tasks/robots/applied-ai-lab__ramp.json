@@ -1,0 +1,63 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.applied-ai-lab/ramp",
+  "track": "robots",
+  "local_path": "robots/applied-ai-lab/ramp",
+  "driver_dir": "MHS/drivers/robots/applied-ai-lab__ramp",
+  "upstream": {
+    "repo_url": "https://github.com/applied-ai-lab/ramp",
+    "commit": "55b2d49a1ef2e47fc92c1f1203f2212a702b9242",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "prior-art",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 9,
+  "rank": 1183,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "catkin_make"
+    ],
+    "system_deps": [
+      "Catkin workspace with this package in src; run catkin_make from the workspace root"
+    ],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/applied-ai-lab__ramp --backend fake",
+  "skip_reason": "override (ros-wave-c-routing.json): Model review of wave C: skip, prior art: a real-Franka assembly baseline over the external panda_ros_interface (core/action_interface.py:16, 56) with no simulator or stop; it does not run as shipped (main.py:13).",
+  "publish_review": "not_required"
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.manasp21/oscilloscope_mcp",
+  "track": "labs",
+  "local_path": "labs/manasp21/oscilloscope_mcp",
+  "driver_dir": "MHS/drivers/labs/manasp21__oscilloscope_mcp",
+  "upstream": {
+    "repo_url": "https://github.com/manasp21/oscilloscope_mcp",
+    "commit": "49b9c4a7b06b0a98688f5f9cd689ec21c25d3eeb",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "twin-candidate",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 18,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "oscilloscope_mcp.hardware.ethernet_backend:EthernetOscilloscope",
+      "file": "src/oscilloscope_mcp/hardware/ethernet_backend.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "oscilloscope_mcp.hardware.pcie_backend:PCIeOscilloscope",
+      "file": "src/oscilloscope_mcp/hardware/pcie_backend.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "oscilloscope_mcp.hardware.usb_backend:USBOscilloscope",
+      "file": "src/oscilloscope_mcp/hardware/usb_backend.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "oscilloscope_mcp.hardware.adc_interface:SerialADCInterface",
+      "file": "src/oscilloscope_mcp/hardware/adc_interface.py",
+      "line": 430,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "oscilloscope_mcp.signal_processing.engine:SignalProcessor",
+      "file": "src/oscilloscope_mcp/signal_processing/engine.py",
+      "line": 22,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "EthernetOscilloscope.get_status",
+      "PCIeOscilloscope.get_status",
+      "USBOscilloscope.get_status"
+    ],
+    "writes": [
+      "EthernetOscilloscope.configure_channels",
+      "EthernetOscilloscope.set_timebase",
+      "PCIeOscilloscope.configure_channels",
+      "PCIeOscilloscope.set_timebase",
+      "USBOscilloscope.configure_channels",
+      "USBOscilloscope.set_timebase"
+    ],
+    "actions": [
+      "EthernetOscilloscope.acquire_waveform",
+      "EthernetOscilloscope.setup_trigger",
+      "EthernetOscilloscope.stop_acquisition",
+      "PCIeOscilloscope.acquire_waveform",
+      "PCIeOscilloscope.setup_trigger",
+      "PCIeOscilloscope.stop_acquisition",
+      "USBOscilloscope.acquire_waveform",
+      "USBOscilloscope.setup_trigger",
+      "USBOscilloscope.stop_acquisition"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/manasp21__oscilloscope_mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,98 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.learnsyslab/gym-pybullet-drones",
+  "track": "robots",
+  "local_path": "robots/learnsyslab/gym-pybullet-drones",
+  "driver_dir": "MHS/drivers/robots/learnsyslab__gym-pybullet-drones",
+  "upstream": {
+    "repo_url": "https://github.com/learnsyslab/gym-pybullet-drones",
+    "commit": "7ebad1ecabd28a7000add2d05f888aa2e837c2cc",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 37,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_pybullet_drones.envs:CtrlAviary",
+      "file": "gym_pybullet_drones/envs/CtrlAviary.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_pybullet_drones.envs:VelocityAviary",
+      "file": "gym_pybullet_drones/envs/VelocityAviary.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_pybullet_drones.envs:HoverAviary",
+      "file": "gym_pybullet_drones/envs/HoverAviary.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_pybullet_drones.envs:MultiHoverAviary",
+      "file": "gym_pybullet_drones/envs/MultiHoverAviary.py",
+      "line": 6,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_pybullet_drones/__init__.py:3 gym env ctrl-aviary-v0",
+      "gym_pybullet_drones/__init__.py:8 gym env velocity-aviary-v0",
+      "gym_pybullet_drones/__init__.py:13 gym env hover-aviary-v0",
+      "gym_pybullet_drones/__init__.py:18 gym env multihover-aviary-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env ctrl-aviary-v0 registered at gym_pybullet_drones/__init__.py:3",
+      "gym env velocity-aviary-v0 registered at gym_pybullet_drones/__init__.py:8",
+      "gym env hover-aviary-v0 registered at gym_pybullet_drones/__init__.py:13",
+      "gym env multihover-aviary-v0 registered at gym_pybullet_drones/__init__.py:18"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/learnsyslab__gym-pybullet-drones --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

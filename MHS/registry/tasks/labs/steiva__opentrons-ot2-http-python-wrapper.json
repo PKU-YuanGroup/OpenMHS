@@ -1,0 +1,92 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.steiva/opentrons-ot2-http-python-wrapper",
+  "track": "labs",
+  "local_path": "labs/steiva/opentrons-ot2-http-python-wrapper",
+  "driver_dir": "MHS/drivers/labs/steiva__opentrons-ot2-http-python-wrapper",
+  "upstream": {
+    "repo_url": "https://github.com/steiva/opentrons-ot2-http-python-wrapper",
+    "commit": "6bf929c11fe94a03c8b444c70e13be273933f365",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 354,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "ot2_api:OpentronsAPI",
+      "file": "ot2_api.py",
+      "line": 56,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "OpentronsAPI.get_all_runs",
+      "OpentronsAPI.get_offset_for_slot",
+      "OpentronsAPI.get_position",
+      "OpentronsAPI.get_run_info",
+      "OpentronsAPI.get_url"
+    ],
+    "writes": [],
+    "actions": [
+      "OpentronsAPI.add_labware_offset_to_run",
+      "OpentronsAPI.aspirate",
+      "OpentronsAPI.aspirate_in_place",
+      "OpentronsAPI.control_run",
+      "OpentronsAPI.create_run",
+      "OpentronsAPI.dispense",
+      "OpentronsAPI.dispense_in_place",
+      "OpentronsAPI.home_robot",
+      "OpentronsAPI.move_labware",
+      "OpentronsAPI.move_relative",
+      "OpentronsAPI.move_to_coordinates",
+      "OpentronsAPI.move_to_well"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/steiva__opentrons-ot2-http-python-wrapper --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

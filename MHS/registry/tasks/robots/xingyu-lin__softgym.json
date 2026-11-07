@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.xingyu-lin/softgym",
+  "track": "robots",
+  "local_path": "robots/xingyu-lin/softgym",
+  "driver_dir": "MHS/drivers/robots/xingyu-lin__softgym",
+  "upstream": {
+    "repo_url": "https://github.com/xingyu-lin/softgym",
+    "commit": "bb383f64cd488062587714abbae38f27ed9f2457",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 192,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "softgym.envs.pour_water:PourWaterPosControlEnv",
+      "file": "softgym/envs/pour_water.py",
+      "line": 12,
+      "confidence": "override"
+    },
+    {
+      "symbol": "softgym.envs.flex_env:FlexEnv",
+      "file": "softgym/envs/flex_env.py",
+      "line": 17,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "softgym/__init__.py:16 gym env PourWaterPosControl-v0",
+      "softgym/__init__.py:30 gym env PourWaterPosControlGoalConditioned-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env PourWaterPosControl-v0 registered at softgym/__init__.py:16",
+      "gym env PourWaterPosControlGoalConditioned-v0 registered at softgym/__init__.py:30"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/xingyu-lin__softgym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

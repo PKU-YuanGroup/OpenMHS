@@ -1,0 +1,242 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "lantz.drivers.labjack._internal.u12:U12 (lantz/drivers/labjack/_internal/u12.py:395)",
+      "lantz.drivers.andor.neo:Neo (lantz/drivers/andor/neo.py:27)",
+      "lantz.feat:DictFeat (lantz/feat.py:316)",
+      "lantz.log:LoggingTCPServer (lantz/log.py:229)",
+      "lantz.log:LoggingUDPServer (lantz/log.py:260)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python",
+    "make"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1"
+  ],
+  "catalog_refs": [
+    "repo_22d3fa2493973b11",
+    "https://github.com/labpy/lantz"
+  ],
+  "description": "labpy/lantz: control framework for general (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Language: Python. Catalog keywords: Lantz.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 209 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/labpy__lantz/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.labpy/lantz",
+  "integration": {
+    "blockers": [],
+    "effort": "E3",
+    "next_action": "Maintain MHS/drivers/labs/labpy__lantz: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/labpy__lantz --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:driver-pack",
+    "recipe": "families/python-object.md",
+    "role": "driver-pack",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "CLI",
+    "SCPI/VISA",
+    "Serial"
+  ],
+  "languages": [
+    "Python",
+    "C"
+  ],
+  "last_commit_at": "2015-02-05T16:37:02-03:00",
+  "license": "BSD-3-Clause",
+  "license_class": "permissive",
+  "license_spdx": "BSD-3-Clause",
+  "links": {
+    "docs": "https://github.com/LabPy/lantz",
+    "repo": "https://github.com/labpy/lantz"
+  },
+  "local_path": "labs/labpy/lantz",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "labpy",
+  "package_id": "gh.labpy/lantz",
+  "quarantine": false,
+  "rank": 2,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "lantz",
+  "repo_url": "https://github.com/labpy/lantz",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "3e878e3f765a4295b0089d04e241d4beb7b8a65b",
+    "repo_url": "https://github.com/labpy/lantz"
+  },
+  "stars": 139,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "control framework",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "labpy/lantz",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.86,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 65.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "控制框架",
+      "description_zh": "Lantz仪器自动化工具包(驱动封装与应用原型)",
+      "join": "exact",
+      "license_raw": "NOASSERTION",
+      "mhs_support_raw": "需开发适配",
+      "priority": "P2",
+      "row": 1371,
+      "rows_all": [
+        1371
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/labpy__lantz/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/labpy__lantz/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/labpy__lantz/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "BSD-3-Clause",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "3e878e3f765a4295b0089d04e241d4beb7b8a65b",
+      "driver_dir": "MHS/drivers/labs/labpy__lantz",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:e1a039bb4ffa984dad0540889a40ec4b45e0724f655315a75d81e8c395d267fd",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python",
+        "make"
+      ],
+      "entry_evidence_count": 5,
+      "files": 209,
+      "markers": {
+        "cli": 2,
+        "scpi_visa": 2,
+        "serial": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Lantz instrumentation toolkit (Feat, DictFeat, Action) with a driver pack under lantz/drivers; like pymeasure, one card for the pack, not a SCPI command map (rule 9 saw pyvisa).",
+        "rules alone: family-config (family:scpi, rule 9)"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "justification": "Lantz instrumentation toolkit (Feat, DictFeat, Action) with a driver pack under lantz/drivers; like pymeasure, one card for the pack, not a SCPI command map (rule 9 saw pyvisa).",
+      "reason_code": "override:driver-pack",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

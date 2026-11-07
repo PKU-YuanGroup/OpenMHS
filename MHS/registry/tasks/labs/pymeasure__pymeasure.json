@@ -1,0 +1,148 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pymeasure/pymeasure",
+  "track": "labs",
+  "local_path": "labs/pymeasure/pymeasure",
+  "driver_dir": "MHS/drivers/labs/pymeasure__pymeasure",
+  "upstream": {
+    "repo_url": "https://github.com/pymeasure/pymeasure",
+    "commit": "9c6a96014e74bda79988ae0757a6b38ca390d247",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:driver-pack",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 5,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pymeasure.instruments.keithley.keithleyDMM6500:KeithleyDMM6500",
+      "file": "pymeasure/instruments/keithley/keithleyDMM6500.py",
+      "line": 160,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymeasure.instruments.hp.hp856Xx:HP8561B",
+      "file": "pymeasure/instruments/hp/hp856Xx.py",
+      "line": 3039,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymeasure.instruments.hp.hp856Xx:HP8560A",
+      "file": "pymeasure/instruments/hp/hp856Xx.py",
+      "line": 2836,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymeasure.instruments.rohdeschwarz.sfm:SFM",
+      "file": "pymeasure/instruments/rohdeschwarz/sfm.py",
+      "line": 192,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymeasure.instruments.agilent.agilentB298x:AgilentB2987",
+      "file": "pymeasure/instruments/agilent/agilentB298x.py",
+      "line": 1132,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pymeasure/adapters/adapter.py:226 FakeAdapter",
+      "pymeasure/instruments/fakes.py:35 FakeInstrument",
+      "pymeasure/instruments/fakes.py:83 SwissArmyFake",
+      "pymeasure/instruments/keithley/keithley2281S.py:283 BatterySimulationChannel",
+      "pymeasure/instruments/ni/virtualbench.py:61 VirtualBench_Direct",
+      "pymeasure/instruments/ni/virtualbench.py:89 VirtualBench"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "KeithleyDMM6500.get_channel_pairs",
+      "KeithleyDMM6500.get_channels",
+      "KeithleyDMM6500.measure_capacitance",
+      "KeithleyDMM6500.measure_continuity",
+      "KeithleyDMM6500.measure_current",
+      "KeithleyDMM6500.measure_diode",
+      "KeithleyDMM6500.measure_frequency",
+      "KeithleyDMM6500.measure_period",
+      "KeithleyDMM6500.measure_resistance",
+      "KeithleyDMM6500.measure_temperature",
+      "KeithleyDMM6500.measure_voltage",
+      "KeithleyDMM6500.read_binary_values"
+    ],
+    "writes": [
+      "KeithleyDMM6500.write_binary_values",
+      "HP8561B.set_auto_couple",
+      "HP8561B.set_continuous_sweep",
+      "HP8561B.set_crt_adjustment_pattern",
+      "HP8561B.set_full_span",
+      "HP8561B.set_fullband",
+      "HP8561B.set_linear_scale",
+      "HP8561B.set_marker_delta_to_span",
+      "HP8561B.set_marker_minimum",
+      "HP8561B.set_marker_to_center_frequency",
+      "HP8561B.set_marker_to_center_frequency_step_size",
+      "HP8561B.set_marker_to_reference_level"
+    ],
+    "actions": [
+      "KeithleyDMM6500.acquire_relative",
+      "KeithleyDMM6500.disable_filter",
+      "KeithleyDMM6500.disable_relative",
+      "KeithleyDMM6500.enable_filter",
+      "KeithleyDMM6500.enable_relative",
+      "KeithleyDMM6500.reset",
+      "KeithleyDMM6500.scan_start",
+      "KeithleyDMM6500.scan_stop"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.measure.current.v1",
+      "cap.measure.resistance.v1",
+      "cap.measure.temperature.v1",
+      "cap.measure.voltage.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "pymeasure/instruments/anapico/apsin12G.py:32 FREQ_LIMIT = [9000.0, 12000000000.0]",
+      "pymeasure/instruments/anapico/apsin12G.py:33 POW_LIMIT = [-30, 27]",
+      "pymeasure/instruments/anritsu/anritsuMS464xB.py:62 FREQUENCY_RANGE = [10000000.0, 70000000000.0]",
+      "pymeasure/instruments/anritsu/anritsuMS464xB.py:903 FREQUENCY_RANGE = [10000000.0, 20000000000.0]",
+      "pymeasure/instruments/anritsu/anritsuMS464xB.py:913 FREQUENCY_RANGE = [10000000.0, 40000000000.0]",
+      "pymeasure/instruments/anritsu/anritsuMS464xB.py:923 FREQUENCY_RANGE = [10000000.0, 50000000000.0]",
+      "pymeasure/instruments/anritsu/anritsuMS464xB.py:933 FREQUENCY_RANGE = [10000000.0, 70000000000.0]",
+      "pymeasure/instruments/deltaelektronika/sm7045d.py:45 VOLTAGE_RANGE = [0, 70]"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymeasure__pymeasure --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

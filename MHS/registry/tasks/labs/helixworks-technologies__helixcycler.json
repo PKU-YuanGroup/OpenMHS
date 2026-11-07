@@ -1,0 +1,109 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.helixworks-technologies/helixcycler",
+  "track": "labs",
+  "local_path": "labs/helixworks-technologies/helixcycler",
+  "driver_dir": "MHS/drivers/labs/helixworks-technologies__helixcycler",
+  "upstream": {
+    "repo_url": "https://github.com/helixworks-technologies/helixcycler",
+    "commit": "29bcd934a8d5289021fb774de17ecdf578ff92f7",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 310,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "tc_send_code:HardwareController",
+      "file": "tc_send_code.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "helixcycler:App",
+      "file": "helixcycler.py",
+      "line": 21,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "helixshaker:App",
+      "file": "helixshaker.py",
+      "line": 11,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "HardwareController.get_available_ports",
+      "HardwareController.get_lid_temperature",
+      "HardwareController.get_plate_info",
+      "App.controller.get_available_ports",
+      "App.controller.get_lid_temperature",
+      "App.controller.get_plate_info"
+    ],
+    "writes": [
+      "HardwareController.set_lid_temperature",
+      "HardwareController.set_plate_temperature",
+      "HardwareController.set_shake_speed",
+      "App.set_controls_state",
+      "App.set_lid_temp",
+      "App.set_plate_temp",
+      "App.controller.set_lid_temperature",
+      "App.controller.set_plate_temperature",
+      "App.controller.set_shake_speed",
+      "App.set_shake_speed"
+    ],
+    "actions": [
+      "App.emergency_stop",
+      "App.emergency_stop_are_you_sure",
+      "App.run_ready_check",
+      "App.start_run_thread"
+    ],
+    "candidate_classes": [
+      "cap.thermal.setpoint.v1",
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.measure.temperature.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/helixworks-technologies__helixcycler --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.opendilab/di-engine",
+  "track": "robots",
+  "local_path": "robots/opendilab/di-engine",
+  "driver_dir": "MHS/drivers/robots/opendilab__di-engine",
+  "upstream": {
+    "repo_url": "https://github.com/opendilab/di-engine",
+    "commit": "d0b21d065b2d80317cc16b28a95301be8871d950",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 132,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ding/policy/command_mode_policy_instance.py:92 DummyCommandModePolicy",
+      "ding/utils/fake_linklink.py:4 FakeClass",
+      "ding/utils/fake_linklink.py:14 FakeNN",
+      "ding/utils/fake_linklink.py:23 FakeLink",
+      "dizoo/gfootball/envs/fake_dataset.py:24 FakeGfootballDataset",
+      "ding/utils/fake_linklink.py:1"
+    ],
+    "upstream_tests": "ding/config/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/opendilab__di-engine --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

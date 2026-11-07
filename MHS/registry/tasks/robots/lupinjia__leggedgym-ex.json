@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.lupinjia/leggedgym-ex",
+  "track": "robots",
+  "local_path": "robots/lupinjia/leggedgym-ex",
+  "driver_dir": "MHS/drivers/robots/lupinjia__leggedgym-ex",
+  "upstream": {
+    "repo_url": "https://github.com/lupinjia/leggedgym-ex",
+    "commit": "09283fe0e768274feb79eacacd72f1dd4175c142",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1218,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "resources/robots/unitree_robotics/g1_description/scene.xml:1 MJCF scene model",
+      "resources/robots/booster_robotics/K1/K1_22dof.xml:1 MJCF robot model",
+      "resources/robots/unitree_robotics/g1_description/g1_12dof.xml:1 MJCF robot model",
+      "resources/robots/unitree_robotics/g1_description/g1_23dof.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/lupinjia__leggedgym-ex --backend fake",
+  "skip_reason": "override (robots.json): Skip: a legged-robot RL training framework over external Genesis/IsaacGym/IsaacSim, not a device or a Gymnasium/MuJoCo environment.",
+  "publish_review": "not_required"
+}

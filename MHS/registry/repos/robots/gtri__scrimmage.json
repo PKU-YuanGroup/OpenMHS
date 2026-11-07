@@ -1,0 +1,216 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "cmake",
+    "docker",
+    "make"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_998f09a248cb0ee9",
+    "https://github.com/gtri/scrimmage"
+  ],
+  "description": "gtri/scrimmage: multi-robot systems for multi-robot systems (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: direct simulation backend. Declared backend: SCRIMMAGE. Language: C++. Catalog keywords: RL.",
+  "domains": [
+    "multi-robot systems"
+  ],
+  "evidence": {
+    "files_read": 10,
+    "notes": "bounded static scan: 546 files enumerated (max depth 3), 10 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "ros1"
+  ],
+  "hardware_free": true,
+  "id": "gh.gtri/scrimmage",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs a future engine bridge; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/ros1.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "plugin",
+    "ROS/MOOS/FlightGear integration",
+    "C++ API",
+    "AirSim",
+    "Docker",
+    "HTTP/REST",
+    "ROS 1",
+    "gRPC",
+    "CLI"
+  ],
+  "languages": [
+    "C++",
+    "C",
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2026-07-31T16:22:01Z",
+  "license": "LGPL-3.0",
+  "license_class": "weak-copyleft",
+  "license_spdx": "LGPL-3.0",
+  "links": {
+    "docs": "https://github.com/gtri/scrimmage/commit/4bdf41fb06facaea358d478d9a07aa4d77fcac27",
+    "repo": "https://github.com/gtri/scrimmage"
+  },
+  "local_path": "robots/gtri/scrimmage",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "gtri",
+  "package_id": "gh.gtri/scrimmage",
+  "quarantine": false,
+  "rank": 37,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "scrimmage",
+  "repo_url": "https://github.com/gtri/scrimmage",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "4bdf41fb06facaea358d478d9a07aa4d77fcac27",
+    "repo_url": "https://github.com/gtri/scrimmage"
+  },
+  "stars": 184,
+  "tags": [
+    "ros1",
+    "robotics",
+    "multi-robot systems",
+    "direct simulation backend",
+    "simulated",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "A",
+  "title": "gtri/scrimmage",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "airsim",
+      "family_confidence": 0.86,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 70.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "SCRIMMAGE",
+      "category_zh": "多机器人",
+      "description_zh": "插件化多代理机器人仿真平台，支持任务分配、控制、RL及外部仿真集成。",
+      "join": "exact",
+      "license_raw": "LGPL-3.0（LICENSE）；附带GPL/LGPL文本及组件另核",
+      "mhs_support_raw": "需开发适配（仅核公开文档/API；未确认可复用MHS适配器，不据此断言不存在）",
+      "priority": "P2",
+      "row": 960,
+      "rows_all": [
+        960
+      ],
+      "scope": "peripheral",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "ros1",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bros\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/gtri__scrimmage/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/robots/gtri__scrimmage/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/gtri__scrimmage/hardware"
+        ],
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "LGPL-3.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "LGPL-3.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "cmake",
+        "docker",
+        "make"
+      ],
+      "entry_evidence_count": 5,
+      "files": 546,
+      "markers": {
+        "airsim": 3,
+        "balance": 3,
+        "camera": 18,
+        "docker": 43,
+        "gpu": 22,
+        "http": 19,
+        "ros1": 3
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): SCRIMMAGE is a C++ multi-agent simulation engine, not a device, so bridge-runtime framework work fits rather than a per-repository driver.",
+        "rules alone: untriaged (untriaged:no_entry_class, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "SCRIMMAGE is a C++ multi-agent simulation engine, not a device, so bridge-runtime framework work fits rather than a per-repository driver.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

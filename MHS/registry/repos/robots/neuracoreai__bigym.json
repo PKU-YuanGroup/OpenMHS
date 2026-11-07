@@ -1,0 +1,230 @@
+{
+  "adapter": {
+    "bridge": "gymnasium",
+    "entry_points": [
+      "bigym.envs.cupboards:DrawerTopOpen (bigym/envs/cupboards.py:34)",
+      "bigym.envs.cupboards:DrawerTopClose (bigym/envs/cupboards.py:41)",
+      "bigym.envs.cupboards:DrawersAllOpen (bigym/envs/cupboards.py:51)",
+      "bigym.envs.cupboards:DrawersAllClose (bigym/envs/cupboards.py:58)",
+      "bigym.envs.cupboards:WallCupboardOpen (bigym/envs/cupboards.py:68)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python",
+    "docker",
+    "make"
+  ],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
+  "catalog_refs": [
+    "repo_02e7ed9259d46de7",
+    "https://github.com/neuracoreai/bigym"
+  ],
+  "description": "neuracoreai/bigym: complete environment for robot arm manipulation (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 2. Catalog role: task environment. Declared backend: MuJoCo. Language: Python. Catalog keywords: BiGym.",
+  "domains": [
+    "robot arm manipulation"
+  ],
+  "evidence": {
+    "files_read": 6,
+    "notes": "bounded static scan: 200 files enumerated (max depth 3), 6 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/robots/neuracoreai__bigym/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "gymnasium"
+  ],
+  "hardware_free": true,
+  "id": "gh.neuracoreai/bigym",
+  "integration": {
+    "blockers": [
+      "LICENSE_REVIEW: permissive; the user decides before a driver is published"
+    ],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/neuracoreai__bigym: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/neuracoreai__bigym --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:source-review",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "Gymnasium",
+    "dm_env",
+    "Docker",
+    "MuJoCo"
+  ],
+  "languages": [
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2026-07-01T12:52:54+01:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/neuracoreai/bigym"
+  },
+  "local_path": "robots/neuracoreai/bigym",
+  "modes": [
+    "simulated"
+  ],
+  "owner": "neuracoreai",
+  "package_id": "gh.neuracoreai/bigym",
+  "quarantine": false,
+  "rank": 80,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "bigym",
+  "repo_url": "https://github.com/neuracoreai/bigym",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "14beb30318ad14c5d6723175c2ee2281129792af",
+    "repo_url": "https://github.com/neuracoreai/bigym"
+  },
+  "stars": 229,
+  "tags": [
+    "gymnasium",
+    "robotics",
+    "complete environment",
+    "task environment",
+    "simulated",
+    "family config"
+  ],
+  "tier": "A",
+  "title": "neuracoreai/bigym",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "mujoco",
+      "family_confidence": 0.89,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 54.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.66
+    },
+    "catalog": {
+      "adapter_role_zh": "任务环境",
+      "archived": "false",
+      "backend_family_raw": "MuJoCo",
+      "category_zh": "完整环境",
+      "description_zh": "BiGym：演示驱动的移动双臂操作基准(40个家居任务)",
+      "join": "exact",
+      "license_raw": "Apache-2.0",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 1753,
+      "rows_all": [
+        1753
+      ],
+      "scope": "peripheral",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "gymnasium",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bmujoco"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "A2-task-env-entry"
+    },
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/neuracoreai__bigym/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": "Apache-2.0",
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "14beb30318ad14c5d6723175c2ee2281129792af",
+      "driver_dir": "MHS/drivers/robots/neuracoreai__bigym",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:73e8ab2e3ae745e3673cb372026aad73c5f0613622a7d8866464945df8f519d7",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python",
+        "docker",
+        "make"
+      ],
+      "entry_evidence_count": 5,
+      "files": 200,
+      "markers": {
+        "camera": 2,
+        "dm_env": 2,
+        "docker": 3,
+        "gpu": 7,
+        "gymnasium": 3,
+        "mujoco": 5
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): Model review of helper wave 1: GymnasiumDriver fits BiGymEnv (bigym_env.py:34); publication review because the README lists CC BY-NC 4.0 among the 3D asset licences (README.md:153-156).",
+        "rules alone: family-config (family:mujoco, rule 9)"
+      ],
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "Model review of helper wave 1: GymnasiumDriver fits BiGymEnv (bigym_env.py:34); publication review because the README lists CC BY-NC 4.0 among the 3D asset licences (README.md:153-156).",
+      "reason_code": "override:source-review",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

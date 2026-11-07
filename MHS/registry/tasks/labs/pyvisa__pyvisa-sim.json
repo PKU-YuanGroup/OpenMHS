@@ -1,0 +1,94 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pyvisa/pyvisa-sim",
+  "track": "labs",
+  "local_path": "labs/pyvisa/pyvisa-sim",
+  "driver_dir": "MHS/drivers/labs/pyvisa__pyvisa-sim",
+  "upstream": {
+    "repo_url": "https://github.com/pyvisa/pyvisa-sim",
+    "commit": "bb678155efcf3523f5ac67162c6937158ecc0171",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:scpi",
+  "role": "transport",
+  "family": "scpi",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 383,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "pyvisa_sim.sessions.gpib:GPIBInstrumentSession",
+      "file": "pyvisa_sim/sessions/gpib.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyvisa_sim.sessions.serial:SerialInstrumentSession",
+      "file": "pyvisa_sim/sessions/serial.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyvisa_sim.sessions.tcpip:TCPIPInstrumentSession",
+      "file": "pyvisa_sim/sessions/tcpip.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyvisa_sim.sessions.tcpip:TCPIPSocketSession",
+      "file": "pyvisa_sim/sessions/tcpip.py",
+      "line": 33,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyvisa_sim.sessions.usb:USBInstrumentSession",
+      "file": "pyvisa_sim/sessions/usb.py",
+      "line": 36,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pyvisa_sim/default.yaml:1 pyvisa-sim device file",
+      "pyvisa_sim/testsuite/fixtures/channels.yaml:1 pyvisa-sim device file",
+      "pyvisa_sim/highlevel.py:25 SimVisaLibrary"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pyvisa__pyvisa-sim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,129 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.lightwheelai/lw-benchhub",
+  "track": "robots",
+  "local_path": "robots/lightwheelai/lw-benchhub",
+  "driver_dir": "MHS/drivers/robots/lightwheelai__lw-benchhub",
+  "upstream": {
+    "repo_url": "https://github.com/lightwheelai/lw-benchhub",
+    "commit": "b2bcb2d00edef691f9fcc49039cbf0bcc7464605",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 105,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "lw_benchhub.core.env_builder.env_builder:LwEnvBuilder",
+      "file": "lw_benchhub/core/env_builder/env_builder.py",
+      "line": 29,
+      "confidence": "override"
+    },
+    {
+      "symbol": "lw_benchhub.core.tasks.base:LwTaskBase",
+      "file": "lw_benchhub/core/tasks/base.py",
+      "line": 163,
+      "confidence": "override"
+    },
+    {
+      "symbol": "lw_benchhub_tasks.lightwheel_robocasa_tasks.single_stage.lift_obj:LiftObj",
+      "file": "lw_benchhub_tasks/lightwheel_robocasa_tasks/single_stage/lift_obj.py",
+      "line": 30,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "lw_benchhub/core/mdp/actions/wbc_policy/robot_model/g1/lift_box_43dof.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "lw_benchhub/core/mdp/actions/wbc_policy/robot_model/g1/pnp_bottle_43dof.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "lw_benchhub/core/mdp/actions/wbc_policy/robot_model/g1/pnp_cube_43dof.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "lw_benchhub/core/mdp/actions/wbc_policy/robot_model/g1/scene_29dof.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "lw_benchhub/core/mdp/actions/wbc_policy/robot_model/g1/scene_29dof_activated3dex.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "lw_benchhub_rl/__init__.py:18 gym env Robocasa-Rl-G1LiftObjStateRL",
+      "lw_benchhub_rl/__init__.py:29 gym env Robocasa-Rl-G1LiftObjVisualRL",
+      "lw_benchhub_rl/__init__.py:40 gym env Robocasa-Rl-LeRobotLiftObjStateRL",
+      "lw_benchhub_rl/__init__.py:51 gym env Robocasa-Rl-LeRobotLiftObjVisualRL"
+    ],
+    "upstream_tests": "third_party/IsaacLab-Arena/isaaclab_arena/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Robocasa-Rl-G1LiftObjStateRL registered at lw_benchhub_rl/__init__.py:18",
+      "gym env Robocasa-Rl-G1LiftObjVisualRL registered at lw_benchhub_rl/__init__.py:29",
+      "gym env Robocasa-Rl-LeRobotLiftObjStateRL registered at lw_benchhub_rl/__init__.py:40",
+      "gym env Robocasa-Rl-LeRobotLiftObjVisualRL registered at lw_benchhub_rl/__init__.py:51",
+      "gym env Robocasa-Rl-LeRobotLiftObjDigitalTwin registered at lw_benchhub_rl/__init__.py:62",
+      "gym env Robocasa-Rl-LeRobot100LiftObjStateRL registered at lw_benchhub_rl/__init__.py:73",
+      "gym env Local-Task-BaseTask registered at lw_benchhub_tasks/__init__.py:17",
+      "gym env Robocasa-Task-RobocasaBaseTask registered at lw_benchhub_tasks/__init__.py:26",
+      "gym env Robocasa-Task-TestObjectsTask registered at lw_benchhub_tasks/asset_check/__init__.py:17",
+      "gym env Robocasa-Rl-{}-{} (id template, built at run time) registered at lw_benchhub/core/rl/__init__.py:21",
+      "gym env Local-Scene-Usd registered at lw_benchhub/core/scenes/__init__.py:3",
+      "gym env Robocasa-Scene-Usd registered at lw_benchhub/core/scenes/__init__.py:12"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license",
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/lightwheelai__lw-benchhub --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,78 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.quantumquadrate/k10cr1",
+  "track": "labs",
+  "local_path": "labs/quantumquadrate/k10cr1",
+  "driver_dir": "MHS/drivers/labs/quantumquadrate__k10cr1",
+  "upstream": {
+    "repo_url": "https://github.com/quantumquadrate/k10cr1",
+    "commit": "2ffdc284da575e525f96ef27b99e5e260bbe415d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 1,
+  "rank": 42,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "K10CR1.k10cr1:K10CR1",
+      "file": "K10CR1/k10cr1.py",
+      "line": 6,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "K10CR1.identify"
+    ],
+    "writes": [],
+    "actions": [
+      "K10CR1.home",
+      "K10CR1.jog"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/quantumquadrate__k10cr1 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

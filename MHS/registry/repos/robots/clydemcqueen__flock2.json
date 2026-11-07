@@ -1,0 +1,245 @@
+{
+  "adapter": {
+    "bridge": "ros",
+    "entry_points": [
+      "flock_simple_path:TrajectoryVelocityFlyer (src/flock_simple_path.py:175)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "packaged"
+  },
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "build_systems": [
+    "cmake",
+    "docker",
+    "ros"
+  ],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_e572ee732d0c693f",
+    "https://github.com/clydemcqueen/flock2"
+  ],
+  "description": "clydemcqueen/flock2: device backend for UAVs; multi-robot systems (robotics track). OpenMHS plan: family-config with RosDriver, wave 5. Catalog role: device SDK. Declared backend: ROS 2. Language: C++, Python. Catalog keywords: DJI, Tello, fiducial_vlam, tello_ros.",
+  "domains": [
+    "UAVs",
+    "multi-robot systems"
+  ],
+  "evidence": {
+    "files_read": 5,
+    "notes": "bounded static scan: 32 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "ros2"
+  ],
+  "hardware_free": true,
+  "id": "gh.clydemcqueen/flock2",
+  "integration": {
+    "blockers": [
+      "NO_HARDWARE_FREE_PATH"
+    ],
+    "effort": "E1",
+    "next_action": "Review MHS/drivers/robots/clydemcqueen__flock2/RESULT.json: the package is blocked on NO_HARDWARE_FREE_PATH; clear the codes before MHS/registry/tasks/robots/clydemcqueen__flock2.json is dispatched again.",
+    "reason_code": "family:ros",
+    "recipe": "families/ros2.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "ROS 2",
+    "Docker",
+    "Gazebo",
+    "CLI"
+  ],
+  "languages": [
+    "C++",
+    "Python"
+  ],
+  "last_commit_at": "2021-11-15T07:47:15-08:00",
+  "license": "BSD-3-Clause",
+  "license_class": "permissive",
+  "license_spdx": "BSD-3-Clause",
+  "links": {
+    "repo": "https://github.com/clydemcqueen/flock2"
+  },
+  "local_path": "robots/clydemcqueen/flock2",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "clydemcqueen",
+  "package_id": "gh.clydemcqueen/flock2",
+  "quarantine": false,
+  "rank": 30,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "flock2",
+  "repo_url": "https://github.com/clydemcqueen/flock2",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "b6ee071c61189445f83b4a4dcc706726945b5090",
+    "repo_url": "https://github.com/clydemcqueen/flock2"
+  },
+  "stars": 0,
+  "tags": [
+    "ros2",
+    "robotics",
+    "device backend",
+    "device sdk",
+    "simulated",
+    "hardware interface",
+    "family config"
+  ],
+  "tier": "B",
+  "title": "clydemcqueen/flock2",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 5,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "ros2",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 51.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "unknown",
+      "backend_family_raw": "ROS 2",
+      "category_zh": "设备后端",
+      "description_zh": "用ROS 2飞行DJI Tello无人机群，基于fiducial_vlam和tello_ros",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "unknown",
+      "priority": "参考",
+      "row": 500,
+      "rows_all": [
+        500
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "ros2",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bros ?2\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/clydemcqueen__flock2/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/robots/clydemcqueen__flock2/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/clydemcqueen__flock2/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "BSD-3-Clause",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "NO_HARDWARE_FREE_PATH"
+      ],
+      "commit": "b6ee071c61189445f83b4a4dcc706726945b5090",
+      "driver_dir": "MHS/drivers/robots/clydemcqueen__flock2",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:92384d7973c16fcecdd017bc4a318ed65313fb103db4493f2db867be762439b1",
+      "reviewed": false,
+      "status": "blocked"
+    },
+    "scan": {
+      "build_systems": [
+        "cmake",
+        "docker",
+        "ros"
+      ],
+      "entry_evidence_count": 5,
+      "files": 32,
+      "markers": {
+        "camera": 2,
+        "docker": 4,
+        "gazebo": 5,
+        "ros2": 25
+      }
+    },
+    "triage": {
+      "evidence": [
+        "structural marker: ROS package.xml (1)",
+        "device-driver evidence: catalogue category 'device backend'"
+      ],
+      "family": "ros",
+      "helper": "RosDriver",
+      "reason_code": "family:ros",
+      "rule": 9,
+      "version": "0.9.4"
+    }
+  }
+}

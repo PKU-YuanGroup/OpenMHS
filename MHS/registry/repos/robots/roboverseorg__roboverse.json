@@ -1,0 +1,212 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [
+      "roboverse_pack.tasks.simpler_env._native.control.pd_ee_pose:PDEEPoseController (roboverse_pack/tasks/simpler_env/_native/control/pd_ee_pose.py:162)",
+      "roboverse_pack.tasks.simpler_env._native.control.pd_joint_pos:PDJointPosMimicController (roboverse_pack/tasks/simpler_env/_native/control/pd_joint_pos.py:202)",
+      "roboverse_pack.teleop.runtime:CanonicalTeleopRuntime (roboverse_pack/teleop/runtime.py:76)",
+      "packages.metasim.metasim.utils.teleop_utils:XrClient (packages/metasim/metasim/utils/teleop_utils.py:367)",
+      "roboverse_pack.tasks.embodiedgen.put_banana:PutBananaTask (roboverse_pack/tasks/embodiedgen/put_banana.py:17)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python",
+    "make"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_23eee572afd3af9b",
+    "https://github.com/roboverseorg/roboverse"
+  ],
+  "description": "roboverseorg/roboverse: protocol bridge for robot manipulation (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: protocol bridge. Declared backend: MetaSim multi backend. Language: Python. Catalog keywords: MetaSim, MuJoCo, Isaac, SAPIEN, PyBullet.",
+  "domains": [
+    "robot manipulation"
+  ],
+  "evidence": {
+    "files_read": 6,
+    "notes": "bounded static scan: 884 files enumerated (max depth 3), 6 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "gymnasium"
+  ],
+  "hardware_free": true,
+  "id": "gh.roboverseorg/roboverse",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver",
+      "NEEDS_GPU: an import or the catalogue requires a GPU"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs a future engine bridge; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "Python ScenarioCfg/handler; task interface",
+    "Viser/Rerun visualization",
+    "Brax/MJX",
+    "CLI",
+    "dm_env",
+    "Docker",
+    "Gymnasium",
+    "Isaac Gym",
+    "Isaac Lab"
+  ],
+  "languages": [
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2026-09-08T20:58:49Z",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "docs": "https://github.com/RoboVerseOrg/RoboVerse",
+    "repo": "https://github.com/roboverseorg/roboverse"
+  },
+  "local_path": "robots/roboverseorg/roboverse",
+  "modes": [
+    "simulated"
+  ],
+  "owner": "roboverseorg",
+  "package_id": "gh.roboverseorg/roboverse",
+  "quarantine": false,
+  "rank": 851,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "roboverse",
+  "repo_url": "https://github.com/roboverseorg/roboverse",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "5f3ec0185d2d3bcb59d53b0bd1f5b0f8a6f2ce14",
+    "repo_url": "https://github.com/roboverseorg/roboverse"
+  },
+  "stars": 1865,
+  "tags": [
+    "gymnasium",
+    "robotics",
+    "simulated",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "roboverseorg/roboverse",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "mujoco",
+      "family_confidence": 0.86,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 92.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "false",
+      "backend_family_raw": "MetaSim多后端",
+      "blockers_raw": "多后端安装复杂；GPU 后端需 NVIDIA",
+      "category_zh": "协议桥接",
+      "description_zh": "同仓MetaSim统一状态/动作与MuJoCo、Isaac、SAPIEN、PyBullet等引擎，加任务/资产层",
+      "join": "exact",
+      "license_raw": "Apache-2.0",
+      "mhs_support_raw": "需开发适配；所核资料未确认MHS接口，不据此断言不存在",
+      "priority": "P0",
+      "row": 2281,
+      "rows_all": [
+        2281
+      ],
+      "scope": "core",
+      "track_raw": "robotics | shared_infrastructure",
+      "verification_level": "已核源码"
+    },
+    "classification": {
+      "catalog_family": "gymnasium",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bgymnasium\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/roboverseorg__roboverse/simulated",
+        "mode": "simulated",
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python",
+        "make"
+      ],
+      "entry_evidence_count": 7,
+      "files": 884,
+      "markers": {
+        "brax_mjx": 2,
+        "camera": 2,
+        "cli": 1,
+        "dm_env": 1,
+        "docker": 2,
+        "gpu": 4,
+        "gymnasium": 3,
+        "isaac_gym": 4,
+        "isaac_lab": 4,
+        "isaac_sim": 8,
+        "lerobot": 2,
+        "mujoco": 13,
+        "pybullet": 4,
+        "sapien": 11
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): RoboVerse is a multi-backend simulator engine, not a device, so bridge-runtime/framework fits.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "RoboVerse is a multi-backend simulator engine, not a device, so bridge-runtime/framework fits.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

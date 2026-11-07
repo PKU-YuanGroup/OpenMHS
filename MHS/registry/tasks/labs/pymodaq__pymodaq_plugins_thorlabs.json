@@ -1,0 +1,125 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pymodaq/pymodaq_plugins_thorlabs",
+  "track": "labs",
+  "local_path": "labs/pymodaq/pymodaq_plugins_thorlabs",
+  "driver_dir": "MHS/drivers/labs/pymodaq__pymodaq_plugins_thorlabs",
+  "upstream": {
+    "repo_url": "https://github.com/pymodaq/pymodaq_plugins_thorlabs",
+    "commit": "4aaf06acf6ea46b93fb900b76701f077dee44e28",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 19,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pymodaq_plugins_thorlabs.hardware.kinesis:BrushlessDCMotor",
+      "file": "src/pymodaq_plugins_thorlabs/hardware/kinesis.py",
+      "line": 213,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_thorlabs.hardware.kinesis:BrushlessMotorChannel",
+      "file": "src/pymodaq_plugins_thorlabs/hardware/kinesis.py",
+      "line": 174,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_thorlabs.hardware.kinesis:IntegratedStepper",
+      "file": "src/pymodaq_plugins_thorlabs/hardware/kinesis.py",
+      "line": 147,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_thorlabs.hardware.kinesis:Flipper",
+      "file": "src/pymodaq_plugins_thorlabs/hardware/kinesis.py",
+      "line": 278,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_thorlabs.hardware.kinesis:Piezo",
+      "file": "src/pymodaq_plugins_thorlabs/hardware/kinesis.py",
+      "line": 312,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "BrushlessDCMotor.get_position",
+      "BrushlessDCMotor.get_target_position",
+      "BrushlessDCMotor.get_units",
+      "BrushlessDCMotor.is_homed",
+      "BrushlessDCMotor.is_homing",
+      "BrushlessDCMotor.is_moving",
+      "BrushlessMotorChannel.get_position",
+      "BrushlessMotorChannel.get_property",
+      "BrushlessMotorChannel.get_target_position",
+      "BrushlessMotorChannel.get_units",
+      "BrushlessMotorChannel.is_homed",
+      "BrushlessMotorChannel.is_homing"
+    ],
+    "writes": [
+      "BrushlessMotorChannel.set_property"
+    ],
+    "actions": [
+      "BrushlessDCMotor.home",
+      "BrushlessDCMotor.move_abs",
+      "BrushlessDCMotor.move_done_callback",
+      "BrushlessDCMotor.move_rel",
+      "BrushlessDCMotor.stop",
+      "BrushlessMotorChannel.home",
+      "BrushlessMotorChannel.move_abs",
+      "BrushlessMotorChannel.move_done_callback",
+      "BrushlessMotorChannel.move_rel",
+      "BrushlessMotorChannel.stop",
+      "IntegratedStepper.home",
+      "IntegratedStepper.move_abs"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymodaq__pymodaq_plugins_thorlabs --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

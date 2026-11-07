@@ -1,0 +1,136 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.allenneuraldynamics/runze-control",
+  "track": "labs",
+  "local_path": "labs/allenneuraldynamics/runze-control",
+  "driver_dir": "MHS/drivers/labs/allenneuraldynamics__runze-control",
+  "upstream": {
+    "repo_url": "https://github.com/allenneuraldynamics/runze-control",
+    "commit": "34392b3d9bc0d60c0c46f69908fec7f108cef230",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 12,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "runze_control.multichannel_syringe_pump:SY01B",
+      "file": "src/runze_control/multichannel_syringe_pump.py",
+      "line": 80,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "runze_control.syringe_pump:MiniSY04",
+      "file": "src/runze_control/syringe_pump.py",
+      "line": 172,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "runze_control.syringe_pump:SY08",
+      "file": "src/runze_control/syringe_pump.py",
+      "line": 266,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "runze_control.rotary_valve:RotaryValve",
+      "file": "src/runze_control/rotary_valve.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "runze_control.multichannel_syringe_pump:MultiChannelSyringePump",
+      "file": "src/runze_control/multichannel_syringe_pump.py",
+      "line": 9,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "SY01B.get_address",
+      "SY01B.get_can_baudrate",
+      "SY01B.get_firmware_version",
+      "SY01B.get_motor_status",
+      "SY01B.get_position_percent",
+      "SY01B.get_position_steps",
+      "SY01B.get_position_ul",
+      "SY01B.get_protocol",
+      "SY01B.get_remaining_capacity_ul",
+      "SY01B.get_rs232_baudrate",
+      "SY01B.get_rs485_baudrate",
+      "SY01B.get_serial_number"
+    ],
+    "writes": [
+      "SY01B.set_address",
+      "SY01B.set_multicast_address",
+      "SY01B.set_speed_percent",
+      "MiniSY04.set_address",
+      "MiniSY04.set_multicast_address",
+      "MiniSY04.set_speed_percent",
+      "SY08.set_address",
+      "SY08.set_multicast_address",
+      "SY08.set_speed_percent"
+    ],
+    "actions": [
+      "SY01B.aspirate",
+      "SY01B.aspirate_steps",
+      "SY01B.dispense",
+      "SY01B.dispense_steps",
+      "SY01B.force_stop",
+      "SY01B.halt",
+      "SY01B.move_absolute_in_percent",
+      "SY01B.move_absolute_in_steps",
+      "SY01B.move_valve_to_position",
+      "SY01B.reset_syringe_position",
+      "MiniSY04.aspirate",
+      "MiniSY04.aspirate_steps"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1",
+      "cap.actuation.valve.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/allenneuraldynamics__runze-control --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

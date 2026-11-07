@@ -1,0 +1,73 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nsls-ii-sst/caproto_cryostat",
+  "track": "labs",
+  "local_path": "labs/nsls-ii-sst/caproto_cryostat",
+  "driver_dir": "MHS/drivers/labs/nsls-ii-sst__caproto_cryostat",
+  "upstream": {
+    "repo_url": "https://github.com/nsls-ii-sst/caproto_cryostat",
+    "commit": "bc89595479d634106426f698eef27a993a5cb99a",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:tag-bridge",
+  "role": "device-driver",
+  "family": "tag-bridge",
+  "helper": "TagDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 350,
+  "exemplar": "MHS/drivers/labs/josuablejeru__labmastro",
+  "entry_symbols": [
+    {
+      "symbol": "cryostat:ADR",
+      "file": "cryostat.py",
+      "line": 17,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "ADR.update_hook (attribute)"
+    ],
+    "writes": [],
+    "actions": [
+      "ADR.PAUSE",
+      "ADR.START_CYCLE"
+    ],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "capabilities",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/nsls-ii-sst__caproto_cryostat --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

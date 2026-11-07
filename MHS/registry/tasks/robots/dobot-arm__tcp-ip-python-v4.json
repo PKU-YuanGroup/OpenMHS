@@ -1,0 +1,136 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.dobot-arm/tcp-ip-python-v4",
+  "track": "robots",
+  "local_path": "robots/dobot-arm/tcp-ip-python-v4",
+  "driver_dir": "MHS/drivers/robots/dobot-arm__tcp-ip-python-v4",
+  "upstream": {
+    "repo_url": "https://github.com/dobot-arm/tcp-ip-python-v4",
+    "commit": "55ec1ec82201aaf2e6d54aa47b6272bbaa14c815",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 10,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "dobot_sdk.api.robot:DobotRobot",
+      "file": "dobot_sdk/api/robot.py",
+      "line": 25,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dobot_sdk.api.robot_control:RobotControl",
+      "file": "dobot_sdk/api/robot_control.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dobot_sdk.models.error_info:ErrorReport",
+      "file": "dobot_sdk/models/error_info.py",
+      "line": 44,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dobot_sdk.api.error_controller:ErrorController",
+      "file": "dobot_sdk/api/error_controller.py",
+      "line": 28,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "dobot_sdk.core.connection:DobotConnection",
+      "file": "dobot_sdk/core/connection.py",
+      "line": 20,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "DobotRobot.GetError",
+      "DobotRobot.GetErrorFormatted",
+      "DobotRobot.GetStatus",
+      "DobotRobot.IsConnected",
+      "DobotRobot.is_connected",
+      "DobotRobot.communication.GetCoils",
+      "DobotRobot.communication.GetHoldRegs",
+      "DobotRobot.communication.GetInBits",
+      "DobotRobot.communication.GetInRegs",
+      "DobotRobot.communication.GetInputBool",
+      "DobotRobot.communication.GetInputFloat",
+      "DobotRobot.communication.GetInputInt"
+    ],
+    "writes": [
+      "DobotRobot.SetTimeout",
+      "DobotRobot.communication.SetCoils",
+      "DobotRobot.communication.SetHoldRegs",
+      "DobotRobot.communication.SetOutputBool",
+      "DobotRobot.communication.SetOutputFloat",
+      "DobotRobot.communication.SetOutputInt",
+      "DobotRobot.communication.SetSingleCoil",
+      "DobotRobot.communication.SetSingleHoldReg",
+      "DobotRobot.io.SetTool485",
+      "DobotRobot.io.SetToolMode",
+      "DobotRobot.io.SetToolPower",
+      "DobotRobot.motion.SetResumeOffset"
+    ],
+    "actions": [
+      "DobotRobot.EnableAutoReconnect",
+      "DobotRobot.StartFeedbackMonitor",
+      "DobotRobot.StopFeedbackMonitor",
+      "DobotRobot.motion.MovJ",
+      "DobotRobot.motion.MovJIO",
+      "DobotRobot.motion.MovL",
+      "DobotRobot.motion.MovLIO",
+      "DobotRobot.motion.MovS",
+      "DobotRobot.motion.MoveJog",
+      "DobotRobot.motion.PathRecoveryStop",
+      "DobotRobot.motion.RelJointMovJ",
+      "DobotRobot.motion.RelMovJTool"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/dobot-arm__tcp-ip-python-v4 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

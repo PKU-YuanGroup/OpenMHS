@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.anupama29k/protocol-simulation",
+  "track": "labs",
+  "local_path": "labs/anupama29k/protocol-simulation",
+  "driver_dir": "MHS/drivers/labs/anupama29k__protocol-simulation",
+  "upstream": {
+    "repo_url": "https://github.com/anupama29k/protocol-simulation",
+    "commit": "1dd32cd1981a812cf246e60e89515ed4f4d5b7b5",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 940,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "backend/app/api/routes/simulate.py:1"
+    ],
+    "upstream_tests": "backend/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/anupama29k__protocol-simulation --backend fake",
+  "skip_reason": "override (labs.json): Simulation-only FastAPI/Three.js web app, not a device: its PyLabRobot seam is an unimplemented scaffold, so a driver author can reuse only the bench geometry and hand-off schema.",
+  "publish_review": "not_required"
+}

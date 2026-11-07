@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mujocolab/mjlab_playground",
+  "track": "robots",
+  "local_path": "robots/mujocolab/mjlab_playground",
+  "driver_dir": "MHS/drivers/robots/mujocolab__mjlab_playground",
+  "upstream": {
+    "repo_url": "https://github.com/mujocolab/mjlab_playground",
+    "commit": "b0364728a67bf4709eff832d3a9a36c3a460f11b",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 368,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/mujocolab__mjlab_playground --backend fake",
+  "skip_reason": "override (robots.json): Not a driver: this is a task pack of mjlab environment configs and MDP terms; the ManagerBasedRlEnv class and Go1 model are external, so add tasks through mjlab, not an OpenMHS driver.",
+  "publish_review": "not_required"
+}

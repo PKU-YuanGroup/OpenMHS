@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.yueruyin/robot-unitree-g1",
+  "track": "robots",
+  "local_path": "robots/yueruyin/robot-unitree-g1",
+  "driver_dir": "MHS/drivers/robots/yueruyin__robot-unitree-g1",
+  "upstream": {
+    "repo_url": "https://github.com/yueruyin/robot-unitree-g1",
+    "commit": "5de811e5ef85407d99f59ca605f90df6f51df601",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 82,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "deploy.deploy_mujoco53:main",
+      "file": "deploy/deploy_mujoco53.py",
+      "line": 1915,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "resources/g1/scene53.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "resources/g1/g1_53dof.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "OpenHomie/HomieRL/legged_gym/resources/robots/g1_description/g1.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "resources/g1/scene53.xml:1 MJCF scene model",
+      "resources/g1/g1_53dof.xml:1 MJCF robot model",
+      "OpenHomie/HomieRL/legged_gym/resources/robots/g1_description/g1.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model resources/g1/scene53.xml:1",
+      "MJCF robot model resources/g1/g1_53dof.xml:1",
+      "MJCF robot model OpenHomie/HomieRL/legged_gym/resources/robots/g1_description/g1.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/yueruyin__robot-unitree-g1 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

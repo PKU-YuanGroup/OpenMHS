@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.farama-foundation/supersuit",
+  "track": "robots",
+  "local_path": "robots/farama-foundation/supersuit",
+  "driver_dir": "MHS/drivers/robots/farama-foundation__supersuit",
+  "upstream": {
+    "repo_url": "https://github.com/farama-foundation/supersuit",
+    "commit": "172135be4a7967a7636588f693c2ec79c62bec1c",
+    "license_spdx": "Apache-2.0 AND MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 228,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/farama-foundation__supersuit --backend fake",
+  "skip_reason": "override (robots.json): SuperSuit is a Gymnasium/PettingZoo wrapper toolkit, not a device or simulator, so it is tooling rather than a driver; there is no hardware API to bind.",
+  "publish_review": "not_required"
+}

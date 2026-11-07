@@ -1,0 +1,131 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.festo-se/festo-dev-fluid-control",
+  "track": "labs",
+  "local_path": "labs/festo-se/festo-dev-fluid-control",
+  "driver_dir": "MHS/drivers/labs/festo-se__festo-dev-fluid-control",
+  "upstream": {
+    "repo_url": "https://github.com/festo-se/festo-dev-fluid-control",
+    "commit": "2da14c5d6b202d3aca1ca1ca6e173f68eaf266c3",
+    "license_spdx": "LicenseRef-proprietary",
+    "license_class": "proprietary"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 34,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "fluid_control.cli.session:FluidControlSession",
+      "file": "src/fluid_control/cli/session.py",
+      "line": 76,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "fluid_control.aspirator:Aspirator",
+      "file": "src/fluid_control/aspirator.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "fluid_control.dispenser:Dispenser",
+      "file": "src/fluid_control/dispenser.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "fluid_control.pipettor:Pipettor",
+      "file": "src/fluid_control/pipettor.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "fluid_control.pressure_control:PressureControl",
+      "file": "src/fluid_control/pressure_control.py",
+      "line": 6,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "FluidControlSession.get_channels",
+      "FluidControlSession.get_liquid_classes",
+      "FluidControlSession.get_status",
+      "Aspirator.get_liquid_classes",
+      "Aspirator.get_status",
+      "Dispenser.get_liquid_classes",
+      "Dispenser.get_status"
+    ],
+    "writes": [
+      "FluidControlSession.set_pressure",
+      "Aspirator.set_new_calibration",
+      "Aspirator.set_pressures",
+      "Aspirator.fluid_control_status.set_busy",
+      "Aspirator.fluid_control_status.set_clear",
+      "Aspirator.fluid_control_status.set_error",
+      "Dispenser.set_new_calibration",
+      "Dispenser.set_pressures",
+      "Dispenser.fluid_control_status.set_busy",
+      "Dispenser.fluid_control_status.set_clear",
+      "Dispenser.fluid_control_status.set_error"
+    ],
+    "actions": [
+      "FluidControlSession.aspirate",
+      "FluidControlSession.disable_axes",
+      "FluidControlSession.dispense",
+      "FluidControlSession.enable_axes",
+      "FluidControlSession.home",
+      "FluidControlSession.mix",
+      "FluidControlSession.move_axis",
+      "FluidControlSession.raise_arm",
+      "Aspirator.aspirate",
+      "Aspirator.dispense",
+      "Aspirator.mix",
+      "Dispenser.aspirate"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1",
+      "cap.motion.joint_position.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/festo-se__festo-dev-fluid-control --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

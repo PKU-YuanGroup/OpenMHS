@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.dyson-ai/grip",
+  "track": "robots",
+  "local_path": "robots/dyson-ai/grip",
+  "driver_dir": "MHS/drivers/robots/dyson-ai__grip",
+  "upstream": {
+    "repo_url": "https://github.com/dyson-ai/grip",
+    "commit": "eee9f38f86ac636ba4b4ddd1e6b9cfb783f0e203",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:source-review",
+  "role": "sim-env",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 174,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "grip.environments.pick_and_place_env:PickAndPlaceEnvironment",
+      "file": "grip/environments/pick_and_place_env.py",
+      "line": 21,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10,<3.13",
+    "commands": [
+      "colcon build"
+    ],
+    "system_deps": [
+      "ament/colcon workspace and the ROS dependencies declared in package.xml"
+    ],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "grip/environments/pick_and_place_env.py:21 PickAndPlaceEnvironment environment class",
+      "grip/environments/base_env.py:8 Env environment class",
+      "grip/environments/template_env.py:32 TemplateEnvironment environment class"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/dyson-ai__grip --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

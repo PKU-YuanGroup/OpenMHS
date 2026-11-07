@@ -1,0 +1,218 @@
+{
+  "adapter": {
+    "bridge": "gymnasium",
+    "entry_points": [
+      "metagym.bandits:Bandits (metagym/bandits/bandits_env.py:12)",
+      "metagym.liftsim:LiftSim (metagym/liftsim/environment/env.py:37)",
+      "metagym.metalm:MetaLM (metagym/metalm/metalm.py:21)",
+      "metagym.metalocomotion.envs.meta_ants.meta_ant_env:MetaAntEnv (metagym/metalocomotion/envs/meta_ants/meta_ant_env.py:7)",
+      "metagym.metalocomotion.envs.meta_humanoids.meta_humanoids_env:MetaHumanoidEnv (metagym/metalocomotion/envs/meta_humanoids/meta_humanoids_env.py:7)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
+  "catalog_refs": [
+    "repo_fb2f7008d9b7e701",
+    "https://github.com/paddlepaddle/metagym"
+  ],
+  "description": "paddlepaddle/metagym: complete environment for general (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 2. Catalog role: task environment. Language: Python.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 90 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/robots/paddlepaddle__metagym/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "gymnasium"
+  ],
+  "hardware_free": true,
+  "id": "gh.paddlepaddle/metagym",
+  "integration": {
+    "blockers": [],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/paddlepaddle__metagym: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/paddlepaddle__metagym --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "family:gymnasium",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "Python SDK",
+    "Gymnasium",
+    "PyBullet",
+    "CLI"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2023-01-03T09:51:02+08:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/paddlepaddle/metagym"
+  },
+  "local_path": "robots/paddlepaddle/metagym",
+  "modes": [
+    "simulated"
+  ],
+  "owner": "paddlepaddle",
+  "package_id": "gh.paddlepaddle/metagym",
+  "quarantine": false,
+  "rank": 71,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "metagym",
+  "repo_url": "https://github.com/paddlepaddle/metagym",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "ca724c22fd0c2ade8ec905edc688a1befdf98a3c",
+    "repo_url": "https://github.com/paddlepaddle/metagym"
+  },
+  "stars": 303,
+  "tags": [
+    "gymnasium",
+    "robotics",
+    "complete environment",
+    "task environment",
+    "simulated",
+    "family config"
+  ],
+  "tier": "A",
+  "title": "paddlepaddle/metagym",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "gym-env",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 44.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.66
+    },
+    "catalog": {
+      "adapter_role_zh": "任务环境",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "完整环境",
+      "description_zh": "强化学习与元强化学习环境集合：电梯调度、四旋翼、四足地形适应、迷宫等",
+      "join": "exact",
+      "license_raw": "Apache-2.0",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "参考",
+      "row": 1947,
+      "rows_all": [
+        1947
+      ],
+      "scope": "peripheral",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "gymnasium",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bgymnasium\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "A2-task-env-entry"
+    },
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/paddlepaddle__metagym/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": "GPL-3.0",
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "ca724c22fd0c2ade8ec905edc688a1befdf98a3c",
+      "driver_dir": "MHS/drivers/robots/paddlepaddle__metagym",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:1a7be70bb806a5f5340530d148fb105b0c888e7b5fa47989fbb0ce16e8b3164b",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 4,
+      "files": 90,
+      "markers": {
+        "gymnasium": 1,
+        "pybullet": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "structural marker: registers gym env bandits-v0",
+        "sim-env evidence: registers gym env bandits-v0"
+      ],
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "reason_code": "family:gymnasium",
+      "rule": 9,
+      "version": "0.9.4"
+    }
+  }
+}

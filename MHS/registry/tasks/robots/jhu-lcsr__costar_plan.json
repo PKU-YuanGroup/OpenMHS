@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jhu-lcsr/costar_plan",
+  "track": "robots",
+  "local_path": "robots/jhu-lcsr/costar_plan",
+  "driver_dir": "MHS/drivers/robots/jhu-lcsr__costar_plan",
+  "upstream": {
+    "repo_url": "https://github.com/jhu-lcsr/costar_plan",
+    "commit": "be5c12f9d0e9d7078e6a5c283d3be059e7f3d040",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 417,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "costar_simulation/python/costar_simulation/manager.py:14 CostarSimulationManager",
+      "ctp_tom/python/ctp_tom/experiment.py:28 FakeOrangesExperiment",
+      "costar_task_plan/python/costar_task_plan/mcts/rollout.py:10 SimulationRollout",
+      "costar_task_plan/python/costar_task_plan/simulation/actor.py:10 SimulationActorState",
+      "costar_task_plan/python/costar_task_plan/simulation/actor.py:23 SimulationActorAction",
+      "costar_task_plan/python/costar_task_plan/simulation/actor.py:35 SimulationActor"
+    ],
+    "upstream_tests": "costar_task_plan/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jhu-lcsr__costar_plan --backend fake",
+  "skip_reason": "catalogue category 'policy/algorithm' with no env registration or device evidence",
+  "publish_review": "not_required"
+}

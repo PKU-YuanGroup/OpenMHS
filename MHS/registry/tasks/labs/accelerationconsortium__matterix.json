@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.accelerationconsortium/matterix",
+  "track": "labs",
+  "local_path": "labs/accelerationconsortium/matterix",
+  "driver_dir": "MHS/drivers/labs/accelerationconsortium__matterix",
+  "upstream": {
+    "repo_url": "https://github.com/accelerationconsortium/matterix",
+    "commit": "687e2cef294f00e86dbb32173fefd93b50e5107f",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 65,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "matterix.envs:MatterixBaseEnv",
+      "file": "source/matterix/matterix/envs/matterix_base_env.py",
+      "line": 48,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/matterix_tasks/matterix_tasks/test_dev_tasks/__init__.py:15 gym env Matterix-Test-Beakers-Franka-v1",
+      "source/matterix_tasks/matterix_tasks/test_dev_tasks/__init__.py:24 gym env Matterix-Test-Particle-systems-Franka-v1",
+      "source/matterix_tasks/matterix_tasks/test_dev_tasks/__init__.py:33 gym env Matterix-Test-Beaker-Lift-Franka-v1",
+      "source/matterix_tasks/matterix_tasks/test_dev_tasks/__init__.py:42 gym env Matterix-Test-Semantics-Heat-Transfer-Franka-v1"
+    ],
+    "upstream_tests": "source/matterix/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Matterix-Test-Beakers-Franka-v1 registered at source/matterix_tasks/matterix_tasks/test_dev_tasks/__init__.py:15",
+      "gym env Matterix-Test-Particle-systems-Franka-v1 registered at source/matterix_tasks/matterix_tasks/test_dev_tasks/__init__.py:24",
+      "gym env Matterix-Test-Beaker-Lift-Franka-v1 registered at source/matterix_tasks/matterix_tasks/test_dev_tasks/__init__.py:33",
+      "gym env Matterix-Test-Semantics-Heat-Transfer-Franka-v1 registered at source/matterix_tasks/matterix_tasks/test_dev_tasks/__init__.py:42"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/accelerationconsortium__matterix --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

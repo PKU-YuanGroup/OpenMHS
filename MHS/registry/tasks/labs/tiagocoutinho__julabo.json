@@ -1,0 +1,117 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tiagocoutinho/julabo",
+  "track": "labs",
+  "local_path": "labs/tiagocoutinho/julabo",
+  "driver_dir": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "upstream": {
+    "repo_url": "https://github.com/tiagocoutinho/julabo",
+    "commit": "650da2138459d93e3bfdb8db17ce0bd161c6a9a7",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:exemplar",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 0,
+  "rank": 3,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "julabo.device:JulaboCF",
+      "file": "julabo/device.py",
+      "line": 147,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "julabo.device:JulaboHL",
+      "file": "julabo/device.py",
+      "line": 151,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "julabo.device:JulaboMS",
+      "file": "julabo/device.py",
+      "line": 156,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "julabo.device:JulaboFC",
+      "file": "julabo/device.py",
+      "line": 161,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "julabo.tango.server.device:JulaboCF",
+      "file": "julabo/tango/server/device.py",
+      "line": 186,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "julabo/simulator.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "JulaboCF.active_set_point_channel (attribute)",
+      "JulaboCF.bath_temperature (attribute)",
+      "JulaboCF.external_input (attribute)",
+      "JulaboCF.external_temperature (attribute)",
+      "JulaboCF.heating_power (attribute)",
+      "JulaboCF.high_temperature (attribute)",
+      "JulaboCF.identification (attribute)",
+      "JulaboCF.is_started (attribute)",
+      "JulaboCF.low_temperature (attribute)",
+      "JulaboCF.safety_temperature (attribute)",
+      "JulaboCF.self_tunning (attribute)",
+      "JulaboCF.set_point_1 (attribute)"
+    ],
+    "writes": [],
+    "actions": [
+      "JulaboCF.start",
+      "JulaboCF.stop",
+      "JulaboHL.start",
+      "JulaboHL.stop",
+      "JulaboMS.start",
+      "JulaboMS.stop"
+    ],
+    "candidate_classes": [
+      "cap.measure.temperature.v1",
+      "cap.thermal.setpoint.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/tiagocoutinho__julabo --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

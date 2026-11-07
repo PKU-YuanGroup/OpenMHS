@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.yang-zj1026/navila-bench",
+  "track": "robots",
+  "local_path": "robots/yang-zj1026/navila-bench",
+  "driver_dir": "MHS/drivers/robots/yang-zj1026__navila-bench",
+  "upstream": {
+    "repo_url": "https://github.com/yang-zj1026/navila-bench",
+    "commit": "e9d2db12ce5788c0f987d734c0094100b6bc0d3a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 74,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "omni.isaac.vlnce.config.go2.go2_matterport_vision_cfg:Go2MatterportVisionCfg",
+      "file": "isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/go2/go2_matterport_vision_cfg.py",
+      "line": 163,
+      "confidence": "override"
+    },
+    {
+      "symbol": "omni.isaac.vlnce.config.h1.h1_matterport_vision_cfg:H1MatterportVisionCfg",
+      "file": "isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/h1/h1_matterport_vision_cfg.py",
+      "line": 350,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/go2/__init__.py:10 gym env go2_matterport_base",
+      "isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/go2/__init__.py:20 gym env go2_matterport_vision",
+      "isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/h1/__init__.py:10 gym env h1_matterport_base",
+      "isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/h1/__init__.py:20 gym env h1_matterport_vision"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env go2_matterport_base registered at isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/go2/__init__.py:10",
+      "gym env go2_matterport_vision registered at isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/go2/__init__.py:20",
+      "gym env h1_matterport_base registered at isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/h1/__init__.py:10",
+      "gym env h1_matterport_vision registered at isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/h1/__init__.py:20"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/yang-zj1026__navila-bench --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

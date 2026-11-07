@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.asvela/keyoscacquire",
+  "track": "labs",
+  "local_path": "labs/asvela/keyoscacquire",
+  "driver_dir": "MHS/drivers/labs/asvela__keyoscacquire",
+  "upstream": {
+    "repo_url": "https://github.com/asvela/keyoscacquire",
+    "commit": "1d093470ab99769c9b149816d7faa4b61a4837d2",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 17,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "keyoscacquire.oscilloscope:Oscilloscope",
+      "file": "keyoscacquire/oscilloscope.py",
+      "line": 38,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Oscilloscope.get_error",
+      "Oscilloscope.get_full_error_queue",
+      "Oscilloscope.get_trace",
+      "Oscilloscope.is_running"
+    ],
+    "writes": [
+      "Oscilloscope.set_acquiring_options",
+      "Oscilloscope.set_channels_for_capture",
+      "Oscilloscope.set_options_get_trace",
+      "Oscilloscope.set_options_get_trace_save",
+      "Oscilloscope.set_waveform_export_options"
+    ],
+    "actions": [
+      "Oscilloscope.capture_and_read",
+      "Oscilloscope.run",
+      "Oscilloscope.stop"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/asvela__keyoscacquire --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

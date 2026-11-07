@@ -1,0 +1,131 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.raphaelsura/pythonphotonicslab",
+  "track": "labs",
+  "local_path": "labs/raphaelsura/pythonphotonicslab",
+  "driver_dir": "MHS/drivers/labs/raphaelsura__pythonphotonicslab",
+  "upstream": {
+    "repo_url": "https://github.com/raphaelsura/pythonphotonicslab",
+    "commit": "bdef2648d4aec219566f710ade6c1b9ba224bc19",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 61,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "LowLevelModules.Instruments:DG645",
+      "file": "LowLevelModules/Instruments.py",
+      "line": 96,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "LowLevelModules.Instruments:SG384",
+      "file": "LowLevelModules/Instruments.py",
+      "line": 47,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "LowLevelModules.conexcc:ConexCC",
+      "file": "LowLevelModules/conexcc.py",
+      "line": 20,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "LowLevelModules.conexagp:ConexAGP",
+      "file": "LowLevelModules/conexagp.py",
+      "line": 23,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "LowLevelModules.Instruments:LakeShore335",
+      "file": "LowLevelModules/Instruments.py",
+      "line": 3,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "DG645.get_amplitude",
+      "DG645.get_burst_config",
+      "DG645.get_burst_count",
+      "DG645.get_burst_delay",
+      "DG645.get_burst_mode",
+      "DG645.get_burst_period",
+      "DG645.get_delay",
+      "DG645.get_holdoff",
+      "DG645.get_offset",
+      "DG645.get_polarity",
+      "DG645.get_timebase",
+      "DG645.get_trigger_level"
+    ],
+    "writes": [
+      "DG645.set_amplitude",
+      "DG645.set_burst_config",
+      "DG645.set_burst_count",
+      "DG645.set_burst_delay",
+      "DG645.set_burst_mode",
+      "DG645.set_burst_period",
+      "DG645.set_delay",
+      "DG645.set_holdoff",
+      "DG645.set_offset",
+      "DG645.set_polarity",
+      "DG645.set_trigger_level",
+      "DG645.set_trigger_rate"
+    ],
+    "actions": [
+      "SG384.disable_rf_signal",
+      "SG384.enable_rf_signal",
+      "ConexCC.exit_disable_state",
+      "ConexCC.move_absolute",
+      "ConexCC.move_relative"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "LowLevelModules/conexagp.py:19 MAX_VELOCITY = 0.4",
+      "LowLevelModules/conexagp.py:20 POS_LIMIT = 13.8",
+      "LowLevelModules/conexcc.py:17 MAX_VELOCITY = 5.0"
+    ]
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/raphaelsura__pythonphotonicslab --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

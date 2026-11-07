@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.thomaschabal/transporter-nets-torch",
+  "track": "robots",
+  "local_path": "robots/thomaschabal/transporter-nets-torch",
+  "driver_dir": "MHS/drivers/robots/thomaschabal__transporter-nets-torch",
+  "upstream": {
+    "repo_url": "https://github.com/thomaschabal/transporter-nets-torch",
+    "commit": "8c9cbaa27350ca971ded09226e0103a662609b64",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:duplicate_of",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": "gh.google-research/ravens",
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1178,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ravens_torch/environments/environment.py:379 EnvironmentNoRotationsWithHeightmap environment class",
+      "ravens_torch/environments/environment.py:27 Environment environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/thomaschabal__transporter-nets-torch --backend fake",
+  "skip_reason": "duplicate of gh.google-research/ravens: override (robots.json): Model review of recon wave A: a PyTorch port of Transporter Nets whose environments are a copy of the Ravens PyBullet tasks; the Ravens card carries them.",
+  "publish_review": "not_required"
+}

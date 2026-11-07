@@ -1,0 +1,130 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.smithsonian/rxlab-instruments",
+  "track": "labs",
+  "local_path": "labs/smithsonian/rxlab-instruments",
+  "driver_dir": "MHS/drivers/labs/smithsonian__rxlab-instruments",
+  "upstream": {
+    "repo_url": "https://github.com/smithsonian/rxlab-instruments",
+    "commit": "2fbf8e6913e9eb2143088ed3a0b49d01a22fb93c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 43,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "labinstruments.keithley:Keithley2280",
+      "file": "labinstruments/keithley.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "labinstruments.agilent:AgilentE8257D",
+      "file": "labinstruments/agilent.py",
+      "line": 49,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "labinstruments.rohdeschwarz:RohdeSchwarzFSVA40",
+      "file": "labinstruments/rohdeschwarz.py",
+      "line": 20,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "labinstruments.hittite:Hittite",
+      "file": "labinstruments/hittite.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "labinstruments.hittite:SignalGenerator",
+      "file": "labinstruments/hittite.py",
+      "line": 129,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Keithley2280.get_current",
+      "Keithley2280.get_id",
+      "Keithley2280.get_voltage",
+      "AgilentE8257D.get_frequency",
+      "AgilentE8257D.get_id",
+      "AgilentE8257D.get_output_state",
+      "AgilentE8257D.get_power",
+      "RohdeSchwarzFSVA40.get_count",
+      "RohdeSchwarzFSVA40.get_id",
+      "RohdeSchwarzFSVA40.get_marker_value",
+      "RohdeSchwarzFSVA40.get_trace"
+    ],
+    "writes": [
+      "Keithley2280.set_current",
+      "Keithley2280.set_current_limit",
+      "Keithley2280.set_voltage",
+      "Keithley2280.set_voltage_limit",
+      "AgilentE8257D.set_frequency",
+      "AgilentE8257D.set_power",
+      "RohdeSchwarzFSVA40.set_attenuation",
+      "RohdeSchwarzFSVA40.set_averaging",
+      "RohdeSchwarzFSVA40.set_averaging_state",
+      "RohdeSchwarzFSVA40.set_averaging_type",
+      "RohdeSchwarzFSVA40.set_bw_ratio",
+      "RohdeSchwarzFSVA40.set_center_frequency"
+    ],
+    "actions": [
+      "Keithley2280.power_off",
+      "Keithley2280.power_on",
+      "Keithley2280.reset",
+      "AgilentE8257D.power_off",
+      "AgilentE8257D.power_on",
+      "AgilentE8257D.reset",
+      "RohdeSchwarzFSVA40.reset"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.measure.current.v1",
+      "cap.measure.voltage.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/smithsonian__rxlab-instruments --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

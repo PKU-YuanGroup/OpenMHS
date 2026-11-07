@@ -1,0 +1,193 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "cmake",
+    "python",
+    "make"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_32ad20b47e6645a1",
+    "https://github.com/nekonaute/roborobo4"
+  ],
+  "description": "nekonaute/roborobo4: complete environment for multi-robot systems; mobile robots (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: task environment. Language: Jupyter Notebook. Catalog keywords: Roborobo, C++.",
+  "domains": [
+    "multi-robot systems",
+    "mobile robots"
+  ],
+  "evidence": {
+    "files_read": 6,
+    "notes": "bounded static scan: 439 files enumerated (max depth 3), 6 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.nekonaute/roborobo4",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs a future engine bridge; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/python-object.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "Python SDK",
+    "C++ API",
+    "CLI"
+  ],
+  "languages": [
+    "Jupyter Notebook",
+    "C",
+    "C++",
+    "Python"
+  ],
+  "last_commit_at": "2025-05-19T12:20:26+02:00",
+  "license": "CC-BY-SA-4.0",
+  "license_class": "copyleft",
+  "license_spdx": "CC-BY-SA-4.0",
+  "links": {
+    "repo": "https://github.com/nekonaute/roborobo4"
+  },
+  "local_path": "robots/nekonaute/roborobo4",
+  "modes": [
+    "simulated"
+  ],
+  "owner": "nekonaute",
+  "package_id": "gh.nekonaute/roborobo4",
+  "quarantine": false,
+  "rank": 1243,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "roborobo4",
+  "repo_url": "https://github.com/nekonaute/roborobo4",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "ae758c327228f612d044a54ee00d33ee1c469ee1",
+    "repo_url": "https://github.com/nekonaute/roborobo4"
+  },
+  "stars": 10,
+  "tags": [
+    "python-object",
+    "robotics",
+    "complete environment",
+    "task environment",
+    "simulated",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "nekonaute/roborobo4",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "gazebo",
+      "family_confidence": 0.74,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 59.0,
+      "quality_flags": [
+        "license_unknown"
+      ],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "任务环境",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "完整环境",
+      "description_zh": "Roborobo 4：面向进化/群体机器人的快速2D移动机器人仿真器，C++内核带Python接口",
+      "join": "exact",
+      "license_raw": "NOASSERTION",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 1748,
+      "rows_all": [
+        1748
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B5-task-env-wrap"
+    },
+    "device_plan": [
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/robots/nekonaute__roborobo4/simulated",
+        "mode": "simulated",
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": "LICENCE",
+      "file_spdx": "CC-BY-SA-4.0",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "cmake",
+        "python",
+        "make"
+      ],
+      "entry_evidence_count": 5,
+      "files": 439,
+      "markers": {
+        "cli": 3
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): Roborobo is a C++ 2D swarm-robot simulator with a pybind11 API, not a device SDK, so bridge-runtime/framework fits; a driver author needs pyroborobo, a properties file and a Controller subclass.",
+        "rules alone: untriaged (untriaged:no_entry_class, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "Roborobo is a C++ 2D swarm-robot simulator with a pybind11 API, not a device SDK, so bridge-runtime/framework fits; a driver author needs pyroborobo, a properties file and a Controller subclass.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

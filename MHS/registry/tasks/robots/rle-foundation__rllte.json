@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.rle-foundation/rllte",
+  "track": "robots",
+  "local_path": "robots/rle-foundation/rllte",
+  "driver_dir": "MHS/drivers/robots/rle-foundation__rllte",
+  "upstream": {
+    "repo_url": "https://github.com/rle-foundation/rllte",
+    "commit": "b5d55c826a449b235f773992e74e11b0ae2c7801",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1201,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rle-foundation__rllte --backend fake",
+  "skip_reason": "override (robots.json): rllte is an RL algorithm library, not a device: its env factories only wrap Gymnasium, dm_control and PyBullet, and its policy/agent classes are neural networks, so there is no hardware to drive.",
+  "publish_review": "not_required"
+}

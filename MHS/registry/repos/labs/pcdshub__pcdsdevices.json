@@ -1,0 +1,254 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "pcdsdevices.tpr:TprTrigger (pcdsdevices/tpr.py:60)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "pixi",
+    "python",
+    "make"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.motion.joint_position.v1"
+  ],
+  "catalog_refs": [
+    "repo_0b3838a7b18938b8",
+    "https://github.com/pcdshub/pcdsdevices"
+  ],
+  "description": "pcdshub/pcdsdevices: device backend for general (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 3. Catalog role: device SDK. Declared backend: Ophyd/Bluesky; EPICS. Language: Python. Catalog keywords: LCLS, PCDS, ophyd.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 6,
+    "notes": "bounded static scan: 316 files enumerated (max depth 3), 6 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/pcdshub__pcdsdevices/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.pcdshub/pcdsdevices",
+  "integration": {
+    "blockers": [
+      "LICENSE_REVIEW: permissive; the user decides before a driver is published"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/pcdshub__pcdsdevices: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/pcdshub__pcdsdevices --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "EPICS CA/PVA",
+    "Bluesky/Ophyd",
+    "CLI",
+    "EPICS"
+  ],
+  "languages": [
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2026-10-02T15:02:58-07:00",
+  "license": "BSD-3-Clause",
+  "license_class": "permissive",
+  "license_spdx": "BSD-3-Clause",
+  "links": {
+    "repo": "https://github.com/pcdshub/pcdsdevices"
+  },
+  "local_path": "labs/pcdshub/pcdsdevices",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "pcdshub",
+  "package_id": "gh.pcdshub/pcdsdevices",
+  "quarantine": false,
+  "rank": 28,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pcdsdevices",
+  "repo_url": "https://github.com/pcdshub/pcdsdevices",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "d13b06eb53e6185088a7534ce0e17ab154463407",
+    "repo_url": "https://github.com/pcdshub/pcdsdevices"
+  },
+  "stars": 7,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "simulated",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "pcdshub/pcdsdevices",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-bluesky",
+      "family_confidence": 0.89,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 69.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "Ophyd/Bluesky; EPICS",
+      "category_zh": "设备后端",
+      "description_zh": "LCLS（PCDS）专用ophyd设备类集合，定义非标准设备",
+      "join": "exact",
+      "license_raw": "NOASSERTION",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P1",
+      "row": 1972,
+      "rows_all": [
+        1972
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "bluesky-ophyd",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bophyd\\b"
+      ],
+      "family_note": "triage family python-object (catalogue family bluesky-ophyd)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/pcdshub__pcdsdevices/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/pcdshub__pcdsdevices/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/pcdshub__pcdsdevices/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": "LICENSE.md",
+      "file_spdx": "BSD-3-Clause",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "d13b06eb53e6185088a7534ce0e17ab154463407",
+      "driver_dir": "MHS/drivers/labs/pcdshub__pcdsdevices",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:9e4be3e07a9024c50d2133d4f94029ac663ffad55072812204ce8f1a08a1bb22",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "pixi",
+        "python",
+        "make"
+      ],
+      "entry_evidence_count": 7,
+      "files": 316,
+      "markers": {
+        "bluesky_ophyd": 10,
+        "cli": 1,
+        "epics": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (helper-wave-1-routing.json): Model review of helper wave 1: a direct Driver over TprTrigger (tpr.py:60), whose FormattedComponents OphydDriver cannot prove; LICENSE.md is the BSD form with an SLAC Enhancements grant (LICENSE.md:31-39).",
+        "rules alone: family-config (family:ophyd, rule 9)"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of helper wave 1: a direct Driver over TprTrigger (tpr.py:60), whose FormattedComponents OphydDriver cannot prove; LICENSE.md is the BSD form with an SLAC Enhancements grant (LICENSE.md:31-39).",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

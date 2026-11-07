@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.stanfordvl/igibson",
+  "track": "robots",
+  "local_path": "robots/stanfordvl/igibson",
+  "driver_dir": "MHS/drivers/robots/stanfordvl__igibson",
+  "upstream": {
+    "repo_url": "https://github.com/stanfordvl/igibson",
+    "commit": "7d9598278b95ec1039e1f4366c66b45346521e44",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 200,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "igibson.robots.behavior_robot:BRHand",
+      "file": "igibson/robots/behavior_robot.py",
+      "line": 839,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "igibson.robots.behavior_robot:BehaviorRobot",
+      "file": "igibson/robots/behavior_robot.py",
+      "line": 88,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "igibson.robots.behavior_robot:BREye",
+      "file": "igibson/robots/behavior_robot.py",
+      "line": 1020,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "igibson.robots.tiago:Tiago",
+      "file": "igibson/robots/tiago.py",
+      "line": 39,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "igibson.robots.fetch:Fetch",
+      "file": "igibson/robots/fetch.py",
+      "line": 28,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=2.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "igibson/simulator.py:40 Simulator",
+      "igibson/simulator_vr.py:24 SimulatorVR",
+      "igibson/robots/robot_base.py:1424 VirtualJoint",
+      "igibson/robots/robot_base.py:1518 Virtual6DOFJoint",
+      "igibson/robots/robot_base.py:1630 VirtualPlanarJoint",
+      "igibson/utils/constants.py:22 SimulatorMode"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/stanfordvl__igibson --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

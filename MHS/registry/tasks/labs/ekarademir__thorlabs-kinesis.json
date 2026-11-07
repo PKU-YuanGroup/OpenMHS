@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ekarademir/thorlabs-kinesis",
+  "track": "labs",
+  "local_path": "labs/ekarademir/thorlabs-kinesis",
+  "driver_dir": "MHS/drivers/labs/ekarademir__thorlabs-kinesis",
+  "upstream": {
+    "repo_url": "https://github.com/ekarademir/thorlabs-kinesis",
+    "commit": "2959e511281b3a39324c92a1786abd9a15d8cc82",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1132,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ekarademir__thorlabs-kinesis --backend fake",
+  "skip_reason": "override (labs.json): The repository is a ctypes binding layer over the Thorlabs Kinesis DLLs that exposes module-level functions and data structures but no device class, so it is tooling, not an OpenMHS driver.",
+  "publish_review": "not_required"
+}

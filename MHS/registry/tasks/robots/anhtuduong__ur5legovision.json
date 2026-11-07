@@ -1,0 +1,100 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.anhtuduong/ur5legovision",
+  "track": "robots",
+  "local_path": "robots/anhtuduong/ur5legovision",
+  "driver_dir": "MHS/drivers/robots/anhtuduong__ur5legovision",
+  "upstream": {
+    "repo_url": "https://github.com/anhtuduong/ur5legovision",
+    "commit": "7cf487fbadcfd42e2fe09f75c7345d24920a1e3d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 164,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "UR5Controller.get_ee_pose",
+      "UR5Controller.math_utils.getGraspMatrix",
+      "UR5Controller.math_utils.is_point_inside_segment",
+      "UR5Controller.u.getIdx",
+      "UR5Controller.u.getLegJointState",
+      "UR5Controller.u.getSegment",
+      "UR5Controller.u.get_caller_id",
+      "UR5Controller.u.get_dict_keys",
+      "AdvancedController.get_contact",
+      "AdvancedController.get_jstate",
+      "AdvancedController.get_pose",
+      "AdvancedController.math_utils.getGraspMatrix"
+    ],
+    "writes": [
+      "UR5Controller.u.setLegJointState",
+      "AdvancedController.setGravity",
+      "AdvancedController.u.setLegJointState",
+      "LabAdmittanceController.admit.setAdmittanceGains",
+      "LabAdmittanceController.admit.setPosturalTask",
+      "LabAdmittanceController.obs_avoidance.setCubeParameters",
+      "LabAdmittanceController.obs_avoidance.setCylinderParameters",
+      "LabAdmittanceController.u.setLegJointState"
+    ],
+    "actions": [
+      "UR5Controller.homing_procedure",
+      "UR5Controller.move_gripper_callback",
+      "UR5Controller.move_joints",
+      "UR5Controller.move_joints_callback",
+      "UR5Controller.move_to_callback",
+      "UR5Controller.startRealRobot",
+      "UR5Controller.startSimulator",
+      "AdvancedController.startSimulator",
+      "LabAdmittanceController.reset_joints",
+      "LabAdmittanceController.startRealRobot",
+      "LabAdmittanceController.startSimulator"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.manipulation.grasp.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/anhtuduong__ur5legovision --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.openai/mujoco-py",
+  "track": "robots",
+  "local_path": "robots/openai/mujoco-py",
+  "driver_dir": "MHS/drivers/robots/openai__mujoco-py",
+  "upstream": {
+    "repo_url": "https://github.com/openai/mujoco-py",
+    "commit": "a13903b82f1ab316815e63b3575526005b3b2ae1",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:mujoco",
+  "role": "framework",
+  "family": "mujoco",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 138,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "xmls/claw.xml:2 MJCF robot model",
+      "xmls/juggler.xml:2 MJCF robot model",
+      "xmls/slider.xml:2 MJCF robot model",
+      "xmls/tosser.xml:2 MJCF robot model"
+    ],
+    "upstream_tests": "mujoco_py/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/openai__mujoco-py --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

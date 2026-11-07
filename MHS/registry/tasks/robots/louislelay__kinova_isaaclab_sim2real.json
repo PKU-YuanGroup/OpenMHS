@@ -1,0 +1,74 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.louislelay/kinova_isaaclab_sim2real",
+  "track": "robots",
+  "local_path": "robots/louislelay/kinova_isaaclab_sim2real",
+  "driver_dir": "MHS/drivers/robots/louislelay__kinova_isaaclab_sim2real",
+  "upstream": {
+    "repo_url": "https://github.com/louislelay/kinova_isaaclab_sim2real",
+    "commit": "d97c80ed8f532de5ab2609366f12e9d4c62e1ea3",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 78,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gen3.tasks.manager_based.gen3_reach.joint_pos_env_cfg:Gen3ReachEnvCfg",
+      "file": "source/gen3/gen3/tasks/manager_based/gen3_reach/joint_pos_env_cfg.py",
+      "line": 25,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/gen3/gen3/tasks/manager_based/gen3_reach/__init__.py:15 gym env Gen3-Reach-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Gen3-Reach-v0 registered at source/gen3/gen3/tasks/manager_based/gen3_reach/__init__.py:15"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/louislelay__kinova_isaaclab_sim2real --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

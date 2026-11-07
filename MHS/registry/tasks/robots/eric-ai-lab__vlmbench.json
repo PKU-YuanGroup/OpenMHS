@@ -1,0 +1,74 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.eric-ai-lab/vlmbench",
+  "track": "robots",
+  "local_path": "robots/eric-ai-lab/vlmbench",
+  "driver_dir": "MHS/drivers/robots/eric-ai-lab__vlmbench",
+  "upstream": {
+    "repo_url": "https://github.com/eric-ai-lab/vlmbench",
+    "commit": "479bd17b7d80645002af74f142a29dfe8b428876",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 252,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "amsolver.gym.vlmbench_env:VLMBenchEnv",
+      "file": "amsolver/gym/vlmbench_env.py",
+      "line": 14,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "amsolver/task_environment.py:43 TaskEnvironment environment class",
+      "amsolver/gym/vlmbench_env.py:14 VLMBenchEnv environment class",
+      "amsolver/sim2real/domain_randomization_environment.py:19 DomainRandomizationEnvironment environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/eric-ai-lab__vlmbench --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

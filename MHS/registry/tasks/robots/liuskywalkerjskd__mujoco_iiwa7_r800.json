@@ -1,0 +1,86 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.liuskywalkerjskd/mujoco_iiwa7_r800",
+  "track": "robots",
+  "local_path": "robots/liuskywalkerjskd/mujoco_iiwa7_r800",
+  "driver_dir": "MHS/drivers/robots/liuskywalkerjskd__mujoco_iiwa7_r800",
+  "upstream": {
+    "repo_url": "https://github.com/liuskywalkerjskd/mujoco_iiwa7_r800",
+    "commit": "bf300255e9b511b6ad43ab40727347033a2619dd",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 303,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "iiwa7_mjcf/iiwa7_tuned.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "iiwa7_mjcf/iiwa7_with_gripper.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "iiwa7_mjcf/robotiq_2f85.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "iiwa7_mjcf/iiwa7_tuned.xml:1 MJCF robot model",
+      "iiwa7_mjcf/iiwa7_with_gripper.xml:1 MJCF robot model",
+      "iiwa7_mjcf/robotiq_2f85.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model iiwa7_mjcf/iiwa7_tuned.xml:1",
+      "MJCF robot model iiwa7_mjcf/iiwa7_with_gripper.xml:1",
+      "MJCF robot model iiwa7_mjcf/robotiq_2f85.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/liuskywalkerjskd__mujoco_iiwa7_r800 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

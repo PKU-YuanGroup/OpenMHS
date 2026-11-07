@@ -1,0 +1,124 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.gregmoille/instrumentcontrol",
+  "track": "labs",
+  "local_path": "labs/gregmoille/instrumentcontrol",
+  "driver_dir": "MHS/drivers/labs/gregmoille__instrumentcontrol",
+  "upstream": {
+    "repo_url": "https://github.com/gregmoille/instrumentcontrol",
+    "commit": "2cf8c78dea007c636fff1f3d006a039fc1876055",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 16,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "pyScope.PyTektronixScope:TekDPO70000",
+      "file": "pyScope/PyTektronixScope.py",
+      "line": 31,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyScope.PyTektronixDPO:TektronixDPO7000",
+      "file": "pyScope/PyTektronixDPO.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyRSA.rsa306_signalvu:RSA306SignalVu",
+      "file": "pyRSA/rsa306_signalvu.py",
+      "line": 35,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyPowerMeter.thorlabspowermeter:ThorlabsP1xx",
+      "file": "pyPowerMeter/thorlabspowermeter.py",
+      "line": 25,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyRFsynth.Valon:Valon5105",
+      "file": "pyRFsynth/Valon.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "TekDPO70000.acquire_enhanced_enob (attribute)",
+      "TekDPO70000.acquire_enhanced_state (attribute)",
+      "TekDPO70000.acquire_interp_8bit (attribute)",
+      "TekDPO70000.acquire_magnivu (attribute)",
+      "TekDPO70000.acquire_mode (attribute)",
+      "TekDPO70000.acquire_mode_actual (attribute)",
+      "TekDPO70000.acquire_num_acquisitions (attribute)",
+      "TekDPO70000.acquire_num_avgs (attribute)",
+      "TekDPO70000.acquire_num_envelop (attribute)",
+      "TekDPO70000.acquire_num_frames (attribute)",
+      "TekDPO70000.acquire_num_samples (attribute)",
+      "TekDPO70000.acquire_sampling_mode (attribute)"
+    ],
+    "writes": [
+      "TektronixDPO7000.configure_channel",
+      "TektronixDPO7000.configure_edge_trigger",
+      "TektronixDPO7000.configure_timebase",
+      "RSA306SignalVu.config_block_iq",
+      "RSA306SignalVu.config_spectrum",
+      "RSA306SignalVu.config_trigger"
+    ],
+    "actions": [
+      "TekDPO70000.force_trigger",
+      "TekDPO70000.run",
+      "TekDPO70000.stop",
+      "TektronixDPO7000.run",
+      "RSA306SignalVu.acquire_block_iq",
+      "RSA306SignalVu.acquire_spectrum_df_param",
+      "RSA306SignalVu.backup_and_reset_signalvu_state",
+      "RSA306SignalVu.run"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.measure.spectrum.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/gregmoille__instrumentcontrol --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

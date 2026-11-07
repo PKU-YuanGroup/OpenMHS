@@ -1,0 +1,178 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "docker",
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_bf947f050c520661",
+    "https://github.com/selfpatch/ros2_medkit_mcp"
+  ],
+  "description": "selfpatch/ros2_medkit_mcp: protocol implementation/bridge for general (robotics track). OpenMHS plan: reference only (host). Declared backend: MCP; ROS 2. Language: Python. Catalog keywords: LLM, ros2_medkit, SOVD, MCP.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 5,
+    "notes": "bounded static scan: 30 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "mcp-proxy"
+  ],
+  "hardware_free": false,
+  "id": "gh.selfpatch/ros2_medkit_mcp",
+  "integration": {
+    "blockers": [
+      "REFERENCE_ONLY: role host"
+    ],
+    "effort": "EX",
+    "next_action": "Reference only: a host, orchestrator or MCP wrapper of a covered backend; integrate the backend instead.",
+    "reason_code": "override:recon",
+    "role": "host",
+    "scenario_required": false,
+    "strategy": "reference"
+  },
+  "interfaces": [
+    "MCP",
+    "HTTP/REST",
+    "Docker",
+    "ROS 2",
+    "CLI"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-09-02T13:26:29+02:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/selfpatch/ros2_medkit_mcp"
+  },
+  "local_path": "robots/selfpatch/ros2_medkit_mcp",
+  "modes": [],
+  "owner": "selfpatch",
+  "package_id": "gh.selfpatch/ros2_medkit_mcp",
+  "quarantine": false,
+  "rank": 1089,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "ros2_medkit_mcp",
+  "repo_url": "https://github.com/selfpatch/ros2_medkit_mcp",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "cbac09be8ba7dbcd20ef0c965d49e353f7217644",
+    "repo_url": "https://github.com/selfpatch/ros2_medkit_mcp"
+  },
+  "stars": 0,
+  "tags": [
+    "mcp-proxy",
+    "robotics",
+    "hardware interface",
+    "reference"
+  ],
+  "tier": "D",
+  "title": "selfpatch/ros2_medkit_mcp",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "mcp-server",
+      "family_confidence": 0.86,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 64.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "unknown",
+      "backend_family_raw": "MCP; ROS 2",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "连接LLM与ros2_medkit SOVD HTTP API的薄MCP适配器，覆盖发现、数据、操作",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 2455,
+      "rows_all": [
+        2455
+      ],
+      "scope": "core",
+      "track_raw": "robotics | shared_infrastructure",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "mcp-proxy",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bmcp\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_note": "tier B -> D: triage reference (override:recon)",
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": "Apache-2.0",
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "docker",
+        "python"
+      ],
+      "entry_evidence_count": 4,
+      "files": 30,
+      "markers": {
+        "docker": 22,
+        "http": 4,
+        "mcp": 44,
+        "ros2": 32
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): A thin MCP host that only proxies the ros2_medkit SOVD HTTP gateway through the external ros2-medkit-client, so it is not a device driver; target that gateway or client instead.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "A thin MCP host that only proxies the ros2_medkit SOVD HTTP gateway through the external ros2-medkit-client, so it is not a device driver; target that gateway or client instead.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

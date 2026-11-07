@@ -1,0 +1,130 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.scaxlibur/wavebench",
+  "track": "labs",
+  "local_path": "labs/scaxlibur/wavebench",
+  "driver_dir": "MHS/drivers/labs/scaxlibur__wavebench",
+  "upstream": {
+    "repo_url": "https://github.com/scaxlibur/wavebench",
+    "commit": "44506c4975d8615ace0d2dbababe880b89567709",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 12,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "wavebench.services.rf_source_service:RfSourceService",
+      "file": "src/wavebench/services/rf_source_service.py",
+      "line": 183,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "wavebench.drivers.dg4202:DG4202Source",
+      "file": "src/wavebench/drivers/dg4202.py",
+      "line": 148,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "wavebench.drivers.dp800:DP800Power",
+      "file": "src/wavebench/drivers/dp800.py",
+      "line": 121,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "wavebench.instruments.api:DriverContext",
+      "file": "src/wavebench/instruments/api.py",
+      "line": 47,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "wavebench.services.resource_lease:ResourceLease",
+      "file": "src/wavebench/services/resource_lease.py",
+      "line": 125,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "RfSourceService.idn",
+      "DG4202Source.get_status",
+      "DG4202Source.idn",
+      "DP800Power.get_measurement",
+      "DP800Power.get_protection_status",
+      "DP800Power.get_status",
+      "DP800Power.idn"
+    ],
+    "writes": [
+      "RfSourceService.configure_cw",
+      "RfSourceService.configure_cw_with_artifact",
+      "RfSourceService.configure_modulation",
+      "RfSourceService.configure_modulation_with_artifact",
+      "RfSourceService.configure_pulse",
+      "RfSourceService.configure_pulse_with_artifact",
+      "RfSourceService.configure_sweep",
+      "RfSourceService.configure_sweep_with_artifact",
+      "RfSourceService.set_output",
+      "RfSourceService.set_output_with_artifact",
+      "RfSourceService.set_pulse_output",
+      "RfSourceService.set_pulse_output_with_artifact"
+    ],
+    "actions": [
+      "RfSourceService.disable_modulation",
+      "RfSourceService.disable_modulation_with_artifact",
+      "RfSourceService.enable_modulated_output",
+      "RfSourceService.enable_modulated_output_with_artifact",
+      "RfSourceService.trigger_snapshot",
+      "RfSourceService.trigger_snapshot_with_artifact"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/wavebench/arbitrary.py:13 DAC14_MIN = 0",
+      "src/wavebench/arbitrary.py:14 DAC14_MAX = 16383",
+      "src/wavebench/config.py:90 min_signal_vpp = 0.02",
+      "src/wavebench/data/analysis_resources.py:27 max_input_samples = 20000000",
+      "src/wavebench/data/analysis_resources.py:29 max_fir_taps = 4095",
+      "src/wavebench/data/analysis_resources.py:30 max_zero_phase_fir_taps = 255",
+      "src/wavebench/data/analysis_resources.py:31 max_work_units = 2000000000",
+      "src/wavebench/data/analysis_resources.py:34 max_peak_candidates = 100000"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/scaxlibur__wavebench --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

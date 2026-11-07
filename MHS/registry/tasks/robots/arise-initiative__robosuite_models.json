@@ -1,0 +1,104 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.arise-initiative/robosuite_models",
+  "track": "robots",
+  "local_path": "robots/arise-initiative/robosuite_models",
+  "driver_dir": "MHS/drivers/robots/arise-initiative__robosuite_models",
+  "upstream": {
+    "repo_url": "https://github.com/arise-initiative/robosuite_models",
+    "commit": "2d63a6b4319bda772420daf10594ce0de5bd793d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 123,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "robosuite_models/assets/robots/aloha/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "robosuite_models/assets/robots/arx5/robot.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "robosuite_models/assets/robots/b1/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "robosuite_models/assets/robots/g1/robot.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "robosuite_models/assets/robots/go2/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robosuite_models/assets/robots/aloha/robot.xml:1 MJCF robot model",
+      "robosuite_models/assets/robots/arx5/robot.xml:2 MJCF robot model",
+      "robosuite_models/assets/robots/b1/robot.xml:1 MJCF robot model",
+      "robosuite_models/assets/robots/g1/robot.xml:2 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model robosuite_models/assets/robots/aloha/robot.xml:1",
+      "MJCF robot model robosuite_models/assets/robots/arx5/robot.xml:2",
+      "MJCF robot model robosuite_models/assets/robots/b1/robot.xml:1",
+      "MJCF robot model robosuite_models/assets/robots/g1/robot.xml:2",
+      "MJCF robot model robosuite_models/assets/robots/go2/robot.xml:1",
+      "MJCF robot model robosuite_models/assets/robots/h1/robot.xml:2",
+      "MJCF robot model robosuite_models/assets/robots/pr2/robot.xml:2",
+      "MJCF robot model robosuite_models/assets/robots/vx300s/robot.xml:1",
+      "MJCF robot model robosuite_models/assets/robots/yumi/robot.xml:2",
+      "MJCF robot model robosuite_models/assets/robots/z1/robot.xml:2"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/arise-initiative__robosuite_models --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

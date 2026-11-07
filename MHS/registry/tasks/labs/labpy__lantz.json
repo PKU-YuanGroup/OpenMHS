@@ -1,0 +1,110 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.labpy/lantz",
+  "track": "labs",
+  "local_path": "labs/labpy/lantz",
+  "driver_dir": "MHS/drivers/labs/labpy__lantz",
+  "upstream": {
+    "repo_url": "https://github.com/labpy/lantz",
+    "commit": "3e878e3f765a4295b0089d04e241d4beb7b8a65b",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:driver-pack",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 2,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "lantz.drivers.labjack._internal.u12:U12",
+      "file": "lantz/drivers/labjack/_internal/u12.py",
+      "line": 395,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lantz.drivers.andor.neo:Neo",
+      "file": "lantz/drivers/andor/neo.py",
+      "line": 27,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lantz.feat:DictFeat",
+      "file": "lantz/feat.py",
+      "line": 316,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lantz.log:LoggingTCPServer",
+      "file": "lantz/log.py",
+      "line": 229,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lantz.log:LoggingUDPServer",
+      "file": "lantz/log.py",
+      "line": 260,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "lantz/simulators/fungen.py:25 SimFunctionGenerator",
+      "lantz/simulators/instrument.py:29 SimError",
+      "lantz/simulators/voltmeter.py:21 SimVoltmeter"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "U12.getDriverVersion",
+      "U12.getFirmwareVersion",
+      "U12.getWinVersion",
+      "DictFeat.get_cache"
+    ],
+    "writes": [
+      "DictFeat.set_cache"
+    ],
+    "actions": [
+      "U12.aiStreamStart",
+      "U12.pulseOutStart",
+      "U12.reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/labpy__lantz --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

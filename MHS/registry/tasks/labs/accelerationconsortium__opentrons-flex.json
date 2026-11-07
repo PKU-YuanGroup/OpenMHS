@@ -1,0 +1,125 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.accelerationconsortium/opentrons-flex",
+  "track": "labs",
+  "local_path": "labs/accelerationconsortium/opentrons-flex",
+  "driver_dir": "MHS/drivers/labs/accelerationconsortium__opentrons-flex",
+  "upstream": {
+    "repo_url": "https://github.com/accelerationconsortium/opentrons-flex",
+    "commit": "2639016ee9f234949aaf596c2ab2b93694eb0e0b",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 209,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "unitelabs.opentrons_flex.io.flex_motion:FlexMotionController",
+      "file": "src/unitelabs/opentrons_flex/io/flex_motion.py",
+      "line": 99,
+      "confidence": "override"
+    },
+    {
+      "symbol": "unitelabs.opentrons_flex.io.heater_shaker:HeaterShakerController",
+      "file": "src/unitelabs/opentrons_flex/io/heater_shaker.py",
+      "line": 15,
+      "confidence": "override"
+    },
+    {
+      "symbol": "unitelabs.opentrons_flex.io.thermocycler:ThermocyclerController",
+      "file": "src/unitelabs/opentrons_flex/io/thermocycler.py",
+      "line": 15,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10,<3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/unitelabs/opentrons_flex/io/simulator_compat.py:8 OT3SimulatorCompatibilityAdapter",
+      "src/unitelabs/opentrons_flex/io/simulator_compat.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "FlexMotionController.get_lights",
+      "FlexMotionController.get_tip_presence",
+      "FlexMotionController.is_simulating",
+      "HeaterShakerController.get_device_info",
+      "HeaterShakerController.get_latch_status",
+      "HeaterShakerController.get_rpm",
+      "HeaterShakerController.get_temperature",
+      "HeaterShakerController.is_connected",
+      "ThermocyclerController.get_device_info",
+      "ThermocyclerController.get_lid_status",
+      "ThermocyclerController.get_lid_temperature",
+      "ThermocyclerController.get_plate_temperature"
+    ],
+    "writes": [
+      "FlexMotionController.configure_nozzle_layout",
+      "FlexMotionController.set_lights",
+      "HeaterShakerController.set_rpm",
+      "HeaterShakerController.set_temperature",
+      "ThermocyclerController.set_lid_temperature",
+      "ThermocyclerController.set_plate_temperature"
+    ],
+    "actions": [
+      "FlexMotionController.aspirate",
+      "FlexMotionController.dispense",
+      "FlexMotionController.home",
+      "FlexMotionController.home_mount",
+      "FlexMotionController.move_rel",
+      "FlexMotionController.move_to",
+      "FlexMotionController.pause",
+      "FlexMotionController.prepare_for_aspirate",
+      "FlexMotionController.resume",
+      "FlexMotionController.stop",
+      "HeaterShakerController.stop_shaking"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.temperature.v1",
+      "cap.thermal.setpoint.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.motion.joint_position.v1",
+      "cap.fluid.dispense.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/accelerationconsortium__opentrons-flex --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

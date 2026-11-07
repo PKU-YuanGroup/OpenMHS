@@ -1,0 +1,84 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.spiglerg/tavis",
+  "track": "robots",
+  "local_path": "robots/spiglerg/tavis",
+  "driver_dir": "MHS/drivers/robots/spiglerg__tavis",
+  "upstream": {
+    "repo_url": "https://github.com/spiglerg/tavis",
+    "commit": "a114648a0db232a1a8d4b142c65251b29afa795a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 100,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "tavis.make_env:make_tavis_env",
+      "file": "tavis/make_env.py",
+      "line": 14,
+      "confidence": "override"
+    },
+    {
+      "symbol": "tavis.robots.gr1t2:GR1T2Embodiment",
+      "file": "tavis/robots/gr1t2.py",
+      "line": 400,
+      "confidence": "override"
+    },
+    {
+      "symbol": "tavis.robots.reachy2:Reachy2Embodiment",
+      "file": "tavis/robots/reachy2.py",
+      "line": 596,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/spiglerg__tavis --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,113 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ad-sdl/ur_module",
+  "track": "labs",
+  "local_path": "labs/ad-sdl/ur_module",
+  "driver_dir": "MHS/drivers/labs/ad-sdl__ur_module",
+  "upstream": {
+    "repo_url": "https://github.com/ad-sdl/ur_module",
+    "commit": "75f1c5fe53c70bccbe1f37eeeb55a382133e623e",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 30,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "ur_interface.ur:UR",
+      "file": "src/ur_interface/ur.py",
+      "line": 70,
+      "confidence": "override"
+    },
+    {
+      "symbol": "ur_interface.ur_dashboard:UR_DASHBOARD",
+      "file": "src/ur_interface/ur_dashboard.py",
+      "line": 10,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9.21",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "UR.get_movement_state",
+      "UR.ur_dashboard.get_loaded_program",
+      "UR.ur_dashboard.get_operational_mode",
+      "UR.ur_dashboard.get_overall_robot_status",
+      "UR.ur_dashboard.get_program_run_status",
+      "UR.ur_dashboard.get_program_state",
+      "UR.ur_dashboard.get_robot_mode",
+      "UR.ur_dashboard.get_safety_status",
+      "UR.ur_dashboard.is_in_remote_control",
+      "UR_DASHBOARD.get_loaded_program",
+      "UR_DASHBOARD.get_operational_mode",
+      "UR_DASHBOARD.get_overall_robot_status"
+    ],
+    "writes": [
+      "UR.set_digital_io",
+      "UR.ur_dashboard.set_operational_mode",
+      "UR_DASHBOARD.set_operational_mode"
+    ],
+    "actions": [
+      "UR.gripper_screw_transfer",
+      "UR.gripper_transfer",
+      "UR.home",
+      "UR.pipette_dispense_and_retrieve",
+      "UR.pipette_pick_and_move_sample",
+      "UR.pipette_transfer",
+      "UR.robotiq_screwdriver_transfer",
+      "UR.run_droplet",
+      "UR.run_urp_program",
+      "UR.ur_dashboard.brake_release",
+      "UR.ur_dashboard.pause_program",
+      "UR.ur_dashboard.power_off"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.manipulation.grasp.v1",
+      "cap.actuation.gpio.v1",
+      "cap.device.calibrate.v1",
+      "cap.fluid.dispense.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ad-sdl__ur_module --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

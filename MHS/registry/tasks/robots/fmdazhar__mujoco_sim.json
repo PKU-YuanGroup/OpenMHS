@@ -1,0 +1,108 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.fmdazhar/mujoco_sim",
+  "track": "robots",
+  "local_path": "robots/fmdazhar/mujoco_sim",
+  "driver_dir": "MHS/drivers/robots/fmdazhar__mujoco_sim",
+  "upstream": {
+    "repo_url": "https://github.com/fmdazhar/mujoco_sim",
+    "commit": "9c204da4f307c7a711ca4e5cddb1d46a86cab0b1",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 115,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "mujoco_sim.envs:ur5ePegInHoleGymEnv",
+      "file": "mujoco_sim/envs/ur5e_pick_gym_connector.py",
+      "line": 21,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "mujoco_sim/envs/xmls/ur5e_demos.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "mujoco_sim/envs/xmls/hande/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "mujoco_sim/envs/xmls/ur5e/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "mujoco_sim/envs/xmls/ur5e1.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "mujoco_sim/envs/xmls/hande/hande.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "mujoco_sim/__init__.py:10 gym env ur5ePegInHoleGymEnv_easy-v0",
+      "mujoco_sim/__init__.py:57 gym env ur5ePegInHoleGymEnv_medium-v0",
+      "mujoco_sim/__init__.py:120 gym env ur5ePegInHoleGymEnv_medium-v1",
+      "mujoco_sim/__init__.py:193 gym env ur5ePegInHoleGymEnv_hard-v0"
+    ],
+    "upstream_tests": "mujoco_sim/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env ur5ePegInHoleGymEnv_easy-v0 registered at mujoco_sim/__init__.py:10",
+      "gym env ur5ePegInHoleGymEnv_medium-v0 registered at mujoco_sim/__init__.py:57",
+      "gym env ur5ePegInHoleGymEnv_medium-v1 registered at mujoco_sim/__init__.py:120",
+      "gym env ur5ePegInHoleGymEnv_hard-v0 registered at mujoco_sim/__init__.py:193",
+      "gym env ur5ePegInHoleGymEnv_hard-v1 registered at mujoco_sim/__init__.py:267",
+      "gym env ur5ePegInHoleGymEnv_very_hard-v1 registered at mujoco_sim/__init__.py:351"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/fmdazhar__mujoco_sim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

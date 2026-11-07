@@ -1,0 +1,63 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mergeos-bounties/gazebo-mcp",
+  "track": "robots",
+  "local_path": "robots/mergeos-bounties/gazebo-mcp",
+  "driver_dir": "MHS/drivers/robots/mergeos-bounties__gazebo-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/mergeos-bounties/gazebo-mcp",
+    "commit": "c60f9af5d2e295e0a0e6e1d33c4a0f29a8f4650e",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "reference",
+  "reason_code": "override:recon",
+  "role": "host",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 685,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/gazebo_mcp/backend/mock.py:9 MockBackend",
+      "src/gazebo_mcp/backend/mock.py:1",
+      "src/gazebo_mcp/backend/mock_sim.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/mergeos-bounties__gazebo-mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

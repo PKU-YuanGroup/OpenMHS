@@ -1,0 +1,182 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_0b177c8f48d93b7c",
+    "https://github.com/robotflow-initiative/rfuniverse"
+  ],
+  "description": "robotflow-initiative/rfuniverse: direct simulation backend for robot manipulation (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: direct simulation backend. Declared backend: Unity. Language: C#. Catalog keywords: Unity, IK.",
+  "domains": [
+    "robot manipulation"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 521 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "unity"
+  ],
+  "hardware_free": true,
+  "id": "gh.robotflow-initiative/rfuniverse",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs a future engine bridge; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/unity.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "CLI",
+    "Unity",
+    "gRPC"
+  ],
+  "languages": [
+    "C#",
+    "Protocol Buffers"
+  ],
+  "last_commit_at": "2026-07-13T03:21:08Z",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "docs": "https://github.com/robotflow-initiative/rfuniverse",
+    "repo": "https://github.com/robotflow-initiative/rfuniverse"
+  },
+  "local_path": "robots/robotflow-initiative/rfuniverse",
+  "modes": [
+    "simulated"
+  ],
+  "owner": "robotflow-initiative",
+  "package_id": "gh.robotflow-initiative/rfuniverse",
+  "quarantine": false,
+  "rank": 341,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "rfuniverse",
+  "repo_url": "https://github.com/robotflow-initiative/rfuniverse",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "6946edbc28cc62064e4c574f9506c40a520a7b8a",
+    "repo_url": "https://github.com/robotflow-initiative/rfuniverse"
+  },
+  "stars": 145,
+  "tags": [
+    "unity",
+    "robotics",
+    "direct simulation backend",
+    "simulated",
+    "bridge runtime"
+  ],
+  "tier": "A",
+  "title": "robotflow-initiative/rfuniverse",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "unity",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 47.0,
+      "quality_flags": [],
+      "tier": "C",
+      "tier_confidence": 0.7
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "Unity",
+      "category_zh": "直接模拟后端",
+      "description_zh": "Unity机器人模拟平台，含刚体、布料、触觉、相机及IK接口",
+      "join": "exact",
+      "license_raw": "Apache-2.0",
+      "mhs_support_raw": "需开发适配；所核资料未确认MHS接口，不据此断言不存在",
+      "priority": "P1",
+      "row": 2248,
+      "rows_all": [
+        2248
+      ],
+      "scope": "unknown",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "unity",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bunity\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/robots/robotflow-initiative__rfuniverse/simulated",
+        "mode": "simulated",
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 2,
+      "files": 521,
+      "markers": {
+        "camera": 1,
+        "cli": 1,
+        "unity": 4
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): RFUniverse is the Unity simulator engine driven by the separate pyrfuniverse client, so bridge-runtime/framework; install pyrfuniverse and target its env API and a Unity build, not this C# clone.",
+        "rules alone: untriaged (untriaged:no_entry_class, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "RFUniverse is the Unity simulator engine driven by the separate pyrfuniverse client, so bridge-runtime/framework; install pyrfuniverse and target its env API and a Unity build, not this C# clone.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

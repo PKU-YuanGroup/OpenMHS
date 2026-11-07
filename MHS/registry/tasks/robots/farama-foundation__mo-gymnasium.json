@@ -1,0 +1,118 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.farama-foundation/mo-gymnasium",
+  "track": "robots",
+  "local_path": "robots/farama-foundation/mo-gymnasium",
+  "driver_dir": "MHS/drivers/robots/farama-foundation__mo-gymnasium",
+  "upstream": {
+    "repo_url": "https://github.com/farama-foundation/mo-gymnasium",
+    "commit": "8d280fdc3f517b18090619806843c03f51d775af",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 59,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "mo_gymnasium.envs.breakable_bottles.breakable_bottles:BreakableBottles",
+      "file": "mo_gymnasium/envs/breakable_bottles/breakable_bottles.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "mo_gymnasium.envs.continuous_mountain_car.continuous_mountain_car:MOContinuousMountainCar",
+      "file": "mo_gymnasium/envs/continuous_mountain_car/continuous_mountain_car.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "mo_gymnasium.envs.deep_sea_treasure.deep_sea_treasure:DeepSeaTreasure",
+      "file": "mo_gymnasium/envs/deep_sea_treasure/deep_sea_treasure.py",
+      "line": 89,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "mo_gymnasium.envs.fishwood.fishwood:FishWood",
+      "file": "mo_gymnasium/envs/fishwood/fishwood.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "mo_gymnasium.envs.four_room.four_room:FourRoom",
+      "file": "mo_gymnasium/envs/four_room/four_room.py",
+      "line": 34,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "mo_gymnasium/envs/mujoco/assets/mo_reacher.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "mo_gymnasium/envs/breakable_bottles/__init__.py:4 gym env breakable-bottles-v0",
+      "mo_gymnasium/envs/continuous_mountain_car/__init__.py:4 gym env mo-mountaincarcontinuous-v0",
+      "mo_gymnasium/envs/deep_sea_treasure/__init__.py:9 gym env deep-sea-treasure-v0",
+      "mo_gymnasium/envs/deep_sea_treasure/__init__.py:15 gym env deep-sea-treasure-concave-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env breakable-bottles-v0 registered at mo_gymnasium/envs/breakable_bottles/__init__.py:4",
+      "gym env mo-mountaincarcontinuous-v0 registered at mo_gymnasium/envs/continuous_mountain_car/__init__.py:4",
+      "gym env deep-sea-treasure-v0 registered at mo_gymnasium/envs/deep_sea_treasure/__init__.py:9",
+      "gym env deep-sea-treasure-concave-v0 registered at mo_gymnasium/envs/deep_sea_treasure/__init__.py:15",
+      "gym env deep-sea-treasure-mirrored-v0 registered at mo_gymnasium/envs/deep_sea_treasure/__init__.py:22",
+      "gym env fishwood-v0 registered at mo_gymnasium/envs/fishwood/__init__.py:4",
+      "gym env four-room-v0 registered at mo_gymnasium/envs/four_room/__init__.py:4",
+      "gym env fruit-tree-v0 registered at mo_gymnasium/envs/fruit_tree/__init__.py:4",
+      "gym env mo-highway-v0 registered at mo_gymnasium/envs/highway/__init__.py:4",
+      "gym env mo-highway-fast-v0 registered at mo_gymnasium/envs/highway/__init__.py:6",
+      "gym env mo-lunar-lander-v3 registered at mo_gymnasium/envs/lunar_lander/__init__.py:4",
+      "gym env mo-lunar-lander-continuous-v3 registered at mo_gymnasium/envs/lunar_lander/__init__.py:10"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/farama-foundation__mo-gymnasium --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

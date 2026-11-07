@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tiagocoutinho/vacuubrand",
+  "track": "labs",
+  "local_path": "labs/tiagocoutinho/vacuubrand",
+  "driver_dir": "MHS/drivers/labs/tiagocoutinho__vacuubrand",
+  "upstream": {
+    "repo_url": "https://github.com/tiagocoutinho/vacuubrand",
+    "commit": "12b2e12aa43866ffa2ab986fc466c5548a7aba07",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 105,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "vacuubrand.dcp3000.dcp3000:DCP3000",
+      "file": "vacuubrand/dcp3000/dcp3000.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "vacuubrand.tango.server.dcp3000:DCP3000",
+      "file": "vacuubrand/tango/server/dcp3000.py",
+      "line": 30,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "vacuubrand.dcp3000.protocol:AIOProtocol",
+      "file": "vacuubrand/dcp3000/protocol.py",
+      "line": 113,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "vacuubrand.dcp3000.protocol:IOProtocol",
+      "file": "vacuubrand/dcp3000/protocol.py",
+      "line": 146,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "vacuubrand/simulator.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "capabilities"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/tiagocoutinho__vacuubrand --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

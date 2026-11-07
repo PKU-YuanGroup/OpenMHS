@@ -1,0 +1,73 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.isaac-sim/isaaclab",
+  "track": "robots",
+  "local_path": "robots/isaac-sim/isaaclab",
+  "driver_dir": "MHS/drivers/robots/isaac-sim__isaaclab",
+  "upstream": {
+    "repo_url": "https://github.com/isaac-sim/isaaclab",
+    "commit": "dd2f470fcad5873980e9bc4acffb043238aca41c",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:engine",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 607,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "isaaclab.envs:ManagerBasedRLEnv",
+      "file": "source/isaaclab/isaaclab/envs/manager_based_rl_env.py",
+      "line": 25,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.12,<3.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/isaaclab/isaaclab/app/sim_launcher.py:55 SimulationLauncher",
+      "source/isaaclab/isaaclab/sim/simulation_cfg.py:38 SimulationCfg",
+      "source/isaaclab/isaaclab/sim/simulation_context.py:67 SimulationContext",
+      "source/isaaclab/isaaclab/app/sim_launcher.py:1",
+      "source/isaaclab/isaaclab/sim/simulation_cfg.py:1",
+      "source/isaaclab/isaaclab/sim/simulation_context.py:1"
+    ],
+    "upstream_tests": "docker/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/isaac-sim__isaaclab --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

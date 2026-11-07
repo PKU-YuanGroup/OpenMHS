@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sustech-data/igibson-imitation",
+  "track": "robots",
+  "local_path": "robots/sustech-data/igibson-imitation",
+  "driver_dir": "MHS/drivers/robots/sustech-data__igibson-imitation",
+  "upstream": {
+    "repo_url": "https://github.com/sustech-data/igibson-imitation",
+    "commit": "069ca9d779cbed1557c84a9d51180d296a2551e2",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:duplicate_of",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": "gh.stanfordvl/igibson",
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1102,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=2.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "igibson/envs/action_primitive_env.py:11 ActionPrimitivesEnv environment class",
+      "igibson/envs/igibson_ray_env.py:18 iGibsonRayEnv environment class",
+      "igibson/envs/parallel_env.py:14 ParallelNavEnv environment class",
+      "igibson/envs/parallel_env.py:84 ProcessPyEnvironment environment class"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/sustech-data__igibson-imitation --backend fake",
+  "skip_reason": "catalogue fork/mirror note names gh.stanfordvl/igibson (tree similarity 1.00)",
+  "publish_review": "not_required"
+}

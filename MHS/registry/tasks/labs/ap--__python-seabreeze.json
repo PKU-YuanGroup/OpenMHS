@@ -1,0 +1,126 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ap/python-seabreeze",
+  "track": "labs",
+  "local_path": "labs/ap--/python-seabreeze",
+  "driver_dir": "MHS/drivers/labs/ap--__python-seabreeze",
+  "upstream": {
+    "repo_url": "https://github.com/ap--/python-seabreeze",
+    "commit": "3de4fdd6bbb533a701309c746c94cac2ffc05be0",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 7,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "seabreeze.spectrometers:Spectrometer",
+      "file": "src/seabreeze/spectrometers.py",
+      "line": 97,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "seabreeze.pyseabreeze.features.gpio:SeaBreezeGPIOFeature",
+      "file": "src/seabreeze/pyseabreeze/features/gpio.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "seabreeze.pyseabreeze.features.pixelbinning:SeaBreezePixelBinningFeature",
+      "file": "src/seabreeze/pyseabreeze/features/pixelbinning.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "seabreeze.pyseabreeze.features.opticalbench:SeaBreezeOpticalBenchFeature",
+      "file": "src/seabreeze/pyseabreeze/features/opticalbench.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "seabreeze.pyseabreeze.features.wificonfiguration:SeaBreezeWifiConfigurationFeature",
+      "file": "src/seabreeze/pyseabreeze/features/wificonfiguration.py",
+      "line": 9,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "SeaBreezeGPIOFeature.get_egpio_available_modes",
+      "SeaBreezeGPIOFeature.get_egpio_current_mode",
+      "SeaBreezeGPIOFeature.get_egpio_output_vector_vector",
+      "SeaBreezeGPIOFeature.get_egpio_value",
+      "SeaBreezeGPIOFeature.get_gpio_output_enable_vector",
+      "SeaBreezeGPIOFeature.get_gpio_value_vector",
+      "SeaBreezeGPIOFeature.get_number_of_egpio_pins",
+      "SeaBreezeGPIOFeature.get_number_of_gpio_pins",
+      "SeaBreezeGPIOFeature.modes (attribute)",
+      "SeaBreezePixelBinningFeature.get_binning_factor",
+      "SeaBreezePixelBinningFeature.get_default_binning_factor",
+      "SeaBreezePixelBinningFeature.get_max_binning_factor"
+    ],
+    "writes": [
+      "SeaBreezeGPIOFeature.set_egpio_mode",
+      "SeaBreezeGPIOFeature.set_egpio_output_vector",
+      "SeaBreezeGPIOFeature.set_egpio_value",
+      "SeaBreezeGPIOFeature.set_gpio_output_enable_vector",
+      "SeaBreezeGPIOFeature.set_gpio_value_vector",
+      "SeaBreezePixelBinningFeature.set_binning_factor",
+      "SeaBreezePixelBinningFeature.set_default_binning_factor"
+    ],
+    "actions": [
+      "Spectrometer.trigger_mode"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.actuation.gpio.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/seabreeze/pyseabreeze/devices.py:503 integration_time_min = 1000",
+      "src/seabreeze/pyseabreeze/devices.py:504 integration_time_max = 655350000",
+      "src/seabreeze/pyseabreeze/devices.py:547 integration_time_min = 1000",
+      "src/seabreeze/pyseabreeze/devices.py:548 integration_time_max = 655350000",
+      "src/seabreeze/pyseabreeze/devices.py:579 integration_time_min = 3000",
+      "src/seabreeze/pyseabreeze/devices.py:580 integration_time_max = 655350000",
+      "src/seabreeze/pyseabreeze/devices.py:607 integration_time_min = 3000",
+      "src/seabreeze/pyseabreeze/devices.py:608 integration_time_max = 655350000"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ap--__python-seabreeze --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

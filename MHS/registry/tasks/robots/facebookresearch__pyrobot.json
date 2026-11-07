@@ -1,0 +1,96 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.facebookresearch/pyrobot",
+  "track": "robots",
+  "local_path": "robots/facebookresearch/pyrobot",
+  "driver_dir": "MHS/drivers/robots/facebookresearch__pyrobot",
+  "upstream": {
+    "repo_url": "https://github.com/facebookresearch/pyrobot",
+    "commit": "03af5520c28ff500e409701378211744fcb78f24",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": "ros",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 95,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "pyrobot.locobot.camera:LoCoBotCamera",
+      "file": "src/pyrobot/locobot/camera.py",
+      "line": 174,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyrobot.locobot.arm:LoCoBotArm",
+      "file": "src/pyrobot/locobot/arm.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyrobot.sawyer.arm:SawyerArm",
+      "file": "src/pyrobot/sawyer/arm.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyrobot.ur5.arm:UR5Arm",
+      "file": "src/pyrobot/ur5/arm.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyrobot.vrep_locobot.arm:LoCoBotArm",
+      "file": "src/pyrobot/vrep_locobot/arm.py",
+      "line": 19,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/pyrobot/habitat/simulator.py:11 HabitatSim",
+      "src/pyrobot/vrep_locobot/simulator.py:9 VrepSim",
+      "src/pyrobot/habitat/sim_utils.py:1",
+      "src/pyrobot/habitat/simulator.py:1",
+      "src/pyrobot/vrep_locobot/simulator.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/facebookresearch__pyrobot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

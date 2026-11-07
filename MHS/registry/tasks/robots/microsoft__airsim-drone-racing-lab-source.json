@@ -1,0 +1,73 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.microsoft/airsim-drone-racing-lab-source",
+  "track": "robots",
+  "local_path": "robots/microsoft/airsim-drone-racing-lab-source",
+  "driver_dir": "MHS/drivers/robots/microsoft__airsim-drone-racing-lab-source",
+  "upstream": {
+    "repo_url": "https://github.com/microsoft/airsim-drone-racing-lab-source",
+    "commit": "93a461fa90ee59fadf82e8cadaa5e3db80fe50b0",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 494,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "airgym.envs:AirSimDroneEnv",
+      "file": "PythonClient/reinforcement_learning/airgym/envs/drone_env.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "airgym.envs:AirSimCarEnv",
+      "file": "PythonClient/reinforcement_learning/airgym/envs/car_env.py",
+      "line": 12,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "PythonClient/reinforcement_learning/airgym/__init__.py:3 gym env airsim-drone-sample-v0",
+      "PythonClient/reinforcement_learning/airgym/__init__.py:7 gym env airsim-car-sample-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/microsoft__airsim-drone-racing-lab-source --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

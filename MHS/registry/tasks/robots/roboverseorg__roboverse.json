@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.roboverseorg/roboverse",
+  "track": "robots",
+  "local_path": "robots/roboverseorg/roboverse",
+  "driver_dir": "MHS/drivers/robots/roboverseorg__roboverse",
+  "upstream": {
+    "repo_url": "https://github.com/roboverseorg/roboverse",
+    "commit": "5f3ec0185d2d3bcb59d53b0bd1f5b0f8a6f2ce14",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 851,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "roboverse_pack.tasks.simpler_env._native.control.pd_ee_pose:PDEEPoseController",
+      "file": "roboverse_pack/tasks/simpler_env/_native/control/pd_ee_pose.py",
+      "line": 162,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "roboverse_pack.tasks.simpler_env._native.control.pd_joint_pos:PDJointPosMimicController",
+      "file": "roboverse_pack/tasks/simpler_env/_native/control/pd_joint_pos.py",
+      "line": 202,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "roboverse_pack.teleop.runtime:CanonicalTeleopRuntime",
+      "file": "roboverse_pack/teleop/runtime.py",
+      "line": 76,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "packages.metasim.metasim.utils.teleop_utils:XrClient",
+      "file": "packages/metasim/metasim/utils/teleop_utils.py",
+      "line": 367,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "roboverse_pack.tasks.embodiedgen.put_banana:PutBananaTask",
+      "file": "roboverse_pack/tasks/embodiedgen/put_banana.py",
+      "line": 17,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10,<3.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "tools/embodiedgen_integration/enums.py:29 SimAssetMapper",
+      "tools/maniskill_integration/metasim_rollout.py:21 MetaSimManiskillRollout",
+      "tools/maniskill_integration/recipe.py:94 SimSpec",
+      "packages/metasim/metasim/constants.py:17 SimType",
+      "packages/metasim/metasim/scenario/simulator_params.py:11 SimParamCfg",
+      "packages/metasim/metasim/sim/base.py:47 BaseSimHandler"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/roboverseorg__roboverse --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

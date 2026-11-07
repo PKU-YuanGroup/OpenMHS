@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jaykorea/genesis_wheeled_legged_gym",
+  "track": "robots",
+  "local_path": "robots/jaykorea/genesis_wheeled_legged_gym",
+  "driver_dir": "MHS/drivers/robots/jaykorea__genesis_wheeled_legged_gym",
+  "upstream": {
+    "repo_url": "https://github.com/jaykorea/genesis_wheeled_legged_gym",
+    "commit": "eba14f8c8f2f227763acb23cd6a79bbbafb771ae",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1725,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "resources/robots/flamingo/xml/flamingo_v1_5_1.xml:1 MJCF robot model",
+      "resources/robots/flamingo_light/xml/flamingo_light_v1.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jaykorea__genesis_wheeled_legged_gym --backend fake",
+  "skip_reason": "override (robots.json): This is a Genesis-based RL training environment that simulates Flamingo robots in-process, not a hardware device or a Gymnasium/MuJoCo environment, so no driver family applies.",
+  "publish_review": "not_required"
+}

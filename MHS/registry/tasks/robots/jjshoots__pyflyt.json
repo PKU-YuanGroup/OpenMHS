@@ -1,0 +1,108 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jjshoots/pyflyt",
+  "track": "robots",
+  "local_path": "robots/jjshoots/pyflyt",
+  "driver_dir": "MHS/drivers/robots/jjshoots__pyflyt",
+  "upstream": {
+    "repo_url": "https://github.com/jjshoots/pyflyt",
+    "commit": "9095d41f6fc5f07fe711346b747b4f7fd475b424",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 72,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "PyFlyt.gym_envs.quadx_envs.quadx_hover_env:QuadXHoverEnv",
+      "file": "PyFlyt/gym_envs/quadx_envs/quadx_hover_env.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PyFlyt.gym_envs.quadx_envs.quadx_waypoints_env:QuadXWaypointsEnv",
+      "file": "PyFlyt/gym_envs/quadx_envs/quadx_waypoints_env.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PyFlyt.gym_envs.quadx_envs.quadx_gates_env:QuadXGatesEnv",
+      "file": "PyFlyt/gym_envs/quadx_envs/quadx_gates_env.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PyFlyt.gym_envs.quadx_envs.quadx_pole_balance_env:QuadXPoleBalanceEnv",
+      "file": "PyFlyt/gym_envs/quadx_envs/quadx_pole_balance_env.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PyFlyt.gym_envs.quadx_envs.quadx_pole_waypoints_env:QuadXPoleWaypointsEnv",
+      "file": "PyFlyt/gym_envs/quadx_envs/quadx_pole_waypoints_env.py",
+      "line": 15,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "PyFlyt/gym_envs/__init__.py:8 gym env PyFlyt/QuadX-Hover-v4",
+      "PyFlyt/gym_envs/__init__.py:12 gym env PyFlyt/QuadX-Waypoints-v4",
+      "PyFlyt/gym_envs/__init__.py:16 gym env PyFlyt/QuadX-Gates-v3",
+      "PyFlyt/gym_envs/__init__.py:20 gym env PyFlyt/QuadX-Pole-Balance-v4"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env PyFlyt/QuadX-Hover-v4 registered at PyFlyt/gym_envs/__init__.py:8",
+      "gym env PyFlyt/QuadX-Waypoints-v4 registered at PyFlyt/gym_envs/__init__.py:12",
+      "gym env PyFlyt/QuadX-Gates-v3 registered at PyFlyt/gym_envs/__init__.py:16",
+      "gym env PyFlyt/QuadX-Pole-Balance-v4 registered at PyFlyt/gym_envs/__init__.py:20",
+      "gym env PyFlyt/QuadX-Pole-Waypoints-v4 registered at PyFlyt/gym_envs/__init__.py:24",
+      "gym env PyFlyt/QuadX-Ball-In-Cup-v4 registered at PyFlyt/gym_envs/__init__.py:28",
+      "gym env PyFlyt/Fixedwing-Waypoints-v4 registered at PyFlyt/gym_envs/__init__.py:34",
+      "gym env PyFlyt/Rocket-Landing-v4 registered at PyFlyt/gym_envs/__init__.py:40"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jjshoots__pyflyt --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

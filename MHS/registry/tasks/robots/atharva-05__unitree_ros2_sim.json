@@ -1,0 +1,200 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.atharva-05/unitree_ros2_sim",
+  "track": "robots",
+  "local_path": "robots/atharva-05/unitree_ros2_sim",
+  "driver_dir": "MHS/drivers/robots/atharva-05__unitree_ros2_sim",
+  "upstream": {
+    "repo_url": "https://github.com/atharva-05/unitree_ros2_sim",
+    "commit": "44659704169515708ec46d0428381dc6c7730350",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 366,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "ros2_unitree_legged_controller/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install",
+    "capabilities",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/atharva-05__unitree_ros2_sim --backend fake",
+  "skip_reason": null,
+  "publish_review": "required",
+  "companions": [
+    {
+      "alias": "gazebo_ros_pkgs",
+      "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+      "commit": "ae6e5793a31f5927df89cb58007d2a5eb567baa8",
+      "profile": "ros2-humble-gazebo11",
+      "reason": "pause_physics, its get_model_list stall read-back (the world's sim time in header.stamp) and unpause_physics are served by gazebo_ros 3.9.0 (ROS 2 Humble, Gazebo 11).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:3",
+          "token": "tested with ROS Humble"
+        },
+        {
+          "side": "package",
+          "ref": "README.md:3",
+          "token": "Gazebo 11"
+        },
+        {
+          "side": "package",
+          "ref": "go1_sim/go1_gazebo/package.xml:10",
+          "token": "ament_cmake"
+        },
+        {
+          "side": "package",
+          "ref": "go1_sim/go1_gazebo/launch/start_world.launch.py:47",
+          "token": "gazebo.launch.py"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/package.xml:5",
+          "token": "3.9.0"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/package.xml:23",
+          "token": "ament_cmake"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_dev/package.xml:23",
+          "token": "libgazebo11-dev"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_msgs/cmake/gazebo_msgs-extras.cmake:4-5",
+          "token": "humble"
+        }
+      ],
+      "lock": "ros-simulation__gazebo_ros_pkgs@3.9.0",
+      "ref": "3.9.0",
+      "local_path": "work/companions/ros-simulation__gazebo_ros_pkgs@ae6e5793a31f",
+      "repo_url": "https://github.com/ros-simulation/gazebo_ros_pkgs.git",
+      "license_spdx": "NOASSERTION",
+      "licence_note": "Apache-2.0 AND BSD (per package.xml; no licence file in the repository)"
+    },
+    {
+      "alias": "gazebo_ros2_control",
+      "package_id": "gh.ros-controls/gazebo_ros2_control",
+      "commit": "42d875b482f0b254d9032950a91b2c5cbd7d1c3d",
+      "profile": "ros2-humble-gazebo11",
+      "reason": "gazebo_ros2_control 0.4.12 (Humble) updates the controllers and writes their commands to the joints only from the world-update event (facts only).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:3",
+          "token": "tested with ROS Humble"
+        },
+        {
+          "side": "package",
+          "ref": "go1_sim/go1_gazebo/package.xml:16-18",
+          "token": "gazebo_ros2_control"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros2_control/package.xml:4",
+          "token": "0.4.12"
+        },
+        {
+          "side": "companion",
+          "ref": "README.md:22",
+          "token": "Humble"
+        },
+        {
+          "side": "companion:gazebo_ros_pkgs",
+          "ref": "gazebo_dev/package.xml:23",
+          "token": "libgazebo11-dev"
+        }
+      ],
+      "lock": "ros-controls__gazebo_ros2_control@0.4.12",
+      "ref": "0.4.12",
+      "local_path": "work/companions/ros-controls__gazebo_ros2_control@42d875b482f0",
+      "repo_url": "https://github.com/ros-controls/gazebo_ros2_control.git",
+      "license_spdx": "Apache-2.0 AND BSD-3-Clause"
+    },
+    {
+      "alias": "gazebo_classic",
+      "package_id": "gh.gazebosim/gazebo-classic",
+      "commit": "b22c6e15e52299865b31093b8feebc9ca19e26e8",
+      "profile": "ros2-humble-gazebo11",
+      "reason": "World::Step advances sim time and runs every model and controller update only while the world is not paused (Gazebo 11.15.1; facts only).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:3",
+          "token": "tested with ROS Humble"
+        },
+        {
+          "side": "package",
+          "ref": "README.md:3",
+          "token": "Gazebo 11"
+        },
+        {
+          "side": "companion:gazebo_ros_pkgs",
+          "ref": "gazebo_msgs/cmake/gazebo_msgs-extras.cmake:4-5",
+          "token": "humble"
+        },
+        {
+          "side": "companion:gazebo_ros_pkgs",
+          "ref": "gazebo_dev/package.xml:23",
+          "token": "libgazebo11-dev"
+        },
+        {
+          "side": "companion",
+          "ref": "CMakeLists.txt:20",
+          "token": "GAZEBO_MAJOR_VERSION 11"
+        },
+        {
+          "side": "companion",
+          "ref": "Changelog.md:3",
+          "token": "Gazebo 11.15.1"
+        }
+      ],
+      "local_path": "robots/gazebosim/gazebo-classic",
+      "repo_url": "https://github.com/gazebosim/gazebo-classic",
+      "license_spdx": "Apache-2.0"
+    }
+  ]
+}

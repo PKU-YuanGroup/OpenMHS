@@ -1,0 +1,216 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "oscilloscope_mcp.instruments.rigol_ds1000z:RigolDs1000z (src/oscilloscope_mcp/instruments/rigol_ds1000z.py:54)",
+      "oscilloscope_mcp.instruments._base:Scope (src/oscilloscope_mcp/instruments/_base.py:260)",
+      "oscilloscope_mcp.transport.scpi_lan:ScpiLan (src/oscilloscope_mcp/transport/scpi_lan.py:44)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1"
+  ],
+  "catalog_refs": [
+    "repo_e054d2288be6aa97",
+    "https://github.com/masahiro-999/oscilloscope-mcp"
+  ],
+  "description": "masahiro-999/oscilloscope-mcp: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Declared backend: MCP. Language: Python. Catalog keywords: LAN, SCPI, AI, Agent, RIGOL,.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 57 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/masahiro-999__oscilloscope-mcp/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.masahiro-999/oscilloscope-mcp",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/masahiro-999__oscilloscope-mcp: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/masahiro-999__oscilloscope-mcp --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "MCP",
+    "SCPI/VISA",
+    "Serial",
+    "CLI"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-06-28T22:28:57+09:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/masahiro-999/oscilloscope-mcp"
+  },
+  "local_path": "labs/masahiro-999/oscilloscope-mcp",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "masahiro-999",
+  "package_id": "gh.masahiro-999/oscilloscope-mcp",
+  "quarantine": false,
+  "rank": 15,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "oscilloscope-mcp",
+  "repo_url": "https://github.com/masahiro-999/oscilloscope-mcp",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "e45773551e2b956e1fb086ad99cbfec546eaad4b",
+    "repo_url": "https://github.com/masahiro-999/oscilloscope-mcp"
+  },
+  "stars": 3,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "masahiro-999/oscilloscope-mcp",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "mcp-server",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 54.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "MCP",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "经LAN/SCPI让AI Agent操作RIGOL DS1000Z示波器的MCP服务器",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 1558,
+      "rows_all": [
+        1558
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "mcp-proxy",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bmcp\\b"
+      ],
+      "family_note": "triage family python-object (catalogue family mcp-proxy)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/masahiro-999__oscilloscope-mcp/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "e45773551e2b956e1fb086ad99cbfec546eaad4b",
+      "driver_dir": "MHS/drivers/labs/masahiro-999__oscilloscope-mcp",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:7008cddea6cfe267fbeb4e1c751715a760db5f60bd42f35b36d84b4bcbcde45e",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 5,
+      "files": 57,
+      "markers": {
+        "mcp": 18,
+        "scpi_visa": 14,
+        "serial": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class oscilloscope_mcp.instruments.rigol_ds1000z:RigolDs1000z (src/oscilloscope_mcp/instruments/rigol_ds1000z.py:54, score 12)",
+        "device evidence: catalogue role 'device SDK'"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

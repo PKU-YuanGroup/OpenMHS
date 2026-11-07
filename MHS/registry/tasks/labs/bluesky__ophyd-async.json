@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.bluesky/ophyd-async",
+  "track": "labs",
+  "local_path": "labs/bluesky/ophyd-async",
+  "driver_dir": "MHS/drivers/labs/bluesky__ophyd-async",
+  "upstream": {
+    "repo_url": "https://github.com/bluesky/ophyd-async",
+    "commit": "888f84c633bce8962e5f2f941da5ce507de247e9",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:ophyd",
+  "role": "framework",
+  "family": "ophyd",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 58,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "ophyd_async.tango.core._tango_transport:TangoSignalBackend",
+      "file": "src/ophyd_async/tango/core/_tango_transport.py",
+      "line": 772,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd_async.epics.core._aioca:CaSignalBackend",
+      "file": "src/ophyd_async/epics/core/_aioca.py",
+      "line": 272,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd_async.epics.core._p4p:PvaSignalBackend",
+      "file": "src/ophyd_async/epics/core/_p4p.py",
+      "line": 364,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd_async.core._command:TriggerableCommand",
+      "file": "src/ophyd_async/core/_command.py",
+      "line": 135,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ophyd_async.core._signal:SignalX",
+      "file": "src/ophyd_async/core/_signal.py",
+      "line": 315,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/ophyd_async/core/_command.py:265 MockCommandBackend",
+      "src/ophyd_async/core/_device.py:62 DeviceMock",
+      "src/ophyd_async/core/_mock_signal_backend.py:26 MockSignalBackend",
+      "src/ophyd_async/core/_mock_signal_utils.py:155 MockPutHandle",
+      "src/ophyd_async/core/_movable.py:107 InstantMovableMock",
+      "src/ophyd_async/epics/adsimdetector.py:31 SimDetectorTriggerLogic"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/bluesky__ophyd-async --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

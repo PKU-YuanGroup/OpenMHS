@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cau-hai-lab/libero-para",
+  "track": "robots",
+  "local_path": "robots/cau-hai-lab/libero-para",
+  "driver_dir": "MHS/drivers/robots/cau-hai-lab__libero-para",
+  "upstream": {
+    "repo_url": "https://github.com/cau-hai-lab/libero-para",
+    "commit": "86cfb7b9d214bdc8d7bb4e2e96a4834a37244eec",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:duplicate_of",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": "gh.lifelong-robot-learning/libero",
+  "package_status": "none",
+  "wave": 9,
+  "rank": 903,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "libero/libero/envs/problems/libero_coffee_table_manipulation.py:12 Libero_Coffee_Table_Manipulation environment class",
+      "libero/libero/envs/problems/libero_floor_manipulation.py:12 Libero_Floor_Manipulation environment class",
+      "libero/libero/envs/problems/libero_kitchen_tabletop_manipulation.py:12 Libero_Kitchen_Tabletop_Manipulation environment class",
+      "libero/libero/envs/problems/libero_living_room_tabletop_manipulation.py:12 Libero_Living_Room_Tabletop_Manipulation environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cau-hai-lab__libero-para --backend fake",
+  "skip_reason": "duplicate of gh.lifelong-robot-learning/libero: override (robots.json): Model review of recon wave A: paraphrased task instructions over a copy of the LIBERO environment code; one LIBERO driver serves its BDDL files.",
+  "publish_review": "not_required"
+}

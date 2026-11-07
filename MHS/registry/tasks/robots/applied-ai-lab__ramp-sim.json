@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.applied-ai-lab/ramp-sim",
+  "track": "robots",
+  "local_path": "robots/applied-ai-lab/ramp-sim",
+  "driver_dir": "MHS/drivers/robots/applied-ai-lab__ramp-sim",
+  "upstream": {
+    "repo_url": "https://github.com/applied-ai-lab/ramp-sim",
+    "commit": "9d5015a9ab806e565ca5dda7596c4b72192f4bc4",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1728,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "core/env.py:13 RAMPEnv environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/applied-ai-lab__ramp-sim --backend fake",
+  "skip_reason": "override (robots.json): Model review of recon wave B: RAMPEnv.step takes no action and the class has no action space: the external planner drives the Isaac Sim assembly, so there is no environment interface to drive.",
+  "publish_review": "not_required"
+}

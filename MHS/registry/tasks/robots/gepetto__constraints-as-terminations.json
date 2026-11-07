@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.gepetto/constraints-as-terminations",
+  "track": "robots",
+  "local_path": "robots/gepetto/constraints-as-terminations",
+  "driver_dir": "MHS/drivers/robots/gepetto__constraints-as-terminations",
+  "upstream": {
+    "repo_url": "https://github.com/gepetto/constraints-as-terminations",
+    "commit": "5fc729b789a27d39bf95df1b58fbc32b794106ff",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 79,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "cat_envs.tasks.utils.cat.cat_env:CaTEnv",
+      "file": "exts/cat_envs/cat_envs/tasks/utils/cat/cat_env.py",
+      "line": 17,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "exts/cat_envs/cat_envs/tasks/locomotion/velocity/config/solo12/__init__.py:16 gym env Isaac-Velocity-CaT-Flat-Solo12-v0",
+      "exts/cat_envs/cat_envs/tasks/locomotion/velocity/config/solo12/__init__.py:29 gym env Isaac-Velocity-CaT-Flat-Solo12-Play-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Isaac-Velocity-CaT-Flat-Solo12-v0 registered at exts/cat_envs/cat_envs/tasks/locomotion/velocity/config/solo12/__init__.py:16",
+      "gym env Isaac-Velocity-CaT-Flat-Solo12-Play-v0 registered at exts/cat_envs/cat_envs/tasks/locomotion/velocity/config/solo12/__init__.py:29"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/gepetto__constraints-as-terminations --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

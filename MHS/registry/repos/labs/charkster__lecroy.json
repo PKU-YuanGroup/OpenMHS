@@ -1,0 +1,210 @@
+{
+  "adapter": {
+    "bridge": "scpi",
+    "entry_points": [
+      "lecroy:lecroy (lecroy.py:4)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1"
+  ],
+  "catalog_refs": [
+    "repo_4bbf2ba2201abad1",
+    "https://github.com/charkster/lecroy"
+  ],
+  "description": "charkster/lecroy: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with ScpiDriver, wave 3. Catalog role: device SDK. Language: Python. Catalog keywords: LeCroy.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 4 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/charkster__lecroy/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "scpi-visa"
+  ],
+  "hardware_free": false,
+  "id": "gh.charkster/lecroy",
+  "integration": {
+    "blockers": [
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/charkster__lecroy: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/charkster__lecroy --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/scpi-visa.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "SCPI/VISA"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2022-10-22T16:18:49-07:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/charkster/lecroy"
+  },
+  "local_path": "labs/charkster/lecroy",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "charkster",
+  "package_id": "gh.charkster/lecroy",
+  "quarantine": false,
+  "rank": 31,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "lecroy",
+  "repo_url": "https://github.com/charkster/lecroy",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "da08c5168d8c63809d60b4c8b4b3529cbaf3de18",
+    "repo_url": "https://github.com/charkster/lecroy"
+  },
+  "stars": 4,
+  "tags": [
+    "scpi-visa",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "charkster/lecroy",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 48.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "unknown",
+      "category_zh": "设备后端",
+      "description_zh": "LeCroy示波器类，自动配置、测量与截屏",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 460,
+      "rows_all": [
+        460
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_note": "triage family scpi (catalogue family python-object)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/charkster__lecroy/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "da08c5168d8c63809d60b4c8b4b3529cbaf3de18",
+      "driver_dir": "MHS/drivers/labs/charkster__lecroy",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:641b13da47df3feda4bdba4487c4008bfda1e2afcd1a02ce4747ed6595086927",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 0,
+      "files": 4,
+      "markers": {
+        "balance": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of wave B: a direct Driver, not a ScpiDriver table: the upstream methods assemble several VBS or SCPI lines from their arguments over a held pyvisa instrument.",
+        "rules alone: family-config (family:scpi, rule 9)"
+      ],
+      "family": "scpi",
+      "helper": "ScpiDriver",
+      "justification": "Model review of wave B: a direct Driver, not a ScpiDriver table: the upstream methods assemble several VBS or SCPI lines from their arguments over a held pyvisa instrument.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

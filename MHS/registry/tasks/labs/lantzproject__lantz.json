@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.lantzproject/lantz",
+  "track": "labs",
+  "local_path": "labs/lantzproject/lantz",
+  "driver_dir": "MHS/drivers/labs/lantzproject__lantz",
+  "upstream": {
+    "repo_url": "https://github.com/lantzproject/lantz",
+    "commit": "a08023847850e3d3d8c8afc9f9ad03440b35eba9",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1481,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/lantzproject__lantz --backend fake",
+  "skip_reason": "override (labs.json): The lantzproject/lantz repository is a metapackage that only re-exports lantz-core, installs lantz-drivers/lantz-sims and dispatches CLI subcommands, with no device driver.",
+  "publish_review": "not_required"
+}

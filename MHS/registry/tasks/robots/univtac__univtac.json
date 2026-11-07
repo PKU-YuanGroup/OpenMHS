@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.univtac/univtac",
+  "track": "robots",
+  "local_path": "robots/univtac/univtac",
+  "driver_dir": "MHS/drivers/robots/univtac__univtac",
+  "upstream": {
+    "repo_url": "https://github.com/univtac/univtac",
+    "commit": "0dafa10262e22f486f160a55d6f11aeab12d8e7b",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1683,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "policy/smolvla/src/lerobot/envs/configs.py:723 LiberoPlusEnv environment class",
+      "policy/smolvla/src/lerobot/envs/metaworld.py:78 MetaworldEnv environment class",
+      "policy/smolvla/src/lerobot/envs/robocasa.py:115 RoboCasaEnv environment class",
+      "policy/smolvla/src/lerobot/envs/robomme.py:49 RoboMMEGymEnv environment class"
+    ],
+    "upstream_tests": "policy/smolvla_vision/lerobot/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/univtac__univtac --backend fake",
+  "skip_reason": "override (robots.json): UniVTAC is a simulation benchmark on Isaac Sim/Isaac Lab and TacEx, not a hardware device.",
+  "publish_review": "not_required"
+}

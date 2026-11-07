@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.vmehtacode/algaegrowth-simulator",
+  "track": "labs",
+  "local_path": "labs/vmehtacode/algaegrowth-simulator",
+  "driver_dir": "MHS/drivers/labs/vmehtacode__algaegrowth-simulator",
+  "upstream": {
+    "repo_url": "https://github.com/vmehtacode/algaegrowth-simulator",
+    "commit": "fb0c57d1a3febb650dcdef885a0e0d11c5e5b0fa",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 772,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/models/parameters.py:164 SimulationConfig",
+      "src/models/results.py:13 SimulationResult"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/vmehtacode__algaegrowth-simulator --backend fake",
+  "skip_reason": "override (labs.json): Skip: an offline microalgal growth model with a Streamlit dashboard, not a device or simulator API.",
+  "publish_review": "not_required"
+}

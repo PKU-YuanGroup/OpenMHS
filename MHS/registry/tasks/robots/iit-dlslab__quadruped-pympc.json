@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.iit-dlslab/quadruped-pympc",
+  "track": "robots",
+  "local_path": "robots/iit-dlslab/quadruped-pympc",
+  "driver_dir": "MHS/drivers/robots/iit-dlslab__quadruped-pympc",
+  "upstream": {
+    "repo_url": "https://github.com/iit-dlslab/quadruped-pympc",
+    "commit": "ebc9e2c528e4baadb234e705afd497d2399e789f",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 224,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ros2/run_simulator.py:62 Simulator_Node",
+      "quadruped_pympc/acados/interfaces/acados_template/acados_template/acados_dims.py:33 AcadosSimDims",
+      "quadruped_pympc/acados/interfaces/acados_template/acados_template/acados_sim.py:46 AcadosSimOptions",
+      "quadruped_pympc/acados/interfaces/acados_template/acados_template/acados_sim.py:286 AcadosSim",
+      "ros2/run_simulator.py:1",
+      "simulation/batched_simulations.py:1"
+    ],
+    "upstream_tests": "quadruped_pympc/acados/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/iit-dlslab__quadruped-pympc --backend fake",
+  "skip_reason": "override (robots.json): Quadruped-PyMPC is an MPC algorithm library, not a device: it computes torques from a supplied robot state and leaves robot I/O to external stacks.",
+  "publish_review": "not_required"
+}

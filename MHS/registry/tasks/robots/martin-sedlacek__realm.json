@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.martin-sedlacek/realm",
+  "track": "robots",
+  "local_path": "robots/martin-sedlacek/realm",
+  "driver_dir": "MHS/drivers/robots/martin-sedlacek__realm",
+  "upstream": {
+    "repo_url": "https://github.com/martin-sedlacek/realm",
+    "commit": "897f3acd2ffbfdb5b8467414f71f9b981ae9d561",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1594,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "realm/robots/robot_ik/franka/fr3.xml:1 MJCF robot model",
+      "realm/robots/robot_ik/franka/panda.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/martin-sedlacek__realm --backend fake",
+  "skip_reason": "override (robots.json): Skip: REALM is an OmniGibson/Isaac Sim benchmark that evaluates manipulation policies, not a device or a Gymnasium/MuJoCo environment.",
+  "publish_review": "required"
+}

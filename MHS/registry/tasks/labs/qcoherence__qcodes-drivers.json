@@ -1,0 +1,131 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.qcoherence/qcodes-drivers",
+  "track": "labs",
+  "local_path": "labs/qcoherence/qcodes-drivers",
+  "driver_dir": "MHS/drivers/labs/qcoherence__qcodes-drivers",
+  "upstream": {
+    "repo_url": "https://github.com/qcoherence/qcodes-drivers",
+    "commit": "619bdd35bda80f767f42a1681d6dd26819ad09a9",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:qcodes",
+  "role": "device-driver",
+  "family": "qcodes",
+  "helper": "QcodesDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 44,
+  "exemplar": "MHS/drivers/labs/qcodes__qcodes_contrib_drivers",
+  "entry_symbols": [
+    {
+      "symbol": "old_versions.redpitaya_qcodes:Redpitaya",
+      "file": "old_versions/redpitaya_qcodes.py",
+      "line": 120,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "redpitaya_qcodes:Redpitaya",
+      "file": "redpitaya_qcodes.py",
+      "line": 176,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ADwin_Gold2:ADwin_Gold2",
+      "file": "ADwin_Gold2.py",
+      "line": 549,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Agilent_E8257D:E8257D",
+      "file": "Agilent_E8257D.py",
+      "line": 28,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "RS_FSV:RS_FSV",
+      "file": "RS_FSV.py",
+      "line": 51,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "Virtual_SSB0550A.py:15 Virtual_SSB0550A",
+      "old_versions/Virtual_SSB_QTLab.py:15 Virtual_SSB",
+      "PLH250P_current_source_dummy.py:1",
+      "Virtual_SSB0550A.py:1",
+      "simulation_sweeps.py:1",
+      "old_versions/Virtual_SSB_QTLab.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Redpitaya.get_data",
+      "Redpitaya.get_data_binary",
+      "Redpitaya.get_samples_from_sec",
+      "Redpitaya.get_sec_from_samples",
+      "Redpitaya.get_single_pulse",
+      "ADwin_Gold2.get_idn",
+      "ADwin_Gold2.get_input",
+      "ADwin_Gold2.get_input_mask",
+      "ADwin_Gold2.get_input_number",
+      "ADwin_Gold2.get_input_size",
+      "ADwin_Gold2.get_mode",
+      "ADwin_Gold2.get_output_mask"
+    ],
+    "writes": [
+      "Redpitaya.set_mode",
+      "ADwin_Gold2.set_input_mask",
+      "ADwin_Gold2.set_mode",
+      "ADwin_Gold2.set_output_mask",
+      "ADwin_Gold2.set_outputs",
+      "ADwin_Gold2.set_outputs_one_cycle",
+      "ADwin_Gold2.set_ramp_size",
+      "ADwin_Gold2.set_subsampling"
+    ],
+    "actions": [
+      "Redpitaya.reset",
+      "Redpitaya.reset_LUT"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "SignalHound_USB_SA124B.py:842 sa_MIN_MAX = 0",
+      "USB_SA124B.py:588 sa_MIN_MAX = 0"
+    ]
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/qcoherence__qcodes-drivers --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

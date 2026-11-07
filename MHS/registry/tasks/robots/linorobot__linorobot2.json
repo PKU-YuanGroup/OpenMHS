@@ -1,0 +1,200 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.linorobot/linorobot2",
+  "track": "robots",
+  "local_path": "robots/linorobot/linorobot2",
+  "driver_dir": "MHS/drivers/robots/linorobot__linorobot2",
+  "upstream": {
+    "repo_url": "https://github.com/linorobot/linorobot2",
+    "commit": "f6b0bd0350c4a9d6b815ef4bb5c701a1e5129711",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 170,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install",
+    "capabilities"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/linorobot__linorobot2 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required",
+  "companions": [
+    {
+      "alias": "gz_sim",
+      "package_id": "gh.gazebosim/gz-sim",
+      "commit": "446a44335a45b704b4d36dabcc5508ee34eeb3d8",
+      "profile": "ros2-jazzy-gzsim8",
+      "reason": "The WorldControl pause (SimulationRunner OnWorldControl, applied by SetPaused in the step loop), its paused flag in WorldStatistics on <world>/stats and the unpause are gz-sim 8.15.0's (Harmonic).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:8",
+          "token": "**Jazzy**"
+        },
+        {
+          "side": "package",
+          "ref": "docker/Dockerfile:1",
+          "token": "ARG DOCKER_ROS_DISTRO=jazzy"
+        },
+        {
+          "side": "package",
+          "ref": "linorobot2_gazebo/package.xml:12",
+          "token": "<buildtool_depend>ament_cmake</buildtool_depend>"
+        },
+        {
+          "side": "package",
+          "ref": "linorobot2_gazebo/launch/gazebo.launch.py:31",
+          "token": "'gz_sim.launch.py'"
+        },
+        {
+          "side": "companion",
+          "ref": "CMakeLists.txt:6",
+          "token": "project(gz-sim8 VERSION 8.15.0)"
+        },
+        {
+          "side": "companion",
+          "ref": "Changelog.md:3",
+          "token": "### Gazebo Sim 8.15.0 (2026-08-11)"
+        },
+        {
+          "side": "companion:ros_gz",
+          "ref": "README.md:9",
+          "token": "Jazzy | Harmonic | [jazzy]"
+        },
+        {
+          "side": "companion:ros_gz",
+          "ref": "ros_gz_sim/package.xml:32",
+          "token": "<depend>gz_sim_vendor</depend>"
+        }
+      ],
+      "lock": "gazebosim__gz-sim@gz-sim8_8.15.0",
+      "ref": "gz-sim8_8.15.0",
+      "local_path": "work/companions/gazebosim__gz-sim@446a44335a45",
+      "repo_url": "https://github.com/gazebosim/gz-sim.git",
+      "license_spdx": "Apache-2.0"
+    },
+    {
+      "alias": "ros_gz",
+      "package_id": "gh.gazebosim/ros_gz",
+      "commit": "b87d7523400a695a10d47ca7b8cb5fa86d5b8d9d",
+      "profile": "ros2-jazzy-gzsim8",
+      "reason": "ros_gz_bridge 1.0.25 (Jazzy) maps ros_gz_interfaces/srv/ControlWorld to the gz WorldControl request and WorldStatistics to the ROS message; the operator runs its parameter_bridge.",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:8",
+          "token": "**Jazzy**"
+        },
+        {
+          "side": "package",
+          "ref": "linorobot2_gazebo/launch/gazebo.launch.py:136-138",
+          "token": "ros_gz_bridge"
+        },
+        {
+          "side": "companion",
+          "ref": "ros_gz_bridge/package.xml:5",
+          "token": "<version>1.0.25</version>"
+        },
+        {
+          "side": "companion",
+          "ref": "ros_gz_bridge/CHANGELOG.rst:5",
+          "token": "1.0.25 (2026-10-13)"
+        },
+        {
+          "side": "companion",
+          "ref": "README.md:56",
+          "token": "This branch supports ROS Jazzy"
+        },
+        {
+          "side": "companion",
+          "ref": "README.md:9",
+          "token": "Jazzy | Harmonic | [jazzy]"
+        }
+      ],
+      "lock": "gazebosim__ros_gz@1.0.25",
+      "ref": "1.0.25",
+      "local_path": "work/companions/gazebosim__ros_gz@b87d7523400a",
+      "repo_url": "https://github.com/gazebosim/ros_gz.git",
+      "license_spdx": "Apache-2.0"
+    },
+    {
+      "alias": "gz_transport",
+      "package_id": "gh.gazebosim/gz-transport",
+      "commit": "35fef7ea10c2e133498e9010bd2e397a0ce0c3bf",
+      "profile": "ros2-jazzy-gzsim8",
+      "reason": "gz-transport 13.6.0 sends the bridge's gz service request asynchronously (facts only).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "docker/Dockerfile:1",
+          "token": "ARG DOCKER_ROS_DISTRO=jazzy"
+        },
+        {
+          "side": "companion",
+          "ref": "CMakeLists.txt:6",
+          "token": "project(gz-transport13 VERSION 13.6.0)"
+        },
+        {
+          "side": "companion",
+          "ref": "Changelog.md:3",
+          "token": "### Gazebo Transport 13.6.0 (2026-08-15)"
+        },
+        {
+          "side": "companion:gz_sim",
+          "ref": "CMakeLists.txt:87",
+          "token": "gz_find_package(gz-transport13"
+        },
+        {
+          "side": "companion:ros_gz",
+          "ref": "README.md:9",
+          "token": "Jazzy | Harmonic | [jazzy]"
+        }
+      ],
+      "lock": "gazebosim__gz-transport@gz-transport13_13.6.0",
+      "ref": "gz-transport13_13.6.0",
+      "local_path": "work/companions/gazebosim__gz-transport@35fef7ea10c2",
+      "repo_url": "https://github.com/gazebosim/gz-transport.git",
+      "license_spdx": "Apache-2.0"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.python-microscopy/python-microscopy",
+  "track": "labs",
+  "local_path": "labs/python-microscopy/python-microscopy",
+  "driver_dir": "MHS/drivers/labs/python-microscopy__python-microscopy",
+  "upstream": {
+    "repo_url": "https://github.com/python-microscopy/python-microscopy",
+    "commit": "7adbde6095bc565dbd34d334f37628f3c65dc10d",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "reference",
+  "reason_code": "override:recon",
+  "role": "host",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 379,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "PYME/IO/testClusterSpooling.py:77 DummyFramewrangler",
+      "PYME/cluster/webdav.py:166 DummyFileMember",
+      "PYME/Acquire/Hardware/lasers.py:161 FakeLaser",
+      "PYME/misc/mock_ctypes.py:1",
+      "PYME/misc/mock_traits.py:1",
+      "PYME/misc/mock_traitsui.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/python-microscopy__python-microscopy --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

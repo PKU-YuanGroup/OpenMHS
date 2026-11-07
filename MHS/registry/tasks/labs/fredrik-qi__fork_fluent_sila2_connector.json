@@ -1,0 +1,95 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.fredrik-qi/fork_fluent_sila2_connector",
+  "track": "labs",
+  "local_path": "labs/fredrik-qi/fork_fluent_sila2_connector",
+  "driver_dir": "MHS/drivers/labs/fredrik-qi__fork_fluent_sila2_connector",
+  "upstream": {
+    "repo_url": "https://github.com/fredrik-qi/fork_fluent_sila2_connector",
+    "commit": "4a2f857c619c5bcead352b52622a72cc2d356ffe",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:partner-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 4,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "tecan.__Fluent:Fluent",
+      "file": "Python/src/tecan/__Fluent.py",
+      "line": 15,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Fluent.get_all_runnable_methods",
+      "Fluent.get_fingers",
+      "Fluent.get_tips",
+      "Fluent.get_variable_names",
+      "Fluent.get_variable_value",
+      "Fluent.lastError (attribute)",
+      "Fluent.progress (attribute)",
+      "Fluent.state (attribute)"
+    ],
+    "writes": [
+      "Fluent.set_location",
+      "Fluent.set_variable_value"
+    ],
+    "actions": [
+      "Fluent.aspirate",
+      "Fluent.dispense",
+      "Fluent.drop_tips",
+      "Fluent.pause_run",
+      "Fluent.resume_run",
+      "Fluent.run_method",
+      "Fluent.start_fluent",
+      "Fluent.stop_method",
+      "Fluent.transfer_labware",
+      "Fluent.transfer_labware_back_to_base"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/fredrik-qi__fork_fluent_sila2_connector --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

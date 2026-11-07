@@ -1,0 +1,227 @@
+{
+  "adapter": {
+    "bridge": "scpi",
+    "entry_points": [
+      "rssd.RSI.RSI_Memory:RSI (rssd/RSI/RSI_Memory.py:19)",
+      "rssd.FileIO:FileIO (rssd/FileIO.py:5)",
+      "rssd.PNA.Common:PNA (rssd/PNA/Common.py:4)",
+      "rssd.VNA.Common:VNA (rssd/VNA/Common.py:5)",
+      "rssd.NRQ.Common:NRQ (rssd/NRQ/Common.py:4)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.sensing.read.v1",
+    "cap.motion.joint_position.v1",
+    "cap.motion.stop.v1"
+  ],
+  "catalog_refs": [
+    "repo_0d0bbf17b294a249",
+    "https://github.com/mclim9/rssd"
+  ],
+  "description": "mclim9/rssd: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: family-config with ScpiDriver, wave 1. Catalog role: device SDK. Declared backend: PyVISA. Language: Python. Catalog keywords: SCPI, VSA, VSG, VNA.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 5,
+    "notes": "bounded static scan: 229 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/mclim9__rssd/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "scpi-visa"
+  ],
+  "hardware_free": false,
+  "id": "gh.mclim9/rssd",
+  "integration": {
+    "blockers": [],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/labs/mclim9__rssd: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/mclim9__rssd --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "family:scpi",
+    "recipe": "families/scpi-visa.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "SCPI/VISA",
+    "Python SDK",
+    "CLI"
+  ],
+  "languages": [
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2024-07-07T21:03:25-07:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/mclim9/rssd"
+  },
+  "local_path": "labs/mclim9/rssd",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "mclim9",
+  "package_id": "gh.mclim9/rssd",
+  "quarantine": false,
+  "rank": 13,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "rssd",
+  "repo_url": "https://github.com/mclim9/rssd",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "7b040ee12841e721953a1f737297586135c0c110",
+    "repo_url": "https://github.com/mclim9/rssd"
+  },
+  "stars": 51,
+  "tags": [
+    "scpi-visa",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "family config"
+  ],
+  "tier": "B",
+  "title": "mclim9/rssd",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 1,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 54.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "PyVISA",
+      "category_zh": "设备后端",
+      "description_zh": "罗德与施瓦茨SCPI Python驱动(VSA/VSG/VNA等)",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 1585,
+      "rows_all": [
+        1585
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bpyvisa\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/mclim9__rssd/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "License.txt",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "7b040ee12841e721953a1f737297586135c0c110",
+      "driver_dir": "MHS/drivers/labs/mclim9__rssd",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:e1b141efa1b1cbbac4148be8b3440bce201beae07202ef07d0238e6dcc835eac",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 6,
+      "files": 229,
+      "markers": {
+        "cli": 2,
+        "scpi_visa": 8,
+        "spectrometer": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "structural marker: imports pyvisa",
+        "device-driver evidence: catalogue category 'device backend'"
+      ],
+      "family": "scpi",
+      "helper": "ScpiDriver",
+      "reason_code": "family:scpi",
+      "rule": 9,
+      "version": "0.9.4"
+    }
+  }
+}

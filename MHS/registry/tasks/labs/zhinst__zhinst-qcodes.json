@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.zhinst/zhinst-qcodes",
+  "track": "labs",
+  "local_path": "labs/zhinst/zhinst-qcodes",
+  "driver_dir": "MHS/drivers/labs/zhinst__zhinst-qcodes",
+  "upstream": {
+    "repo_url": "https://github.com/zhinst/zhinst-qcodes",
+    "commit": "042dd17a5bf492cc4c573e465b2bc399e68d3203",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 26,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "zhinst.qcodes.driver.devices.pqsc:PQSC",
+      "file": "src/zhinst/qcodes/driver/devices/pqsc.py",
+      "line": 10,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "PQSC.get_idn",
+      "PQSC.get_streamingnodes",
+      "PQSC._snapshot_cache.is_running",
+      "ZIDevice.get_idn",
+      "ZIDevice.get_streamingnodes",
+      "ZIDevice._snapshot_cache.is_running",
+      "MFLI.get_idn",
+      "MFLI.get_streamingnodes",
+      "MFLI._snapshot_cache.is_running"
+    ],
+    "writes": [
+      "PQSC.set_transaction",
+      "ZIDevice.set_transaction",
+      "MFLI.set_transaction"
+    ],
+    "actions": [
+      "PQSC.arm",
+      "PQSC.arm_and_run",
+      "PQSC.factory_reset",
+      "PQSC.run",
+      "PQSC.stop",
+      "ZIDevice.factory_reset",
+      "MFLI.factory_reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/zhinst__zhinst-qcodes --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

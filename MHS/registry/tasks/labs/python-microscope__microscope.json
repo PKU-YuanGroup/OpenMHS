@@ -1,0 +1,142 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.python-microscope/microscope",
+  "track": "labs",
+  "local_path": "labs/python-microscope/microscope",
+  "driver_dir": "MHS/drivers/labs/python-microscope__microscope",
+  "upstream": {
+    "repo_url": "https://github.com/python-microscope/microscope",
+    "commit": "47c13d0342dca476a279f2de2da5b84ce2162326",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:driver-pack",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 11,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "microscope.lights.cobolt:CoboltLaser",
+      "file": "microscope/lights/cobolt.py",
+      "line": 31,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "microscope.lights.sapphire:SapphireLaser",
+      "file": "microscope/lights/sapphire.py",
+      "line": 33,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "microscope.lights.deepstar:DeepstarLaser",
+      "file": "microscope/lights/deepstar.py",
+      "line": 31,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "microscope.lights.obis:ObisLaser",
+      "file": "microscope/lights/obis.py",
+      "line": 32,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "microscope.cameras.picamera:PiCamera",
+      "file": "microscope/cameras/picamera.py",
+      "line": 49,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "microscope/simulators/__init__.py:165 SimulatedCamera",
+      "microscope/simulators/__init__.py:331 SimulatedController",
+      "microscope/simulators/__init__.py:340 SimulatedFilterWheel",
+      "microscope/simulators/__init__.py:356 SimulatedLightSource",
+      "microscope/simulators/__init__.py:393 SimulatedDeformableMirror",
+      "microscope/simulators/__init__.py:420 SimulatedStageAxis"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "CoboltLaser.get_all_settings",
+      "CoboltLaser.get_is_enabled",
+      "CoboltLaser.get_is_on",
+      "CoboltLaser.get_set_power",
+      "CoboltLaser.get_setting",
+      "CoboltLaser.get_status",
+      "SapphireLaser.get_all_settings",
+      "SapphireLaser.get_is_enabled",
+      "SapphireLaser.get_is_on",
+      "SapphireLaser.get_set_power",
+      "SapphireLaser.get_setting",
+      "SapphireLaser.get_status"
+    ],
+    "writes": [
+      "CoboltLaser.set_setting",
+      "CoboltLaser.set_trigger",
+      "SapphireLaser.set_setting",
+      "SapphireLaser.set_trigger",
+      "DeepstarLaser.set_setting",
+      "DeepstarLaser.set_trigger"
+    ],
+    "actions": [
+      "CoboltLaser.disable",
+      "CoboltLaser.enable",
+      "CoboltLaser.trigger",
+      "CoboltLaser.trigger_mode",
+      "CoboltLaser.trigger_type",
+      "SapphireLaser.disable",
+      "SapphireLaser.enable",
+      "SapphireLaser.trigger",
+      "SapphireLaser.trigger_mode",
+      "SapphireLaser.trigger_type",
+      "DeepstarLaser.disable",
+      "DeepstarLaser.enable"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "microscope/_wrappers/BMC.py:36 MAX_PATH = 260",
+      "microscope/cameras/atmcd.py:266 DRV_TEMPERATURE_OUT_RANGE = 20038",
+      "microscope/cameras/atmcd.py:274 DRV_TEMP_OUT_RANGE = 20038",
+      "microscope/cameras/pvcam.py:185 MAX_CAM = 16",
+      "microscope/cameras/pvcam.py:227 ATTR_MIN = 3",
+      "microscope/cameras/pvcam.py:228 ATTR_MAX = 4",
+      "microscope/cameras/pvcam.py:250 MAX_CLEAR_MODE = 6",
+      "microscope/cameras/pvcam.py:263 MAX_EXPOSE_MODE = 7"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/python-microscope__microscope --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

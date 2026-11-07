@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ammerritt-gh/tavi-triple-axis-virtual-instrument",
+  "track": "labs",
+  "local_path": "labs/ammerritt-gh/tavi-triple-axis-virtual-instrument",
+  "driver_dir": "MHS/drivers/labs/ammerritt-gh__tavi-triple-axis-virtual-instrument",
+  "upstream": {
+    "repo_url": "https://github.com/ammerritt-gh/tavi-triple-axis-virtual-instrument",
+    "commit": "97a295b3d6167843b0f4259aa79b284dc55a3857",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 760,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ammerritt-gh__tavi-triple-axis-virtual-instrument --backend fake",
+  "skip_reason": "override (labs.json): TAVI is a McStas-backed virtual TAS GUI, not a hardware driver or Gym/MuJoCo environment, so skip/sim-env.",
+  "publish_review": "not_required"
+}

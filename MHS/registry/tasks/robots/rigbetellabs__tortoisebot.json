@@ -1,0 +1,157 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.rigbetellabs/tortoisebot",
+  "track": "robots",
+  "local_path": "robots/rigbetellabs/tortoisebot",
+  "driver_dir": "MHS/drivers/robots/rigbetellabs__tortoisebot",
+  "upstream": {
+    "repo_url": "https://github.com/rigbetellabs/tortoisebot",
+    "commit": "eae9f74a17213adb4dcc8552d65236d5549ebf62",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 360,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "YDLidar-SDK/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install",
+    "capabilities",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rigbetellabs__tortoisebot --backend fake",
+  "skip_reason": null,
+  "publish_review": "required",
+  "companions": [
+    {
+      "alias": "gz_sim",
+      "package_id": "gh.gazebosim/gz-sim",
+      "commit": "b90cd2c41a193102d6951857c2d83e13f59bb64b",
+      "profile": "ros2-humble-gzsim6",
+      "reason": "The WorldControl pause (SimulationRunner OnWorldControl, applied by SetPaused in the step loop), its paused flag in WorldStatistics on <world>/stats and the unpause are ignition-gazebo 6.18.0's (Fortress).",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:1",
+          "token": "ROS 2 Humble"
+        },
+        {
+          "side": "package",
+          "ref": "README.md:36-38",
+          "token": "Ignition Fortress"
+        },
+        {
+          "side": "package",
+          "ref": "tortoisebot_gazebo/launch/ignition_sim.launch.py:111-112",
+          "token": "cmd=['ign', 'gazebo', '-r', world]"
+        },
+        {
+          "side": "companion",
+          "ref": "CMakeLists.txt:6",
+          "token": "project(ignition-gazebo6 VERSION 6.18.0)"
+        },
+        {
+          "side": "companion",
+          "ref": "Changelog.md:3",
+          "token": "### Gazebo Sim 6.18.0 (2026-06-09)"
+        },
+        {
+          "side": "companion:ros_gz",
+          "ref": "README.md:5",
+          "token": "Humble | Fortress | [humble]"
+        },
+        {
+          "side": "companion:ros_gz",
+          "ref": "ros_gz_sim/package.xml:31",
+          "token": "ignition-gazebo6</depend>"
+        }
+      ],
+      "lock": "gazebosim__gz-sim@ignition-gazebo6_6.18.0",
+      "ref": "ignition-gazebo6_6.18.0",
+      "local_path": "work/companions/gazebosim__gz-sim@b90cd2c41a19",
+      "repo_url": "https://github.com/gazebosim/gz-sim.git",
+      "license_spdx": "Apache-2.0"
+    },
+    {
+      "alias": "ros_gz",
+      "package_id": "gh.gazebosim/ros_gz",
+      "commit": "856e319ee4da713609b3f6e58c74ac8db7662482",
+      "profile": "ros2-humble-gzsim6",
+      "reason": "ros_gz_bridge 0.244.27 (Humble) maps ros_gz_interfaces/srv/ControlWorld to the ignition WorldControl request and WorldStatistics to the ROS message; the operator runs its parameter_bridge.",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:1",
+          "token": "ROS 2 Humble"
+        },
+        {
+          "side": "package",
+          "ref": "README.md:69-71",
+          "token": "ros-humble-ros-gz-bridge"
+        },
+        {
+          "side": "companion",
+          "ref": "ros_gz_bridge/package.xml:5",
+          "token": "<version>0.244.27</version>"
+        },
+        {
+          "side": "companion",
+          "ref": "ros_gz_bridge/CHANGELOG.rst:5",
+          "token": "0.244.27 (2026-10-13)"
+        },
+        {
+          "side": "companion",
+          "ref": "README.md:54",
+          "token": "This branch supports ROS Humble"
+        },
+        {
+          "side": "companion",
+          "ref": "README.md:5",
+          "token": "Humble | Fortress | [humble]"
+        }
+      ],
+      "lock": "gazebosim__ros_gz@0.244.27",
+      "ref": "0.244.27",
+      "local_path": "work/companions/gazebosim__ros_gz@856e319ee4da",
+      "repo_url": "https://github.com/gazebosim/ros_gz.git",
+      "license_spdx": "Apache-2.0"
+    }
+  ]
+}

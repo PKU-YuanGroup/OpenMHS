@@ -1,0 +1,103 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.asvela/tektronix-func-gen",
+  "track": "labs",
+  "local_path": "labs/asvela/tektronix-func-gen",
+  "driver_dir": "MHS/drivers/labs/asvela__tektronix-func-gen",
+  "upstream": {
+    "repo_url": "https://github.com/asvela/tektronix-func-gen",
+    "commit": "30f7406e89bd9f344487b84913f5111e8bb110a7",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 57,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "tektronix_func_gen:FuncGen",
+      "file": "tektronix_func_gen.py",
+      "line": 56,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "tektronix_func_gen:FuncGenChannel",
+      "file": "tektronix_func_gen.py",
+      "line": 784,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "FuncGen.get_custom_waveform",
+      "FuncGen.get_error",
+      "FuncGen.get_frequency_lock",
+      "FuncGen.get_settings",
+      "FuncGen.get_waveform_catalogue",
+      "FuncGenChannel.get_amplitude",
+      "FuncGenChannel.get_amplitude_lims",
+      "FuncGenChannel.get_frequency",
+      "FuncGenChannel.get_frequency_lims",
+      "FuncGenChannel.get_function",
+      "FuncGenChannel.get_offset",
+      "FuncGenChannel.get_output"
+    ],
+    "writes": [
+      "FuncGen.set_custom_waveform",
+      "FuncGen.set_frequency_lock",
+      "FuncGen.set_settings",
+      "FuncGenChannel.set_amplitude",
+      "FuncGenChannel.set_frequency",
+      "FuncGenChannel.set_function",
+      "FuncGenChannel.set_limit",
+      "FuncGenChannel.set_offset",
+      "FuncGenChannel.set_output",
+      "FuncGenChannel.set_output_state",
+      "FuncGenChannel.set_settings",
+      "FuncGenChannel.set_stricter_limits"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.voltage.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/asvela__tektronix-func-gen --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

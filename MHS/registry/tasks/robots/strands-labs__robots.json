@@ -1,0 +1,137 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.strands-labs/robots",
+  "track": "robots",
+  "local_path": "robots/strands-labs/robots",
+  "driver_dir": "MHS/drivers/robots/strands-labs__robots",
+  "upstream": {
+    "repo_url": "https://github.com/strands-labs/robots",
+    "commit": "f19439bf8c80e7ae6f0fdc0f003d850d638dd97d",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:partner-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 2,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "strands_robots.hardware_robot:Robot",
+      "file": "strands_robots/hardware_robot.py",
+      "line": 545,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "strands_robots.inference.client:RemotePolicy",
+      "file": "strands_robots/inference/client.py",
+      "line": 138,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "strands_robots.drivers.yahboom_m3pro:YahboomM3ProDriver",
+      "file": "strands_robots/drivers/yahboom_m3pro.py",
+      "line": 238,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "strands_robots.drivers.earthrover:EarthRoverDriver",
+      "file": "strands_robots/drivers/earthrover.py",
+      "line": 302,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "strands_robots.drivers.microduck:MicroduckDriver",
+      "file": "strands_robots/drivers/microduck.py",
+      "line": 1009,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Robot.get_observation",
+      "Robot.get_status",
+      "Robot.get_task_status",
+      "Robot.get_teleop_status",
+      "Robot.get_teleoperate_status",
+      "RemotePolicy.get_actions",
+      "RemotePolicy.get_actions_sync",
+      "RemotePolicy.is_chunk_emitting",
+      "YahboomM3ProDriver.get_observation",
+      "YahboomM3ProDriver.get_status",
+      "YahboomM3ProDriver.get_task_status",
+      "YahboomM3ProDriver.is_connected"
+    ],
+    "writes": [
+      "RemotePolicy.set_control_frequency",
+      "RemotePolicy.set_robot_state_keys",
+      "RemotePolicy.set_rtc_observed_delay",
+      "YahboomM3ProDriver.set_arm_degrees",
+      "YahboomM3ProDriver.set_gripper"
+    ],
+    "actions": [
+      "Robot.run_policy",
+      "Robot.start_task",
+      "Robot.start_teleop_publish",
+      "Robot.start_teleop_receive",
+      "Robot.stop",
+      "Robot.stop_task",
+      "Robot.stop_teleop",
+      "Robot.stop_teleoperate",
+      "RemotePolicy.reset",
+      "YahboomM3ProDriver.home",
+      "YahboomM3ProDriver.last_arm_command",
+      "YahboomM3ProDriver.move"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.manipulation.grasp.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "strands_robots/locomotion_envelope.py:37 MAX_TARGET_LINEAR_VELOCITY_MPS = 2.0",
+      "strands_robots/locomotion_envelope.py:40 MAX_TARGET_ANGULAR_VELOCITY_RPS = 2.0",
+      "strands_robots/ros.py:349 _FEEDBACK_LIMIT = 5",
+      "strands_robots/dashboard/auth.py:1296 _HANDOFF_MAX = 32",
+      "strands_robots/dashboard/checkpoints.py:259 MAX_LIMIT = 40",
+      "strands_robots/dashboard/churn_guard.py:10 CHURN_OPENS_PER_MIN = 20",
+      "strands_robots/dashboard/churn_guard.py:14 MAX_TRACKED = 512",
+      "strands_robots/dashboard/record_joints.py:9 MAX_AGE_S = 30.0"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/strands-labs__robots --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

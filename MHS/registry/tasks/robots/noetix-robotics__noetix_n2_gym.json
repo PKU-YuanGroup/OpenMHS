@@ -1,0 +1,86 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.noetix-robotics/noetix_n2_gym",
+  "track": "robots",
+  "local_path": "robots/noetix-robotics/noetix_n2_gym",
+  "driver_dir": "MHS/drivers/robots/noetix-robotics__noetix_n2_gym",
+  "upstream": {
+    "repo_url": "https://github.com/noetix-robotics/noetix_n2_gym",
+    "commit": "153aad12dcc44aeafe378efe2f652873b02e0d89",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 99,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "sim2sim.sim2sim:run_mujoco",
+      "file": "sim2sim/sim2sim.py",
+      "line": 53,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "resources/robots/N2/mjcf/N2_10dof.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "resources/robots/N2/mjcf/n2_18dof.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "resources/robots/N2/mjcf/N2_10dof.xml:1 MJCF robot model",
+      "resources/robots/N2/mjcf/n2_18dof.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model resources/robots/N2/mjcf/N2_10dof.xml:1",
+      "MJCF robot model resources/robots/N2/mjcf/n2_18dof.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/noetix-robotics__noetix_n2_gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

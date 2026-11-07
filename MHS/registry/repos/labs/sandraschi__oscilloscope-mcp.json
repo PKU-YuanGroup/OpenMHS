@@ -1,0 +1,183 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "just",
+    "python",
+    "cargo",
+    "node"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_e6e2c22e4f23caa6",
+    "https://github.com/sandraschi/oscilloscope-mcp"
+  ],
+  "description": "sandraschi/oscilloscope-mcp: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: reference only (host). Declared backend: MCP. Language: Python. Catalog keywords: FastMCP, USB, PicoScope, Hantek.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 6,
+    "notes": "bounded static scan: 89 files enumerated (max depth 3), 6 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "mcp-proxy"
+  ],
+  "hardware_free": false,
+  "id": "gh.sandraschi/oscilloscope-mcp",
+  "integration": {
+    "blockers": [
+      "REFERENCE_ONLY: role host"
+    ],
+    "effort": "EX",
+    "next_action": "Reference only: a host, orchestrator or MCP wrapper of a covered backend; integrate the backend instead.",
+    "reason_code": "override:recon",
+    "role": "host",
+    "scenario_required": false,
+    "strategy": "reference"
+  },
+  "interfaces": [
+    "MCP",
+    "Python SDK",
+    "HTTP/REST",
+    "CLI"
+  ],
+  "languages": [
+    "Python",
+    "PowerShell",
+    "TypeScript",
+    "Rust"
+  ],
+  "last_commit_at": "2026-10-02T14:48:20+02:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/sandraschi/oscilloscope-mcp"
+  },
+  "local_path": "labs/sandraschi/oscilloscope-mcp",
+  "modes": [],
+  "owner": "sandraschi",
+  "package_id": "gh.sandraschi/oscilloscope-mcp",
+  "quarantine": false,
+  "rank": 659,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "oscilloscope-mcp",
+  "repo_url": "https://github.com/sandraschi/oscilloscope-mcp",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "6c6332e7c6260eaa661a224eaf5c3b9732736987",
+    "repo_url": "https://github.com/sandraschi/oscilloscope-mcp"
+  },
+  "stars": 5,
+  "tags": [
+    "mcp-proxy",
+    "lab instrumentation",
+    "direct simulation backend",
+    "simulated",
+    "reference"
+  ],
+  "tier": "D",
+  "title": "sandraschi/oscilloscope-mcp",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "mcp-server",
+      "family_confidence": 0.86,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 84.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "MCP",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "FastMCP服务器，控制USB示波器（PicoScope、Hantek）并含内置模拟器",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P1",
+      "row": 2413,
+      "rows_all": [
+        2413
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "mcp-proxy",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bmcp\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_note": "tier A -> D: triage reference (override:recon)",
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "just",
+        "python",
+        "cargo",
+        "node"
+      ],
+      "entry_evidence_count": 4,
+      "files": 89,
+      "markers": {
+        "http": 3,
+        "mcp": 34
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): oscilloscope-mcp is an MCP host that wraps pyPicoSDK and PyHT6022 rather than implementing device I/O, so it is reference/host.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "oscilloscope-mcp is an MCP host that wraps pyPicoSDK and PyHT6022 rather than implementing device I/O, so it is reference/host.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

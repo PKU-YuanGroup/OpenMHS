@@ -1,0 +1,65 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mergeos-bounties/ros2-mcp",
+  "track": "robots",
+  "local_path": "robots/mergeos-bounties/ros2-mcp",
+  "driver_dir": "MHS/drivers/robots/mergeos-bounties__ros2-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/mergeos-bounties/ros2-mcp",
+    "commit": "a4bb529d793d3c5d895286cb7bf8e731fcc9cfa9",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "reference",
+  "reason_code": "override:recon",
+  "role": "host",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 560,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "mock_tf_tree_generator.py:4 MockTFTreeGenerator",
+      "src/ros2_mcp/backend/mock.py:13 MockBackend",
+      "mock_tf_tree_generator.py:1",
+      "tools/topic_echo/mock_buffer.py:1",
+      "src/ros2_mcp/backend/mock.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/mergeos-bounties__ros2-mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

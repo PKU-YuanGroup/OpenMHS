@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pymmcore-plus/pymmcore-plus",
+  "track": "labs",
+  "local_path": "labs/pymmcore-plus/pymmcore-plus",
+  "driver_dir": "MHS/drivers/labs/pymmcore-plus__pymmcore-plus",
+  "upstream": {
+    "repo_url": "https://github.com/pymmcore-plus/pymmcore-plus",
+    "commit": "f8884a64419fbbfb02a42917ed8e889e0d611bce",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:pymmcore-plus",
+  "role": "framework",
+  "family": "pymmcore-plus",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 48,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "pymmcore_plus.model._microscope:Microscope",
+      "file": "src/pymmcore_plus/model/_microscope.py",
+      "line": 31,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymmcore_plus.experimental.unicore.devices._stage:XYStepperStageDevice",
+      "file": "src/pymmcore_plus/experimental/unicore/devices/_stage.py",
+      "line": 139,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymmcore_plus.experimental.unicore.devices._stage:StageDevice",
+      "file": "src/pymmcore_plus/experimental/unicore/devices/_stage.py",
+      "line": 28,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymmcore_plus.experimental.unicore.devices._slm:SLMDevice",
+      "file": "src/pymmcore_plus/experimental/unicore/devices/_slm.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymmcore_plus.core._device:SerialDevice",
+      "file": "src/pymmcore_plus/core/_device.py",
+      "line": 678,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/pymmcore_plus/mocks.py:5 MockSequenceableCore",
+      "src/pymmcore_plus/mocks.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymmcore-plus__pymmcore-plus --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

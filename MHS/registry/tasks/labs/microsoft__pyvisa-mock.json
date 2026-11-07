@@ -1,0 +1,83 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.microsoft/pyvisa-mock",
+  "track": "labs",
+  "local_path": "labs/microsoft/pyvisa-mock",
+  "driver_dir": "MHS/drivers/labs/microsoft__pyvisa-mock",
+  "upstream": {
+    "repo_url": "https://github.com/microsoft/pyvisa-mock",
+    "commit": "ab1ae6a1c4f3a7d2f4486f50df4c572579d18edd",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:scpi",
+  "role": "transport",
+  "family": "scpi",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 59,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "test:Mocker",
+      "file": "test.py",
+      "line": 28,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "test:MockerChannel",
+      "file": "test.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyvisa_mock.base.session:Session",
+      "file": "pyvisa_mock/base/session.py",
+      "line": 39,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pyvisa_mock/base/high_level.py:33 MockInstr",
+      "pyvisa_mock/base/high_level.py:53 MockResource",
+      "pyvisa_mock/base/high_level.py:119 MockVisaLibrary",
+      "pyvisa_mock/base/base_mocker.py:1"
+    ],
+    "upstream_tests": "pyvisa_mock/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/microsoft__pyvisa-mock --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

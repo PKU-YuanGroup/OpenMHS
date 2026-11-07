@@ -1,0 +1,261 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "smartem.online.microscope:ThermoFisherVerios (smartem/online/microscope.py:167)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "packaged"
+  },
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.imaging.focus.v1",
+    "cap.motion.joint_position.v1",
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_779ae239240697e4",
+    "https://github.com/cfpark00/smartem"
+  ],
+  "description": "cfpark00/smartem: control framework for microscopy imaging (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 5. Catalog role: controller. Language: Jupyter Notebook. Catalog keywords: Thermo, Fisher, Verios.",
+  "domains": [
+    "microscopy imaging"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 77 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.cfpark00/smartem",
+  "integration": {
+    "blockers": [
+      "HELPER_MISSING"
+    ],
+    "effort": "E2",
+    "next_action": "Review MHS/drivers/labs/cfpark00__smartem/RESULT.json: the package is blocked on HELPER_MISSING; clear the codes before MHS/registry/tasks/labs/cfpark00__smartem.json is dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "CLI"
+  ],
+  "languages": [
+    "Jupyter Notebook",
+    "Python"
+  ],
+  "last_commit_at": "2025-05-12T08:34:25-04:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/cfpark00/smartem"
+  },
+  "local_path": "labs/cfpark00/smartem",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "cfpark00",
+  "package_id": "gh.cfpark00/smartem",
+  "quarantine": false,
+  "rank": 13,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "smartem",
+  "repo_url": "https://github.com/cfpark00/smartem",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "bbabd6ac4dcdc4b77a46c0f0e21e056c82f193aa",
+    "repo_url": "https://github.com/cfpark00/smartem"
+  },
+  "stars": 3,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "control framework",
+    "controller",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "cfpark00/smartem",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 5,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "sdk-library",
+      "family_confidence": 0.59,
+      "family_source": "catalog",
+      "merged": true,
+      "priority_score": 40.0,
+      "quality_flags": [
+        "family_catalog_only"
+      ],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "控制器",
+      "archived": "false",
+      "backend_family_raw": "unknown",
+      "category_zh": "控制框架",
+      "description_zh": "机器学习引导的电子显微镜采集，含Thermo Fisher Verios类",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 447,
+      "rows_all": [
+        447
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B6-role-without-entry"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/cfpark00__smartem/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.imaging.focus.v1"
+            ],
+            "kind": "instrument.microscope"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/cfpark00__smartem/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/cfpark00__smartem/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.imaging.focus.v1"
+            ],
+            "kind": "instrument.microscope"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "HELPER_MISSING"
+      ],
+      "commit": "bbabd6ac4dcdc4b77a46c0f0e21e056c82f193aa",
+      "driver_dir": "MHS/drivers/labs/cfpark00__smartem",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:d1b06a0318309c4d288297d1da16f328490cc632c2e9d13a55744076b0b4d262",
+      "reviewed": false,
+      "status": "blocked"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 6,
+      "files": 77,
+      "markers": {
+        "camera": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): ThermoFisherVerios is a single-device driver for the Thermo Fisher Verios SEM over the proprietary autoscript SDK; install that SDK separately and use FakeRandomMicroscope for fake runs.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class smartem.online.microscope:ThermoFisherVerios uses the hardware transport autoscript_sdb_microscope_client",
+      "helper": "PythonObjectDriver",
+      "justification": "ThermoFisherVerios is a single-device driver for the Thermo Fisher Verios SEM over the proprietary autoscript SDK; install that SDK separately and use FakeRandomMicroscope for fake runs.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tatp-233/discoverse",
+  "track": "robots",
+  "local_path": "robots/tatp-233/discoverse",
+  "driver_dir": "MHS/drivers/robots/tatp-233__discoverse",
+  "upstream": {
+    "repo_url": "https://github.com/tatp-233/discoverse",
+    "commit": "d67f47c084aba0e0cf422a8725235f8b9238655a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 134,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "policies.act.envs.airbot_com_mmk_env:AIRBOTMMK2Env",
+      "file": "policies/act/envs/airbot_com_mmk_env.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "policies.act.envs.airbot_mmk_env:AIRBOTMMK2Env",
+      "file": "policies/act/envs/airbot_mmk_env.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "policies.act.envs.airbot_play_3_with_cam:AIRBOTPlayWithCameraEnv",
+      "file": "policies/act/envs/airbot_play_3_with_cam.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "policies.act.envs.airbot_play_4_with_cam:AIRBOTPlayWithCameraEnv",
+      "file": "policies/act/envs/airbot_play_4_with_cam.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "policies.act.envs.airbot_play_5_with_cam:AIRBOTPlayWithCameraEnv",
+      "file": "policies/act/envs/airbot_play_5_with_cam.py",
+      "line": 12,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "models/mjcf/leaphand_sensor_env.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/mjcf/mmk2_floor.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/mjcf/mmk2_floor_fixed.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/mjcf/mmk2_lidar.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/mjcf/skyrover_floor.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "models/mjcf/leaphand_sensor_env.xml:1 MJCF scene model",
+      "models/mjcf/mmk2_floor.xml:1 MJCF scene model",
+      "models/mjcf/mmk2_floor_fixed.xml:1 MJCF scene model",
+      "models/mjcf/mmk2_lidar.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "submodules/ComfyUI/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model models/mjcf/leaphand_sensor_env.xml:1",
+      "MJCF scene model models/mjcf/mmk2_floor.xml:1",
+      "MJCF scene model models/mjcf/mmk2_floor_fixed.xml:1",
+      "MJCF scene model models/mjcf/mmk2_lidar.xml:1",
+      "MJCF scene model models/mjcf/skyrover_floor.xml:1",
+      "MJCF scene model models/mjcf/manipulator/robot_airbot_play.xml:1",
+      "MJCF scene model models/mjcf/manipulator/robot_airbot_play_force.xml:1",
+      "MJCF scene model models/mjcf/manipulator/robot_airbot_play_g2.xml:1",
+      "MJCF scene model models/mjcf/manipulator/robot_arx_l5.xml:1",
+      "MJCF scene model models/mjcf/manipulator/robot_arx_x5.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/tatp-233__discoverse --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

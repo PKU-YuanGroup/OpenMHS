@@ -1,0 +1,114 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.opengalaxea/galaxeamanipsim",
+  "track": "robots",
+  "local_path": "robots/opengalaxea/galaxeamanipsim",
+  "driver_dir": "MHS/drivers/robots/opengalaxea__galaxeamanipsim",
+  "upstream": {
+    "repo_url": "https://github.com/opengalaxea/galaxeamanipsim",
+    "commit": "abe7f5161eeaa150e6eaffdf443af5df7f23f356",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 93,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "galaxea_sim.envs.base.bimanual_manipulation:BimanualManipulationEnv",
+      "file": "galaxea_sim/envs/base/bimanual_manipulation.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "galaxea_sim.envs.robotwin.dual_bottles_pick_easy:DualBottlesPickEasyEnv",
+      "file": "galaxea_sim/envs/robotwin/dual_bottles_pick_easy.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "galaxea_sim.envs.robotwin.block_hammer_beat:BlockHammerBeatEnv",
+      "file": "galaxea_sim/envs/robotwin/block_hammer_beat.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "galaxea_sim.envs.robotwin.block_handover:BlockHandoverEnv",
+      "file": "galaxea_sim/envs/robotwin/block_handover.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "galaxea_sim.envs.robotwin.blocks_stack_easy:BlocksStackEasyEnv",
+      "file": "galaxea_sim/envs/robotwin/blocks_stack_easy.py",
+      "line": 11,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "galaxea_sim/envs/base/__init__.py:7 gym env R1Base-v0",
+      "galaxea_sim/envs/base/__init__.py:17 gym env R1ProBase-v0",
+      "galaxea_sim/envs/base/__init__.py:27 gym env R1LiteBase-v0",
+      "galaxea_sim/envs/robotwin/__init__.py:43 gym env R1DualBottlesPickEasy-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env R1Base-v0 registered at galaxea_sim/envs/base/__init__.py:7",
+      "gym env R1ProBase-v0 registered at galaxea_sim/envs/base/__init__.py:17",
+      "gym env R1LiteBase-v0 registered at galaxea_sim/envs/base/__init__.py:27",
+      "gym env R1DualBottlesPickEasy-v0 registered at galaxea_sim/envs/robotwin/__init__.py:43",
+      "gym env R1ProDualBottlesPickEasy-v0 registered at galaxea_sim/envs/robotwin/__init__.py:58",
+      "gym env R1LiteDualBottlesPickEasy-v0 registered at galaxea_sim/envs/robotwin/__init__.py:73",
+      "gym env R1BlockHammerBeat-v0 registered at galaxea_sim/envs/robotwin/__init__.py:88",
+      "gym env R1LiteBlockHammerBeat-v0 registered at galaxea_sim/envs/robotwin/__init__.py:103",
+      "gym env R1BlockHandover-v0 registered at galaxea_sim/envs/robotwin/__init__.py:118",
+      "gym env R1LiteBlockHandover-v0 registered at galaxea_sim/envs/robotwin/__init__.py:133",
+      "gym env R1BlocksStackEasy-v0 registered at galaxea_sim/envs/robotwin/__init__.py:148",
+      "gym env R1ProBlocksStackEasy-v0 registered at galaxea_sim/envs/robotwin/__init__.py:164"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/opengalaxea__galaxeamanipsim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

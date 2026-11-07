@@ -1,0 +1,101 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.emb-ai/robobenchmart",
+  "track": "robots",
+  "local_path": "robots/emb-ai/robobenchmart",
+  "driver_dir": "MHS/drivers/robots/emb-ai__robobenchmart",
+  "upstream": {
+    "repo_url": "https://github.com/emb-ai/robobenchmart",
+    "commit": "33ca547ffeb4e4aac9af53bd685b17c05b971fc8",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 102,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "dsynth.envs.move_from_board_to_board:MoveFromBoardToBoardStaticEnv",
+      "file": "dsynth/envs/move_from_board_to_board.py",
+      "line": 323,
+      "confidence": "override"
+    },
+    {
+      "symbol": "dsynth.envs.move_from_board_to_board:MoveFromBoardToBoardStaticOneProdEnv",
+      "file": "dsynth/envs/move_from_board_to_board.py",
+      "line": 326,
+      "confidence": "override"
+    },
+    {
+      "symbol": "dsynth.envs.move_from_board_to_board:MoveFromBoardToBoardContEnv",
+      "file": "dsynth/envs/move_from_board_to_board.py",
+      "line": 332,
+      "confidence": "override"
+    },
+    {
+      "symbol": "dsynth.envs.move_from_board_to_board:MoveFromBoardToBoardVanishContEnv",
+      "file": "dsynth/envs/move_from_board_to_board.py",
+      "line": 460,
+      "confidence": "override"
+    },
+    {
+      "symbol": "dsynth.envs.move_from_board_to_board:MoveFromBoardToBoardNestleContEnv",
+      "file": "dsynth/envs/move_from_board_to_board.py",
+      "line": 466,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "dsynth/envs/move_from_board_to_board.py:323 MoveFromBoardToBoardStaticEnv environment class",
+      "dsynth/envs/move_from_board_to_board.py:326 MoveFromBoardToBoardStaticOneProdEnv environment class",
+      "dsynth/envs/move_from_board_to_board.py:460 MoveFromBoardToBoardVanishContEnv environment class",
+      "dsynth/envs/move_from_board_to_board.py:466 MoveFromBoardToBoardNestleContEnv environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/emb-ai__robobenchmart --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

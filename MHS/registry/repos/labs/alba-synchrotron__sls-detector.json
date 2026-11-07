@@ -1,0 +1,243 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "sls.client:Detector (sls/client.py:142)",
+      "sls.lima.tango:MythenSLS (sls/lima/tango.py:8)",
+      "sls.client:Acquisition (sls/client.py:501)",
+      "sls.client:Connection (sls/client.py:32)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1"
+  ],
+  "catalog_refs": [
+    "repo_acd064214d65214a",
+    "https://github.com/alba-synchrotron/sls-detector"
+  ],
+  "description": "alba-synchrotron/sls-detector: device backend for optics (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Declared backend: Tango. Language: Python. Catalog keywords: SLS, Mythen, II, Lima, Tango.",
+  "domains": [
+    "optics"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 31 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/alba-synchrotron__sls-detector/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.alba-synchrotron/sls-detector",
+  "integration": {
+    "blockers": [
+      "LICENSE_REVIEW: permissive; the user decides before a driver is published"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/alba-synchrotron__sls-detector: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/alba-synchrotron__sls-detector --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "other:Tango",
+    "CLI",
+    "Tango"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2021-07-30T12:06:14+02:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/alba-synchrotron/sls-detector"
+  },
+  "local_path": "labs/alba-synchrotron/sls-detector",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "alba-synchrotron",
+  "package_id": "gh.alba-synchrotron/sls-detector",
+  "quarantine": false,
+  "rank": 73,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "sls-detector",
+  "repo_url": "https://github.com/alba-synchrotron/sls-detector",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "961d33152af298eb4cbd311d9d185683ba992199",
+    "repo_url": "https://github.com/alba-synchrotron/sls-detector"
+  },
+  "stars": 0,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "simulated",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "alba-synchrotron/sls-detector",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "protocol-bridge",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 64.0,
+      "quality_flags": [
+        "license_unknown"
+      ],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "Tango",
+      "category_zh": "设备后端",
+      "description_zh": "SLS Mythen II探测器的Python库，含较完整模拟器、Lima相机插件与Tango设备类",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "unknown",
+      "priority": "P1",
+      "row": 128,
+      "rows_all": [
+        128
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "other",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\btango\\b"
+      ],
+      "family_note": "triage family python-object (catalogue family other)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/alba-synchrotron__sls-detector/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/alba-synchrotron__sls-detector/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/alba-synchrotron__sls-detector/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": "MIT",
+      "file": null,
+      "file_spdx": null,
+      "review": false,
+      "source": "package-metadata"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "961d33152af298eb4cbd311d9d185683ba992199",
+      "driver_dir": "MHS/drivers/labs/alba-synchrotron__sls-detector",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:e10b6f4003319b4134c56dccd69ef97676be77bf841565eafaf70c2fbbcc336d",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 10,
+      "files": 31,
+      "markers": {
+        "camera": 6,
+        "cli": 8,
+        "tango": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of the helper integration, 2026-11-05: the Mythen II runs over its own TCP client sls.client:Detector (sls/client.py:142) with a stop port and an upstream simulator; the Tango class is an optional Lima plugin.",
+        "rules alone: family-config (family:tag-bridge, rule 9)"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of the helper integration, 2026-11-05: the Mythen II runs over its own TCP client sls.client:Detector (sls/client.py:142) with a stop port and an upstream simulator; the Tango class is an optional Lima plugin.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

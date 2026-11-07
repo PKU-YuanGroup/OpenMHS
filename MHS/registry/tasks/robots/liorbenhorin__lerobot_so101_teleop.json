@@ -1,0 +1,99 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.liorbenhorin/lerobot_so101_teleop",
+  "track": "robots",
+  "local_path": "robots/liorbenhorin/lerobot_so101_teleop",
+  "driver_dir": "MHS/drivers/robots/liorbenhorin__lerobot_so101_teleop",
+  "upstream": {
+    "repo_url": "https://github.com/liorbenhorin/lerobot_so101_teleop",
+    "commit": "9ea18b2c77df29e05c1c45bb1915dfd95514c470",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 88,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "lerobot_so101_teleop.tasks.base.base_env_cfg:BaseEnvCfg",
+      "file": "source/lerobot_so101_teleop/tasks/base/base_env_cfg.py",
+      "line": 280,
+      "confidence": "override"
+    },
+    {
+      "symbol": "lerobot_so101_teleop.tasks.rock_a_stack.rock_a_stack_env_cfg:RockAStackSimpleEnvCfg",
+      "file": "source/lerobot_so101_teleop/tasks/rock_a_stack/rock_a_stack_env_cfg.py",
+      "line": 119,
+      "confidence": "override"
+    },
+    {
+      "symbol": "lerobot_so101_teleop.tasks.rock_a_stack.rock_a_stack_hard_env_cfg:RockAStackHardEnvCfg",
+      "file": "source/lerobot_so101_teleop/tasks/rock_a_stack/rock_a_stack_hard_env_cfg.py",
+      "line": 136,
+      "confidence": "override"
+    },
+    {
+      "symbol": "lerobot_so101_teleop.tasks.rock_a_stack.rock_a_stack_hard_env_cfg:RockAStackHardEnvEvalCfg",
+      "file": "source/lerobot_so101_teleop/tasks/rock_a_stack/rock_a_stack_hard_env_cfg.py",
+      "line": 187,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/lerobot_so101_teleop/tasks/base/__init__.py:9 gym env Lerobot-So101-Teleop-Base",
+      "source/lerobot_so101_teleop/tasks/rock_a_stack/__init__.py:9 gym env Lerobot-So101-Teleop-Rock-A-Stack-Simple",
+      "source/lerobot_so101_teleop/tasks/rock_a_stack/__init__.py:18 gym env Lerobot-So101-Teleop-Rock-A-Stack-Hard",
+      "source/lerobot_so101_teleop/tasks/rock_a_stack/__init__.py:27 gym env Lerobot-So101-Teleop-Rock-A-Stack-Hard-Eval"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Lerobot-So101-Teleop-Base registered at source/lerobot_so101_teleop/tasks/base/__init__.py:9",
+      "gym env Lerobot-So101-Teleop-Rock-A-Stack-Simple registered at source/lerobot_so101_teleop/tasks/rock_a_stack/__init__.py:9",
+      "gym env Lerobot-So101-Teleop-Rock-A-Stack-Hard registered at source/lerobot_so101_teleop/tasks/rock_a_stack/__init__.py:18",
+      "gym env Lerobot-So101-Teleop-Rock-A-Stack-Hard-Eval registered at source/lerobot_so101_teleop/tasks/rock_a_stack/__init__.py:27"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/liorbenhorin__lerobot_so101_teleop --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

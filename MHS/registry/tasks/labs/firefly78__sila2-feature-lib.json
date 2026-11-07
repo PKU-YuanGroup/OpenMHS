@@ -1,0 +1,63 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.firefly78/sila2-feature-lib",
+  "track": "labs",
+  "local_path": "labs/firefly78/sila2-feature-lib",
+  "driver_dir": "MHS/drivers/labs/firefly78__sila2-feature-lib",
+  "upstream": {
+    "repo_url": "https://github.com/firefly78/sila2-feature-lib",
+    "commit": "a40f02e2c05946ceb199ca0b3e5cddaec19f9b6e",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 764,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/sila2_feature_lib/simulation/v001_0/feature_ul.py:15 StartSimulationModeFailed",
+      "src/sila2_feature_lib/simulation/v001_0/feature_ul.py:27 SimulationModeGlobal",
+      "src/sila2_feature_lib/simulation/v001_0/feature_ul.py:75 SimulatorController"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/firefly78__sila2-feature-lib --backend fake",
+  "skip_reason": "override (labs.json): sila2-feature-lib is a library of SiLA2 feature templates for building device servers, not a device or simulator; SimulatorController only flips a global flag and opens no hardware.",
+  "publish_review": "not_required"
+}

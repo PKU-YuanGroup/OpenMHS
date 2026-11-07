@@ -1,0 +1,125 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.roesel/elliptec",
+  "track": "labs",
+  "local_path": "labs/roesel/elliptec",
+  "driver_dir": "MHS/drivers/labs/roesel__elliptec",
+  "upstream": {
+    "repo_url": "https://github.com/roesel/elliptec",
+    "commit": "5f86ca595f80397bca280347830339c832a7b0bc",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 16,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "elliptec.shutter:Shutter",
+      "file": "src/elliptec/shutter.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "elliptec.iris:Iris",
+      "file": "src/elliptec/iris.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "elliptec.linear:Linear",
+      "file": "src/elliptec/linear.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "elliptec.rotator:Rotator",
+      "file": "src/elliptec/rotator.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "elliptec.slider:Slider",
+      "file": "src/elliptec/slider.py",
+      "line": 10,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Shutter.get_slot",
+      "Shutter.is_closed",
+      "Shutter.is_open",
+      "Iris.get_aperture",
+      "Iris.get_home_offset",
+      "Iris.get_jog_step",
+      "Linear.get_distance",
+      "Linear.get_home_offset",
+      "Linear.get_jog_step"
+    ],
+    "writes": [
+      "Shutter.set_slot",
+      "Iris.set_aperture",
+      "Iris.set_home_offset",
+      "Iris.set_jog_step",
+      "Linear.set_distance",
+      "Linear.set_home_offset",
+      "Linear.set_jog_step"
+    ],
+    "actions": [
+      "Shutter.home",
+      "Shutter.jog",
+      "Shutter.move",
+      "Iris.check_move",
+      "Iris.home",
+      "Iris.jog",
+      "Iris.move",
+      "Linear.home",
+      "Linear.jog",
+      "Linear.move"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/roesel__elliptec --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

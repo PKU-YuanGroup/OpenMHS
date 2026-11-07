@@ -1,0 +1,92 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.clarklabucb/newerapumps_python3",
+  "track": "labs",
+  "local_path": "labs/clarklabucb/newerapumps_python3",
+  "driver_dir": "MHS/drivers/labs/clarklabucb__newerapumps_python3",
+  "upstream": {
+    "repo_url": "https://github.com/clarklabucb/newerapumps_python3",
+    "commit": "b8e3d0214ded43734ad22fa378b5bd408010f109",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 296,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "pump_control3:PumpControl",
+      "file": "pump_control3.py",
+      "line": 15,
+      "confidence": "override"
+    },
+    {
+      "symbol": "new_era3:find_pumps",
+      "file": "new_era3.py",
+      "line": 11,
+      "confidence": "override"
+    },
+    {
+      "symbol": "new_era3:set_rates",
+      "file": "new_era3.py",
+      "line": 43,
+      "confidence": "override"
+    },
+    {
+      "symbol": "new_era3:get_rate",
+      "file": "new_era3.py",
+      "line": 68,
+      "confidence": "override"
+    },
+    {
+      "symbol": "new_era3:set_diameter",
+      "file": "new_era3.py",
+      "line": 111,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "capabilities",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/clarklabucb__newerapumps_python3 --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

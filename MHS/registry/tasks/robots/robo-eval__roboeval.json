@@ -1,0 +1,133 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.robo-eval/roboeval",
+  "track": "robots",
+  "local_path": "robots/robo-eval/roboeval",
+  "driver_dir": "MHS/drivers/robots/robo-eval__roboeval",
+  "upstream": {
+    "repo_url": "https://github.com/robo-eval/roboeval",
+    "commit": "7199e5c4851bbf8eaf185d486735cbcb233f608a",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "sim-env",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 53,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "roboeval.envs.lift_pot:LiftPotPosition",
+      "file": "roboeval/envs/lift_pot.py",
+      "line": 125,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "roboeval.envs.lift_pot:LiftPotOrientation",
+      "file": "roboeval/envs/lift_pot.py",
+      "line": 134,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "roboeval.envs.lift_pot:LiftPotPositionAndOrientation",
+      "file": "roboeval/envs/lift_pot.py",
+      "line": 142,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "roboeval.envs.lift_tray:LiftTrayPosition",
+      "file": "roboeval/envs/lift_tray.py",
+      "line": 126,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "roboeval.envs.manipulation:StackTwoBlocksPosition",
+      "file": "roboeval/envs/manipulation.py",
+      "line": 148,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "roboeval/envs/xmls/google_robot/scene.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "roboeval/envs/xmls/hello_robot_stretch/scene.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "roboeval/envs/xmls/google_robot/robot.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "roboeval/envs/xmls/h1/h1.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "roboeval/envs/xmls/hello_robot_stretch/stretch.xml",
+      "line": 2,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "roboeval/envs/xmls/google_robot/scene.xml:2 MJCF scene model",
+      "roboeval/envs/xmls/hello_robot_stretch/scene.xml:2 MJCF scene model",
+      "roboeval/envs/xmls/google_robot/robot.xml:2 MJCF robot model",
+      "roboeval/envs/xmls/h1/h1.xml:2 MJCF robot model"
+    ],
+    "upstream_tests": "thirdparty/mujoco_menagerie/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model roboeval/envs/xmls/google_robot/scene.xml:2",
+      "MJCF scene model roboeval/envs/xmls/hello_robot_stretch/scene.xml:2",
+      "MJCF robot model roboeval/envs/xmls/google_robot/robot.xml:2",
+      "MJCF robot model roboeval/envs/xmls/h1/h1.xml:2",
+      "MJCF robot model roboeval/envs/xmls/hello_robot_stretch/stretch.xml:2",
+      "MJCF robot model roboeval/envs/xmls/robotiq_2f85/2f85.xml:2",
+      "MJCF robot model roboeval/envs/xmls/robotiq_2f85/2f85_fine_manipulation.xml:2"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/robo-eval__roboeval --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

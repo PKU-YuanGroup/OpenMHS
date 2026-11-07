@@ -1,0 +1,86 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.roboterax/humanoid-gym",
+  "track": "robots",
+  "local_path": "robots/roboterax/humanoid-gym",
+  "driver_dir": "MHS/drivers/robots/roboterax__humanoid-gym",
+  "upstream": {
+    "repo_url": "https://github.com/roboterax/humanoid-gym",
+    "commit": "ae46e201c85a2b17e7f2cea59a441dae7ea88a8f",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 103,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "humanoid.scripts.sim2sim:run_mujoco",
+      "file": "humanoid/scripts/sim2sim.py",
+      "line": 87,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "resources/robots/XBot/mjcf/XBot-L-terrain.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "resources/robots/XBot/mjcf/XBot-L.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "resources/robots/XBot/mjcf/XBot-L-terrain.xml:1 MJCF robot model",
+      "resources/robots/XBot/mjcf/XBot-L.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model resources/robots/XBot/mjcf/XBot-L-terrain.xml:1",
+      "MJCF robot model resources/robots/XBot/mjcf/XBot-L.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/roboterax__humanoid-gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

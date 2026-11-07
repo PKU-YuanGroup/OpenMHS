@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.hello-robot/stretch_mujoco",
+  "track": "robots",
+  "local_path": "robots/hello-robot/stretch_mujoco",
+  "driver_dir": "MHS/drivers/robots/hello-robot__stretch_mujoco",
+  "upstream": {
+    "repo_url": "https://github.com/hello-robot/stretch_mujoco",
+    "commit": "c78d6a1cd79bb5ead1b679610299563c1a91124a",
+    "license_spdx": "BSD-3-Clause-Clear",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:flagship-twin",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 145,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "stretch_mujoco/models/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "stretch_mujoco/models/stretch.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "stretch_mujoco/models/stretch_mj_3.3.0.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "stretch_mujoco/models/scene.xml:1 MJCF scene model",
+      "stretch_mujoco/models/stretch.xml:1 MJCF robot model",
+      "stretch_mujoco/models/stretch_mj_3.3.0.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model stretch_mujoco/models/scene.xml:1",
+      "MJCF robot model stretch_mujoco/models/stretch.xml:1",
+      "MJCF robot model stretch_mujoco/models/stretch_mj_3.3.0.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/hello-robot__stretch_mujoco --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

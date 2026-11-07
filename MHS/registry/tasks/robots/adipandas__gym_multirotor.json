@@ -1,0 +1,106 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.adipandas/gym_multirotor",
+  "track": "robots",
+  "local_path": "robots/adipandas/gym_multirotor",
+  "driver_dir": "MHS/drivers/robots/adipandas__gym_multirotor",
+  "upstream": {
+    "repo_url": "https://github.com/adipandas/gym_multirotor",
+    "commit": "c13535254b6f6ecc84a32e49320cd989b54304d5",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 91,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_multirotor.envs.mujoco.quadrotor_plus_hover:QuadrotorPlusHoverEnv",
+      "file": "gym_multirotor/envs/mujoco/quadrotor_plus_hover.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_multirotor.envs.mujoco.tiltrotor_plus_hover:TiltrotorPlus8DofHoverEnv",
+      "file": "gym_multirotor/envs/mujoco/tiltrotor_plus_hover.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_multirotor.envs.mujoco.quadrotor_x_hover:QuadrotorXHoverEnv",
+      "file": "gym_multirotor/envs/mujoco/quadrotor_x_hover.py",
+      "line": 4,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "gym_multirotor/envs/mujoco/assets/quadrotor_plus.xml",
+      "line": 6,
+      "kind": "robot"
+    },
+    {
+      "file": "gym_multirotor/envs/mujoco/assets/quadrotor_x.xml",
+      "line": 6,
+      "kind": "robot"
+    },
+    {
+      "file": "gym_multirotor/envs/mujoco/assets/tiltrotor_plus_hover.xml",
+      "line": 5,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_multirotor/__init__.py:8 gym env QuadrotorPlusHoverEnv-v0",
+      "gym_multirotor/__init__.py:14 gym env TiltrotorPlus8DofHoverEnv-v0",
+      "gym_multirotor/__init__.py:21 gym env QuadrotorXHoverEnv-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env QuadrotorPlusHoverEnv-v0 registered at gym_multirotor/__init__.py:8",
+      "gym env TiltrotorPlus8DofHoverEnv-v0 registered at gym_multirotor/__init__.py:14",
+      "gym env QuadrotorXHoverEnv-v0 registered at gym_multirotor/__init__.py:21"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/adipandas__gym_multirotor --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

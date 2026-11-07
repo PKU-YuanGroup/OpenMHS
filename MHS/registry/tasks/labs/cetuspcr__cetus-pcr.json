@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cetuspcr/cetus-pcr",
+  "track": "labs",
+  "local_path": "labs/cetuspcr/cetus-pcr",
+  "driver_dir": "MHS/drivers/labs/cetuspcr__cetus-pcr",
+  "upstream": {
+    "repo_url": "https://github.com/cetuspcr/cetus-pcr",
+    "commit": "bbed1fd40257f5ba51bf4d9c9bc5fa328f28d7cb",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 33,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "functions:ArduinoPCR",
+      "file": "functions.py",
+      "line": 72,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "ArduinoPCR.run_experiment"
+    ],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": [
+      "assets/Color Chart.py:5 MAX_ROWS = 36"
+    ]
+  },
+  "needs_recon": [
+    "capabilities"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/cetuspcr__cetus-pcr --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

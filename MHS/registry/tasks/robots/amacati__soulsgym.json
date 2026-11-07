@@ -1,0 +1,98 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.amacati/soulsgym",
+  "track": "robots",
+  "local_path": "robots/amacati/soulsgym",
+  "driver_dir": "MHS/drivers/robots/amacati__soulsgym",
+  "upstream": {
+    "repo_url": "https://github.com/amacati/soulsgym",
+    "commit": "29c94d89ac8a47846c619019296d0ba55c6e80d5",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 26,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "soulsgym.envs.darksouls3.iudex:IudexEnv",
+      "file": "soulsgym/envs/darksouls3/iudex.py",
+      "line": 45,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "soulsgym.envs.darksouls3.iudex:IudexImgEnv",
+      "file": "soulsgym/envs/darksouls3/iudex.py",
+      "line": 403,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "soulsgym.envs.darksouls3.iudex:IudexEnvDemo",
+      "file": "soulsgym/envs/darksouls3/iudex.py",
+      "line": 451,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "soulsgym.envs.darksouls3.vordt:VordtEnv",
+      "file": "soulsgym/envs/darksouls3/vordt.py",
+      "line": 40,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11.2",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "soulsgym/__init__.py:51 gym env SoulsGymIudex-v0",
+      "soulsgym/__init__.py:55 gym env SoulsGymIudexImg-v0",
+      "soulsgym/__init__.py:59 gym env SoulsGymIudexDemo-v0",
+      "soulsgym/__init__.py:63 gym env SoulsGymVordt-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env SoulsGymIudex-v0 registered at soulsgym/__init__.py:51",
+      "gym env SoulsGymIudexImg-v0 registered at soulsgym/__init__.py:55",
+      "gym env SoulsGymIudexDemo-v0 registered at soulsgym/__init__.py:59",
+      "gym env SoulsGymVordt-v0 registered at soulsgym/__init__.py:63"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/amacati__soulsgym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

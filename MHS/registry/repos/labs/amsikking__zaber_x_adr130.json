@@ -1,0 +1,219 @@
+{
+  "adapter": {
+    "bridge": "serial",
+    "entry_points": [
+      "zaber_X_ADR130:Controller (zaber_X_ADR130.py:3)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.motion.joint_position.v1"
+  ],
+  "catalog_refs": [
+    "repo_d2df30b595ade0e9",
+    "https://github.com/amsikking/zaber_x_adr130"
+  ],
+  "description": "amsikking/zaber_x_adr130: device backend for microscopy imaging (lab instrumentation track). OpenMHS plan: direct-driver with SerialDriver, wave 1. Catalog role: device SDK. Language: Python. Catalog keywords: Zaber, X-ADR130, XY.",
+  "domains": [
+    "microscopy imaging"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 6 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/amsikking__zaber_x_adr130/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "serial"
+  ],
+  "hardware_free": false,
+  "id": "gh.amsikking/zaber_x_adr130",
+  "integration": {
+    "blockers": [
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/amsikking__zaber_x_adr130: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/amsikking__zaber_x_adr130 --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/serial.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "serial",
+    "Python SDK",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2025-03-17T15:13:00-07:00",
+  "license": "GPL-3.0",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-3.0",
+  "links": {
+    "repo": "https://github.com/amsikking/zaber_x_adr130"
+  },
+  "local_path": "labs/amsikking/zaber_x_adr130",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "amsikking",
+  "package_id": "gh.amsikking/zaber_x_adr130",
+  "quarantine": false,
+  "rank": 49,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "zaber_x_adr130",
+  "repo_url": "https://github.com/amsikking/zaber_x_adr130",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "7c5926e07929b5c40ea6049ea5bceab28609bb0e",
+    "repo_url": "https://github.com/amsikking/zaber_x_adr130"
+  },
+  "stars": 0,
+  "tags": [
+    "serial",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "amsikking/zaber_x_adr130",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 1,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 45.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "Zaber X-ADR130直线电机XY显微镜台的Python设备适配器",
+      "join": "exact",
+      "license_raw": "GPL-3.0",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 183,
+      "rows_all": [
+        183
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_note": "triage family serial (catalogue family python-object)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/amsikking__zaber_x_adr130/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-3.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "GPL-3.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "7c5926e07929b5c40ea6049ea5bceab28609bb0e",
+      "driver_dir": "MHS/drivers/labs/amsikking__zaber_x_adr130",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:4dee116b07b19d5c21660fbcf40ffc6f809e87403ed88f402a46b80cc8224969",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 0,
+      "files": 6,
+      "markers": {
+        "microscopy": 3
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of wave B: a direct Driver, not a SerialDriver table: each line is '/' plus the device address read at connect and an axis token ('1 move abs'), assembled at run time.",
+        "rules alone: family-config (family:serial, rule 9)"
+      ],
+      "family": "serial",
+      "hardware_transport": "class zaber_X_ADR130:Controller uses the hardware transport serial",
+      "helper": "SerialDriver",
+      "justification": "Model review of wave B: a direct Driver, not a SerialDriver table: each line is '/' plus the device address read at connect and an axis token ('1 move abs'), assembled at run time.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

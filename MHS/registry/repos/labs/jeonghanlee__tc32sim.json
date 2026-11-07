@@ -1,0 +1,181 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "make"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_7e2c4b9c0d660100",
+    "https://github.com/jeonghanlee/tc32sim"
+  ],
+  "description": "jeonghanlee/tc32sim: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: not integrated (override:recon). Declared backend: EPICS. Language: Batchfile. Catalog keywords: TC-32, IOC, TCP, Hz, CH00..CH31, StreamDevice.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 5,
+    "notes": "bounded static scan: 45 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "other"
+  ],
+  "hardware_free": false,
+  "id": "gh.jeonghanlee/tc32sim",
+  "integration": {
+    "blockers": [
+      "NOT_A_DEVICE: override (labs.json): TC-32 simulator IOC: a bash TCP emulator feeds synthetic temperatures to a C++ EPICS StreamDevice IOC, so this is a simulator, not a Python device driver.",
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata"
+    ],
+    "effort": "EX",
+    "next_action": "Not integrated: override (labs.json): TC-32 simulator IOC: a bash TCP emulator feeds synthetic temperatures to a C++ EPICS StreamDevice IOC, so this is a simulator, not a Python device driver.",
+    "reason_code": "override:recon",
+    "role": "sim-env",
+    "scenario_required": false,
+    "strategy": "skip"
+  },
+  "interfaces": [
+    "EPICS CA/PVA",
+    "other:TCP stream",
+    "CLI",
+    "EPICS",
+    "gRPC"
+  ],
+  "languages": [
+    "Batchfile",
+    "Shell",
+    "C++"
+  ],
+  "last_commit_at": "2026-09-17T12:43:38-07:00",
+  "license": "NOASSERTION",
+  "license_class": "unknown",
+  "license_spdx": "NOASSERTION",
+  "links": {
+    "repo": "https://github.com/jeonghanlee/tc32sim"
+  },
+  "local_path": "labs/jeonghanlee/tc32sim",
+  "modes": [],
+  "owner": "jeonghanlee",
+  "package_id": "gh.jeonghanlee/tc32sim",
+  "quarantine": false,
+  "rank": 1959,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "tc32sim",
+  "repo_url": "https://github.com/jeonghanlee/tc32sim",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "61645aeb78f9e7239a20397c918e2e74508cb9da",
+    "repo_url": "https://github.com/jeonghanlee/tc32sim"
+  },
+  "stars": 2,
+  "tags": [
+    "other",
+    "lab instrumentation",
+    "device backend",
+    "direct simulation backend",
+    "simulated",
+    "skip"
+  ],
+  "tier": "D",
+  "title": "jeonghanlee/tc32sim",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "protocol-bridge",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 58.0,
+      "quality_flags": [
+        "license_unknown"
+      ],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "EPICS",
+      "category_zh": "设备后端",
+      "description_zh": "TC-32温度监测器模拟IOC,以TCP流模拟器(~3Hz,CH00..CH31)替代硬件,经StreamDevice和PVA对外",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P1",
+      "row": 1198,
+      "rows_all": [
+        1198
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "other",
+      "catalog_tier": "C",
+      "family_matches": [
+        "\\bepics\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_note": "tier C -> D: triage skip (override:recon)",
+      "tier_rule": "C3-backend-needs-scenario"
+    },
+    "device_plan": [],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": null,
+      "file_spdx": null,
+      "review": true,
+      "source": "none"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "make"
+      ],
+      "entry_evidence_count": 0,
+      "files": 45,
+      "markers": {
+        "cli": 1,
+        "epics": 3
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): TC-32 simulator IOC: a bash TCP emulator feeds synthetic temperatures to a C++ EPICS StreamDevice IOC, so this is a simulator, not a Python device driver.",
+        "rules alone: untriaged (untriaged:non_python, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "TC-32 simulator IOC: a bash TCP emulator feeds synthetic temperatures to a C++ EPICS StreamDevice IOC, so this is a simulator, not a Python device driver.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

@@ -1,0 +1,5402 @@
+{
+  "pilot_candidates_version": "0.9",
+  "generated_by": "MHS/registry/taskcards.py (via build_registry.py)",
+  "generated_at": "2026-10-20T00:00:00Z",
+  "description": "The top-ranked task cards within the available pilot helpers (python-object, serial, scpi, gymnasium, mujoco), an equal share per bucket, for MHS/handoff/pilot-20.json (WP-11). Exemplars (wave 0) are listed in their bucket and are not pilot repos; every other candidate is wave 1. Within a bucket strict-ready cards come first, then the rank score; a bucket served by two helpers takes its cards from the two families in turn.",
+  "rank_formula": "rank_score = 40*partner + 20*hardware_mode + 10*helper_available + 8*has_tests + 5*log10(stars+1) - 15*gpu - 20*license_unknown; sorted by descending score, ties by package_id",
+  "buckets": {
+    "direct-python-instrument": {
+      "description": "direct Python instrument drivers (python-object, labs track)",
+      "count": 12
+    },
+    "serial-scpi": {
+      "description": "serial and SCPI command maps (SerialDriver, ScpiDriver)",
+      "count": 12
+    },
+    "gymnasium-mujoco": {
+      "description": "gymnasium and MuJoCo simulators (GymnasiumDriver, MujocoDriver)",
+      "count": 11
+    },
+    "robot-sdk": {
+      "description": "robot SDK drivers on fakes (python-object, robots track)",
+      "count": 5,
+      "shortfall": "5 of 10 slots unfilled: only 5 card(s), 1 of them exemplar(s), pass the pilot checks (dispatch-ready, no licence review, an AST entry symbol or MuJoCo model, candidate classes, no system dependency or asset download, a motion API for a robot); the other buckets took the slots"
+    }
+  },
+  "count": 40,
+  "candidates": [
+    {
+      "bucket": "direct-python-instrument",
+      "package_id": "gh.tiagocoutinho/julabo",
+      "exemplar": true,
+      "strict_ready": true,
+      "wave": 0,
+      "rank": 3,
+      "rank_score": 34.2255,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 0,
+        "stars": 6,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/tiagocoutinho__julabo.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.tiagocoutinho/julabo",
+        "track": "labs",
+        "local_path": "labs/tiagocoutinho/julabo",
+        "driver_dir": "MHS/drivers/labs/tiagocoutinho__julabo",
+        "upstream": {
+          "repo_url": "https://github.com/tiagocoutinho/julabo",
+          "commit": "650da2138459d93e3bfdb8db17ce0bd161c6a9a7",
+          "license_spdx": "LGPL-3.0",
+          "license_class": "weak-copyleft"
+        },
+        "decision": "direct-driver",
+        "reason_code": "override:exemplar",
+        "role": "device-driver",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 0,
+        "rank": 3,
+        "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+        "entry_symbols": [
+          {
+            "symbol": "julabo.device:JulaboCF",
+            "file": "julabo/device.py",
+            "line": 147,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "julabo.device:JulaboHL",
+            "file": "julabo/device.py",
+            "line": 151,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "julabo.device:JulaboMS",
+            "file": "julabo/device.py",
+            "line": 156,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "julabo.device:JulaboFC",
+            "file": "julabo/device.py",
+            "line": 161,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "julabo.tango.server.device:JulaboCF",
+            "file": "julabo/tango/server/device.py",
+            "line": 186,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "julabo/simulator.py:1"
+          ],
+          "upstream_tests": null
+        },
+        "hints": {
+          "reads": [
+            "JulaboCF.active_set_point_channel (attribute)",
+            "JulaboCF.bath_temperature (attribute)",
+            "JulaboCF.external_input (attribute)",
+            "JulaboCF.external_temperature (attribute)",
+            "JulaboCF.heating_power (attribute)",
+            "JulaboCF.high_temperature (attribute)",
+            "JulaboCF.identification (attribute)",
+            "JulaboCF.is_started (attribute)",
+            "JulaboCF.low_temperature (attribute)",
+            "JulaboCF.safety_temperature (attribute)",
+            "JulaboCF.self_tunning (attribute)",
+            "JulaboCF.set_point_1 (attribute)"
+          ],
+          "writes": [],
+          "actions": [
+            "JulaboCF.start",
+            "JulaboCF.stop",
+            "JulaboHL.start",
+            "JulaboHL.stop",
+            "JulaboMS.start",
+            "JulaboMS.stop"
+          ],
+          "candidate_classes": [
+            "cap.measure.temperature.v1",
+            "cap.thermal.setpoint.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R2",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/tiagocoutinho__julabo --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "direct-python-instrument",
+      "package_id": "gh.martinhjelmare/leicacam",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 1,
+      "rank_score": 84.8086,
+      "components": {
+        "partner": 1,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 22,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/martinhjelmare__leicacam.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.martinhjelmare/leicacam",
+        "track": "labs",
+        "local_path": "labs/martinhjelmare/leicacam",
+        "driver_dir": "MHS/drivers/labs/martinhjelmare__leicacam",
+        "upstream": {
+          "repo_url": "https://github.com/martinhjelmare/leicacam",
+          "commit": "5c33a0d6daa179377390eccf40f1fc3e584b2dad",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "override:partner-driver",
+        "role": "device-driver",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 1,
+        "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+        "entry_symbols": [
+          {
+            "symbol": "leicacam.cam:CAM",
+            "file": "src/leicacam/cam.py",
+            "line": 107,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "leicacam.async_cam:AsyncCAM",
+            "file": "src/leicacam/async_cam.py",
+            "line": 12,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.12",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "fake",
+          "hints": [],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [
+            "CAM.get_information"
+          ],
+          "writes": [],
+          "actions": [
+            "CAM.autofocus_scan",
+            "CAM.disable",
+            "CAM.disable_all",
+            "CAM.enable",
+            "CAM.enable_all",
+            "CAM.pause_scan",
+            "CAM.start_scan",
+            "CAM.stop_scan"
+          ],
+          "candidate_classes": [
+            "cap.imaging.focus.v1",
+            "cap.sensing.read.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/martinhjelmare__leicacam --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "direct-python-instrument",
+      "package_id": "gh.benpruitt/tecancavro",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 2,
+      "rank_score": 77.0749,
+      "components": {
+        "partner": 1,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 0,
+        "stars": 25,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/benpruitt__tecancavro.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.benpruitt/tecancavro",
+        "track": "labs",
+        "local_path": "labs/benpruitt/tecancavro",
+        "driver_dir": "MHS/drivers/labs/benpruitt__tecancavro",
+        "upstream": {
+          "repo_url": "https://github.com/benpruitt/tecancavro",
+          "commit": "5267fd2ed48b7e38d2261459cbf4a381e54c33c1",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "override:partner-driver",
+        "role": "device-driver",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 2,
+        "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+        "entry_symbols": [
+          {
+            "symbol": "tecancavro.models:XCaliburD",
+            "file": "tecancavro/models.py",
+            "line": 25,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "tecancavro.transport:TecanAPINode",
+            "file": "tecancavro/transport.py",
+            "line": 196,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "tecancavro.transport:TecanAPISerial",
+            "file": "tecancavro/transport.py",
+            "line": 75,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "fake",
+          "hints": [],
+          "upstream_tests": null
+        },
+        "hints": {
+          "reads": [
+            "XCaliburD.getBufferStatus",
+            "XCaliburD.getCurPort",
+            "XCaliburD.getCutoffSpeed",
+            "XCaliburD.getEncoderPos",
+            "XCaliburD.getPlungerPos",
+            "XCaliburD.getStartSpeed",
+            "XCaliburD.getTopSpeed"
+          ],
+          "writes": [
+            "XCaliburD.setCutoffSpeed",
+            "XCaliburD.setMicrostep",
+            "XCaliburD.setSlope",
+            "XCaliburD.setSpeed",
+            "XCaliburD.setStartSpeed",
+            "XCaliburD.setTopSpeed"
+          ],
+          "actions": [
+            "XCaliburD.dispense",
+            "XCaliburD.dispenseToWaste",
+            "XCaliburD.haltExec",
+            "XCaliburD.markRepeatStart",
+            "XCaliburD.movePlungerAbs",
+            "XCaliburD.movePlungerRel",
+            "XCaliburD.resetChain"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1",
+            "cap.fluid.dispense.v1",
+            "cap.motion.joint_position.v1",
+            "cap.motion.stop.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R2",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/benpruitt__tecancavro --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "direct-python-instrument",
+      "package_id": "gh.pymeasure/pymeasure",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 5,
+      "rank_score": 52.4771,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 785,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/pymeasure__pymeasure.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.pymeasure/pymeasure",
+        "track": "labs",
+        "local_path": "labs/pymeasure/pymeasure",
+        "driver_dir": "MHS/drivers/labs/pymeasure__pymeasure",
+        "upstream": {
+          "repo_url": "https://github.com/pymeasure/pymeasure",
+          "commit": "9c6a96014e74bda79988ae0757a6b38ca390d247",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "override:driver-pack",
+        "role": "driver-pack",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 5,
+        "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+        "entry_symbols": [
+          {
+            "symbol": "pymeasure.instruments.keithley.keithleyDMM6500:KeithleyDMM6500",
+            "file": "pymeasure/instruments/keithley/keithleyDMM6500.py",
+            "line": 160,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pymeasure.instruments.hp.hp856Xx:HP8561B",
+            "file": "pymeasure/instruments/hp/hp856Xx.py",
+            "line": 3039,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pymeasure.instruments.hp.hp856Xx:HP8560A",
+            "file": "pymeasure/instruments/hp/hp856Xx.py",
+            "line": 2836,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pymeasure.instruments.rohdeschwarz.sfm:SFM",
+            "file": "pymeasure/instruments/rohdeschwarz/sfm.py",
+            "line": 192,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pymeasure.instruments.agilent.agilentB298x:AgilentB2987",
+            "file": "pymeasure/instruments/agilent/agilentB298x.py",
+            "line": 1132,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.10",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "pymeasure/adapters/adapter.py:226 FakeAdapter",
+            "pymeasure/instruments/fakes.py:35 FakeInstrument",
+            "pymeasure/instruments/fakes.py:83 SwissArmyFake",
+            "pymeasure/instruments/keithley/keithley2281S.py:283 BatterySimulationChannel",
+            "pymeasure/instruments/ni/virtualbench.py:61 VirtualBench_Direct",
+            "pymeasure/instruments/ni/virtualbench.py:89 VirtualBench"
+          ],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [
+            "KeithleyDMM6500.get_channel_pairs",
+            "KeithleyDMM6500.get_channels",
+            "KeithleyDMM6500.measure_capacitance",
+            "KeithleyDMM6500.measure_continuity",
+            "KeithleyDMM6500.measure_current",
+            "KeithleyDMM6500.measure_diode",
+            "KeithleyDMM6500.measure_frequency",
+            "KeithleyDMM6500.measure_period",
+            "KeithleyDMM6500.measure_resistance",
+            "KeithleyDMM6500.measure_temperature",
+            "KeithleyDMM6500.measure_voltage",
+            "KeithleyDMM6500.read_binary_values"
+          ],
+          "writes": [
+            "KeithleyDMM6500.write_binary_values",
+            "HP8561B.set_auto_couple",
+            "HP8561B.set_continuous_sweep",
+            "HP8561B.set_crt_adjustment_pattern",
+            "HP8561B.set_full_span",
+            "HP8561B.set_fullband",
+            "HP8561B.set_linear_scale",
+            "HP8561B.set_marker_delta_to_span",
+            "HP8561B.set_marker_minimum",
+            "HP8561B.set_marker_to_center_frequency",
+            "HP8561B.set_marker_to_center_frequency_step_size",
+            "HP8561B.set_marker_to_reference_level"
+          ],
+          "actions": [
+            "KeithleyDMM6500.acquire_relative",
+            "KeithleyDMM6500.disable_filter",
+            "KeithleyDMM6500.disable_relative",
+            "KeithleyDMM6500.enable_filter",
+            "KeithleyDMM6500.enable_relative",
+            "KeithleyDMM6500.reset",
+            "KeithleyDMM6500.scan_start",
+            "KeithleyDMM6500.scan_stop"
+          ],
+          "candidate_classes": [
+            "cap.device.configure.v1",
+            "cap.sensing.read.v1",
+            "cap.measure.current.v1",
+            "cap.measure.resistance.v1",
+            "cap.measure.temperature.v1",
+            "cap.measure.voltage.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": [
+            "pymeasure/instruments/anapico/apsin12G.py:32 FREQ_LIMIT = [9000.0, 12000000000.0]",
+            "pymeasure/instruments/anapico/apsin12G.py:33 POW_LIMIT = [-30, 27]",
+            "pymeasure/instruments/anritsu/anritsuMS464xB.py:62 FREQUENCY_RANGE = [10000000.0, 70000000000.0]",
+            "pymeasure/instruments/anritsu/anritsuMS464xB.py:903 FREQUENCY_RANGE = [10000000.0, 20000000000.0]",
+            "pymeasure/instruments/anritsu/anritsuMS464xB.py:913 FREQUENCY_RANGE = [10000000.0, 40000000000.0]",
+            "pymeasure/instruments/anritsu/anritsuMS464xB.py:923 FREQUENCY_RANGE = [10000000.0, 50000000000.0]",
+            "pymeasure/instruments/anritsu/anritsuMS464xB.py:933 FREQUENCY_RANGE = [10000000.0, 70000000000.0]",
+            "pymeasure/instruments/deltaelektronika/sm7045d.py:45 VOLTAGE_RANGE = [0, 70]"
+          ]
+        },
+        "needs_recon": [],
+        "timebox_min": 120,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymeasure__pymeasure --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "direct-python-instrument",
+      "package_id": "gh.ni/nidaqmx-python",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 6,
+      "rank_score": 51.8579,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 590,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/ni__nidaqmx-python.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.ni/nidaqmx-python",
+        "track": "labs",
+        "local_path": "labs/ni/nidaqmx-python",
+        "driver_dir": "MHS/drivers/labs/ni__nidaqmx-python",
+        "upstream": {
+          "repo_url": "https://github.com/ni/nidaqmx-python",
+          "commit": "04211cd36322a1fa2269c7d6edd63b6051daf034",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "PY_SDK_WITH_ENTRY",
+        "role": "device-driver",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 6,
+        "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+        "entry_symbols": [
+          {
+            "symbol": "nidaqmx.task._task:Task",
+            "file": "generated/nidaqmx/task/_task.py",
+            "line": 64,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "nidaqmx.task._in_stream:InStream",
+            "file": "generated/nidaqmx/task/_in_stream.py",
+            "line": 19,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "nidaqmx.system.system:System",
+            "file": "generated/nidaqmx/system/system.py",
+            "line": 34,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "nidaqmx._library_interpreter:LibraryInterpreter",
+            "file": "generated/nidaqmx/_library_interpreter.py",
+            "line": 71,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "nidaqmx._grpc_interpreter:GrpcStubInterpreter",
+            "file": "generated/nidaqmx/_grpc_interpreter.py",
+            "line": 93,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.9,<4.0",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "fake",
+          "hints": [],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [
+            "Task.is_task_done",
+            "Task.read_waveform",
+            "InStream.get_channels_buffer_size",
+            "InStream.read_all",
+            "InStream.read_all_avail_samp",
+            "InStream.read_into",
+            "System.get_analog_power_up_states",
+            "System.get_analog_power_up_states_with_output_type",
+            "System.get_digital_logic_family_power_up_state",
+            "System.get_digital_power_up_states",
+            "System.get_digital_pull_up_pull_down_states"
+          ],
+          "writes": [
+            "Task.write_waveform",
+            "InStream.configure_logging",
+            "System.set_analog_power_up_states",
+            "System.set_analog_power_up_states_with_output_type",
+            "System.set_digital_logic_family_power_up_state",
+            "System.set_digital_power_up_states",
+            "System.set_digital_pull_up_pull_down_states"
+          ],
+          "actions": [
+            "Task.start",
+            "Task.stop",
+            "Task.wait_until_done",
+            "Task._export_signals.hshk_event_interlocked_assert_on_start",
+            "InStream.auto_start",
+            "InStream.logging_pause",
+            "InStream.start_new_file"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1",
+            "cap.actuation.gpio.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": [
+            "generated/nidaqmx/constants.py:612 MAP_RANGES = 10448",
+            "generated/nidaqmx/constants.py:709 MAX_SHEAR_STRAIN = 15977",
+            "generated/nidaqmx/constants.py:710 MAX_SHEAR_STRAIN_ANGLE = 15978"
+          ]
+        },
+        "needs_recon": [],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ni__nidaqmx-python --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "direct-python-instrument",
+      "package_id": "gh.ap/python-seabreeze",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 7,
+      "rank_score": 50.0242,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 253,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/ap--__python-seabreeze.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.ap/python-seabreeze",
+        "track": "labs",
+        "local_path": "labs/ap--/python-seabreeze",
+        "driver_dir": "MHS/drivers/labs/ap--__python-seabreeze",
+        "upstream": {
+          "repo_url": "https://github.com/ap--/python-seabreeze",
+          "commit": "3de4fdd6bbb533a701309c746c94cac2ffc05be0",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "PY_SDK_WITH_ENTRY",
+        "role": "device-driver",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 7,
+        "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+        "entry_symbols": [
+          {
+            "symbol": "seabreeze.spectrometers:Spectrometer",
+            "file": "src/seabreeze/spectrometers.py",
+            "line": 97,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "seabreeze.pyseabreeze.features.gpio:SeaBreezeGPIOFeature",
+            "file": "src/seabreeze/pyseabreeze/features/gpio.py",
+            "line": 9,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "seabreeze.pyseabreeze.features.pixelbinning:SeaBreezePixelBinningFeature",
+            "file": "src/seabreeze/pyseabreeze/features/pixelbinning.py",
+            "line": 9,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "seabreeze.pyseabreeze.features.opticalbench:SeaBreezeOpticalBenchFeature",
+            "file": "src/seabreeze/pyseabreeze/features/opticalbench.py",
+            "line": 9,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "seabreeze.pyseabreeze.features.wificonfiguration:SeaBreezeWifiConfigurationFeature",
+            "file": "src/seabreeze/pyseabreeze/features/wificonfiguration.py",
+            "line": 9,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.9",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "fake",
+          "hints": [],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [
+            "SeaBreezeGPIOFeature.get_egpio_available_modes",
+            "SeaBreezeGPIOFeature.get_egpio_current_mode",
+            "SeaBreezeGPIOFeature.get_egpio_output_vector_vector",
+            "SeaBreezeGPIOFeature.get_egpio_value",
+            "SeaBreezeGPIOFeature.get_gpio_output_enable_vector",
+            "SeaBreezeGPIOFeature.get_gpio_value_vector",
+            "SeaBreezeGPIOFeature.get_number_of_egpio_pins",
+            "SeaBreezeGPIOFeature.get_number_of_gpio_pins",
+            "SeaBreezeGPIOFeature.modes (attribute)",
+            "SeaBreezePixelBinningFeature.get_binning_factor",
+            "SeaBreezePixelBinningFeature.get_default_binning_factor",
+            "SeaBreezePixelBinningFeature.get_max_binning_factor"
+          ],
+          "writes": [
+            "SeaBreezeGPIOFeature.set_egpio_mode",
+            "SeaBreezeGPIOFeature.set_egpio_output_vector",
+            "SeaBreezeGPIOFeature.set_egpio_value",
+            "SeaBreezeGPIOFeature.set_gpio_output_enable_vector",
+            "SeaBreezeGPIOFeature.set_gpio_value_vector",
+            "SeaBreezePixelBinningFeature.set_binning_factor",
+            "SeaBreezePixelBinningFeature.set_default_binning_factor"
+          ],
+          "actions": [
+            "Spectrometer.trigger_mode"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1",
+            "cap.actuation.gpio.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": [
+            "src/seabreeze/pyseabreeze/devices.py:503 integration_time_min = 1000",
+            "src/seabreeze/pyseabreeze/devices.py:504 integration_time_max = 655350000",
+            "src/seabreeze/pyseabreeze/devices.py:547 integration_time_min = 1000",
+            "src/seabreeze/pyseabreeze/devices.py:548 integration_time_max = 655350000",
+            "src/seabreeze/pyseabreeze/devices.py:579 integration_time_min = 3000",
+            "src/seabreeze/pyseabreeze/devices.py:580 integration_time_max = 655350000",
+            "src/seabreeze/pyseabreeze/devices.py:607 integration_time_min = 3000",
+            "src/seabreeze/pyseabreeze/devices.py:608 integration_time_max = 655350000"
+          ]
+        },
+        "needs_recon": [],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ap--__python-seabreeze --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "direct-python-instrument",
+      "package_id": "gh.alexshkarin/pylablib",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 9,
+      "rank_score": 49.6622,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 214,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/alexshkarin__pylablib.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.alexshkarin/pylablib",
+        "track": "labs",
+        "local_path": "labs/alexshkarin/pylablib",
+        "driver_dir": "MHS/drivers/labs/alexshkarin__pylablib",
+        "upstream": {
+          "repo_url": "https://github.com/alexshkarin/pylablib",
+          "commit": "96d9504d3e668f18beb3b75503c01b93152dbcd5",
+          "license_spdx": "GPL-3.0",
+          "license_class": "copyleft"
+        },
+        "decision": "direct-driver",
+        "reason_code": "override:driver-pack",
+        "role": "driver-pack",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 9,
+        "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+        "entry_symbols": [
+          {
+            "symbol": "pylablib.devices.Thorlabs.kinesis:KinesisMotor",
+            "file": "pylablib/devices/Thorlabs/kinesis.py",
+            "line": 1171,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pylablib.devices.Andor.AndorSDK2:AndorSDK2Camera",
+            "file": "pylablib/devices/Andor/AndorSDK2.py",
+            "line": 81,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pylablib.devices.IDS.peak:IDSPeakCamera",
+            "file": "pylablib/devices/IDS/peak.py",
+            "line": 1141,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pylablib.devices.AlliedVision.VimbaX:AlliedVisionVimbaXCamera",
+            "file": "pylablib/devices/AlliedVision/VimbaX.py",
+            "line": 292,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pylablib.devices.PrincetonInstruments.picam:PicamCamera",
+            "file": "pylablib/devices/PrincetonInstruments/picam.py",
+            "line": 285,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "pylablib/core/utils/general.py:401 DummyResource",
+            "pylablib/devices/SiliconSoftware/fgrab_prototyp_defs.py:410 CameraSimulatorTriggerMode",
+            "pylablib/legacy/core/utils/general.py:274 DummyResource"
+          ],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [
+            "KinesisMotor.get_all_axes",
+            "KinesisMotor.get_all_channels",
+            "KinesisMotor.get_device_info",
+            "KinesisMotor.get_number_of_channels",
+            "KinesisMotor.get_scale_units",
+            "KinesisMotor.get_stage",
+            "KinesisMotor.is_opened",
+            "KinesisMotor.CommData (attribute)",
+            "KinesisMotor.CommShort (attribute)",
+            "AndorSDK2Camera.get_EMCCD_gain",
+            "AndorSDK2Camera.get_accum_mode_parameters",
+            "AndorSDK2Camera.get_acquisition_mode"
+          ],
+          "writes": [
+            "KinesisMotor.set_default_channel",
+            "AndorSDK2Camera._frame_counter.set_first_valid_frame",
+            "IDSPeakCamera.set_all_attribute_values",
+            "IDSPeakCamera.set_attribute_value",
+            "IDSPeakCamera.set_exposure",
+            "IDSPeakCamera.set_frame_format",
+            "IDSPeakCamera.set_frame_info_format",
+            "IDSPeakCamera.set_frame_info_period",
+            "IDSPeakCamera.set_frame_period",
+            "IDSPeakCamera.set_image_indexing",
+            "IDSPeakCamera.set_roi",
+            "IDSPeakCamera._frame_counter.set_first_valid_frame"
+          ],
+          "actions": [
+            "AndorSDK2Camera.enable_frame_transfer_mode",
+            "AndorSDK2Camera._frame_counter.reset",
+            "AndorSDK2Camera._frame_counter.wait_start",
+            "IDSPeakCamera.enable_raw_readout",
+            "IDSPeakCamera.grab",
+            "IDSPeakCamera.snap",
+            "IDSPeakCamera.start_acquisition",
+            "IDSPeakCamera.stop_acquisition",
+            "IDSPeakCamera._frame_counter.reset",
+            "IDSPeakCamera._frame_counter.wait_start"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1",
+            "cap.sensing.image.v1",
+            "cap.measure.temperature.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": [
+            "pylablib/devices/Mightex/MightexSSeries.py:123 _dim_min = [4, 4]",
+            "pylablib/devices/Mightex/MightexSSeries.py:175 _exposure_range = [5e-05, 0.75]",
+            "pylablib/devices/OZOptics/base.py:163 _voltage_limits = [-5.0, 5.0]",
+            "pylablib/devices/OZOptics/base.py:164 _frequency_limits = [0, 100]",
+            "pylablib/devices/Sirah/tuner.py:733 _tune_local_thinet_range = 100000000000.0",
+            "pylablib/devices/Sirah/tuner.py:734 _tune_local_fine_range = 25000000000.0",
+            "pylablib/devices/Windows/winmm_lib.py:47 MAX_JOYSTICKOEMVXDNAME = 260"
+          ]
+        },
+        "needs_recon": [],
+        "timebox_min": 120,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/alexshkarin__pylablib --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "direct-python-instrument",
+      "package_id": "gh.python-microscope/microscope",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 11,
+      "rank_score": 47.6725,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 85,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/python-microscope__microscope.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.python-microscope/microscope",
+        "track": "labs",
+        "local_path": "labs/python-microscope/microscope",
+        "driver_dir": "MHS/drivers/labs/python-microscope__microscope",
+        "upstream": {
+          "repo_url": "https://github.com/python-microscope/microscope",
+          "commit": "47c13d0342dca476a279f2de2da5b84ce2162326",
+          "license_spdx": "GPL-3.0",
+          "license_class": "copyleft"
+        },
+        "decision": "direct-driver",
+        "reason_code": "override:driver-pack",
+        "role": "driver-pack",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 11,
+        "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+        "entry_symbols": [
+          {
+            "symbol": "microscope.lights.cobolt:CoboltLaser",
+            "file": "microscope/lights/cobolt.py",
+            "line": 31,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "microscope.lights.sapphire:SapphireLaser",
+            "file": "microscope/lights/sapphire.py",
+            "line": 33,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "microscope.lights.deepstar:DeepstarLaser",
+            "file": "microscope/lights/deepstar.py",
+            "line": 31,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "microscope.lights.obis:ObisLaser",
+            "file": "microscope/lights/obis.py",
+            "line": 32,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "microscope.cameras.picamera:PiCamera",
+            "file": "microscope/cameras/picamera.py",
+            "line": 49,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.7",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "microscope/simulators/__init__.py:165 SimulatedCamera",
+            "microscope/simulators/__init__.py:331 SimulatedController",
+            "microscope/simulators/__init__.py:340 SimulatedFilterWheel",
+            "microscope/simulators/__init__.py:356 SimulatedLightSource",
+            "microscope/simulators/__init__.py:393 SimulatedDeformableMirror",
+            "microscope/simulators/__init__.py:420 SimulatedStageAxis"
+          ],
+          "upstream_tests": null
+        },
+        "hints": {
+          "reads": [
+            "CoboltLaser.get_all_settings",
+            "CoboltLaser.get_is_enabled",
+            "CoboltLaser.get_is_on",
+            "CoboltLaser.get_set_power",
+            "CoboltLaser.get_setting",
+            "CoboltLaser.get_status",
+            "SapphireLaser.get_all_settings",
+            "SapphireLaser.get_is_enabled",
+            "SapphireLaser.get_is_on",
+            "SapphireLaser.get_set_power",
+            "SapphireLaser.get_setting",
+            "SapphireLaser.get_status"
+          ],
+          "writes": [
+            "CoboltLaser.set_setting",
+            "CoboltLaser.set_trigger",
+            "SapphireLaser.set_setting",
+            "SapphireLaser.set_trigger",
+            "DeepstarLaser.set_setting",
+            "DeepstarLaser.set_trigger"
+          ],
+          "actions": [
+            "CoboltLaser.disable",
+            "CoboltLaser.enable",
+            "CoboltLaser.trigger",
+            "CoboltLaser.trigger_mode",
+            "CoboltLaser.trigger_type",
+            "SapphireLaser.disable",
+            "SapphireLaser.enable",
+            "SapphireLaser.trigger",
+            "SapphireLaser.trigger_mode",
+            "SapphireLaser.trigger_type",
+            "DeepstarLaser.disable",
+            "DeepstarLaser.enable"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": [
+            "microscope/_wrappers/BMC.py:36 MAX_PATH = 260",
+            "microscope/cameras/atmcd.py:266 DRV_TEMPERATURE_OUT_RANGE = 20038",
+            "microscope/cameras/atmcd.py:274 DRV_TEMP_OUT_RANGE = 20038",
+            "microscope/cameras/pvcam.py:185 MAX_CAM = 16",
+            "microscope/cameras/pvcam.py:227 ATTR_MIN = 3",
+            "microscope/cameras/pvcam.py:228 ATTR_MAX = 4",
+            "microscope/cameras/pvcam.py:250 MAX_CLEAR_MODE = 6",
+            "microscope/cameras/pvcam.py:263 MAX_EXPOSE_MODE = 7"
+          ]
+        },
+        "needs_recon": [],
+        "timebox_min": 120,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/python-microscope__microscope --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "direct-python-instrument",
+      "package_id": "gh.thedeanlab/navigate",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 15,
+      "rank_score": 46.0639,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 40,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/thedeanlab__navigate.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.thedeanlab/navigate",
+        "track": "labs",
+        "local_path": "labs/thedeanlab/navigate",
+        "driver_dir": "MHS/drivers/labs/thedeanlab__navigate",
+        "upstream": {
+          "repo_url": "https://github.com/thedeanlab/navigate",
+          "commit": "da14920d7b40d048a5d2225a7846d11f78e05212",
+          "license_spdx": "BSD-3-Clause-Clear",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "PY_SDK_WITH_ENTRY",
+        "role": "driver-pack",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 15,
+        "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+        "entry_symbols": [
+          {
+            "symbol": "navigate.model.devices.stage.asi:MS2000Stage",
+            "file": "src/navigate/model/devices/stage/asi.py",
+            "line": 607,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "navigate.model.devices.stage.asi:MFC2000Stage",
+            "file": "src/navigate/model/devices/stage/asi.py",
+            "line": 851,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "navigate.model.devices.pump.tecan:XCaliburPump",
+            "file": "src/navigate/model/devices/pump/tecan.py",
+            "line": 49,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "navigate.model.devices.APIs.omicron.LuxxLaser:LuxxLaser",
+            "file": "src/navigate/model/devices/APIs/omicron/LuxxLaser.py",
+            "line": 15,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "navigate.model.devices.camera.synthetic:SyntheticCamera",
+            "file": "src/navigate/model/devices/camera/synthetic.py",
+            "line": 94,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.9.7",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "src/navigate/model/device_startup_functions.py:63 DummyDeviceConnection"
+          ],
+          "upstream_tests": "test"
+        },
+        "hints": {
+          "reads": [
+            "MS2000Stage.get_abs_position",
+            "MS2000Stage.get_axis_position",
+            "MS2000Stage.get_position_dict",
+            "MS2000Stage.get_speed",
+            "MFC2000Stage.get_abs_position",
+            "MFC2000Stage.get_axis_position",
+            "MFC2000Stage.get_position_dict",
+            "MFC2000Stage.get_speed",
+            "XCaliburPump.get_max_position",
+            "XCaliburPump.get_status"
+          ],
+          "writes": [
+            "MS2000Stage.set_speed",
+            "MS2000Stage.set_theta_speed",
+            "MFC2000Stage.set_speed",
+            "MFC2000Stage.set_theta_speed",
+            "XCaliburPump.set_fine_positioning_mode",
+            "XCaliburPump.set_speed"
+          ],
+          "actions": [
+            "MS2000Stage.move_absolute",
+            "MS2000Stage.move_axis_absolute",
+            "MS2000Stage.move_axis_relative",
+            "MS2000Stage.scan_axis_triggered_move",
+            "MS2000Stage.start_scan",
+            "MS2000Stage.stop",
+            "MS2000Stage.stop_scan",
+            "MS2000Stage.verify_move",
+            "MFC2000Stage.move_absolute",
+            "MFC2000Stage.move_axis_absolute",
+            "MFC2000Stage.start_scan",
+            "MFC2000Stage.stop"
+          ],
+          "candidate_classes": [
+            "cap.motion.joint_position.v1",
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1",
+            "cap.actuation.pump.v1",
+            "cap.motion.stop.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": [
+            "src/navigate/model/devices/APIs/photometrics/PyVCAM-master/src/pyvcam/constants.py:18 MAX_CAM = 16",
+            "src/navigate/model/devices/APIs/photometrics/PyVCAM-master/src/pyvcam/constants.py:304 MAX_EXPOSE_MODE = 7"
+          ]
+        },
+        "needs_recon": [],
+        "timebox_min": 120,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/thedeanlab__navigate --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "direct-python-instrument",
+      "package_id": "gh.roesel/elliptec",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 16,
+      "rank_score": 45.841,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 36,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/roesel__elliptec.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.roesel/elliptec",
+        "track": "labs",
+        "local_path": "labs/roesel/elliptec",
+        "driver_dir": "MHS/drivers/labs/roesel__elliptec",
+        "upstream": {
+          "repo_url": "https://github.com/roesel/elliptec",
+          "commit": "5f86ca595f80397bca280347830339c832a7b0bc",
+          "license_spdx": "GPL-3.0",
+          "license_class": "copyleft"
+        },
+        "decision": "direct-driver",
+        "reason_code": "PY_SDK_WITH_ENTRY",
+        "role": "device-driver",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 16,
+        "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+        "entry_symbols": [
+          {
+            "symbol": "elliptec.shutter:Shutter",
+            "file": "src/elliptec/shutter.py",
+            "line": 10,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "elliptec.iris:Iris",
+            "file": "src/elliptec/iris.py",
+            "line": 9,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "elliptec.linear:Linear",
+            "file": "src/elliptec/linear.py",
+            "line": 8,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "elliptec.rotator:Rotator",
+            "file": "src/elliptec/rotator.py",
+            "line": 8,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "elliptec.slider:Slider",
+            "file": "src/elliptec/slider.py",
+            "line": 10,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.10",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "fake",
+          "hints": [],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [
+            "Shutter.get_slot",
+            "Shutter.is_closed",
+            "Shutter.is_open",
+            "Iris.get_aperture",
+            "Iris.get_home_offset",
+            "Iris.get_jog_step",
+            "Linear.get_distance",
+            "Linear.get_home_offset",
+            "Linear.get_jog_step"
+          ],
+          "writes": [
+            "Shutter.set_slot",
+            "Iris.set_aperture",
+            "Iris.set_home_offset",
+            "Iris.set_jog_step",
+            "Linear.set_distance",
+            "Linear.set_home_offset",
+            "Linear.set_jog_step"
+          ],
+          "actions": [
+            "Shutter.home",
+            "Shutter.jog",
+            "Shutter.move",
+            "Iris.check_move",
+            "Iris.home",
+            "Iris.jog",
+            "Iris.move",
+            "Linear.home",
+            "Linear.jog",
+            "Linear.move"
+          ],
+          "candidate_classes": [
+            "cap.motion.joint_position.v1",
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/roesel__elliptec --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "direct-python-instrument",
+      "package_id": "gh.davidlutton/labtoolkit",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 18,
+      "rank_score": 45.312,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 28,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/davidlutton__labtoolkit.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.davidlutton/labtoolkit",
+        "track": "labs",
+        "local_path": "labs/davidlutton/labtoolkit",
+        "driver_dir": "MHS/drivers/labs/davidlutton__labtoolkit",
+        "upstream": {
+          "repo_url": "https://github.com/davidlutton/labtoolkit",
+          "commit": "1c27b35490002822f9860f45a86235cce949c172",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "PY_SDK_WITH_ENTRY",
+        "role": "driver-pack",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 18,
+        "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+        "entry_symbols": [
+          {
+            "symbol": "labtoolkit.SpectrumAnalyser.AgilentE44nn:AgilentE44nn",
+            "file": "src/labtoolkit/SpectrumAnalyser/AgilentE44nn.py",
+            "line": 15,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "labtoolkit.Switch.HP3488A:HP3488A",
+            "file": "src/labtoolkit/Switch/HP3488A.py",
+            "line": 36,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "labtoolkit.NetworkAnalyser.KeysightFieldFox:KeysightFieldFox",
+            "file": "src/labtoolkit/NetworkAnalyser/KeysightFieldFox.py",
+            "line": 6,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "labtoolkit.NetworkAnalyser.AgilentE8357A:AgilentE8357A",
+            "file": "src/labtoolkit/NetworkAnalyser/AgilentE8357A.py",
+            "line": 9,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "labtoolkit.NetworkAnalyser.HP4395A:HP4395A",
+            "file": "src/labtoolkit/NetworkAnalyser/HP4395A.py",
+            "line": 8,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.10",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "fake",
+          "hints": [],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [
+            "AgilentE44nn.IDN",
+            "AgilentE44nn.query_ascii_values",
+            "AgilentE44nn.query_binary_values",
+            "AgilentE44nn.query_bool",
+            "AgilentE44nn.query_float",
+            "AgilentE44nn.query_int",
+            "HP3488A.query_ascii_values",
+            "HP3488A.query_binary_values",
+            "HP3488A.query_bool",
+            "HP3488A.query_float",
+            "HP3488A.query_int",
+            "KeysightFieldFox.IDN"
+          ],
+          "writes": [
+            "AgilentE44nn.write_binary_values",
+            "HP3488A.write_binary_values",
+            "KeysightFieldFox.write_binary_values"
+          ],
+          "actions": [
+            "AgilentE44nn.frequency_start",
+            "AgilentE44nn.frequency_stop",
+            "KeysightFieldFox.start",
+            "KeysightFieldFox.stop",
+            "KeysightFieldFox.trigger"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 120,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/davidlutton__labtoolkit --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "direct-python-instrument",
+      "package_id": "gh.rwb27/openflexure_microscope_software",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 21,
+      "rank_score": 44.0206,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 15,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/rwb27__openflexure_microscope_software.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.rwb27/openflexure_microscope_software",
+        "track": "labs",
+        "local_path": "labs/rwb27/openflexure_microscope_software",
+        "driver_dir": "MHS/drivers/labs/rwb27__openflexure_microscope_software",
+        "upstream": {
+          "repo_url": "https://github.com/rwb27/openflexure_microscope_software",
+          "commit": "991e1b72b94d796a05caf4c896c0b001ea5a2c97",
+          "license_spdx": "GPL-3.0",
+          "license_class": "copyleft"
+        },
+        "decision": "direct-driver",
+        "reason_code": "PY_SDK_WITH_ENTRY",
+        "role": "device-driver",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 21,
+        "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+        "entry_symbols": [
+          {
+            "symbol": "openflexure_microscope.microscope:Microscope",
+            "file": "openflexure_microscope/microscope.py",
+            "line": 99,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "openflexure_microscope/microscope.py:281 DummyStage"
+          ],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [],
+          "writes": [],
+          "actions": [
+            "Microscope.acquire_image_stack",
+            "Microscope.autofocus"
+          ],
+          "candidate_classes": [
+            "cap.imaging.focus.v1",
+            "cap.sensing.image.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/rwb27__openflexure_microscope_software --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "serial-scpi",
+      "package_id": "gh.thinksrs/srsinst.sr860",
+      "exemplar": true,
+      "strict_ready": true,
+      "wave": 0,
+      "rank": 2,
+      "rank_score": 35.0,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 0,
+        "stars": 9,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/thinksrs__srsinst.sr860.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.thinksrs/srsinst.sr860",
+        "track": "labs",
+        "local_path": "labs/thinksrs/srsinst.sr860",
+        "driver_dir": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+        "upstream": {
+          "repo_url": "https://github.com/thinksrs/srsinst.sr860",
+          "commit": "c234ec204329c1682fcc5a77d28164e99cdd1f3e",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "override:exemplar",
+        "role": "device-driver",
+        "family": "scpi",
+        "helper": "ScpiDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 0,
+        "rank": 2,
+        "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+        "entry_symbols": [
+          {
+            "symbol": "srsinst.sr860.instruments.sr860:SR860",
+            "file": "srsinst/sr860/instruments/sr860.py",
+            "line": 22,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "srsinst.sr860.instruments.visainterface:VisaInterface",
+            "file": "srsinst/sr860/instruments/visainterface.py",
+            "line": 16,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "srsinst.sr860.instruments.components:DataStream",
+            "file": "srsinst/sr860/instruments/components.py",
+            "line": 673,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "srsinst.sr860.instruments.vxi11interface:Vxi11Interface",
+            "file": "srsinst/sr860/instruments/vxi11interface.py",
+            "line": 15,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "srsinst.sr860.instruments.components:Reference2M",
+            "file": "srsinst/sr860/instruments/components.py",
+            "line": 99,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.7",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "transcript",
+          "hints": [],
+          "upstream_tests": null
+        },
+        "hints": {
+          "reads": [
+            "SR860.get_status",
+            "SR860.capture.get_all_data",
+            "SR860.capture.get_data",
+            "SR860.data.get_channel_values",
+            "SR860.data.get_values",
+            "SR860.display.get_screen",
+            "VisaInterface.get_info",
+            "VisaInterface.get_timeout",
+            "VisaInterface.get_visa_instrument",
+            "VisaInterface.query_text",
+            "VisaInterface.id_string (attribute)",
+            "VisaInterface.operation_complete (attribute)"
+          ],
+          "writes": [
+            "SR860.auto.set_phase",
+            "SR860.auto.set_range",
+            "SR860.auto.set_scale",
+            "VisaInterface.set_timeout"
+          ],
+          "actions": [
+            "SR860.reset",
+            "SR860.capture.start",
+            "SR860.capture.stop",
+            "SR860.scan.pause",
+            "SR860.scan.start",
+            "SR860.stream.start",
+            "SR860.stream.stop",
+            "DataStream.start",
+            "DataStream.stop",
+            "DataStream.data.reset"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/thinksrs__srsinst.sr860 --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "serial-scpi",
+      "package_id": "gh.python-ivi/python-ivi",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 8,
+      "rank_score": 49.8829,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 237,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/python-ivi__python-ivi.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.python-ivi/python-ivi",
+        "track": "labs",
+        "local_path": "labs/python-ivi/python-ivi",
+        "driver_dir": "MHS/drivers/labs/python-ivi__python-ivi",
+        "upstream": {
+          "repo_url": "https://github.com/python-ivi/python-ivi",
+          "commit": "cfa45ceade0758debe4bc24ba4c8195222cad1e2",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "family:scpi",
+        "role": "device-driver",
+        "family": "scpi",
+        "helper": "ScpiDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 8,
+        "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+        "entry_symbols": [
+          {
+            "symbol": "ivi.lecroy.lecroyWR104MXIA:lecroyWR104MXIA",
+            "file": "ivi/lecroy/lecroyWR104MXIA.py",
+            "line": 29,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "ivi.lecroy.lecroyWR104XIA:lecroyWR104XIA",
+            "file": "ivi/lecroy/lecroyWR104XIA.py",
+            "line": 29,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "ivi.lecroy.lecroyWR204MXIA:lecroyWR204MXIA",
+            "file": "ivi/lecroy/lecroyWR204MXIA.py",
+            "line": 29,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "ivi.lecroy.lecroyWR204XIA:lecroyWR204XIA",
+            "file": "ivi/lecroy/lecroyWR204XIA.py",
+            "line": 29,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "ivi.lecroy.lecroyWR44MXIA:lecroyWR44MXIA",
+            "file": "ivi/lecroy/lecroyWR44MXIA.py",
+            "line": 29,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "ivi/ivi.py:104 SimulationStateException"
+          ],
+          "upstream_tests": "ivi/test"
+        },
+        "hints": {
+          "reads": [
+            "lecroyWR104MXIA._interface.read_stb",
+            "lecroyWR104XIA._interface.read_stb",
+            "lecroyWR204MXIA._interface.read_stb"
+          ],
+          "writes": [],
+          "actions": [
+            "lecroyWR104MXIA._interface.trigger",
+            "lecroyWR104XIA._interface.trigger",
+            "lecroyWR204MXIA._interface.trigger"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R0",
+          "limit_hints": []
+        },
+        "needs_recon": [],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/python-ivi__python-ivi --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "serial-scpi",
+      "package_id": "gh.bennomeier/cetoni",
+      "exemplar": false,
+      "strict_ready": false,
+      "wave": 1,
+      "rank": 50,
+      "rank_score": 30.0,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 0,
+        "stars": 0,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/bennomeier__cetoni.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.bennomeier/cetoni",
+        "track": "labs",
+        "local_path": "labs/bennomeier/cetoni",
+        "driver_dir": "MHS/drivers/labs/bennomeier__cetoni",
+        "upstream": {
+          "repo_url": "https://github.com/bennomeier/cetoni",
+          "commit": "b957067d56c2698ca4b77bfe2b445af4b1d92045",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "override:direct-driver",
+        "role": "device-driver",
+        "family": "serial",
+        "helper": "SerialDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 50,
+        "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+        "entry_symbols": [
+          {
+            "symbol": "cetoniSerial:Syringe",
+            "file": "cetoniSerial.py",
+            "line": 33,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "cetoniSerial.py:472 FakeSyringe"
+          ],
+          "upstream_tests": null
+        },
+        "hints": {
+          "reads": [
+            "Syringe.readCurrentPosition",
+            "Syringe.readFrame",
+            "Syringe.readStatus",
+            "Syringe.readTargetPosition",
+            "Syringe.readVelocity"
+          ],
+          "writes": [
+            "Syringe.configurePositionRelative",
+            "Syringe.configurePositionRelativeByVolume",
+            "Syringe.setFlowRate",
+            "Syringe.setVelocity",
+            "Syringe.writeFrame",
+            "Syringe.writeTargetPosition"
+          ],
+          "actions": [
+            "Syringe.aspirate",
+            "Syringe.dispense"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1",
+            "cap.motion.joint_position.v1",
+            "cap.fluid.aspirate.v1",
+            "cap.fluid.dispense.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R2",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "install",
+          "limit_sources"
+        ],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/bennomeier__cetoni --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "serial-scpi",
+      "package_id": "gh.mclim9/rssd",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 13,
+      "rank_score": 46.58,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 51,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/mclim9__rssd.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.mclim9/rssd",
+        "track": "labs",
+        "local_path": "labs/mclim9/rssd",
+        "driver_dir": "MHS/drivers/labs/mclim9__rssd",
+        "upstream": {
+          "repo_url": "https://github.com/mclim9/rssd",
+          "commit": "7b040ee12841e721953a1f737297586135c0c110",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "family:scpi",
+        "role": "device-driver",
+        "family": "scpi",
+        "helper": "ScpiDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 13,
+        "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+        "entry_symbols": [
+          {
+            "symbol": "rssd.RSI.RSI_Memory:RSI",
+            "file": "rssd/RSI/RSI_Memory.py",
+            "line": 19,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "rssd.FileIO:FileIO",
+            "file": "rssd/FileIO.py",
+            "line": 5,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "rssd.PNA.Common:PNA",
+            "file": "rssd/PNA/Common.py",
+            "line": 4,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "rssd.VNA.Common:VNA",
+            "file": "rssd/VNA/Common.py",
+            "line": 5,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "rssd.NRQ.Common:NRQ",
+            "file": "rssd/NRQ/Common.py",
+            "line": 4,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "transcript",
+          "hints": [],
+          "upstream_tests": "test"
+        },
+        "hints": {
+          "reads": [
+            "RSI.Get_File",
+            "RSI.Get_dir",
+            "RSI.Get_dirInfo",
+            "PNA.Get_AttnMech",
+            "PNA.Get_Channels",
+            "PNA.Get_Freq",
+            "PNA.Get_FreqLock",
+            "PNA.Get_Harm_Values",
+            "PNA.Get_IFOvld",
+            "PNA.Get_Mkr_Freq",
+            "PNA.Get_Mkr_XY",
+            "PNA.Get_Mkr_Y"
+          ],
+          "writes": [
+            "RSI.Set_Copy",
+            "RSI.Set_Dir",
+            "RSI.Set_FileCreate",
+            "RSI.Set_FileDel",
+            "RSI.Set_FileWrite",
+            "RSI.Set_Filename",
+            "RSI.Set_Move",
+            "FileIO.set_filename",
+            "PNA.Set_AttnAuto",
+            "PNA.Set_AttnMech",
+            "PNA.Set_Autolevel",
+            "PNA.Set_Autolevel_Proto"
+          ],
+          "actions": [],
+          "candidate_classes": [
+            "cap.device.configure.v1",
+            "cap.sensing.read.v1",
+            "cap.motion.joint_position.v1",
+            "cap.motion.stop.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/mclim9__rssd --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "serial-scpi",
+      "package_id": "gh.asvela/keyoscacquire",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 17,
+      "rank_score": 45.4568,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 30,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/asvela__keyoscacquire.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.asvela/keyoscacquire",
+        "track": "labs",
+        "local_path": "labs/asvela/keyoscacquire",
+        "driver_dir": "MHS/drivers/labs/asvela__keyoscacquire",
+        "upstream": {
+          "repo_url": "https://github.com/asvela/keyoscacquire",
+          "commit": "1d093470ab99769c9b149816d7faa4b61a4837d2",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "family:scpi",
+        "role": "device-driver",
+        "family": "scpi",
+        "helper": "ScpiDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 17,
+        "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+        "entry_symbols": [
+          {
+            "symbol": "keyoscacquire.oscilloscope:Oscilloscope",
+            "file": "keyoscacquire/oscilloscope.py",
+            "line": 38,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "transcript",
+          "hints": [],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [
+            "Oscilloscope.get_error",
+            "Oscilloscope.get_full_error_queue",
+            "Oscilloscope.get_trace",
+            "Oscilloscope.is_running"
+          ],
+          "writes": [
+            "Oscilloscope.set_acquiring_options",
+            "Oscilloscope.set_channels_for_capture",
+            "Oscilloscope.set_options_get_trace",
+            "Oscilloscope.set_options_get_trace_save",
+            "Oscilloscope.set_waveform_export_options"
+          ],
+          "actions": [
+            "Oscilloscope.capture_and_read",
+            "Oscilloscope.run",
+            "Oscilloscope.stop"
+          ],
+          "candidate_classes": [
+            "cap.device.configure.v1",
+            "cap.sensing.read.v1",
+            "cap.sensing.image.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/asvela__keyoscacquire --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "serial-scpi",
+      "package_id": "gh.mba2d/test_equipment_control",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 19,
+      "rank_score": 44.9897,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 24,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/mba2d__test_equipment_control.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.mba2d/test_equipment_control",
+        "track": "labs",
+        "local_path": "labs/mba2d/test_equipment_control",
+        "driver_dir": "MHS/drivers/labs/mba2d__test_equipment_control",
+        "upstream": {
+          "repo_url": "https://github.com/mba2d/test_equipment_control",
+          "commit": "34bb54c13c766fdfe7e6260872a03e8dfefd3ad2",
+          "license_spdx": "GPL-3.0",
+          "license_class": "copyleft"
+        },
+        "decision": "family-config",
+        "reason_code": "family:scpi",
+        "role": "device-driver",
+        "family": "scpi",
+        "helper": "ScpiDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 19,
+        "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+        "entry_symbols": [
+          {
+            "symbol": "lab_equipment.Eload_A2D_Eload:A2D_Eload",
+            "file": "lab_equipment/Eload_A2D_Eload.py",
+            "line": 8,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "lab_equipment.A2D_DAQ_control:A2D_DAQ",
+            "file": "lab_equipment/A2D_DAQ_control.py",
+            "line": 10,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "lab_equipment.PSU_SPD1000:SPD1000",
+            "file": "lab_equipment/PSU_SPD1000.py",
+            "line": 13,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "lab_equipment.OTHER_Arduino_IO_Module:Arduino_IO",
+            "file": "lab_equipment/OTHER_Arduino_IO_Module.py",
+            "line": 10,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "lab_equipment.SMU_A2D_POWER_BOARD:A2D_POWER_BOARD",
+            "file": "lab_equipment/SMU_A2D_POWER_BOARD.py",
+            "line": 7,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install -r requirements.txt"
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "lab_equipment/DMM_Fake.py:4 Fake_DMM",
+            "lab_equipment/DMM_VIRTUAL.py:5 VirtualDMM",
+            "lab_equipment/Eload_Fake.py:4 Fake_Eload",
+            "lab_equipment/PSU_Fake.py:4 Fake_PSU",
+            "lab_equipment/VirtualDeviceTemplate.py:24 VirtualDeviceTemplate",
+            "lab_equipment/DMM_Fake.py:1"
+          ],
+          "upstream_tests": null
+        },
+        "hints": {
+          "reads": [
+            "A2D_Eload.get_cal_i",
+            "A2D_Eload.get_cal_v",
+            "A2D_Eload.get_fan",
+            "A2D_Eload.get_led",
+            "A2D_Eload.get_output",
+            "A2D_Eload.get_rs485_addr",
+            "A2D_Eload.measure_current",
+            "A2D_Eload.measure_current_control",
+            "A2D_Eload.measure_temperature",
+            "A2D_Eload.measure_voltage_adc_supply",
+            "A2D_Eload.measure_voltage_supply",
+            "A2D_DAQ.get_analog_mv"
+          ],
+          "writes": [
+            "A2D_Eload.set_current",
+            "A2D_Eload.set_fan",
+            "A2D_Eload.set_led",
+            "A2D_Eload.set_rs485_addr",
+            "A2D_DAQ.configure_from_dict",
+            "A2D_DAQ.set_dig",
+            "A2D_DAQ.set_led",
+            "A2D_DAQ.set_read_delay_ms",
+            "SPD1000.set_current",
+            "SPD1000.set_voltage"
+          ],
+          "actions": [
+            "A2D_Eload.cal_i_reset",
+            "A2D_Eload.cal_v_reset",
+            "A2D_Eload.calibrate_current",
+            "A2D_Eload.calibrate_voltage",
+            "A2D_Eload.reset",
+            "A2D_DAQ.calibrate_pullup_v",
+            "A2D_DAQ.reset"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1",
+            "cap.measure.voltage.v1",
+            "cap.device.calibrate.v1",
+            "cap.measure.current.v1",
+            "cap.imaging.illumination.v1",
+            "cap.measure.temperature.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": [
+            "voltage_to_temp.py:9 max_temp = 9999"
+          ]
+        },
+        "needs_recon": [],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/mba2d__test_equipment_control --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "serial-scpi",
+      "package_id": "gh.zhangxp93/pyinsts",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 23,
+      "rank_score": 43.8805,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 14,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/zhangxp93__pyinsts.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.zhangxp93/pyinsts",
+        "track": "labs",
+        "local_path": "labs/zhangxp93/pyinsts",
+        "driver_dir": "MHS/drivers/labs/zhangxp93__pyinsts",
+        "upstream": {
+          "repo_url": "https://github.com/zhangxp93/pyinsts",
+          "commit": "3bcaa2acbea14bb3ed30de140808e9d0de70c96a",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "family:scpi",
+        "role": "device-driver",
+        "family": "scpi",
+        "helper": "ScpiDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 23,
+        "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+        "entry_symbols": [
+          {
+            "symbol": "pyinsts.instrument_drivers.rohde_schwarz.fsv3030:FSV3030Sp",
+            "file": "src/pyinsts/instrument_drivers/rohde_schwarz/fsv3030.py",
+            "line": 239,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pyinsts.instrument_drivers.rohde_schwarz.fswp:FswpSp",
+            "file": "src/pyinsts/instrument_drivers/rohde_schwarz/fswp.py",
+            "line": 8,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pyinsts.instrument_drivers.rsa6000.rsa6000:Rsa6000Sp",
+            "file": "src/pyinsts/instrument_drivers/rsa6000/rsa6000.py",
+            "line": 228,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pyinsts.instrument_drivers.keysight.keysight_n9020b:KeysightN9020B",
+            "file": "src/pyinsts/instrument_drivers/keysight/keysight_n9020b.py",
+            "line": 9,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pyinsts.instrument_drivers.keysight.keysight_n9030a:KeysightN9030A",
+            "file": "src/pyinsts/instrument_drivers/keysight/keysight_n9030a.py",
+            "line": 9,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.10",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "src/pyinsts/instrument/sim/34461a.yaml:1 pyvisa-sim device file",
+            "src/pyinsts/instrument/sim/E36312a.yaml:1 pyvisa-sim device file",
+            "src/pyinsts/instrument/sim/E5052b.yaml:1 pyvisa-sim device file",
+            "src/pyinsts/instrument/sim/E8257d.yaml:1 pyvisa-sim device file",
+            "src/pyinsts/instrument/sim/Fsv3013.yaml:1 pyvisa-sim device file",
+            "src/pyinsts/instrument/sim/Fsv3030.yaml:1 pyvisa-sim device file"
+          ],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [
+            "FSV3030Sp.query_delta_mkr_x",
+            "FSV3030Sp.query_delta_mkr_y",
+            "FSV3030Sp.query_marker_x",
+            "FSV3030Sp.query_marker_y",
+            "FSV3030Sp.query_trace_x",
+            "FSV3030Sp.query_trace_y",
+            "FswpSp.query_delta_mkr_x",
+            "FswpSp.query_delta_mkr_y",
+            "FswpSp.query_marker_x",
+            "FswpSp.query_marker_y",
+            "FswpSp.query_trace_x",
+            "FswpSp.query_trace_y"
+          ],
+          "writes": [
+            "FSV3030Sp.set_abort_meas",
+            "FSV3030Sp.set_all_markers_off",
+            "FSV3030Sp.set_auto_search_off",
+            "FSV3030Sp.set_clear_status",
+            "FSV3030Sp.set_continuous_peak",
+            "FSV3030Sp.set_err_disp",
+            "FSV3030Sp.set_freq_center",
+            "FSV3030Sp.set_freq_span",
+            "FSV3030Sp.set_freq_span_full",
+            "FSV3030Sp.set_mark_all_off",
+            "FSV3030Sp.set_mark_del",
+            "FSV3030Sp.set_mark_del_on"
+          ],
+          "actions": [],
+          "candidate_classes": [
+            "cap.device.configure.v1",
+            "cap.sensing.read.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/zhangxp93__pyinsts --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "serial-scpi",
+      "package_id": "gh.little-did-i-know/scpi-instrument-control",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 24,
+      "rank_score": 43.7306,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 13,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/little-did-i-know__scpi-instrument-control.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.little-did-i-know/scpi-instrument-control",
+        "track": "labs",
+        "local_path": "labs/little-did-i-know/scpi-instrument-control",
+        "driver_dir": "MHS/drivers/labs/little-did-i-know__scpi-instrument-control",
+        "upstream": {
+          "repo_url": "https://github.com/little-did-i-know/scpi-instrument-control",
+          "commit": "e252a04dd33d57a543f5a65280cadfbaa634a4a5",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "family:scpi",
+        "role": "twin-candidate",
+        "family": "scpi",
+        "helper": "ScpiDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 24,
+        "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+        "entry_symbols": [
+          {
+            "symbol": "scpi_control.power_supply:PowerSupply",
+            "file": "scpi_control/power_supply.py",
+            "line": 35,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "scpi_control.oscilloscope:Oscilloscope",
+            "file": "scpi_control/oscilloscope.py",
+            "line": 53,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "scpi_control.function_generator:FunctionGenerator",
+            "file": "scpi_control/function_generator.py",
+            "line": 32,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "scpi_control.report_generator.models.template:ReportTemplate",
+            "file": "scpi_control/report_generator/models/template.py",
+            "line": 125,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "scpi_control.report_generator.models.report_data:WaveformData",
+            "file": "scpi_control/report_generator/models/report_data.py",
+            "line": 192,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.9",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [
+            "PowerSupply.get_error",
+            "PowerSupply.get_output",
+            "PowerSupply.identify",
+            "PowerSupply.is_connected",
+            "PowerSupply._scpi_commands.get_command",
+            "Oscilloscope.get_channel",
+            "Oscilloscope.get_error",
+            "Oscilloscope.get_waveform",
+            "Oscilloscope.identify",
+            "Oscilloscope.is_connected",
+            "Oscilloscope.measurement.get_cursor_value",
+            "Oscilloscope.measurement.measure_all"
+          ],
+          "writes": [
+            "PowerSupply.set_independent_mode",
+            "PowerSupply.set_parallel_mode",
+            "PowerSupply.set_series_mode",
+            "Oscilloscope.set_timebase",
+            "Oscilloscope.measurement.set_cursor_type",
+            "Oscilloscope.trigger.set_edge_trigger",
+            "Oscilloscope.trigger.set_level",
+            "Oscilloscope.trigger.set_mode",
+            "Oscilloscope.trigger.set_slope",
+            "Oscilloscope.trigger.set_source"
+          ],
+          "actions": [
+            "PowerSupply.reset",
+            "Oscilloscope.reset",
+            "Oscilloscope.run",
+            "Oscilloscope.stop",
+            "Oscilloscope.trigger_force",
+            "Oscilloscope.trigger_single",
+            "Oscilloscope.measurement.disable_statistics",
+            "Oscilloscope.measurement.enable_statistics",
+            "Oscilloscope.measurement.measure",
+            "Oscilloscope.measurement.reset_statistics",
+            "Oscilloscope.screen_capture.capture_screenshot",
+            "Oscilloscope.trigger.trigger_type"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1",
+            "cap.sensing.image.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": [
+            "scpi_control/daq_models.py:43 max_voltage = 300.0",
+            "scpi_control/daq_models.py:44 max_current = 1.0",
+            "scpi_control/daq_models.py:71 max_sample_rate = 250.0",
+            "scpi_control/frequency_response/ranging.py:26 MIN_DIVISIONS = 0.1",
+            "scpi_control/frequency_response/ranging.py:30 MIN_DISTINCT_SAMPLES = 4",
+            "scpi_control/frequency_response/ranging.py:34 MIN_SAMPLES_PER_CYCLE = 20.0",
+            "scpi_control/server/compute.py:14 MAX_FFT_POINTS = 65536",
+            "scpi_control/server/compute.py:15 MAX_SPECTRUM_BINS = 2000"
+          ]
+        },
+        "needs_recon": [],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/little-did-i-know__scpi-instrument-control --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "serial-scpi",
+      "package_id": "gh.alexshkarin/pylablib-v0",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 25,
+      "rank_score": 43.207,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 10,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/alexshkarin__pylablib-v0.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.alexshkarin/pylablib-v0",
+        "track": "labs",
+        "local_path": "labs/alexshkarin/pylablib-v0",
+        "driver_dir": "MHS/drivers/labs/alexshkarin__pylablib-v0",
+        "upstream": {
+          "repo_url": "https://github.com/alexshkarin/pylablib-v0",
+          "commit": "1c3c59d4bcbea4a16eee916033972ee13a7d1af6",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "override:direct-driver",
+        "role": "device-driver",
+        "family": "scpi",
+        "helper": "ScpiDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 25,
+        "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+        "entry_symbols": [
+          {
+            "symbol": "pylablib.core.devio.backend:NetworkDeviceBackend",
+            "file": "pylablib/core/devio/backend.py",
+            "line": 873,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pylablib.aux_libs.devices.AgilentElectronics:AWG33220A",
+            "file": "pylablib/aux_libs/devices/AgilentElectronics.py",
+            "line": 14,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pylablib.aux_libs.devices.Tektronix:MDO3000",
+            "file": "pylablib/aux_libs/devices/Tektronix.py",
+            "line": 266,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pylablib.aux_libs.devices.Tektronix:DPO2014",
+            "file": "pylablib/aux_libs/devices/Tektronix.py",
+            "line": 217,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pylablib.aux_libs.devices.Tektronix:TDS2000",
+            "file": "pylablib/aux_libs/devices/Tektronix.py",
+            "line": 254,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "pylablib/core/utils/general.py:274 DummyResource"
+          ],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [
+            "NetworkDeviceBackend.get_timeout",
+            "NetworkDeviceBackend.is_opened",
+            "NetworkDeviceBackend.read_multichar_term",
+            "NetworkDeviceBackend.socket.get_local_name",
+            "NetworkDeviceBackend.socket.get_peer_name",
+            "NetworkDeviceBackend.socket.is_connected",
+            "AWG33220A.get_amplitude",
+            "AWG33220A.get_arg_type",
+            "AWG33220A.get_burst_mode",
+            "AWG33220A.get_burst_ncycles",
+            "AWG33220A.get_duty_cycle",
+            "AWG33220A.get_esr"
+          ],
+          "writes": [
+            "NetworkDeviceBackend.set_timeout",
+            "NetworkDeviceBackend.socket.set_wait_callback",
+            "AWG33220A.set_amplitude",
+            "AWG33220A.set_burst_mode",
+            "AWG33220A.set_burst_ncycles",
+            "AWG33220A.set_duty_cycle",
+            "AWG33220A.set_frequency",
+            "AWG33220A.set_function",
+            "AWG33220A.set_gate_polarity",
+            "AWG33220A.set_load",
+            "AWG33220A.set_offset",
+            "AWG33220A.set_output"
+          ],
+          "actions": [
+            "AWG33220A.enable_burst",
+            "AWG33220A.enable_sync_output",
+            "AWG33220A.enable_trigger_output",
+            "AWG33220A.reset",
+            "MDO3000.enable_channel",
+            "MDO3000.enable_rf_channel",
+            "MDO3000.reset"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/alexshkarin__pylablib-v0 --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "serial-scpi",
+      "package_id": "gh.xzf89718/oscilloscope_scripts",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 36,
+      "rank_score": 34.7712,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 0,
+        "stars": 8,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/xzf89718__oscilloscope_scripts.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.xzf89718/oscilloscope_scripts",
+        "track": "labs",
+        "local_path": "labs/xzf89718/oscilloscope_scripts",
+        "driver_dir": "MHS/drivers/labs/xzf89718__oscilloscope_scripts",
+        "upstream": {
+          "repo_url": "https://github.com/xzf89718/oscilloscope_scripts",
+          "commit": "105e6021650f5b4f6557e733451612e4696a860d",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "override:direct-driver",
+        "role": "device-driver",
+        "family": "scpi",
+        "helper": "ScpiDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 36,
+        "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+        "entry_symbols": [
+          {
+            "symbol": "Tektronix_TBS2000B_control.oscilloscope_control:Oscilloscope",
+            "file": "Tektronix_TBS2000B_control/oscilloscope_control.py",
+            "line": 14,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.7",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "transcript",
+          "hints": [],
+          "upstream_tests": null
+        },
+        "hints": {
+          "reads": [
+            "Oscilloscope.MeasureAmpl",
+            "Oscilloscope.MeasureFreq",
+            "Oscilloscope.MeasureHigh",
+            "Oscilloscope.MeasureLow"
+          ],
+          "writes": [
+            "Oscilloscope.SetChannel"
+          ],
+          "actions": [],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/xzf89718__oscilloscope_scripts --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "serial-scpi",
+      "package_id": "gh.sanket7941/pyinstrument",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 38,
+      "rank_score": 34.5154,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 0,
+        "stars": 7,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/sanket7941__pyinstrument.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.sanket7941/pyinstrument",
+        "track": "labs",
+        "local_path": "labs/sanket7941/pyinstrument",
+        "driver_dir": "MHS/drivers/labs/sanket7941__pyinstrument",
+        "upstream": {
+          "repo_url": "https://github.com/sanket7941/pyinstrument",
+          "commit": "74278e53b075418f155d0567410e03a8503f347f",
+          "license_spdx": "Unlicense",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "override:direct-driver",
+        "role": "device-driver",
+        "family": "scpi",
+        "helper": "ScpiDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 38,
+        "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+        "entry_symbols": [
+          {
+            "symbol": "pyinstrument.instrument:PSupply",
+            "file": "pyinstrument/instrument.py",
+            "line": 60,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "transcript",
+          "hints": [],
+          "upstream_tests": null
+        },
+        "hints": {
+          "reads": [
+            "PSupply.measureCurr",
+            "PSupply.measureVolt"
+          ],
+          "writes": [
+            "PSupply.setCurr",
+            "PSupply.setVolt"
+          ],
+          "actions": [
+            "PSupply.off",
+            "PSupply.on"
+          ],
+          "candidate_classes": [
+            "cap.device.configure.v1",
+            "cap.measure.voltage.v1",
+            "cap.sensing.read.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/sanket7941__pyinstrument --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "serial-scpi",
+      "package_id": "gh.smithsonian/rxlab-instruments",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 43,
+      "rank_score": 32.3856,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 0,
+        "stars": 2,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/labs/smithsonian__rxlab-instruments.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.smithsonian/rxlab-instruments",
+        "track": "labs",
+        "local_path": "labs/smithsonian/rxlab-instruments",
+        "driver_dir": "MHS/drivers/labs/smithsonian__rxlab-instruments",
+        "upstream": {
+          "repo_url": "https://github.com/smithsonian/rxlab-instruments",
+          "commit": "2fbf8e6913e9eb2143088ed3a0b49d01a22fb93c",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "override:direct-driver",
+        "role": "device-driver",
+        "family": "scpi",
+        "helper": "ScpiDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 43,
+        "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+        "entry_symbols": [
+          {
+            "symbol": "labinstruments.keithley:Keithley2280",
+            "file": "labinstruments/keithley.py",
+            "line": 15,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "labinstruments.agilent:AgilentE8257D",
+            "file": "labinstruments/agilent.py",
+            "line": 49,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "labinstruments.rohdeschwarz:RohdeSchwarzFSVA40",
+            "file": "labinstruments/rohdeschwarz.py",
+            "line": 20,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "labinstruments.hittite:Hittite",
+            "file": "labinstruments/hittite.py",
+            "line": 19,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "labinstruments.hittite:SignalGenerator",
+            "file": "labinstruments/hittite.py",
+            "line": 129,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "transcript",
+          "hints": [],
+          "upstream_tests": null
+        },
+        "hints": {
+          "reads": [
+            "Keithley2280.get_current",
+            "Keithley2280.get_id",
+            "Keithley2280.get_voltage",
+            "AgilentE8257D.get_frequency",
+            "AgilentE8257D.get_id",
+            "AgilentE8257D.get_output_state",
+            "AgilentE8257D.get_power",
+            "RohdeSchwarzFSVA40.get_count",
+            "RohdeSchwarzFSVA40.get_id",
+            "RohdeSchwarzFSVA40.get_marker_value",
+            "RohdeSchwarzFSVA40.get_trace"
+          ],
+          "writes": [
+            "Keithley2280.set_current",
+            "Keithley2280.set_current_limit",
+            "Keithley2280.set_voltage",
+            "Keithley2280.set_voltage_limit",
+            "AgilentE8257D.set_frequency",
+            "AgilentE8257D.set_power",
+            "RohdeSchwarzFSVA40.set_attenuation",
+            "RohdeSchwarzFSVA40.set_averaging",
+            "RohdeSchwarzFSVA40.set_averaging_state",
+            "RohdeSchwarzFSVA40.set_averaging_type",
+            "RohdeSchwarzFSVA40.set_bw_ratio",
+            "RohdeSchwarzFSVA40.set_center_frequency"
+          ],
+          "actions": [
+            "Keithley2280.power_off",
+            "Keithley2280.power_on",
+            "Keithley2280.reset",
+            "AgilentE8257D.power_off",
+            "AgilentE8257D.power_on",
+            "AgilentE8257D.reset",
+            "RohdeSchwarzFSVA40.reset"
+          ],
+          "candidate_classes": [
+            "cap.device.configure.v1",
+            "cap.sensing.read.v1",
+            "cap.measure.current.v1",
+            "cap.measure.voltage.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/smithsonian__rxlab-instruments --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "gymnasium-mujoco",
+      "package_id": "gh.farama-foundation/gymnasium",
+      "exemplar": true,
+      "strict_ready": true,
+      "wave": 0,
+      "rank": 1,
+      "rank_score": 38.5087,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 0,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 12639,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/farama-foundation__gymnasium.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.farama-foundation/gymnasium",
+        "track": "robots",
+        "local_path": "robots/farama-foundation/gymnasium",
+        "driver_dir": "MHS/drivers/robots/farama-foundation__gymnasium",
+        "upstream": {
+          "repo_url": "https://github.com/farama-foundation/gymnasium",
+          "commit": "d77197c284406e6094c9d1a74d4988a8749ce849",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "override:exemplar",
+        "role": "sim-env",
+        "family": "gymnasium",
+        "helper": "GymnasiumDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 0,
+        "rank": 1,
+        "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+        "entry_symbols": [
+          {
+            "symbol": "gymnasium.envs.classic_control.cartpole:CartPoleEnv",
+            "file": "gymnasium/envs/classic_control/cartpole.py",
+            "line": 21,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "gymnasium.envs.classic_control.mountain_car:MountainCarEnv",
+            "file": "gymnasium/envs/classic_control/mountain_car.py",
+            "line": 16,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "gymnasium.envs.classic_control.continuous_mountain_car:Continuous_MountainCarEnv",
+            "file": "gymnasium/envs/classic_control/continuous_mountain_car.py",
+            "line": 26,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "gymnasium.envs.classic_control.pendulum:PendulumEnv",
+            "file": "gymnasium/envs/classic_control/pendulum.py",
+            "line": 16,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "gymnasium.envs.classic_control.acrobot:AcrobotEnv",
+            "file": "gymnasium/envs/classic_control/acrobot.py",
+            "line": 26,
+            "confidence": "ast"
+          }
+        ],
+        "models": [
+          {
+            "file": "gymnasium/envs/mujoco/assets/ant.xml",
+            "line": 1,
+            "kind": "robot"
+          },
+          {
+            "file": "gymnasium/envs/mujoco/assets/half_cheetah.xml",
+            "line": 35,
+            "kind": "robot"
+          },
+          {
+            "file": "gymnasium/envs/mujoco/assets/hopper.xml",
+            "line": 6,
+            "kind": "robot"
+          },
+          {
+            "file": "gymnasium/envs/mujoco/assets/humanoid.xml",
+            "line": 1,
+            "kind": "robot"
+          },
+          {
+            "file": "gymnasium/envs/mujoco/assets/humanoidstandup.xml",
+            "line": 1,
+            "kind": "robot"
+          }
+        ],
+        "install": {
+          "python": ">=3.11",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "gymnasium/envs/__init__.py:18 gym env CartPole-v0",
+            "gymnasium/envs/__init__.py:26 gym env CartPole-v1",
+            "gymnasium/envs/__init__.py:34 gym env MountainCar-v0",
+            "gymnasium/envs/__init__.py:41 gym env MountainCarContinuous-v0"
+          ],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [],
+          "writes": [],
+          "actions": [
+            "gym env CartPole-v0 registered at gymnasium/envs/__init__.py:18",
+            "gym env CartPole-v1 registered at gymnasium/envs/__init__.py:26",
+            "gym env MountainCar-v0 registered at gymnasium/envs/__init__.py:34",
+            "gym env MountainCarContinuous-v0 registered at gymnasium/envs/__init__.py:41",
+            "gym env Pendulum-v1 registered at gymnasium/envs/__init__.py:48",
+            "gym env Acrobot-v1 registered at gymnasium/envs/__init__.py:54",
+            "gym env phys2d/CartPole-v0 registered at gymnasium/envs/__init__.py:65",
+            "gym env phys2d/CartPole-v1 registered at gymnasium/envs/__init__.py:74",
+            "gym env phys2d/Pendulum-v0 registered at gymnasium/envs/__init__.py:83",
+            "gym env LunarLander-v3 registered at gymnasium/envs/__init__.py:94",
+            "gym env LunarLanderContinuous-v3 registered at gymnasium/envs/__init__.py:101",
+            "gym env BipedalWalker-v3 registered at gymnasium/envs/__init__.py:109"
+          ],
+          "candidate_classes": [
+            "cap.world.reset.v1",
+            "cap.world.step.v1",
+            "cap.world.seed.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "simulated",
+          "risk_floor": "R0",
+          "limit_hints": []
+        },
+        "needs_recon": [],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/farama-foundation__gymnasium --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "gymnasium-mujoco",
+      "package_id": "gh.huggingface/gym-aloha",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 3,
+      "rank_score": 69.7415,
+      "components": {
+        "partner": 1,
+        "hardware_mode": 0,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 222,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/huggingface__gym-aloha.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.huggingface/gym-aloha",
+        "track": "robots",
+        "local_path": "robots/huggingface/gym-aloha",
+        "driver_dir": "MHS/drivers/robots/huggingface__gym-aloha",
+        "upstream": {
+          "repo_url": "https://github.com/huggingface/gym-aloha",
+          "commit": "bd3325740ea8d1c97411c41ea1e0f4ce0a7de8da",
+          "license_spdx": "Apache-2.0",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "override:partner-sim",
+        "role": "sim-env",
+        "family": "gymnasium",
+        "helper": "GymnasiumDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 3,
+        "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+        "entry_symbols": [
+          {
+            "symbol": "gym_aloha.env:AlohaEnv",
+            "file": "gym_aloha/env.py",
+            "line": 21,
+            "confidence": "ast"
+          }
+        ],
+        "models": [
+          {
+            "file": "gym_aloha/assets/bimanual_viperx_end_effector_insertion.xml",
+            "line": 1,
+            "kind": "scene"
+          },
+          {
+            "file": "gym_aloha/assets/bimanual_viperx_end_effector_transfer_cube.xml",
+            "line": 1,
+            "kind": "scene"
+          },
+          {
+            "file": "gym_aloha/assets/bimanual_viperx_insertion.xml",
+            "line": 1,
+            "kind": "scene"
+          },
+          {
+            "file": "gym_aloha/assets/bimanual_viperx_transfer_cube.xml",
+            "line": 1,
+            "kind": "scene"
+          }
+        ],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "gym_aloha/__init__.py:3 gym env gym_aloha/AlohaInsertion-v0",
+            "gym_aloha/__init__.py:13 gym env gym_aloha/AlohaTransferCube-v0"
+          ],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [],
+          "writes": [],
+          "actions": [
+            "gym env gym_aloha/AlohaInsertion-v0 registered at gym_aloha/__init__.py:3",
+            "gym env gym_aloha/AlohaTransferCube-v0 registered at gym_aloha/__init__.py:13"
+          ],
+          "candidate_classes": [
+            "cap.world.reset.v1",
+            "cap.world.step.v1",
+            "cap.world.seed.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "simulated",
+          "risk_floor": "R0",
+          "limit_hints": []
+        },
+        "needs_recon": [],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/huggingface__gym-aloha --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "gymnasium-mujoco",
+      "package_id": "gh.turagalab/flybody",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 40,
+      "rank_score": 32.9136,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 0,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 960,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/turagalab__flybody.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.turagalab/flybody",
+        "track": "robots",
+        "local_path": "robots/turagalab/flybody",
+        "driver_dir": "MHS/drivers/robots/turagalab__flybody",
+        "upstream": {
+          "repo_url": "https://github.com/turagalab/flybody",
+          "commit": "d015e9bfe441bd90ae431bac24c55cb74bdbce26",
+          "license_spdx": "Apache-2.0",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "family:mujoco",
+        "role": "sim-env",
+        "family": "mujoco",
+        "helper": "MujocoDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 40,
+        "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+        "entry_symbols": [],
+        "models": [
+          {
+            "file": "flybody/fruitfly/assets/floor.xml",
+            "line": 1,
+            "kind": "scene"
+          },
+          {
+            "file": "flybody/fruitfly/build_fruitfly/floor.xml",
+            "line": 1,
+            "kind": "scene"
+          },
+          {
+            "file": "flybody/fruitfly/assets/fruitfly.xml",
+            "line": 1,
+            "kind": "robot"
+          },
+          {
+            "file": "flybody/fruitfly/build_fruitfly/fruitfly.xml",
+            "line": 1,
+            "kind": "robot"
+          }
+        ],
+        "install": {
+          "python": ">=3.10",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "flybody/fruitfly/assets/floor.xml:1 MJCF scene model",
+            "flybody/fruitfly/build_fruitfly/floor.xml:1 MJCF scene model",
+            "flybody/fruitfly/assets/fruitfly.xml:1 MJCF robot model",
+            "flybody/fruitfly/build_fruitfly/fruitfly.xml:1 MJCF robot model"
+          ],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [],
+          "writes": [],
+          "actions": [
+            "MJCF scene model flybody/fruitfly/assets/floor.xml:1",
+            "MJCF scene model flybody/fruitfly/build_fruitfly/floor.xml:1",
+            "MJCF robot model flybody/fruitfly/assets/fruitfly.xml:1",
+            "MJCF robot model flybody/fruitfly/build_fruitfly/fruitfly.xml:1"
+          ],
+          "candidate_classes": [
+            "cap.world.reset.v1",
+            "cap.world.step.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "simulated",
+          "risk_floor": "R0",
+          "limit_hints": []
+        },
+        "needs_recon": [],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/turagalab__flybody --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "gymnasium-mujoco",
+      "package_id": "gh.huggingface/gym-pusht",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 4,
+      "rank_score": 58.0,
+      "components": {
+        "partner": 1,
+        "hardware_mode": 0,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 0,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/huggingface__gym-pusht.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.huggingface/gym-pusht",
+        "track": "robots",
+        "local_path": "robots/huggingface/gym-pusht",
+        "driver_dir": "MHS/drivers/robots/huggingface__gym-pusht",
+        "upstream": {
+          "repo_url": "https://github.com/huggingface/gym-pusht",
+          "commit": "1dce32970bc3d25e7fad5872c3020159bc5eb31f",
+          "license_spdx": "Apache-2.0",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "override:partner-sim",
+        "role": "sim-env",
+        "family": "gymnasium",
+        "helper": "GymnasiumDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 4,
+        "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+        "entry_symbols": [
+          {
+            "symbol": "gym_pusht.envs:PushTEnv",
+            "file": "gym_pusht/envs/pusht.py",
+            "line": 40,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "gym_pusht/__init__.py:3 gym env gym_pusht/PushT-v0"
+          ],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [],
+          "writes": [],
+          "actions": [
+            "gym env gym_pusht/PushT-v0 registered at gym_pusht/__init__.py:3"
+          ],
+          "candidate_classes": [
+            "cap.world.reset.v1",
+            "cap.world.step.v1",
+            "cap.world.seed.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "simulated",
+          "risk_floor": "R0",
+          "limit_hints": []
+        },
+        "needs_recon": [],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/huggingface__gym-pusht --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "gymnasium-mujoco",
+      "package_id": "gh.google-deepmind/aloha_sim",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 47,
+      "rank_score": 30.519,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 0,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 318,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/google-deepmind__aloha_sim.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.google-deepmind/aloha_sim",
+        "track": "robots",
+        "local_path": "robots/google-deepmind/aloha_sim",
+        "driver_dir": "MHS/drivers/robots/google-deepmind__aloha_sim",
+        "upstream": {
+          "repo_url": "https://github.com/google-deepmind/aloha_sim",
+          "commit": "d02904607cca1bf6dfb72f30b522506ac7ca0f91",
+          "license_spdx": "Apache-2.0",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "family:mujoco",
+        "role": "sim-env",
+        "family": "mujoco",
+        "helper": "MujocoDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 47,
+        "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+        "entry_symbols": [],
+        "models": [
+          {
+            "file": "aloha_sim/assets/aloha/aloha_pbr.xml",
+            "line": 17,
+            "kind": "scene"
+          },
+          {
+            "file": "aloha_sim/assets/aloha/scene_pbr.xml",
+            "line": 17,
+            "kind": "scene"
+          }
+        ],
+        "install": {
+          "python": ">=3.10",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "aloha_sim/assets/aloha/aloha_pbr.xml:17 MJCF scene model",
+            "aloha_sim/assets/aloha/scene_pbr.xml:17 MJCF scene model"
+          ],
+          "upstream_tests": "aloha_sim/tasks/test"
+        },
+        "hints": {
+          "reads": [],
+          "writes": [],
+          "actions": [
+            "MJCF scene model aloha_sim/assets/aloha/aloha_pbr.xml:17",
+            "MJCF scene model aloha_sim/assets/aloha/scene_pbr.xml:17"
+          ],
+          "candidate_classes": [
+            "cap.world.reset.v1",
+            "cap.world.step.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "simulated",
+          "risk_floor": "R0",
+          "limit_hints": []
+        },
+        "needs_recon": [],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/google-deepmind__aloha_sim --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "gymnasium-mujoco",
+      "package_id": "gh.farama-foundation/highwayenv",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 33,
+      "rank_score": 35.6083,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 0,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 3323,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/farama-foundation__highwayenv.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.farama-foundation/highwayenv",
+        "track": "robots",
+        "local_path": "robots/farama-foundation/highwayenv",
+        "driver_dir": "MHS/drivers/robots/farama-foundation__highwayenv",
+        "upstream": {
+          "repo_url": "https://github.com/farama-foundation/highwayenv",
+          "commit": "2a268f348f10f4d1ac83f96bc8a53d2fa50dd3b0",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "family:gymnasium",
+        "role": "sim-env",
+        "family": "gymnasium",
+        "helper": "GymnasiumDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 33,
+        "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+        "entry_symbols": [
+          {
+            "symbol": "highway_env.envs.exit_env:ExitEnv",
+            "file": "highway_env/envs/exit_env.py",
+            "line": 15,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "highway_env.envs.exit_env:ConnectedLaneExitEnv",
+            "file": "highway_env/envs/exit_env.py",
+            "line": 202,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "highway_env.envs.highway_env:HighwayEnv",
+            "file": "highway_env/envs/highway_env.py",
+            "line": 17,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "highway_env.envs.highway_env:HighwayEnvFast",
+            "file": "highway_env/envs/highway_env.py",
+            "line": 154,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "highway_env.envs.intersection_env:IntersectionEnv",
+            "file": "highway_env/envs/intersection_env.py",
+            "line": 13,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.10",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "highway_env/__init__.py:36 gym env exit-v0",
+            "highway_env/__init__.py:40 gym env exit-v1",
+            "highway_env/__init__.py:46 gym env highway-v0",
+            "highway_env/__init__.py:51 gym env highway-fast-v0"
+          ],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [],
+          "writes": [],
+          "actions": [
+            "gym env exit-v0 registered at highway_env/__init__.py:36",
+            "gym env exit-v1 registered at highway_env/__init__.py:40",
+            "gym env highway-v0 registered at highway_env/__init__.py:46",
+            "gym env highway-fast-v0 registered at highway_env/__init__.py:51",
+            "gym env intersection-v0 registered at highway_env/__init__.py:57",
+            "gym env intersection-v1 registered at highway_env/__init__.py:62",
+            "gym env intersection-v2 registered at highway_env/__init__.py:66",
+            "gym env intersection-multi-agent-v0 registered at highway_env/__init__.py:71",
+            "gym env intersection-multi-agent-v1 registered at highway_env/__init__.py:76",
+            "gym env intersection-multi-agent-v2 registered at highway_env/__init__.py:81",
+            "gym env lane-keeping-v0 registered at highway_env/__init__.py:88",
+            "gym env merge-v0 registered at highway_env/__init__.py:95"
+          ],
+          "candidate_classes": [
+            "cap.world.reset.v1",
+            "cap.world.step.v1",
+            "cap.world.seed.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "simulated",
+          "risk_floor": "R0",
+          "limit_hints": []
+        },
+        "needs_recon": [],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/farama-foundation__highwayenv --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "gymnasium-mujoco",
+      "package_id": "gh.nonejou072/robopal",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 48,
+      "rank_score": 30.4428,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 0,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 307,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/nonejou072__robopal.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.nonejou072/robopal",
+        "track": "robots",
+        "local_path": "robots/nonejou072/robopal",
+        "driver_dir": "MHS/drivers/robots/nonejou072__robopal",
+        "upstream": {
+          "repo_url": "https://github.com/nonejou072/robopal",
+          "commit": "df5a503657cb4772f5ec7e09d694c584b0d8e172",
+          "license_spdx": "Apache-2.0",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "family:mujoco",
+        "role": "sim-env",
+        "family": "mujoco",
+        "helper": "MujocoDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 48,
+        "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+        "entry_symbols": [
+          {
+            "symbol": "robopal.envs.bimanual_tasks.bimanual_pick_place:BimanualPickAndPlace",
+            "file": "robopal/envs/bimanual_tasks/bimanual_pick_place.py",
+            "line": 9,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "robopal.envs.bimanual_tasks.bimanual_reach:BimanualReach",
+            "file": "robopal/envs/bimanual_tasks/bimanual_reach.py",
+            "line": 8,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "robopal.envs.bimanual_tasks.bimanual_transport:BimanualTransport",
+            "file": "robopal/envs/bimanual_tasks/bimanual_transport.py",
+            "line": 7,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "robopal.envs.manipulation_tasks.demo_cabinet:LockedCabinetEnv",
+            "file": "robopal/envs/manipulation_tasks/demo_cabinet.py",
+            "line": 9,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "robopal.envs.manipulation_tasks.demo_cube_drawer:DrawerCubeEnv",
+            "file": "robopal/envs/manipulation_tasks/demo_cube_drawer.py",
+            "line": 9,
+            "confidence": "ast"
+          }
+        ],
+        "models": [
+          {
+            "file": "robopal/assets/models/manipulators/DianaMed/DianaMed.xml",
+            "line": 1,
+            "kind": "robot"
+          },
+          {
+            "file": "robopal/assets/models/manipulators/Panda/Panda.xml",
+            "line": 1,
+            "kind": "robot"
+          },
+          {
+            "file": "robopal/assets/models/manipulators/Panda/Panda_hand.xml",
+            "line": 1,
+            "kind": "robot"
+          },
+          {
+            "file": "robopal/assets/models/manipulators/UR5e/UR5e.xml",
+            "line": 1,
+            "kind": "robot"
+          }
+        ],
+        "install": {
+          "python": ">=3.8",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "robopal/assets/models/manipulators/DianaMed/DianaMed.xml:1 MJCF robot model",
+            "robopal/assets/models/manipulators/Panda/Panda.xml:1 MJCF robot model",
+            "robopal/assets/models/manipulators/Panda/Panda_hand.xml:1 MJCF robot model",
+            "robopal/assets/models/manipulators/UR5e/UR5e.xml:1 MJCF robot model"
+          ],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [],
+          "writes": [],
+          "actions": [
+            "MJCF robot model robopal/assets/models/manipulators/DianaMed/DianaMed.xml:1",
+            "MJCF robot model robopal/assets/models/manipulators/Panda/Panda.xml:1",
+            "MJCF robot model robopal/assets/models/manipulators/Panda/Panda_hand.xml:1",
+            "MJCF robot model robopal/assets/models/manipulators/UR5e/UR5e.xml:1"
+          ],
+          "candidate_classes": [
+            "cap.world.reset.v1",
+            "cap.world.step.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "simulated",
+          "risk_floor": "R0",
+          "limit_hints": []
+        },
+        "needs_recon": [],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nonejou072__robopal --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "gymnasium-mujoco",
+      "package_id": "gh.farama-foundation/minigrid",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 35,
+      "rank_score": 35.007,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 0,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 2519,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/farama-foundation__minigrid.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.farama-foundation/minigrid",
+        "track": "robots",
+        "local_path": "robots/farama-foundation/minigrid",
+        "driver_dir": "MHS/drivers/robots/farama-foundation__minigrid",
+        "upstream": {
+          "repo_url": "https://github.com/farama-foundation/minigrid",
+          "commit": "b34a5755dbef71e3f1662552259a94b255c1a8bb",
+          "license_spdx": "Apache-2.0",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "family:gymnasium",
+        "role": "sim-env",
+        "family": "gymnasium",
+        "helper": "GymnasiumDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 35,
+        "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+        "entry_symbols": [
+          {
+            "symbol": "minigrid.envs:BlockedUnlockPickupEnv",
+            "file": "minigrid/envs/blockedunlockpickup.py",
+            "line": 9,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "minigrid.envs:CrossingEnv",
+            "file": "minigrid/envs/crossing.py",
+            "line": 13,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "minigrid.envs:DistShiftEnv",
+            "file": "minigrid/envs/distshift.py",
+            "line": 9,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "minigrid.envs:DoorKeyEnv",
+            "file": "minigrid/envs/doorkey.py",
+            "line": 9,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "minigrid.envs:DynamicObstaclesEnv",
+            "file": "minigrid/envs/dynamicobstacles.py",
+            "line": 13,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.11",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "minigrid/__init__.py:17 gym env MiniGrid-BlockedUnlockPickup-v0",
+            "minigrid/__init__.py:24 gym env MiniGrid-LavaCrossingS9N1-v0",
+            "minigrid/__init__.py:30 gym env MiniGrid-LavaCrossingS9N2-v0",
+            "minigrid/__init__.py:36 gym env MiniGrid-LavaCrossingS9N3-v0"
+          ],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [],
+          "writes": [],
+          "actions": [
+            "gym env MiniGrid-BlockedUnlockPickup-v0 registered at minigrid/__init__.py:17",
+            "gym env MiniGrid-LavaCrossingS9N1-v0 registered at minigrid/__init__.py:24",
+            "gym env MiniGrid-LavaCrossingS9N2-v0 registered at minigrid/__init__.py:30",
+            "gym env MiniGrid-LavaCrossingS9N3-v0 registered at minigrid/__init__.py:36",
+            "gym env MiniGrid-LavaCrossingS11N5-v0 registered at minigrid/__init__.py:42",
+            "gym env MiniGrid-SimpleCrossingS9N1-v0 registered at minigrid/__init__.py:51",
+            "gym env MiniGrid-SimpleCrossingS9N2-v0 registered at minigrid/__init__.py:57",
+            "gym env MiniGrid-SimpleCrossingS9N3-v0 registered at minigrid/__init__.py:63",
+            "gym env MiniGrid-SimpleCrossingS11N5-v0 registered at minigrid/__init__.py:69",
+            "gym env MiniGrid-DistShift1-v0 registered at minigrid/__init__.py:78",
+            "gym env MiniGrid-DistShift2-v0 registered at minigrid/__init__.py:84",
+            "gym env MiniGrid-DoorKey-5x5-v0 registered at minigrid/__init__.py:93"
+          ],
+          "candidate_classes": [
+            "cap.world.reset.v1",
+            "cap.world.step.v1",
+            "cap.world.seed.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "simulated",
+          "risk_floor": "R0",
+          "limit_hints": []
+        },
+        "needs_recon": [],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/farama-foundation__minigrid --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "gymnasium-mujoco",
+      "package_id": "gh.zichunxx/panda_mujoco_gym",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 52,
+      "rank_score": 29.165,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 0,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 170,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/zichunxx__panda_mujoco_gym.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.zichunxx/panda_mujoco_gym",
+        "track": "robots",
+        "local_path": "robots/zichunxx/panda_mujoco_gym",
+        "driver_dir": "MHS/drivers/robots/zichunxx__panda_mujoco_gym",
+        "upstream": {
+          "repo_url": "https://github.com/zichunxx/panda_mujoco_gym",
+          "commit": "e9881d993234875ee1d55d717176bf7999bdb583",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "family:mujoco",
+        "role": "sim-env",
+        "family": "mujoco",
+        "helper": "MujocoDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 52,
+        "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+        "entry_symbols": [
+          {
+            "symbol": "panda_mujoco_gym.envs.pick_and_place:FrankaPickAndPlaceEnv",
+            "file": "panda_mujoco_gym/envs/pick_and_place.py",
+            "line": 7,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "panda_mujoco_gym.envs.push:FrankaPushEnv",
+            "file": "panda_mujoco_gym/envs/push.py",
+            "line": 7,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "panda_mujoco_gym.envs.slide:FrankaSlideEnv",
+            "file": "panda_mujoco_gym/envs/slide.py",
+            "line": 7,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "panda_mujoco_gym.envs.panda_env:FrankaEnv",
+            "file": "panda_mujoco_gym/envs/panda_env.py",
+            "line": 16,
+            "confidence": "ast"
+          }
+        ],
+        "models": [
+          {
+            "file": "panda_mujoco_gym/assets/pick_and_place.xml",
+            "line": 1,
+            "kind": "scene"
+          },
+          {
+            "file": "panda_mujoco_gym/assets/push.xml",
+            "line": 1,
+            "kind": "scene"
+          },
+          {
+            "file": "panda_mujoco_gym/assets/slide.xml",
+            "line": 1,
+            "kind": "scene"
+          },
+          {
+            "file": "panda_mujoco_gym/assets/panda_mocap.xml",
+            "line": 1,
+            "kind": "robot"
+          }
+        ],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install -r requirements.txt"
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "panda_mujoco_gym/assets/pick_and_place.xml:1 MJCF scene model",
+            "panda_mujoco_gym/assets/push.xml:1 MJCF scene model",
+            "panda_mujoco_gym/assets/slide.xml:1 MJCF scene model",
+            "panda_mujoco_gym/assets/panda_mocap.xml:1 MJCF robot model"
+          ],
+          "upstream_tests": "test"
+        },
+        "hints": {
+          "reads": [],
+          "writes": [],
+          "actions": [
+            "MJCF scene model panda_mujoco_gym/assets/pick_and_place.xml:1",
+            "MJCF scene model panda_mujoco_gym/assets/push.xml:1",
+            "MJCF scene model panda_mujoco_gym/assets/slide.xml:1",
+            "MJCF robot model panda_mujoco_gym/assets/panda_mocap.xml:1"
+          ],
+          "candidate_classes": [
+            "cap.world.reset.v1",
+            "cap.world.step.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "simulated",
+          "risk_floor": "R0",
+          "limit_hints": []
+        },
+        "needs_recon": [],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/zichunxx__panda_mujoco_gym --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "gymnasium-mujoco",
+      "package_id": "gh.learnsyslab/gym-pybullet-drones",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 37,
+      "rank_score": 34.6682,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 0,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 2155,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/learnsyslab__gym-pybullet-drones.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.learnsyslab/gym-pybullet-drones",
+        "track": "robots",
+        "local_path": "robots/learnsyslab/gym-pybullet-drones",
+        "driver_dir": "MHS/drivers/robots/learnsyslab__gym-pybullet-drones",
+        "upstream": {
+          "repo_url": "https://github.com/learnsyslab/gym-pybullet-drones",
+          "commit": "7ebad1ecabd28a7000add2d05f888aa2e837c2cc",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "family:gymnasium",
+        "role": "sim-env",
+        "family": "gymnasium",
+        "helper": "GymnasiumDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 37,
+        "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+        "entry_symbols": [
+          {
+            "symbol": "gym_pybullet_drones.envs:CtrlAviary",
+            "file": "gym_pybullet_drones/envs/CtrlAviary.py",
+            "line": 7,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "gym_pybullet_drones.envs:VelocityAviary",
+            "file": "gym_pybullet_drones/envs/VelocityAviary.py",
+            "line": 9,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "gym_pybullet_drones.envs:HoverAviary",
+            "file": "gym_pybullet_drones/envs/HoverAviary.py",
+            "line": 6,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "gym_pybullet_drones.envs:MultiHoverAviary",
+            "file": "gym_pybullet_drones/envs/MultiHoverAviary.py",
+            "line": 6,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "gym_pybullet_drones/__init__.py:3 gym env ctrl-aviary-v0",
+            "gym_pybullet_drones/__init__.py:8 gym env velocity-aviary-v0",
+            "gym_pybullet_drones/__init__.py:13 gym env hover-aviary-v0",
+            "gym_pybullet_drones/__init__.py:18 gym env multihover-aviary-v0"
+          ],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [],
+          "writes": [],
+          "actions": [
+            "gym env ctrl-aviary-v0 registered at gym_pybullet_drones/__init__.py:3",
+            "gym env velocity-aviary-v0 registered at gym_pybullet_drones/__init__.py:8",
+            "gym env hover-aviary-v0 registered at gym_pybullet_drones/__init__.py:13",
+            "gym env multihover-aviary-v0 registered at gym_pybullet_drones/__init__.py:18"
+          ],
+          "candidate_classes": [
+            "cap.world.reset.v1",
+            "cap.world.step.v1",
+            "cap.world.seed.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "simulated",
+          "risk_floor": "R0",
+          "limit_hints": []
+        },
+        "needs_recon": [],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/learnsyslab__gym-pybullet-drones --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "gymnasium-mujoco",
+      "package_id": "gh.princeton-robot-planning-and-learning/kindergarden",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 54,
+      "rank_score": 26.662,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 0,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 53,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/princeton-robot-planning-and-learning__kindergarden.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.princeton-robot-planning-and-learning/kindergarden",
+        "track": "robots",
+        "local_path": "robots/princeton-robot-planning-and-learning/kindergarden",
+        "driver_dir": "MHS/drivers/robots/princeton-robot-planning-and-learning__kindergarden",
+        "upstream": {
+          "repo_url": "https://github.com/princeton-robot-planning-and-learning/kindergarden",
+          "commit": "5b2dbac482142b879b48449b3fa2af63f641aed3",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "family-config",
+        "reason_code": "family:mujoco",
+        "role": "sim-env",
+        "family": "mujoco",
+        "helper": "MujocoDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 54,
+        "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+        "entry_symbols": [
+          {
+            "symbol": "kinder.envs.kinematic2d.obstruction2d:ObjectCentricObstruction2DEnv",
+            "file": "src/kinder/envs/kinematic2d/obstruction2d.py",
+            "line": 146,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "kinder.envs.dynamic3d.task_families:ConstrainedCupboard3DEnv",
+            "file": "src/kinder/envs/dynamic3d/task_families.py",
+            "line": 118,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "kinder.envs.dynamic3d.task_families:Dynamo3DEnv",
+            "file": "src/kinder/envs/dynamic3d/task_families.py",
+            "line": 125,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "kinder.envs.dynamic3d.task_families:Shelf3DEnv",
+            "file": "src/kinder/envs/dynamic3d/task_families.py",
+            "line": 136,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "kinder.envs.dynamic3d.task_families:Tossing3DEnv",
+            "file": "src/kinder/envs/dynamic3d/task_families.py",
+            "line": 147,
+            "confidence": "ast"
+          }
+        ],
+        "models": [
+          {
+            "file": "src/kinder/envs/dynamic3d/models/kinova_gen3/scene.xml",
+            "line": 1,
+            "kind": "scene"
+          },
+          {
+            "file": "src/kinder/envs/dynamic3d/models/kinova_gen3/scene_2f85.xml",
+            "line": 1,
+            "kind": "scene"
+          },
+          {
+            "file": "src/kinder/envs/dynamic3d/models/rby1a/rby1a_model_v1.2.xml",
+            "line": 1,
+            "kind": "scene"
+          },
+          {
+            "file": "src/kinder/envs/dynamic3d/models/stanford_tidybot/base_motion.xml",
+            "line": 1,
+            "kind": "scene"
+          },
+          {
+            "file": "src/kinder/envs/dynamic3d/models/stanford_tidybot/cupboard_scene.xml",
+            "line": 1,
+            "kind": "scene"
+          }
+        ],
+        "install": {
+          "python": ">=3.10,<3.13",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "upstream-sim",
+          "hints": [
+            "src/kinder/envs/dynamic3d/models/kinova_gen3/scene.xml:1 MJCF scene model",
+            "src/kinder/envs/dynamic3d/models/kinova_gen3/scene_2f85.xml:1 MJCF scene model",
+            "src/kinder/envs/dynamic3d/models/rby1a/rby1a_model_v1.2.xml:1 MJCF scene model",
+            "src/kinder/envs/dynamic3d/models/stanford_tidybot/base_motion.xml:1 MJCF scene model"
+          ],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [],
+          "writes": [],
+          "actions": [
+            "MJCF scene model src/kinder/envs/dynamic3d/models/kinova_gen3/scene.xml:1",
+            "MJCF scene model src/kinder/envs/dynamic3d/models/kinova_gen3/scene_2f85.xml:1",
+            "MJCF scene model src/kinder/envs/dynamic3d/models/rby1a/rby1a_model_v1.2.xml:1",
+            "MJCF scene model src/kinder/envs/dynamic3d/models/stanford_tidybot/base_motion.xml:1",
+            "MJCF scene model src/kinder/envs/dynamic3d/models/stanford_tidybot/cupboard_scene.xml:1",
+            "MJCF scene model src/kinder/envs/dynamic3d/models/stanford_tidybot/table_scene.xml:1",
+            "MJCF robot model src/kinder/envs/dynamic3d/models/franka_fr3/fr3.xml:1",
+            "MJCF robot model src/kinder/envs/dynamic3d/models/kinova_gen3/gen3.xml:1",
+            "MJCF robot model src/kinder/envs/dynamic3d/models/kinova_gen3/gen3_2f85.xml:1",
+            "MJCF robot model src/kinder/envs/dynamic3d/models/stanford_tidybot/base.xml:1"
+          ],
+          "candidate_classes": [
+            "cap.world.reset.v1",
+            "cap.world.step.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "simulated",
+          "risk_floor": "R0",
+          "limit_hints": []
+        },
+        "needs_recon": [],
+        "timebox_min": 60,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/princeton-robot-planning-and-learning__kindergarden --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "robot-sdk",
+      "package_id": "gh.xarm-developer/xarm-python-sdk",
+      "exemplar": true,
+      "strict_ready": true,
+      "wave": 0,
+      "rank": 4,
+      "rank_score": 30.0,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 0,
+        "stars": 0,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/xarm-developer__xarm-python-sdk.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.xarm-developer/xarm-python-sdk",
+        "track": "robots",
+        "local_path": "robots/xarm-developer/xarm-python-sdk",
+        "driver_dir": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+        "upstream": {
+          "repo_url": "https://github.com/xarm-developer/xarm-python-sdk",
+          "commit": "d911319cebc45142613e18086aabb8067b18ab7f",
+          "license_spdx": "BSD-3-Clause",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "override:exemplar",
+        "role": "device-driver",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 0,
+        "rank": 4,
+        "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+        "entry_symbols": [
+          {
+            "symbol": "xarm.wrapper.xarm_api:XArmAPI",
+            "file": "xarm/wrapper/xarm_api.py",
+            "line": 14,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "xarm.x3.xarm:XArm",
+            "file": "xarm/x3/xarm.py",
+            "line": 43,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "xarm.x3.gripper:Gripper",
+            "file": "xarm/x3/gripper.py",
+            "line": 64,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "xarm.x3.linear_motor:LinearMotor",
+            "file": "xarm/x3/linear_motor.py",
+            "line": 14,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "xarm.x3.servo:Servo",
+            "file": "xarm/x3/servo.py",
+            "line": 16,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.5",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "fake",
+          "hints": [],
+          "upstream_tests": null
+        },
+        "hints": {
+          "reads": [
+            "XArmAPI.get_allow_approx_motion",
+            "XArmAPI.get_base_board_version",
+            "XArmAPI.get_bio_gripper_error",
+            "XArmAPI.get_bio_gripper_g2_position",
+            "XArmAPI.get_bio_gripper_status",
+            "XArmAPI.get_c23_error_info",
+            "XArmAPI.get_c24_error_info",
+            "XArmAPI.get_c31_error_info",
+            "XArmAPI.get_c37_error_info",
+            "XArmAPI.get_c38_error_info",
+            "XArmAPI.get_c54_error_info",
+            "XArmAPI.get_c60_error_info"
+          ],
+          "writes": [
+            "XArmAPI.config_cgpio_reset_when_stop",
+            "XArmAPI.config_tgpio_reset_when_stop",
+            "XArmAPI.set_allow_approx_motion",
+            "XArmAPI.set_baud_checkset_enable",
+            "XArmAPI.set_bio_gripper_control_mode",
+            "XArmAPI.set_bio_gripper_enable",
+            "XArmAPI.set_bio_gripper_force",
+            "XArmAPI.set_bio_gripper_g2_position",
+            "XArmAPI.set_bio_gripper_speed",
+            "XArmAPI.set_cartesian_velo_continuous",
+            "XArmAPI.set_cgpio_analog",
+            "XArmAPI.set_cgpio_analog_with_xyz"
+          ],
+          "actions": [
+            "XArmAPI.arm",
+            "XArmAPI.calibrate_tcp_coordinate_offset",
+            "XArmAPI.calibrate_tcp_orientation_offset",
+            "XArmAPI.calibrate_user_coordinate_offset",
+            "XArmAPI.calibrate_user_orientation_offset",
+            "XArmAPI.emergency_stop",
+            "XArmAPI.move_arc_lines",
+            "XArmAPI.move_circle",
+            "XArmAPI.move_gohome",
+            "XArmAPI.reset",
+            "XArmAPI._arm.run_blockly_app",
+            "XArmAPI._arm.run_gcode_app"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1",
+            "cap.manipulation.grasp.v1",
+            "cap.motion.joint_position.v1",
+            "cap.motion.cartesian_pose.v1",
+            "cap.actuation.gpio.v1",
+            "cap.device.calibrate.v1",
+            "cap.measure.current.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/xarm-developer__xarm-python-sdk --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "robot-sdk",
+      "package_id": "gh.dobot-arm/tcp-ip-python-v4",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 10,
+      "rank_score": 47.7224,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 87,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/dobot-arm__tcp-ip-python-v4.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.dobot-arm/tcp-ip-python-v4",
+        "track": "robots",
+        "local_path": "robots/dobot-arm/tcp-ip-python-v4",
+        "driver_dir": "MHS/drivers/robots/dobot-arm__tcp-ip-python-v4",
+        "upstream": {
+          "repo_url": "https://github.com/dobot-arm/tcp-ip-python-v4",
+          "commit": "55ec1ec82201aaf2e6d54aa47b6272bbaa14c815",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "PY_SDK_WITH_ENTRY",
+        "role": "device-driver",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 10,
+        "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+        "entry_symbols": [
+          {
+            "symbol": "dobot_sdk.api.robot:DobotRobot",
+            "file": "dobot_sdk/api/robot.py",
+            "line": 25,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "dobot_sdk.api.robot_control:RobotControl",
+            "file": "dobot_sdk/api/robot_control.py",
+            "line": 10,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "dobot_sdk.models.error_info:ErrorReport",
+            "file": "dobot_sdk/models/error_info.py",
+            "line": 44,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "dobot_sdk.api.error_controller:ErrorController",
+            "file": "dobot_sdk/api/error_controller.py",
+            "line": 28,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "dobot_sdk.core.connection:DobotConnection",
+            "file": "dobot_sdk/core/connection.py",
+            "line": 20,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.8",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "fake",
+          "hints": [],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [
+            "DobotRobot.GetError",
+            "DobotRobot.GetErrorFormatted",
+            "DobotRobot.GetStatus",
+            "DobotRobot.IsConnected",
+            "DobotRobot.is_connected",
+            "DobotRobot.communication.GetCoils",
+            "DobotRobot.communication.GetHoldRegs",
+            "DobotRobot.communication.GetInBits",
+            "DobotRobot.communication.GetInRegs",
+            "DobotRobot.communication.GetInputBool",
+            "DobotRobot.communication.GetInputFloat",
+            "DobotRobot.communication.GetInputInt"
+          ],
+          "writes": [
+            "DobotRobot.SetTimeout",
+            "DobotRobot.communication.SetCoils",
+            "DobotRobot.communication.SetHoldRegs",
+            "DobotRobot.communication.SetOutputBool",
+            "DobotRobot.communication.SetOutputFloat",
+            "DobotRobot.communication.SetOutputInt",
+            "DobotRobot.communication.SetSingleCoil",
+            "DobotRobot.communication.SetSingleHoldReg",
+            "DobotRobot.io.SetTool485",
+            "DobotRobot.io.SetToolMode",
+            "DobotRobot.io.SetToolPower",
+            "DobotRobot.motion.SetResumeOffset"
+          ],
+          "actions": [
+            "DobotRobot.EnableAutoReconnect",
+            "DobotRobot.StartFeedbackMonitor",
+            "DobotRobot.StopFeedbackMonitor",
+            "DobotRobot.motion.MovJ",
+            "DobotRobot.motion.MovJIO",
+            "DobotRobot.motion.MovL",
+            "DobotRobot.motion.MovLIO",
+            "DobotRobot.motion.MovS",
+            "DobotRobot.motion.MoveJog",
+            "DobotRobot.motion.PathRecoveryStop",
+            "DobotRobot.motion.RelJointMovJ",
+            "DobotRobot.motion.RelMovJTool"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1",
+            "cap.motion.joint_position.v1",
+            "cap.motion.stop.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": []
+        },
+        "needs_recon": [
+          "limit_sources"
+        ],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/dobot-arm__tcp-ip-python-v4 --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "robot-sdk",
+      "package_id": "gh.cmjang/dm_control_python",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 29,
+      "rank_score": 39.4881,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 0,
+        "stars": 78,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/cmjang__dm_control_python.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.cmjang/dm_control_python",
+        "track": "robots",
+        "local_path": "robots/cmjang/dm_control_python",
+        "driver_dir": "MHS/drivers/robots/cmjang__dm_control_python",
+        "upstream": {
+          "repo_url": "https://github.com/cmjang/dm_control_python",
+          "commit": "7da93877ba844d9587149d6f3a6385453aa8379f",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "override:flagship-driver",
+        "role": "device-driver",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 29,
+        "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+        "entry_symbols": [
+          {
+            "symbol": "DM_CAN:MotorControl",
+            "file": "DM_CAN.py",
+            "line": 66,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install -r requirements.txt"
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "fake",
+          "hints": [],
+          "upstream_tests": null
+        },
+        "hints": {
+          "reads": [
+            "MotorControl.read_motor_param",
+            "MotorControl.send_data_frame (attribute)"
+          ],
+          "writes": [
+            "MotorControl.set_zero_position"
+          ],
+          "actions": [
+            "MotorControl.controlMIT",
+            "MotorControl.control_Pos_Vel",
+            "MotorControl.control_Vel",
+            "MotorControl.control_pos_force",
+            "MotorControl.disable",
+            "MotorControl.enable",
+            "MotorControl.enable_old"
+          ],
+          "candidate_classes": [
+            "cap.motion.joint_position.v1",
+            "cap.device.configure.v1",
+            "cap.motion.joint_velocity.v1",
+            "cap.sensing.read.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": [
+            "DM_CAN.py:579 MAX_SPD = 6"
+          ]
+        },
+        "needs_recon": [],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cmjang__dm_control_python --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "robot-sdk",
+      "package_id": "gh.anki/cozmo-python-sdk",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 31,
+      "rank_score": 38.0,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 0,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/anki__cozmo-python-sdk.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.anki/cozmo-python-sdk",
+        "track": "robots",
+        "local_path": "robots/anki/cozmo-python-sdk",
+        "driver_dir": "MHS/drivers/robots/anki__cozmo-python-sdk",
+        "upstream": {
+          "repo_url": "https://github.com/anki/cozmo-python-sdk",
+          "commit": "dd29edef18748fcd816550469195323842a7872e",
+          "license_spdx": "Apache-2.0",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "PY_SDK_WITH_ENTRY",
+        "role": "device-driver",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 31,
+        "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+        "entry_symbols": [
+          {
+            "symbol": "cozmo.robot:Robot",
+            "file": "src/cozmo/robot.py",
+            "line": 630,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "cozmo.camera:Camera",
+            "file": "src/cozmo/camera.py",
+            "line": 212,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "cozmo.world:World",
+            "file": "src/cozmo/world.py",
+            "line": 79,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "cozmo.nav_memory_map:NavMemoryMapGrid",
+            "file": "src/cozmo/nav_memory_map.py",
+            "line": 251,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "cozmo.annotate:ImageAnnotator",
+            "file": "src/cozmo/annotate.py",
+            "line": 394,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": null,
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "fake",
+          "hints": [],
+          "upstream_tests": "tests"
+        },
+        "hints": {
+          "reads": [
+            "Robot.has_in_progress_actions",
+            "Robot.is_anim_buffer_full",
+            "Robot.is_animating",
+            "Robot.is_animating_idle",
+            "Robot.is_behavior_running",
+            "Robot.is_carrying_block",
+            "Robot.is_charging",
+            "Robot.is_cliff_detected",
+            "Robot.is_device_accelerometer_supported",
+            "Robot.is_device_gyro_supported",
+            "Robot.is_falling",
+            "Robot.is_freeplay_mode_active"
+          ],
+          "writes": [
+            "Robot.set_all_backpack_lights",
+            "Robot.set_backpack_lights",
+            "Robot.set_backpack_lights_off",
+            "Robot.set_center_backpack_lights",
+            "Robot.set_head_angle",
+            "Robot.set_head_light",
+            "Robot.set_idle_animation",
+            "Robot.set_lift_height",
+            "Robot.set_manual_exposure",
+            "Robot.set_needs_levels",
+            "Robot.set_robot_volume",
+            "Camera.set_manual_exposure"
+          ],
+          "actions": [
+            "Robot.abort_all_actions",
+            "Robot.enable_all_reaction_triggers",
+            "Robot.enable_auto_exposure",
+            "Robot.enable_device_imu",
+            "Robot.enable_facial_expression_estimation",
+            "Robot.enable_freeplay_cube_lights",
+            "Robot.enable_stop_on_cliff",
+            "Robot.move_head",
+            "Robot.move_lift",
+            "Robot.start_behavior",
+            "Robot.start_freeplay_behaviors",
+            "Robot.stop_all_motors"
+          ],
+          "candidate_classes": [
+            "cap.sensing.read.v1",
+            "cap.device.configure.v1",
+            "cap.motion.joint_position.v1",
+            "cap.motion.stop.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": [
+            "src/cozmo/robot.py:105 MIN_LIFT_HEIGHT_MM = 32.0",
+            "src/cozmo/robot.py:111 MAX_LIFT_HEIGHT_MM = 92.0"
+          ]
+        },
+        "needs_recon": [],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/anki__cozmo-python-sdk --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    },
+    {
+      "bucket": "robot-sdk",
+      "package_id": "gh.zayfod/pycozmo",
+      "exemplar": false,
+      "strict_ready": true,
+      "wave": 1,
+      "rank": 32,
+      "rank_score": 38.0,
+      "components": {
+        "partner": 0,
+        "hardware_mode": 1,
+        "helper_available": 1,
+        "has_tests": 1,
+        "stars": 0,
+        "gpu": 0,
+        "license_unknown": 0
+      },
+      "card": "MHS/registry/tasks/robots/zayfod__pycozmo.json",
+      "task": {
+        "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+        "card_version": "0.9",
+        "package_id": "gh.zayfod/pycozmo",
+        "track": "robots",
+        "local_path": "robots/zayfod/pycozmo",
+        "driver_dir": "MHS/drivers/robots/zayfod__pycozmo",
+        "upstream": {
+          "repo_url": "https://github.com/zayfod/pycozmo",
+          "commit": "1b6dcd9b869a3784f1d8b02e820bb033f95fd13a",
+          "license_spdx": "MIT",
+          "license_class": "permissive"
+        },
+        "decision": "direct-driver",
+        "reason_code": "PY_SDK_WITH_ENTRY",
+        "role": "device-driver",
+        "family": "python-object",
+        "helper": "PythonObjectDriver",
+        "helper_status": "available",
+        "blocked_on": [],
+        "quarantine": false,
+        "variant_of": null,
+        "package_status": "pass",
+        "wave": 1,
+        "rank": 32,
+        "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+        "entry_symbols": [
+          {
+            "symbol": "pycozmo.client:Client",
+            "file": "pycozmo/client.py",
+            "line": 41,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pycozmo.conn:Connection",
+            "file": "pycozmo/conn.py",
+            "line": 341,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pycozmo.brain:Brain",
+            "file": "pycozmo/brain.py",
+            "line": 27,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pycozmo.procedural_face:ProceduralLid",
+            "file": "pycozmo/procedural_face.py",
+            "line": 73,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "pycozmo.util:Matrix44",
+            "file": "pycozmo/util.py",
+            "line": 316,
+            "confidence": "ast"
+          }
+        ],
+        "models": [],
+        "install": {
+          "python": ">=3.6.0",
+          "commands": [
+            "pip install ."
+          ],
+          "system_deps": [],
+          "gpu": false,
+          "platform": "any"
+        },
+        "mock_strategy": {
+          "preferred": "fake",
+          "hints": [],
+          "upstream_tests": "pycozmo/tests"
+        },
+        "hints": {
+          "reads": [
+            "Client.get_anim_names",
+            "Client.pose.is_accurate",
+            "Client.pose.is_comparable",
+            "Client.pose.is_valid"
+          ],
+          "writes": [
+            "Client.set_all_backpack_lights",
+            "Client.set_backpack_lights",
+            "Client.set_backpack_lights_off",
+            "Client.set_center_backpack_lights",
+            "Client.set_head_angle",
+            "Client.set_head_light",
+            "Client.set_lift_height",
+            "Client.set_volume",
+            "Client.accel.set_to"
+          ],
+          "actions": [
+            "Client.enable_animations",
+            "Client.enable_camera",
+            "Client.enable_procedural_face",
+            "Client.move_head",
+            "Client.move_lift",
+            "Client.start",
+            "Client.stop",
+            "Client.stop_all_motors",
+            "Client.conn.run",
+            "Connection.run",
+            "Connection.start",
+            "Connection.stop"
+          ],
+          "candidate_classes": [
+            "cap.device.configure.v1",
+            "cap.sensing.read.v1",
+            "cap.motion.joint_position.v1",
+            "cap.motion.stop.v1"
+          ]
+        },
+        "safety": {
+          "expected_mode": "hardware",
+          "risk_floor": "R1",
+          "limit_hints": [
+            "pycozmo/audio.py:25 MULAW_MAX = 32767",
+            "pycozmo/procedural_face.py:519 MAX_X_OFFSET = 10.0",
+            "pycozmo/procedural_face.py:520 MAX_Y_OFFSET = 50.0",
+            "pycozmo/procedural_face.py:521 MAX_EYE_SCALE = 0.25",
+            "pycozmo/protocol_declaration.py:34 MAX_SEQ = 65534"
+          ]
+        },
+        "needs_recon": [],
+        "timebox_min": 90,
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/zayfod__pycozmo --backend fake",
+        "skip_reason": null,
+        "publish_review": "not_required"
+      }
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "zaber_device.zaber_device:ZaberStage (zaber_device/zaber_device.py:721)",
+      "zaber_device.zaber_device:ZaberDevice (zaber_device/zaber_device.py:53)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.motion.joint_position.v1",
+    "cap.device.configure.v1",
+    "cap.measure.current.v1",
+    "cap.motion.stop.v1"
+  ],
+  "catalog_refs": [
+    "repo_34a8df3dd57635d7",
+    "https://github.com/janelia-python/zaber_device_python"
+  ],
+  "description": "janelia-python/zaber_device_python: device backend for general (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Language: Python. Catalog keywords: Janelia, Zaber.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 9 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/janelia-python__zaber_device_python/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.janelia-python/zaber_device_python",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/janelia-python__zaber_device_python: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/janelia-python__zaber_device_python --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "serial",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2024-08-27T16:13:37-04:00",
+  "license": "BSD-3-Clause",
+  "license_class": "permissive",
+  "license_spdx": "BSD-3-Clause",
+  "links": {
+    "repo": "https://github.com/janelia-python/zaber_device_python"
+  },
+  "local_path": "labs/janelia-python/zaber_device_python",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "janelia-python",
+  "package_id": "gh.janelia-python/zaber_device_python",
+  "quarantine": false,
+  "rank": 61,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "zaber_device_python",
+  "repo_url": "https://github.com/janelia-python/zaber_device_python",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "2fec6746359b35acd4cf0c121cff03da8ae0a062",
+    "repo_url": "https://github.com/janelia-python/zaber_device_python"
+  },
+  "stars": 3,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "janelia-python/zaber_device_python",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 53.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "Janelia的Zaber设备Python接口,README缺失",
+      "join": "exact",
+      "license_raw": "NOASSERTION",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 1177,
+      "rows_all": [
+        1177
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "仅简介"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/janelia-python__zaber_device_python/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.measure.current.v1"
+            ],
+            "kind": "instrument.dmm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "BSD-3-Clause",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "2fec6746359b35acd4cf0c121cff03da8ae0a062",
+      "driver_dir": "MHS/drivers/labs/janelia-python__zaber_device_python",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:0ad7b0cbdf8c5a1043e7f036e36fd5f93d64eb1cbccf9daf7068bab3fb427de3",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 8,
+      "files": 9,
+      "markers": {
+        "microscopy": 67
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class zaber_device.zaber_device:ZaberStage (zaber_device/zaber_device.py:721, score 15)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class zaber_device.zaber_device:ZaberStage uses the hardware transport serial",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jdmax/epics-device-lib",
+  "track": "labs",
+  "local_path": "labs/jdmax/epics-device-lib",
+  "driver_dir": "MHS/drivers/labs/jdmax__epics-device-lib",
+  "upstream": {
+    "repo_url": "https://github.com/jdmax/epics-device-lib",
+    "commit": "370b8e3d94224db70ee2a1f51bd28c5d305daefe",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 343,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "instruments.ls336:DeviceConnection",
+      "file": "instruments/ls336.py",
+      "line": 99,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "DeviceConnection.read_heater",
+      "DeviceConnection.read_man_heater",
+      "DeviceConnection.read_outmode",
+      "DeviceConnection.read_pid",
+      "DeviceConnection.read_range",
+      "DeviceConnection.read_setpoint",
+      "DeviceConnection.read_temps",
+      "DeviceConnection.read_llim",
+      "DeviceConnection.read_status",
+      "DeviceConnection.read_sweep",
+      "DeviceConnection.read_ulim"
+    ],
+    "writes": [
+      "DeviceConnection.set_man_heater",
+      "DeviceConnection.set_outmode",
+      "DeviceConnection.set_pid",
+      "DeviceConnection.set_range",
+      "DeviceConnection.set_setpoint",
+      "DeviceConnection.set_heater",
+      "DeviceConnection.set_llim",
+      "DeviceConnection.set_remote",
+      "DeviceConnection.set_sweep",
+      "DeviceConnection.set_ulim",
+      "ModbusDevice.set_alarm"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.thermal.setpoint.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/jdmax__epics-device-lib --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

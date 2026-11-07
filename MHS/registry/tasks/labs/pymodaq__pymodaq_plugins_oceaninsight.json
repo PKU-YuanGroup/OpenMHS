@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pymodaq/pymodaq_plugins_oceaninsight",
+  "track": "labs",
+  "local_path": "labs/pymodaq/pymodaq_plugins_oceaninsight",
+  "driver_dir": "MHS/drivers/labs/pymodaq__pymodaq_plugins_oceaninsight",
+  "upstream": {
+    "repo_url": "https://github.com/pymodaq/pymodaq_plugins_oceaninsight",
+    "commit": "298f768a2f2c5643a45e61f416300b3805b8c893",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 12,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pymodaq_plugins_oceaninsight.daq_viewer_plugins.plugins_1D.daq_1Dviewer_Omnidriver:DAQ_1DViewer_Omnidriver",
+      "file": "src/pymodaq_plugins_oceaninsight/daq_viewer_plugins/plugins_1D/daq_1Dviewer_Omnidriver.py",
+      "line": 26,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "DAQ_1DViewer_Omnidriver.get_xaxis"
+    ],
+    "writes": [],
+    "actions": [
+      "DAQ_1DViewer_Omnidriver.stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymodaq__pymodaq_plugins_oceaninsight --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

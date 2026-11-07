@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.gbionics/jaxsim",
+  "track": "robots",
+  "local_path": "robots/gbionics/jaxsim",
+  "driver_dir": "MHS/drivers/robots/gbionics__jaxsim",
+  "upstream": {
+    "repo_url": "https://github.com/gbionics/jaxsim",
+    "commit": "51966e90f3dffb9cb06ac79d4d784c5686222a23",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1262,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/jaxsim/logging.py:10 JaxSimWarning",
+      "src/jaxsim/api/data.py:27 JaxSimModelData",
+      "src/jaxsim/api/model.py:48 JaxSimModel",
+      "src/jaxsim/api/references.py:23 JaxSimModelReferences"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/gbionics__jaxsim --backend fake",
+  "skip_reason": "catalogue 'physics engines'/'physics engines' describes software and the scan finds no device or simulation evidence",
+  "publish_review": "not_required"
+}

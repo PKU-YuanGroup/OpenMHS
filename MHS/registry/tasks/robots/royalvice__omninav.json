@@ -1,0 +1,95 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.royalvice/omninav",
+  "track": "robots",
+  "local_path": "robots/royalvice/omninav",
+  "driver_dir": "MHS/drivers/robots/royalvice__omninav",
+  "upstream": {
+    "repo_url": "https://github.com/royalvice/omninav",
+    "commit": "6dd7b8749bb6bdd450e7c0e2f80fe033cd7df641",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1584,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "omninav.robots.go2:Go2Robot",
+      "file": "omninav/robots/go2.py",
+      "line": 45,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "omninav.robots.go2w:Go2wRobot",
+      "file": "omninav/robots/go2w.py",
+      "line": 38,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "omninav.core.map.service:MapService",
+      "file": "omninav/core/map/service.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "omninav.core.base:SimulationManagerBase",
+      "file": "omninav/core/base.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "omninav.interfaces.python_api:OmniNavEnv",
+      "file": "omninav/interfaces/python_api.py",
+      "line": 26,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "omninav/core/base.py:15 SimulationManagerBase",
+      "omninav/core/runtime.py:29 SimulationRuntime",
+      "omninav/core/simulation_manager.py:29 GenesisSimulationManager",
+      "omninav/core/simulation_manager.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/royalvice__omninav --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

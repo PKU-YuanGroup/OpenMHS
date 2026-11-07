@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.vadter/hantek6022be",
+  "track": "labs",
+  "local_path": "labs/vadter/hantek6022be",
+  "driver_dir": "MHS/drivers/labs/vadter__hantek6022be",
+  "upstream": {
+    "repo_url": "https://github.com/vadter/hantek6022be",
+    "commit": "548ff23984044ed1b8265358cfd20312e37cce8b",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 334,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pyhantek6022BE:Hantek",
+      "file": "pyhantek6022BE.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Hantek.GetData",
+      "Hantek.get_rate",
+      "Hantek.get_rates",
+      "Hantek.get_time"
+    ],
+    "writes": [
+      "Hantek.SetSampleRate",
+      "Hantek.SetVDiv",
+      "Hantek.set_chvdiv",
+      "Hantek.set_samplerate"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/vadter__hantek6022be --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

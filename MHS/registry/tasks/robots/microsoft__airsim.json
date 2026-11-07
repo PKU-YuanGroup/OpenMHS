@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.microsoft/airsim",
+  "track": "robots",
+  "local_path": "robots/microsoft/airsim",
+  "driver_dir": "MHS/drivers/robots/microsoft__airsim",
+  "upstream": {
+    "repo_url": "https://github.com/microsoft/airsim",
+    "commit": "1ca93f6f77e4e8a39b2b241c1fe2764da4d7dd41",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:engine",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 84,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "airgym.envs:AirSimDroneEnv",
+      "file": "PythonClient/reinforcement_learning/airgym/envs/drone_env.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "airgym.envs:AirSimCarEnv",
+      "file": "PythonClient/reinforcement_learning/airgym/envs/car_env.py",
+      "line": 12,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "PythonClient/eventcamera_sim/event_simulator.py:84 EventSimulator",
+      "PythonClient/reinforcement_learning/airgym/envs/airsim_env.py:8 AirSimEnv",
+      "PythonClient/reinforcement_learning/airgym/envs/car_env.py:12 AirSimCarEnv",
+      "PythonClient/reinforcement_learning/airgym/envs/drone_env.py:13 AirSimDroneEnv",
+      "PythonClient/eventcamera_sim/event_simulator.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/microsoft__airsim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

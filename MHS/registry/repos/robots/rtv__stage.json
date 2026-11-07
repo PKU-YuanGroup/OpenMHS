@@ -1,0 +1,194 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "cmake",
+    "make"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_50fe28ecff70dfc3",
+    "https://github.com/rtv/stage"
+  ],
+  "description": "rtv/stage: multi-robot systems for multi-robot systems (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: direct simulation backend. Declared backend: Stage. Language: C++. Catalog keywords: C++.",
+  "domains": [
+    "multi-robot systems"
+  ],
+  "evidence": {
+    "files_read": 10,
+    "notes": "bounded static scan: 288 files enumerated (max depth 3), 10 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "gazebo"
+  ],
+  "hardware_free": true,
+  "id": "gh.rtv/stage",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs a future engine bridge; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/gazebo.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "C++ plugin /libstage",
+    "C++ API",
+    "Gazebo",
+    "CLI"
+  ],
+  "languages": [
+    "C++",
+    "C",
+    "Shell",
+    "Python"
+  ],
+  "last_commit_at": "2020-11-11T23:35:42Z",
+  "license": "GPL-2.0",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-2.0",
+  "links": {
+    "docs": "https://github.com/rtv/Stage/commit/281ed731ed56b23d0879a2c765d4a20824a6d58a",
+    "repo": "https://github.com/rtv/stage"
+  },
+  "local_path": "robots/rtv/stage",
+  "modes": [
+    "simulated"
+  ],
+  "owner": "rtv",
+  "package_id": "gh.rtv/stage",
+  "quarantine": false,
+  "rank": 239,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "stage",
+  "repo_url": "https://github.com/rtv/stage",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "281ed731ed56b23d0879a2c765d4a20824a6d58a",
+    "repo_url": "https://github.com/rtv/stage"
+  },
+  "stars": 425,
+  "tags": [
+    "gazebo",
+    "robotics",
+    "multi-robot systems",
+    "direct simulation backend",
+    "simulated",
+    "bridge runtime"
+  ],
+  "tier": "A",
+  "title": "rtv/stage",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "gazebo",
+      "family_confidence": 0.74,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 66.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "Stage",
+      "category_zh": "多机器人",
+      "description_zh": "可独立运行或作为 C++ 库的二维半移动机器人/传感器群体仿真器。",
+      "join": "exact",
+      "license_raw": "GPL-2.0",
+      "mhs_support_raw": "需开发适配（仅核公开文档/API；未确认可复用MHS适配器，不据此断言不存在）",
+      "priority": "P2",
+      "row": 2376,
+      "rows_all": [
+        2376
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "gazebo",
+      "catalog_tier": "A",
+      "family_matches": [
+        "gazebo",
+        "gazebo"
+      ],
+      "family_rule": "scored",
+      "family_score": 4,
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/robots/rtv__stage/simulated",
+        "mode": "simulated",
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-2.0",
+      "declared_spdx": null,
+      "file": "COPYING.txt",
+      "file_spdx": "GPL-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "cmake",
+        "make"
+      ],
+      "entry_evidence_count": 5,
+      "files": 288,
+      "markers": {
+        "camera": 1,
+        "gazebo": 5,
+        "laser": 1,
+        "microscopy": 82
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): Stage is a C++ 2.5D multi-robot simulator engine with a Player plugin, not a Python driver, so bridge-runtime/framework fits; driver authors must bind libstage or use Player's Python client (GPL-2.0).",
+        "rules alone: untriaged (untriaged:no_entry_class, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "Stage is a C++ 2.5D multi-robot simulator engine with a Player plugin, not a Python driver, so bridge-runtime/framework fits; driver authors must bind libstage or use Player's Python client (GPL-2.0).",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

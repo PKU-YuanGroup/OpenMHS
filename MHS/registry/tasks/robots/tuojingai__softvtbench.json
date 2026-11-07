@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tuojingai/softvtbench",
+  "track": "robots",
+  "local_path": "robots/tuojingai/softvtbench",
+  "driver_dir": "MHS/drivers/robots/tuojingai__softvtbench",
+  "upstream": {
+    "repo_url": "https://github.com/tuojingai/softvtbench",
+    "commit": "58056111f01e05bf1a4ae1dee75db4e3d9e7c5be",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 269,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "tac_manip.tasks.manipulation.libero.config.franka.franka_libero_env_cfg:IKLiberoCameraEnvCfg",
+      "file": "SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/libero/config/franka/franka_libero_env_cfg.py",
+      "line": 1066,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/articulated/config/franka/__init__.py:16 gym env Isaac-Open-Drawer-Franka-IK-IL-v0",
+      "SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/articulated/config/franka/__init__.py:25 gym env Isaac-Put-Into-And-Close-Drawer-Franka-IK-IL-v0",
+      "SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/articulated/config/franka/__init__.py:38 gym env Isaac-Open-Drawer-Franka-IK-Tactile-v0",
+      "SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/articulated/config/franka/__init__.py:47 gym env Isaac-Put-Into-And-Close-Drawer-Franka-IK-Tactile-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Isaac-Open-Drawer-Franka-IK-IL-v0 registered at SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/articulated/config/franka/__init__.py:16",
+      "gym env Isaac-Put-Into-And-Close-Drawer-Franka-IK-IL-v0 registered at SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/articulated/config/franka/__init__.py:25",
+      "gym env Isaac-Open-Drawer-Franka-IK-Tactile-v0 registered at SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/articulated/config/franka/__init__.py:38",
+      "gym env Isaac-Put-Into-And-Close-Drawer-Franka-IK-Tactile-v0 registered at SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/articulated/config/franka/__init__.py:47",
+      "gym env Isaac-Open-Drawer-UR10E-IK-IL-v0 registered at SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/articulated/config/ur10e/__init__.py:16",
+      "gym env Isaac-Put-Into-And-Close-Drawer-UR10E-IK-IL-v0 registered at SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/articulated/config/ur10e/__init__.py:25",
+      "gym env Isaac-Open-Drawer-UR10E-IK-Tactile-v0 registered at SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/articulated/config/ur10e/__init__.py:38",
+      "gym env Isaac-Put-Into-And-Close-Drawer-UR10E-IK-Tactile-v0 registered at SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/articulated/config/ur10e/__init__.py:47",
+      "gym env Isaac-Factory-NutThread-IK-v0 registered at SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/factory/config/franka/__init__.py:16",
+      "gym env Isaac-Factory-PegInsert-IK-v0 registered at SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/factory/config/franka/__init__.py:25",
+      "gym env Isaac-Factory-GearMesh-IK-v0 registered at SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/factory/config/franka/__init__.py:34",
+      "gym env Isaac-Factory-NutThread-IK-Tactile-v0 registered at SoftVTBench/source/tac_manip/tac_manip/tasks/manipulation/factory/config/franka/__init__.py:46"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/tuojingai__softvtbench --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

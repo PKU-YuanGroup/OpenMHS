@@ -1,0 +1,291 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "pyhamilton.interface:HamiltonInterface (pyhamilton/interface.py:501)",
+      "pyhamilton.odtc.odtc_protocol:ThermalCyclerProtocol (pyhamilton/odtc/odtc_protocol.py:4)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.fluid.aspirate.v1",
+    "cap.fluid.dispense.v1",
+    "cap.motion.joint_position.v1",
+    "cap.sensing.read.v1",
+    "cap.manipulation.grasp.v1",
+    "cap.motion.stop.v1"
+  ],
+  "catalog_refs": [
+    "repo_b3974c87a13fac68",
+    "https://github.com/dgretton/pyhamilton"
+  ],
+  "description": "dgretton/pyhamilton: Hamilton pipetting SDK for wet-lab automation and chemistry (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 6. Catalog role: device SDK; protocol bridge. Declared backend: Hamilton OEM/VENUS bridge. Language: Python.",
+  "domains": [
+    "wet-lab automation and chemistry"
+  ],
+  "evidence": {
+    "files_read": 5,
+    "notes": "bounded static scan: 422 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/dgretton__pyhamilton/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.dgretton/pyhamilton",
+  "integration": {
+    "blockers": [
+      "PLATFORM_WINDOWS: Windows-only imports"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/dgretton__pyhamilton: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/dgretton__pyhamilton --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python",
+    "HTTP local OEM bridge",
+    ".NET",
+    "Python SDK",
+    "Windows COM/Venus",
+    "CLI",
+    "HTTP/REST",
+    "Serial"
+  ],
+  "languages": [
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2025-11-27T05:40:47Z",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "docs": "https://github.com/dgretton/pyhamilton",
+    "repo": "https://github.com/dgretton/pyhamilton"
+  },
+  "local_path": "labs/dgretton/pyhamilton",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "dgretton",
+  "package_id": "gh.dgretton/pyhamilton",
+  "quarantine": false,
+  "rank": 4,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pyhamilton",
+  "repo_url": "https://github.com/dgretton/pyhamilton",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "65938d05cc8f5a5a0d3186648add560439ab1cdd",
+    "repo_url": "https://github.com/dgretton/pyhamilton"
+  },
+  "stars": 192,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "hamilton pipetting sdk",
+    "simulated",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "dgretton/pyhamilton",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 6,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 45.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备 SDK | 协议桥接",
+      "archived": "false",
+      "backend_family_raw": "Hamilton OEM/VENUS桥接",
+      "category_zh": "Hamilton移液 SDK",
+      "description_zh": "Hamilton Python命令接口；源码区分OEM窗口模拟与仅JSON日志模式。",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "需开发适配；已核材料未建立官方或第三方 MHS 集成证据",
+      "priority": "P1",
+      "row": 630,
+      "rows_all": [
+        630
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已核源码"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/dgretton__pyhamilton/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.fluid.aspirate.v1",
+              "cap.fluid.dispense.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "lab.liquid_handler"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.manipulation.grasp.v1"
+            ],
+            "kind": "robot.gripper"
+          }
+        ],
+        "risk_floor": "R2",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/labs/dgretton__pyhamilton/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/dgretton__pyhamilton/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.fluid.aspirate.v1",
+              "cap.fluid.dispense.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "lab.liquid_handler"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.manipulation.grasp.v1"
+            ],
+            "kind": "robot.gripper"
+          }
+        ],
+        "risk_floor": "R2"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "65938d05cc8f5a5a0d3186648add560439ab1cdd",
+      "driver_dir": "MHS/drivers/labs/dgretton__pyhamilton",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:83f0ebd06b8c7adddc9f4f9881bcb52abae4b89a7839891bb099620ad14c5dd2",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 7,
+      "files": 422,
+      "markers": {
+        "camera": 2,
+        "cli": 2,
+        "http": 1,
+        "serial": 3,
+        "thermal": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): HamiltonInterface drives Hamilton STAR/STARlet through VENUS and has OEM-window simulation and JSON-log-only modes for hardware-free runs.",
+        "rules alone: direct-driver (PY_SDK_WITH_ENTRY, rule 10)"
+      ],
+      "family": "python-object",
+      "flagship": true,
+      "hardware_transport": "class pyhamilton.interface:HamiltonInterface uses the hardware transport clr",
+      "helper": "PythonObjectDriver",
+      "justification": "HamiltonInterface drives Hamilton STAR/STARlet through VENUS and has OEM-window simulation and JSON-log-only modes for hardware-free runs.",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

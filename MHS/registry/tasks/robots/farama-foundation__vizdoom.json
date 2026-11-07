@@ -1,0 +1,94 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.farama-foundation/vizdoom",
+  "track": "robots",
+  "local_path": "robots/farama-foundation/vizdoom",
+  "driver_dir": "MHS/drivers/robots/farama-foundation__vizdoom",
+  "upstream": {
+    "repo_url": "https://github.com/farama-foundation/vizdoom",
+    "commit": "26a9958970a3b1069325cf9e00c4119a69664128",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 66,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "vizdoom.gymnasium_wrapper.gymnasium_env_defns:VizdoomScenarioEnv",
+      "file": "gymnasium_wrapper/gymnasium_env_defns.py",
+      "line": 32,
+      "confidence": "override"
+    },
+    {
+      "symbol": "vizdoom.gymnasium_wrapper.base_gymnasium_env:VizdoomEnv",
+      "file": "gymnasium_wrapper/base_gymnasium_env.py",
+      "line": 58,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10.0,<3.15",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gymnasium_wrapper/__init__.py:30 gym env VizdoomBasic-v1",
+      "gymnasium_wrapper/__init__.py:36 gym env VizdoomBasic-MultiBinary-v1",
+      "gymnasium_wrapper/__init__.py:42 gym env VizdoomBasicAudio-v1",
+      "gymnasium_wrapper/__init__.py:48 gym env VizdoomBasicAudio-MultiBinary-v1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env VizdoomBasic-v1 registered at gymnasium_wrapper/__init__.py:30",
+      "gym env VizdoomBasic-MultiBinary-v1 registered at gymnasium_wrapper/__init__.py:36",
+      "gym env VizdoomBasicAudio-v1 registered at gymnasium_wrapper/__init__.py:42",
+      "gym env VizdoomBasicAudio-MultiBinary-v1 registered at gymnasium_wrapper/__init__.py:48",
+      "gym env VizdoomBasicNotifications-v1 registered at gymnasium_wrapper/__init__.py:54",
+      "gym env VizdoomBasicNotifications-MultiBinary-v1 registered at gymnasium_wrapper/__init__.py:63",
+      "gym env VizdoomDeadlyCorridor-v1 registered at gymnasium_wrapper/__init__.py:72",
+      "gym env VizdoomDeadlyCorridor-MultiBinary-v1 registered at gymnasium_wrapper/__init__.py:78",
+      "gym env VizdoomDefendCenter-v1 registered at gymnasium_wrapper/__init__.py:84",
+      "gym env VizdoomDefendCenter-MultiBinary-v1 registered at gymnasium_wrapper/__init__.py:90",
+      "gym env VizdoomDefendLine-v1 registered at gymnasium_wrapper/__init__.py:96",
+      "gym env VizdoomDefendLine-MultiBinary-v1 registered at gymnasium_wrapper/__init__.py:102"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/farama-foundation__vizdoom --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.stanford-iprl-lab/scaffoldlearning",
+  "track": "robots",
+  "local_path": "robots/stanford-iprl-lab/scaffoldlearning",
+  "driver_dir": "MHS/drivers/robots/stanford-iprl-lab__scaffoldlearning",
+  "upstream": {
+    "repo_url": "https://github.com/stanford-iprl-lab/scaffoldlearning",
+    "commit": "555b1896a2f00731d2880cadec434c63d0a9af4c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 629,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "simulation/Shallow_Manipulation_Env.py:28 RobotEnv environment class",
+      "simulation/Wrench_Manipulation_Env.py:29 RobotEnv environment class"
+    ],
+    "upstream_tests": "external/bullet3.git/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/stanford-iprl-lab__scaffoldlearning --backend fake",
+  "skip_reason": "override (robots.json): ScaffoldLearning is a research PyBullet simulation of a Franka/Robotiq arm with RL training, not a device driver and not a Gymnasium or MuJoCo environment, so it is skipped.",
+  "publish_review": "not_required"
+}

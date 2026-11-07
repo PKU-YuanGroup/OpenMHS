@@ -1,0 +1,151 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.imswitch/imswitch",
+  "track": "labs",
+  "local_path": "labs/imswitch/imswitch",
+  "driver_dir": "MHS/drivers/labs/imswitch__imswitch",
+  "upstream": {
+    "repo_url": "https://github.com/imswitch/imswitch",
+    "commit": "37bf1df6de0ee4746b05bef9684c782e4995b2e8",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 4,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "imswitch.imcontrol.model.interfaces.standamotor:StandaMotor",
+      "file": "imswitch/imcontrol/model/interfaces/standamotor.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "imswitch.imcontrol.view.guitools.ViewSetupInfo:ViewSetupInfo",
+      "file": "imswitch/imcontrol/view/guitools/ViewSetupInfo.py",
+      "line": 34,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "imswitch.imcontrol.controller.controllers.HyphaController:HyphaController",
+      "file": "imswitch/imcontrol/controller/controllers/HyphaController.py",
+      "line": 138,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "imswitch.imcontrol.model.interfaces.pyicic.IC_Camera:IC_Camera",
+      "file": "imswitch/imcontrol/model/interfaces/pyicic/IC_Camera.py",
+      "line": 32,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "imswitch.imcontrol.model.managers.positioners.SmarACTPositionerManager:SmarACTPositionerManager",
+      "file": "imswitch/imcontrol/model/managers/positioners/SmarACTPositionerManager.py",
+      "line": 25,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "imswitch/imcontrol/model/SetupInfo.py:252 MockXXInfo",
+      "imswitch/imcontrol/model/interfaces/RS232Driver_mock.py:4 MockRS232Driver",
+      "imswitch/imcontrol/model/interfaces/hamamatsu_mock.py:55 MockHamamatsu",
+      "imswitch/imcontrol/model/interfaces/pco_mock.py:11 MockCameraPCO",
+      "imswitch/imcontrol/model/interfaces/piezoPiezoconceptZ_mock.py:6 MockPCZPiezo",
+      "imswitch/imcontrol/model/interfaces/stageMHXY_mock.py:6 MockMHXYStage"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "StandaMotor.get_pos",
+      "ViewSetupInfo.getAllDevices",
+      "ViewSetupInfo.getDetectors",
+      "ViewSetupInfo.getDevice",
+      "ViewSetupInfo.getTTLDevices",
+      "ViewSetupInfo.hasWidget",
+      "ViewSetupInfo.Flatfield (attribute)",
+      "ViewSetupInfo.FlowStop (attribute)",
+      "ViewSetupInfo.HistoScan (attribute)",
+      "ViewSetupInfo.LEDMatrixs (attribute)",
+      "ViewSetupInfo.LEDs (attribute)",
+      "ViewSetupInfo.PixelCalibration (attribute)"
+    ],
+    "writes": [
+      "StandaMotor.set_def_sync_in_settings",
+      "StandaMotor.set_def_sync_out_settings",
+      "StandaMotor.set_rot_speed",
+      "StandaMotor.set_sync_in_settings",
+      "StandaMotor.set_zero_pos",
+      "ViewSetupInfo.setDefaultLEDPresetForScan",
+      "ViewSetupInfo.setDefaultLaserPresetForScan",
+      "ViewSetupInfo.setLEDPreset",
+      "ViewSetupInfo.setLaserPreset",
+      "ViewSetupInfo.setROI",
+      "HyphaController.set_illumination"
+    ],
+    "actions": [
+      "StandaMotor.start_cont_rot",
+      "StandaMotor.stop_cont_rot",
+      "StandaMotor.wait_for_stop",
+      "HyphaController.autofocus",
+      "HyphaController.home_stage",
+      "HyphaController.move_stage",
+      "HyphaController.snap_image",
+      "HyphaController.start_service",
+      "HyphaController.asyncio_thread.run",
+      "HyphaController.mMicroscope.home"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.imaging.illumination.v1",
+      "cap.imaging.focus.v1",
+      "cap.measure.flow.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "imswitch/imcontrol/model/interfaces/SmarACT.py:150 SA_PID_LIMIT = 16",
+      "imswitch/imcontrol/model/interfaces/gxipy/dxwrapper.py:40 PARAMETER_OUT_OF_BOUND = -102",
+      "imswitch/imcontrol/model/interfaces/gxipy/gxidef.py:6 GAMMA_MIN = 0.1",
+      "imswitch/imcontrol/model/interfaces/gxipy/gxidef.py:7 GAMMA_MAX = 10.0",
+      "imswitch/imcontrol/model/interfaces/gxipy/gxidef.py:8 CONTRAST_MIN = -50",
+      "imswitch/imcontrol/model/interfaces/gxipy/gxidef.py:9 CONTRAST_MAX = 100",
+      "imswitch/imcontrol/model/interfaces/gxipy/gxidef.py:10 UNSIGNED_INT_MAX = 4294967295",
+      "imswitch/imcontrol/model/interfaces/gxipy/gxidef.py:11 UNSIGNED_LONG_LONG_MAX = 18446744073709551615"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/imswitch__imswitch --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

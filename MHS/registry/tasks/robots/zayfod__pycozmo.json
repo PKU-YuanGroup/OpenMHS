@@ -1,0 +1,129 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.zayfod/pycozmo",
+  "track": "robots",
+  "local_path": "robots/zayfod/pycozmo",
+  "driver_dir": "MHS/drivers/robots/zayfod__pycozmo",
+  "upstream": {
+    "repo_url": "https://github.com/zayfod/pycozmo",
+    "commit": "1b6dcd9b869a3784f1d8b02e820bb033f95fd13a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 32,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "pycozmo.client:Client",
+      "file": "pycozmo/client.py",
+      "line": 41,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pycozmo.conn:Connection",
+      "file": "pycozmo/conn.py",
+      "line": 341,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pycozmo.brain:Brain",
+      "file": "pycozmo/brain.py",
+      "line": 27,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pycozmo.procedural_face:ProceduralLid",
+      "file": "pycozmo/procedural_face.py",
+      "line": 73,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pycozmo.util:Matrix44",
+      "file": "pycozmo/util.py",
+      "line": 316,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.6.0",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "pycozmo/tests"
+  },
+  "hints": {
+    "reads": [
+      "Client.get_anim_names",
+      "Client.pose.is_accurate",
+      "Client.pose.is_comparable",
+      "Client.pose.is_valid"
+    ],
+    "writes": [
+      "Client.set_all_backpack_lights",
+      "Client.set_backpack_lights",
+      "Client.set_backpack_lights_off",
+      "Client.set_center_backpack_lights",
+      "Client.set_head_angle",
+      "Client.set_head_light",
+      "Client.set_lift_height",
+      "Client.set_volume",
+      "Client.accel.set_to"
+    ],
+    "actions": [
+      "Client.enable_animations",
+      "Client.enable_camera",
+      "Client.enable_procedural_face",
+      "Client.move_head",
+      "Client.move_lift",
+      "Client.start",
+      "Client.stop",
+      "Client.stop_all_motors",
+      "Client.conn.run",
+      "Connection.run",
+      "Connection.start",
+      "Connection.stop"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "pycozmo/audio.py:25 MULAW_MAX = 32767",
+      "pycozmo/procedural_face.py:519 MAX_X_OFFSET = 10.0",
+      "pycozmo/procedural_face.py:520 MAX_Y_OFFSET = 50.0",
+      "pycozmo/procedural_face.py:521 MAX_EYE_SCALE = 0.25",
+      "pycozmo/protocol_declaration.py:34 MAX_SEQ = 65534"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/zayfod__pycozmo --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pymodaq/pymodaq_plugins_mockexamples",
+  "track": "labs",
+  "local_path": "labs/pymodaq/pymodaq_plugins_mockexamples",
+  "driver_dir": "MHS/drivers/labs/pymodaq__pymodaq_plugins_mockexamples",
+  "upstream": {
+    "repo_url": "https://github.com/pymodaq/pymodaq_plugins_mockexamples",
+    "commit": "1c0aabb9421c914600df7c88fc9873ae88c29b93",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1058,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/pymodaq_plugins_mockexamples/daq_move_plugins/daq_move_MockBinary.py:8 DAQ_Move_MockBinary",
+      "src/pymodaq_plugins_mockexamples/daq_move_plugins/daq_move_MockCamera.py:11 DAQ_Move_MockCamera",
+      "src/pymodaq_plugins_mockexamples/daq_move_plugins/daq_move_MockComplexSignal.py:10 DAQ_Move_MockComplexSignal",
+      "src/pymodaq_plugins_mockexamples/daq_move_plugins/daq_move_MockHeater.py:9 DAQ_Move_MockHeater",
+      "src/pymodaq_plugins_mockexamples/daq_move_plugins/daq_move_MockNamedAxes.py:11 DAQ_Move_MockNamedAxes",
+      "src/pymodaq_plugins_mockexamples/daq_move_plugins/daq_move_MockRandom.py:11 DAQ_Move_MockRandom"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymodaq__pymodaq_plugins_mockexamples --backend fake",
+  "skip_reason": "override (labs.json): This PyMoDAQ plugin provides mock virtual instruments that synthesize data; it is not a device driver.",
+  "publish_review": "not_required"
+}

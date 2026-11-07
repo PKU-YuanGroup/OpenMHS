@@ -1,0 +1,251 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "PAL3_driver:PALService (PAL3_driver.py:512)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "packaged"
+  },
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "build_systems": [
+    "python",
+    "docker"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.motion.joint_position.v1",
+    "cap.sample.centrifuge.v1",
+    "cap.manipulation.grasp.v1",
+    "cap.motion.stop.v1"
+  ],
+  "catalog_refs": [
+    "repo_84d735bae7e37ee5",
+    "https://github.com/ad-sdl/pal_module"
+  ],
+  "description": "ad-sdl/pal_module: device backend for liquid handling (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 5. Catalog role: device SDK. Language: Python. Catalog keywords: PAL, MADSci.",
+  "domains": [
+    "liquid handling"
+  ],
+  "evidence": {
+    "files_read": 5,
+    "notes": "bounded static scan: 85 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.ad-sdl/pal_module",
+  "integration": {
+    "blockers": [
+      "NO_HARDWARE_FREE_PATH",
+      "PLATFORM_WINDOWS: Windows-only imports"
+    ],
+    "effort": "E2",
+    "next_action": "Review MHS/drivers/labs/ad-sdl__pal_module/RESULT.json: the package is blocked on NO_HARDWARE_FREE_PATH; clear the codes before MHS/registry/tasks/labs/ad-sdl__pal_module.json is dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Docker",
+    "HTTP/REST",
+    "MADSci",
+    "MQTT"
+  ],
+  "languages": [
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2026-08-05T14:52:24-05:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/ad-sdl/pal_module"
+  },
+  "local_path": "labs/ad-sdl/pal_module",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "ad-sdl",
+  "package_id": "gh.ad-sdl/pal_module",
+  "quarantine": false,
+  "rank": 17,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pal_module",
+  "repo_url": "https://github.com/ad-sdl/pal_module",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "31da19a869362cbc1766ffca0508f84ccdb8405e",
+    "repo_url": "https://github.com/ad-sdl/pal_module"
+  },
+  "stars": 1,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "ad-sdl/pal_module",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 5,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-madsci",
+      "family_confidence": 0.86,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 38.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "unknown",
+      "category_zh": "设备后端",
+      "description_zh": "控制PAL机器人的MADSci模块，在建且未验证",
+      "join": "exact",
+      "license_raw": "NOASSERTION",
+      "mhs_support_raw": "unknown",
+      "priority": "参考",
+      "row": 61,
+      "rows_all": [
+        61
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "madsci",
+      "catalog_tier": "B",
+      "family_matches": [
+        "madsci",
+        "madsci",
+        "madsci"
+      ],
+      "family_note": "triage family python-object (catalogue family madsci)",
+      "family_rule": "scored",
+      "family_score": 4,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/ad-sdl__pal_module/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.sample.centrifuge.v1"
+            ],
+            "kind": "lab.centrifuge"
+          },
+          {
+            "capabilities": [
+              "cap.manipulation.grasp.v1"
+            ],
+            "kind": "robot.gripper"
+          }
+        ],
+        "risk_floor": "R2",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "NO_HARDWARE_FREE_PATH"
+      ],
+      "commit": "31da19a869362cbc1766ffca0508f84ccdb8405e",
+      "driver_dir": "MHS/drivers/labs/ad-sdl__pal_module",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:47a5cc6d92ed5f47a23ddcb06e00af5c5c68c1ea294cc66c43e0d9e5b234c17a",
+      "reviewed": false,
+      "status": "blocked"
+    },
+    "scan": {
+      "build_systems": [
+        "python",
+        "docker"
+      ],
+      "entry_evidence_count": 0,
+      "files": 85,
+      "markers": {
+        "docker": 3,
+        "http": 2,
+        "madsci": 34,
+        "mqtt": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (waiting-routing.json): Model review of the waiting cards, 2026-11-05: no HTTP API to profile (the node action is a stub, src/pal_module.py:29-33); PALService (PAL3_driver.py:512) drives the PAL3 through .NET and scripts outside the clone (:12-22).",
+        "rules alone: family-config (family:http, rule 9)"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class PAL3_driver:PALService uses the hardware transport clr",
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of the waiting cards, 2026-11-05: no HTTP API to profile (the node action is a stub, src/pal_module.py:29-33); PALService (PAL3_driver.py:512) drives the PAL3 through .NET and scripts outside the clone (:12-22).",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

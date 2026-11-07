@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.biosteamdevelopmentgroup/biosteam",
+  "track": "labs",
+  "local_path": "labs/biosteamdevelopmentgroup/biosteam",
+  "driver_dir": "MHS/drivers/labs/biosteamdevelopmentgroup__biosteam",
+  "upstream": {
+    "repo_url": "https://github.com/biosteamdevelopmentgroup/biosteam",
+    "commit": "6b7f8382629cf0a921daf3bbd52453da64587d72",
+    "license_spdx": "NCSA",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 278,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "biosteam/_system.py:671 MockSystem",
+      "biosteam/evaluation/_variable.py:180 MockVariable",
+      "biosteam/units/mixing.py:422 MockMixer",
+      "biosteam/units/splitting.py:278 MockSplitter",
+      "biosteam/utils/piping.py:118 MockStream",
+      "thermosteam/thermosteam/_thermal_condition.py:72 MockThermalCondition"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/biosteamdevelopmentgroup__biosteam --backend fake",
+  "skip_reason": "override (labs.json): BioSTEAM is an in-memory chemical-process simulation and techno-economic-analysis library with no serial, VISA, socket or vendor-SDK interface, so a driver author has no device to wrap.",
+  "publish_review": "not_required"
+}

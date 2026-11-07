@@ -1,0 +1,224 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "sidecar.bmg_interface:BmgCom (sidecar/bmg_interface.py:15)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.thermal.setpoint.v1"
+  ],
+  "catalog_refs": [
+    "repo_c02f59d0193ea825",
+    "https://github.com/ad-sdl/bmg_module"
+  ],
+  "description": "ad-sdl/bmg_module: device backend for biology (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 6. Catalog role: device SDK. Language: Python. Catalog keywords: MADSci, BMG, VANTAstar, REST.",
+  "domains": [
+    "biology"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 19 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/ad-sdl__bmg_module/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.ad-sdl/bmg_module",
+  "integration": {
+    "blockers": [
+      "PLATFORM_WINDOWS: Windows-only imports"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/ad-sdl__bmg_module: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/ad-sdl__bmg_module --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "HTTP/REST",
+    "MADSci",
+    "CLI"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-08-04T13:41:55-05:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/ad-sdl/bmg_module"
+  },
+  "local_path": "labs/ad-sdl/bmg_module",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "ad-sdl",
+  "package_id": "gh.ad-sdl/bmg_module",
+  "quarantine": false,
+  "rank": 22,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "bmg_module",
+  "repo_url": "https://github.com/ad-sdl/bmg_module",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "22d55c6036e91f0af8d0c398727aef226208896d",
+    "repo_url": "https://github.com/ad-sdl/bmg_module"
+  },
+  "stars": 1,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "ad-sdl/bmg_module",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 6,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-madsci",
+      "family_confidence": 0.86,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 45.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "MADSci节点：控制BMG酶标仪(VANTAstar)，含驱动与REST节点",
+      "join": "exact",
+      "license_raw": "NOASSERTION",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 55,
+      "rows_all": [
+        55
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "madsci",
+      "catalog_tier": "B",
+      "family_matches": [
+        "madsci",
+        "madsci",
+        "madsci"
+      ],
+      "family_note": "triage family python-object (catalogue family madsci)",
+      "family_rule": "scored",
+      "family_score": 4,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/ad-sdl__bmg_module/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.thermal.setpoint.v1"
+            ],
+            "kind": "thermal.zone"
+          }
+        ],
+        "risk_floor": "R2",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "22d55c6036e91f0af8d0c398727aef226208896d",
+      "driver_dir": "MHS/drivers/labs/ad-sdl__bmg_module",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:5fbd9d1dc8d4e132b27321943934be7e193f32cfca7ca791af4245d770c4fd81",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 2,
+      "files": 19,
+      "markers": {
+        "http": 4,
+        "madsci": 11
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (waiting-routing.json): Model review of the waiting cards, 2026-11-05: HttpDriver has only the OT-2 profile; BmgCom (sidecar/bmg_interface.py:15) is the COM client of the BMG reader (plate_in/out, set_temp, run_assay :64-146), served as a direct Driver.",
+        "rules alone: family-config (family:http, rule 9)"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class sidecar.bmg_interface:BmgCom uses the hardware transport comtypes",
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of the waiting cards, 2026-11-05: HttpDriver has only the OT-2 profile; BmgCom (sidecar/bmg_interface.py:15) is the COM client of the BMG reader (plate_in/out, set_temp, run_assay :64-146), served as a direct Driver.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

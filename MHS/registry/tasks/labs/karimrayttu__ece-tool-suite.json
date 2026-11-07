@@ -1,0 +1,136 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.karimrayttu/ece-tool-suite",
+  "track": "labs",
+  "local_path": "labs/karimrayttu/ece-tool-suite",
+  "driver_dir": "MHS/drivers/labs/karimrayttu__ece-tool-suite",
+  "upstream": {
+    "repo_url": "https://github.com/karimrayttu/ece-tool-suite",
+    "commit": "13f7962a674ebc998a2ad2a31eb8592df65ad022",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 11,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "ece_suite.instruments.keysight:KeysightScope",
+      "file": "backend/ece_suite/instruments/keysight.py",
+      "line": 36,
+      "confidence": "override"
+    },
+    {
+      "symbol": "ece_suite.instruments.scope_drivers:TektronixScope",
+      "file": "backend/ece_suite/instruments/scope_drivers.py",
+      "line": 50,
+      "confidence": "override"
+    },
+    {
+      "symbol": "ece_suite.instruments.keysight:KeysightSpectrumAnalyzer",
+      "file": "backend/ece_suite/instruments/keysight.py",
+      "line": 263,
+      "confidence": "override"
+    },
+    {
+      "symbol": "ece_suite.instruments.dmm:ScpiDmm",
+      "file": "backend/ece_suite/instruments/dmm.py",
+      "line": 25,
+      "confidence": "override"
+    },
+    {
+      "symbol": "ece_suite.instruments.transport:VisaTransport",
+      "file": "backend/ece_suite/instruments/transport.py",
+      "line": 34,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "backend/ece_suite/main.py:742 RtlSimIn",
+      "backend/ece_suite/instruments/sim/base.py:14 SimInstrument",
+      "backend/ece_suite/instruments/sim/dmm.py:12 SimDMM",
+      "backend/ece_suite/instruments/sim/eload.py:13 SimEload",
+      "backend/ece_suite/instruments/sim/fluke_dmm.py:13 SimFlukeDMM",
+      "backend/ece_suite/instruments/sim/funcgen.py:13 SimFuncGen"
+    ],
+    "upstream_tests": "backend/tests"
+  },
+  "hints": {
+    "reads": [
+      "TektronixScope.identify",
+      "TektronixScope.measure_all",
+      "TektronixScope.measure_vpp",
+      "KeysightScope.identify",
+      "KeysightScope.measure_all",
+      "KeysightScope.measure_vpp",
+      "ScpiDmm.identify"
+    ],
+    "writes": [
+      "TektronixScope.configure_channel",
+      "TektronixScope.configure_timebase",
+      "TektronixScope.set_acquisition",
+      "TektronixScope.set_channel",
+      "TektronixScope.set_timebase",
+      "TektronixScope.set_trigger",
+      "KeysightScope.configure_channel",
+      "KeysightScope.configure_timebase",
+      "KeysightScope.set_acquisition",
+      "KeysightScope.set_channel",
+      "KeysightScope.set_timebase",
+      "KeysightScope.set_trigger"
+    ],
+    "actions": [
+      "TektronixScope.capture",
+      "TektronixScope.measure",
+      "TektronixScope.reset",
+      "TektronixScope.run",
+      "TektronixScope.stop",
+      "KeysightScope.capture",
+      "KeysightScope.measure",
+      "KeysightScope.reset",
+      "KeysightScope.run",
+      "KeysightScope.stop"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "backend/ece_suite/main.py:754 max_rounds = 3",
+      "backend/ece_suite/safety.py:49 min_current = 0.0"
+    ]
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/karimrayttu__ece-tool-suite --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

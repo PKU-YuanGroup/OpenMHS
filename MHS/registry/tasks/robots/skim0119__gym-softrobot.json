@@ -1,0 +1,112 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.skim0119/gym-softrobot",
+  "track": "robots",
+  "local_path": "robots/skim0119/gym-softrobot",
+  "driver_dir": "MHS/drivers/robots/skim0119__gym-softrobot",
+  "upstream": {
+    "repo_url": "https://github.com/skim0119/gym-softrobot",
+    "commit": "e4a73ed86191747f4d0af56e612a6e339e952448",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 132,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_softrobot.envs.octopus:FlatEnv",
+      "file": "gym_softrobot/envs/octopus/flat_env.py",
+      "line": 41,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_softrobot.envs.octopus:CrawlEnv",
+      "file": "gym_softrobot/envs/octopus/crawl_env.py",
+      "line": 40,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_softrobot.envs.octopus:OctoPhaseCrawlEnv",
+      "file": "gym_softrobot/envs/octopus/phase_crawl_env.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_softrobot.envs.octopus:OctoMuscleCrawlEnv",
+      "file": "gym_softrobot/envs/octopus/muscle_crawl_env.py",
+      "line": 24,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_softrobot.envs.octopus:ReachEnv",
+      "file": "gym_softrobot/envs/octopus/reach_env.py",
+      "line": 37,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_softrobot/__init__.py:6 gym env OctoFlat-v0",
+      "gym_softrobot/__init__.py:11 gym env OctoFlatLite-v0",
+      "gym_softrobot/__init__.py:17 gym env OctoCrawl-v0",
+      "gym_softrobot/__init__.py:22 gym env OctoPhaseCrawl-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env OctoFlat-v0 registered at gym_softrobot/__init__.py:6",
+      "gym env OctoFlatLite-v0 registered at gym_softrobot/__init__.py:11",
+      "gym env OctoCrawl-v0 registered at gym_softrobot/__init__.py:17",
+      "gym env OctoPhaseCrawl-v0 registered at gym_softrobot/__init__.py:22",
+      "gym env OctoMuscleCrawl-v0 registered at gym_softrobot/__init__.py:27",
+      "gym env OctoReach-v0 registered at gym_softrobot/__init__.py:32",
+      "gym env OctoArmSingle-v0 registered at gym_softrobot/__init__.py:37",
+      "gym env OctoArmTwo-v0 registered at gym_softrobot/__init__.py:42",
+      "gym env OctoArmPush-v0 registered at gym_softrobot/__init__.py:47",
+      "gym env OctoArmPush-v1 registered at gym_softrobot/__init__.py:52",
+      "gym env OctoArmPullWeight-v0 registered at gym_softrobot/__init__.py:58",
+      "gym env TendonArmReach-v0 registered at gym_softrobot/__init__.py:65"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/skim0119__gym-softrobot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

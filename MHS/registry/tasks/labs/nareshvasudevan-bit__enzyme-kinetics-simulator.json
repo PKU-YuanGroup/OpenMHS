@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nareshvasudevan-bit/enzyme-kinetics-simulator",
+  "track": "labs",
+  "local_path": "labs/nareshvasudevan-bit/enzyme-kinetics-simulator",
+  "driver_dir": "MHS/drivers/labs/nareshvasudevan-bit__enzyme-kinetics-simulator",
+  "upstream": {
+    "repo_url": "https://github.com/nareshvasudevan-bit/enzyme-kinetics-simulator",
+    "commit": "de299a88f72751ebe7c596a5a15289984eb18c61",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1040,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/kinetics_sim/engine.py:16 SimConfig"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/nareshvasudevan-bit__enzyme-kinetics-simulator --backend fake",
+  "skip_reason": "override (labs.json): A pure Michaelis-Menten curve simulation and fitting library, not a device driver.",
+  "publish_review": "not_required"
+}

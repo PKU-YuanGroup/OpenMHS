@@ -1,0 +1,92 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.luckyrobots/luckyrobots",
+  "track": "robots",
+  "local_path": "robots/luckyrobots/luckyrobots",
+  "driver_dir": "MHS/drivers/robots/luckyrobots__luckyrobots",
+  "upstream": {
+    "repo_url": "https://github.com/luckyrobots/luckyrobots",
+    "commit": "4ea8f2c543cf23d6aedf4891e63f8aaeb454cb1a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": "python-object",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 276,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "luckyrobots.session:Session",
+      "file": "src/luckyrobots/session.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "luckyrobots.client:LuckyEngineClient",
+      "file": "src/luckyrobots/client.py",
+      "line": 62,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "luckyrobots.robots.robot_controller:RobotController",
+      "file": "src/luckyrobots/robots/robot_controller.py",
+      "line": 157,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "luckyrobots.async_robots:AsyncRobotController",
+      "file": "src/luckyrobots/async_robots.py",
+      "line": 48,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "luckyrobots.lucky_env:LuckyEnv",
+      "file": "src/luckyrobots/lucky_env.py",
+      "line": 56,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/luckyrobots/sim_contract.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/luckyrobots__luckyrobots --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pypose/pypose",
+  "track": "robots",
+  "local_path": "robots/pypose/pypose",
+  "driver_dir": "MHS/drivers/robots/pypose__pypose",
+  "upstream": {
+    "repo_url": "https://github.com/pypose/pypose",
+    "commit": "afedf8a61927825bb9835e238217dfc36c80cc0e",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 160,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pypose/lietensor/lietensor.py:494 Sim3Type",
+      "pypose/lietensor/operation.py:467 Sim3_Log",
+      "pypose/lietensor/operation.py:597 Sim3_Act",
+      "pypose/lietensor/operation.py:699 Sim3_Act4",
+      "pypose/lietensor/operation.py:803 Sim3_AdjXa",
+      "pypose/lietensor/operation.py:905 Sim3_Mul"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/pypose__pypose --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

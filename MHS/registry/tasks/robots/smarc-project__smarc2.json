@@ -1,0 +1,95 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.smarc-project/smarc2",
+  "track": "robots",
+  "local_path": "robots/smarc-project/smarc2",
+  "driver_dir": "MHS/drivers/robots/smarc-project__smarc2",
+  "upstream": {
+    "repo_url": "https://github.com/smarc-project/smarc2",
+    "commit": "ac01e42e2333121bf3a3817a457734e0b88bf538",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": "ros",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 117,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "vehicles.hardware.active_hook.ardupilot.modules.DroneCAN.pydronecan.dronecan.driver.mcast:mcast",
+      "file": "vehicles/hardware/active_hook/ardupilot/modules/DroneCAN/pydronecan/dronecan/driver/mcast.py",
+      "line": 168,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "vehicles.hardware.active_hook.ardupilot.modules.DroneCAN.pydronecan.dronecan.driver.file:file",
+      "file": "vehicles/hardware/active_hook/ardupilot/modules/DroneCAN/pydronecan/dronecan/driver/file.py",
+      "line": 29,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "vehicles.hardware.active_hook.ardupilot.modules.DroneCAN.pydronecan.dronecan.driver.slcan:SLCAN",
+      "file": "vehicles/hardware/active_hook/ardupilot/modules/DroneCAN/pydronecan/dronecan/driver/slcan.py",
+      "line": 677,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "vehicles.hardware.active_hook.ardupilot.modules.DroneCAN.pydronecan.dronecan.driver.mavcan:MAVCAN",
+      "file": "vehicles/hardware/active_hook/ardupilot/modules/DroneCAN/pydronecan/dronecan/driver/mavcan.py",
+      "line": 197,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "vehicles.hardware.active_hook.ardupilot.modules.DroneCAN.pydronecan.dronecan.driver.socketcan:SocketCAN",
+      "file": "vehicles/hardware/active_hook/ardupilot/modules/DroneCAN/pydronecan/dronecan/driver/socketcan.py",
+      "line": 178,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "behaviours/sam/sam_diving_controller/sam_diving_controller/SimPub.py:22 SimPub",
+      "behaviours/smarc/wasp_bt/wasp_bt/vehicles/vehicle.py:35 MockVehicleStateContainer",
+      "vehicles/hardware/active_hook/ardupilot/Tools/autotest/pysim/util.py:373 FakeMacOSXSpawn",
+      "behaviours/lolo/lolo_prox_ops/scritps/fake_commands.py:1",
+      "behaviours/lolo/lolo_prox_ops/scritps/fake_target.py:1",
+      "external_equipment/tank/watertank_utils/launch/sim_tank_mocap.launch.py:1"
+    ],
+    "upstream_tests": "drivers/stim300/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/smarc-project__smarc2 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

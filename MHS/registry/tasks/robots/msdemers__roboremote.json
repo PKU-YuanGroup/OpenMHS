@@ -1,0 +1,71 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.msdemers/roboremote",
+  "track": "robots",
+  "local_path": "robots/msdemers/roboremote",
+  "driver_dir": "MHS/drivers/robots/msdemers__roboremote",
+  "upstream": {
+    "repo_url": "https://github.com/msdemers/roboremote",
+    "commit": "7c300baa992d72b5684dd23c6f6173a3af3cc0bb",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 833,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "physics.sim.simulator:Simulator",
+      "file": "physics/sim/simulator.py",
+      "line": 31,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "physics/service/servicer.py:12 ArmSimServicer",
+      "physics/sim/simulator.py:11 SimSnapshot",
+      "physics/sim/simulator.py:31 Simulator",
+      "physics/sim/status.py:3 SimStatus",
+      "proto/gen/python/roboremote/arm/v1/arm_pb2_grpc.py:28 ArmSimServiceStub",
+      "proto/gen/python/roboremote/arm/v1/arm_pb2_grpc.py:61 ArmSimServiceServicer"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/msdemers__roboremote --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

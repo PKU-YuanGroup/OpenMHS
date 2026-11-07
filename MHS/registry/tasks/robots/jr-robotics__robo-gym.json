@@ -1,0 +1,94 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jr-robotics/robo-gym",
+  "track": "robots",
+  "local_path": "robots/jr-robotics/robo-gym",
+  "driver_dir": "MHS/drivers/robots/jr-robotics__robo-gym",
+  "upstream": {
+    "repo_url": "https://github.com/jr-robotics/robo-gym",
+    "commit": "f086bc90068c41ffd1889d290f3766d69291bf26",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 258,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robo_gym.envs:ExampleEnvSim",
+      "file": "robo_gym/envs/example/example_env.py",
+      "line": 227,
+      "confidence": "override"
+    },
+    {
+      "symbol": "robo_gym.envs:NoObstacleNavigationMir100Sim",
+      "file": "robo_gym/envs/mir100/mir100.py",
+      "line": 443,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robo_gym/__init__.py:6 gym env ExampleEnvSim-v0",
+      "robo_gym/__init__.py:11 gym env ExampleEnvRob-v0",
+      "robo_gym/__init__.py:17 gym env NoObstacleNavigationMir100Sim-v0",
+      "robo_gym/__init__.py:22 gym env NoObstacleNavigationMir100Rob-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env ExampleEnvSim-v0 registered at robo_gym/__init__.py:6",
+      "gym env ExampleEnvRob-v0 registered at robo_gym/__init__.py:11",
+      "gym env NoObstacleNavigationMir100Sim-v0 registered at robo_gym/__init__.py:17",
+      "gym env NoObstacleNavigationMir100Rob-v0 registered at robo_gym/__init__.py:22",
+      "gym env ObstacleAvoidanceMir100Sim-v0 registered at robo_gym/__init__.py:27",
+      "gym env ObstacleAvoidanceMir100Rob-v0 registered at robo_gym/__init__.py:32",
+      "gym env EmptyEnvironmentURSim-v0 registered at robo_gym/__init__.py:38",
+      "gym env EmptyEnvironmentURRob-v0 registered at robo_gym/__init__.py:43",
+      "gym env EndEffectorPositioningURSim-v0 registered at robo_gym/__init__.py:48",
+      "gym env EndEffectorPositioningURRob-v0 registered at robo_gym/__init__.py:53",
+      "gym env BasicAvoidanceURSim-v0 registered at robo_gym/__init__.py:58",
+      "gym env BasicAvoidanceURRob-v0 registered at robo_gym/__init__.py:63"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jr-robotics__robo-gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

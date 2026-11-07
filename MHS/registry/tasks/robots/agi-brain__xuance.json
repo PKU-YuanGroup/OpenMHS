@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.agi-brain/xuance",
+  "track": "robots",
+  "local_path": "robots/agi-brain/xuance",
+  "driver_dir": "MHS/drivers/robots/agi-brain__xuance",
+  "upstream": {
+    "repo_url": "https://github.com/agi-brain/xuance",
+    "commit": "c023141e770ddc15a9bdfee8b568831bee2b7620",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 179,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "xuance/common/memory_tools.py:182 DummyOnPolicyBuffer",
+      "xuance/common/memory_tools.py:290 DummyOnPolicyBuffer_Atari",
+      "xuance/common/memory_tools.py:331 DummyOffPolicyBuffer",
+      "xuance/common/memory_tools.py:601 DummyOffPolicyBuffer_Atari",
+      "xuance/environment/vector_envs/dummy/dummy_vec_env.py:7 DummyVecEnv",
+      "xuance/environment/vector_envs/dummy/dummy_vec_env.py:100 DummyVecEnv_Atari"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/agi-brain__xuance --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

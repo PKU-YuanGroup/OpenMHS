@@ -1,0 +1,85 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.solgaardlab/apt_piezo",
+  "track": "labs",
+  "local_path": "labs/solgaardlab/apt_piezo",
+  "driver_dir": "MHS/drivers/labs/solgaardlab__apt_piezo",
+  "upstream": {
+    "repo_url": "https://github.com/solgaardlab/apt_piezo",
+    "commit": "677eb8f632b6b1d7c84c1fd83a5821239331e4a5",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 316,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "interface.controller:Controller",
+      "file": "interface/controller.py",
+      "line": 5,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "interface.module:Module",
+      "file": "interface/module.py",
+      "line": 6,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Controller.read_data"
+    ],
+    "writes": [
+      "Controller.write_data",
+      "Module.set_closed_loop"
+    ],
+    "actions": [
+      "Module.move"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/solgaardlab__apt_piezo --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

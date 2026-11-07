@@ -1,0 +1,63 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.edinburgh-genome-foundry/dnacauldron",
+  "track": "robots",
+  "local_path": "robots/edinburgh-genome-foundry/dnacauldron",
+  "driver_dir": "MHS/drivers/robots/edinburgh-genome-foundry__dnacauldron",
+  "upstream": {
+    "repo_url": "https://github.com/edinburgh-genome-foundry/dnacauldron",
+    "commit": "04c46105472723dc1d60f38ea0628916df3ac974",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 425,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "dnacauldron/Assembly/AssemblySimulation.py:6 AssemblySimulation",
+      "dnacauldron/AssemblyPlan/AssemblyPlan.py:270 AssemblySimulationCancellation",
+      "dnacauldron/AssemblyPlan/AssemblyPlanSimulation.py:19 AssemblyPlanSimulation"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/edinburgh-genome-foundry__dnacauldron --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

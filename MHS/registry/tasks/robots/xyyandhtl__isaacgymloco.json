@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.xyyandhtl/isaacgymloco",
+  "track": "robots",
+  "local_path": "robots/xyyandhtl/isaacgymloco",
+  "driver_dir": "MHS/drivers/robots/xyyandhtl__isaacgymloco",
+  "upstream": {
+    "repo_url": "https://github.com/xyyandhtl/isaacgymloco",
+    "commit": "6d164af918109d5d6d9ac3607540fb53c28836a2",
+    "license_spdx": "CC-BY-NC-SA-4.0",
+    "license_class": "source-available"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1382,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "legged_gym/resources/robots/go1/xml/go1.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "legged_gym/legged_gym/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/xyyandhtl__isaacgymloco --backend fake",
+  "skip_reason": "override (robots.json): Skip: this is an Isaac Gym legged-robot training framework, not a device or a Gymnasium/MuJoCo environment, and it talks to no hardware.",
+  "publish_review": "required"
+}

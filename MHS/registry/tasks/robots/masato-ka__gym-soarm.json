@@ -1,0 +1,85 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.masato-ka/gym-soarm",
+  "track": "robots",
+  "local_path": "robots/masato-ka/gym-soarm",
+  "driver_dir": "MHS/drivers/robots/masato-ka__gym-soarm",
+  "upstream": {
+    "repo_url": "https://github.com/masato-ka/gym-soarm",
+    "commit": "d1e47309120a372cf95169a555bda64704c9cf40",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 102,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_soarm.env:SoArmAlohaEnv",
+      "file": "gym_soarm/env.py",
+      "line": 19,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "gym_soarm/assets/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "gym_soarm/assets/so-arm100.xml",
+      "line": 4,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_soarm/__init__.py:25 gym env SoArm-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env SoArm-v0 registered at gym_soarm/__init__.py:25"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/masato-ka__gym-soarm --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

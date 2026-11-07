@@ -1,0 +1,219 @@
+{
+  "adapter": {
+    "bridge": "scpi",
+    "entry_points": [
+      "tektronix_func_gen:FuncGen (tektronix_func_gen.py:56)",
+      "tektronix_func_gen:FuncGenChannel (tektronix_func_gen.py:784)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.measure.voltage.v1"
+  ],
+  "catalog_refs": [
+    "repo_86d92e956b9dbe80",
+    "https://github.com/asvela/tektronix-func-gen"
+  ],
+  "description": "asvela/tektronix-func-gen: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with ScpiDriver, wave 3. Catalog role: device SDK. Declared backend: PyVISA. Language: Python. Catalog keywords: PyVISA, Tektronix, AFG1000.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 6 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/asvela__tektronix-func-gen/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "scpi-visa"
+  ],
+  "hardware_free": false,
+  "id": "gh.asvela/tektronix-func-gen",
+  "integration": {
+    "blockers": [
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/asvela__tektronix-func-gen: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/asvela__tektronix-func-gen --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/scpi-visa.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "SCPI/VISA"
+  ],
+  "languages": [
+    "Python",
+    "HTML"
+  ],
+  "last_commit_at": "2021-03-30T16:50:13+02:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/asvela/tektronix-func-gen"
+  },
+  "local_path": "labs/asvela/tektronix-func-gen",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "asvela",
+  "package_id": "gh.asvela/tektronix-func-gen",
+  "quarantine": false,
+  "rank": 57,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "tektronix-func-gen",
+  "repo_url": "https://github.com/asvela/tektronix-func-gen",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "30f7406e89bd9f344487b84913f5111e8bb110a7",
+    "repo_url": "https://github.com/asvela/tektronix-func-gen"
+  },
+  "stars": 21,
+  "tags": [
+    "scpi-visa",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "asvela/tektronix-func-gen",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 45.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "PyVISA",
+      "category_zh": "设备后端",
+      "description_zh": "通过PyVISA控制Tektronix AFG1000/3000任意函数发生器",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 276,
+      "rows_all": [
+        276
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bpyvisa\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/asvela__tektronix-func-gen/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.measure.voltage.v1"
+            ],
+            "kind": "instrument.dmm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE.md",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "30f7406e89bd9f344487b84913f5111e8bb110a7",
+      "driver_dir": "MHS/drivers/labs/asvela__tektronix-func-gen",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:b7540e39846b4503a7889f0097c3a87b84defb520b8c0ca2b9484bd04eab7592",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 7,
+      "files": 6,
+      "markers": {
+        "scpi_visa": 15
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of wave B: a direct Driver over FuncGen, not a ScpiDriver table: every channel command is assembled from the channel number and a command word (SOURceN:...).",
+        "rules alone: family-config (family:scpi, rule 9)"
+      ],
+      "family": "scpi",
+      "hardware_transport": "class tektronix_func_gen:FuncGen uses the hardware transport pyvisa",
+      "helper": "ScpiDriver",
+      "justification": "Model review of wave B: a direct Driver over FuncGen, not a ScpiDriver table: every channel command is assembled from the channel number and a command word (SOURceN:...).",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

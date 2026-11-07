@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.callmeray/maniskill-vitac2024",
+  "track": "robots",
+  "local_path": "robots/callmeray/maniskill-vitac2024",
+  "driver_dir": "MHS/drivers/robots/callmeray__maniskill-vitac2024",
+  "upstream": {
+    "repo_url": "https://github.com/callmeray/maniskill-vitac2024",
+    "commit": "114035d58c693dba00ff616fef6e67e1fe62a1f1",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 92,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "envs.peg_insertion:ContinuousInsertionSimGymRandomizedPointFLowEnv",
+      "file": "envs/peg_insertion.py",
+      "line": 740,
+      "confidence": "override"
+    },
+    {
+      "symbol": "envs.long_open_lock:LongOpenLockRandPointFlowEnv",
+      "file": "envs/long_open_lock.py",
+      "line": 625,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "envs/__init__.py:3 gym env ContinuousInsertionRandomizedMarkerEnv-v1",
+      "envs/__init__.py:8 gym env LongOpenLockRandPointFlowEnv-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env ContinuousInsertionRandomizedMarkerEnv-v1 registered at envs/__init__.py:3",
+      "gym env LongOpenLockRandPointFlowEnv-v1 registered at envs/__init__.py:8"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/callmeray__maniskill-vitac2024 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

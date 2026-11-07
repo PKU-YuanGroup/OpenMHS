@@ -1,0 +1,69 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.klintan/ros2_denso_radar",
+  "track": "robots",
+  "local_path": "robots/klintan/ros2_denso_radar",
+  "driver_dir": "MHS/drivers/robots/klintan__ros2_denso_radar",
+  "upstream": {
+    "repo_url": "https://github.com/klintan/ros2_denso_radar",
+    "commit": "ad497b214a4ffa0a74b2373d9f77b1c8828810ec",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "device-driver",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 31,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "colcon build"
+    ],
+    "system_deps": [
+      "ament/colcon workspace and the ROS dependencies declared in package.xml"
+    ],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": [
+      "src/radar/driver.py:14 RADAR_VALID_MAX = 5"
+    ]
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "capabilities",
+    "motion"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/klintan__ros2_denso_radar --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

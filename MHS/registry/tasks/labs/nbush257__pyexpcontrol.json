@@ -1,0 +1,129 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nbush257/pyexpcontrol",
+  "track": "labs",
+  "local_path": "labs/nbush257/pyexpcontrol",
+  "driver_dir": "MHS/drivers/labs/nbush257__pyexpcontrol",
+  "upstream": {
+    "repo_url": "https://github.com/nbush257/pyexpcontrol",
+    "commit": "06e94c4d22ac2d9fc542a3ebee035a8b9e360ea7",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 206,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "olfactometer:Olfactometer",
+      "file": "python/olfactometer.py",
+      "line": 40,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "nebPod:Controller",
+      "file": "python/nebPod.py",
+      "line": 223,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ArCOM.Python2.ArCOM:ArCOMObject",
+      "file": "ArCOM/Python2/ArCOM.py",
+      "line": 23,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ArCOM.Python3.ArCOM:ArCOMObject",
+      "file": "ArCOM/Python3/ArCOM.py",
+      "line": 23,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Olfactometer.get_gates",
+      "Olfactometer.get_laser_amp_from_user",
+      "Olfactometer.get_last_trigger",
+      "Olfactometer.get_logname_from_user",
+      "Olfactometer.get_runname",
+      "Olfactometer.get_subject_dir",
+      "Olfactometer.get_user_input_number",
+      "Olfactometer.serial_port.readArray",
+      "Controller.get_gates",
+      "Controller.get_laser_amp_from_user",
+      "Controller.get_last_trigger",
+      "Controller.get_logname_from_user"
+    ],
+    "writes": [
+      "Olfactometer.set_all_olfactometer_valves",
+      "Olfactometer.set_all_sglx_low",
+      "Olfactometer.set_gpio",
+      "Olfactometer.set_max_milliwattage",
+      "Olfactometer.set_odor_map",
+      "Controller.set_all_olfactometer_valves",
+      "Controller.set_all_sglx_low",
+      "Controller.set_gpio",
+      "Controller.set_max_milliwattage",
+      "Controller.set_odor_map"
+    ],
+    "actions": [
+      "Olfactometer.auto_calibrate",
+      "Olfactometer.reset",
+      "Olfactometer.run_pulse",
+      "Olfactometer.run_tagging",
+      "Olfactometer.run_train",
+      "Olfactometer.start_camera_trig",
+      "Olfactometer.start_hb",
+      "Olfactometer.start_recording",
+      "Olfactometer.start_recording_TTL",
+      "Olfactometer.start_recording_sglx",
+      "Olfactometer.stop_camera_trig",
+      "Olfactometer.stop_recording"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.actuation.gpio.v1",
+      "cap.device.calibrate.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/nbush257__pyexpcontrol --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

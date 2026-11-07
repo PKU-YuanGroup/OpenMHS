@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mb-it-engineering/microscope_environment",
+  "track": "labs",
+  "local_path": "labs/mb-it-engineering/microscope_environment",
+  "driver_dir": "MHS/drivers/labs/mb-it-engineering__microscope_environment",
+  "upstream": {
+    "repo_url": "https://github.com/mb-it-engineering/microscope_environment",
+    "commit": "e2c292841a63d1cdb14cb1b46bb4e77933dc4a5f",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1840,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/mb-it-engineering__microscope_environment --backend fake",
+  "skip_reason": "override (labs.json): Skip: this is a synthetic numpy/OpenCV microscope simulator exposed through a FastAPI/MCP control surface, not a hardware device or a Gymnasium/MuJoCo environment.",
+  "publish_review": "required"
+}

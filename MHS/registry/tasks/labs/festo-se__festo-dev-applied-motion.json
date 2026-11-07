@@ -1,0 +1,130 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.festo-se/festo-dev-applied-motion",
+  "track": "labs",
+  "local_path": "labs/festo-se/festo-dev-applied-motion",
+  "driver_dir": "MHS/drivers/labs/festo-se__festo-dev-applied-motion",
+  "upstream": {
+    "repo_url": "https://github.com/festo-se/festo-dev-applied-motion",
+    "commit": "c1926f02d8e69cec7f8d265dba20e9e5b474f425",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 25,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "applied_motion.backends.fposbapi_client:FPosBAPIClient",
+      "file": "src/applied_motion/backends/fposbapi_client.py",
+      "line": 63,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "applied_motion.applied_motion:Gantry",
+      "file": "src/applied_motion/applied_motion.py",
+      "line": 98,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "applied_motion.backends.fposbapi_axis:FPosBAxis",
+      "file": "src/applied_motion/backends/fposbapi_axis.py",
+      "line": 43,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "applied_motion.backends.edcon_axis:EdconAxis",
+      "file": "src/applied_motion/backends/edcon_axis.py",
+      "line": 46,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "applied_motion.cli.session:MotionSession",
+      "file": "src/applied_motion/cli/session.py",
+      "line": 43,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "FPosBAPIClient.get_io",
+      "FPosBAPIClient.get_par",
+      "FPosBAPIClient.get_veab",
+      "FPosBAPIClient.is_error",
+      "FPosBAPIClient.read_err",
+      "FPosBAPIClient.read_path",
+      "FPosBAPIClient.read_pos",
+      "FPosBAPIClient.read_tray",
+      "Gantry.get_location",
+      "Gantry.get_status",
+      "Gantry.is_ready_for_motion",
+      "Gantry.is_stopped"
+    ],
+    "writes": [
+      "FPosBAPIClient.set_io",
+      "FPosBAPIClient.set_par",
+      "FPosBAPIClient.set_veab",
+      "FPosBAPIClient.write_path",
+      "FPosBAPIClient.write_pos",
+      "FPosBAPIClient.write_tray"
+    ],
+    "actions": [
+      "FPosBAPIClient.abort",
+      "FPosBAPIClient.disable",
+      "FPosBAPIClient.enable",
+      "FPosBAPIClient.halt",
+      "FPosBAPIClient.home",
+      "FPosBAPIClient.move_loc",
+      "FPosBAPIClient.move_path",
+      "FPosBAPIClient.move_pos",
+      "FPosBAPIClient.move_tray",
+      "FPosBAPIClient.reset_err",
+      "FPosBAPIClient.resume",
+      "Gantry.home"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/festo-se__festo-dev-applied-motion --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

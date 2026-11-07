@@ -1,0 +1,112 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.osudrl/cassie-mujoco-sim",
+  "track": "robots",
+  "local_path": "robots/osudrl/cassie-mujoco-sim",
+  "driver_dir": "MHS/drivers/robots/osudrl__cassie-mujoco-sim",
+  "upstream": {
+    "repo_url": "https://github.com/osudrl/cassie-mujoco-sim",
+    "commit": "188d3d7f04f0c4ed12db66bdec67884e1c0eb743",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 336,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "cassiemujoco:CassieSim",
+      "file": "example/cassiemujoco.py",
+      "line": 31,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "model/cassie.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "model/cassie_depth.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "model/cassie_hfield.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "model/cassie_mass.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "model/cassie_no_grav.xml",
+      "line": 2,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "model/cassie.xml:2 MJCF robot model",
+      "model/cassie_depth.xml:2 MJCF robot model",
+      "model/cassie_hfield.xml:2 MJCF robot model",
+      "model/cassie_mass.xml:2 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model model/cassie.xml:2",
+      "MJCF robot model model/cassie_depth.xml:2",
+      "MJCF robot model model/cassie_hfield.xml:2",
+      "MJCF robot model model/cassie_mass.xml:2",
+      "MJCF robot model model/cassie_no_grav.xml:2",
+      "MJCF robot model model/cassie_noise_terrain.xml:2",
+      "MJCF robot model model/cassie_slosh_mass.xml:2",
+      "MJCF robot model model/cassie_tray_box.xml:2",
+      "MJCF robot model model/cassiepole.xml:2",
+      "MJCF robot model model/cassiepole_x.xml:2"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/osudrl__cassie-mujoco-sim --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

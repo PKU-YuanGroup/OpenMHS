@@ -1,0 +1,226 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "bosdyn.client.robot:Robot (python/bosdyn-client/src/bosdyn/client/robot.py:80)",
+      "bosdyn.mission.client:MissionClient (python/bosdyn-mission/src/bosdyn/mission/client.py:70)",
+      "bosdyn.orbit.client:Client (python/bosdyn-orbit/src/bosdyn/orbit/client.py:21)",
+      "bosdyn.scout.client:ScoutClient (python/bosdyn-scout/src/bosdyn/scout/client.py:26)",
+      "bosdyn.client.spot_cam.compositor:CompositorClient (python/bosdyn-client/src/bosdyn/client/spot_cam/compositor.py:15)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1"
+  ],
+  "catalog_refs": [
+    "repo_7c7b49f79b703ff5",
+    "https://github.com/boston-dynamics/spot-sdk"
+  ],
+  "description": "boston-dynamics/spot-sdk: device backend for legged robots (robotics track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 3. Catalog role: device SDK. Language: Python, JavaScript, Shell. Catalog keywords: Boston, Dynamics, Spot.",
+  "domains": [
+    "legged robots"
+  ],
+  "evidence": {
+    "files_read": 5,
+    "notes": "bounded static scan: 1070 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/robots/boston-dynamics__spot-sdk/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.boston-dynamics/spot-sdk",
+  "integration": {
+    "blockers": [
+      "LICENSE_REVIEW: proprietary; the user decides before a driver is published",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/robots/boston-dynamics__spot-sdk: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/boston-dynamics__spot-sdk --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:flagship-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "gRPC",
+    "HTTP/REST",
+    "CLI"
+  ],
+  "languages": [
+    "Python",
+    "JavaScript",
+    "Shell"
+  ],
+  "last_commit_at": "2026-09-10T10:38:12-04:00",
+  "license": "LicenseRef-proprietary",
+  "license_class": "proprietary",
+  "license_spdx": "LicenseRef-proprietary",
+  "links": {
+    "repo": "https://github.com/boston-dynamics/spot-sdk"
+  },
+  "local_path": "robots/boston-dynamics/spot-sdk",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "boston-dynamics",
+  "package_id": "gh.boston-dynamics/spot-sdk",
+  "quarantine": false,
+  "rank": 44,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "spot-sdk",
+  "repo_url": "https://github.com/boston-dynamics/spot-sdk",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "04537ddafe0641d1751af3eb9e76cb785fc18594",
+    "repo_url": "https://github.com/boston-dynamics/spot-sdk"
+  },
+  "stars": 0,
+  "tags": [
+    "python-object",
+    "robotics",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "boston-dynamics/spot-sdk",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "gazebo",
+      "family_confidence": 0.74,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 23.0,
+      "quality_flags": [
+        "license_unknown"
+      ],
+      "tier": "C",
+      "tier_confidence": 0.7
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "unknown",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "Boston Dynamics Spot机器人官方SDK，含Python客户端与示例",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 386,
+      "rows_all": [
+        386
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "http-api",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bgrpc\\b"
+      ],
+      "family_note": "triage family python-object (catalogue family http-api)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/boston-dynamics__spot-sdk/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "LicenseRef-proprietary",
+      "review": true,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "04537ddafe0641d1751af3eb9e76cb785fc18594",
+      "driver_dir": "MHS/drivers/robots/boston-dynamics__spot-sdk",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:d1de59e67f474103d2a2dcbdbcf32e2f80a6ced784d214aacdb34ec207126264",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 0,
+      "files": 1070,
+      "markers": {
+        "http": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): Spot Python SDK (bosdyn-client gRPC: lease, estop, robot_command); a direct Driver, not a serial device (a pyserial import in examples misled the marker rule).",
+        "rules alone: direct-driver (PY_SDK_WITH_ENTRY, rule 10)"
+      ],
+      "family": "python-object",
+      "flagship": true,
+      "helper": "PythonObjectDriver",
+      "justification": "Spot Python SDK (bosdyn-client gRPC: lease, estop, robot_command); a direct Driver, not a serial device (a pyserial import in examples misled the marker rule).",
+      "reason_code": "override:flagship-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

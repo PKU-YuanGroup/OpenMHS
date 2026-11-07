@@ -1,0 +1,111 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.lachlanhurst/so100-mujoco-rl",
+  "track": "robots",
+  "local_path": "robots/lachlanhurst/so100-mujoco-rl",
+  "driver_dir": "MHS/drivers/robots/lachlanhurst__so100-mujoco-rl",
+  "upstream": {
+    "repo_url": "https://github.com/lachlanhurst/so100-mujoco-rl",
+    "commit": "057ccecbb5c2bb06aa526714f300e801c19d3cf7",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 138,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "so100_mujoco_rl.envs.env01_v1:Env01",
+      "file": "src/so100_mujoco_rl/envs/env01_v1.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "so100_mujoco_rl.envs.env02_v1:Env02",
+      "file": "src/so100_mujoco_rl/envs/env02_v1.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "so100_mujoco_rl.envs.env03_v1:Env03",
+      "file": "src/so100_mujoco_rl/envs/env03_v1.py",
+      "line": 25,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "so100_mujoco_rl.envs.env04_v1:Env04",
+      "file": "src/so100_mujoco_rl/envs/env04_v1.py",
+      "line": 23,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "so100_mujoco_rl.envs.env05_v1:Env05",
+      "file": "src/so100_mujoco_rl/envs/env05_v1.py",
+      "line": 22,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "src/so100_mujoco_rl/envs/model/so_arm100_camera.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/so100_mujoco_rl/__init__.py:5 gym env Env01-v1",
+      "src/so100_mujoco_rl/__init__.py:12 gym env Env02-v1",
+      "src/so100_mujoco_rl/__init__.py:19 gym env Env03-v1",
+      "src/so100_mujoco_rl/__init__.py:26 gym env Env04-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Env01-v1 registered at src/so100_mujoco_rl/__init__.py:5",
+      "gym env Env02-v1 registered at src/so100_mujoco_rl/__init__.py:12",
+      "gym env Env03-v1 registered at src/so100_mujoco_rl/__init__.py:19",
+      "gym env Env04-v1 registered at src/so100_mujoco_rl/__init__.py:26",
+      "gym env Env05-v1 registered at src/so100_mujoco_rl/__init__.py:33"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/lachlanhurst__so100-mujoco-rl --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

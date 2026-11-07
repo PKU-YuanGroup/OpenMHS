@@ -1,0 +1,256 @@
+{
+  "adapter": {
+    "bridge": "mavlink",
+    "entry_points": [
+      "platforms.nuttx.NuttX.apps.system.ymodem.sbrb:ymodem (platforms/nuttx/NuttX/apps/system/ymodem/sbrb.py:381)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [
+    "HELPER_MISSING",
+    "helper:mavlink"
+  ],
+  "build_systems": [
+    "cmake",
+    "make",
+    "ros",
+    "node"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_573e8f5ea6e9c39a",
+    "https://github.com/px4/px4-autopilot"
+  ],
+  "description": "px4/px4-autopilot: device backend; control framework (robotics track). OpenMHS plan: family-config with mavlink helper (planned), wave 5. Catalog role: controller; device SDK. Declared backend: C++ flight control (NuttX/Linux/macOS); uORB; SITL + Gazebo/SIH; MAVLink; uXRCE-DDS. Language: C++.",
+  "domains": [],
+  "evidence": {
+    "files_read": 10,
+    "notes": "bounded static scan: 7809 files enumerated (max depth 3), 10 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "mavlink"
+  ],
+  "hardware_free": true,
+  "id": "gh.px4/px4-autopilot",
+  "integration": {
+    "blockers": [
+      "HELPER_MISSING",
+      "HELPER_MISSING: helper:mavlink"
+    ],
+    "effort": "E1",
+    "next_action": "Review MHS/drivers/robots/px4__px4-autopilot/RESULT.json: the package is blocked on HELPER_MISSING, helper:mavlink; clear the codes before MHS/registry/tasks/robots/px4__px4-autopilot.json is dispatched again.",
+    "reason_code": "override:flagship-driver",
+    "recipe": "families/mavlink.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "MAVLink(UDP)",
+    "uXRCE-DDS/ROS 2",
+    "px4_ros2_interface_lib(Mode/ModeExecutor)",
+    "PX4 shell/ parameter PX4_PARAM_*",
+    "MAVLink",
+    "ROS",
+    "Docker",
+    "Gazebo",
+    "Replay",
+    "ROS 2",
+    "Unity",
+    "Serial"
+  ],
+  "languages": [
+    "C++",
+    "C",
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2026-10-08T22:50:41+00:00",
+  "license": "BSD-3-Clause",
+  "license_class": "permissive",
+  "license_spdx": "BSD-3-Clause",
+  "links": {
+    "docs": "https://github.com/PX4/PX4-Autopilot",
+    "repo": "https://github.com/px4/px4-autopilot"
+  },
+  "local_path": "robots/px4/px4-autopilot",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "px4",
+  "package_id": "gh.px4/px4-autopilot",
+  "quarantine": false,
+  "rank": 3,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "px4-autopilot",
+  "repo_url": "https://github.com/px4/px4-autopilot",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "32d864618182f9b3b5c0fd48cd8b02e085bb161e",
+    "repo_url": "https://github.com/px4/px4-autopilot"
+  },
+  "stars": 12764,
+  "tags": [
+    "mavlink",
+    "robotics",
+    "device backend control framework",
+    "controller device sdk",
+    "simulated",
+    "family config"
+  ],
+  "tier": "B",
+  "title": "px4/px4-autopilot",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 5,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "ros2",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 89.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "控制器 | 设备SDK",
+      "archived": "false",
+      "backend_family_raw": "C++ 飞控(NuttX/Linux/macOS)；uORB；SITL + Gazebo/SIH；MAVLink；uXRCE-DDS",
+      "blockers_raw": "SITL 构建/镜像体积；真机误连安全风险需显式隔离",
+      "category_zh": "设备后端 | 控制框架",
+      "description_zh": "PX4 开源飞控栈(多旋翼/固定翼/VTOL/车船)，原生支持 SITL：Gazebo(gz_bridge)、内置无依赖 SIH 物理、Gazebo Classic 及 MAVLink 仿真 API；通过 MAVLink 或 uXRCE-DDS/ROS 2 进行外部控制。",
+      "join": "exact",
+      "license_raw": "BSD-3-Clause",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P1",
+      "row": 2048,
+      "rows_all": [
+        2048
+      ],
+      "scope": "core",
+      "track_raw": "robotics | shared_infrastructure",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "gazebo",
+      "catalog_tier": "B",
+      "family_matches": [
+        "gazebo"
+      ],
+      "family_note": "triage family mavlink (catalogue family gazebo)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/px4__px4-autopilot/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/robots/px4__px4-autopilot/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/px4__px4-autopilot/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "BSD-3-Clause",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "BSD-3-Clause",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "blocked_on": [
+        "HELPER_MISSING"
+      ],
+      "driver_dir": "MHS/drivers/robots/px4__px4-autopilot",
+      "files": [
+        "RESULT.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:0a8eebf044370efe4721dd23f3160c96679ea044a323e79657de9771236589db",
+      "reviewed": false,
+      "status": "blocked"
+    },
+    "scan": {
+      "build_systems": [
+        "cmake",
+        "make",
+        "ros",
+        "node"
+      ],
+      "entry_evidence_count": 8,
+      "files": 7809,
+      "markers": {
+        "docker": 3,
+        "gazebo": 1,
+        "mavlink": 120,
+        "replay": 3,
+        "ros2": 8,
+        "unity": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): PX4 flight stack for real vehicles with SITL; integrated through the MAVLink helper, not as a Gazebo or ROS package (FIT-ROS-04).",
+        "rules alone: family-config (family:ros, rule 9)"
+      ],
+      "family": "mavlink",
+      "flagship": true,
+      "hardware_transport": "class platforms.nuttx.NuttX.apps.system.ymodem.sbrb:ymodem uses the hardware transport serial",
+      "helper": null,
+      "justification": "PX4 flight stack for real vehicles with SITL; integrated through the MAVLink helper, not as a Gazebo or ROS package (FIT-ROS-04).",
+      "reason_code": "override:flagship-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

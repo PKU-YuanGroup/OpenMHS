@@ -1,0 +1,195 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "conda",
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_b5c2717561a72434",
+    "https://github.com/jimntu/failsafe_code"
+  ],
+  "description": "jimntu/failsafe_code: policy/algorithm for robot arm manipulation (robotics track). OpenMHS plan: reference only (prior-art). Declared backend: SAPIEN. Language: Jupyter Notebook. Catalog keywords: ManiSkill, FailSafe, IROS.",
+  "domains": [
+    "robot arm manipulation"
+  ],
+  "evidence": {
+    "files_read": 8,
+    "notes": "bounded static scan: 172 files enumerated (max depth 3), 8 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "gymnasium"
+  ],
+  "hardware_free": false,
+  "id": "gh.jimntu/failsafe_code",
+  "integration": {
+    "blockers": [
+      "REFERENCE_ONLY: role prior-art"
+    ],
+    "effort": "EX",
+    "next_action": "Reference only: an earlier MHS implementation to compare with, not a device to integrate.",
+    "reason_code": "override:recon",
+    "role": "prior-art",
+    "scenario_required": false,
+    "strategy": "reference"
+  },
+  "interfaces": [
+    "Python SDK",
+    "CLI",
+    "Docker",
+    "Gymnasium",
+    "HTTP/REST",
+    "LeRobot",
+    "MQTT",
+    "SAPIEN",
+    "Serial",
+    "ZeroMQ"
+  ],
+  "languages": [
+    "Jupyter Notebook",
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2026-08-04T20:33:48+08:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/jimntu/failsafe_code"
+  },
+  "local_path": "robots/jimntu/failsafe_code",
+  "modes": [],
+  "owner": "jimntu",
+  "package_id": "gh.jimntu/failsafe_code",
+  "quarantine": false,
+  "rank": 493,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "failsafe_code",
+  "repo_url": "https://github.com/jimntu/failsafe_code",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "b863aaecc50407a769c191f67d79ddfaab9f6880",
+    "repo_url": "https://github.com/jimntu/failsafe_code"
+  },
+  "stars": 30,
+  "tags": [
+    "gymnasium",
+    "robotics",
+    "policy algorithm",
+    "task environment",
+    "simulated",
+    "reference"
+  ],
+  "tier": "D",
+  "title": "jimntu/failsafe_code",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "sapien",
+      "family_confidence": 0.89,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 59.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "任务环境",
+      "archived": "false",
+      "backend_family_raw": "SAPIEN",
+      "category_zh": "策略/算法",
+      "description_zh": "在ManiSkill中生成失败案例及恢复动作的FailSafe流水线(IROS 2026)",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "参考",
+      "row": 1216,
+      "rows_all": [
+        1216
+      ],
+      "scope": "peripheral",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "gymnasium",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bsapien\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_note": "tier A -> D: triage reference (override:recon)",
+      "tier_rule": "A2-task-env-entry"
+    },
+    "device_plan": [],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "conda",
+        "python"
+      ],
+      "entry_evidence_count": 4,
+      "files": 172,
+      "markers": {
+        "camera": 2,
+        "cli": 2,
+        "docker": 1,
+        "gpu": 60,
+        "gymnasium": 3,
+        "http": 3,
+        "lerobot": 1,
+        "lidar": 1,
+        "mqtt": 1,
+        "sapien": 21,
+        "serial": 1,
+        "zeromq": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): FailSafe is a research failure-generation pipeline over ManiSkill, not a device driver; target ManiSkill's PickCube/PushCube/StackCube envs and the motion planner, not these thin subclasses.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "FailSafe is a research failure-generation pipeline over ManiSkill, not a device driver; target ManiSkill's PickCube/PushCube/StackCube envs and the motion planner, not these thin subclasses.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

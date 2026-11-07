@@ -1,0 +1,131 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.alexshkarin/pylablib-v0",
+  "track": "labs",
+  "local_path": "labs/alexshkarin/pylablib-v0",
+  "driver_dir": "MHS/drivers/labs/alexshkarin__pylablib-v0",
+  "upstream": {
+    "repo_url": "https://github.com/alexshkarin/pylablib-v0",
+    "commit": "1c3c59d4bcbea4a16eee916033972ee13a7d1af6",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 25,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "pylablib.core.devio.backend:NetworkDeviceBackend",
+      "file": "pylablib/core/devio/backend.py",
+      "line": 873,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylablib.aux_libs.devices.AgilentElectronics:AWG33220A",
+      "file": "pylablib/aux_libs/devices/AgilentElectronics.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylablib.aux_libs.devices.Tektronix:MDO3000",
+      "file": "pylablib/aux_libs/devices/Tektronix.py",
+      "line": 266,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylablib.aux_libs.devices.Tektronix:DPO2014",
+      "file": "pylablib/aux_libs/devices/Tektronix.py",
+      "line": 217,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylablib.aux_libs.devices.Tektronix:TDS2000",
+      "file": "pylablib/aux_libs/devices/Tektronix.py",
+      "line": 254,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pylablib/core/utils/general.py:274 DummyResource"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "NetworkDeviceBackend.get_timeout",
+      "NetworkDeviceBackend.is_opened",
+      "NetworkDeviceBackend.read_multichar_term",
+      "NetworkDeviceBackend.socket.get_local_name",
+      "NetworkDeviceBackend.socket.get_peer_name",
+      "NetworkDeviceBackend.socket.is_connected",
+      "AWG33220A.get_amplitude",
+      "AWG33220A.get_arg_type",
+      "AWG33220A.get_burst_mode",
+      "AWG33220A.get_burst_ncycles",
+      "AWG33220A.get_duty_cycle",
+      "AWG33220A.get_esr"
+    ],
+    "writes": [
+      "NetworkDeviceBackend.set_timeout",
+      "NetworkDeviceBackend.socket.set_wait_callback",
+      "AWG33220A.set_amplitude",
+      "AWG33220A.set_burst_mode",
+      "AWG33220A.set_burst_ncycles",
+      "AWG33220A.set_duty_cycle",
+      "AWG33220A.set_frequency",
+      "AWG33220A.set_function",
+      "AWG33220A.set_gate_polarity",
+      "AWG33220A.set_load",
+      "AWG33220A.set_offset",
+      "AWG33220A.set_output"
+    ],
+    "actions": [
+      "AWG33220A.enable_burst",
+      "AWG33220A.enable_sync_output",
+      "AWG33220A.enable_trigger_output",
+      "AWG33220A.reset",
+      "MDO3000.enable_channel",
+      "MDO3000.enable_rf_channel",
+      "MDO3000.reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/alexshkarin__pylablib-v0 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cairo-robotics/cairo_simulator",
+  "track": "robots",
+  "local_path": "robots/cairo-robotics/cairo_simulator",
+  "driver_dir": "MHS/drivers/robots/cairo-robotics__cairo_simulator",
+  "upstream": {
+    "repo_url": "https://github.com/cairo-robotics/cairo_simulator",
+    "commit": "1d9b5d77ad22988057b16dc2dfe55220a9571545",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 67,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "cairo_simulator.devices.manipulators:Sawyer",
+      "file": "src/cairo_simulator/devices/manipulators.py",
+      "line": 339,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "cairo_simulator.devices.sensors:LaserRangeFinder",
+      "file": "src/cairo_simulator/devices/sensors.py",
+      "line": 86,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "cairo_planning.planners.lazy_prm:LazyCPRM",
+      "file": "src/cairo_planning/planners/lazy_prm.py",
+      "line": 403,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "cairo_simulator.devices.ground_vehicles:Racecar",
+      "file": "src/cairo_simulator/devices/ground_vehicles.py",
+      "line": 37,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "cairo_planning.planners.prm:CPRM",
+      "file": "src/cairo_planning/planners/prm.py",
+      "line": 388,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/cairo_simulator/core/sim_context.py:28 AbstractSimContext",
+      "src/cairo_simulator/core/sim_context.py:59 SawyerSimContext",
+      "src/cairo_simulator/core/sim_context.py:203 SawyerBiasedSimContext",
+      "src/cairo_simulator/core/simulator.py:30 Simulator",
+      "src/cairo_simulator/core/simulator.py:428 SimObject",
+      "src/cairo_simulator/core/sim_context.py:1"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cairo-robotics__cairo_simulator --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

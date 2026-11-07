@@ -1,0 +1,236 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "tekinstr:CommChannel (tekinstr/__init__.py:33)",
+      "tekinstr.mdo3000.oscilloscope:Oscilloscope (tekinstr/mdo3000/oscilloscope.py:8)",
+      "tekinstr.tds3000.oscilloscope:Oscilloscope (tekinstr/tds3000/oscilloscope.py:7)",
+      "tekinstr.mdo3000.oscilloscope:Channel (tekinstr/mdo3000/oscilloscope.py:95)",
+      "tekinstr.tds3000.oscilloscope:Channel (tekinstr/tds3000/oscilloscope.py:20)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python",
+    "make"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_29588672dc794567",
+    "https://github.com/l-johnston/tekinstr"
+  ],
+  "description": "l-johnston/tekinstr: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Language: Python.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 59 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/l-johnston__tekinstr/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.l-johnston/tekinstr",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/l-johnston__tekinstr: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/l-johnston__tekinstr --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "CLI",
+    "SCPI/VISA"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2022-05-23T09:28:16-05:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/l-johnston/tekinstr"
+  },
+  "local_path": "labs/l-johnston/tekinstr",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "l-johnston",
+  "package_id": "gh.l-johnston/tekinstr",
+  "quarantine": false,
+  "rank": 27,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "tekinstr",
+  "repo_url": "https://github.com/l-johnston/tekinstr",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "7949430c1a6818d30aec152663c18dde85f2a7d7",
+    "repo_url": "https://github.com/l-johnston/tekinstr"
+  },
+  "stars": 1,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "l-johnston/tekinstr",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 54.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "unknown",
+      "category_zh": "设备后端",
+      "description_zh": "泰克示波器Python控制库",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 1364,
+      "rows_all": [
+        1364
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/l-johnston__tekinstr/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/l-johnston__tekinstr/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/l-johnston__tekinstr/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "7949430c1a6818d30aec152663c18dde85f2a7d7",
+      "driver_dir": "MHS/drivers/labs/l-johnston__tekinstr",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:3f0750adeee080a0e3df230dc3c5b08b886b10104ca16d5d268c440a6204a862",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python",
+        "make"
+      ],
+      "entry_evidence_count": 4,
+      "files": 59,
+      "markers": {
+        "cli": 1,
+        "scpi_visa": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of wave B: a direct Driver, not the card's ScpiDriver table (a direct Driver over tekinstr.mdo3000.oscilloscope:Oscilloscope with native.py, not the card's ScpiDriver; the upstream is an object with properties and its chann...)",
+        "rules alone: family-config (family:scpi, rule 9)"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class tekinstr:CommChannel uses the hardware transport pyvisa",
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of wave B: a direct Driver, not the card's ScpiDriver table (a direct Driver over tekinstr.mdo3000.oscilloscope:Oscilloscope with native.py, not the card's ScpiDriver; the upstream is an object with properties and its chann...)",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

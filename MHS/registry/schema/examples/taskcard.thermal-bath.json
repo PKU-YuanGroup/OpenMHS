@@ -1,0 +1,38 @@
+{
+  "card_version": "0.9",
+  "package_id": "gh.example/thermal-bath",
+  "track": "labs",
+  "local_path": "labs/example/thermal-bath",
+  "driver_dir": "MHS/drivers/labs/example__thermal-bath",
+  "upstream": {
+    "repo_url": "https://github.com/example/thermal-bath",
+    "commit": "4f1c2b9e8d7a6c5b4a39281706f5e4d3c2b1a090",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 2,
+  "rank": 37,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {"symbol": "thermal_bath.device:Bath", "file": "thermal_bath/device.py", "line": 120, "confidence": "ast"}
+  ],
+  "install": {"python": ">=3.10", "commands": ["pip install ."], "system_deps": [], "gpu": false, "platform": "any"},
+  "mock_strategy": {"preferred": "upstream-sim", "hints": ["thermal_bath/sim.py:10"], "upstream_tests": "tests"},
+  "hints": {"reads": ["bath temperature"], "writes": ["setpoint"], "actions": [], "candidate_classes": ["cap.thermal.setpoint.v1", "cap.measure.temperature.v1"]},
+  "safety": {"expected_mode": "hardware", "risk_floor": "R2", "limit_hints": ["README.md:40"]},
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/example__thermal-bath --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

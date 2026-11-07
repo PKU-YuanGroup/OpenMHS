@@ -1,0 +1,121 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.kajalbiju/psi_bluesky_backend",
+  "track": "labs",
+  "local_path": "labs/kajalbiju/psi_bluesky_backend",
+  "driver_dir": "MHS/drivers/labs/kajalbiju__psi_bluesky_backend",
+  "upstream": {
+    "repo_url": "https://github.com/kajalbiju/psi_bluesky_backend",
+    "commit": "59252b014ef37fc4f2de2e37eda1fca755afe50f",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "driver-pack",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 345,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "Bluesky4.SR830:SR830",
+      "file": "Bluesky4/SR830.py",
+      "line": 9,
+      "confidence": "override"
+    },
+    {
+      "symbol": "Bluesky4.mercury_itc:MercuryITC",
+      "file": "Bluesky4/mercury_itc.py",
+      "line": 8,
+      "confidence": "override"
+    },
+    {
+      "symbol": "Bluesky4.sim928:SIM928",
+      "file": "Bluesky4/sim928.py",
+      "line": 6,
+      "confidence": "override"
+    },
+    {
+      "symbol": "Bluesky4.SR830_ophyd:SR830Device",
+      "file": "Bluesky4/SR830_ophyd.py",
+      "line": 5,
+      "confidence": "override"
+    },
+    {
+      "symbol": "Bluesky4.mercury_itc_ophyd:MercuryITCController",
+      "file": "Bluesky4/mercury_itc_ophyd.py",
+      "line": 8,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "SR830Device.read_frequency",
+      "SR830Device.read_idn",
+      "SR830Device.sr830.get_idn",
+      "SR830Device.sr830.get_param",
+      "SR830Device.freq (attribute)",
+      "SR830Device.idn (attribute)",
+      "MercuryITC.get_d_value",
+      "MercuryITC.get_gas_flow",
+      "MercuryITC.get_heater_setpoint",
+      "MercuryITC.get_i_value",
+      "MercuryITC.get_p_value",
+      "MercuryITC.read_temperature"
+    ],
+    "writes": [
+      "SR830Device.sr830.set_gpib_address",
+      "MercuryITC.set_d_value",
+      "MercuryITC.set_flow_setpoint",
+      "MercuryITC.set_gas_flow",
+      "MercuryITC.set_heater_setpoint",
+      "MercuryITC.set_i_value",
+      "MercuryITC.set_p_value",
+      "SIM928.set_voltage"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.thermal.setpoint.v1",
+      "cap.measure.flow.v1",
+      "cap.measure.temperature.v1",
+      "cap.measure.voltage.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/kajalbiju__psi_bluesky_backend --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

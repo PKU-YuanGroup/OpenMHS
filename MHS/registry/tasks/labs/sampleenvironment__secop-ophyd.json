@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sampleenvironment/secop-ophyd",
+  "track": "labs",
+  "local_path": "labs/sampleenvironment/secop-ophyd",
+  "driver_dir": "MHS/drivers/labs/sampleenvironment__secop-ophyd",
+  "upstream": {
+    "repo_url": "https://github.com/sampleenvironment/secop-ophyd",
+    "commit": "02950c43863c62536cffcb494e6986a19437cc54",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "transport",
+  "family": "ophyd",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 81,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "frappy_modules.cryo:Cryostat",
+      "file": "frappy_modules/cryo.py",
+      "line": 48,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "frappy_modules.ophyd_secop_test_modules:OPYD_test_struct",
+      "file": "frappy_modules/ophyd_secop_test_modules.py",
+      "line": 206,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "secop_ophyd.SECoPSignal:SECoPBackend",
+      "file": "src/secop_ophyd/SECoPSignal.py",
+      "line": 182,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "secop_ophyd.AsyncFrappyClient:AsyncFrappyClient",
+      "file": "src/secop_ophyd/AsyncFrappyClient.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "secop_ophyd.SECoPDevices:SECoPMoveableDevice",
+      "file": "src/secop_ophyd/SECoPDevices.py",
+      "line": 870,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/sampleenvironment__secop-ophyd --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pufferai/pokegym",
+  "track": "robots",
+  "local_path": "robots/pufferai/pokegym",
+  "driver_dir": "MHS/drivers/robots/pufferai__pokegym",
+  "upstream": {
+    "repo_url": "https://github.com/pufferai/pokegym",
+    "commit": "9050f7ae43e21b9337ac5ae407d37e6eb34ca03f",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 239,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "pokegym.environment:Environment",
+      "file": "pokegym/environment.py",
+      "line": 374,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pokegym/A_TESTING_FILE.py:258 Environment environment class",
+      "pokegym/environment.py:374 Environment environment class",
+      "pokegym/backups/environment_backup_bill.py:219 Environment environment class",
+      "pokegym/backups/environment_backup_main.py:200 Environment environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/pufferai__pokegym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

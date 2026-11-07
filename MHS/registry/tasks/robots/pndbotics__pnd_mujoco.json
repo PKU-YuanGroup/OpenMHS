@@ -1,0 +1,104 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pndbotics/pnd_mujoco",
+  "track": "robots",
+  "local_path": "robots/pndbotics/pnd_mujoco",
+  "driver_dir": "MHS/drivers/robots/pndbotics__pnd_mujoco",
+  "upstream": {
+    "repo_url": "https://github.com/pndbotics/pnd_mujoco",
+    "commit": "84873eb3c4afd584d468864ba41527a1c14fb688",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 203,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "pnd_robots/adam_lite/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "pnd_robots/adam_pro/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "pnd_robots/adam_pro_omnipicker/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "pnd_robots/adam_sp/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "pnd_robots/adam_u/scene.xml",
+      "line": 2,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pnd_robots/adam_lite/scene.xml:1 MJCF scene model",
+      "pnd_robots/adam_pro/scene.xml:1 MJCF scene model",
+      "pnd_robots/adam_pro_omnipicker/scene.xml:1 MJCF scene model",
+      "pnd_robots/adam_sp/scene.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "simulate_python/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model pnd_robots/adam_lite/scene.xml:1",
+      "MJCF scene model pnd_robots/adam_pro/scene.xml:1",
+      "MJCF scene model pnd_robots/adam_pro_omnipicker/scene.xml:1",
+      "MJCF scene model pnd_robots/adam_sp/scene.xml:1",
+      "MJCF scene model pnd_robots/adam_u/scene.xml:2",
+      "MJCF scene model pnd_robots/adam_u_omnipicker/scene.xml:2",
+      "MJCF robot model pnd_robots/adam_lite/adam_lite.xml:1",
+      "MJCF robot model pnd_robots/adam_pro/adam_pro.xml:2",
+      "MJCF robot model pnd_robots/adam_pro_omnipicker/adam_pro_omnipicker.xml:2",
+      "MJCF robot model pnd_robots/adam_sp/adam_sp.xml:2"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/pndbotics__pnd_mujoco --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

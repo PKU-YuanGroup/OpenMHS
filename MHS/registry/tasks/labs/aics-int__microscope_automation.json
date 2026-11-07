@@ -1,0 +1,133 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.aics-int/microscope_automation",
+  "track": "labs",
+  "local_path": "labs/aics-int/microscope_automation",
+  "driver_dir": "MHS/drivers/labs/aics-int__microscope_automation",
+  "upstream": {
+    "repo_url": "https://github.com/aics-int/microscope_automation",
+    "commit": "cdac7bdb191ea2d85965574b32ec65e3c2a7e22d",
+    "license_spdx": "BSD-2-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 10,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "microscope_automation.hardware.hardware_components:Pump",
+      "file": "microscope_automation/hardware/hardware_components.py",
+      "line": 2058,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "microscope_automation.hardware.hardware_components:Camera",
+      "file": "microscope_automation/hardware/hardware_components.py",
+      "line": 701,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "microscope_automation.hardware.hardware_components:Stage",
+      "file": "microscope_automation/hardware/hardware_components.py",
+      "line": 842,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "microscope_automation.connectors.connect_zen_black:ConnectMicroscope",
+      "file": "microscope_automation/connectors/connect_zen_black.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "microscope_automation.connectors.connect_zen_blue:ConnectMicroscope",
+      "file": "microscope_automation/connectors/connect_zen_blue.py",
+      "line": 41,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "microscope_automation/connectors/connect_zen_blue_dummy.py:1",
+      "microscope_automation/hardware/RS232_dummy.py:1"
+    ],
+    "upstream_tests": "microscope_automation/tests"
+  },
+  "hints": {
+    "reads": [
+      "Pump.get_connection",
+      "Pump.get_id",
+      "Pump.get_information",
+      "Pump.get_init_experiment",
+      "Pump.get_time",
+      "Camera.get_data",
+      "Camera.get_id",
+      "Camera.get_information",
+      "Camera.get_init_experiment",
+      "Camera.get_meta",
+      "Stage.get_id",
+      "Stage.get_information"
+    ],
+    "writes": [
+      "Pump.set_component",
+      "Pump.set_connection",
+      "Pump.set_id",
+      "Pump.set_init_experiment",
+      "Pump.set_time",
+      "Camera.set_component",
+      "Camera.set_id",
+      "Camera.set_init_experiment",
+      "Stage.set_component",
+      "Stage.set_id",
+      "Stage.set_init_experiment"
+    ],
+    "actions": [
+      "Pump.trigger_pump",
+      "Camera.live_mode_start",
+      "Camera.live_mode_stop",
+      "Camera.snap_image",
+      "Stage.move_to_position"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.actuation.pump.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/aics-int__microscope_automation --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

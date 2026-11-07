@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.openhutb/hutb",
+  "track": "robots",
+  "local_path": "robots/openhutb/hutb",
+  "driver_dir": "MHS/drivers/robots/openhutb__hutb",
+  "upstream": {
+    "repo_url": "https://github.com/openhutb/hutb",
+    "commit": "d897b68b246c5ecaaa1b6b4e162cad00e59fafa1",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 19,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "Unreal.CarlaUE4.Plugins.UnrealRoboticsLab.URLab_Bridge.RoboJuDo.robojudo.controller.base_ctrl:ControllerHook",
+      "file": "Unreal/CarlaUE4/Plugins/UnrealRoboticsLab/URLab_Bridge/RoboJuDo/robojudo/controller/base_ctrl.py",
+      "line": 41,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Unreal.CarlaUE4.Plugins.UnrealRoboticsLab.URLab_Bridge.RoboJuDo.robojudo.environment.unitree_env:UnitreeEnv",
+      "file": "Unreal/CarlaUE4/Plugins/UnrealRoboticsLab/URLab_Bridge/RoboJuDo/robojudo/environment/unitree_env.py",
+      "line": 44,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PythonAPI.carla.source.holoocean.environments:HoloOceanEnvironment",
+      "file": "PythonAPI/carla/source/holoocean/environments.py",
+      "line": 35,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PythonAPI.carla.agents.navigation.behavior_agent:BehaviorAgent",
+      "file": "PythonAPI/carla/agents/navigation/behavior_agent.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "PythonAPI.carla.agents.navigation.constant_velocity_agent:ConstantVelocityAgent",
+      "file": "PythonAPI/carla/agents/navigation/constant_velocity_agent.py",
+      "line": 16,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "Co-Simulation/PTV-Vissim/run_synchronization.py:36",
+      "Co-Simulation/Sumo/run_synchronization.py:45",
+      "Co-Simulation/PTV-Vissim/vissim_integration/carla_simulation.py:25",
+      "Co-Simulation/PTV-Vissim/vissim_integration/vissim_simulation.py:29",
+      "Co-Simulation/PTV-Vissim/vissim_integration/vissim_simulation.py:133",
+      "Co-Simulation/Sumo/sumo_integration/carla_simulation.py:25"
+    ],
+    "upstream_tests": "PythonAPI/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/openhutb__hutb --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

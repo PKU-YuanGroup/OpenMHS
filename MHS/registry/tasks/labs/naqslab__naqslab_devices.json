@@ -1,0 +1,111 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.naqslab/naqslab_devices",
+  "track": "labs",
+  "local_path": "labs/naqslab/naqslab_devices",
+  "driver_dir": "MHS/drivers/labs/naqslab__naqslab_devices",
+  "upstream": {
+    "repo_url": "https://github.com/naqslab/naqslab_devices",
+    "commit": "2c0ac4fb715ec7ad71c6f0061cd3c7e3d6583b69",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 298,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "SR865.labscript_device:SR865",
+      "file": "SR865/labscript_device.py",
+      "line": 28,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "SignalGenerator.Models:RS_SMF100A",
+      "file": "SignalGenerator/Models.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "SignalGenerator.Models:RS_SMHU",
+      "file": "SignalGenerator/Models.py",
+      "line": 37,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "NovaTechDDS.labscript_device:NovaTech409B",
+      "file": "NovaTechDDS/labscript_device.py",
+      "line": 317,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "NovaTechDDS.labscript_device:NovaTech440A",
+      "file": "NovaTechDDS/labscript_device.py",
+      "line": 397,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "SignalGenerator/blacs_worker.py:195 MockSignalGeneratorWorker"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [
+      "SR865.set_phase",
+      "SR865.set_sens",
+      "SR865.set_tau"
+    ],
+    "actions": [
+      "RS_SMF100A.enable_output",
+      "RS_SMHU.enable_output"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "NovaTechDDS/labscript_device.py:28 clock_limit = 9990",
+      "NovaTechDDS/labscript_device.py:320 clock_limit = 1",
+      "NovaTechDDS/labscript_device.py:400 clock_limit = 1",
+      "PulseBlasterESRPro300/labscript_device.py:29 clock_limit = 30000000.0",
+      "PulseBlaster_No_DDS_200/labscript_device.py:22 clock_limit = 17200000.0",
+      "SignalGenerator/Models.py:24 freq_limits = [100000.0, 22000000000.0]",
+      "SignalGenerator/Models.py:26 amp_limits = [-26, 18]",
+      "SignalGenerator/Models.py:33 freq_limits = [8000.0, 20000000000.0]"
+    ]
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/naqslab__naqslab_devices --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

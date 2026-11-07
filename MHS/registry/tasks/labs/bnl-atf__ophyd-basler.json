@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.bnl-atf/ophyd-basler",
+  "track": "labs",
+  "local_path": "labs/bnl-atf/ophyd-basler",
+  "driver_dir": "MHS/drivers/labs/bnl-atf__ophyd-basler",
+  "upstream": {
+    "repo_url": "https://github.com/bnl-atf/ophyd-basler",
+    "commit": "5573459ca330f931ce49a1e53f0e89b834db85cc",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 17,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "ophyd_basler.basler_camera:BaslerCamera",
+      "file": "ophyd_basler/basler_camera.py",
+      "line": 21,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "ophyd_basler/tests"
+  },
+  "hints": {
+    "reads": [
+      "BaslerCamera.active_format (attribute)",
+      "BaslerCamera.camera_model (attribute)",
+      "BaslerCamera.exposure_time (attribute)",
+      "BaslerCamera.grab_timeout (attribute)",
+      "BaslerCamera.image (attribute)",
+      "BaslerCamera.image_shape (attribute)",
+      "BaslerCamera.mean (attribute)",
+      "BaslerCamera.payload_size (attribute)",
+      "BaslerCamera.pixel_level_max (attribute)",
+      "BaslerCamera.pixel_level_min (attribute)",
+      "BaslerCamera.serial_number (attribute)",
+      "BaslerCamera.user_defined_name (attribute)"
+    ],
+    "writes": [
+      "BaslerCamera.set_custom_images"
+    ],
+    "actions": [
+      "BaslerCamera.trigger"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/bnl-atf__ophyd-basler --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

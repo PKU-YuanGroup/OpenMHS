@@ -1,0 +1,121 @@
+{
+  "$schema": "../schema/overrides.schema.json",
+  "overrides_version": "0.9",
+  "title": "Source-reviewed routing corrections from the ROS waves",
+  "description": "The selected environment contract determines the integration helper; a repository's ROS files do not turn its Gymnasium entry into a ROS wire interface.",
+  "overrides": [
+    {
+      "package_id": "gh.anurye/gym-turtlebot",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:source-review",
+      "entry_symbols": [
+        {
+          "symbol": "tb4_drl_navigation.envs.diffdrive.turtlebot4:Turtlebot4Env",
+          "file": "src/tb4_drl_navigation/tb4_drl_navigation/envs/diffdrive/turtlebot4.py",
+          "line": 37
+        }
+      ],
+      "justification": "Turtlebot4Env is a concrete Gymnasium navigation environment with two action controls and structured observations. Preserve that task interface and explicitly address its ROS/Gazebo lifecycle."
+    },
+    {
+      "package_id": "gh.darshmenon/ur3_ros2_pick_and_place",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:source-review",
+      "entry_symbols": [
+        {
+          "symbol": "mujoco_ur_rl_ros2.envs.ur_reach_env:URReachEnv",
+          "file": "mujoco_ur_rl_ros2/envs/ur_reach_env.py",
+          "line": 26
+        }
+      ],
+      "justification": "The selected pinned URReachEnv is a six-action Gymnasium environment with reset/step over MuJoCo, not a ROS topic/service API. Keep its complete reach environment scope and use GymnasiumDriver."
+    },
+    {
+      "package_id": "gh.dyson-ai/grip",
+      "strategy": "direct-driver",
+      "role": "sim-env",
+      "family": "python-object",
+      "reason_code": "override:source-review",
+      "entry_symbols": [
+        {
+          "symbol": "grip.environments.pick_and_place_env:PickAndPlaceEnvironment",
+          "file": "grip/environments/pick_and_place_env.py",
+          "line": 21
+        }
+      ],
+      "justification": "The selected pure-Python PyBullet environment has a custom step/reset API without Gym spaces. A direct Driver preserves its arm and gripper controls; separate ROS utilities are not this entry."
+    },
+    {
+      "package_id": "gh.jackvice/roboterrain",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:source-review",
+      "entry_symbols": [
+        {
+          "symbol": "sb3.environments.rover_env:RoverEnv",
+          "file": "ros2_ws/src/sb3/environments/rover_env.py",
+          "line": 68
+        }
+      ],
+      "justification": "The selected RoverEnv exposes Gymnasium reset/step and structured action/observation spaces; preserve navigation controls. Its internal ROS transport does not change the environment interface."
+    },
+    {
+      "package_id": "gh.jacopopan/gymnasium-docker-ros2",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:source-review",
+      "entry_symbols": [
+        {
+          "symbol": "gymnasium_docker_ros2.env:GDR2Env",
+          "file": "src/gymnasium_docker_ros2/env.py",
+          "line": 11
+        }
+      ],
+      "justification": "GDR2Env exposes a concrete Gymnasium force-control task. Preserve step/reset and validate Docker/ZeroMQ ownership and failure semantics before enabling a live backend."
+    },
+    {
+      "package_id": "gh.ncbdrck/multiros",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "ros",
+      "reason_code": "bridge-runtime:ros",
+      "justification": "MultiROS ships generic Gazebo/MoveIt utilities, two abstract environment bases and four incomplete templates; concrete tasks live elsewhere. It is a framework behind the ROS bridge, not a fabricated RL task."
+    },
+    {
+      "package_id": "gh.talregev/gym-webots",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:source-review",
+      "entry_symbols": [
+        {
+          "symbol": "gym_webots.envs.pioneer:WebotsCircuit2cPionner3atCameraNnEnv",
+          "file": "gym_webots/envs/pioneer/webots_circuit2c_pioneer_camera_nn.py",
+          "line": 28
+        }
+      ],
+      "justification": "The selected legacy Gym environment exposes three wheel actions and camera observations. A production wrapper must supply missing spaces and preserve native behavior; a fake alone is not that wrapper."
+    },
+    {
+      "package_id": "gh.ut-amrl/socialgym2",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:source-review",
+      "entry_symbols": [
+        {
+          "symbol": "environment.ros_social_gym:RosSocialEnv",
+          "file": "src/environment/ros_social_gym.py",
+          "line": 46
+        }
+      ],
+      "justification": "The selected RosSocialEnv has a PettingZoo parallel environment API. Preserve multi-agent controls with a shared Gymnasium adapter; ROS wire metadata alone does not integrate the environment."
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.oceanworldlabs/oceanscale",
+  "track": "robots",
+  "local_path": "robots/oceanworldlabs/oceanscale",
+  "driver_dir": "MHS/drivers/robots/oceanworldlabs__oceanscale",
+  "upstream": {
+    "repo_url": "https://github.com/oceanworldlabs/oceanscale",
+    "commit": "84f6cc4ce3dcf7cb4a53e2e9d2e81f541b0c63f2",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 60,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "oceanscale.rov_env:ROVEnv",
+      "file": "oceanscale/rov_env.py",
+      "line": 56,
+      "confidence": "override"
+    },
+    {
+      "symbol": "oceanscale.envs.docking_env:DockingApproachEnv",
+      "file": "oceanscale/envs/docking_env.py",
+      "line": 100,
+      "confidence": "override"
+    },
+    {
+      "symbol": "oceanscale.envs.waypoint_env:WaypointFollowingEnv",
+      "file": "oceanscale/envs/waypoint_env.py",
+      "line": 43,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.12,<3.14",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "oceanscale/envs/docking_env.py:100 DockingApproachEnv environment class",
+      "oceanscale/envs/pfm_batched_station_keeping_env_3d_real.py:13 PFMBatchedStationKeepingEnv3DReal environment class",
+      "oceanscale/envs/pfm_station_keeping_env.py:15 PFMStationKeepingEnv2D environment class",
+      "oceanscale/envs/pfm_station_keeping_env_3d.py:68 PFMStationKeepingEnv3D environment class"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/oceanworldlabs__oceanscale --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

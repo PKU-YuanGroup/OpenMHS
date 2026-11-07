@@ -1,0 +1,68 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.skylark0924/rofunc",
+  "track": "robots",
+  "local_path": "robots/skylark0924/rofunc",
+  "driver_dir": "MHS/drivers/robots/skylark0924__rofunc",
+  "upstream": {
+    "repo_url": "https://github.com/skylark0924/rofunc",
+    "commit": "37dffbc190f6010cb61e5e27365e7c192e86e8b8",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1154,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.7,<3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "rofunc/simulator/base_sim.py:29 PlaygroundSim",
+      "rofunc/simulator/base_sim.py:140 RobotSim",
+      "rofunc/simulator/franka_sim.py:20 FrankaSim",
+      "rofunc/simulator/gluon_sim.py:24 GluonSim",
+      "rofunc/simulator/human_sim.py:24 HumanSim",
+      "rofunc/simulator/humanoid_sim.py:23 HumanoidSim"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/skylark0924__rofunc --backend fake",
+  "skip_reason": "override (robots.json): Rofunc is a robot-learning and simulator toolkit, not a device: its device modules record data and its card entries are kinematics, simulated hands or file parsers, so no hardware driver applies.",
+  "publish_review": "not_required"
+}

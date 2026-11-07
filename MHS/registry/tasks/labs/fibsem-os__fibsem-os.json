@@ -1,0 +1,145 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.fibsem-os/fibsem-os",
+  "track": "labs",
+  "local_path": "labs/fibsem-os/fibsem-os",
+  "driver_dir": "MHS/drivers/labs/fibsem-os__fibsem-os",
+  "upstream": {
+    "repo_url": "https://github.com/fibsem-os/fibsem-os",
+    "commit": "8bd5dc731f523354273c38cd2cc190db9b7483e5",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "twin-candidate",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 6,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "fibsem.drivers.autoscript.devices:AutoscriptFMCamera",
+      "file": "fibsem/drivers/autoscript/devices.py",
+      "line": 1404,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "fibsem.drivers.autoscript.devices:ThermoFisherFluorescenceMicroscope",
+      "file": "fibsem/drivers/autoscript/devices.py",
+      "line": 1780,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "fibsem.drivers.tescan.devices:TescanStage",
+      "file": "fibsem/drivers/tescan/devices.py",
+      "line": 655,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "fibsem.drivers.remote.devices:RemoteStage",
+      "file": "fibsem/drivers/remote/devices.py",
+      "line": 619,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "fibsem.fm.remote:RemoteFluorescenceMicroscope",
+      "file": "fibsem/fm/remote.py",
+      "line": 31,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "AutoscriptFMCamera.read_binning",
+      "AutoscriptFMCamera.read_exposure_time",
+      "AutoscriptFMCamera.read_gain",
+      "AutoscriptFMCamera.read_offset",
+      "AutoscriptFMCamera.read_pixel_size",
+      "AutoscriptFMCamera.read_resolution",
+      "AutoscriptFMCamera.changed (attribute)",
+      "AutoscriptFMCamera.metadata_changed (attribute)",
+      "AutoscriptFMCamera.needs_channel (attribute)",
+      "ThermoFisherFluorescenceMicroscope.get_metadata",
+      "ThermoFisherFluorescenceMicroscope.is_acquiring",
+      "ThermoFisherFluorescenceMicroscope.is_interactive"
+    ],
+    "writes": [
+      "AutoscriptFMCamera.write_binning",
+      "AutoscriptFMCamera.write_exposure_time",
+      "AutoscriptFMCamera.write_gain",
+      "AutoscriptFMCamera.write_offset",
+      "ThermoFisherFluorescenceMicroscope.set_acquiring",
+      "ThermoFisherFluorescenceMicroscope.set_active_channel",
+      "ThermoFisherFluorescenceMicroscope.set_binning",
+      "ThermoFisherFluorescenceMicroscope.set_channel",
+      "ThermoFisherFluorescenceMicroscope.set_channel_color",
+      "ThermoFisherFluorescenceMicroscope.set_channel_name",
+      "ThermoFisherFluorescenceMicroscope.set_exposure_time",
+      "ThermoFisherFluorescenceMicroscope.set_gain"
+    ],
+    "actions": [
+      "ThermoFisherFluorescenceMicroscope.acquire_image",
+      "ThermoFisherFluorescenceMicroscope.acquire_z_stack_on_device",
+      "ThermoFisherFluorescenceMicroscope.refusal_to_start",
+      "ThermoFisherFluorescenceMicroscope.start_acquisition",
+      "ThermoFisherFluorescenceMicroscope.stop_acquisition",
+      "ThermoFisherFluorescenceMicroscope.camera.acquire",
+      "ThermoFisherFluorescenceMicroscope.objective.focus_position",
+      "ThermoFisherFluorescenceMicroscope.objective.home",
+      "ThermoFisherFluorescenceMicroscope.objective.move_absolute",
+      "ThermoFisherFluorescenceMicroscope.objective.move_relative",
+      "TescanStage.home",
+      "TescanStage.move_absolute"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.imaging.focus.v1",
+      "cap.motion.stop.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "fibsem/config.py:433 MAX_RECENT_EXPERIMENTS = 10",
+      "fibsem/alignment/coincidence.py:52 DEFAULT_CAPTURE_RANGE = 2e-05",
+      "fibsem/alignment/coincidence.py:441 DEFAULT_COARSE_CAPTURE_RANGE = 0.0001",
+      "fibsem/alignment/coincidence.py:828 MIN_HEIGHT_LEVER = 0.0006",
+      "fibsem/alignment/coincidence.py:829 MIN_WALK_TO_UNDO = 2e-07",
+      "fibsem/autofunctions/acb.py:39 saturation_limit = 0.005",
+      "fibsem/autofunctions/acb.py:40 min_range_utilisation = 0.6",
+      "fibsem/autofunctions/autofocus.py:49 search_range = 0.005"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/fibsem-os__fibsem-os --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

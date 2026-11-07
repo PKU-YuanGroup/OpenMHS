@@ -1,0 +1,112 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.wetenschaap/pymista",
+  "track": "labs",
+  "local_path": "labs/wetenschaap/pymista",
+  "driver_dir": "MHS/drivers/labs/wetenschaap__pymista",
+  "upstream": {
+    "repo_url": "https://github.com/wetenschaap/pymista",
+    "commit": "b30040a192c329b6144a120f0dfea2ca68060760",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 32,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pymista.zaber:ZaberStage",
+      "file": "pymista/zaber.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymista.universal:UniversalStage",
+      "file": "pymista/universal.py",
+      "line": 3,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymista.universal:UniversalAxis",
+      "file": "pymista/universal.py",
+      "line": 148,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pymista/dummy.py:6 DummyStage",
+      "pymista/dummy.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "ZaberStage.get_bounds",
+      "ZaberStage.get_position",
+      "ZaberStage.is_homed",
+      "ZaberStage.is_moving",
+      "UniversalStage.get_bounds",
+      "UniversalStage.get_position",
+      "UniversalStage.is_homed",
+      "UniversalStage.is_moving",
+      "UniversalAxis.get_position",
+      "UniversalAxis.is_busy",
+      "UniversalAxis.is_homed"
+    ],
+    "writes": [],
+    "actions": [
+      "ZaberStage.home",
+      "ZaberStage.move_absolute",
+      "ZaberStage.move_relative",
+      "ZaberStage.stop",
+      "UniversalStage.home",
+      "UniversalStage.move_absolute",
+      "UniversalStage.move_relative",
+      "UniversalStage.stop",
+      "UniversalAxis.home",
+      "UniversalAxis.move_absolute",
+      "UniversalAxis.move_relative",
+      "UniversalAxis.stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/wetenschaap__pymista --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

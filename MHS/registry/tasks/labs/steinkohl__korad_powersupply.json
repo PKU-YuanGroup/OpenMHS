@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.steinkohl/korad_powersupply",
+  "track": "labs",
+  "local_path": "labs/steinkohl/korad_powersupply",
+  "driver_dir": "MHS/drivers/labs/steinkohl__korad_powersupply",
+  "upstream": {
+    "repo_url": "https://github.com/steinkohl/korad_powersupply",
+    "commit": "fd2e8b7c59a4dd9f9e609bdacf15b3d7bc1b3d5e",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 121,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "korad:KC3405P",
+      "file": "korad.py",
+      "line": 28,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "KC3405P.get_current",
+      "KC3405P.get_current_setting",
+      "KC3405P.get_device_info",
+      "KC3405P.get_ocp_status",
+      "KC3405P.get_overcurrent_protection_setting",
+      "KC3405P.get_overvoltage_protection_setting",
+      "KC3405P.get_ovp_status",
+      "KC3405P.get_settings",
+      "KC3405P.get_status",
+      "KC3405P.get_voltage",
+      "KC3405P.get_voltage_setting"
+    ],
+    "writes": [
+      "KC3405P.set_current",
+      "KC3405P.set_overcurrent_protection",
+      "KC3405P.set_overvoltage_protection",
+      "KC3405P.set_voltage"
+    ],
+    "actions": [
+      "KC3405P.disable_external_compensation",
+      "KC3405P.disable_external_switch",
+      "KC3405P.disable_external_trigger",
+      "KC3405P.disable_output",
+      "KC3405P.disable_overcurrent_protection",
+      "KC3405P.disable_overvoltage_protection",
+      "KC3405P.enable_external_compensation",
+      "KC3405P.enable_external_switch",
+      "KC3405P.enable_external_trigger",
+      "KC3405P.enable_output",
+      "KC3405P.enable_overcurrent_protection",
+      "KC3405P.enable_overvoltage_protection"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.voltage.v1",
+      "cap.measure.current.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/steinkohl__korad_powersupply --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

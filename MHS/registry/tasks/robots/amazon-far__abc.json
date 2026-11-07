@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.amazon-far/abc",
+  "track": "robots",
+  "local_path": "robots/amazon-far/abc",
+  "driver_dir": "MHS/drivers/robots/amazon-far__abc",
+  "upstream": {
+    "repo_url": "https://github.com/amazon-far/abc",
+    "commit": "d0832d12651d1b260a652861a14648dc5f3660c7",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1898,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "abc_minimal/config.py:258 SimEvalConfig",
+      "abc_minimal/config.py:299 VizSimEvalConfig",
+      "abc_minimal/sim_env.py:35 SimTaskEnv",
+      "abc_sim/task_specs.py:15 SimTaskSpec",
+      "abc_sim/rendering/replay/camera_providers.py:67 SimRenderCameraProvider",
+      "abc_minimal/sim_env.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/amazon-far__abc --backend fake",
+  "skip_reason": "catalogue category 'policy/algorithm' with no env registration or device evidence",
+  "publish_review": "not_required"
+}

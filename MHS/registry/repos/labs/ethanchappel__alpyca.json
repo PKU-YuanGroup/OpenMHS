@@ -1,0 +1,189 @@
+{
+  "adapter": {
+    "bridge": "tag-bridge",
+    "entry_points": [
+      "alpaca:Telescope (alpaca.py:1109)",
+      "alpaca:Camera (alpaca.py:613)",
+      "alpaca:FilterWheel (alpaca.py:1063)",
+      "alpaca:Switch (alpaca.py:176)",
+      "alpaca:SafetyMonitor (alpaca.py:349)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_e439c2bc9517c484",
+    "https://github.com/ethanchappel/alpyca"
+  ],
+  "description": "ethanchappel/alpyca: protocol implementation/bridge for optics (lab instrumentation track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: protocol bridge. Language: Python. Catalog keywords: ASCOM, Alpaca, Initiative.",
+  "domains": [
+    "optics"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 10 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "tag-bridge"
+  ],
+  "hardware_free": false,
+  "id": "gh.ethanchappel/alpyca",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver",
+      "ARCHIVED: the upstream repository is archived"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this transport backs the tag-bridge helper; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/tag-bridge.md",
+    "role": "transport",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "HTTP/REST",
+    "Python SDK"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2023-06-08T13:32:46-05:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/ethanchappel/alpyca"
+  },
+  "local_path": "labs/ethanchappel/alpyca",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "ethanchappel",
+  "package_id": "gh.ethanchappel/alpyca",
+  "quarantine": false,
+  "rank": 124,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "alpyca",
+  "repo_url": "https://github.com/ethanchappel/alpyca",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "72e329190388b160a39a7ea818589b824745f338",
+    "repo_url": "https://github.com/ethanchappel/alpyca"
+  },
+  "stars": 17,
+  "tags": [
+    "tag-bridge",
+    "lab instrumentation",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "ethanchappel/alpyca",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "http-api",
+      "family_confidence": 0.79,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 31.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "true",
+      "backend_family_raw": "unknown",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "ASCOM Alpaca的Python接口(已转由ASCOM Initiative维护)",
+      "join": "exact",
+      "license_raw": "Apache-2.0",
+      "mhs_support_raw": "unknown",
+      "priority": "参考",
+      "row": 741,
+      "rows_all": [
+        741
+      ],
+      "scope": "peripheral",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_note": "triage family tag-bridge (catalogue family python-object)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/ethanchappel__alpyca/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": null,
+      "file": "LICENSE.txt",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 2,
+      "files": 10,
+      "markers": {
+        "http": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): alpyca is the client-side Python SDK for the ASCOM Alpaca REST protocol and is transport-level work, not a per-device driver; a driver author needs a running Alpaca server and a device number.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": "tag-bridge",
+      "helper": null,
+      "justification": "alpyca is the client-side Python SDK for the ASCOM Alpaca REST protocol and is transport-level work, not a per-device driver; a driver author needs a running Alpaca server and a device number.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

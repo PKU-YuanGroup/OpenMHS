@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.j123b567/onvif-simulator",
+  "track": "labs",
+  "local_path": "labs/j123b567/onvif-simulator",
+  "driver_dir": "MHS/drivers/labs/j123b567__onvif-simulator",
+  "upstream": {
+    "repo_url": "https://github.com/j123b567/onvif-simulator",
+    "commit": "4154644d01397c36b68464fbd82d5857762aa718",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "http",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1958,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/j123b567__onvif-simulator --backend fake",
+  "skip_reason": "override (labs.json): Skip as a simulated ONVIF camera server: the Flask app answers device, media and PTZ SOAP requests with canned XML and never drives hardware.",
+  "publish_review": "required"
+}

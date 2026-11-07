@@ -1,0 +1,111 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.alexlegoshin/idm-dnkmetr",
+  "track": "labs",
+  "local_path": "labs/alexlegoshin/idm-dnkmetr",
+  "driver_dir": "MHS/drivers/labs/alexlegoshin__idm-dnkmetr",
+  "upstream": {
+    "repo_url": "https://github.com/alexlegoshin/idm-dnkmetr",
+    "commit": "8f69873e51d2dce10c292feda3a44f745f1af5c1",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "driver-pack",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 115,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "drivers:ScpiInstrument",
+      "file": "drivers.py",
+      "line": 42,
+      "confidence": "override"
+    },
+    {
+      "symbol": "drivers:PowerSupply",
+      "file": "drivers.py",
+      "line": 117,
+      "confidence": "override"
+    },
+    {
+      "symbol": "drivers:Multimeter",
+      "file": "drivers.py",
+      "line": 138,
+      "confidence": "override"
+    },
+    {
+      "symbol": "drivers:SwitchController",
+      "file": "drivers.py",
+      "line": 146,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "drivers.py:164 FakePowerSupply",
+      "drivers.py:192 FakeMultimeter"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "PowerSupply.idn",
+      "PowerSupply.measure_current",
+      "PowerSupply.measure_voltage",
+      "PowerSupply.query_number",
+      "Multimeter.idn",
+      "Multimeter.measure_dc_current",
+      "Multimeter.measure_dc_voltage",
+      "Multimeter.query_number",
+      "SwitchController.idn",
+      "SwitchController.query_number"
+    ],
+    "writes": [
+      "PowerSupply.set_current_limit",
+      "PowerSupply.set_voltage"
+    ],
+    "actions": [
+      "PowerSupply.enable_output",
+      "SwitchController.reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.current.v1",
+      "cap.measure.voltage.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/alexlegoshin__idm-dnkmetr --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.allenai/molmospaces",
+  "track": "robots",
+  "local_path": "robots/allenai/molmospaces",
+  "driver_dir": "MHS/drivers/robots/allenai__molmospaces",
+  "upstream": {
+    "repo_url": "https://github.com/allenai/molmospaces",
+    "commit": "713fd12ab593c3bbb4abfaa76622e14249aa36b3",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 94,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "molmo_spaces.tasks.gym_env:GymEnv",
+      "file": "molmo_spaces/tasks/gym_env.py",
+      "line": 48,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "molmo_spaces/tasks/gym_env.py:48 GymEnv environment class",
+      "molmo_spaces_isaac/src/molmo_spaces_isaac/assets/viewer.py:126 AssetsViewerEnv environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/allenai__molmospaces --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

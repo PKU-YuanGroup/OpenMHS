@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sjtu-visys-team/visfly",
+  "track": "robots",
+  "local_path": "robots/sjtu-visys-team/visfly",
+  "driver_dir": "MHS/drivers/robots/sjtu-visys-team__visfly",
+  "upstream": {
+    "repo_url": "https://github.com/sjtu-visys-team/visfly",
+    "commit": "6ff29bfcbc752da4f9474f6f0ece29d836111a22",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 134,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "envs.NavigationEnv:NavigationEnv",
+      "file": "envs/NavigationEnv.py",
+      "line": 27,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "envs/NavigationEnv.py:27 NavigationEnv environment class",
+      "envs/CatchEnv.py:52 CatchEnv environment class",
+      "envs/DynamicEnv.py:14 DynEnv environment class",
+      "envs/HoverEnv.py:97 HoverEnv2 environment class"
+    ],
+    "upstream_tests": "utils/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/sjtu-visys-team__visfly --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

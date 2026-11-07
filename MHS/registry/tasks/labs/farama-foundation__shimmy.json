@@ -1,0 +1,77 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.farama-foundation/shimmy",
+  "track": "labs",
+  "local_path": "labs/farama-foundation/shimmy",
+  "driver_dir": "MHS/drivers/labs/farama-foundation__shimmy",
+  "upstream": {
+    "repo_url": "https://github.com/farama-foundation/shimmy",
+    "commit": "4e6c5af2c9cc4f1dde6427fda84a1a5c2fe2c07b",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:gymnasium",
+  "role": "framework",
+  "family": "gymnasium",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 190,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "shimmy.openai_gym_compatibility:GymV26CompatibilityV0",
+      "file": "shimmy/openai_gym_compatibility.py",
+      "line": 37,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "shimmy.openai_gym_compatibility:GymV21CompatibilityV0",
+      "file": "shimmy/openai_gym_compatibility.py",
+      "line": 160,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "shimmy/registration.py:30 gym env dm_control/compatibility-env-v0",
+      "shimmy/registration.py:129 gym env android_env/compatibility-env-v0",
+      "shimmy/registration.py:136 gym env GymV26Environment-v0",
+      "shimmy/registration.py:142 gym env GymV21Environment-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/farama-foundation__shimmy --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

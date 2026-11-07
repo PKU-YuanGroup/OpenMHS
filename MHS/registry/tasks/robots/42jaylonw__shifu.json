@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.42jaylonw/shifu",
+  "track": "robots",
+  "local_path": "robots/42jaylonw/shifu",
+  "driver_dir": "MHS/drivers/robots/42jaylonw__shifu",
+  "upstream": {
+    "repo_url": "https://github.com/42jaylonw/shifu",
+    "commit": "d2a733c3e492012e983384989fc13cf13db49631",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1664,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "shifu/gym/isaac_gym.py:292 TerrainGymEnv environment class",
+      "shifu/gym/pybullet_twin.py:196 ArmTwin environment class",
+      "shifu/gym/isaac_gym.py:16 IsaacGymEnv environment class",
+      "shifu/gym/pybullet_twin.py:26 PybulletTwinEnv environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/42jaylonw__shifu --backend fake",
+  "skip_reason": "override (robots.json): Skip: Shifu is a simulation-only robot-learning environment suite built on IsaacGym and PyBullet, not a device or a Gymnasium/MuJoCo environment.",
+  "publish_review": "not_required"
+}

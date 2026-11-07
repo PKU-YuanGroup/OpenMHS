@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ianyangchina/pybullet_multigoal_gym",
+  "track": "robots",
+  "local_path": "robots/ianyangchina/pybullet_multigoal_gym",
+  "driver_dir": "MHS/drivers/robots/ianyangchina__pybullet_multigoal_gym",
+  "upstream": {
+    "repo_url": "https://github.com/ianyangchina/pybullet_multigoal_gym",
+    "commit": "54b50b8de3d2d58f88f8d4036aafc0858ed3d1e5",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 139,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "pybullet_multigoal_gym.envs.base_envs.base_env:BaseBulletMGEnv",
+      "file": "pybullet_multigoal_gym/envs/base_envs/base_env.py",
+      "line": 10,
+      "confidence": "override"
+    },
+    {
+      "symbol": "pybullet_multigoal_gym.envs.task_envs.kuka_multi_step_envs:KukaBlockStackEnv",
+      "file": "pybullet_multigoal_gym/envs/task_envs/kuka_multi_step_envs.py",
+      "line": 6,
+      "confidence": "override"
+    },
+    {
+      "symbol": "pybullet_multigoal_gym.envs.task_envs.kuka_insertion_envs:KukaInsertionEnv",
+      "file": "pybullet_multigoal_gym/envs/task_envs/kuka_insertion_envs.py",
+      "line": 6,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pybullet_multigoal_gym/envs/task_envs/kuka_insertion_envs.py:6 KukaInsertionEnv environment class",
+      "pybullet_multigoal_gym/envs/task_envs/kuka_multi_step_envs.py:6 KukaBlockStackEnv environment class",
+      "pybullet_multigoal_gym/envs/task_envs/kuka_multi_step_envs.py:151 KukaBlockRearrangeEnv environment class",
+      "pybullet_multigoal_gym/envs/task_envs/kuka_multi_step_envs.py:230 KukaChestPickAndPlaceEnv environment class"
+    ],
+    "upstream_tests": "pybullet_multigoal_gym/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ianyangchina__pybullet_multigoal_gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

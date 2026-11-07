@@ -1,0 +1,129 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cognitiveaisystems/blindvla",
+  "track": "robots",
+  "local_path": "robots/cognitiveaisystems/blindvla",
+  "driver_dir": "MHS/drivers/robots/cognitiveaisystems__blindvla",
+  "upstream": {
+    "repo_url": "https://github.com/cognitiveaisystems/blindvla",
+    "commit": "06855fcb91d65c88ca351a2d45af0be860a91987",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 238,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "ManiSkill.mani_skill.envs.scenes.base_env:SceneManipulationEnv",
+      "file": "ManiSkill/mani_skill/envs/scenes/base_env.py",
+      "line": 20,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ManiSkill.mani_skill.envs.tasks.empty_env:EmptyEnv",
+      "file": "ManiSkill/mani_skill/envs/tasks/empty_env.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ManiSkill.mani_skill.envs.tasks.rotate_cube:RotateCubeEnvLevel0",
+      "file": "ManiSkill/mani_skill/envs/tasks/rotate_cube.py",
+      "line": 352,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ManiSkill.mani_skill.envs.tasks.rotate_cube:RotateCubeEnvLevel1",
+      "file": "ManiSkill/mani_skill/envs/tasks/rotate_cube.py",
+      "line": 363,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ManiSkill.mani_skill.envs.tasks.rotate_cube:RotateCubeEnvLevel2",
+      "file": "ManiSkill/mani_skill/envs/tasks/rotate_cube.py",
+      "line": 374,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "ManiSkill/mani_skill/envs/tasks/control/assets/cartpole.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ManiSkill/mani_skill/envs/tasks/control/assets/hopper.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ManiSkill/mani_skill/envs/tasks/control/assets/ant.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ManiSkill/mani_skill/envs/scenes/base_env.py:20 gym env SceneManipulation-v1",
+      "ManiSkill/mani_skill/envs/tasks/empty_env.py:18 gym env Empty-v1",
+      "ManiSkill/mani_skill/envs/tasks/rotate_cube.py:352 gym env TriFingerRotateCubeLevel0-v1",
+      "ManiSkill/mani_skill/envs/tasks/rotate_cube.py:363 gym env TriFingerRotateCubeLevel1-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env SceneManipulation-v1 registered at ManiSkill/mani_skill/envs/scenes/base_env.py:20",
+      "gym env Empty-v1 registered at ManiSkill/mani_skill/envs/tasks/empty_env.py:18",
+      "gym env TriFingerRotateCubeLevel0-v1 registered at ManiSkill/mani_skill/envs/tasks/rotate_cube.py:352",
+      "gym env TriFingerRotateCubeLevel1-v1 registered at ManiSkill/mani_skill/envs/tasks/rotate_cube.py:363",
+      "gym env TriFingerRotateCubeLevel2-v1 registered at ManiSkill/mani_skill/envs/tasks/rotate_cube.py:374",
+      "gym env TriFingerRotateCubeLevel3-v1 registered at ManiSkill/mani_skill/envs/tasks/rotate_cube.py:385",
+      "gym env TriFingerRotateCubeLevel4-v1 registered at ManiSkill/mani_skill/envs/tasks/rotate_cube.py:396",
+      "gym env MS-AntWalk-v1 registered at ManiSkill/mani_skill/envs/tasks/control/ant.py:298",
+      "gym env MS-AntRun-v1 registered at ManiSkill/mani_skill/envs/tasks/control/ant.py:315",
+      "gym env MS-CartpoleBalance-v1 registered at ManiSkill/mani_skill/envs/tasks/control/cartpole.py:179",
+      "gym env MS-CartpoleSwingUp-v1 registered at ManiSkill/mani_skill/envs/tasks/control/cartpole.py:214",
+      "gym env MS-HopperStand-v1 registered at ManiSkill/mani_skill/envs/tasks/control/hopper.py:218"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cognitiveaisystems__blindvla --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.koeng101/pylabrobot-protobuf",
+  "track": "labs",
+  "local_path": "labs/koeng101/pylabrobot-protobuf",
+  "driver_dir": "MHS/drivers/labs/koeng101__pylabrobot-protobuf",
+  "upstream": {
+    "repo_url": "https://github.com/koeng101/pylabrobot-protobuf",
+    "commit": "c9b0a575d1be8efe95615af98928bf98fbddd243",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING",
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 20,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "client.py.pylabrobot_protobuf_client.star:RemoteSTARBackend",
+      "file": "src/client/py/pylabrobot_protobuf_client/star/__init__.py",
+      "line": 21,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "src/client/py/pylabrobot_protobuf_client/resource/tests"
+  },
+  "hints": {
+    "reads": [
+      "RemoteSTARBackend.get_channels_y_positions",
+      "RemoteSTARBackend.get_channels_z_positions",
+      "RemoteSTARBackend.get_core",
+      "RemoteSTARBackend.get_iswap_version",
+      "RemoteSTARBackend.get_temperature_at_hhc",
+      "RemoteSTARBackend.query_whether_temperature_reached_at_hhc",
+      "ResourceServiceImpl.get_absolute_location",
+      "ResourceServiceImpl.get_absolute_rotation",
+      "ResourceServiceImpl.get_absolute_size",
+      "ResourceServiceImpl.get_highest_point",
+      "ResourceServiceImpl.get_location_wrt",
+      "ResourceServiceImpl.get_resource"
+    ],
+    "writes": [
+      "RemoteSTARBackend.configure_node_names",
+      "RemoteSTARBackend.set_1d_barcode_type",
+      "RemoteSTARBackend.set_carrier_monitoring",
+      "RemoteSTARBackend.set_cover_output",
+      "RemoteSTARBackend.set_deck_data",
+      "RemoteSTARBackend.set_loading_indicators",
+      "RemoteSTARBackend.set_not_stop",
+      "RemoteSTARBackend.set_single_step_mode"
+    ],
+    "actions": [
+      "RemoteSTARBackend.aspirate",
+      "RemoteSTARBackend.aspirate96",
+      "RemoteSTARBackend.aspirate_core_96",
+      "RemoteSTARBackend.aspirate_pip",
+      "RemoteSTARBackend.collapse_gripper_arm",
+      "RemoteSTARBackend.core_move_picked_up_resource",
+      "RemoteSTARBackend.core_move_plate_to_position",
+      "RemoteSTARBackend.core_release_picked_up_resource",
+      "RemoteSTARBackend.disable_cover_control",
+      "RemoteSTARBackend.dispense",
+      "RemoteSTARBackend.dispense96",
+      "RemoteSTARBackend.dispense_core_96"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1",
+      "cap.measure.temperature.v1",
+      "cap.manipulation.grasp.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/koeng101__pylabrobot-protobuf --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

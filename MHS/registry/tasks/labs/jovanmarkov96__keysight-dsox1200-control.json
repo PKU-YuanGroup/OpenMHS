@@ -1,0 +1,103 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jovanmarkov96/keysight-dsox1200-control",
+  "track": "labs",
+  "local_path": "labs/jovanmarkov96/keysight-dsox1200-control",
+  "driver_dir": "MHS/drivers/labs/jovanmarkov96__keysight-dsox1200-control",
+  "upstream": {
+    "repo_url": "https://github.com/jovanmarkov96/keysight-dsox1200-control",
+    "commit": "34ba50a758b9f4e8773dee788c3f9a4c04455f8f",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 35,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "keysight_dsox1200.instrument:DSOX1200",
+      "file": "src/keysight_dsox1200/instrument.py",
+      "line": 57,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "DSOX1200.get_options",
+      "DSOX1200.identify",
+      "DSOX1200.measure_clear",
+      "DSOX1200.measure_counter",
+      "DSOX1200.measure_delay",
+      "DSOX1200.measure_duty_cycle",
+      "DSOX1200.measure_falltime",
+      "DSOX1200.measure_frequency",
+      "DSOX1200.measure_nwidth",
+      "DSOX1200.measure_overshoot",
+      "DSOX1200.measure_period",
+      "DSOX1200.measure_phase"
+    ],
+    "writes": [
+      "DSOX1200.configure_acquire",
+      "DSOX1200.configure_channel",
+      "DSOX1200.configure_timebase",
+      "DSOX1200.configure_trigger_edge"
+    ],
+    "actions": [
+      "DSOX1200.acquire_complete",
+      "DSOX1200.acquire_count",
+      "DSOX1200.acquire_count_query",
+      "DSOX1200.acquire_points",
+      "DSOX1200.acquire_points_query",
+      "DSOX1200.acquire_srate_query",
+      "DSOX1200.acquire_type",
+      "DSOX1200.acquire_type_query",
+      "DSOX1200.capture_all_channels",
+      "DSOX1200.capture_waveform",
+      "DSOX1200.reset",
+      "DSOX1200.run"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/jovanmarkov96__keysight-dsox1200-control --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

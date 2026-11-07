@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.wrioste/soma",
+  "track": "robots",
+  "local_path": "robots/wrioste/soma",
+  "driver_dir": "MHS/drivers/robots/wrioste__soma",
+  "upstream": {
+    "repo_url": "https://github.com/wrioste/soma",
+    "commit": "8e8772a98f5eeb332745d9b6dd008e6927f050af",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 523,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "mmgs/models/heads/sim_head.py:12 SimHead",
+      "mmgs/models/simulators/base.py:14 BaseSimulator",
+      "mmgs/models/simulators/gs_simulator_embodied.py:35 GsSimulatorEmbodied",
+      "mmgs/models/simulators/gs_simulator_embodied_stage2.py:35 GsSimulatorEmbodiedS2",
+      "mmgs/models/simulators/gs_simulator_hierarchy.py:33 GsSimulatorHierarchy",
+      "configs/_base_/models/gs_simulator_embodied.py:1"
+    ],
+    "upstream_tests": "data_preprocess/preprocess/gaussian_adapter/gaussian_splatting/submodules/fused-ssim/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/wrioste__soma --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

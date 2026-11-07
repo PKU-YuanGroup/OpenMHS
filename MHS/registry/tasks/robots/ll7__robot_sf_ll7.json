@@ -1,0 +1,75 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ll7/robot_sf_ll7",
+  "track": "robots",
+  "local_path": "robots/ll7/robot_sf_ll7",
+  "driver_dir": "MHS/drivers/robots/ll7__robot_sf_ll7",
+  "upstream": {
+    "repo_url": "https://github.com/ll7/robot_sf_ll7",
+    "commit": "53721be3248600e08641a9816d094b605e3c93e4",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 191,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robot_sf.gym_env.robot_env:RobotEnv",
+      "file": "robot_sf/gym_env/robot_env.py",
+      "line": 526,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robot_sf/gym_env/crowd_sim_env.py:51 CrowdSimEnv environment class",
+      "robot_sf/gym_env/multi_robot_env.py:61 MultiRobotEnv environment class",
+      "robot_sf/gym_env/pedestrian_env.py:105 PedestrianEnv environment class",
+      "robot_sf/gym_env/robot_env_with_image.py:23 RobotEnvWithImage environment class"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ll7__robot_sf_ll7 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

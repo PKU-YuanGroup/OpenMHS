@@ -1,0 +1,106 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.msuarezrodriguez/python-instrument-control",
+  "track": "labs",
+  "local_path": "labs/msuarezrodriguez/python-instrument-control",
+  "driver_dir": "MHS/drivers/labs/msuarezrodriguez__python-instrument-control",
+  "upstream": {
+    "repo_url": "https://github.com/msuarezrodriguez/python-instrument-control",
+    "commit": "e56156e1ba6a2e5469094291fef91945ca9ee069",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 324,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "instruments.lakeshore_336:LakeShore336",
+      "file": "instruments/lakeshore_336.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "instruments.keithley_2634b:Keithley2634B",
+      "file": "instruments/keithley_2634b.py",
+      "line": 4,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "LakeShore336.get_heater_range",
+      "LakeShore336.get_idn",
+      "LakeShore336.get_output_mode",
+      "LakeShore336.get_ramp",
+      "LakeShore336.get_sensor_units",
+      "LakeShore336.get_setpoint",
+      "LakeShore336.get_temperature",
+      "Keithley2634B.get_idn",
+      "Keithley2634B.get_next_error",
+      "Keithley2634B.measure_current",
+      "Keithley2634B.measure_voltage"
+    ],
+    "writes": [
+      "LakeShore336.set_heater_range",
+      "LakeShore336.set_manual_output",
+      "LakeShore336.set_output_mode",
+      "LakeShore336.set_ramp",
+      "LakeShore336.set_setpoint",
+      "Keithley2634B.configure_current_source",
+      "Keithley2634B.configure_voltage_source",
+      "Keithley2634B.set_current",
+      "Keithley2634B.set_voltage"
+    ],
+    "actions": [
+      "Keithley2634B.enable_output"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.measure.current.v1",
+      "cap.measure.temperature.v1",
+      "cap.measure.voltage.v1",
+      "cap.thermal.setpoint.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/msuarezrodriguez__python-instrument-control --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

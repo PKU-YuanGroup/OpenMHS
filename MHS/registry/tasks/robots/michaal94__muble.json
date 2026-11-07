@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.michaal94/muble",
+  "track": "robots",
+  "local_path": "robots/michaal94/muble",
+  "driver_dir": "MHS/drivers/robots/michaal94__muble",
+  "upstream": {
+    "repo_url": "https://github.com/michaal94/muble",
+    "commit": "84f1109110aeca0063b0d062d87096cc53cc0f71",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 348,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "environment.tabletop_env:TabletopEnv",
+      "file": "environment/tabletop_env.py",
+      "line": 20,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "conda/robotiq_gripper_85.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "docker/robotiq_gripper_85.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "conda/robotiq_gripper_85.xml:1 MJCF robot model",
+      "docker/robotiq_gripper_85.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model conda/robotiq_gripper_85.xml:1",
+      "MJCF robot model docker/robotiq_gripper_85.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/michaal94__muble --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.isiscomputinggroup/lewis",
+  "track": "labs",
+  "local_path": "labs/isiscomputinggroup/lewis",
+  "driver_dir": "MHS/drivers/labs/isiscomputinggroup__lewis",
+  "upstream": {
+    "repo_url": "https://github.com/isiscomputinggroup/lewis",
+    "commit": "1b2086d6ce5eda9a46c264067f3e6d66d15ac8cf",
+    "license_spdx": "GPL-3.0-or-later",
+    "license_class": "copyleft"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 60,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "lewis.core.control_client:ControlClient",
+      "file": "lewis/core/control_client.py",
+      "line": 68,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lewis.core.control_server:ExposedObjectCollection",
+      "file": "lewis/core/control_server.py",
+      "line": 169,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lewis.adapters.epics:PropertyExposingDriver",
+      "file": "lewis/adapters/epics.py",
+      "line": 417,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lewis.adapters.modbus:ModbusServer",
+      "file": "lewis/adapters/modbus.py",
+      "line": 580,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lewis.adapters.stream:StreamServer",
+      "file": "lewis/adapters/stream.py",
+      "line": 213,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/isiscomputinggroup__lewis --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

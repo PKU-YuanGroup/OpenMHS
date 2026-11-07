@@ -1,0 +1,180 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "docker",
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_20b5920f450a4251",
+    "https://github.com/mergeos-bounties/gazebo-mcp"
+  ],
+  "description": "mergeos-bounties/gazebo-mcp: protocol implementation/bridge for general (robotics track). OpenMHS plan: reference only (host). Declared backend: MCP; Gazebo. Language: Python. Catalog keywords: AI, Gazebo, gz-sim, MCP, mock, live.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 5,
+    "notes": "bounded static scan: 34 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB); agent-read source notes in work/recon/robots/mergeos-bounties__gazebo-mcp.md (entry points with file:line; not executed)",
+    "provenance_refs": [
+      "work/recon/robots/mergeos-bounties__gazebo-mcp.md"
+    ],
+    "read_by": "agent",
+    "state": "agent_read",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "mcp-proxy"
+  ],
+  "hardware_free": false,
+  "id": "gh.mergeos-bounties/gazebo-mcp",
+  "integration": {
+    "blockers": [
+      "REFERENCE_ONLY: role host"
+    ],
+    "effort": "EX",
+    "next_action": "Reference only: a host, orchestrator or MCP wrapper of a covered backend; integrate the backend instead.",
+    "reason_code": "override:recon",
+    "role": "host",
+    "scenario_required": false,
+    "strategy": "reference"
+  },
+  "interfaces": [
+    "MCP",
+    "CLI",
+    "HTTP/REST",
+    "Docker",
+    "Gazebo"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-07-22T13:51:33+07:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/mergeos-bounties/gazebo-mcp"
+  },
+  "local_path": "robots/mergeos-bounties/gazebo-mcp",
+  "modes": [],
+  "owner": "mergeos-bounties",
+  "package_id": "gh.mergeos-bounties/gazebo-mcp",
+  "quarantine": false,
+  "rank": 685,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "gazebo-mcp",
+  "repo_url": "https://github.com/mergeos-bounties/gazebo-mcp",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "c60f9af5d2e295e0a0e6e1d33c4a0f29a8f4650e",
+    "repo_url": "https://github.com/mergeos-bounties/gazebo-mcp"
+  },
+  "stars": 4,
+  "tags": [
+    "mcp-proxy",
+    "robotics",
+    "simulated",
+    "reference"
+  ],
+  "tier": "D",
+  "title": "mergeos-bounties/gazebo-mcp",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "mcp-server",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 79.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "false",
+      "backend_family_raw": "MCP; Gazebo",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "面向AI代理的Gazebo/gz-sim MCP服务，含离线mock及可选live桥接",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P1",
+      "row": 1599,
+      "rows_all": [
+        1599
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "mcp-proxy",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bmcp\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_note": "tier B -> D: triage reference (override:recon)",
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "docker",
+        "python"
+      ],
+      "entry_evidence_count": 6,
+      "files": 34,
+      "markers": {
+        "cli": 8,
+        "docker": 8,
+        "gazebo": 57,
+        "mcp": 71
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): gazebo-mcp is a reference MCP host over an optional Gazebo HTTP/file bridge and an in-memory mock, not a device driver.",
+        "rules alone: untriaged (untriaged:no_entry_class, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "gazebo-mcp is a reference MCP host over an optional Gazebo HTTP/file bridge and an in-memory mock, not a device driver.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

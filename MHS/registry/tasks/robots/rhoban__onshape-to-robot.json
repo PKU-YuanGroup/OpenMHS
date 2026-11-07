@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.rhoban/onshape-to-robot",
+  "track": "robots",
+  "local_path": "robots/rhoban/onshape-to-robot",
+  "driver_dir": "MHS/drivers/robots/rhoban__onshape-to-robot",
+  "upstream": {
+    "repo_url": "https://github.com/rhoban/onshape-to-robot",
+    "commit": "80e710700aac9573a2230f74f7ce9e094833a0bc",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 538,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "onshape_to_robot/processor_dummy_base_link.py:7 ProcessorDummyBaseLink",
+      "onshape_to_robot/simulation.py:12 Simulation",
+      "onshape_to_robot/processor_dummy_base_link.py:1",
+      "onshape_to_robot/simulation.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rhoban__onshape-to-robot --backend fake",
+  "skip_reason": "override (robots.json): Onshape-to-robot is a CAD-to-URDF/SDF/MuJoCo exporter over the Onshape REST API, not a device or a simulator environment, so it is skip/not-device.",
+  "publish_review": "not_required"
+}

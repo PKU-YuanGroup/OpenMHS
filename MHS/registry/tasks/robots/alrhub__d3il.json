@@ -1,0 +1,134 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.alrhub/d3il",
+  "track": "robots",
+  "local_path": "robots/alrhub/d3il",
+  "driver_dir": "MHS/drivers/robots/alrhub__d3il",
+  "upstream": {
+    "repo_url": "https://github.com/alrhub/d3il",
+    "commit": "1d9c71850d4fc1477cee17b557c8b97d70b13071",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 137,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_aligning.envs:Robot_Push_Env",
+      "file": "environments/d3il/envs/gym_aligning_env/gym_aligning/envs/aligning.py",
+      "line": 129,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_avoiding.envs:ObstacleAvoidanceEnv",
+      "file": "environments/d3il/envs/gym_avoiding_env/gym_avoiding/envs/avoiding.py",
+      "line": 52,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_inserting.envs:Gate_Insertion_Env",
+      "file": "environments/d3il/envs/gym_inserting_env/gym_inserting/envs/gate_insertion.py",
+      "line": 154,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_pushing.envs:Block_Push_Env",
+      "file": "environments/d3il/envs/gym_pushing_env/gym_pushing/envs/pushing.py",
+      "line": 171,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_sorting.envs:Sorting_Env",
+      "file": "environments/d3il/envs/gym_sorting_env/gym_sorting/envs/sorting.py",
+      "line": 193,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "environments/d3il/models/mj/robot/panda.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "environments/d3il/models/mj/robot/panda_invisible.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "environments/d3il/models/mj/robot/panda_rod.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "environments/d3il/models/mj/robot/panda_rod_invisible.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "environments/d3il/models/mj/robot/panda_tmp.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "environments/d3il/envs/gym_aligning_env/gym_aligning/__init__.py:3 gym env aligning-v0",
+      "environments/d3il/envs/gym_avoiding_env/gym_avoiding/__init__.py:3 gym env avoiding-v0",
+      "environments/d3il/envs/gym_inserting_env/gym_inserting/__init__.py:3 gym env gate_insertion-v0",
+      "environments/d3il/envs/gym_pushing_env/gym_pushing/__init__.py:3 gym env pushing-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env aligning-v0 registered at environments/d3il/envs/gym_aligning_env/gym_aligning/__init__.py:3",
+      "gym env avoiding-v0 registered at environments/d3il/envs/gym_avoiding_env/gym_avoiding/__init__.py:3",
+      "gym env gate_insertion-v0 registered at environments/d3il/envs/gym_inserting_env/gym_inserting/__init__.py:3",
+      "gym env pushing-v0 registered at environments/d3il/envs/gym_pushing_env/gym_pushing/__init__.py:3",
+      "gym env sorting-v0 registered at environments/d3il/envs/gym_sorting_env/gym_sorting/__init__.py:3",
+      "gym env stacking-v0 registered at environments/d3il/envs/gym_stacking_env/gym_stacking/__init__.py:3"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/alrhub__d3il --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

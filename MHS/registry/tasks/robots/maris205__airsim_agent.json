@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.maris205/airsim_agent",
+  "track": "robots",
+  "local_path": "robots/maris205/airsim_agent",
+  "driver_dir": "MHS/drivers/robots/maris205__airsim_agent",
+  "upstream": {
+    "repo_url": "https://github.com/maris205/airsim_agent",
+    "commit": "543efd30685681eb7eccd418c21f1b0b3d3c2456",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "reference",
+  "reason_code": "reference:host",
+  "role": "host",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1570,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "2-prompt_app/airsim_agent.py:20",
+      "2-prompt_app/airsim_wrapper.py:19",
+      "3-mulitmode_app/airsim_agent.py:21",
+      "3-mulitmode_app/airsim_wrapper.py:32",
+      "4-agent_app/airsim_agent.py:20",
+      "4-agent_app/airsim_wrapper.py:30"
+    ],
+    "upstream_tests": "external-libraries/tornado4/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/maris205__airsim_agent --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.horizonrobotics/roboorchardsim",
+  "track": "robots",
+  "local_path": "robots/horizonrobotics/roboorchardsim",
+  "driver_dir": "MHS/drivers/robots/horizonrobotics__roboorchardsim",
+  "upstream": {
+    "repo_url": "https://github.com/horizonrobotics/roboorchardsim",
+    "commit": "6e3fa645ca91569066a93064e03549a4d1340535",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1556,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "robo_orchard_sim.ext.envs.manager_based_env:IsaacManagerBasedEnv",
+      "file": "robo_orchard_sim/ext/envs/manager_based_env.py",
+      "line": 84,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "robo_orchard_sim.ext.envs.env_base:IsaacEnv",
+      "file": "robo_orchard_sim/ext/envs/env_base.py",
+      "line": 63,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robo_orchard_sim/ext/envs/manager_based_env.py:84 IsaacManagerBasedEnv environment class",
+      "robo_orchard_sim/ext/envs/env_base.py:63 IsaacEnv environment class"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/horizonrobotics__roboorchardsim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.openrl-lab/openrl",
+  "track": "robots",
+  "local_path": "robots/openrl-lab/openrl",
+  "driver_dir": "MHS/drivers/robots/openrl-lab__openrl",
+  "upstream": {
+    "repo_url": "https://github.com/openrl-lab/openrl",
+    "commit": "4c92aa440c12a6834c3fd76c574a341480868436",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 195,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "openrl/envs/nlp/fake_dialog_env.py:10 FakeDialogEnv",
+      "openrl/envs/nlp/rewards/meteor.py:9 VirtualMetric",
+      "openrl/envs/nlp/fake_dialog_env.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/openrl-lab__openrl --backend fake",
+  "skip_reason": "override (robots.json): OpenRL is a PyTorch RL training framework, not a device or simulator, so there is no device to drive.",
+  "publish_review": "not_required"
+}

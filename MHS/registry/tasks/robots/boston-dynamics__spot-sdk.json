@@ -1,0 +1,119 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.boston-dynamics/spot-sdk",
+  "track": "robots",
+  "local_path": "robots/boston-dynamics/spot-sdk",
+  "driver_dir": "MHS/drivers/robots/boston-dynamics__spot-sdk",
+  "upstream": {
+    "repo_url": "https://github.com/boston-dynamics/spot-sdk",
+    "commit": "04537ddafe0641d1751af3eb9e76cb785fc18594",
+    "license_spdx": "LicenseRef-proprietary",
+    "license_class": "proprietary"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:flagship-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 44,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "bosdyn.client.robot:Robot",
+      "file": "python/bosdyn-client/src/bosdyn/client/robot.py",
+      "line": 80,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "bosdyn.mission.client:MissionClient",
+      "file": "python/bosdyn-mission/src/bosdyn/mission/client.py",
+      "line": 70,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "bosdyn.orbit.client:Client",
+      "file": "python/bosdyn-orbit/src/bosdyn/orbit/client.py",
+      "line": 21,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "bosdyn.scout.client:ScoutClient",
+      "file": "python/bosdyn-scout/src/bosdyn/scout/client.py",
+      "line": 26,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "bosdyn.client.spot_cam.compositor:CompositorClient",
+      "file": "python/bosdyn-client/src/bosdyn/client/spot_cam/compositor.py",
+      "line": 15,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "python/bosdyn-client/tests"
+  },
+  "hints": {
+    "reads": [
+      "Robot.get_cached_hardware_hardware_configuration",
+      "Robot.get_cached_robot_id",
+      "Robot.get_cached_usernames",
+      "Robot.get_frame_tree_snapshot",
+      "Robot.get_id",
+      "Robot.has_arm",
+      "Robot.is_estopped",
+      "Robot.is_powered_on",
+      "Robot.lease_wallet.get_lease",
+      "Robot.lease_wallet.get_lease_state",
+      "MissionClient.get_info",
+      "MissionClient.get_info_async"
+    ],
+    "writes": [
+      "Robot.lease_wallet.set_client_name"
+    ],
+    "actions": [
+      "Robot.power_off",
+      "Robot.power_on",
+      "Robot.start_time_sync",
+      "Robot.stop_time_sync",
+      "MissionClient.pause_mission",
+      "MissionClient.pause_mission_async",
+      "MissionClient.stop_mission",
+      "MissionClient.stop_mission_async"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "motion"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/boston-dynamics__spot-sdk --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

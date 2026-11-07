@@ -1,0 +1,229 @@
+{
+  "adapter": {
+    "bridge": "gymnasium",
+    "entry_points": [
+      "roboschool:RoboschoolInvertedPendulum (roboschool/gym_pendulums.py:69)",
+      "roboschool:RoboschoolInvertedPendulumSwingup (roboschool/gym_pendulums.py:125)",
+      "roboschool:RoboschoolInvertedDoublePendulum (roboschool/gym_pendulums.py:7)",
+      "roboschool:RoboschoolReacher (roboschool/gym_reacher.py:7)",
+      "roboschool:RoboschoolHopper (roboschool/gym_mujoco_walkers.py:14)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "docker",
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
+  "catalog_refs": [
+    "repo_ba2e13029b29da72",
+    "https://github.com/openai/roboschool"
+  ],
+  "description": "openai/roboschool: complete environment for legged robots (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 2. Catalog role: task environment. Declared backend: PyBullet. Language: Python, Shell, C++. Catalog keywords: OpenAI, Roboschool, RL, Bullet, PyBullet.",
+  "domains": [
+    "legged robots"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 179 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/robots/openai__roboschool/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "gymnasium"
+  ],
+  "hardware_free": true,
+  "id": "gh.openai/roboschool",
+  "integration": {
+    "blockers": [],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/openai__roboschool: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/openai__roboschool --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "family:gymnasium",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "Python SDK",
+    "Gymnasium",
+    "Docker",
+    "MuJoCo",
+    "PyBullet",
+    "CLI"
+  ],
+  "languages": [
+    "Python",
+    "Shell",
+    "C++",
+    "C"
+  ],
+  "last_commit_at": "2019-10-09T18:01:07-07:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/openai/roboschool"
+  },
+  "local_path": "robots/openai/roboschool",
+  "modes": [
+    "simulated"
+  ],
+  "owner": "openai",
+  "package_id": "gh.openai/roboschool",
+  "quarantine": false,
+  "rank": 131,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "roboschool",
+  "repo_url": "https://github.com/openai/roboschool",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "d32bcb2b35b94168b5ce27233ca62f3c8678886f",
+    "repo_url": "https://github.com/openai/roboschool"
+  },
+  "stars": 0,
+  "tags": [
+    "gymnasium",
+    "robotics",
+    "complete environment",
+    "task environment",
+    "simulated",
+    "family config"
+  ],
+  "tier": "A",
+  "title": "openai/roboschool",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "gym-env",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 59.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "任务环境",
+      "archived": "unknown",
+      "backend_family_raw": "PyBullet",
+      "category_zh": "完整环境",
+      "description_zh": "OpenAI Roboschool机器人RL环境(基于Bullet)，已弃用，建议用PyBullet",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "参考",
+      "row": 1884,
+      "rows_all": [
+        1884
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "gymnasium",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bpybullet"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "A2-task-env-entry"
+    },
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/openai__roboschool/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": "LICENSE.md",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "d32bcb2b35b94168b5ce27233ca62f3c8678886f",
+      "driver_dir": "MHS/drivers/robots/openai__roboschool",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:139156ac02cbaed80546e8624b000f3fa40b8f2027175e1294139e9a048c36cb",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "docker",
+        "python"
+      ],
+      "entry_evidence_count": 4,
+      "files": 179,
+      "markers": {
+        "camera": 1,
+        "docker": 2,
+        "gpu": 1,
+        "gymnasium": 4,
+        "mujoco": 2,
+        "pybullet": 4
+      }
+    },
+    "triage": {
+      "evidence": [
+        "structural marker: registers gym env RoboschoolAnt-v1",
+        "sim-env evidence: registers gym env RoboschoolAnt-v1"
+      ],
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "reason_code": "family:gymnasium",
+      "rule": 9,
+      "version": "0.9.4"
+    }
+  }
+}

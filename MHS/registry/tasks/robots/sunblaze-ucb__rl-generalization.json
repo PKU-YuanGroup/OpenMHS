@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sunblaze-ucb/rl-generalization",
+  "track": "robots",
+  "local_path": "robots/sunblaze-ucb/rl-generalization",
+  "driver_dir": "MHS/drivers/robots/sunblaze-ucb__rl-generalization",
+  "upstream": {
+    "repo_url": "https://github.com/sunblaze-ucb/rl-generalization",
+    "commit": "5e05aa108aeadd4cf21f45d56128e9da3bddc14c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 355,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "sunblaze_envs.classic_control:ModifiableCartPoleEnv",
+      "file": "sunblaze_envs/classic_control.py",
+      "line": 30,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "sunblaze_envs/__init__.py:7 gym env SunblazeCartPole-v0",
+      "sunblaze_envs/__init__.py:14 gym env SunblazeCartPoleRandomNormal-v0",
+      "sunblaze_envs/__init__.py:21 gym env SunblazeCartPoleRandomExtreme-v0",
+      "sunblaze_envs/__init__.py:28 gym env SunblazeMountainCar-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env SunblazeCartPole-v0 registered at sunblaze_envs/__init__.py:7",
+      "gym env SunblazeCartPoleRandomNormal-v0 registered at sunblaze_envs/__init__.py:14",
+      "gym env SunblazeCartPoleRandomExtreme-v0 registered at sunblaze_envs/__init__.py:21",
+      "gym env SunblazeMountainCar-v0 registered at sunblaze_envs/__init__.py:28",
+      "gym env SunblazeMountainCarRandomNormal-v0 registered at sunblaze_envs/__init__.py:35",
+      "gym env SunblazeMountainCarRandomExtreme-v0 registered at sunblaze_envs/__init__.py:42",
+      "gym env SunblazePendulum-v0 registered at sunblaze_envs/__init__.py:49",
+      "gym env SunblazePendulumRandomNormal-v0 registered at sunblaze_envs/__init__.py:55",
+      "gym env SunblazePendulumRandomExtreme-v0 registered at sunblaze_envs/__init__.py:61",
+      "gym env SunblazeAcrobot-v0 registered at sunblaze_envs/__init__.py:67",
+      "gym env SunblazeAcrobotRandomNormal-v0 registered at sunblaze_envs/__init__.py:73",
+      "gym env SunblazeAcrobotRandomExtreme-v0 registered at sunblaze_envs/__init__.py:79"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/sunblaze-ucb__rl-generalization --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,110 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ombayley/chemklipper",
+  "track": "labs",
+  "local_path": "labs/ombayley/chemklipper",
+  "driver_dir": "MHS/drivers/labs/ombayley__chemklipper",
+  "upstream": {
+    "repo_url": "https://github.com/ombayley/chemklipper",
+    "commit": "e88503106b481ad12a2469b3dbe991c18186e650",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 38,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "chem_klipper.devices.pump:Pump",
+      "file": "src/chem_klipper/devices/pump.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "chem_klipper.devices.gantry:Gantry",
+      "file": "src/chem_klipper/devices/gantry.py",
+      "line": 31,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "chem_klipper.moonraker:MoonrakerClient",
+      "file": "src/chem_klipper/moonraker.py",
+      "line": 35,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "chem_klipper.devices.moonraker_device:MoonrakerDevice",
+      "file": "src/chem_klipper/devices/moonraker_device.py",
+      "line": 16,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Pump.get_status",
+      "Pump.is_connected",
+      "Gantry.get_current_position",
+      "Gantry.get_status",
+      "Gantry.get_target_position",
+      "Gantry.is_connected",
+      "MoonrakerClient.is_connected"
+    ],
+    "writes": [],
+    "actions": [
+      "Pump.aspirate",
+      "Pump.dispense",
+      "Gantry.disable_motors",
+      "Gantry.enable_motors",
+      "Gantry.home",
+      "Gantry.move",
+      "Gantry.wait_for_move"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": [
+      "src/chem_klipper/devices/gantry.py:20 MIN_STEPPER_CURRENT = 0.1",
+      "src/chem_klipper/devices/gantry.py:21 MAX_STEPPER_CURRENT = 1.0",
+      "src/chem_klipper/devices/pump.py:12 MIN_STEPPER_CURRENT = 0.1",
+      "src/chem_klipper/devices/pump.py:13 MAX_STEPPER_CURRENT = 1.0"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ombayley__chemklipper --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

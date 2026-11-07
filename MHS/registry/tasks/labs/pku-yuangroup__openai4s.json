@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pku-yuangroup/openai4s",
+  "track": "labs",
+  "local_path": "labs/pku-yuangroup/openai4s",
+  "driver_dir": "MHS/drivers/labs/pku-yuangroup__openai4s",
+  "upstream": {
+    "repo_url": "https://github.com/pku-yuangroup/openai4s",
+    "commit": "f48f216c81fe400444857c8a5d84d7407398918c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "reference",
+  "reason_code": "override:recon",
+  "role": "host",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 213,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "harness/faults.py:12 FakeClock",
+      "harness/faults.py:32 FakeUUIDFactory"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pku-yuangroup__openai4s --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

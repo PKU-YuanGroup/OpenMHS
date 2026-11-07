@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.phuongboi/drone-control-using-reinforcement-learning",
+  "track": "robots",
+  "local_path": "robots/phuongboi/drone-control-using-reinforcement-learning",
+  "driver_dir": "MHS/drivers/robots/phuongboi__drone-control-using-reinforcement-learning",
+  "upstream": {
+    "repo_url": "https://github.com/phuongboi/drone-control-using-reinforcement-learning",
+    "commit": "abce3e5e18767966ddc17cb75016f9fafbd9a8d8",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:duplicate_of",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": "gh.learnsyslab/gym-pybullet-drones",
+  "package_status": "none",
+  "wave": 9,
+  "rank": 478,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_pybullet_drones/__init__.py:3 gym env ctrl-aviary-v0",
+      "gym_pybullet_drones/__init__.py:8 gym env velocity-aviary-v0",
+      "gym_pybullet_drones/__init__.py:13 gym env hover-aviary-v0",
+      "gym_pybullet_drones/__init__.py:18 gym env multihover-aviary-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/phuongboi__drone-control-using-reinforcement-learning --backend fake",
+  "skip_reason": "duplicate of gh.learnsyslab/gym-pybullet-drones: override (robots.json): PPO training scripts around a vendored copy of the gym_pybullet_drones package; the envs are the canonical repo's (rule 9 saw the copied registrations).",
+  "publish_review": "not_required"
+}

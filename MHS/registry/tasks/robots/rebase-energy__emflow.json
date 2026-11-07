@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.rebase-energy/emflow",
+  "track": "robots",
+  "local_path": "robots/rebase-energy/emflow",
+  "driver_dir": "MHS/drivers/robots/rebase-energy__emflow",
+  "upstream": {
+    "repo_url": "https://github.com/rebase-energy/emflow",
+    "commit": "843bbdc7ac372b7b4a735ed0f000d8bef3db0847",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 415,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "emflow/models/simulator.py:13 Simulator",
+      "emflow/models/simulator.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rebase-energy__emflow --backend fake",
+  "skip_reason": "override (robots.json): emflow is an energy forecasting and trading framework, not a device or device simulator; its Gymnasium envs settle forecasts and bids against historical data.",
+  "publish_review": "not_required"
+}

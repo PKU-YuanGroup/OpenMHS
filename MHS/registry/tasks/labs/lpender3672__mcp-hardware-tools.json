@@ -1,0 +1,65 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.lpender3672/mcp-hardware-tools",
+  "track": "labs",
+  "local_path": "labs/lpender3672/mcp-hardware-tools",
+  "driver_dir": "MHS/drivers/labs/lpender3672__mcp-hardware-tools",
+  "upstream": {
+    "repo_url": "https://github.com/lpender3672/mcp-hardware-tools",
+    "commit": "e13d9cd83962cc1bb80b3f25f0daa2fce52eb0f5",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "reference",
+  "reason_code": "reference:host",
+  "role": "host",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1025,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/hwtools/transport/fake.py:14 FakeTransport",
+      "src/hwtools/drivers/simulated/scope.py:43 SimulatedScope",
+      "src/hwtools/drivers/simulated/signal_generator.py:34 SimulatedSignalGenerator",
+      "src/hwtools/drivers/simulated/signals.py:20 SimSignal",
+      "src/hwtools/transport/fake.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/lpender3672__mcp-hardware-tools --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

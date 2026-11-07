@@ -1,0 +1,243 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "comm.scpi:SCPIController (comm/scpi.py:81)",
+      "comm.bridge:EAPowerSupply (comm/bridge.py:132)",
+      "comm.dl3000:DL3000Load (comm/dl3000.py:96)",
+      "models.simplified:SimplifiedModel (models/simplified.py:6)",
+      "models.single_diode:SingleDiodeModel (models/single_diode.py:85)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_2f71bdbeff9d4864",
+    "https://github.com/laristizabal1/pv-emulator"
+  ],
+  "description": "laristizabal1/pv-emulator: complete environment for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: measurement model. Declared backend: PyVISA. Language: Python. Catalog keywords: SCPI, I-V.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 68 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/laristizabal1__pv-emulator/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.laristizabal1/pv-emulator",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/laristizabal1__pv-emulator: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/laristizabal1__pv-emulator --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "SCPI/VISA",
+    "Python SDK",
+    "HTTP/REST",
+    "Serial",
+    "Modbus",
+    "CLI"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-07-05T15:59:07-05:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/laristizabal1/pv-emulator"
+  },
+  "local_path": "labs/laristizabal1/pv-emulator",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "laristizabal1",
+  "package_id": "gh.laristizabal1/pv-emulator",
+  "quarantine": false,
+  "rank": 36,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pv-emulator",
+  "repo_url": "https://github.com/laristizabal1/pv-emulator",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "a2339189e88c80889a86ac67bcf98b5cc9fc4447",
+    "repo_url": "https://github.com/laristizabal1/pv-emulator"
+  },
+  "stars": 0,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "complete environment",
+    "measurement model",
+    "simulated",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "laristizabal1/pv-emulator",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.86,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 54.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "测量模型",
+      "archived": "false",
+      "backend_family_raw": "PyVISA",
+      "category_zh": "完整环境",
+      "description_zh": "用可编程电源经SCPI仿真光伏板I-V曲线的测试平台",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 1392,
+      "rows_all": [
+        1392
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bpyvisa\\b"
+      ],
+      "family_note": "triage family python-object (catalogue family scpi-visa)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B3-measurement-model"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/laristizabal1__pv-emulator/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/laristizabal1__pv-emulator/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/laristizabal1__pv-emulator/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "a2339189e88c80889a86ac67bcf98b5cc9fc4447",
+      "driver_dir": "MHS/drivers/labs/laristizabal1__pv-emulator",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:0d5cecbfca5d363e3edecbf13d913ed56d142b764ec4a2bc97cac65c9db1246f",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 7,
+      "files": 68,
+      "markers": {
+        "http": 2,
+        "scpi_visa": 8,
+        "serial": 11
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of wave B: a direct Driver, not the card's ScpiDriver table (the family-config ScpiDriver helper is replaced by a direct Driver over comm.bridge:EAPowerSupply with native.py)",
+        "rules alone: family-config (family:scpi, rule 9)"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class comm.scpi:SCPIController uses the hardware transport serial",
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of wave B: a direct Driver, not the card's ScpiDriver table (the family-config ScpiDriver helper is replaced by a direct Driver over comm.bridge:EAPowerSupply with native.py)",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

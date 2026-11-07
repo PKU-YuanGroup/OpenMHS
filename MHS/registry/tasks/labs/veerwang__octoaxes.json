@@ -1,0 +1,73 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.veerwang/octoaxes",
+  "track": "labs",
+  "local_path": "labs/veerwang/octoaxes",
+  "driver_dir": "MHS/drivers/labs/veerwang__octoaxes",
+  "upstream": {
+    "repo_url": "https://github.com/veerwang/octoaxes",
+    "commit": "77cb47e0fdf83bde33c85d24be4d4b3723e74e15",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 271,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "hardware.serial_thread:SerialThread",
+      "file": "software/common/hardware/serial_thread.py",
+      "line": 21,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": "software/common/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": [
+      "software/octoaxes/constants.py:182 DEFAULT_LOW_LIMIT = -6000",
+      "software/octoaxes/constants.py:183 DEFAULT_HIGH_LIMIT = 6000",
+      "software/octoaxesplus/constants.py:189 DEFAULT_LOW_LIMIT = -6000",
+      "software/octoaxesplus/constants.py:190 DEFAULT_HIGH_LIMIT = 6000"
+    ]
+  },
+  "needs_recon": [
+    "install",
+    "capabilities",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/veerwang__octoaxes --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

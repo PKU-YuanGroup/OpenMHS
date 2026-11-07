@@ -1,0 +1,78 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.proroklab/vectorizedmultiagentsimulator",
+  "track": "robots",
+  "local_path": "robots/proroklab/vectorizedmultiagentsimulator",
+  "driver_dir": "MHS/drivers/robots/proroklab__vectorizedmultiagentsimulator",
+  "upstream": {
+    "repo_url": "https://github.com/proroklab/vectorizedmultiagentsimulator",
+    "commit": "9658bc56e886f96e4b62033e5df009eccb92122b",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 97,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "vmas.simulator.environment.environment:Environment",
+      "file": "vmas/simulator/environment/environment.py",
+      "line": 50,
+      "confidence": "override"
+    },
+    {
+      "symbol": "vmas.simulator.environment.gym.gymnasium:GymnasiumWrapper",
+      "file": "vmas/simulator/environment/gym/gymnasium.py",
+      "line": 26,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "vmas/simulator/environment/environment.py:50 Environment environment class"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/proroklab__vectorizedmultiagentsimulator --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

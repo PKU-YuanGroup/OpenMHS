@@ -1,0 +1,261 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "chem_klipper.devices.pump:Pump (src/chem_klipper/devices/pump.py:18)",
+      "chem_klipper.devices.gantry:Gantry (src/chem_klipper/devices/gantry.py:31)",
+      "chem_klipper.moonraker:MoonrakerClient (src/chem_klipper/moonraker.py:35)",
+      "chem_klipper.devices.moonraker_device:MoonrakerDevice (src/chem_klipper/devices/moonraker_device.py:16)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.motion.joint_position.v1",
+    "cap.fluid.aspirate.v1",
+    "cap.fluid.dispense.v1"
+  ],
+  "catalog_refs": [
+    "repo_27054da170b95350",
+    "https://github.com/ombayley/chemklipper"
+  ],
+  "description": "ombayley/chemklipper: device backend for liquid handling (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Language: Python. Catalog keywords: Klipper, Moonraker, WebSocket.",
+  "domains": [
+    "liquid handling"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 71 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/ombayley__chemklipper/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.ombayley/chemklipper",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/ombayley__chemklipper: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/ombayley__chemklipper --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "WebSocket",
+    "HTTP/REST"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-07-04T19:17:53+02:00",
+  "license": "GPL-3.0",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-3.0",
+  "links": {
+    "repo": "https://github.com/ombayley/chemklipper"
+  },
+  "local_path": "labs/ombayley/chemklipper",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "ombayley",
+  "package_id": "gh.ombayley/chemklipper",
+  "quarantine": false,
+  "rank": 38,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "chemklipper",
+  "repo_url": "https://github.com/ombayley/chemklipper",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "e88503106b481ad12a2469b3dbe991c18186e650",
+    "repo_url": "https://github.com/ombayley/chemklipper"
+  },
+  "stars": 0,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "simulated",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "ombayley/chemklipper",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "protocol-bridge",
+      "family_confidence": 0.74,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 44.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "基于Klipper的低成本液体处理机器人的异步Python控制层(Moonraker WebSocket)",
+      "join": "exact",
+      "license_raw": "GPL-3.0",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 1858,
+      "rows_all": [
+        1858
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "http-api",
+      "catalog_tier": "B",
+      "family_matches": [
+        "websocket"
+      ],
+      "family_note": "triage family python-object (catalogue family http-api)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/ombayley__chemklipper/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.fluid.aspirate.v1",
+              "cap.fluid.dispense.v1"
+            ],
+            "kind": "lab.liquid_handler"
+          }
+        ],
+        "risk_floor": "R2",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/labs/ombayley__chemklipper/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/ombayley__chemklipper/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.fluid.aspirate.v1",
+              "cap.fluid.dispense.v1"
+            ],
+            "kind": "lab.liquid_handler"
+          }
+        ],
+        "risk_floor": "R2"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-3.0",
+      "declared_spdx": "GPL-3.0",
+      "file": "LICENSE",
+      "file_spdx": "GPL-3.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "e88503106b481ad12a2469b3dbe991c18186e650",
+      "driver_dir": "MHS/drivers/labs/ombayley__chemklipper",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:6e0ffec99d868297a39856572c1b32905f87dfa0cb8ded180ae71711a1ee4526",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 8,
+      "files": 71,
+      "markers": {
+        "http": 5
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class chem_klipper.devices.gantry:Gantry (src/chem_klipper/devices/gantry.py:31, score 13)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

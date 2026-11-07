@@ -1,0 +1,95 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.morse-simulator/morse",
+  "track": "robots",
+  "local_path": "robots/morse-simulator/morse",
+  "driver_dir": "MHS/drivers/robots/morse-simulator__morse",
+  "upstream": {
+    "repo_url": "https://github.com/morse-simulator/morse",
+    "commit": "5f9d98978413506313b1457c1680bfa1f10c210b",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 98,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "morse.builder.robots.human:Human",
+      "file": "src/morse/builder/robots/human.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "morse.builder.robots.pr2:LocalizedPR2",
+      "file": "src/morse/builder/robots/pr2.py",
+      "line": 118,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "morse.builder.robots.pr2:NavPR2",
+      "file": "src/morse/builder/robots/pr2.py",
+      "line": 153,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "morse.builder.robots.morserobots:Morsy",
+      "file": "src/morse/builder/robots/morserobots.py",
+      "line": 5,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "morse.builder.robots.morserobots:ATRV",
+      "file": "src/morse/builder/robots/morserobots.py",
+      "line": 26,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/morse/core/morse_time.py:114 FixedSimulationStepStrategy",
+      "src/morse/core/multinode.py:4 SimulationNodeClass",
+      "src/morse/middleware/pocolibs_datastream.py:39 DummyPoster",
+      "src/morse/robots/fakerobot.py:5 FakeRobot",
+      "src/morse/builder/robots/morserobots.py:43 FakeRobot",
+      "src/morse/robots/fakerobot.py:1"
+    ],
+    "upstream_tests": "bindings/pymorse/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/morse-simulator__morse --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

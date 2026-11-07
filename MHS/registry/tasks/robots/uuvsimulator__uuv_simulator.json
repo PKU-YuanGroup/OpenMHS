@@ -1,0 +1,98 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.uuvsimulator/uuv_simulator",
+  "track": "robots",
+  "local_path": "robots/uuvsimulator/uuv_simulator",
+  "driver_dir": "MHS/drivers/robots/uuvsimulator__uuv_simulator",
+  "upstream": {
+    "repo_url": "https://github.com/uuvsimulator/uuv_simulator",
+    "commit": "bfb40cb153684a0703173117b6bbf4258e8e71c5",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 91,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "uuv_descriptions/test"
+  },
+  "hints": {
+    "reads": [
+      "DPControllerLocalPlanner.get_idle_circle_path",
+      "DPControllerLocalPlanner.get_vehicle_rot",
+      "DPControllerLocalPlanner.has_finished",
+      "DPControllerLocalPlanner.has_started",
+      "DPControllerLocalPlanner.is_automatic_on",
+      "DPControllerLocalPlanner.is_station_keeping_on",
+      "DPControllerLocalPlanner._traj_interpolator.get_interp_method",
+      "DPControllerLocalPlanner._traj_interpolator.get_interpolator_tags",
+      "DPControllerLocalPlanner._traj_interpolator.get_max_time",
+      "DPControllerLocalPlanner._traj_interpolator.get_path_message",
+      "DPControllerLocalPlanner._traj_interpolator.get_trajectory_as_message",
+      "DPControllerLocalPlanner._traj_interpolator.get_visual_markers"
+    ],
+    "writes": [
+      "DPControllerLocalPlanner.set_automatic_mode",
+      "DPControllerLocalPlanner.set_station_keeping",
+      "DPControllerLocalPlanner.set_trajectory_running",
+      "DPControllerLocalPlanner._traj_interpolator.set_duration",
+      "DPControllerLocalPlanner._traj_interpolator.set_interp_method",
+      "DPControllerLocalPlanner._traj_interpolator.set_interpolator_parameters",
+      "DPControllerLocalPlanner._traj_interpolator.set_stamped_pose_only",
+      "DPControllerLocalPlanner._traj_interpolator.set_start_time",
+      "DPControllerLocalPlanner._traj_interpolator.set_waypoints",
+      "TrajectoryGenerator.set_duration",
+      "TrajectoryGenerator.set_interp_method",
+      "TrajectoryGenerator.set_interpolator_parameters"
+    ],
+    "actions": [
+      "DPControllerLocalPlanner.start_circle",
+      "DPControllerLocalPlanner.start_helix",
+      "DPControllerLocalPlanner.start_station_keeping",
+      "DPControllerLocalPlanner.start_waypoint_list",
+      "TrajectoryGenerator._wp_interp.reset",
+      "CSInterpolator.reset",
+      "CSInterpolator.start_time"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.cartesian_pose.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/uuvsimulator__uuv_simulator --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

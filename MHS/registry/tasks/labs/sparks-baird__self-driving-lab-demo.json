@@ -1,0 +1,78 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sparks-baird/self-driving-lab-demo",
+  "track": "labs",
+  "local_path": "labs/sparks-baird/self-driving-lab-demo",
+  "driver_dir": "MHS/drivers/labs/sparks-baird__self-driving-lab-demo",
+  "upstream": {
+    "repo_url": "https://github.com/sparks-baird/self-driving-lab-demo",
+    "commit": "051e91e34b63e5ce357df3db7e7425186c5c635c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 16,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "extra.nonwireless.lib.host_nonwireless:Talker",
+      "file": "src/extra/nonwireless/lib/host_nonwireless.py",
+      "line": 6,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/self_driving_lab_demo/core.py:40 SensorSimulator",
+      "src/extra/self_driving_lab_demo_blinkt/core.py:90 SensorSimulator",
+      "src/public_mqtt_sdl_demo/lib/sdl_demo_utils.py:269 DummyMotor",
+      "src/public_mqtt_sdl_demo/lib/sdl_demo_utils.py:274 DummySensor"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": [
+      "src/extra/adafruit_io_sdl_demo/main.py:59 max_wait = 20",
+      "src/extra/micropython_sdl_demo/main.py:21 max_wait = 30",
+      "src/extra/micropython_sdl_demo/microdot_basic.py:16 max_wait = 10"
+    ]
+  },
+  "needs_recon": [
+    "capabilities",
+    "artifacts"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/sparks-baird__self-driving-lab-demo --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

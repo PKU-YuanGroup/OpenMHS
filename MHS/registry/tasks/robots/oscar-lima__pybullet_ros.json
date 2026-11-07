@@ -1,0 +1,80 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.oscar-lima/pybullet_ros",
+  "track": "robots",
+  "local_path": "robots/oscar-lima/pybullet_ros",
+  "driver_dir": "MHS/drivers/robots/oscar-lima__pybullet_ros",
+  "upstream": {
+    "repo_url": "https://github.com/oscar-lima/pybullet_ros",
+    "commit": "b0a79a7d290b9506d2ac3c3b1aa07ef65065e5cd",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": "ros",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 41,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "pybullet_ros.pybullet_ros:pyBulletRosWrapper",
+      "file": "ros/src/pybullet_ros/pybullet_ros.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pybullet_ros.sdf.sdf_parser:Model",
+      "file": "ros/src/pybullet_ros/sdf/sdf_parser.py",
+      "line": 277,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pybullet_ros.plugins.control:pveControl",
+      "file": "ros/src/pybullet_ros/plugins/control.py",
+      "line": 12,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "catkin_make"
+    ],
+    "system_deps": [
+      "Catkin workspace with this package in src; run catkin_make from the workspace root"
+    ],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "common/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/oscar-lima__pybullet_ros --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

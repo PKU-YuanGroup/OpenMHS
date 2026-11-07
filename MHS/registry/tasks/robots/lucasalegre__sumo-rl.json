@@ -1,0 +1,74 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.lucasalegre/sumo-rl",
+  "track": "robots",
+  "local_path": "robots/lucasalegre/sumo-rl",
+  "driver_dir": "MHS/drivers/robots/lucasalegre__sumo-rl",
+  "upstream": {
+    "repo_url": "https://github.com/lucasalegre/sumo-rl",
+    "commit": "86f0fc41401eeca724b2e8878f5020dc6d70c9b4",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 60,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "sumo_rl.environment.env:SumoEnvironment",
+      "file": "sumo_rl/environment/env.py",
+      "line": 51,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "sumo_rl/environment/__init__.py:6 gym env sumo-rl-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env sumo-rl-v0 registered at sumo_rl/environment/__init__.py:6"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/lucasalegre__sumo-rl --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

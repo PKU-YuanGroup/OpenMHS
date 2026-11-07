@@ -1,0 +1,95 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.opentrons/opentrons",
+  "track": "labs",
+  "local_path": "labs/opentrons/opentrons",
+  "driver_dir": "MHS/drivers/labs/opentrons__opentrons",
+  "upstream": {
+    "repo_url": "https://github.com/opentrons/opentrons",
+    "commit": "adb4970a4d170f74b217e947d0176a4f534f298a",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:http",
+  "role": "framework",
+  "family": "http",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 22,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "opentrons.hardware_control.api:API",
+      "file": "api/src/opentrons/hardware_control/api.py",
+      "line": 92,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "opentrons.hardware_control.ot3api:OT3API",
+      "file": "api/src/opentrons/hardware_control/ot3api.py",
+      "line": 194,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "hardware.opentrons_hardware.sensors.sensor_driver:SensorDriver",
+      "file": "hardware/opentrons_hardware/sensors/sensor_driver.py",
+      "line": 58,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "opentrons.protocol_api._liquid:LiquidClass",
+      "file": "api/src/opentrons/protocol_api/_liquid.py",
+      "line": 41,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "opentrons.protocol_api._parameter_context:ParameterContext",
+      "file": "api/src/opentrons/protocol_api/_parameter_context.py",
+      "line": 36,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "hardware-testing/hardware_testing/drivers/asair_sensor.py:288",
+      "hardware-testing/hardware_testing/drivers/pressure_fixture.py:81",
+      "robot-server/robot_server/simulator_calibration_seed.py:1",
+      "abr-testing/abr_testing/protocol_simulation/abr_sim_check.py:1",
+      "abr-testing/abr_testing/protocol_simulation/simulation_metrics.py:1",
+      "api/src/opentrons/simulate.py:1"
+    ],
+    "upstream_tests": "abr-testing/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/opentrons__opentrons --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

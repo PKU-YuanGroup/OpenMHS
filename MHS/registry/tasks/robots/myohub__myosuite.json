@@ -1,0 +1,116 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.myohub/myosuite",
+  "track": "robots",
+  "local_path": "robots/myohub/myosuite",
+  "driver_dir": "MHS/drivers/robots/myohub__myosuite",
+  "upstream": {
+    "repo_url": "https://github.com/myohub/myosuite",
+    "commit": "2d08f42dfec85278566c95b1d09f5bd67662b3d6",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 33,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "myosuite.envs.modular_env:ModularTaskEnv",
+      "file": "myosuite/envs/modular_env.py",
+      "line": 234,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "myosuite.envs.multi_agent_modular_env:ModularMultiAgentTaskEnv",
+      "file": "myosuite/envs/multi_agent_modular_env.py",
+      "line": 35,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "myosuite.envs.myo.tasks.challenge.baoding:BaodingEnv",
+      "file": "myosuite/envs/myo/tasks/challenge/baoding.py",
+      "line": 41,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "myosuite.envs.myo.tasks.challenge.bimanual:BimanualEnv",
+      "file": "myosuite/envs/myo/tasks/challenge/bimanual.py",
+      "line": 47,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "myosuite.envs.myo.tasks.challenge.chasetag:ChaseTagEnv",
+      "file": "myosuite/envs/myo/tasks/challenge/chasetag.py",
+      "line": 332,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "myosuite/envs/myo/assets/arm/myoarm_tabletennis.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "myosuite/envs/myo/assets/arm/myotorso_tabletennis_isolated.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "myosuite/envs/myo/tasks/mimic/__init__.py:25 gym env myoMimicBimanual-v0",
+      "myosuite/envs/myo/tasks/mimic/__init__.py:32 gym env myoMimicFullbody-v0",
+      "myosuite/envs/myo/tasks/mimic/__init__.py:39 gym env myoMuscleMimicBimanual-v0",
+      "myosuite/envs/myo/tasks/mimic/__init__.py:46 gym env myoMuscleMimicFullbody-v0"
+    ],
+    "upstream_tests": "myosuite/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env myoMimicBimanual-v0 registered at myosuite/envs/myo/tasks/mimic/__init__.py:25",
+      "gym env myoMimicFullbody-v0 registered at myosuite/envs/myo/tasks/mimic/__init__.py:32",
+      "gym env myoMuscleMimicBimanual-v0 registered at myosuite/envs/myo/tasks/mimic/__init__.py:39",
+      "gym env myoMuscleMimicFullbody-v0 registered at myosuite/envs/myo/tasks/mimic/__init__.py:46",
+      "gym env myoFullBodyDirectional-v0 registered at myosuite/envs/myo/tasks/mimic/__init__.py:53"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/myohub__myosuite --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

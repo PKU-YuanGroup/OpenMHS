@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tensaur/drone",
+  "track": "robots",
+  "local_path": "robots/tensaur/drone",
+  "driver_dir": "MHS/drivers/robots/tensaur__drone",
+  "upstream": {
+    "repo_url": "https://github.com/tensaur/drone",
+    "commit": "096e91e66c4024e7f3d4a470b5eeb4b50abb1bf9",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 474,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "crazyflie-firmware/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/tensaur__drone --backend fake",
+  "skip_reason": "override (robots.json): Skip: this is a C PufferLib drone simulator plus embedded Crazyflie firmware, not a Python device API; an OpenMHS driver would need the external PufferLib env or Crazyflie radio stack.",
+  "publish_review": "not_required"
+}

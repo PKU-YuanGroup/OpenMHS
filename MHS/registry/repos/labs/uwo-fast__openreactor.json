@@ -1,0 +1,255 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "openreactor.ezo:DriverPort (src/openreactor/ezo.py:470)",
+      "openreactor.service:Service (src/openreactor/service.py:119)",
+      "openreactor.rlht:RlhtSlice (src/openreactor/rlht.py:232)",
+      "openreactor.controller:Controller (src/openreactor/controller.py:91)",
+      "openreactor.rlht:CrumbsPort (src/openreactor/rlht.py:206)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "just",
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.device.calibrate.v1"
+  ],
+  "catalog_refs": [
+    "repo_40bebaa91a933da7",
+    "https://github.com/uwo-fast/openreactor"
+  ],
+  "description": "uwo-fast/openreactor: device backend for chemistry (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Language: Python. Catalog keywords: CLI.",
+  "domains": [
+    "chemistry"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 59 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/uwo-fast__openreactor/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.uwo-fast/openreactor",
+  "integration": {
+    "blockers": [
+      "LICENSE_REVIEW: network-copyleft; the user decides before a driver is published"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/uwo-fast__openreactor: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/uwo-fast__openreactor --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "HTTP/REST",
+    "CLI",
+    "other:I2C"
+  ],
+  "languages": [
+    "Python",
+    "JavaScript"
+  ],
+  "last_commit_at": "2026-10-04T17:00:03-04:00",
+  "license": "AGPL-3.0",
+  "license_class": "network-copyleft",
+  "license_spdx": "AGPL-3.0",
+  "links": {
+    "repo": "https://github.com/uwo-fast/openreactor"
+  },
+  "local_path": "labs/uwo-fast/openreactor",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "uwo-fast",
+  "package_id": "gh.uwo-fast/openreactor",
+  "quarantine": false,
+  "rank": 41,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "openreactor",
+  "repo_url": "https://github.com/uwo-fast/openreactor",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "ade88dc17e1c06775ddcb1cdc9ca6c40e4083db0",
+    "repo_url": "https://github.com/uwo-fast/openreactor"
+  },
+  "stars": 0,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "uwo-fast/openreactor",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "http-api",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 64.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "树莓派上监控实验室反应器(温度、搅拌、加液、水化学)的网页/CLI/HTTP API",
+      "join": "exact",
+      "license_raw": "AGPL-3.0",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 2792,
+      "rows_all": [
+        2792
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "cli-process",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bcli\\b"
+      ],
+      "family_note": "triage family python-object (catalogue family cli-process)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/uwo-fast__openreactor/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.device.calibrate.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/uwo-fast__openreactor/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/uwo-fast__openreactor/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.device.calibrate.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "AGPL-3.0",
+      "declared_spdx": "AGPL-3.0-or-later",
+      "file": "LICENSE",
+      "file_spdx": "AGPL-3.0",
+      "review": true,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "ade88dc17e1c06775ddcb1cdc9ca6c40e4083db0",
+      "driver_dir": "MHS/drivers/labs/uwo-fast__openreactor",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:e8d1d86a1bd6a7c2be74317999621e4e84c0bb8a42e2da8e2097a1a6f2481904",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "just",
+        "python"
+      ],
+      "entry_evidence_count": 2,
+      "files": 59,
+      "markers": {
+        "cli": 2,
+        "http": 7,
+        "thermal": 4
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class openreactor.ezo:DriverPort (src/openreactor/ezo.py:470, score 12)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

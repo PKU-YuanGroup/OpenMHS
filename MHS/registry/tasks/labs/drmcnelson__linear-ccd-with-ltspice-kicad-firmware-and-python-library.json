@@ -1,0 +1,92 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.drmcnelson/linear-ccd-with-ltspice-kicad-firmware-and-python-library",
+  "track": "labs",
+  "local_path": "labs/drmcnelson/linear-ccd-with-ltspice-kicad-firmware-and-python-library",
+  "driver_dir": "MHS/drivers/labs/drmcnelson__linear-ccd-with-ltspice-kicad-firmware-and-python-library",
+  "upstream": {
+    "repo_url": "https://github.com/drmcnelson/linear-ccd-with-ltspice-kicad-firmware-and-python-library",
+    "commit": "fcda5364d1ec63bc1b0e17efc40508b7fdef76b3",
+    "license_spdx": "CC-BY-NC-SA-4.0",
+    "license_class": "source-available"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 53,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "TCD1304Rev2_Python.TCD1304Rev2Controller:LCCDCONTROLLER",
+      "file": "TCD1304Rev2_Python/TCD1304Rev2Controller.py",
+      "line": 494,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "TCD1304Rev2_Python.TCD1304Rev2Controller:LCCDFRAME",
+      "file": "TCD1304Rev2_Python/TCD1304Rev2Controller.py",
+      "line": 173,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "TCD1304Rev2_Python.TCD1304Rev2Controller:LCCDDATA",
+      "file": "TCD1304Rev2_Python/TCD1304Rev2Controller.py",
+      "line": 265,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "TCD1304Rev2_Python.TCD1304Rev2Controller:LCCDDATASET",
+      "file": "TCD1304Rev2_Python/TCD1304Rev2Controller.py",
+      "line": 421,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "LCCDCONTROLLER.read_all_",
+      "LCCDCONTROLLER.read_nowait",
+      "LCCDCONTROLLER.read_to_done_"
+    ],
+    "writes": [],
+    "actions": [
+      "LCCDCONTROLLER.GraphicsWindow.start"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/drmcnelson__linear-ccd-with-ltspice-kicad-firmware-and-python-library --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

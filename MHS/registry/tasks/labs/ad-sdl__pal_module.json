@@ -1,0 +1,114 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ad-sdl/pal_module",
+  "track": "labs",
+  "local_path": "labs/ad-sdl/pal_module",
+  "driver_dir": "MHS/drivers/labs/ad-sdl__pal_module",
+  "upstream": {
+    "repo_url": "https://github.com/ad-sdl/pal_module",
+    "commit": "31da19a869362cbc1766ffca0508f84ccdb8405e",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 17,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "PAL3_driver:PALService",
+      "file": "PAL3_driver.py",
+      "line": 512,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8.1",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "MADSci/tests"
+  },
+  "hints": {
+    "reads": [
+      "RestNodeClient.get_action_history",
+      "RestNodeClient.get_action_result",
+      "RestNodeClient.get_info",
+      "RestNodeClient.get_log",
+      "RestNodeClient.get_resources",
+      "RestNodeClient.get_state",
+      "RestNodeClient.get_status",
+      "RestNodeClient.logger.get_events",
+      "RestNodeClient.logger.query_events",
+      "RestNodeClient.supported_capabilities (attribute)",
+      "ResourceClient.get_resource",
+      "ResourceClient.get_template"
+    ],
+    "writes": [
+      "RestNodeClient.set_config",
+      "ResourceClient.set_capacity",
+      "ResourceClient.set_child",
+      "ResourceClient.set_quantity",
+      "PALService.set_active_modules",
+      "PALService.set_centrifuge",
+      "PALService.set_module_by_name",
+      "PALService.set_pos",
+      "PALService.set_project",
+      "PALService.set_rack",
+      "PALService.set_vial",
+      "PALService.set_vortex"
+    ],
+    "actions": [
+      "PALService.centrifuge_sequence",
+      "PALService.clean_wash",
+      "PALService.move_absolute",
+      "PALService.move_back",
+      "PALService.move_gripper",
+      "PALService.move_nmr_rack",
+      "PALService.move_nmr_tube",
+      "PALService.move_relative",
+      "PALService.start_remote_service",
+      "PALService.stop_remote_service"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.sample.centrifuge.v1",
+      "cap.manipulation.grasp.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ad-sdl__pal_module --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

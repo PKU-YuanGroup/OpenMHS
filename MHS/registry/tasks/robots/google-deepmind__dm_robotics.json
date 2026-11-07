@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.google-deepmind/dm_robotics",
+  "track": "robots",
+  "local_path": "robots/google-deepmind/dm_robotics",
+  "driver_dir": "MHS/drivers/robots/google-deepmind__dm_robotics",
+  "upstream": {
+    "repo_url": "https://github.com/google-deepmind/dm_robotics",
+    "commit": "59bebe7ef6e5050ec1b2443f59857836bb727742",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 240,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "py/moma/base_task_test.py:113 FakePhysics",
+      "py/moma/subtask_env_test.py:51 FakeEffector",
+      "py/moma/subtask_env_test.py:81 FakeSubtask",
+      "py/moma/subtask_env_test.py:168 FakeSubTaskObserver",
+      "py/agentflow/loggers/subtask_logger_test.py:91 FakeLogger",
+      "py/agentflow/options/basic_options_test.py:487 FakeActionSpace"
+    ],
+    "upstream_tests": "cpp/mujoco/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/google-deepmind__dm_robotics --backend fake",
+  "skip_reason": "override (robots.json): dm_robotics is a library, not a device: shipped MoMa effectors only write MuJoCo physics and expose no serial, VISA or vendor SDK; skip, as real robot control needs an external effector.",
+  "publish_review": "not_required"
+}

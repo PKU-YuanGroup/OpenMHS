@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.patilunmesh/drone_simulator",
+  "track": "robots",
+  "local_path": "robots/patilunmesh/drone_simulator",
+  "driver_dir": "MHS/drivers/robots/patilunmesh__drone_simulator",
+  "upstream": {
+    "repo_url": "https://github.com/patilunmesh/drone_simulator",
+    "commit": "a9d0857f1ad4fe57df0250659b107cfc72f44023",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 57,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "drone_simulation/test"
+  },
+  "hints": {
+    "reads": [
+      "RapidTrajectory.get_acceleration",
+      "RapidTrajectory.get_body_rates",
+      "RapidTrajectory.get_cost",
+      "RapidTrajectory.get_jerk",
+      "RapidTrajectory.get_normal_vector",
+      "RapidTrajectory.get_param_alpha",
+      "RapidTrajectory.get_param_beta",
+      "RapidTrajectory.get_param_gamma",
+      "RapidTrajectory.get_position",
+      "RapidTrajectory.get_thrust",
+      "RapidTrajectory.get_velocity",
+      "SingleAxisTrajectory.get_acceleration"
+    ],
+    "writes": [
+      "RapidTrajectory.set_goal_acceleration",
+      "RapidTrajectory.set_goal_acceleration_in_axis",
+      "RapidTrajectory.set_goal_position",
+      "RapidTrajectory.set_goal_position_in_axis",
+      "RapidTrajectory.set_goal_velocity",
+      "RapidTrajectory.set_goal_velocity_in_axis",
+      "SingleAxisTrajectory.set_goal_acceleration",
+      "SingleAxisTrajectory.set_goal_position",
+      "SingleAxisTrajectory.set_goal_velocity"
+    ],
+    "actions": [
+      "RapidTrajectory.reset",
+      "SingleAxisTrajectory.reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.cartesian_pose.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/patilunmesh__drone_simulator --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mede-erik/scpi_emu",
+  "track": "labs",
+  "local_path": "labs/mede-erik/scpi_emu",
+  "driver_dir": "MHS/drivers/labs/mede-erik__scpi_emu",
+  "upstream": {
+    "repo_url": "https://github.com/mede-erik/scpi_emu",
+    "commit": "1426a9e2bac7bec2baa616862ea7d6025456be01",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "scpi",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1029,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/mede-erik__scpi_emu --backend fake",
+  "skip_reason": "override (labs.json): Skip: a Python SCPI-over-TCP emulator of 14+ instruments, not a client driver for real hardware.",
+  "publish_review": "not_required"
+}

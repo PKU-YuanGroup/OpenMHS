@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.google-research/robopianist",
+  "track": "robots",
+  "local_path": "robots/google-research/robopianist",
+  "driver_dir": "MHS/drivers/robots/google-research__robopianist",
+  "upstream": {
+    "repo_url": "https://github.com/google-research/robopianist",
+    "commit": "0d9736c64eba5faafdf214ed7d38d648ffbd5c7f",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:source-review",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 95,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robopianist.suite:load",
+      "file": "robopianist/suite/__init__.py",
+      "line": 50,
+      "confidence": "override"
+    },
+    {
+      "symbol": "robopianist.suite.tasks.piano_with_shadow_hands:PianoWithShadowHands",
+      "file": "robopianist/suite/tasks/piano_with_shadow_hands.py",
+      "line": 49,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "third_party/mujoco_menagerie/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/google-research__robopianist --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

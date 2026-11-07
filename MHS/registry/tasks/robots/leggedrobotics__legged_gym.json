@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.leggedrobotics/legged_gym",
+  "track": "robots",
+  "local_path": "robots/leggedrobotics/legged_gym",
+  "driver_dir": "MHS/drivers/robots/leggedrobotics__legged_gym",
+  "upstream": {
+    "repo_url": "https://github.com/leggedrobotics/legged_gym",
+    "commit": "8fa29acc6fd1910c3d9659eef6310bdd301cde0a",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 755,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "legged_gym/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/leggedrobotics__legged_gym --backend fake",
+  "skip_reason": "override (robots.json): Skip: legged_gym is a training environment for simulated ANYmal/Cassie locomotion in Isaac Gym (not Gymnasium/MuJoCo), with no device I/O; a driver needs Isaac Gym Preview 3, rsl_rl and a GPU.",
+  "publish_review": "not_required"
+}

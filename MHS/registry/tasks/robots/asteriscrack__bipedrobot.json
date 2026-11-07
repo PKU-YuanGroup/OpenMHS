@@ -1,0 +1,103 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.asteriscrack/bipedrobot",
+  "track": "robots",
+  "local_path": "robots/asteriscrack/bipedrobot",
+  "driver_dir": "MHS/drivers/robots/asteriscrack__bipedrobot",
+  "upstream": {
+    "repo_url": "https://github.com/asteriscrack/bipedrobot",
+    "commit": "bdaa21ee73c9cfa60a7fe76caf5082fc67329891",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 72,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "envs.mujoco_env:MujocoEnv",
+      "file": "envs/mujoco/mujoco_env.py",
+      "line": 19,
+      "confidence": "override"
+    },
+    {
+      "symbol": "envs.mujoco.biped_env_v2:BipedEnvV2",
+      "file": "envs/mujoco/biped_env_v2.py",
+      "line": 130,
+      "confidence": "override"
+    },
+    {
+      "symbol": "envs.isaaclab.biped_env:BipedEnv",
+      "file": "envs/isaaclab/biped_env.py",
+      "line": 24,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "envs/assets/robotV2/robot_v2.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "envs/assets/robot/Robot_description/urdf/robot_mujoco.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "envs/isaaclab/__init__.py:17 gym env Isaac-BipedRobot-Direct-v0",
+      "envs/isaaclab/__init__.py:27 gym env Isaac-BipedRobotV2-Direct-v0",
+      "envs/mujoco/__init__.py:3 gym env Mujoco-v0",
+      "envs/mujoco/__init__.py:9 gym env MujocoV2-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Isaac-BipedRobot-Direct-v0 registered at envs/isaaclab/__init__.py:17",
+      "gym env Isaac-BipedRobotV2-Direct-v0 registered at envs/isaaclab/__init__.py:27",
+      "gym env Mujoco-v0 registered at envs/mujoco/__init__.py:3",
+      "gym env MujocoV2-v0 registered at envs/mujoco/__init__.py:9"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/asteriscrack__bipedrobot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

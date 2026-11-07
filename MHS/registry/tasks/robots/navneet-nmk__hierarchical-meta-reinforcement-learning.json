@@ -1,0 +1,115 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.navneet-nmk/hierarchical-meta-reinforcement-learning",
+  "track": "robots",
+  "local_path": "robots/navneet-nmk/hierarchical-meta-reinforcement-learning",
+  "driver_dir": "MHS/drivers/robots/navneet-nmk__hierarchical-meta-reinforcement-learning",
+  "upstream": {
+    "repo_url": "https://github.com/navneet-nmk/hierarchical-meta-reinforcement-learning",
+    "commit": "4ef92cebfa11760d9de55d54fc8e827271982a63",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 149,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "maml_rl.envs.bandit:BernoulliBanditEnv",
+      "file": "maml_rl/envs/bandit.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "maml_rl.envs.mdp:TabularMDPEnv",
+      "file": "maml_rl/envs/mdp.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "maml_rl.envs.navigation:Navigation2DEnv",
+      "file": "maml_rl/envs/navigation.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "maml_rl.envs.utils:mujoco_wrapper",
+      "file": "maml_rl/envs/__init__.py",
+      "line": 26,
+      "confidence": "recon"
+    }
+  ],
+  "models": [
+    {
+      "file": "rlkit/rlkit/envs/assets/low_gear_ratio_ant.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "rlkit/rlkit/envs/assets/reacher_7dof.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "maml_rl/envs/__init__.py:7 gym env Bandit-K{}-v0",
+      "maml_rl/envs/__init__.py:16 gym env TabularMDP-v0",
+      "maml_rl/envs/__init__.py:26 gym env AntVel-v1",
+      "maml_rl/envs/__init__.py:33 gym env AntDir-v1"
+    ],
+    "upstream_tests": "maml_rl/utils/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Bandit-K{}-v0 (id template, built at run time) registered at maml_rl/envs/__init__.py:7",
+      "gym env TabularMDP-v0 registered at maml_rl/envs/__init__.py:16",
+      "gym env AntVel-v1 registered at maml_rl/envs/__init__.py:26",
+      "gym env AntDir-v1 registered at maml_rl/envs/__init__.py:33",
+      "gym env AntPos-v0 registered at maml_rl/envs/__init__.py:40",
+      "gym env HalfCheetahVel-v1 registered at maml_rl/envs/__init__.py:47",
+      "gym env HalfCheetahDir-v1 registered at maml_rl/envs/__init__.py:54",
+      "gym env 2DNavigation-v0 registered at maml_rl/envs/__init__.py:64"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/navneet-nmk__hierarchical-meta-reinforcement-learning --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

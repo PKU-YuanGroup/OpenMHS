@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.robot-colosseum/robot-colosseum",
+  "track": "robots",
+  "local_path": "robots/robot-colosseum/robot-colosseum",
+  "driver_dir": "MHS/drivers/robots/robot-colosseum__robot-colosseum",
+  "upstream": {
+    "repo_url": "https://github.com/robot-colosseum/robot-colosseum",
+    "commit": "098a910ae1d490524adb49b8d50735b00a1a62de",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:duplicate_of",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": "gh.stepjam/rlbench",
+  "package_status": "none",
+  "wave": 9,
+  "rank": 732,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "colosseum/rlbench/extensions/environment.py:33 EnvironmentExt environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/robot-colosseum__robot-colosseum --backend fake",
+  "skip_reason": "duplicate of gh.stepjam/rlbench: override (robots.json): Model review of recon wave B: perturbation variants of RLBench tasks on the same PyRep and CoppeliaSim runtime; the RLBench card carries the environment.",
+  "publish_review": "not_required"
+}

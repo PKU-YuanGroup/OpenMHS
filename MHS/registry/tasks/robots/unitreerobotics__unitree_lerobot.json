@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.unitreerobotics/unitree_lerobot",
+  "track": "robots",
+  "local_path": "robots/unitreerobotics/unitree_lerobot",
+  "driver_dir": "MHS/drivers/robots/unitreerobotics__unitree_lerobot",
+  "upstream": {
+    "repo_url": "https://github.com/unitreerobotics/unitree_lerobot",
+    "commit": "41c2805742de879ddab2d8d6beaeaf215f876395",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 202,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10,<3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "unitree_lerobot/eval_robot/image_server/image_server.py:1117 IsaacSimCamera",
+      "unitree_lerobot/eval_robot/utils/sim_state_topic.py:128 SimStateSubscriber",
+      "unitree_lerobot/eval_robot/utils/sim_state_topic.py:253 SimRewardSubscriber",
+      "unitree_lerobot/eval_robot/eval_g1_sim.py:1",
+      "unitree_lerobot/eval_robot/utils/sim_savedata_utils.py:1",
+      "unitree_lerobot/eval_robot/utils/sim_state_topic.py:1"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/unitreerobotics__unitree_lerobot --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

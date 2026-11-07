@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.utra-robosoccer/bez_isaacgym",
+  "track": "robots",
+  "local_path": "robots/utra-robosoccer/bez_isaacgym",
+  "driver_dir": "MHS/drivers/robots/utra-robosoccer__bez_isaacgym",
+  "upstream": {
+    "repo_url": "https://github.com/utra-robosoccer/bez_isaacgym",
+    "commit": "048e960b1ad2eb563e3068ed669fea3e5cc42303",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1684,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "bez_isaacgym/tasks/kick_env.py:44 KickEnv environment class",
+      "bez_isaacgym/tasks/orient_env.py:37 OrientEnv environment class",
+      "bez_isaacgym/tasks/walk_env.py:37 WalkEnv environment class",
+      "bez_isaacgym/utils/rlgames_utils.py:157 RLGPUEnv environment class"
+    ],
+    "upstream_tests": "bez_isaacgym/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/utra-robosoccer__bez_isaacgym --backend fake",
+  "skip_reason": "override (robots.json): Skip: an Isaac Gym RL training environment for the simulated Bez humanoid, not a gymnasium.Env or MuJoCo environment; a driver would need Isaac Gym Preview 3 and CUDA.",
+  "publish_review": "not_required"
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.google/putting-dune",
+  "track": "labs",
+  "local_path": "labs/google/putting-dune",
+  "driver_dir": "MHS/drivers/labs/google__putting-dune",
+  "upstream": {
+    "repo_url": "https://github.com/google/putting-dune",
+    "commit": "5f07f70a84971ad8eb391dfdabd2290bb65fd210",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1573,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.7",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "putting_dune/putting_dune_environment.py:36 PuttingDuneEnvironment environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/google__putting-dune --backend fake",
+  "skip_reason": "override (labs.json): Skip: an in-process dm_env STEM simulator for RL research, not a device driver or Gymnasium/MuJoCo env; no microscope transport exists, only simulated observations and tfrecords files.",
+  "publish_review": "not_required"
+}

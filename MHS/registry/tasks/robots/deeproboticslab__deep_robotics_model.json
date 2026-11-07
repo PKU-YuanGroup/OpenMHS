@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.deeproboticslab/deep_robotics_model",
+  "track": "robots",
+  "local_path": "robots/deeproboticslab/deep_robotics_model",
+  "driver_dir": "MHS/drivers/robots/deeproboticslab__deep_robotics_model",
+  "upstream": {
+    "repo_url": "https://github.com/deeproboticslab/deep_robotics_model",
+    "commit": "75824b516ecc8fa3f8f7ce5d6577e1e86d6b614f",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 226,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "Lite3/mjcf/Lite3.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "M20/mjcf/M20.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "M20S/mjcf/M20S.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "M20_Piper/mjcf/M20_Piper.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "S10/mjcf/S10.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "Lite3/mjcf/Lite3.xml:1 MJCF robot model",
+      "M20/mjcf/M20.xml:1 MJCF robot model",
+      "M20S/mjcf/M20S.xml:1 MJCF robot model",
+      "M20_Piper/mjcf/M20_Piper.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model Lite3/mjcf/Lite3.xml:1",
+      "MJCF robot model M20/mjcf/M20.xml:1",
+      "MJCF robot model M20S/mjcf/M20S.xml:1",
+      "MJCF robot model M20_Piper/mjcf/M20_Piper.xml:1",
+      "MJCF robot model S10/mjcf/S10.xml:1",
+      "MJCF robot model DR02/mjcf/pro/DR02_pro.xml:1",
+      "MJCF robot model DR02/mjcf/standard/DR02_std.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/deeproboticslab__deep_robotics_model --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

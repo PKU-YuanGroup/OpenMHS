@@ -1,0 +1,94 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jgerstmayr/exudyn",
+  "track": "robots",
+  "local_path": "robots/jgerstmayr/exudyn",
+  "driver_dir": "MHS/drivers/robots/jgerstmayr__exudyn",
+  "upstream": {
+    "repo_url": "https://github.com/jgerstmayr/exudyn",
+    "commit": "f172eb2c4b8cc1ccb19d722749145d185b9000c6",
+    "license_spdx": "LicenseRef-custom",
+    "license_class": "unknown"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1426,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "exudyn.misc.GUI:TkinterEditDictionaryWithTypeInfo",
+      "file": "python/exudyn/misc/GUI.py",
+      "line": 561,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "exudyn.misc.resultsMonitor:ResultsMonitor",
+      "file": "python/exudyn/misc/resultsMonitor.py",
+      "line": 347,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "exudyn.advancedUtilities:SystemEnergy",
+      "file": "python/exudyn/advancedUtilities.py",
+      "line": 1142,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "exudyn.misc.GUI:TkinterEditDictionary",
+      "file": "python/exudyn/misc/GUI.py",
+      "line": 1689,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "exudyn.robotics.motion:Trajectory",
+      "file": "python/exudyn/robotics/motion.py",
+      "line": 299,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "python/TestModels/simulationSettingsDeprecationTest.py:1",
+      "python/TestModels/simulationSettingsRenamesTest.py:1",
+      "python/TestModels/simulatorCouplingTwoMbs.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jgerstmayr__exudyn --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

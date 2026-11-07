@@ -1,0 +1,94 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.stepjam/pyrep",
+  "track": "robots",
+  "local_path": "robots/stepjam/pyrep",
+  "driver_dir": "MHS/drivers/robots/stepjam__pyrep",
+  "upstream": {
+    "repo_url": "https://github.com/stepjam/pyrep",
+    "commit": "8f420be8064b1970aae18a9cfbc978dfb15747ef",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:engine",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 203,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "pyrep.robots.end_effectors.panda_gripper:PandaGripper",
+      "file": "pyrep/robots/end_effectors/panda_gripper.py",
+      "line": 4,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyrep.robots.arms.panda:Panda",
+      "file": "pyrep/robots/arms/panda.py",
+      "line": 4,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyrep.robots.arms.locobot_arm:LoCoBotArm",
+      "file": "pyrep/robots/arms/locobot_arm.py",
+      "line": 4,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyrep.pyrep:PyRep",
+      "file": "pyrep/pyrep.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyrep.objects.camera:Camera",
+      "file": "pyrep/objects/camera.py",
+      "line": 6,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pyrep/objects/dummy.py:6 Dummy",
+      "pyrep/backend/sim.py:1",
+      "pyrep/objects/dummy.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/stepjam__pyrep --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

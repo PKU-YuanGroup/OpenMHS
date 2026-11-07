@@ -1,0 +1,114 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.iit-dlslab/basic-locomotion-isaaclab",
+  "track": "robots",
+  "local_path": "robots/iit-dlslab/basic-locomotion-isaaclab",
+  "driver_dir": "MHS/drivers/robots/iit-dlslab__basic-locomotion-isaaclab",
+  "upstream": {
+    "repo_url": "https://github.com/iit-dlslab/basic-locomotion-isaaclab",
+    "commit": "8bda7c7df8b223acf649e0b212635a92c8528900",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 56,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "basic_locomotion_isaaclab.tasks.locomotion.locomotion_env:LocomotionEnv",
+      "file": "source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/locomotion_env.py",
+      "line": 55,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "robot_model/a2/scene_flat.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "robot_model/aliengo/scene_flat.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "robot_model/go2/scene_flat.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "robot_model/go2/scene_random_boxes.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "robot_model/hyqreal2/scene_flat.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:23 gym env Locomotion-Aliengo-Flat",
+      "source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:33 gym env Locomotion-Aliengo-Rough-Blind",
+      "source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:43 gym env Locomotion-Aliengo-Rough-Vision",
+      "source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:57 gym env Locomotion-Go2-Flat"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Locomotion-Aliengo-Flat registered at source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:23",
+      "gym env Locomotion-Aliengo-Rough-Blind registered at source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:33",
+      "gym env Locomotion-Aliengo-Rough-Vision registered at source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:43",
+      "gym env Locomotion-Go2-Flat registered at source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:57",
+      "gym env Locomotion-Go2-Rough-Blind registered at source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:67",
+      "gym env Locomotion-Go2-Rough-Vision registered at source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:77",
+      "gym env Locomotion-A2-Flat registered at source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:91",
+      "gym env Locomotion-A2-Rough-Blind registered at source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:101",
+      "gym env Locomotion-A2-Rough-Vision registered at source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:111",
+      "gym env Locomotion-B2-Flat registered at source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:125",
+      "gym env Locomotion-B2-Rough-Blind registered at source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:135",
+      "gym env Locomotion-B2-Rough-Vision registered at source/basic_locomotion_isaaclab/basic_locomotion_isaaclab/tasks/locomotion/__init__.py:145"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/iit-dlslab__basic-locomotion-isaaclab --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

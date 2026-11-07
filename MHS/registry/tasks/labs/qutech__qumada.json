@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.qutech/qumada",
+  "track": "labs",
+  "local_path": "labs/qutech/qumada",
+  "driver_dir": "MHS/drivers/labs/qutech__qumada",
+  "upstream": {
+    "repo_url": "https://github.com/qutech/qumada",
+    "commit": "6f1694a59a1841f7de34e696dedefe9bac962633",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "reference",
+  "reason_code": "reference:host",
+  "role": "host",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 614,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/qumada/instrument/sims/FZJ_Decadac.yaml:1 pyvisa-sim device file",
+      "src/qumada/instrument/buffered_instruments.py:45 BufferedDummyDMM",
+      "src/qumada/measurement/measurement.py:883 VirtualGate",
+      "src/qumada/instrument/buffers/dummy_dmm_buffer.py:36 DummyDMMBuffer",
+      "src/qumada/instrument/custom_drivers/Dummies/dummy_dac.py:33 DummyDac_Channel",
+      "src/qumada/instrument/custom_drivers/Dummies/dummy_dac.py:45 DummyDac"
+    ],
+    "upstream_tests": "src/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/qutech__qumada --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

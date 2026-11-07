@@ -1,0 +1,176 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_853158f886e5f8fb",
+    "https://github.com/ghollyer/amadeus"
+  ],
+  "description": "ghollyer/amadeus: protocol implementation/bridge for microscopy imaging (lab instrumentation track). OpenMHS plan: reference only (host). Declared backend: MCP. Language: Python. Catalog keywords: MCP, ZeroMQ.",
+  "domains": [
+    "microscopy imaging"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 53 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "mcp-proxy"
+  ],
+  "hardware_free": false,
+  "id": "gh.ghollyer/amadeus",
+  "integration": {
+    "blockers": [
+      "REFERENCE_ONLY: role host"
+    ],
+    "effort": "EX",
+    "next_action": "Reference only: a host, orchestrator or MCP wrapper of a covered backend; integrate the backend instead.",
+    "reason_code": "override:recon",
+    "role": "host",
+    "scenario_required": false,
+    "strategy": "reference"
+  },
+  "interfaces": [
+    "MCP",
+    "ZeroMQ",
+    "Python SDK",
+    "CLI"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-07-09T10:28:30-04:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/ghollyer/amadeus"
+  },
+  "local_path": "labs/ghollyer/amadeus",
+  "modes": [],
+  "owner": "ghollyer",
+  "package_id": "gh.ghollyer/amadeus",
+  "quarantine": false,
+  "rank": 678,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "amadeus",
+  "repo_url": "https://github.com/ghollyer/amadeus",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "1844491d5e5b96655770cc819bdf5beab208f361",
+    "repo_url": "https://github.com/ghollyer/amadeus"
+  },
+  "stars": 4,
+  "tags": [
+    "mcp-proxy",
+    "lab instrumentation",
+    "hardware interface",
+    "reference"
+  ],
+  "tier": "D",
+  "title": "ghollyer/amadeus",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "mcp-server",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 69.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "false",
+      "backend_family_raw": "MCP",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "显微镜自动化MCP服务，客户端经ZeroMQ与显微镜软件Python环境通信，含状态管理与图像分析",
+      "join": "exact",
+      "license_raw": "Apache-2.0",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P1",
+      "row": 908,
+      "rows_all": [
+        908
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "mcp-proxy",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bmcp\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_note": "tier B -> D: triage reference (override:recon)",
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 7,
+      "files": 53,
+      "markers": {
+        "camera": 2,
+        "mcp": 11,
+        "microscopy": 3,
+        "spectrometer": 1,
+        "zeromq": 5
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): AMADEUS is an MCP host that forwards microscope commands over ZMQ to a DigitalMicrograph-side dispatcher, not a per-device driver class.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "AMADEUS is an MCP host that forwards microscope commands over ZMQ to a DigitalMicrograph-side dispatcher, not a per-device driver class.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

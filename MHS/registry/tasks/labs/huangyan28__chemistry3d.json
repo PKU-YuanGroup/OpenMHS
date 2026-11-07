@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.huangyan28/chemistry3d",
+  "track": "labs",
+  "local_path": "labs/huangyan28/chemistry3d",
+  "driver_dir": "MHS/drivers/labs/huangyan28__chemistry3d",
+  "upstream": {
+    "repo_url": "https://github.com/huangyan28/chemistry3d",
+    "commit": "865b405a32e46972702c8a204204f365e4d095ef",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 2132,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/huangyan28__chemistry3d --backend fake",
+  "skip_reason": "override (labs.json): Skip: Chemistry3D is an Isaac Sim chemistry-lab simulation benchmark, not a device or a Gymnasium/MuJoCo environment, and its only action surface is a simulated Franka inside omni_python.",
+  "publish_review": "required"
+}

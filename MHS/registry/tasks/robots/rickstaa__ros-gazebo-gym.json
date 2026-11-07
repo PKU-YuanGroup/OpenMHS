@@ -1,0 +1,140 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.rickstaa/ros-gazebo-gym",
+  "track": "robots",
+  "local_path": "robots/rickstaa/ros-gazebo-gym",
+  "driver_dir": "MHS/drivers/robots/rickstaa__ros-gazebo-gym",
+  "upstream": {
+    "repo_url": "https://github.com/rickstaa/ros-gazebo-gym",
+    "commit": "157981585c26e7d252bc10e4deb527ca450775a0",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:source-review",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 240,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "ros_gazebo_gym.task_envs.panda.panda_reach:PandaReachEnv",
+      "file": "src/ros_gazebo_gym/task_envs/panda/panda_reach.py",
+      "line": 187,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "catkin_make"
+    ],
+    "system_deps": [
+      "Catkin workspace with this package in src; run catkin_make from the workspace root"
+    ],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "templates/template_my_task_env.py:22 gym env MyTaskEnv-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env MyTaskEnv-v0 registered at templates/template_my_task_env.py:22"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rickstaa__ros-gazebo-gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required",
+  "companions": [
+    {
+      "alias": "gazebo_ros_pkgs",
+      "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+      "commit": "cd9cc952402375be5f274f39b29399c4087aa839",
+      "profile": "ros1-noetic-gazebo11",
+      "reason": "The host's stop calls /gazebo/pause_physics and confirms it with /gazebo/get_physics_properties; both are served by gazebo_ros 2.9.3 (ROS 1 Noetic, as the clone's CI image), facts only.",
+      "version_evidence": [
+        {
+          "side": "package",
+          "ref": "README.md:7",
+          "token": "Noetic"
+        },
+        {
+          "side": "package",
+          "ref": ".ci/Dockerfile.noetic:1",
+          "token": "ros:noetic-desktop-full"
+        },
+        {
+          "side": "package",
+          "ref": "package.xml:47",
+          "token": "catkin"
+        },
+        {
+          "side": "package",
+          "ref": "src/ros_gazebo_gym/core/gazebo_connection.py:50",
+          "token": "/gazebo/pause_physics"
+        },
+        {
+          "side": "package",
+          "ref": "src/ros_gazebo_gym/core/gazebo_connection.py:63",
+          "token": "/gazebo/get_physics_properties"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+          "token": "Noetic"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/package.xml:4",
+          "token": "2.9.3"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/package.xml:23",
+          "token": "catkin"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/src/gazebo_ros_api_plugin.cpp:492",
+          "token": "pause_physics"
+        },
+        {
+          "side": "companion",
+          "ref": "gazebo_ros/src/gazebo_ros_api_plugin.cpp:383",
+          "token": "get_physics_properties"
+        }
+      ],
+      "local_path": "robots/ros-simulation/gazebo_ros_pkgs",
+      "repo_url": "https://github.com/ros-simulation/gazebo_ros_pkgs",
+      "license_spdx": "NOASSERTION"
+    }
+  ]
+}

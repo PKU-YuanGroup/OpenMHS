@@ -1,0 +1,236 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "pipettebot.gantry:GcodeGantry (src/pipettebot/gantry.py:147)",
+      "pipettebot.bot:PipetteBot (src/pipettebot/bot.py:26)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "make",
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.fluid.aspirate.v1",
+    "cap.fluid.dispense.v1",
+    "cap.motion.joint_position.v1"
+  ],
+  "catalog_refs": [
+    "repo_23482f09634e5860",
+    "https://github.com/qte77/i3mega-pipettebot"
+  ],
+  "description": "qte77/i3mega-pipettebot: device backend for liquid handling (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Language: Python. Catalog keywords: DLAB, dPette.",
+  "domains": [
+    "liquid handling"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 169 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/qte77__i3mega-pipettebot/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.qte77/i3mega-pipettebot",
+  "integration": {
+    "blockers": [
+      "ARCHIVED: the upstream repository is archived"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/qte77__i3mega-pipettebot: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/qte77__i3mega-pipettebot --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "serial",
+    "CLI",
+    "HTTP/REST",
+    "LeRobot",
+    "Opentrons",
+    "Replay",
+    "Serial"
+  ],
+  "languages": [
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2026-09-17T16:03:05+02:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/qte77/i3mega-pipettebot"
+  },
+  "local_path": "labs/qte77/i3mega-pipettebot",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "qte77",
+  "package_id": "gh.qte77/i3mega-pipettebot",
+  "quarantine": false,
+  "rank": 40,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "i3mega-pipettebot",
+  "repo_url": "https://github.com/qte77/i3mega-pipettebot",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "99dc2e0a8c15067f3d994e6484507fa2be2301d7",
+    "repo_url": "https://github.com/qte77/i3mega-pipettebot"
+  },
+  "stars": 0,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "qte77/i3mega-pipettebot",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 69.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "true",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "把廉价3D打印机改造成低于150美元的一次性吸头移液机器人，由DLAB dPette电子移液器和Python驱动",
+      "join": "exact",
+      "license_raw": "Apache-2.0",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 2129,
+      "rows_all": [
+        2129
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/qte77__i3mega-pipettebot/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.fluid.aspirate.v1",
+              "cap.fluid.dispense.v1"
+            ],
+            "kind": "lab.liquid_handler"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R2",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": "Apache-2.0",
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "99dc2e0a8c15067f3d994e6484507fa2be2301d7",
+      "driver_dir": "MHS/drivers/labs/qte77__i3mega-pipettebot",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:cf2a9fffbbe41f16544f0121275938b752bd22be1c8573ba2155a8cffe46d00f",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "make",
+        "python"
+      ],
+      "entry_evidence_count": 5,
+      "files": 169,
+      "markers": {
+        "cli": 2,
+        "http": 1,
+        "lerobot": 2,
+        "microscopy": 5,
+        "opentrons": 9,
+        "replay": 2,
+        "serial": 7
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class pipettebot.gantry:GcodeGantry (src/pipettebot/gantry.py:147, score 12)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class pipettebot.gantry:GcodeGantry uses the hardware transport serial",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

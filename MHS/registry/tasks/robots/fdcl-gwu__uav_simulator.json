@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.fdcl-gwu/uav_simulator",
+  "track": "robots",
+  "local_path": "robots/fdcl-gwu/uav_simulator",
+  "driver_dir": "MHS/drivers/robots/fdcl-gwu__uav_simulator",
+  "upstream": {
+    "repo_url": "https://github.com/fdcl-gwu/uav_simulator",
+    "commit": "7270fe4e274f2a5d84432336311da478d87d8d3d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 130,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "TrajectoryNode.get_current_b1"
+    ],
+    "writes": [
+      "TrajectoryNode.set_desired_states_to_current",
+      "TrajectoryNode.set_desired_states_to_zero"
+    ],
+    "actions": [
+      "TrajectoryNode.land",
+      "TrajectoryNode.mark_traj_start",
+      "TrajectoryNode.takeoff"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/fdcl-gwu__uav_simulator --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

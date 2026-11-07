@@ -1,0 +1,219 @@
+{
+  "adapter": {
+    "bridge": "scpi",
+    "entry_points": [
+      "Control_lib.instrument_control:SR810_30_lockin (Control_lib/instrument_control.py:290)",
+      "Control_lib.instrument_control:PN300 (Control_lib/instrument_control.py:1637)",
+      "Control_lib.instrument_control:AVS47 (Control_lib/instrument_control.py:2074)",
+      "Control_lib.instrument_control:pynskabox (Control_lib/instrument_control.py:53)",
+      "Control_lib.instrument_control:Anritsu68367C (Control_lib/instrument_control.py:2396)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.measure.voltage.v1"
+  ],
+  "catalog_refs": [
+    "repo_f7d8942313f28076",
+    "https://github.com/akperuht/pydaq"
+  ],
+  "description": "akperuht/pydaq: control framework for electronic measurement (lab instrumentation track). OpenMHS plan: family-config with ScpiDriver, wave 3. Catalog role: device SDK. Language: Python. Catalog keywords: Jyv, skyl.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 31 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/akperuht__pydaq/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "scpi-visa"
+  ],
+  "hardware_free": false,
+  "id": "gh.akperuht/pydaq",
+  "integration": {
+    "blockers": [
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/labs/akperuht__pydaq: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/akperuht__pydaq --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "family:scpi",
+    "recipe": "families/scpi-visa.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "Python SDK",
+    "SCPI/VISA"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-07-07T17:05:17+03:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/akperuht/pydaq"
+  },
+  "local_path": "labs/akperuht/pydaq",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "akperuht",
+  "package_id": "gh.akperuht/pydaq",
+  "quarantine": false,
+  "rank": 43,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pydaq",
+  "repo_url": "https://github.com/akperuht/pydaq",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "edb7584d00891aa0f1a0ef483d12d1d59ab4f794",
+    "repo_url": "https://github.com/akperuht/pydaq"
+  },
+  "stars": 0,
+  "tags": [
+    "scpi-visa",
+    "lab instrumentation",
+    "control framework",
+    "device sdk",
+    "hardware interface",
+    "family config"
+  ],
+  "tier": "B",
+  "title": "akperuht/pydaq",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 48.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "控制框架",
+      "description_zh": "赫尔辛基(Jyväskylä)低温测量的Python数据采集与硬件控制框架，含GUI",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 122,
+      "rows_all": [
+        122
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_note": "triage family scpi (catalogue family python-object)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/akperuht__pydaq/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.measure.voltage.v1"
+            ],
+            "kind": "instrument.dmm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "edb7584d00891aa0f1a0ef483d12d1d59ab4f794",
+      "driver_dir": "MHS/drivers/labs/akperuht__pydaq",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:6c004dedca7af613f414a391bffe78a1e3ab134eb890578768ccf78e2e8ff8fc",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 0,
+      "files": 31,
+      "markers": {}
+    },
+    "triage": {
+      "evidence": [
+        "structural marker: imports pymeasure",
+        "device-driver evidence: catalogue role 'device SDK'"
+      ],
+      "family": "scpi",
+      "hardware_transport": "class Control_lib.instrument_control:SR810_30_lockin uses the hardware transport nidaqmx",
+      "helper": "ScpiDriver",
+      "reason_code": "family:scpi",
+      "rule": 9,
+      "version": "0.9.4"
+    }
+  }
+}

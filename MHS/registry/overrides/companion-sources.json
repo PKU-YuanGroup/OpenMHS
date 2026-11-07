@@ -1,0 +1,637 @@
+{
+  "$schema": "../schema/overrides.schema.json",
+  "overrides_version": "0.9",
+  "title": "Companion sources: simulator packages whose stop lives in the simulator's own repository",
+  "description": "Reviewed companion sources (user decision of 2026-11-05: a stop may cite a locally cloned companion repository at a pinned commit). Each entry restates the card's current decision (the ROS packages: family-config, family ros, role sim-env, reason_code family:ros; gh.rickstaa/ros-gazebo-gym: its Gymnasium routing of ros-routing-20261102.json, moved here unchanged by integrator v4 on 2026-11-05 because a repository is overridden once) and adds companions: gazebo_ros_pkgs (ROS 1 Noetic, gazebo_ros 2.9.3) for the pause_physics e-stop and its get_physics_properties read-back, plus the unpause_physics re-enable on every entry except gh.wh200720041/warehouse_simulation_toolkit, which binds the pause and the paused-flag read-back only, and Gazebo classic 11 for facts about what a paused world runs. The version evidence ties the package's stack to the companion's pin; gate G1 re-checks every range, each clone's HEAD and its tracked files. Record: MHS/changes/COMPANION-SOURCES.md.",
+  "overrides": [
+    {
+      "package_id": "gh.6-robot/wpr_simulation",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "ros",
+      "reason_code": "family:ros",
+      "justification": "Model review of the companion preflight (claude-opus-5-5): the Gazebo pause stop, its read-back and the unpause live in gazebo_ros 2.9.3 (Noetic) and Gazebo classic 11, cloned locally at their corpus pins.",
+      "companions": [
+        {
+          "alias": "gazebo_ros_pkgs",
+          "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+          "commit": "cd9cc952402375be5f274f39b29399c4087aa839",
+          "profile": "ros1-noetic-gazebo11",
+          "reason": "pause_physics, its get_physics_properties read-back and unpause_physics are served by gazebo_ros 2.9.3 (ROS 1 Noetic), whose empty_world.launch the clone's launch includes.",
+          "version_evidence": [
+            {
+              "side": "package",
+              "ref": "README.md:15-17",
+              "token": "ROS Noetic"
+            },
+            {
+              "side": "package",
+              "ref": "package.xml:51",
+              "token": "catkin"
+            },
+            {
+              "side": "package",
+              "ref": "launch/wpb_simple.launch:3-10",
+              "token": "$(find gazebo_ros)/launch/empty_world.launch"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+              "token": "Noetic"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/package.xml:4",
+              "token": "2.9.3"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/package.xml:23",
+              "token": "catkin"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_dev/package.xml:23-24",
+              "token": "gazebo11"
+            }
+          ]
+        },
+        {
+          "alias": "gazebo_classic",
+          "package_id": "gh.gazebosim/gazebo-classic",
+          "commit": "b22c6e15e52299865b31093b8feebc9ca19e26e8",
+          "profile": "ros1-noetic-gazebo11",
+          "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (facts only).",
+          "version_evidence": [
+            {
+              "side": "package",
+              "ref": "README.md:15-17",
+              "token": "ROS Noetic"
+            },
+            {
+              "side": "companion:gazebo_ros_pkgs",
+              "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+              "token": "Noetic"
+            },
+            {
+              "side": "companion:gazebo_ros_pkgs",
+              "ref": "gazebo_dev/package.xml:23-24",
+              "token": "gazebo11"
+            },
+            {
+              "side": "companion",
+              "ref": "CMakeLists.txt:20",
+              "token": "GAZEBO_MAJOR_VERSION 11"
+            },
+            {
+              "side": "companion",
+              "ref": "Changelog.md:3",
+              "token": "Gazebo 11.15.1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "package_id": "gh.drcl-usc/hector_simulation",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "ros",
+      "reason_code": "family:ros",
+      "justification": "Model review of the companion preflight (claude-opus-5-5): the Gazebo pause stop, its read-back and the unpause live in gazebo_ros 2.9.3 (Noetic) and Gazebo classic 11, cloned locally at their corpus pins.",
+      "companions": [
+        {
+          "alias": "gazebo_ros_pkgs",
+          "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+          "commit": "cd9cc952402375be5f274f39b29399c4087aa839",
+          "profile": "ros1-noetic-gazebo11",
+          "reason": "pause_physics, its get_physics_properties read-back and unpause_physics are served by gazebo_ros 2.9.3 (ROS 1 Noetic), whose empty_world.launch the clone's launch includes.",
+          "version_evidence": [
+            {
+              "side": "package",
+              "ref": "Readme.md:32-34",
+              "token": "ROS Noetic"
+            },
+            {
+              "side": "package",
+              "ref": "Readme.md:43-44",
+              "token": "gazebo-11"
+            },
+            {
+              "side": "package",
+              "ref": "Hector_ROS_Simulation/hector_control/package.xml:10",
+              "token": "catkin"
+            },
+            {
+              "side": "package",
+              "ref": "Hector_ROS_Simulation/unitree_ros/unitree_gazebo/launch/biped.launch:15-22",
+              "token": "$(find gazebo_ros)/launch/empty_world.launch"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+              "token": "Noetic"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/package.xml:4",
+              "token": "2.9.3"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/package.xml:23",
+              "token": "catkin"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_dev/package.xml:23-24",
+              "token": "gazebo11"
+            }
+          ]
+        },
+        {
+          "alias": "gazebo_classic",
+          "package_id": "gh.gazebosim/gazebo-classic",
+          "commit": "b22c6e15e52299865b31093b8feebc9ca19e26e8",
+          "profile": "ros1-noetic-gazebo11",
+          "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (facts only).",
+          "version_evidence": [
+            {
+              "side": "package",
+              "ref": "Readme.md:32-34",
+              "token": "ROS Noetic"
+            },
+            {
+              "side": "package",
+              "ref": "Readme.md:43-44",
+              "token": "gazebo-11"
+            },
+            {
+              "side": "companion:gazebo_ros_pkgs",
+              "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+              "token": "Noetic"
+            },
+            {
+              "side": "companion:gazebo_ros_pkgs",
+              "ref": "gazebo_dev/package.xml:23-24",
+              "token": "gazebo11"
+            },
+            {
+              "side": "companion",
+              "ref": "CMakeLists.txt:20",
+              "token": "GAZEBO_MAJOR_VERSION 11"
+            },
+            {
+              "side": "companion",
+              "ref": "Changelog.md:3",
+              "token": "Gazebo 11.15.1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "package_id": "gh.ipa320/cob_simulation",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "ros",
+      "reason_code": "family:ros",
+      "justification": "Model review of the companion preflight (claude-opus-5-5): the Gazebo pause stop, its read-back and the unpause live in gazebo_ros 2.9.3 (Noetic) and Gazebo classic 11, cloned locally at their corpus pins.",
+      "companions": [
+        {
+          "alias": "gazebo_ros_pkgs",
+          "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+          "commit": "cd9cc952402375be5f274f39b29399c4087aa839",
+          "profile": "ros1-noetic-gazebo11",
+          "reason": "pause_physics, its get_physics_properties read-back and unpause_physics are served by gazebo_ros 2.9.3 (ROS 1 Noetic), whose empty_world.launch the clone's launch includes.",
+          "version_evidence": [
+            {
+              "side": "package",
+              "ref": ".github/workflows/main.yml:26-29",
+              "token": "ROS_DISTRO: noetic"
+            },
+            {
+              "side": "package",
+              "ref": "cob_gazebo_worlds/package.xml:16",
+              "token": "catkin"
+            },
+            {
+              "side": "package",
+              "ref": "cob_gazebo_worlds/launch/world.launch:27-34",
+              "token": "$(find gazebo_ros)/launch/empty_world.launch"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+              "token": "Noetic"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/package.xml:4",
+              "token": "2.9.3"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/package.xml:23",
+              "token": "catkin"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_dev/package.xml:23-24",
+              "token": "gazebo11"
+            }
+          ]
+        },
+        {
+          "alias": "gazebo_classic",
+          "package_id": "gh.gazebosim/gazebo-classic",
+          "commit": "b22c6e15e52299865b31093b8feebc9ca19e26e8",
+          "profile": "ros1-noetic-gazebo11",
+          "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (facts only).",
+          "version_evidence": [
+            {
+              "side": "package",
+              "ref": ".github/workflows/main.yml:26-29",
+              "token": "ROS_DISTRO: noetic"
+            },
+            {
+              "side": "companion:gazebo_ros_pkgs",
+              "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+              "token": "Noetic"
+            },
+            {
+              "side": "companion:gazebo_ros_pkgs",
+              "ref": "gazebo_dev/package.xml:23-24",
+              "token": "gazebo11"
+            },
+            {
+              "side": "companion",
+              "ref": "CMakeLists.txt:20",
+              "token": "GAZEBO_MAJOR_VERSION 11"
+            },
+            {
+              "side": "companion",
+              "ref": "Changelog.md:3",
+              "token": "Gazebo 11.15.1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "package_id": "gh.mortezaaliyari/multi-robot-gazebo-navistack",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "ros",
+      "reason_code": "family:ros",
+      "justification": "Model review of the companion preflight (claude-opus-5-5): the Gazebo pause stop, its read-back and the unpause live in gazebo_ros 2.9.3 (Noetic) and Gazebo classic 11, cloned locally at their corpus pins.",
+      "companions": [
+        {
+          "alias": "gazebo_ros_pkgs",
+          "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+          "commit": "cd9cc952402375be5f274f39b29399c4087aa839",
+          "profile": "ros1-noetic-gazebo11",
+          "reason": "pause_physics, its get_physics_properties read-back and unpause_physics are served by gazebo_ros 2.9.3 (ROS 1 Noetic), whose empty_world.launch the clone's launch includes.",
+          "version_evidence": [
+            {
+              "side": "package",
+              "ref": "README.md:11-14",
+              "token": "ROS Noetic"
+            },
+            {
+              "side": "package",
+              "ref": "README.md:11-14",
+              "token": "GAzebo 11"
+            },
+            {
+              "side": "package",
+              "ref": "turtlebot3_gazebo/package.xml:17",
+              "token": "catkin"
+            },
+            {
+              "side": "package",
+              "ref": "turtlebot3_gazebo/launch/multi_turtlebot3_closeworld2.launch:16-23",
+              "token": "$(find gazebo_ros)/launch/empty_world.launch"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+              "token": "Noetic"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/package.xml:4",
+              "token": "2.9.3"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/package.xml:23",
+              "token": "catkin"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_dev/package.xml:23-24",
+              "token": "gazebo11"
+            }
+          ]
+        },
+        {
+          "alias": "gazebo_classic",
+          "package_id": "gh.gazebosim/gazebo-classic",
+          "commit": "b22c6e15e52299865b31093b8feebc9ca19e26e8",
+          "profile": "ros1-noetic-gazebo11",
+          "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (facts only).",
+          "version_evidence": [
+            {
+              "side": "package",
+              "ref": "README.md:11-14",
+              "token": "ROS Noetic"
+            },
+            {
+              "side": "package",
+              "ref": "README.md:11-14",
+              "token": "GAzebo 11"
+            },
+            {
+              "side": "companion:gazebo_ros_pkgs",
+              "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+              "token": "Noetic"
+            },
+            {
+              "side": "companion:gazebo_ros_pkgs",
+              "ref": "gazebo_dev/package.xml:23-24",
+              "token": "gazebo11"
+            },
+            {
+              "side": "companion",
+              "ref": "CMakeLists.txt:20",
+              "token": "GAZEBO_MAJOR_VERSION 11"
+            },
+            {
+              "side": "companion",
+              "ref": "Changelog.md:3",
+              "token": "Gazebo 11.15.1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "package_id": "gh.nus-advanced-robotics-centre/me5413_final_project",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "ros",
+      "reason_code": "family:ros",
+      "justification": "Model review of the companion preflight (claude-opus-5-5): the Gazebo pause stop, its read-back and the unpause live in gazebo_ros 2.9.3 (Noetic) and Gazebo classic 11, cloned locally at their corpus pins.",
+      "companions": [
+        {
+          "alias": "gazebo_ros_pkgs",
+          "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+          "commit": "cd9cc952402375be5f274f39b29399c4087aa839",
+          "profile": "ros1-noetic-gazebo11",
+          "reason": "pause_physics, its get_physics_properties read-back and unpause_physics are served by gazebo_ros 2.9.3 (ROS 1 Noetic), whose empty_world.launch the clone's launch includes.",
+          "version_evidence": [
+            {
+              "side": "package",
+              "ref": "README.md:17-19",
+              "token": "ROS Noetic"
+            },
+            {
+              "side": "package",
+              "ref": "src/me5413_world/package.xml:51",
+              "token": "catkin"
+            },
+            {
+              "side": "package",
+              "ref": "src/me5413_world/launch/world.launch:6-13",
+              "token": "$(find gazebo_ros)/launch/empty_world.launch"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+              "token": "Noetic"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/package.xml:4",
+              "token": "2.9.3"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/package.xml:23",
+              "token": "catkin"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_dev/package.xml:23-24",
+              "token": "gazebo11"
+            }
+          ]
+        },
+        {
+          "alias": "gazebo_classic",
+          "package_id": "gh.gazebosim/gazebo-classic",
+          "commit": "b22c6e15e52299865b31093b8feebc9ca19e26e8",
+          "profile": "ros1-noetic-gazebo11",
+          "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (facts only).",
+          "version_evidence": [
+            {
+              "side": "package",
+              "ref": "README.md:17-19",
+              "token": "ROS Noetic"
+            },
+            {
+              "side": "companion:gazebo_ros_pkgs",
+              "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+              "token": "Noetic"
+            },
+            {
+              "side": "companion:gazebo_ros_pkgs",
+              "ref": "gazebo_dev/package.xml:23-24",
+              "token": "gazebo11"
+            },
+            {
+              "side": "companion",
+              "ref": "CMakeLists.txt:20",
+              "token": "GAZEBO_MAJOR_VERSION 11"
+            },
+            {
+              "side": "companion",
+              "ref": "Changelog.md:3",
+              "token": "Gazebo 11.15.1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "package_id": "gh.rickstaa/ros-gazebo-gym",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:source-review",
+      "entry_symbols": [
+        {
+          "symbol": "ros_gazebo_gym.task_envs.panda.panda_reach:PandaReachEnv",
+          "file": "src/ros_gazebo_gym/task_envs/panda/panda_reach.py",
+          "line": 187
+        }
+      ],
+      "justification": "PandaReach is a shipped concrete Gymnasium task; the previously selected MyTaskEnv is incomplete. Target the shipped effort/no-gripper profile, preserving seven configured joint controls and source-backed bounds.",
+      "companions": [
+        {
+          "alias": "gazebo_ros_pkgs",
+          "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+          "commit": "cd9cc952402375be5f274f39b29399c4087aa839",
+          "profile": "ros1-noetic-gazebo11",
+          "reason": "The host's stop calls /gazebo/pause_physics and confirms it with /gazebo/get_physics_properties; both are served by gazebo_ros 2.9.3 (ROS 1 Noetic, as the clone's CI image), facts only.",
+          "version_evidence": [
+            {
+              "side": "package",
+              "ref": "README.md:7",
+              "token": "Noetic"
+            },
+            {
+              "side": "package",
+              "ref": ".ci/Dockerfile.noetic:1",
+              "token": "ros:noetic-desktop-full"
+            },
+            {
+              "side": "package",
+              "ref": "package.xml:47",
+              "token": "catkin"
+            },
+            {
+              "side": "package",
+              "ref": "src/ros_gazebo_gym/core/gazebo_connection.py:50",
+              "token": "/gazebo/pause_physics"
+            },
+            {
+              "side": "package",
+              "ref": "src/ros_gazebo_gym/core/gazebo_connection.py:63",
+              "token": "/gazebo/get_physics_properties"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+              "token": "Noetic"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/package.xml:4",
+              "token": "2.9.3"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/package.xml:23",
+              "token": "catkin"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/src/gazebo_ros_api_plugin.cpp:492",
+              "token": "pause_physics"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/src/gazebo_ros_api_plugin.cpp:383",
+              "token": "get_physics_properties"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "package_id": "gh.wh200720041/warehouse_simulation_toolkit",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "ros",
+      "reason_code": "family:ros",
+      "justification": "Model review p5-gz-pause (grok-4.7): the only stop is the Gazebo world pause of gazebo_ros 2.9.3 (Noetic) and Gazebo classic 11, cloned locally at their corpus pins.",
+      "companions": [
+        {
+          "alias": "gazebo_ros_pkgs",
+          "package_id": "gh.ros-simulation/gazebo_ros_pkgs",
+          "commit": "cd9cc952402375be5f274f39b29399c4087aa839",
+          "profile": "ros1-noetic-gazebo11",
+          "reason": "pause_physics and its get_physics_properties read-back (pause) are served by gazebo_ros 2.9.3 (ROS 1 Noetic), whose empty_world.launch the clone's launch includes; its diff-drive plugin is cited as facts.",
+          "version_evidence": [
+            {
+              "side": "package",
+              "ref": "README.md:30",
+              "token": "ROS Noetic"
+            },
+            {
+              "side": "package",
+              "ref": "README.md:34",
+              "token": "ros-noetic-navigation"
+            },
+            {
+              "side": "package",
+              "ref": "package.xml:16",
+              "token": "catkin"
+            },
+            {
+              "side": "package",
+              "ref": "launch/warehouse_simulation.launch:8",
+              "token": "$(find gazebo_ros)/launch/empty_world.launch"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+              "token": "Noetic"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/package.xml:4",
+              "token": "2.9.3"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_ros/package.xml:23",
+              "token": "catkin"
+            },
+            {
+              "side": "companion",
+              "ref": "gazebo_dev/package.xml:23-24",
+              "token": "gazebo11"
+            }
+          ]
+        },
+        {
+          "alias": "gazebo_classic",
+          "package_id": "gh.gazebosim/gazebo-classic",
+          "commit": "b22c6e15e52299865b31093b8feebc9ca19e26e8",
+          "profile": "ros1-noetic-gazebo11",
+          "reason": "World::Step gates every model and controller update on the paused flag that pause_physics sets and get_physics_properties reads (facts only).",
+          "version_evidence": [
+            {
+              "side": "package",
+              "ref": "README.md:30",
+              "token": "ROS Noetic"
+            },
+            {
+              "side": "companion:gazebo_ros_pkgs",
+              "ref": "gazebo_ros/CHANGELOG.rst:5-7",
+              "token": "Noetic"
+            },
+            {
+              "side": "companion:gazebo_ros_pkgs",
+              "ref": "gazebo_dev/package.xml:23-24",
+              "token": "gazebo11"
+            },
+            {
+              "side": "companion",
+              "ref": "CMakeLists.txt:20",
+              "token": "GAZEBO_MAJOR_VERSION 11"
+            },
+            {
+              "side": "companion",
+              "ref": "Changelog.md:3",
+              "token": "Gazebo 11.15.1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

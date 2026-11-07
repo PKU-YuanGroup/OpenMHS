@@ -1,0 +1,83 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mattgbiz/velmex-xyz-stagecontrol-python",
+  "track": "labs",
+  "local_path": "labs/mattgbiz/velmex-xyz-stagecontrol-python",
+  "driver_dir": "MHS/drivers/labs/mattgbiz__velmex-xyz-stagecontrol-python",
+  "upstream": {
+    "repo_url": "https://github.com/mattgbiz/velmex-xyz-stagecontrol-python",
+    "commit": "2e60447742855950c701d5627ee4c232407d633c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 1,
+  "rank": 46,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "XYZMotion:VXM",
+      "file": "XYZMotion.py",
+      "line": 27,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "VXM.getAllPositions",
+      "VXM.getPosition"
+    ],
+    "writes": [
+      "VXM.setVelocity"
+    ],
+    "actions": [
+      "VXM.home",
+      "VXM.moveToZero",
+      "VXM.move_in",
+      "VXM.move_mm"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/mattgbiz__velmex-xyz-stagecontrol-python --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

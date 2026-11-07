@@ -1,0 +1,228 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "redpitaya_client:RedPitayaClient (src/redpitaya_client.py:9)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_ee6011be72de320c",
+    "https://github.com/andmorifa/instrument-control-python"
+  ],
+  "description": "andmorifa/instrument-control-python: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Declared backend: PyVISA. Language: Python. Catalog keywords: Red, Pitaya, Mock.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 8 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/andmorifa__instrument-control-python/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.andmorifa/instrument-control-python",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/andmorifa__instrument-control-python: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/andmorifa__instrument-control-python --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "SCPI/VISA",
+    "Python SDK"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-01-30T17:18:08+01:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/andmorifa/instrument-control-python"
+  },
+  "local_path": "labs/andmorifa/instrument-control-python",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "andmorifa",
+  "package_id": "gh.andmorifa/instrument-control-python",
+  "quarantine": false,
+  "rank": 74,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "instrument-control-python",
+  "repo_url": "https://github.com/andmorifa/instrument-control-python",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "0622a4aee5cf8b7a4704711d1fdf81fe35b0b6ff",
+    "repo_url": "https://github.com/andmorifa/instrument-control-python"
+  },
+  "stars": 0,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "simulated",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "andmorifa/instrument-control-python",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 41.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "PyVISA",
+      "category_zh": "设备后端",
+      "description_zh": "Red Pitaya信号发生与采集的Python工具包，含无硬件Mock模式",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 185,
+      "rows_all": [
+        185
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bpyvisa\\b"
+      ],
+      "family_note": "triage family python-object (catalogue family scpi-visa)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/andmorifa__instrument-control-python/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/labs/andmorifa__instrument-control-python/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/andmorifa__instrument-control-python/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "0622a4aee5cf8b7a4704711d1fdf81fe35b0b6ff",
+      "driver_dir": "MHS/drivers/labs/andmorifa__instrument-control-python",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:b511bad27214095ce9e3be2aaf82eb5379a7394108bcb65fc6fea1f64bcd3c54",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 1,
+      "files": 8,
+      "markers": {
+        "scpi_visa": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class redpitaya_client:RedPitayaClient (src/redpitaya_client.py:9, score 9)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

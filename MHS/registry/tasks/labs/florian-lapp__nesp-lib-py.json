@@ -1,0 +1,74 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.florian-lapp/nesp-lib-py",
+  "track": "labs",
+  "local_path": "labs/florian-lapp/nesp-lib-py",
+  "driver_dir": "MHS/drivers/labs/florian-lapp__nesp-lib-py",
+  "upstream": {
+    "repo_url": "https://github.com/florian-lapp/nesp-lib-py",
+    "commit": "c16abc82c9feb7c356f06c30b0dff0d4d421cfe3",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 34,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "nesp_lib.pump:Pump",
+      "file": "nesp_lib/pump.py",
+      "line": 14,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Pump.status"
+    ],
+    "writes": [],
+    "actions": [
+      "Pump.run",
+      "Pump.run_purge",
+      "Pump.stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/florian-lapp__nesp-lib-py --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

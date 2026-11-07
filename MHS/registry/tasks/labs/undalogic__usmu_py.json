@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.undalogic/usmu_py",
+  "track": "labs",
+  "local_path": "labs/undalogic/usmu_py",
+  "driver_dir": "MHS/drivers/labs/undalogic__usmu_py",
+  "upstream": {
+    "repo_url": "https://github.com/undalogic/usmu_py",
+    "commit": "345dc809f9711162a7cc60ca273a3fd13693735a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 55,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "usmu_py.smu:USMU",
+      "file": "usmu_py/smu.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "USMU.measure_iv_point",
+      "USMU.read_adc",
+      "USMU.read_idn"
+    ],
+    "writes": [
+      "USMU.set_current_limit",
+      "USMU.set_current_limit_dac",
+      "USMU.set_dac",
+      "USMU.set_oversample_rate",
+      "USMU.set_voltage",
+      "USMU.set_voltage_and_measure"
+    ],
+    "actions": [
+      "USMU.disable_output",
+      "USMU.enable_output",
+      "USMU.enable_voltage_calibration_mode"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.device.calibrate.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/undalogic__usmu_py --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

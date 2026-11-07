@@ -1,0 +1,77 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.umass-foundation-model/co-llm-agents",
+  "track": "robots",
+  "local_path": "robots/umass-foundation-model/co-llm-agents",
+  "driver_dir": "MHS/drivers/robots/umass-foundation-model__co-llm-agents",
+  "upstream": {
+    "repo_url": "https://github.com/umass-foundation-model/co-llm-agents",
+    "commit": "3e12dea925d735eefce33da71806ae9da6fcaf3f",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 406,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "tdw_gym:TDW",
+      "file": "tdw_mat/tdw-gym/tdw_gym.py",
+      "line": 50,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "tdw_mat/tdw-gym/__init__.py:4 gym env transport_challenge_MA",
+      "tdw_mat/tdw-gym/challenge.py:17 gym env transport_challenge_MA"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env transport_challenge_MA registered at tdw_mat/tdw-gym/__init__.py:4",
+      "gym env transport_challenge_MA registered at tdw_mat/tdw-gym/challenge.py:17"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/umass-foundation-model__co-llm-agents --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,261 @@
+{
+  "adapter": {
+    "bridge": "serial",
+    "entry_points": [
+      "cetoniSerial:Syringe (cetoniSerial.py:33)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.motion.joint_position.v1",
+    "cap.fluid.aspirate.v1",
+    "cap.fluid.dispense.v1"
+  ],
+  "catalog_refs": [
+    "repo_b158d29f2eb9c9a4",
+    "https://github.com/bennomeier/cetoni"
+  ],
+  "description": "bennomeier/cetoni: device backend for liquid handling (lab instrumentation track). OpenMHS plan: direct-driver with SerialDriver, wave 1. Catalog role: device SDK. Language: Python. Catalog keywords: CetoniSDK, Cetoni, Nemesys, V4.",
+  "domains": [
+    "liquid handling"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 4 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/bennomeier__cetoni/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "serial"
+  ],
+  "hardware_free": true,
+  "id": "gh.bennomeier/cetoni",
+  "integration": {
+    "blockers": [
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/bennomeier__cetoni: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/bennomeier__cetoni --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/serial.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "serial",
+    "Serial"
+  ],
+  "languages": [
+    "Python",
+    "Jupyter Notebook"
+  ],
+  "last_commit_at": "2024-05-17T15:00:14+02:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/bennomeier/cetoni"
+  },
+  "local_path": "labs/bennomeier/cetoni",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "bennomeier",
+  "package_id": "gh.bennomeier/cetoni",
+  "quarantine": false,
+  "rank": 50,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "cetoni",
+  "repo_url": "https://github.com/bennomeier/cetoni",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "b957067d56c2698ca4b77bfe2b445af4b1d92045",
+    "repo_url": "https://github.com/bennomeier/cetoni"
+  },
+  "stars": 0,
+  "tags": [
+    "serial",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "bennomeier/cetoni",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 1,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 45.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "unknown",
+      "category_zh": "设备后端",
+      "description_zh": "不依赖CetoniSDK、经串口控制Cetoni Nemesys V4注射泵的Python模块",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 345,
+      "rows_all": [
+        345
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "python-object",
+      "catalog_tier": "B",
+      "family_matches": [
+        "python ?sdk"
+      ],
+      "family_note": "triage family serial (catalogue family python-object)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B6-role-without-entry"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/bennomeier__cetoni/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.fluid.aspirate.v1",
+              "cap.fluid.dispense.v1"
+            ],
+            "kind": "lab.liquid_handler"
+          }
+        ],
+        "risk_floor": "R2",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/bennomeier__cetoni/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/bennomeier__cetoni/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.fluid.aspirate.v1",
+              "cap.fluid.dispense.v1"
+            ],
+            "kind": "lab.liquid_handler"
+          }
+        ],
+        "risk_floor": "R2"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "b957067d56c2698ca4b77bfe2b445af4b1d92045",
+      "driver_dir": "MHS/drivers/labs/bennomeier__cetoni",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:f81e89f6b8cfb8a46e372de9dc0dccb9febd5bb46ad5f916d22defa3145c0093",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 2,
+      "files": 4,
+      "markers": {
+        "serial": 3
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of wave B: a direct Driver, not a SerialDriver table: cetoniSerial builds framed binary commands (opcode, node id, CANopen index, CRC-16, DLE stuffing).",
+        "rules alone: family-config (family:serial, rule 9)"
+      ],
+      "family": "serial",
+      "hardware_transport": "class cetoniSerial:Syringe uses the hardware transport serial",
+      "helper": "SerialDriver",
+      "justification": "Model review of wave B: a direct Driver, not a SerialDriver table: cetoniSerial builds framed binary commands (opcode, node id, CANopen index, CRC-16, DLE stuffing).",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

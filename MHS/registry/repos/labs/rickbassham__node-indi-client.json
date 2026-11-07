@@ -1,0 +1,183 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "node"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_07ee24cec55204eb",
+    "https://github.com/rickbassham/node-indi-client"
+  ],
+  "description": "rickbassham/node-indi-client: protocol implementation/bridge for optics (lab instrumentation track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: protocol bridge. Language: JavaScript. Catalog keywords: INDI, Node.js, XML, JSON, MQTT.",
+  "domains": [
+    "optics"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 13 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "other"
+  ],
+  "hardware_free": false,
+  "id": "gh.rickbassham/node-indi-client",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this transport backs a future engine bridge; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/other.md",
+    "role": "transport",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "MQTT",
+    "other:INDI",
+    "other:Node.js",
+    "CLI"
+  ],
+  "languages": [
+    "JavaScript"
+  ],
+  "last_commit_at": "2021-09-25T11:57:18-04:00",
+  "license": "ISC",
+  "license_class": "permissive",
+  "license_spdx": "ISC",
+  "links": {
+    "repo": "https://github.com/rickbassham/node-indi-client"
+  },
+  "local_path": "labs/rickbassham/node-indi-client",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "rickbassham",
+  "package_id": "gh.rickbassham/node-indi-client",
+  "quarantine": false,
+  "rank": 150,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "node-indi-client",
+  "repo_url": "https://github.com/rickbassham/node-indi-client",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "246917ccdcc144c16ba00681862fc01f65e80658",
+    "repo_url": "https://github.com/rickbassham/node-indi-client"
+  },
+  "stars": 7,
+  "tags": [
+    "other",
+    "lab instrumentation",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "rickbassham/node-indi-client",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "protocol-bridge",
+      "family_confidence": 0.74,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 40.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "false",
+      "backend_family_raw": "unknown",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "INDI协议的Node.js客户端,把XML转为JSON,示例桥接到MQTT",
+      "join": "exact",
+      "license_raw": "ISC",
+      "mhs_support_raw": "unknown",
+      "priority": "参考",
+      "row": 2191,
+      "rows_all": [
+        2191
+      ],
+      "scope": "peripheral",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "other",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bmqtt\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/rickbassham__node-indi-client/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "ISC",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "ISC",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "node"
+      ],
+      "entry_evidence_count": 1,
+      "files": 13,
+      "markers": {
+        "mqtt": 7
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): This Node.js library is an INDI protocol client and transport, not a driver for one device, so it is bridge-runtime work rather than a per-repository driver.",
+        "rules alone: untriaged (untriaged:non_python, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "This Node.js library is an INDI protocol client and transport, not a driver for one device, so it is bridge-runtime work rather than a per-repository driver.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

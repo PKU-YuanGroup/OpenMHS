@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tjards/multi-agent_sim",
+  "track": "robots",
+  "local_path": "robots/tjards/multi-agent_sim",
+  "driver_dir": "MHS/drivers/robots/tjards__multi-agent_sim",
+  "upstream": {
+    "repo_url": "https://github.com/tjards/multi-agent_sim",
+    "commit": "1e31f64ad66797b32141418e25629d69a08c38cf",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1104,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/tjards__multi-agent_sim --backend fake",
+  "skip_reason": "override (robots.json): Skip: this is a self-contained multi-agent swarming simulator, not a hardware driver or a Gymnasium/MuJoCo environment.",
+  "publish_review": "not_required"
+}

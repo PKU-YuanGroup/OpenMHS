@@ -1,0 +1,86 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.avisengine/avis-engine-python-api",
+  "track": "robots",
+  "local_path": "robots/avisengine/avis-engine-python-api",
+  "driver_dir": "MHS/drivers/robots/avisengine__avis-engine-python-api",
+  "upstream": {
+    "repo_url": "https://github.com/avisengine/avis-engine-python-api",
+    "commit": "32b9a9e063a5608b9b60a87aa32171d44c116316",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 409,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "avisengine:Car",
+      "file": "avisengine.py",
+      "line": 17,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Car.getData",
+      "Car.getImage",
+      "Car.getSensors",
+      "Car.getSpeed",
+      "Car.data_str (attribute)",
+      "Car.sock (attribute)"
+    ],
+    "writes": [
+      "Car.setSensorAngle",
+      "Car.setSpeed",
+      "Car.setSteering"
+    ],
+    "actions": [
+      "Car.stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/avisengine__avis-engine-python-api --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

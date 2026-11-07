@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.spacetelescope/poppy",
+  "track": "labs",
+  "local_path": "labs/spacetelescope/poppy",
+  "driver_dir": "MHS/drivers/labs/spacetelescope__poppy",
+  "upstream": {
+    "repo_url": "https://github.com/spacetelescope/poppy",
+    "commit": "5e76d377bd27cce0e43268db4a1bcc61c29316b9",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 275,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "poppy/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/spacetelescope__poppy --backend fake",
+  "skip_reason": "override (labs.json): Poppy is a physical-optics simulation library, not a device driver; its DMs and tip-tilt stage only compute wavefront OPD in software.",
+  "publish_review": "not_required"
+}

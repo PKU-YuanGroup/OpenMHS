@@ -1,0 +1,137 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.anki/cozmo-python-sdk",
+  "track": "robots",
+  "local_path": "robots/anki/cozmo-python-sdk",
+  "driver_dir": "MHS/drivers/robots/anki__cozmo-python-sdk",
+  "upstream": {
+    "repo_url": "https://github.com/anki/cozmo-python-sdk",
+    "commit": "dd29edef18748fcd816550469195323842a7872e",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 31,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "cozmo.robot:Robot",
+      "file": "src/cozmo/robot.py",
+      "line": 630,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "cozmo.camera:Camera",
+      "file": "src/cozmo/camera.py",
+      "line": 212,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "cozmo.world:World",
+      "file": "src/cozmo/world.py",
+      "line": 79,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "cozmo.nav_memory_map:NavMemoryMapGrid",
+      "file": "src/cozmo/nav_memory_map.py",
+      "line": 251,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "cozmo.annotate:ImageAnnotator",
+      "file": "src/cozmo/annotate.py",
+      "line": 394,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Robot.has_in_progress_actions",
+      "Robot.is_anim_buffer_full",
+      "Robot.is_animating",
+      "Robot.is_animating_idle",
+      "Robot.is_behavior_running",
+      "Robot.is_carrying_block",
+      "Robot.is_charging",
+      "Robot.is_cliff_detected",
+      "Robot.is_device_accelerometer_supported",
+      "Robot.is_device_gyro_supported",
+      "Robot.is_falling",
+      "Robot.is_freeplay_mode_active"
+    ],
+    "writes": [
+      "Robot.set_all_backpack_lights",
+      "Robot.set_backpack_lights",
+      "Robot.set_backpack_lights_off",
+      "Robot.set_center_backpack_lights",
+      "Robot.set_head_angle",
+      "Robot.set_head_light",
+      "Robot.set_idle_animation",
+      "Robot.set_lift_height",
+      "Robot.set_manual_exposure",
+      "Robot.set_needs_levels",
+      "Robot.set_robot_volume",
+      "Camera.set_manual_exposure"
+    ],
+    "actions": [
+      "Robot.abort_all_actions",
+      "Robot.enable_all_reaction_triggers",
+      "Robot.enable_auto_exposure",
+      "Robot.enable_device_imu",
+      "Robot.enable_facial_expression_estimation",
+      "Robot.enable_freeplay_cube_lights",
+      "Robot.enable_stop_on_cliff",
+      "Robot.move_head",
+      "Robot.move_lift",
+      "Robot.start_behavior",
+      "Robot.start_freeplay_behaviors",
+      "Robot.stop_all_motors"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/cozmo/robot.py:105 MIN_LIFT_HEIGHT_MM = 32.0",
+      "src/cozmo/robot.py:111 MAX_LIFT_HEIGHT_MM = 92.0"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/anki__cozmo-python-sdk --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

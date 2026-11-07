@@ -1,0 +1,181 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "cmake",
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_b03278ad3ac5bf07",
+    "https://github.com/kisaragi-mochi/stackchan-mcp"
+  ],
+  "description": "kisaragi-mochi/stackchan-mcp: protocol implementation/bridge for humanoid robots (robotics track). OpenMHS plan: reference only (host). Declared backend: MCP. Language: C++. Catalog keywords: M5Stack, StackChan, CoreS3+, MCP, ESP32.",
+  "domains": [
+    "humanoid robots"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 300 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "mcp-proxy"
+  ],
+  "hardware_free": false,
+  "id": "gh.kisaragi-mochi/stackchan-mcp",
+  "integration": {
+    "blockers": [
+      "REFERENCE_ONLY: role host"
+    ],
+    "effort": "EX",
+    "next_action": "Reference only: a host, orchestrator or MCP wrapper of a covered backend; integrate the backend instead.",
+    "reason_code": "override:recon",
+    "role": "host",
+    "scenario_required": false,
+    "strategy": "reference"
+  },
+  "interfaces": [
+    "MCP",
+    "WebSocket",
+    "HTTP/REST",
+    "CLI",
+    "Docker"
+  ],
+  "languages": [
+    "C++",
+    "Python",
+    "C",
+    "Shell"
+  ],
+  "last_commit_at": "2026-10-03T22:07:53+09:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/kisaragi-mochi/stackchan-mcp"
+  },
+  "local_path": "robots/kisaragi-mochi/stackchan-mcp",
+  "modes": [],
+  "owner": "kisaragi-mochi",
+  "package_id": "gh.kisaragi-mochi/stackchan-mcp",
+  "quarantine": false,
+  "rank": 337,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "stackchan-mcp",
+  "repo_url": "https://github.com/kisaragi-mochi/stackchan-mcp",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "318fb1256df6aa39b9ebf3f53362085167f9a47b",
+    "repo_url": "https://github.com/kisaragi-mochi/stackchan-mcp"
+  },
+  "stars": 156,
+  "tags": [
+    "mcp-proxy",
+    "robotics",
+    "hardware interface",
+    "reference"
+  ],
+  "tier": "D",
+  "title": "kisaragi-mochi/stackchan-mcp",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "mcp-server",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 65.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "false",
+      "backend_family_raw": "MCP",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "M5Stack官方StackChan(CoreS3+舵机+相机)的MCP网关,Python网关+ESP32固件",
+      "join": "exact",
+      "license_raw": "NOASSERTION",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 1311,
+      "rows_all": [
+        1311
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "mcp-proxy",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bmcp\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_note": "tier B -> D: triage reference (override:recon)",
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "cmake",
+        "python"
+      ],
+      "entry_evidence_count": 2,
+      "files": 300,
+      "markers": {
+        "cli": 1,
+        "docker": 4,
+        "http": 39,
+        "mcp": 47
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): Stackchan-mcp is an MCP gateway that relays tool calls between LLM clients and StackChan firmware over WebSocket, so it is a host reference, not a device driver.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "Stackchan-mcp is an MCP gateway that relays tool calls between LLM clients and StackChan firmware over WebSocket, so it is a host reference, not a device driver.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.gt-ripl/robo-vln",
+  "track": "robots",
+  "local_path": "robots/gt-ripl/robo-vln",
+  "driver_dir": "MHS/drivers/robots/gt-ripl__robo-vln",
+  "upstream": {
+    "repo_url": "https://github.com/gt-ripl/robo-vln",
+    "commit": "35fe68b46d1e51fc5b0c6f4127ed4868296c1c2e",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 390,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "environments/habitat-sim/habitat_sim/simulator.py:44",
+      "environments/habitat-lab/habitat/core/embodied_task.py:57",
+      "environments/habitat-lab/habitat/core/simulator.py:221",
+      "environments/habitat-sim/habitat_sim/sim.py:1",
+      "environments/habitat-sim/habitat_sim/simulator.py:1",
+      "environments/habitat-lab/habitat/core/simulator.py:1"
+    ],
+    "upstream_tests": "environments/habitat-lab/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/gt-ripl__robo-vln --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jkk-research/wayp_plan_tools",
+  "track": "robots",
+  "local_path": "robots/jkk-research/wayp_plan_tools",
+  "driver_dir": "MHS/drivers/robots/jkk-research__wayp_plan_tools",
+  "upstream": {
+    "repo_url": "https://github.com/jkk-research/wayp_plan_tools",
+    "commit": "aeb6febe4ce75f4d09aec5878b9a9cb232e8ff43",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1472,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "colcon build"
+    ],
+    "system_deps": [
+      "ament/colcon workspace and the ROS dependencies declared in package.xml"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jkk-research__wayp_plan_tools --backend fake",
+  "skip_reason": "override (robots.json): ROS 2 C++ waypoint and controller tooling that only exchanges pose, odometry and Twist topics, with no device I/O or Python API, so there is no device entry point for a driver.",
+  "publish_review": "not_required"
+}

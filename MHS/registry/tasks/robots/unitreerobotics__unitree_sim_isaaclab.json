@@ -1,0 +1,94 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.unitreerobotics/unitree_sim_isaaclab",
+  "track": "robots",
+  "local_path": "robots/unitreerobotics/unitree_sim_isaaclab",
+  "driver_dir": "MHS/drivers/robots/unitreerobotics__unitree_sim_isaaclab",
+  "upstream": {
+    "repo_url": "https://github.com/unitreerobotics/unitree_sim_isaaclab",
+    "commit": "e30c25b1dffdf92ada1d6c8c1fe9a47bdde0fecc",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 73,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "tasks.g1_tasks.move_cylinder_g1_29dof_dex1_wholebody.move_cylinder_g1_29dof_dex1_hw_env_cfg:MoveCylinderG129Dex1WholebodyEnvCfg",
+      "file": "tasks/g1_tasks/move_cylinder_g1_29dof_dex1_wholebody/move_cylinder_g1_29dof_dex1_hw_env_cfg.py",
+      "line": 121,
+      "confidence": "override"
+    },
+    {
+      "symbol": "tasks.g1_tasks.pick_place_cylinder_g1_29dof_dex1.pickplace_cylinder_g1_29dof_dex1_joint_env_cfg:PickPlaceG129DEX1BaseFixEnvCfg",
+      "file": "tasks/g1_tasks/pick_place_cylinder_g1_29dof_dex1/pickplace_cylinder_g1_29dof_dex1_joint_env_cfg.py",
+      "line": 118,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "tasks/g1_tasks/move_cylinder_g1_29dof_dex1_wholebody/__init__.py:10 gym env Isaac-Move-Cylinder-G129-Dex1-Wholebody",
+      "tasks/g1_tasks/move_cylinder_g1_29dof_dex3_wholebody/__init__.py:10 gym env Isaac-Move-Cylinder-G129-Dex3-Wholebody",
+      "tasks/g1_tasks/move_cylinder_g1_29dof_inspire_wholebody/__init__.py:10 gym env Isaac-Move-Cylinder-G129-Inspire-Wholebody",
+      "tasks/g1_tasks/pick_place_cylinder_g1_29dof_dex1/__init__.py:10 gym env Isaac-PickPlace-Cylinder-G129-Dex1-Joint"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Isaac-Move-Cylinder-G129-Dex1-Wholebody registered at tasks/g1_tasks/move_cylinder_g1_29dof_dex1_wholebody/__init__.py:10",
+      "gym env Isaac-Move-Cylinder-G129-Dex3-Wholebody registered at tasks/g1_tasks/move_cylinder_g1_29dof_dex3_wholebody/__init__.py:10",
+      "gym env Isaac-Move-Cylinder-G129-Inspire-Wholebody registered at tasks/g1_tasks/move_cylinder_g1_29dof_inspire_wholebody/__init__.py:10",
+      "gym env Isaac-PickPlace-Cylinder-G129-Dex1-Joint registered at tasks/g1_tasks/pick_place_cylinder_g1_29dof_dex1/__init__.py:10",
+      "gym env Isaac-PickPlace-Cylinder-G129-Dex3-Joint registered at tasks/g1_tasks/pick_place_cylinder_g1_29dof_dex3/__init__.py:11",
+      "gym env Isaac-PickPlace-Cylinder-G129-Inspire-Joint registered at tasks/g1_tasks/pick_place_cylinder_g1_29dof_inspire/__init__.py:10",
+      "gym env Isaac-PickPlace-RedBlock-G129-Dex1-Joint registered at tasks/g1_tasks/pick_place_redblock_g1_29dof_dex1/__init__.py:9",
+      "gym env Isaac-PickPlace-RedBlock-G129-Dex3-Joint registered at tasks/g1_tasks/pick_place_redblock_g1_29dof_dex3/__init__.py:10",
+      "gym env Isaac-PickPlace-RedBlock-G129-Inspire-Joint registered at tasks/g1_tasks/pick_place_redblock_g1_29dof_inspire/__init__.py:9",
+      "gym env Isaac-Pick-Redblock-Into-Drawer-G129-Dex1-Joint registered at tasks/g1_tasks/pick_redblock_into_drawer_g1_29dof_dex1/__init__.py:9",
+      "gym env Isaac-Pick-Redblock-Into-Drawer-G129-Dex3-Joint registered at tasks/g1_tasks/pick_redblock_into_drawer_g1_29dof_dex3/__init__.py:10",
+      "gym env Isaac-Stack-RgyBlock-G129-Dex1-Joint registered at tasks/g1_tasks/stack_rgyblock_g1_29dof_dex1/__init__.py:9"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/unitreerobotics__unitree_sim_isaaclab --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

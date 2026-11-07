@@ -1,0 +1,216 @@
+{
+  "adapter": {
+    "bridge": "scpi",
+    "entry_points": [
+      "pyvisa.ctwrapper.highlevel:IVIVisaLibrary (pyvisa/ctwrapper/highlevel.py:69)",
+      "pyvisa.resources.serial:PrlgxASRLIntfc (pyvisa/resources/serial.py:90)",
+      "pyvisa.resources.usb:USBInstrument (pyvisa/resources/usb.py:45)",
+      "pyvisa.resources.usb:USBRaw (pyvisa/resources/usb.py:138)",
+      "pyvisa.resources.gpib:GPIBInstrument (pyvisa/resources/gpib.py:119)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python",
+    "make"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_b86570161eff4af7",
+    "https://github.com/pyvisa/pyvisa"
+  ],
+  "description": "pyvisa/pyvisa: device backend; protocol implementation/bridge for general test measurement instrument communication (lab instrumentation track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: protocol bridge; device SDK. Language: Python. Catalog keywords: VISA, GPIB, RS232,.",
+  "domains": [
+    "general test measurement instrument communication"
+  ],
+  "evidence": {
+    "files_read": 21,
+    "notes": "bounded static scan: 99 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB); agent-read source notes in work/recon/labs/pyvisa__pyvisa.md (entry points with file:line; not executed)",
+    "provenance_refs": [
+      "work/recon/labs/pyvisa__pyvisa.md"
+    ],
+    "read_by": "agent",
+    "state": "agent_read",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "scpi-visa"
+  ],
+  "hardware_free": true,
+  "id": "gh.pyvisa/pyvisa",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver",
+      "LICENSE_REVIEW: permissive; the user decides before a driver is published"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this transport backs the scpi helper; it is not a per-repo driver task.",
+    "reason_code": "bridge-runtime:scpi",
+    "recipe": "families/scpi-visa.md",
+    "role": "transport",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "Python API",
+    "pyvisa-shell command line",
+    "Python",
+    "VISA",
+    "CLI",
+    "SCPI/VISA",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-09-04T22:29:18+02:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "docs": "https://github.com/pyvisa/pyvisa",
+    "repo": "https://github.com/pyvisa/pyvisa"
+  },
+  "local_path": "labs/pyvisa/pyvisa",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "pyvisa",
+  "package_id": "gh.pyvisa/pyvisa",
+  "quarantine": false,
+  "rank": 17,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pyvisa",
+  "repo_url": "https://github.com/pyvisa/pyvisa",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "14d7c1743bf3e98c4c94a819bd6787ccc44c1407",
+    "repo_url": "https://github.com/pyvisa/pyvisa"
+  },
+  "stars": 965,
+  "tags": [
+    "scpi-visa",
+    "lab instrumentation",
+    "protocol bridge device sdk",
+    "simulated",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "pyvisa/pyvisa",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 77.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接 | 设备SDK",
+      "archived": "false",
+      "backend_family_raw": "VISA（ctypes 封装 IVI VISA 库；可插拔 '@py'/'@sim'/'@ivi' 后端）",
+      "blockers_raw": "真实仪器需厂商 VISA 安装与物理连接（本研究禁止接硬件）",
+      "category_zh": "设备后端 | 协议实现/桥接",
+      "description_zh": "VISA 标准的 Python 前端：统一 GPIB/RS232/USB/Ethernet 仪器的资源发现、消息读写、二进制块解析、事件、锁；后端可为 NI/Keysight IVI-VISA 动态库、pyvisa-py 或 pyvisa-sim。",
+      "join": "exact",
+      "license_raw": "MIT（使用 NI-VISA/Keysight VISA 等后端时受其各自专有许可约束）（GitHub 识别: MIT）",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P0",
+      "row": 2106,
+      "rows_all": [
+        2106
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument | shared_infrastructure",
+      "verification_level": "来源自报已运行（attachment_b；此次未复现）"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bvisa\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/pyvisa__pyvisa/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/pyvisa__pyvisa/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/pyvisa__pyvisa/hardware"
+        ],
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": true,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python",
+        "make"
+      ],
+      "entry_evidence_count": 8,
+      "files": 99,
+      "markers": {
+        "cli": 1,
+        "scpi_visa": 73,
+        "serial": 4
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): VISA transport behind the ScpiDriver helper's optional pyvisa backend; not a device.",
+        "rules alone: bridge-runtime (bridge-runtime:scpi, rule 6)"
+      ],
+      "family": "scpi",
+      "flagship": true,
+      "hardware_transport": "class pyvisa.ctwrapper.highlevel:IVIVisaLibrary uses the hardware transport pyvisa",
+      "helper": null,
+      "justification": "VISA transport behind the ScpiDriver helper's optional pyvisa backend; not a device.",
+      "reason_code": "bridge-runtime:scpi",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

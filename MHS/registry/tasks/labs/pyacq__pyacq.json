@@ -1,0 +1,90 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pyacq/pyacq",
+  "track": "labs",
+  "local_path": "labs/pyacq/pyacq",
+  "driver_dir": "MHS/drivers/labs/pyacq__pyacq",
+  "upstream": {
+    "repo_url": "https://github.com/pyacq/pyacq",
+    "commit": "a269276a0b6aaeda642ab46c96c2a60b42ec2cd6",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": "python-object",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 56,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "pyacq.viewers.qtriggeredoscilloscope:QTriggeredOscilloscope",
+      "file": "pyacq/viewers/qtriggeredoscilloscope.py",
+      "line": 33,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyacq.core.rpc.client:RPCClient",
+      "file": "pyacq/core/rpc/client.py",
+      "line": 26,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyacq.core.manager:Manager",
+      "file": "pyacq/core/manager.py",
+      "line": 67,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyacq.core.stream.stream:InputStream",
+      "file": "pyacq/core/stream/stream.py",
+      "line": 207,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyacq.core.tools:ChannelSplitter",
+      "file": "pyacq/core/tools.py",
+      "line": 219,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9,<4.0",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "pyacq/core/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pyacq__pyacq --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

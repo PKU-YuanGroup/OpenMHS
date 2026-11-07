@@ -1,0 +1,186 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "docker",
+    "node"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_a878c7f0c69af921",
+    "https://github.com/rickbassham/indi-mqtt-bridge"
+  ],
+  "description": "rickbassham/indi-mqtt-bridge: protocol implementation/bridge for optics (lab instrumentation track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: protocol bridge. Language: JavaScript. Catalog keywords: INDI, MQTT, Docker.",
+  "domains": [
+    "optics"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 12 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "other"
+  ],
+  "hardware_free": false,
+  "id": "gh.rickbassham/indi-mqtt-bridge",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this transport backs a future engine bridge; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/other.md",
+    "role": "transport",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "MQTT",
+    "other:INDI",
+    "Docker",
+    "CLI"
+  ],
+  "languages": [
+    "JavaScript"
+  ],
+  "last_commit_at": "2023-09-25T11:49:11+00:00",
+  "license": "ISC",
+  "license_class": "permissive",
+  "license_spdx": "ISC",
+  "links": {
+    "repo": "https://github.com/rickbassham/indi-mqtt-bridge"
+  },
+  "local_path": "labs/rickbassham/indi-mqtt-bridge",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "rickbassham",
+  "package_id": "gh.rickbassham/indi-mqtt-bridge",
+  "quarantine": false,
+  "rank": 225,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "indi-mqtt-bridge",
+  "repo_url": "https://github.com/rickbassham/indi-mqtt-bridge",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "d4adb841a92458f72cd85438486e973a547e896e",
+    "repo_url": "https://github.com/rickbassham/indi-mqtt-bridge"
+  },
+  "stars": 1,
+  "tags": [
+    "other",
+    "lab instrumentation",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "rickbassham/indi-mqtt-bridge",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "protocol-bridge",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 47.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "false",
+      "backend_family_raw": "unknown",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "INDI与MQTT之间的桥接服务(Docker)",
+      "join": "exact",
+      "license_raw": "ISC",
+      "mhs_support_raw": "unknown",
+      "priority": "参考",
+      "row": 2190,
+      "rows_all": [
+        2190
+      ],
+      "scope": "peripheral",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "other",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bmqtt\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/rickbassham__indi-mqtt-bridge/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "ISC",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "ISC",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "docker",
+        "node"
+      ],
+      "entry_evidence_count": 1,
+      "files": 12,
+      "markers": {
+        "docker": 6,
+        "mqtt": 13
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): This Node.js daemon bridges INDI property vectors to and from MQTT topics, so it is transport middleware and not a driver for any one device.",
+        "rules alone: untriaged (untriaged:non_python, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "This Node.js daemon bridges INDI property vectors to and from MQTT topics, so it is transport middleware and not a driver for any one device.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

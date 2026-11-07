@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.rumaisaabdulhai/quad_sim",
+  "track": "robots",
+  "local_path": "robots/rumaisaabdulhai/quad_sim",
+  "driver_dir": "MHS/drivers/robots/rumaisaabdulhai__quad_sim",
+  "upstream": {
+    "repo_url": "https://github.com/rumaisaabdulhai/quad_sim",
+    "commit": "01d02f6e2fad8060d6522b7bca01cb82aa038c2a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "sim-env",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 279,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Results.get_delta_dist",
+      "Results.get_df"
+    ],
+    "writes": [
+      "Results.set_avg_speed",
+      "Results.set_elapsed_time",
+      "Results.set_total_dist"
+    ],
+    "actions": [
+      "Results.reset_params"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "entry_symbol",
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rumaisaabdulhai__quad_sim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

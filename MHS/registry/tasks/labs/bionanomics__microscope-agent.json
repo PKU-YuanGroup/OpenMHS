@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.bionanomics/microscope-agent",
+  "track": "labs",
+  "local_path": "labs/bionanomics/microscope-agent",
+  "driver_dir": "MHS/drivers/labs/bionanomics__microscope-agent",
+  "upstream": {
+    "repo_url": "https://github.com/bionanomics/microscope-agent",
+    "commit": "3aef391397deb42f0a1b814091eb2e4b3fe8ed5a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 15,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "acquisition.backends.baumer_genicam:BaumerGenICam",
+      "file": "acquisition/backends/baumer_genicam.py",
+      "line": 73,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "acquisition/backends/nis_mock.py:75 MockNIS",
+      "acquisition/backends/nis_mock.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "BaumerGenICam.get_settings"
+    ],
+    "writes": [
+      "BaumerGenICam.set_settings"
+    ],
+    "actions": [
+      "BaumerGenICam.capture"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.image.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "analysis/physarum_rhythm.py:55 MIN_PERIOD_S = 30.0",
+      "analysis/physarum_rhythm.py:56 MAX_PERIOD_S = 600.0",
+      "timelapse/model_trigger.py:45 MAX_TOKENS = 1024",
+      "timelapse/model_trigger.py:149 max_calls = 50",
+      "timelapse/model_trigger.py:150 min_interval_s = 30.0",
+      "timelapse/scheduler.py:76 max_captures = 500",
+      "timelapse/scheduler.py:77 max_runtime_s = 3600.0",
+      "acquisition/backends/nis_mock.py:40 MAX_XY_STEP_UM = 5000.0"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/bionanomics__microscope-agent --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

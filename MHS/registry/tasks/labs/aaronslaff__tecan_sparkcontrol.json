@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.aaronslaff/tecan_sparkcontrol",
+  "track": "labs",
+  "local_path": "labs/aaronslaff/tecan_sparkcontrol",
+  "driver_dir": "MHS/drivers/labs/aaronslaff__tecan_sparkcontrol",
+  "upstream": {
+    "repo_url": "https://github.com/aaronslaff/tecan_sparkcontrol",
+    "commit": "d2272c6d0e0d4ded08a3af457ed19918a1e66446",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:partner-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 6,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "spark_control_automation:SparkControlClient",
+      "file": "spark_control_automation.py",
+      "line": 110,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "SparkControlClient.get_available_apps",
+      "SparkControlClient.get_instrument_settings",
+      "SparkControlClient.get_instrument_status",
+      "SparkControlClient.get_measurement_results",
+      "SparkControlClient.get_method_status",
+      "SparkControlClient.get_plate_geometry"
+    ],
+    "writes": [],
+    "actions": [
+      "SparkControlClient.calibrate_instrument",
+      "SparkControlClient.start_method",
+      "SparkControlClient.stop_method"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.calibrate.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/aaronslaff__tecan_sparkcontrol --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

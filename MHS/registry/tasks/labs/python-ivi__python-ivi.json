@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.python-ivi/python-ivi",
+  "track": "labs",
+  "local_path": "labs/python-ivi/python-ivi",
+  "driver_dir": "MHS/drivers/labs/python-ivi__python-ivi",
+  "upstream": {
+    "repo_url": "https://github.com/python-ivi/python-ivi",
+    "commit": "cfa45ceade0758debe4bc24ba4c8195222cad1e2",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 8,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "ivi.lecroy.lecroyWR104MXIA:lecroyWR104MXIA",
+      "file": "ivi/lecroy/lecroyWR104MXIA.py",
+      "line": 29,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ivi.lecroy.lecroyWR104XIA:lecroyWR104XIA",
+      "file": "ivi/lecroy/lecroyWR104XIA.py",
+      "line": 29,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ivi.lecroy.lecroyWR204MXIA:lecroyWR204MXIA",
+      "file": "ivi/lecroy/lecroyWR204MXIA.py",
+      "line": 29,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ivi.lecroy.lecroyWR204XIA:lecroyWR204XIA",
+      "file": "ivi/lecroy/lecroyWR204XIA.py",
+      "line": 29,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ivi.lecroy.lecroyWR44MXIA:lecroyWR44MXIA",
+      "file": "ivi/lecroy/lecroyWR44MXIA.py",
+      "line": 29,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ivi/ivi.py:104 SimulationStateException"
+    ],
+    "upstream_tests": "ivi/test"
+  },
+  "hints": {
+    "reads": [
+      "lecroyWR104MXIA._interface.read_stb",
+      "lecroyWR104XIA._interface.read_stb",
+      "lecroyWR204MXIA._interface.read_stb"
+    ],
+    "writes": [],
+    "actions": [
+      "lecroyWR104MXIA._interface.trigger",
+      "lecroyWR104XIA._interface.trigger",
+      "lecroyWR204MXIA._interface.trigger"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/python-ivi__python-ivi --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

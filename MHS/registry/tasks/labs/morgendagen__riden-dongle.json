@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.morgendagen/riden-dongle",
+  "track": "labs",
+  "local_path": "labs/morgendagen/riden-dongle",
+  "driver_dir": "MHS/drivers/labs/morgendagen__riden-dongle",
+  "upstream": {
+    "repo_url": "https://github.com/morgendagen/riden-dongle",
+    "commit": "e9a060958c9dcf82f24353e36c2282b057690be4",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1603,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/riden_http_server/html_content/mockserver.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/morgendagen__riden-dongle --backend fake",
+  "skip_reason": "override (labs.json): Skip: this is C++ ESP8266 firmware for the Riden WiFi dongle, not a Python package or host driver.",
+  "publish_review": "required"
+}

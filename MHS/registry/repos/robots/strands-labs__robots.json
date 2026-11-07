@@ -1,0 +1,292 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "strands_robots.hardware_robot:Robot (strands_robots/hardware_robot.py:545)",
+      "strands_robots.inference.client:RemotePolicy (strands_robots/inference/client.py:138)",
+      "strands_robots.drivers.yahboom_m3pro:YahboomM3ProDriver (strands_robots/drivers/yahboom_m3pro.py:238)",
+      "strands_robots.drivers.earthrover:EarthRoverDriver (strands_robots/drivers/earthrover.py:302)",
+      "strands_robots.drivers.microduck:MicroduckDriver (strands_robots/drivers/microduck.py:1009)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.manipulation.grasp.v1",
+    "cap.motion.joint_position.v1",
+    "cap.motion.stop.v1"
+  ],
+  "catalog_refs": [
+    "repo_7706808cd6314873",
+    "https://github.com/strands-labs/robots"
+  ],
+  "description": "strands-labs/robots: device backend for general (robotics track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 6. Catalog role: direct simulation backend. Declared backend: MuJoCo; MHS. Language: Python, Jupyter Notebook, Shell. Catalog keywords: Strands, Agent, Robot, MuJoCo, VLA.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 5837 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/robots/strands-labs__robots/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.strands-labs/robots",
+  "integration": {
+    "blockers": [
+      "NEEDS_GPU: an import or the catalogue requires a GPU"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/robots/strands-labs__robots: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/strands-labs__robots --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:partner-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "MCP",
+    "CLI",
+    "Gymnasium",
+    "HTTP/REST",
+    "Isaac Sim",
+    "LeRobot",
+    "MuJoCo",
+    "Replay",
+    "ROS 2",
+    "Serial",
+    "ZeroMQ"
+  ],
+  "languages": [
+    "Python",
+    "Jupyter Notebook",
+    "Shell",
+    "JavaScript"
+  ],
+  "last_commit_at": "2026-10-09T08:13:05+00:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/strands-labs/robots"
+  },
+  "local_path": "robots/strands-labs/robots",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "strands-labs",
+  "package_id": "gh.strands-labs/robots",
+  "quarantine": false,
+  "rank": 2,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "robots",
+  "repo_url": "https://github.com/strands-labs/robots",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "f19439bf8c80e7ae6f0fdc0f003d850d638dd97d",
+    "repo_url": "https://github.com/strands-labs/robots"
+  },
+  "stars": 0,
+  "tags": [
+    "python-object",
+    "robotics",
+    "device backend",
+    "direct simulation backend",
+    "simulated",
+    "direct driver"
+  ],
+  "tier": "A",
+  "title": "strands-labs/robots",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 6,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "mujoco",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 88.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "MuJoCo; MHS",
+      "category_zh": "设备后端",
+      "description_zh": "Strands Agent机器人驱动：Robot()默认返回MuJoCo仿真，也可切换真机并运行VLA策略",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "仅声称支持",
+      "priority": "P1",
+      "row": 2600,
+      "rows_all": [
+        2600
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "gymnasium",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bmujoco"
+      ],
+      "family_note": "triage family python-object (catalogue family gymnasium)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/strands-labs__robots/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.manipulation.grasp.v1"
+            ],
+            "kind": "robot.gripper"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/robots/strands-labs__robots/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/strands-labs__robots/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.manipulation.grasp.v1"
+            ],
+            "kind": "robot.gripper"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": "Apache-2.0",
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "f19439bf8c80e7ae6f0fdc0f003d850d638dd97d",
+      "driver_dir": "MHS/drivers/robots/strands-labs__robots",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:d0f792f0a020bf6134eb4a49235324b76610c9a36635195588a1a86d9551fba5",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 9,
+      "files": 5837,
+      "markers": {
+        "camera": 1,
+        "cli": 6,
+        "gpu": 34,
+        "gymnasium": 4,
+        "http": 3,
+        "isaac_sim": 2,
+        "lerobot": 58,
+        "mujoco": 51,
+        "replay": 1,
+        "ros2": 13,
+        "serial": 2,
+        "zeromq": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (partners.json): strands_robots.Robot() drives a MuJoCo simulation by default and real robots with mode=\"real\"; a direct Driver whose sim mode is the hardware-free backend.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": "python-object",
+      "flagship": true,
+      "helper": "PythonObjectDriver",
+      "justification": "strands_robots.Robot() drives a MuJoCo simulation by default and real robots with mode=\"real\"; a direct Driver whose sim mode is the hardware-free backend.",
+      "partner": "AWS (Strands Robots)",
+      "reason_code": "override:partner-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

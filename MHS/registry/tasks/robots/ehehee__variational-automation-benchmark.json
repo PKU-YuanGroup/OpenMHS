@@ -1,0 +1,86 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ehehee/variational-automation-benchmark",
+  "track": "robots",
+  "local_path": "robots/ehehee/variational-automation-benchmark",
+  "driver_dir": "MHS/drivers/robots/ehehee__variational-automation-benchmark",
+  "upstream": {
+    "repo_url": "https://github.com/ehehee/variational-automation-benchmark",
+    "commit": "edcc4bf005446839c0c6f43f8a3bf416702af030",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 229,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "libero.vab.env:VABEnv",
+      "file": "libero/libero/vab/env.py",
+      "line": 50,
+      "confidence": "override"
+    },
+    {
+      "symbol": "libero.vab.bimanual_env:VABBimanualEnv",
+      "file": "libero/libero/vab/bimanual_env.py",
+      "line": 38,
+      "confidence": "override"
+    },
+    {
+      "symbol": "libero.vab.loader:load_task",
+      "file": "libero/libero/vab/loader.py",
+      "line": 11,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "libero/libero/vab/bimanual_env.py:38 VABBimanualEnv environment class",
+      "libero/libero/vab/env.py:50 VABEnv environment class"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "model"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ehehee__variational-automation-benchmark --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

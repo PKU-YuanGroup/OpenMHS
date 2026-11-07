@@ -1,0 +1,124 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ethanjli/liquid-handling-robotics",
+  "track": "labs",
+  "local_path": "labs/ethanjli/liquid-handling-robotics",
+  "driver_dir": "MHS/drivers/labs/ethanjli__liquid-handling-robotics",
+  "upstream": {
+    "repo_url": "https://github.com/ethanjli/liquid-handling-robotics",
+    "commit": "fc7043558072e77981206ae123dfd3a24ef89029",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 28,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "lhrhost.robot.x_axis:Axis",
+      "file": "lhrhost/robot/x_axis.py",
+      "line": 80,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lhrhost.robot.x_axis:ManualAxis",
+      "file": "lhrhost/robot/x_axis.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lhrhost.robot.y_axis:Axis",
+      "file": "lhrhost/robot/y_axis.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lhrhost.robot.z_axis:Axis",
+      "file": "lhrhost/robot/z_axis.py",
+      "line": 8,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "lhrhost.robot.p_axis:Axis",
+      "file": "lhrhost/robot/p_axis.py",
+      "line": 9,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "lhrhost/tests"
+  },
+  "hints": {
+    "reads": [
+      "Axis.get_continuous_offset",
+      "Axis.get_indexed_offset",
+      "Axis.get_module_mount",
+      "Axis.get_module_mount_position",
+      "Axis.get_module_offset_position",
+      "Axis.get_module_position",
+      "Axis.get_module_type",
+      "Axis.get_preset_position",
+      "ManualAxis.get_continuous_offset",
+      "ManualAxis.get_indexed_offset",
+      "ManualAxis.get_module_mount_position",
+      "ManualAxis.get_module_offset_position"
+    ],
+    "writes": [
+      "Axis.set_alignment",
+      "Axis.set_motor_limits",
+      "Axis.set_pid_gains",
+      "Axis.set_preset_physical_position",
+      "Axis.set_preset_sensor_position",
+      "ManualAxis.set_alignment",
+      "ManualAxis.set_motor_limits",
+      "ManualAxis.set_pid_gains",
+      "ManualAxis.set_preset_physical_position",
+      "ManualAxis.set_preset_sensor_position"
+    ],
+    "actions": [
+      "Axis.move_by_physical_delta",
+      "Axis.move_by_sensor_delta",
+      "ManualAxis.move_by_physical_delta",
+      "ManualAxis.move_by_sensor_delta"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ethanjli__liquid-handling-robotics --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

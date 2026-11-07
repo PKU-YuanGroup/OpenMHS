@@ -1,0 +1,61 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tesseract-robotics/tesseract",
+  "track": "robots",
+  "local_path": "robots/tesseract-robotics/tesseract",
+  "driver_dir": "MHS/drivers/robots/tesseract-robotics__tesseract",
+  "upstream": {
+    "repo_url": "https://github.com/tesseract-robotics/tesseract",
+    "commit": "e8d58a0090954276ed7d0190f0624da2d9b85ae0",
+    "license_spdx": "Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [
+    "NOT_A_DEVICE"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "skip-proposed",
+  "wave": 9,
+  "rank": 247,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [
+      "Resolve the root ROS build tooling from pinned package.xml/CMakeLists.txt before installation"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "collision/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/tesseract-robotics__tesseract --backend fake",
+  "skip_reason": "override (ros-wave-c-routing.json): Model review of wave C: skip, not a device: Tesseract is a ROS-agnostic motion-planning library (README.md:25); its ROS integration lives in the separate tesseract_ros and tesseract_ros2 repositories.",
+  "publish_review": "not_required"
+}

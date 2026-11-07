@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/overrides.schema.json",
+  "overrides_version": "0.9",
+  "title": "Reviewed wave B simulation environment routing",
+  "description": "Routing corrections for the existing selected simulation entry points. These entries do not change source pins, entry symbols, native admission, package status or unresolved workflow requirements.",
+  "overrides": [
+    {
+      "package_id": "gh.iamaisim/projectairsim",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:wave-b-sim-env",
+      "justification": "Model review of wave B: The five selected entries are Gym simulator environments. Route to GymnasiumDriver while retaining the blocked native async adapter, remote ownership and cleanup requirements."
+    },
+    {
+      "package_id": "gh.uzh-rpg/flightmare",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:wave-b-sim-env",
+      "justification": "Model review of wave B: The selected FlightEnvVec exposes the Gym/Stable-Baselines vector reset, step, seed and close workflow; the reviewed single-environment adapter uses GymnasiumDriver."
+    }
+  ]
+}

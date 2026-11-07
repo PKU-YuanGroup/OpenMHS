@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.rhoban/bam",
+  "track": "robots",
+  "local_path": "robots/rhoban/bam",
+  "driver_dir": "MHS/drivers/robots/rhoban__bam",
+  "upstream": {
+    "repo_url": "https://github.com/rhoban/bam",
+    "commit": "e9a619d56da5236206f4de6ceec2c1ee1b497b5c",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1567,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.12,<3.13",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "bam/mjlab.py:760 Simulator",
+      "bam/model.py:251 DummyModel",
+      "bam/mujoco.py:206 Simulator",
+      "bam/simulate.py:39 Simulator",
+      "bam/simulate.py:1",
+      "bam/trajectory_sim.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rhoban__bam --backend fake",
+  "skip_reason": "override (robots.json): BAM is a servo-actuator identification and simulation library, not a device driver: its hardware code exists only for the optional identification pipeline, not a general device API.",
+  "publish_review": "not_required"
+}

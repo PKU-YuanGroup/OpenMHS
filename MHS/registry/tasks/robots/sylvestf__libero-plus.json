@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sylvestf/libero-plus",
+  "track": "robots",
+  "local_path": "robots/sylvestf/libero-plus",
+  "driver_dir": "MHS/drivers/robots/sylvestf__libero-plus",
+  "upstream": {
+    "repo_url": "https://github.com/sylvestf/libero-plus",
+    "commit": "4976dc30028e805ff8094b55501d532c48fec182",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "skip:duplicate_of",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": "gh.lifelong-robot-learning/libero",
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1659,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "libero/libero/envs/problems/libero_coffee_table_manipulation.py:125 Libero_Coffee_Table_Manipulation environment class",
+      "libero/libero/envs/env_wrapper.py:411 SegmentationRenderEnv environment class",
+      "libero/libero/envs/env_wrapper.py:511 DemoRenderEnv environment class",
+      "libero/libero/envs/env_wrapper.py:399 OffScreenRenderEnv environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/sylvestf__libero-plus --backend fake",
+  "skip_reason": "duplicate of gh.lifelong-robot-learning/libero: override (robots.json): Model review of recon wave A: perturbed LIBERO tasks over a copy of its environment code (README.md:43 calls the usage identical to LIBERO); one LIBERO driver serves its task files.",
+  "publish_review": "required"
+}

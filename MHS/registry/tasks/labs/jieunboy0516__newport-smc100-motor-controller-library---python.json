@@ -1,0 +1,92 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jieunboy0516/newport-smc100-motor-controller-library-python",
+  "track": "labs",
+  "local_path": "labs/jieunboy0516/newport-smc100-motor-controller-library---python",
+  "driver_dir": "MHS/drivers/labs/jieunboy0516__newport-smc100-motor-controller-library---python",
+  "upstream": {
+    "repo_url": "https://github.com/jieunboy0516/newport-smc100-motor-controller-library---python",
+    "commit": "b828102ddcc30495084606fd1634066c95c985a0",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 311,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "smc100_base:smc100",
+      "file": "smc100_base.py",
+      "line": 73,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "smc100.get_JOGGING_state",
+      "smc100.get_errors",
+      "smc100.get_info",
+      "smc100.get_position",
+      "smc100.get_state",
+      "smc100.get_velocity"
+    ],
+    "writes": [
+      "smc100.set_velocity"
+    ],
+    "actions": [
+      "smc100.enter_DISABLE_state",
+      "smc100.home",
+      "smc100.home_until_done",
+      "smc100.leave_DISABLE_state",
+      "smc100.move",
+      "smc100.move_absolute",
+      "smc100.move_relative",
+      "smc100.reset",
+      "smc100.stop_motion"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/jieunboy0516__newport-smc100-motor-controller-library---python --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

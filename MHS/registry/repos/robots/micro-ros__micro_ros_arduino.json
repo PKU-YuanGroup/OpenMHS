@@ -1,0 +1,188 @@
+{
+  "adapter": {
+    "bridge": "ros",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_decb381c40322a40",
+    "https://github.com/micro-ros/micro_ros_arduino"
+  ],
+  "description": "micro-ros/micro_ros_arduino: device backend for general (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: device SDK. Declared backend: ROS 2. Language: C/C++ header, C, Arduino. Catalog keywords: Arduino, IDE, CLI, micro-ROS, Portenta, OpenCR.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 650 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "ros2"
+  ],
+  "hardware_free": false,
+  "id": "gh.micro-ros/micro_ros_arduino",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this transport backs the ros helper; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/ros2.md",
+    "role": "transport",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "ROS 2",
+    "serial",
+    "CLI",
+    "Docker",
+    "Serial"
+  ],
+  "languages": [
+    "C/C++ header",
+    "C",
+    "Arduino",
+    "C++"
+  ],
+  "last_commit_at": "2025-09-30T12:44:14+02:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/micro-ros/micro_ros_arduino"
+  },
+  "local_path": "robots/micro-ros/micro_ros_arduino",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "micro-ros",
+  "package_id": "gh.micro-ros/micro_ros_arduino",
+  "quarantine": false,
+  "rank": 289,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "micro_ros_arduino",
+  "repo_url": "https://github.com/micro-ros/micro_ros_arduino",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "dc256d6fa0a0960f0e1b88a5aff679eddbc78131",
+    "repo_url": "https://github.com/micro-ros/micro_ros_arduino"
+  },
+  "stars": 0,
+  "tags": [
+    "ros2",
+    "robotics",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "micro-ros/micro_ros_arduino",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "ros2",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 31.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.66
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "unknown",
+      "backend_family_raw": "ROS 2",
+      "category_zh": "设备后端",
+      "description_zh": "面向Arduino IDE/CLI的micro-ROS预编译库，支持Portenta、OpenCR、Teensy等板",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "unknown",
+      "priority": "参考",
+      "row": 1627,
+      "rows_all": [
+        1627
+      ],
+      "scope": "peripheral",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "ros2",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bros ?2\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/micro-ros__micro_ros_arduino/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 0,
+      "files": 650,
+      "markers": {
+        "cli": 1,
+        "docker": 5,
+        "ros2": 14,
+        "serial": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): This C++ Arduino library is the micro-ROS client and transport stack, not a device driver: it turns a board into a ROS 2 node linked to a micro-ROS Agent over serial, WiFi or Ethernet.",
+        "rules alone: untriaged (untriaged:non_python, rule 11)"
+      ],
+      "family": "ros",
+      "helper": null,
+      "justification": "This C++ Arduino library is the micro-ROS client and transport stack, not a device driver: it turns a board into a ROS 2 node linked to a micro-ROS Agent over serial, WiFi or Ethernet.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

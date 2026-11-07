@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.georgeoshardo/symbac",
+  "track": "labs",
+  "local_path": "labs/georgeoshardo/symbac",
+  "driver_dir": "MHS/drivers/labs/georgeoshardo__symbac",
+  "upstream": {
+    "repo_url": "https://github.com/georgeoshardo/symbac",
+    "commit": "5685ae7eb13e111fa155d4d22613d61ef04ac6cd",
+    "license_spdx": "GPL-2.0",
+    "license_class": "copyleft"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 986,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "SyMBac/colony_simulation.py:16 ColonySimulation",
+      "SyMBac/live_viewer.py:77 LiveSimulationViewer",
+      "SyMBac/simulation.py:27 Simulation",
+      "SyMBac/physics/simcell.py:17 SimCell",
+      "SyMBac/physics/simulator.py:14 SimulationContext",
+      "SyMBac/physics/simulator.py:19 Simulator"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/georgeoshardo__symbac --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

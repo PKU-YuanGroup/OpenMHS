@@ -1,0 +1,100 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pcdshub/pcdsdevices",
+  "track": "labs",
+  "local_path": "labs/pcdshub/pcdsdevices",
+  "driver_dir": "MHS/drivers/labs/pcdshub__pcdsdevices",
+  "upstream": {
+    "repo_url": "https://github.com/pcdshub/pcdsdevices",
+    "commit": "d13b06eb53e6185088a7534ce0e17ab154463407",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 28,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pcdsdevices.tpr:TprTrigger",
+      "file": "pcdsdevices/tpr.py",
+      "line": 60,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pcdsdevices/beam_stats.py:191 FakeBeamEnergyRequest",
+      "pcdsdevices/beam_stats.py:204 FakeBeamEnergyRequestNoWait",
+      "pcdsdevices/beam_stats.py:210 FakeBeamEnergyRequestACRWait",
+      "pcdsdevices/crix_motion.py:152 QuadraticSimMotor",
+      "pcdsdevices/crix_motion.py:194 VLSOpticsSim",
+      "pcdsdevices/gon.py:672 SimKappa"
+    ],
+    "upstream_tests": "pcdsdevices/tests"
+  },
+  "hints": {
+    "reads": [
+      "PCDSAreaDetector.get_full_area_detector",
+      "PCDSAreaDetector.get_plugin_graph_edges",
+      "PCDSAreaDetector.cam (attribute)",
+      "PCDSAreaDetector.cc1 (attribute)",
+      "PCDSAreaDetector.cc2 (attribute)",
+      "PCDSAreaDetector.hdf51 (attribute)",
+      "PCDSAreaDetector.image1 (attribute)",
+      "PCDSAreaDetector.image1_cc (attribute)",
+      "PCDSAreaDetector.image1_over (attribute)",
+      "PCDSAreaDetector.image1_proc (attribute)",
+      "PCDSAreaDetector.image1_roi (attribute)",
+      "PCDSAreaDetector.image2 (attribute)"
+    ],
+    "writes": [],
+    "actions": [
+      "TprTrigger.disable",
+      "TprTrigger.disable_ch",
+      "TprTrigger.disable_trg",
+      "TprTrigger.enable",
+      "TprTrigger.enable_ch",
+      "TprTrigger.enable_trg",
+      "SmarPod.multi_axis_move"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "pcdsdevices/attenuator.py:39 MAX_FILTERS = 12",
+      "pcdsdevices/lxe.py:700 sync_limits = [-0.0001, 0.0001]"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pcdshub__pcdsdevices --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

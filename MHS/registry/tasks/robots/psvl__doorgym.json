@@ -1,0 +1,126 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.psvl/doorgym",
+  "track": "robots",
+  "local_path": "robots/psvl/doorgym",
+  "driver_dir": "MHS/drivers/robots/psvl__doorgym",
+  "upstream": {
+    "repo_url": "https://github.com/psvl/doorgym",
+    "commit": "903493a6bd518bed5452c683c3857f1bfc5a209d",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 217,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "doorenv2.envs:DoorEnvBlueV1",
+      "file": "doorenv2/doorenv2/envs/doorenv_blue.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "doorenv2.envs:DoorEnvBlueV2",
+      "file": "doorenv2/doorenv2/envs/doorenv_blue.py",
+      "line": 164,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "doorenv.envs:DoorEnv",
+      "file": "envs/doorenv/envs/doorenv.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "doorenv2.envs:DoorEnvBaxter",
+      "file": "doorenv2/doorenv2/__init__.py",
+      "line": 15,
+      "confidence": "recon"
+    }
+  ],
+  "models": [
+    {
+      "file": "world_generator/world/pull_baxter_rightarm_lefthinge/1555111990_pull_baxter_rightarm.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "world_generator/world/pull_baxter_rightarm_lefthinge/1555111995_pull_baxter_rightarm.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "world_generator/world/pull_baxter_rightarm_lefthinge/1555111999_pull_baxter_rightarm.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "world_generator/world/pull_baxter_rightarm_lefthinge/1555112003_pull_baxter_rightarm.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "world_generator/world/pull_baxter_rightarm_lefthinge/1555112008_pull_baxter_rightarm.xml",
+      "line": 2,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "doorenv2/doorenv2/__init__.py:3 gym env blue-doorenv-v1",
+      "doorenv2/doorenv2/__init__.py:9 gym env blue-doorenv-v2",
+      "doorenv2/doorenv2/__init__.py:15 gym env baxter-doorenv-v1",
+      "envs/doorenv/__init__.py:3 gym env doorenv-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env blue-doorenv-v1 registered at doorenv2/doorenv2/__init__.py:3",
+      "gym env blue-doorenv-v2 registered at doorenv2/doorenv2/__init__.py:9",
+      "gym env baxter-doorenv-v1 registered at doorenv2/doorenv2/__init__.py:15",
+      "gym env doorenv-v0 registered at envs/doorenv/__init__.py:3"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/psvl__doorgym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

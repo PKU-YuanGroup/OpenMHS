@@ -1,0 +1,85 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.romerolab/syringe-pump-controller",
+  "track": "labs",
+  "local_path": "labs/romerolab/syringe-pump-controller",
+  "driver_dir": "MHS/drivers/labs/romerolab__syringe-pump-controller",
+  "upstream": {
+    "repo_url": "https://github.com/romerolab/syringe-pump-controller",
+    "commit": "7c2af002a04ae3abbc7f9fba435b286e69c820fc",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 76,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "new_era:set_rates",
+      "file": "new_era.py",
+      "line": 36,
+      "confidence": "override"
+    },
+    {
+      "symbol": "new_era:get_rate",
+      "file": "new_era.py",
+      "line": 58,
+      "confidence": "override"
+    },
+    {
+      "symbol": "new_era:find_pumps",
+      "file": "new_era.py",
+      "line": 4,
+      "confidence": "override"
+    },
+    {
+      "symbol": "pump_control:PumpControl",
+      "file": "pump_control.py",
+      "line": 14,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "capabilities"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/romerolab__syringe-pump-controller --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

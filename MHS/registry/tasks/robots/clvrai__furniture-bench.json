@@ -1,0 +1,103 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.clvrai/furniture-bench",
+  "track": "robots",
+  "local_path": "robots/clvrai/furniture-bench",
+  "driver_dir": "MHS/drivers/robots/clvrai__furniture-bench",
+  "upstream": {
+    "repo_url": "https://github.com/clvrai/furniture-bench",
+    "commit": "a87960a2490a7a19c86ea16a5ef371718b2baa70",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 51,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "furniture_bench.envs.furniture_sim_env:FurnitureSimEnv",
+      "file": "furniture_bench/envs/furniture_sim_env.py",
+      "line": 48,
+      "confidence": "override"
+    },
+    {
+      "symbol": "furniture_bench.envs.furniture_bench_env:FurnitureBenchEnv",
+      "file": "furniture_bench/envs/furniture_bench_env.py",
+      "line": 25,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "fairo-FR3/polymetis/polymetis/data/franka_panda/panda_arm.mjcf",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "fairo-FR3/polymetis/polymetis/data/franka_panda_robotiq_85/panda_robotiq_85.mjcf",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">3.7,<3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "furniture_bench/__init__.py:15 gym env FurnitureBench-v0",
+      "furniture_bench/__init__.py:21 gym env FurnitureBenchImage-v0",
+      "furniture_bench/__init__.py:27 gym env FurnitureBenchImageFeature-v0",
+      "furniture_bench/__init__.py:33 gym env FurnitureSim-v0"
+    ],
+    "upstream_tests": "fairo-FR3/droidlet/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env FurnitureBench-v0 registered at furniture_bench/__init__.py:15",
+      "gym env FurnitureBenchImage-v0 registered at furniture_bench/__init__.py:21",
+      "gym env FurnitureBenchImageFeature-v0 registered at furniture_bench/__init__.py:27",
+      "gym env FurnitureSim-v0 registered at furniture_bench/__init__.py:33",
+      "gym env FurnitureSimLegacy-v0 registered at furniture_bench/__init__.py:38",
+      "gym env FurnitureSimFull-v0 registered at furniture_bench/__init__.py:44",
+      "gym env FurnitureSimImageFeature-v0 registered at furniture_bench/__init__.py:50",
+      "gym env FurnitureSimState-v0 registered at furniture_bench/__init__.py:56",
+      "gym env FurnitureDummy-v0 registered at furniture_bench/__init__.py:62",
+      "gym env FurnitureImageFeatureDummy-v0 registered at furniture_bench/__init__.py:67"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/clvrai__furniture-bench --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

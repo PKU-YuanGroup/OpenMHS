@@ -1,0 +1,119 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.als-controls/bcs-ophyd-zmq",
+  "track": "labs",
+  "local_path": "labs/als-controls/bcs-ophyd-zmq",
+  "driver_dir": "MHS/drivers/labs/als-controls__bcs-ophyd-zmq",
+  "upstream": {
+    "repo_url": "https://github.com/als-controls/bcs-ophyd-zmq",
+    "commit": "c745feb95f84a5b0cee2c4f1951babb6097055dd",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 14,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "bcsophyd.zmq.bcs_motor:BCSMotor",
+      "file": "src/bcsophyd/zmq/bcs_motor.py",
+      "line": 21,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "BCSAreaDetector.acquire (attribute)",
+      "BCSAreaDetector.image (attribute)",
+      "BCSAreaDetector.total_intensity (attribute)",
+      "BCSMotor.bcs_server.get_acquire_status",
+      "BCSMotor.bcs_server.get_acquired",
+      "BCSMotor.bcs_server.get_acquired_array",
+      "BCSMotor.bcs_server.get_bcsconfiguration",
+      "BCSMotor.bcs_server.get_di",
+      "BCSMotor.bcs_server.get_display_status",
+      "BCSMotor.bcs_server.get_flying_positions",
+      "BCSMotor.bcs_server.get_folder_listing",
+      "BCSMotor.bcs_server.get_freerun"
+    ],
+    "writes": [
+      "BCSMotor.bcs_server.set_breakpoints",
+      "BCSMotor.bcs_server.set_do",
+      "BCSMotor.bcs_server.set_motor_velocity",
+      "BCSMotor.bcs_server.set_state_variable",
+      "BCSDeviceManager.bcs_server.set_breakpoints",
+      "BCSDeviceManager.bcs_server.set_do",
+      "BCSDeviceManager.bcs_server.set_motor_velocity",
+      "BCSDeviceManager.bcs_server.set_state_variable"
+    ],
+    "actions": [
+      "BCSAreaDetector.acquire_frame",
+      "BCSAreaDetector.trigger",
+      "BCSMotor.move",
+      "BCSMotor.stop",
+      "BCSMotor.zmq_move_motor",
+      "BCSMotor.zmq_stop_motor",
+      "BCSMotor.bcs_server.acquire_data",
+      "BCSMotor.bcs_server.disable_breakpoints",
+      "BCSMotor.bcs_server.disable_motor",
+      "BCSMotor.bcs_server.enable_motor",
+      "BCSMotor.bcs_server.home_motor",
+      "BCSMotor.bcs_server.last_scan_run"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.measure.intensity.v1",
+      "cap.motion.stop.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/bcsophyd/zmq/bcs_server.py:30 FORWARD_LIMIT = 2",
+      "src/bcsophyd/zmq/bcs_server.py:31 REVERSE_LIMIT = 4",
+      "src/bcsophyd/zmq/bcs_server.py:37 FORWARD_SW_LIMIT = 256",
+      "src/bcsophyd/zmq/bcs_server.py:38 REVERSE_SW_LIMIT = 512",
+      "src/bcsophyd/zmq/bcs_server.py:41 RAW_FORWARD_LIMIT = 4096",
+      "src/bcsophyd/zmq/bcs_server.py:42 RAW_REVERSE_LIMIT = 8192",
+      "src/bcsophyd/zmq/bcs_server.py:43 RAW_FORWARD_SW_LIMIT = 16384",
+      "src/bcsophyd/zmq/bcs_server.py:44 RAW_REVERSE_SW_LIMIT = 32768"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/als-controls__bcs-ophyd-zmq --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,230 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "sindri.tektronix.bertscope:BERTScope_TCP (sindri/tektronix/bertscope.py:464)",
+      "sindri.agilent.e363xa:E3631A_TCP (sindri/agilent/e363xa.py:693)",
+      "sindri.agilent.n77xx:N77XX_TCP (sindri/agilent/n77xx.py:1210)",
+      "sindri.agilent.n77xx:N77XX_USBVisa (sindri/agilent/n77xx.py:1216)",
+      "sindri.agilent.infiniium.inf90000series:DSOX92504A_TCP (sindri/agilent/infiniium/inf90000series.py:444)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.measure.current.v1",
+    "cap.measure.temperature.v1",
+    "cap.measure.voltage.v1"
+  ],
+  "catalog_refs": [
+    "repo_8ef6e541439f1b71",
+    "https://github.com/sfinucane/sindri"
+  ],
+  "description": "sfinucane/sindri: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 3. Catalog role: device SDK. Declared backend: PyVISA. Language: Python. Catalog keywords: Lantz.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 36 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/sfinucane__sindri/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.sfinucane/sindri",
+  "integration": {
+    "blockers": [
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/sfinucane__sindri: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/sfinucane__sindri --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2014-01-28T17:39:12-08:00",
+  "license": "NOASSERTION",
+  "license_class": "unknown",
+  "license_spdx": "NOASSERTION",
+  "links": {
+    "repo": "https://github.com/sfinucane/sindri"
+  },
+  "local_path": "labs/sfinucane/sindri",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "sfinucane",
+  "package_id": "gh.sfinucane/sindri",
+  "quarantine": false,
+  "rank": 304,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "sindri",
+  "repo_url": "https://github.com/sfinucane/sindri",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "d560635a28a57230f1fa32cea3b9d4df0c8af8e7",
+    "repo_url": "https://github.com/sfinucane/sindri"
+  },
+  "stars": 5,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "sfinucane/sindri",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 38.0,
+      "quality_flags": [
+        "license_unknown"
+      ],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "PyVISA",
+      "category_zh": "设备后端",
+      "description_zh": "基于Lantz的Python仪器与设备驱动库(README基本为空)",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 2464,
+      "rows_all": [
+        2464
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bpyvisa\\b"
+      ],
+      "family_note": "triage family python-object (catalogue family scpi-visa)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/sfinucane__sindri/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.measure.current.v1",
+              "cap.measure.voltage.v1"
+            ],
+            "kind": "instrument.dmm"
+          },
+          {
+            "capabilities": [
+              "cap.measure.temperature.v1"
+            ],
+            "kind": "instrument.thermometer"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": null,
+      "file_spdx": null,
+      "review": true,
+      "source": "none"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "d560635a28a57230f1fa32cea3b9d4df0c8af8e7",
+      "driver_dir": "MHS/drivers/labs/sfinucane__sindri",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:688cb38ff69336ed410fa3d407e4b1806bd4853bd4bb3897d6eca723675f09bb",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 4,
+      "files": 36,
+      "markers": {}
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class sindri.tektronix.bertscope:BERTScope_TCP (sindri/tektronix/bertscope.py:464, score 16)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

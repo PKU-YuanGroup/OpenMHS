@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.edem-ai/robosynchallenge",
+  "track": "robots",
+  "local_path": "robots/edem-ai/robosynchallenge",
+  "driver_dir": "MHS/drivers/robots/edem-ai__robosynchallenge",
+  "upstream": {
+    "repo_url": "https://github.com/edem-ai/robosynchallenge",
+    "commit": "8818c82df5fa2522809b8105e7018950dcc9a9a8",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 905,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "policy/pi0/src/openpi/training/config.py:204 FakeDataConfig",
+      "policy/pi0/src/openpi/training/data_loader.py:99 FakeDataset",
+      "policy/pi05/src/openpi/training/config.py:204 FakeDataConfig",
+      "policy/pi05/src/openpi/training/data_loader.py:99 FakeDataset"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/edem-ai__robosynchallenge --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

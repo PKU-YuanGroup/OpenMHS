@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.lionlai1989/stalkerdronerl",
+  "track": "robots",
+  "local_path": "robots/lionlai1989/stalkerdronerl",
+  "driver_dir": "MHS/drivers/robots/lionlai1989__stalkerdronerl",
+  "upstream": {
+    "repo_url": "https://github.com/lionlai1989/stalkerdronerl",
+    "commit": "e34db1c6a4926d22b447aa1ef93e9bb0bad4793c",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 275,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "sdrl_rl_controller.sdrl_rl_controller.train_sac:QuadcopterTrackingEnv",
+      "file": "src/sdrl_rl_controller/sdrl_rl_controller/train_sac.py",
+      "line": 50,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/sdrl_rl_controller/sdrl_rl_controller/train_sac.py:50 QuadcopterTrackingEnv environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/lionlai1989__stalkerdronerl --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

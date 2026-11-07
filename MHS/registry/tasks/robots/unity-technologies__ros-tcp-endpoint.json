@@ -1,0 +1,74 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.unity-technologies/ros-tcp-endpoint",
+  "track": "robots",
+  "local_path": "robots/unity-technologies/ros-tcp-endpoint",
+  "driver_dir": "MHS/drivers/robots/unity-technologies__ros-tcp-endpoint",
+  "upstream": {
+    "repo_url": "https://github.com/unity-technologies/ros-tcp-endpoint",
+    "commit": "993d366b8900bf9f3d2da444fde64c0379b4dc7c",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:ros",
+  "role": "transport",
+  "family": "ros",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 33,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "ros_tcp_endpoint.server:TcpServer",
+      "file": "src/ros_tcp_endpoint/server.py",
+      "line": 31,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ros_tcp_endpoint.tcp_sender:UnityTcpSender",
+      "file": "src/ros_tcp_endpoint/tcp_sender.py",
+      "line": 35,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "catkin_make"
+    ],
+    "system_deps": [
+      "Catkin workspace with this package in src; run catkin_make from the workspace root"
+    ],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/unity-technologies__ros-tcp-endpoint --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

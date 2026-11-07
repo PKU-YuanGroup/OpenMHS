@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.erwincoumans/tiny-differentiable-simulator",
+  "track": "robots",
+  "local_path": "robots/erwincoumans/tiny-differentiable-simulator",
+  "driver_dir": "MHS/drivers/robots/erwincoumans__tiny-differentiable-simulator",
+  "upstream": {
+    "repo_url": "https://github.com/erwincoumans/tiny-differentiable-simulator",
+    "commit": "8381b8c9ad7f0a959548e4982eb8a63431a842d2",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 56,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "tds_environments.cartpole_tds_env:CartpolePyTinyDiffSim",
+      "file": "python/tds_environments/cartpole_tds_env.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "tds_environments.reacher_tds_env:ReacherPyTinyDiffSim",
+      "file": "python/tds_environments/reacher_tds_env.py",
+      "line": 9,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "data/swimmer/swimmer05/model.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "python/tds_environments/__init__.py:12 gym env CartpolePyTinyDiffSim-v0",
+      "python/tds_environments/__init__.py:19 gym env ReacherPyTinyDiffSim-v0"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env CartpolePyTinyDiffSim-v0 registered at python/tds_environments/__init__.py:12",
+      "gym env ReacherPyTinyDiffSim-v0 registered at python/tds_environments/__init__.py:19"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/erwincoumans__tiny-differentiable-simulator --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

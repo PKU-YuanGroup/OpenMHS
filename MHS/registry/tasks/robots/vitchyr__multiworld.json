@@ -1,0 +1,140 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.vitchyr/multiworld",
+  "track": "robots",
+  "local_path": "robots/vitchyr/multiworld",
+  "driver_dir": "MHS/drivers/robots/vitchyr__multiworld",
+  "upstream": {
+    "repo_url": "https://github.com/vitchyr/multiworld",
+    "commit": "12a05bfa4139f90741608ba409edebb95d7ef9ab",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 358,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "multiworld.envs.gridworlds.goal_gridworld:GoalGridworld",
+      "file": "multiworld/envs/gridworlds/goal_gridworld.py",
+      "line": 22,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "multiworld.envs.mujoco.sawyer_xyz.sawyer_push_nips:SawyerPushAndReachXYEasyEnv",
+      "file": "multiworld/envs/mujoco/sawyer_xyz/sawyer_push_nips.py",
+      "line": 511,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "multiworld.envs.mujoco.sawyer_xyz.sawyer_door_hook:SawyerDoorHookEnv",
+      "file": "multiworld/envs/mujoco/sawyer_xyz/sawyer_door_hook.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "multiworld.envs.mujoco.sawyer_xyz.sawyer_pick_and_place:SawyerPickAndPlaceEnvYZ",
+      "file": "multiworld/envs/mujoco/sawyer_xyz/sawyer_pick_and_place.py",
+      "line": 434,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "multiworld.envs.mujoco.sawyer_xyz.sawyer_reach:SawyerReachXYEnv",
+      "file": "multiworld/envs/mujoco/sawyer_xyz/sawyer_reach.py",
+      "line": 222,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "multiworld/envs/assets/multi_object_sawyer_xyz/sawyer_2_push_puck.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "multiworld/envs/assets/multi_object_sawyer_xyz/sawyer_door.xml",
+      "line": 14,
+      "kind": "scene"
+    },
+    {
+      "file": "multiworld/envs/assets/multi_object_sawyer_xyz/sawyer_door_pull.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "multiworld/envs/assets/multi_object_sawyer_xyz/sawyer_door_pull_30.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "multiworld/envs/assets/multi_object_sawyer_xyz/sawyer_door_pull_60.xml",
+      "line": 2,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "multiworld/envs/gridworlds/__init__.py:2 gym env GoalGridworld-v0",
+      "multiworld/envs/gridworlds/__init__.py:6 gym env GoalGridworld-Concatenated-v0",
+      "multiworld/envs/mujoco/__init__.py:25 gym env SawyerPush-v0",
+      "multiworld/envs/mujoco/__init__.py:44 gym env SawyerDoorOpen-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env GoalGridworld-v0 registered at multiworld/envs/gridworlds/__init__.py:2",
+      "gym env GoalGridworld-Concatenated-v0 registered at multiworld/envs/gridworlds/__init__.py:6",
+      "gym env SawyerPush-v0 registered at multiworld/envs/mujoco/__init__.py:25",
+      "gym env SawyerDoorOpen-v0 registered at multiworld/envs/mujoco/__init__.py:44",
+      "gym env SawyerPickup-v0 registered at multiworld/envs/mujoco/__init__.py:60",
+      "gym env SawyerReachXYEnv-v1 registered at multiworld/envs/mujoco/__init__.py:82",
+      "gym env SawyerReachXYZEnv-v0 registered at multiworld/envs/mujoco/__init__.py:95",
+      "gym env SawyerReachXYZEnv-v1 registered at multiworld/envs/mujoco/__init__.py:108",
+      "gym env SawyerReachTorqueEnv-v0 registered at multiworld/envs/mujoco/__init__.py:121",
+      "gym env Image48SawyerReachXYEnv-v1 registered at multiworld/envs/mujoco/__init__.py:136",
+      "gym env Image84SawyerReachXYEnv-v1 registered at multiworld/envs/mujoco/__init__.py:144",
+      "gym env SawyerPushAndReachEnvEasy-v0 registered at multiworld/envs/mujoco/__init__.py:158"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/vitchyr__multiworld --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

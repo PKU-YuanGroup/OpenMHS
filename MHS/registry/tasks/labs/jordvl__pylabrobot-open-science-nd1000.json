@@ -1,0 +1,110 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jordvl/pylabrobot-open-science-nd1000",
+  "track": "labs",
+  "local_path": "labs/jordvl/pylabrobot-open-science-nd1000",
+  "driver_dir": "MHS/drivers/labs/jordvl__pylabrobot-open-science-nd1000",
+  "upstream": {
+    "repo_url": "https://github.com/jordvl/pylabrobot-open-science-nd1000",
+    "commit": "db60b66494230b65d0c88bca07ce1304a1a974ee",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 344,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "Code.nanodrop:NanoDrop1000",
+      "file": "Code/nanodrop.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Code.ThermoFisherNanoDrop1000_PLR_V1:ThermoFisherNanoDrop1000",
+      "file": "Code/ThermoFisherNanoDrop1000_PLR_V1.py",
+      "line": 220,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Code.ThermoFisherNanoDrop1000_PLR_V1:ThermoFisherNanoDrop1000Driver",
+      "file": "Code/ThermoFisherNanoDrop1000_PLR_V1.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "Code.ThermoFisherNanoDrop1000_PLR_V1:ThermoFisherNanoDrop1000AbsorbanceBackend",
+      "file": "Code/ThermoFisherNanoDrop1000_PLR_V1.py",
+      "line": 84,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "NanoDrop1000.get_raw_spectrum",
+      "NanoDrop1000.measure_absorbance",
+      "ThermoFisherNanoDrop1000.measure_absorbance",
+      "ThermoFisherNanoDrop1000.absorbance_backend.get_raw_spectrum",
+      "ThermoFisherNanoDrop1000.driver.read_comm",
+      "ThermoFisherNanoDrop1000.driver.read_heavy",
+      "ThermoFisherNanoDrop1000Driver.read_comm",
+      "ThermoFisherNanoDrop1000Driver.read_heavy"
+    ],
+    "writes": [
+      "NanoDrop1000.set_integration_time",
+      "NanoDrop1000.set_lamp",
+      "NanoDrop1000.set_magnet",
+      "ThermoFisherNanoDrop1000.absorbance_backend.set_integration_time",
+      "ThermoFisherNanoDrop1000.absorbance_backend.set_lamp",
+      "ThermoFisherNanoDrop1000.absorbance_backend.set_magnet"
+    ],
+    "actions": [
+      "ThermoFisherNanoDrop1000.driver.stop",
+      "ThermoFisherNanoDrop1000Driver.stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.imaging.illumination.v1",
+      "cap.measure.spectrum.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/jordvl__pylabrobot-open-science-nd1000 --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

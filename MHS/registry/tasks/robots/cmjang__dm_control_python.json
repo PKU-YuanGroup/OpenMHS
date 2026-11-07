@@ -1,0 +1,86 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cmjang/dm_control_python",
+  "track": "robots",
+  "local_path": "robots/cmjang/dm_control_python",
+  "driver_dir": "MHS/drivers/robots/cmjang__dm_control_python",
+  "upstream": {
+    "repo_url": "https://github.com/cmjang/dm_control_python",
+    "commit": "7da93877ba844d9587149d6f3a6385453aa8379f",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:flagship-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 29,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "DM_CAN:MotorControl",
+      "file": "DM_CAN.py",
+      "line": 66,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "MotorControl.read_motor_param",
+      "MotorControl.send_data_frame (attribute)"
+    ],
+    "writes": [
+      "MotorControl.set_zero_position"
+    ],
+    "actions": [
+      "MotorControl.controlMIT",
+      "MotorControl.control_Pos_Vel",
+      "MotorControl.control_Vel",
+      "MotorControl.control_pos_force",
+      "MotorControl.disable",
+      "MotorControl.enable",
+      "MotorControl.enable_old"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_velocity.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "DM_CAN.py:579 MAX_SPD = 6"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cmjang__dm_control_python --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

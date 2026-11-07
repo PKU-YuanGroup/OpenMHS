@@ -1,0 +1,74 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.stepjam/rlbench",
+  "track": "robots",
+  "local_path": "robots/stepjam/rlbench",
+  "driver_dir": "MHS/drivers/robots/stepjam__rlbench",
+  "upstream": {
+    "repo_url": "https://github.com/stepjam/rlbench",
+    "commit": "02720bba4c73fe02eb75df946b8791b806028a9d",
+    "license_spdx": "LicenseRef-noncommercial",
+    "license_class": "source-available"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 69,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "rlbench.gym:RLBenchEnv",
+      "file": "rlbench/gym.py",
+      "line": 20,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "rlbench/__init__.py:40 gym env rlbench/{}-{}-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env rlbench/{}-{}-v0 (id template, built at run time) registered at rlbench/__init__.py:40"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/stepjam__rlbench --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

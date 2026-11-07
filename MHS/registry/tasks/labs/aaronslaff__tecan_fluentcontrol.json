@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.aaronslaff/tecan_fluentcontrol",
+  "track": "labs",
+  "local_path": "labs/aaronslaff/tecan_fluentcontrol",
+  "driver_dir": "MHS/drivers/labs/aaronslaff__tecan_fluentcontrol",
+  "upstream": {
+    "repo_url": "https://github.com/aaronslaff/tecan_fluentcontrol",
+    "commit": "5bbff1713f97e75eab6f8b204f293b79a4104a33",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:partner-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 2,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "fluent_control_automation:FluentControlClient",
+      "file": "fluent_control_automation.py",
+      "line": 83,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "FluentControlClient.get_deck_layout",
+      "FluentControlClient.get_instrument_status",
+      "FluentControlClient.get_transfer_status"
+    ],
+    "writes": [],
+    "actions": [
+      "FluentControlClient.cancel_transfer_session",
+      "FluentControlClient.post_transfer_session",
+      "FluentControlClient.start_transfer_session"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/aaronslaff__tecan_fluentcontrol --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

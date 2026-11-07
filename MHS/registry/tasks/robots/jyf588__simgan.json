@@ -1,0 +1,104 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jyf588/simgan",
+  "track": "robots",
+  "local_path": "robots/jyf588/simgan",
+  "driver_dir": "MHS/drivers/robots/jyf588__simgan",
+  "upstream": {
+    "repo_url": "https://github.com/jyf588/simgan",
+    "commit": "23283d7b5629f1653567b2437bb28aac1cc17169",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 125,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "my_pybullet_envs:HopperURDFEnvV3",
+      "file": "my_pybullet_envs/hopper_env_v3.py",
+      "line": 32,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "my_pybullet_envs:HopperCombinedEnv",
+      "file": "my_pybullet_envs/hopper_env_combined_policy.py",
+      "line": 32,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "my_pybullet_envs:LaikagoBulletEnvV4",
+      "file": "my_pybullet_envs/laikago_env_v4.py",
+      "line": 31,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "my_pybullet_envs:LaikagoCombinedEnv",
+      "file": "my_pybullet_envs/laikago_env_combined_policy.py",
+      "line": 32,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "my_pybullet_envs/assets/hopper.mjcf",
+      "line": 17,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "my_pybullet_envs/__init__.py:34 gym env HopperURDFEnv-v3",
+      "my_pybullet_envs/__init__.py:40 gym env HopperCombinedEnv-v1",
+      "my_pybullet_envs/__init__.py:46 gym env LaikagoBulletEnv-v4",
+      "my_pybullet_envs/__init__.py:52 gym env LaikagoCombinedEnv-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env HopperURDFEnv-v3 registered at my_pybullet_envs/__init__.py:34",
+      "gym env HopperCombinedEnv-v1 registered at my_pybullet_envs/__init__.py:40",
+      "gym env LaikagoBulletEnv-v4 registered at my_pybullet_envs/__init__.py:46",
+      "gym env LaikagoCombinedEnv-v1 registered at my_pybullet_envs/__init__.py:52"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jyf588__simgan --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

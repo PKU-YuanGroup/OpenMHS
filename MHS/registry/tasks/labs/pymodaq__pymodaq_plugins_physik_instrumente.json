@@ -1,0 +1,128 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pymodaq/pymodaq_plugins_physik_instrumente",
+  "track": "labs",
+  "local_path": "labs/pymodaq/pymodaq_plugins_physik_instrumente",
+  "driver_dir": "MHS/drivers/labs/pymodaq__pymodaq_plugins_physik_instrumente",
+  "upstream": {
+    "repo_url": "https://github.com/pymodaq/pymodaq_plugins_physik_instrumente",
+    "commit": "6fb8d954c432eac431e87c511a70e82c7b4df5f8",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 19,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pymodaq_plugins_physik_instrumente.hardware.pi_wrapper:PIWrapper",
+      "file": "src/pymodaq_plugins_physik_instrumente/hardware/pi_wrapper.py",
+      "line": 29,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_physik_instrumente.hardware.PI.mmc_wrapper:MMC_Wrapper",
+      "file": "src/pymodaq_plugins_physik_instrumente/hardware/PI/mmc_wrapper.py",
+      "line": 195,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_physik_instrumente.hardware.PI.mmc_wrapper_client64:MMCWrapperClient64",
+      "file": "src/pymodaq_plugins_physik_instrumente/hardware/PI/mmc_wrapper_client64.py",
+      "line": 11,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_physik_instrumente.daq_move_plugins.daq_move_PILegacy:DAQ_Move_PILegacy",
+      "file": "src/pymodaq_plugins_physik_instrumente/daq_move_plugins/daq_move_PILegacy.py",
+      "line": 25,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_physik_instrumente.daq_move_plugins.daq_move_PI_E870:DAQ_Move_PI_E870",
+      "file": "src/pymodaq_plugins_physik_instrumente/daq_move_plugins/daq_move_PI_E870.py",
+      "line": 8,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "PIWrapper.get_axis_limits",
+      "PIWrapper.get_axis_position",
+      "PIWrapper.get_axis_units",
+      "PIWrapper.get_servo",
+      "PIWrapper.get_servo_cycle_duration",
+      "PIWrapper.identify",
+      "PIWrapper.is_daisy",
+      "PIWrapper.is_daisy_master",
+      "PIWrapper.is_referenced",
+      "MMC_Wrapper.getPos",
+      "MMC_Wrapper.VISA_rm (attribute)",
+      "MMC_Wrapper.ress (attribute)"
+    ],
+    "writes": [
+      "PIWrapper.set_1D_waveform",
+      "PIWrapper.set_referencing",
+      "PIWrapper.set_servo",
+      "PIWrapper.set_trigger_waveform"
+    ],
+    "actions": [
+      "PIWrapper.move_absolute",
+      "PIWrapper.move_home",
+      "PIWrapper.move_relative",
+      "PIWrapper.start_waveform",
+      "PIWrapper.stop",
+      "PIWrapper.stop_waveform",
+      "MMC_Wrapper.MDC_waitStop",
+      "MMC_Wrapper.MMC_moveA",
+      "MMC_Wrapper.MMC_moveR",
+      "MMC_Wrapper.MST_waitStop",
+      "MMC_Wrapper.find_home",
+      "MMC_Wrapper.moveAbs"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymodaq__pymodaq_plugins_physik_instrumente --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,182 @@
+{
+  "adapter": {
+    "bridge": "scpi",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_e9323d152990a257",
+    "https://github.com/exopy/pyvisa-i3py-sim"
+  ],
+  "description": "exopy/pyvisa-i3py-sim: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: direct simulation backend. Declared backend: PyVISA. Language: Python. Catalog keywords: PyVISA, i3py.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 19 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "scpi-visa"
+  ],
+  "hardware_free": false,
+  "id": "gh.exopy/pyvisa-i3py-sim",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this transport backs the scpi helper; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/scpi-visa.md",
+    "role": "transport",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "SCPI/VISA"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2016-11-01T21:18:36+01:00",
+  "license": "BSD-3-Clause",
+  "license_class": "permissive",
+  "license_spdx": "BSD-3-Clause",
+  "links": {
+    "repo": "https://github.com/exopy/pyvisa-i3py-sim"
+  },
+  "local_path": "labs/exopy/pyvisa-i3py-sim",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "exopy",
+  "package_id": "gh.exopy/pyvisa-i3py-sim",
+  "quarantine": false,
+  "rank": 94,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pyvisa-i3py-sim",
+  "repo_url": "https://github.com/exopy/pyvisa-i3py-sim",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "7eb8b498b045f11eb0dae4475cbcb5c664fe1c4a",
+    "repo_url": "https://github.com/exopy/pyvisa-i3py-sim"
+  },
+  "stars": 0,
+  "tags": [
+    "scpi-visa",
+    "lab instrumentation",
+    "device backend",
+    "direct simulation backend",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "A",
+  "title": "exopy/pyvisa-i3py-sim",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 48.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "直接模拟后端",
+      "archived": "false",
+      "backend_family_raw": "PyVISA",
+      "category_zh": "设备后端",
+      "description_zh": "PyVISA与i3py的仿真后端，README仅标注进行中",
+      "join": "exact",
+      "license_raw": "BSD-3-Clause",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 754,
+      "rows_all": [
+        754
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "A",
+      "family_matches": [
+        "\\bpyvisa\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "A1-direct-backend-entry"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/exopy__pyvisa-i3py-sim/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "BSD-3-Clause",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "BSD-3-Clause",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 3,
+      "files": 19,
+      "markers": {
+        "scpi_visa": 8
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): A simulated pyvisa/i3py VISA backend, not a device: this WIP skeleton cannot import because highlevel.py and resources/sessions.py are missing and i3py is undeclared, so no driver can target it.",
+        "rules alone: untriaged (untriaged:no_entry_class, rule 11)"
+      ],
+      "family": "scpi",
+      "helper": null,
+      "justification": "A simulated pyvisa/i3py VISA backend, not a device: this WIP skeleton cannot import because highlevel.py and resources/sessions.py are missing and i3py is undeclared, so no driver can target it.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

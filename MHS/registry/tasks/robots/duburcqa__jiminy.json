@@ -1,0 +1,112 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.duburcqa/jiminy",
+  "track": "robots",
+  "local_path": "robots/duburcqa/jiminy",
+  "driver_dir": "MHS/drivers/robots/duburcqa__jiminy",
+  "upstream": {
+    "repo_url": "https://github.com/duburcqa/jiminy",
+    "commit": "accdf3629d9d8c08bb97f2905f010f1616d2168a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 251,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_jiminy.envs:CartPoleJiminyEnv",
+      "file": "python/gym_jiminy/envs/gym_jiminy/envs/cartpole.py",
+      "line": 38,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_jiminy.envs:AcrobotJiminyEnv",
+      "file": "python/gym_jiminy/envs/gym_jiminy/envs/acrobot.py",
+      "line": 32,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_jiminy.envs:AntJiminyEnv",
+      "file": "python/gym_jiminy/envs/gym_jiminy/envs/ant.py",
+      "line": 30,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_jiminy.envs:CassieJiminyEnv",
+      "file": "python/gym_jiminy/envs/gym_jiminy/envs/cassie.py",
+      "line": 67,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_jiminy.envs:DigitJiminyEnv",
+      "file": "python/gym_jiminy/envs/gym_jiminy/envs/digit.py",
+      "line": 85,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:31 gym env cartpole",
+      "python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:39 gym env acrobot",
+      "python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:47 gym env ant",
+      "python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:55 gym env cassie"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env cartpole registered at python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:31",
+      "gym env acrobot registered at python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:39",
+      "gym env ant registered at python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:47",
+      "gym env cassie registered at python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:55",
+      "gym env cassie-pid registered at python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:61",
+      "gym env digit registered at python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:67",
+      "gym env digit-pid registered at python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:73",
+      "gym env anymal registered at python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:79",
+      "gym env anymal-pid registered at python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:85",
+      "gym env atlas registered at python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:91",
+      "gym env atlas-reduced registered at python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:97",
+      "gym env atlas-pid registered at python/gym_jiminy/envs/gym_jiminy/envs/__init__.py:103"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/duburcqa__jiminy --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

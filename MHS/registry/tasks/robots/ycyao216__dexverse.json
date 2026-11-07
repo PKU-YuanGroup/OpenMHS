@@ -1,0 +1,77 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ycyao216/dexverse",
+  "track": "robots",
+  "local_path": "robots/ycyao216/dexverse",
+  "driver_dir": "MHS/drivers/robots/ycyao216__dexverse",
+  "upstream": {
+    "repo_url": "https://github.com/ycyao216/dexverse",
+    "commit": "30cc673e27684b9f10186fa6bea731aed246bc9f",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 104,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "dexverse.tasks.config.functional.grasp_kettle_cfg:GraspKettleEnvFloatingDexHandRightCfg",
+      "file": "source/dexverse/dexverse/tasks/config/functional/grasp_kettle_cfg.py",
+      "line": 65,
+      "confidence": "override"
+    },
+    {
+      "symbol": "dexverse.tasks.config.articulation.articulation_base.articulation_base_cfg:ArticulationBaseEnvFloatingDexHandRightCfg",
+      "file": "source/dexverse/dexverse/tasks/config/articulation/articulation_base/articulation_base_cfg.py",
+      "line": 500,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ycyao216__dexverse --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,112 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cognitiveaisystems/mikasa-robo",
+  "track": "robots",
+  "local_path": "robots/cognitiveaisystems/mikasa-robo",
+  "driver_dir": "MHS/drivers/robots/cognitiveaisystems__mikasa-robo",
+  "upstream": {
+    "repo_url": "https://github.com/cognitiveaisystems/mikasa-robo",
+    "commit": "509b875f3d207c287497c0a897661062de928bb0",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 84,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "mikasa_robo_suite.rl.memory_envs.bunch_of_colors:BunchOfColors3Env",
+      "file": "mikasa_robo_suite/rl/memory_envs/bunch_of_colors.py",
+      "line": 382,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "mikasa_robo_suite.rl.memory_envs.bunch_of_colors:BunchOfColors5Env",
+      "file": "mikasa_robo_suite/rl/memory_envs/bunch_of_colors.py",
+      "line": 387,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "mikasa_robo_suite.rl.memory_envs.bunch_of_colors:BunchOfColors7Env",
+      "file": "mikasa_robo_suite/rl/memory_envs/bunch_of_colors.py",
+      "line": 392,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "mikasa_robo_suite.rl.memory_envs.chain_of_colors:ChainOfColors3Env",
+      "file": "mikasa_robo_suite/rl/memory_envs/chain_of_colors.py",
+      "line": 394,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "mikasa_robo_suite.rl.memory_envs.chain_of_colors:ChainOfColors5Env",
+      "file": "mikasa_robo_suite/rl/memory_envs/chain_of_colors.py",
+      "line": 399,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9,<3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "mikasa_robo_suite/rl/memory_envs/bunch_of_colors.py:382 gym env BunchOfColors3-v0",
+      "mikasa_robo_suite/rl/memory_envs/bunch_of_colors.py:387 gym env BunchOfColors5-v0",
+      "mikasa_robo_suite/rl/memory_envs/bunch_of_colors.py:392 gym env BunchOfColors7-v0",
+      "mikasa_robo_suite/rl/memory_envs/chain_of_colors.py:394 gym env ChainOfColors3-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env BunchOfColors3-v0 registered at mikasa_robo_suite/rl/memory_envs/bunch_of_colors.py:382",
+      "gym env BunchOfColors5-v0 registered at mikasa_robo_suite/rl/memory_envs/bunch_of_colors.py:387",
+      "gym env BunchOfColors7-v0 registered at mikasa_robo_suite/rl/memory_envs/bunch_of_colors.py:392",
+      "gym env ChainOfColors3-v0 registered at mikasa_robo_suite/rl/memory_envs/chain_of_colors.py:394",
+      "gym env ChainOfColors5-v0 registered at mikasa_robo_suite/rl/memory_envs/chain_of_colors.py:399",
+      "gym env ChainOfColors7-v0 registered at mikasa_robo_suite/rl/memory_envs/chain_of_colors.py:404",
+      "gym env InterceptSlow-v0 registered at mikasa_robo_suite/rl/memory_envs/intercept.py:216",
+      "gym env InterceptMedium-v0 registered at mikasa_robo_suite/rl/memory_envs/intercept.py:221",
+      "gym env InterceptFast-v0 registered at mikasa_robo_suite/rl/memory_envs/intercept.py:226",
+      "gym env InterceptGrabSlow-v0 registered at mikasa_robo_suite/rl/memory_envs/intercept_grab.py:238",
+      "gym env InterceptGrabMedium-v0 registered at mikasa_robo_suite/rl/memory_envs/intercept_grab.py:243",
+      "gym env InterceptGrabFast-v0 registered at mikasa_robo_suite/rl/memory_envs/intercept_grab.py:248"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cognitiveaisystems__mikasa-robo --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

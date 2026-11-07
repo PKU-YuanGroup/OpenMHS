@@ -1,0 +1,253 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "qcdrivers.squad.mux.mux:Muxi (src/qcdrivers/squad/mux/mux.py:29)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.measure.voltage.v1"
+  ],
+  "catalog_refs": [
+    "repo_ed4adeacf1f8d464",
+    "https://github.com/squad-lab/qcdrivers"
+  ],
+  "description": "squad-lab/qcdrivers: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 3. Catalog role: device SDK. Declared backend: QCoDeS. Language: Jupyter Notebook. Catalog keywords: SQUAD, Lab, QCoDeS.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 44 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/squad-lab__qcdrivers/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.squad-lab/qcdrivers",
+  "integration": {
+    "blockers": [
+      "LICENSE_REVIEW: network-copyleft; the user decides before a driver is published"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/squad-lab__qcdrivers: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/squad-lab__qcdrivers --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "HTTP/REST",
+    "QCoDeS",
+    "SCPI/VISA"
+  ],
+  "languages": [
+    "Jupyter Notebook",
+    "Python"
+  ],
+  "last_commit_at": "2026-09-26T19:03:13+00:00",
+  "license": "AGPL-3.0",
+  "license_class": "network-copyleft",
+  "license_spdx": "AGPL-3.0",
+  "links": {
+    "repo": "https://github.com/squad-lab/qcdrivers"
+  },
+  "local_path": "labs/squad-lab/qcdrivers",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "squad-lab",
+  "package_id": "gh.squad-lab/qcdrivers",
+  "quarantine": false,
+  "rank": 52,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "qcdrivers",
+  "repo_url": "https://github.com/squad-lab/qcdrivers",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "6704e1c1794eff30811b8db62593673b2e39b6b4",
+    "repo_url": "https://github.com/squad-lab/qcdrivers"
+  },
+  "stars": 0,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "squad-lab/qcdrivers",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-qcodes-ophyd",
+      "family_confidence": 0.89,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 48.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "QCoDeS",
+      "category_zh": "设备后端",
+      "description_zh": "SQUAD Lab的QCoDeS驱动合集(含未收录与专有驱动)",
+      "join": "exact",
+      "license_raw": "AGPL-3.0",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 2554,
+      "rows_all": [
+        2554
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "qcodes",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bqcodes\\b"
+      ],
+      "family_note": "triage family python-object (catalogue family qcodes)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/squad-lab__qcdrivers/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.measure.voltage.v1"
+            ],
+            "kind": "instrument.dmm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/squad-lab__qcdrivers/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/squad-lab__qcdrivers/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.measure.voltage.v1"
+            ],
+            "kind": "instrument.dmm"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "AGPL-3.0",
+      "declared_spdx": "AGPL-3.0-or-later",
+      "file": "LICENSE",
+      "file_spdx": "AGPL-3.0",
+      "review": true,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "6704e1c1794eff30811b8db62593673b2e39b6b4",
+      "driver_dir": "MHS/drivers/labs/squad-lab__qcdrivers",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:8d2080129ff09ec438d5e2e3feb09574afccb9df6cc1a2ca4ba0c830e19f8b87",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 6,
+      "files": 44,
+      "markers": {
+        "http": 1,
+        "qcodes": 11,
+        "scpi_visa": 13,
+        "thermal": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (helper-wave-1-routing.json): Model review of helper wave 1: of the card's entries only Muxi has a firmware-backed stop (*RST clears and flushes all routes); a direct Driver must report the route it sent, since the firmware reply does not identify it.",
+        "rules alone: family-config (family:qcodes, rule 9)"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class qcdrivers.qdevil.qdac2.qdac2:QDac2 uses the hardware transport pyvisa",
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of helper wave 1: of the card's entries only Muxi has a firmware-backed stop (*RST clears and flushes all routes); a direct Driver must report the route it sent, since the firmware reply does not identify it.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

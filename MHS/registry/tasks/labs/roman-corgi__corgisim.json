@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.roman-corgi/corgisim",
+  "track": "labs",
+  "local_path": "labs/roman-corgi/corgisim",
+  "driver_dir": "MHS/drivers/labs/roman-corgi__corgisim",
+  "upstream": {
+    "repo_url": "https://github.com/roman-corgi/corgisim",
+    "commit": "f7f43eacb4dc89e8ca306237e4d1b11eb6e08fdc",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1694,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "corgisim/scene.py:556 SimulatedImage",
+      "corgisim/prf_simulation.py:1"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/roman-corgi__corgisim --backend fake",
+  "skip_reason": "override (labs.json): Corgisim simulates Roman Coronagraph optics and detector images in software and drives no hardware, so it is a skip.",
+  "publish_review": "required"
+}

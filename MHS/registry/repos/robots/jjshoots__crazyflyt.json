@@ -1,0 +1,231 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "CrazyFlyt.drone_controller:DroneController (CrazyFlyt/drone_controller.py:16)",
+      "CrazyFlyt.swarm_controller:SwarmController (CrazyFlyt/swarm_controller.py:11)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.device.configure.v1"
+  ],
+  "catalog_refs": [
+    "repo_9cf3f3af2895af7b",
+    "https://github.com/jjshoots/crazyflyt"
+  ],
+  "description": "jjshoots/crazyflyt: complete environment for UAVs (robotics track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Declared backend: PyBullet. Language: Python. Catalog keywords: PyFlyt, Crazyflie.",
+  "domains": [
+    "UAVs"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 25 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/robots/jjshoots__crazyflyt/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": true,
+  "id": "gh.jjshoots/crazyflyt",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/robots/jjshoots__crazyflyt: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/jjshoots__crazyflyt --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "PyBullet",
+    "CLI"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2023-08-29T19:11:58+01:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/jjshoots/crazyflyt"
+  },
+  "local_path": "robots/jjshoots/crazyflyt",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "jjshoots",
+  "package_id": "gh.jjshoots/crazyflyt",
+  "quarantine": false,
+  "rank": 45,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "crazyflyt",
+  "repo_url": "https://github.com/jjshoots/crazyflyt",
+  "ring": 1,
+  "simulation": true,
+  "source": {
+    "commit": "85d99afa21cb5b90fd130cd480f0589a2b700b58",
+    "repo_url": "https://github.com/jjshoots/crazyflyt"
+  },
+  "stars": 22,
+  "tags": [
+    "python-object",
+    "robotics",
+    "complete environment",
+    "device sdk",
+    "simulated",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "jjshoots/crazyflyt",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "pybullet",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 52.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "PyBullet",
+      "category_zh": "完整环境",
+      "description_zh": "通过PyFlyt仿真或真机飞行Crazyflie 2.x的库",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "参考",
+      "row": 1219,
+      "rows_all": [
+        1219
+      ],
+      "scope": "peripheral",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "pybullet",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bpybullet"
+      ],
+      "family_note": "triage family python-object (catalogue family pybullet)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/jjshoots__crazyflyt/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.device.configure.v1"
+            ],
+            "kind": "device"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/jjshoots__crazyflyt/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/jjshoots__crazyflyt/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.device.configure.v1"
+            ],
+            "kind": "device"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE.txt",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "85d99afa21cb5b90fd130cd480f0589a2b700b58",
+      "driver_dir": "MHS/drivers/robots/jjshoots__crazyflyt",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:ebb4c32dde651a4ac64e5544effff2cc8185132c30d894d957dec0801112f31a",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 2,
+      "files": 25,
+      "markers": {
+        "microscopy": 1,
+        "pybullet": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class CrazyFlyt.drone_controller:DroneController (CrazyFlyt/drone_controller.py:16, score 11)",
+        "device evidence: catalogue role 'device SDK'; class CrazyFlyt.drone_controller:DroneController uses the hardware transport cflib"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class CrazyFlyt.drone_controller:DroneController uses the hardware transport cflib",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nsls-ii-ari/ari_sxn_common",
+  "track": "labs",
+  "local_path": "labs/nsls-ii-ari/ari_sxn_common",
+  "driver_dir": "MHS/drivers/labs/nsls-ii-ari__ari_sxn_common",
+  "upstream": {
+    "repo_url": "https://github.com/nsls-ii-ari/ari_sxn_common",
+    "commit": "13892fc39dd2605a8641d76649e7b13c434d9183",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 38,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "ari_sxn_common.ari_ophyd:M1",
+      "file": "src/ari_sxn_common/ari_ophyd.py",
+      "line": 38,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "M1.Ry_coarse (attribute)",
+      "M1.Ry_fine (attribute)",
+      "M1.Rz (attribute)",
+      "M1.diag (attribute)",
+      "M1.locations (attribute)",
+      "M1.slits (attribute)",
+      "M1.vacuum (attribute)",
+      "M1.x (attribute)",
+      "M1.y (attribute)",
+      "BaffleSlit.bottom (attribute)",
+      "BaffleSlit.currents (attribute)",
+      "BaffleSlit.inboard (attribute)"
+    ],
+    "writes": [],
+    "actions": [
+      "M1.trigger",
+      "BaffleSlit.trigger",
+      "Diagnostic.trigger"
+    ],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "capabilities"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/nsls-ii-ari__ari_sxn_common --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

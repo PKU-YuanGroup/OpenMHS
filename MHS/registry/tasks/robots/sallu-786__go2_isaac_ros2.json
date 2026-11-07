@@ -1,0 +1,78 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sallu-786/go2_isaac_ros2",
+  "track": "robots",
+  "local_path": "robots/sallu-786/go2_isaac_ros2",
+  "driver_dir": "MHS/drivers/robots/sallu-786__go2_isaac_ros2",
+  "upstream": {
+    "repo_url": "https://github.com/sallu-786/go2_isaac_ros2",
+    "commit": "839097f1be8931086671c8cafb670aee97144221",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 113,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "quadruped.go2.go2_env:Go2RSLEnvCfg",
+      "file": "quadruped/go2/go2_env.py",
+      "line": 139,
+      "confidence": "override"
+    },
+    {
+      "symbol": "quadruped.spot.spot_env:SpotRSLEnvCfg",
+      "file": "quadruped/spot/spot_env.py",
+      "line": 139,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/sallu-786__go2_isaac_ros2 --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,0 +1,187 @@
+{
+  "adapter": {
+    "bridge": "ros",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "ros",
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_f2b25c9d0ca368ab",
+    "https://github.com/iblnkn/rosetta"
+  ],
+  "description": "iblnkn/rosetta: protocol implementation/bridge for general (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: protocol bridge. Declared backend: ROS 2; LeRobot. Language: Python. Catalog keywords: LeRobot, YAML.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 6,
+    "notes": "bounded static scan: 143 files enumerated (max depth 3), 6 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "ros2"
+  ],
+  "hardware_free": false,
+  "id": "gh.iblnkn/rosetta",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs the ros helper; it is not a per-repo driver task.",
+    "reason_code": "override:recon",
+    "recipe": "families/ros2.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "ROS 2",
+    "Python SDK",
+    "CLI",
+    "LeRobot"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-09-22T16:00:23-04:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/iblnkn/rosetta"
+  },
+  "local_path": "robots/iblnkn/rosetta",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "iblnkn",
+  "package_id": "gh.iblnkn/rosetta",
+  "quarantine": false,
+  "rank": 96,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "rosetta",
+  "repo_url": "https://github.com/iblnkn/rosetta",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "294136dc435a040d608d9efd773d70ae0b421d00",
+    "repo_url": "https://github.com/iblnkn/rosetta"
+  },
+  "stars": 0,
+  "tags": [
+    "ros2",
+    "robotics",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "iblnkn/rosetta",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "ros2",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 38.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.66
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "unknown",
+      "backend_family_raw": "ROS 2; LeRobot",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "ROS 2与LeRobot间的桥接,用YAML契约映射话题与策略帧",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "参考",
+      "row": 1066,
+      "rows_all": [
+        1066
+      ],
+      "scope": "peripheral",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "ros2",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bros ?2\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/iblnkn__rosetta/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": "Apache-2.0",
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "ros",
+        "python"
+      ],
+      "entry_evidence_count": 7,
+      "files": 143,
+      "markers": {
+        "cli": 1,
+        "lerobot": 15,
+        "ros2": 21
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): Rosetta is a ROS 2-to-LeRobot bridge framework, not a device driver: it converts arbitrary robot topics into frames and back.",
+        "rules alone: untriaged (untriaged:no_entry_class, rule 11)"
+      ],
+      "family": "ros",
+      "helper": null,
+      "justification": "Rosetta is a ROS 2-to-LeRobot bridge framework, not a device driver: it converts arbitrary robot topics into frames and back.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

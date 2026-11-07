@@ -1,0 +1,180 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "docker",
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_9498f8c85d55d60d",
+    "https://github.com/mergeos-bounties/ros2-mcp"
+  ],
+  "description": "mergeos-bounties/ros2-mcp: protocol implementation/bridge for general (robotics track). OpenMHS plan: reference only (host). Declared backend: ROS 2; MCP. Language: Python. Catalog keywords: AI, ROS2, TF, MCP, mock.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 135 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "mcp-proxy"
+  ],
+  "hardware_free": false,
+  "id": "gh.mergeos-bounties/ros2-mcp",
+  "integration": {
+    "blockers": [
+      "REFERENCE_ONLY: role host"
+    ],
+    "effort": "EX",
+    "next_action": "Reference only: a host, orchestrator or MCP wrapper of a covered backend; integrate the backend instead.",
+    "reason_code": "override:recon",
+    "role": "host",
+    "scenario_required": false,
+    "strategy": "reference"
+  },
+  "interfaces": [
+    "MCP",
+    "CLI",
+    "HTTP/REST",
+    "Docker",
+    "ROS 2"
+  ],
+  "languages": [
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2026-07-22T14:13:19+07:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/mergeos-bounties/ros2-mcp"
+  },
+  "local_path": "robots/mergeos-bounties/ros2-mcp",
+  "modes": [],
+  "owner": "mergeos-bounties",
+  "package_id": "gh.mergeos-bounties/ros2-mcp",
+  "quarantine": false,
+  "rank": 560,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "ros2-mcp",
+  "repo_url": "https://github.com/mergeos-bounties/ros2-mcp",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "a4bb529d793d3c5d895286cb7bf8e731fcc9cfa9",
+    "repo_url": "https://github.com/mergeos-bounties/ros2-mcp"
+  },
+  "stars": 11,
+  "tags": [
+    "mcp-proxy",
+    "robotics",
+    "simulated",
+    "reference"
+  ],
+  "tier": "D",
+  "title": "mergeos-bounties/ros2-mcp",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "mcp-server",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 79.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "false",
+      "backend_family_raw": "ROS 2; MCP",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "面向AI代理检查与控制ROS2话题/节点/服务/TF/动作的MCP服务，含离线mock",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P1",
+      "row": 1600,
+      "rows_all": [
+        1600
+      ],
+      "scope": "core",
+      "track_raw": "shared_infrastructure",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "mcp-proxy",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bmcp\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_note": "tier B -> D: triage reference (override:recon)",
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "docker",
+        "python"
+      ],
+      "entry_evidence_count": 7,
+      "files": 135,
+      "markers": {
+        "cli": 11,
+        "docker": 9,
+        "http": 1,
+        "mcp": 118,
+        "ros2": 79
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): ros2-mcp is an MCP server that wraps the ROS2 graph, not a device driver; a driver author should use ROS2 topics/services directly, since LiveBackend only shells out to the ros2 CLI.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "ros2-mcp is an MCP server that wraps the ROS2 graph, not a device driver; a driver author should use ROS2 topics/services directly, since LiveBackend only shells out to the ros2 CLI.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

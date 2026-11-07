@@ -1,0 +1,225 @@
+{
+  "adapter": {
+    "bridge": "serial",
+    "entry_points": [
+      "motorized_pol_v2:A8MRU (motorized_pol_v2.py:23)",
+      "pyAndor_P35_a:ccd (pyAndor_P35_a.py:14)",
+      "Lib64.asdk37:DM (Lib64/asdk37.py:95)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.motion.joint_position.v1",
+    "cap.measure.temperature.v1",
+    "cap.motion.stop.v1"
+  ],
+  "catalog_refs": [
+    "repo_6bd825b8d8a6b8fb",
+    "https://github.com/knerlab/sim_control_software"
+  ],
+  "description": "knerlab/sim_control_software: device backend for microscopy imaging (lab instrumentation track). OpenMHS plan: direct-driver with SerialDriver, wave 3. Catalog role: device SDK. Language: Python.",
+  "domains": [
+    "microscopy imaging"
+  ],
+  "evidence": {
+    "files_read": 2,
+    "notes": "bounded static scan: 38 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/knerlab__sim_control_software/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "serial"
+  ],
+  "hardware_free": false,
+  "id": "gh.knerlab/sim_control_software",
+  "integration": {
+    "blockers": [
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/knerlab__sim_control_software: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/knerlab__sim_control_software --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/serial.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Serial"
+  ],
+  "languages": [
+    "Python",
+    "C"
+  ],
+  "last_commit_at": "2021-04-14T22:02:14-04:00",
+  "license": "GPL-3.0",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-3.0",
+  "links": {
+    "repo": "https://github.com/knerlab/sim_control_software"
+  },
+  "local_path": "labs/knerlab/sim_control_software",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "knerlab",
+  "package_id": "gh.knerlab/sim_control_software",
+  "quarantine": false,
+  "rank": 68,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "sim_control_software",
+  "repo_url": "https://github.com/knerlab/sim_control_software",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "4abc7e9ddafa89bc0ab0fc8f6e25321fe676d95c",
+    "repo_url": "https://github.com/knerlab/sim_control_software"
+  },
+  "stars": 7,
+  "tags": [
+    "serial",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "knerlab/sim_control_software",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 35.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "设备后端",
+      "description_zh": "结构光照明显微镜(含自适应光学)的Python控制程序",
+      "join": "exact",
+      "license_raw": "GPL-3.0",
+      "mhs_support_raw": "unknown",
+      "priority": "参考",
+      "row": 1333,
+      "rows_all": [
+        1333
+      ],
+      "scope": "peripheral",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "serial",
+      "catalog_tier": "B",
+      "family_matches": [
+        "analyst-profile:lab-serial"
+      ],
+      "family_rule": "analyst-profile",
+      "family_score": 91,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/knerlab__sim_control_software/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.motion.stop.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.measure.temperature.v1"
+            ],
+            "kind": "instrument.thermometer"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-3.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "GPL-3.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "4abc7e9ddafa89bc0ab0fc8f6e25321fe676d95c",
+      "driver_dir": "MHS/drivers/labs/knerlab__sim_control_software",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:c1d305c7074c189873270fcaf4685986af359f041fda6fabf5abb433bf82df9f",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 0,
+      "files": 38,
+      "markers": {}
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of wave B: a direct Driver, not a SerialDriver: the A8MRU motor opens no serial port; it calls USMC_Init, USMC_Start and USMC_Stop of USMCDLL.dll through ctypes.",
+        "rules alone: family-config (family:serial, rule 9)"
+      ],
+      "family": "serial",
+      "helper": "SerialDriver",
+      "justification": "Model review of wave B: a direct Driver, not a SerialDriver: the A8MRU motor opens no serial port; it calls USMC_Init, USMC_Start and USMC_Stop of USMCDLL.dll through ctypes.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

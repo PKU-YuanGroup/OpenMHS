@@ -1,0 +1,38 @@
+{
+  "$schema": "../schema/overrides.schema.json",
+  "overrides_version": "0.9",
+  "title": "Re-authored routes of phase 3 (Claude continuation, 2026-11-05)",
+  "description": "Routing of two blocked cards that the user's decision of 2026-11-05 (Claude authors, Claude Sonnet reviews) sends to a Claude re-author (claude-opus-5-5, a model and not a human): gh.sciencecorp/galago-tools re-selects the pack's OT-2 tool, whose run has a stop with a status read-back, instead of the SpectraMax plate reader, which has no abort; gh.moler-group/scanning-squid leaves the recon route for the repository's primary device, the scanning SQUID microscope, under the class its documentation names. Each entry replaces the repository's earlier entry (labs.json, helper-wave-1-routing.json; originals kept in the batch). Nothing here changes source pins, package status, signatures or publication.",
+  "overrides": [
+    {
+      "package_id": "gh.moler-group/scanning-squid",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "microscope.susceptometer:SusceptometerMicroscope",
+          "file": "scanning-squid/microscope/susceptometer.py",
+          "line": 51
+        }
+      ],
+      "justification": "Re-author (claude-opus-5-5): the primary device is the scanning SQUID microscope (microscope.rst:4, SusceptometerMicroscope); a direct Driver serves its Attocube stepping with the stop-and-ground stop (atto.py:143-152)."
+    },
+    {
+      "package_id": "gh.sciencecorp/galago-tools",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "tools.opentrons2.driver:Ot2Driver",
+          "file": "tools/opentrons2/driver.py",
+          "line": 10
+        }
+      ],
+      "justification": "Re-author (claude-opus-5-5): the SpectraMax has no abort; the pack's OT-2 tool stops a run (driver.py:167-197) and reads its status (199-214); a direct Driver at R2 with a bounded transport."
+    }
+  ]
+}

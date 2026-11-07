@@ -1,0 +1,125 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.autolab-project/autolab-drivers",
+  "track": "labs",
+  "local_path": "labs/autolab-project/autolab-drivers",
+  "driver_dir": "MHS/drivers/labs/autolab-project__autolab-drivers",
+  "upstream": {
+    "repo_url": "https://github.com/autolab-project/autolab-drivers",
+    "commit": "4b44dfba7444d1e8e8b5fd895fa304fa550ce882",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 14,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "anritsu_MS2830A.anritsu_MS2830A:Driver_VISA",
+      "file": "anritsu_MS2830A/anritsu_MS2830A.py",
+      "line": 138,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "yenista_CT400.yenista_CT400:Laser",
+      "file": "yenista_CT400/yenista_CT400.py",
+      "line": 408,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "agilent_N5277A.agilent_N5277A:Driver_VISA",
+      "file": "agilent_N5277A/agilent_N5277A.py",
+      "line": 122,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "anritsu_MS9740A.anritsu_MS9740A:Driver_VISA",
+      "file": "anritsu_MS9740A/anritsu_MS9740A.py",
+      "line": 420,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "srs_SR830.srs_SR830:Driver_VISA",
+      "file": "srs_SR830/srs_SR830.py",
+      "line": 340,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "dummy/dummy.py:1",
+      "dummy/dummy_utilities.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Driver_VISA.get_driver_model",
+      "Driver_VISA.get_id",
+      "Driver_VISA.get_power_marker",
+      "Driver_VISA.get_power_marker_1",
+      "Driver_VISA.get_power_marker_2",
+      "Driver_VISA.get_power_marker_3",
+      "Driver_VISA.get_timeout",
+      "Driver_VISA.get_waveform",
+      "Driver_VISA.frequency.get_frequency_center",
+      "Driver_VISA.frequency.get_frequency_span",
+      "Driver_VISA.frequency.get_frequency_start",
+      "Driver_VISA.frequency.get_frequency_step"
+    ],
+    "writes": [
+      "Driver_VISA.set_timeout",
+      "Driver_VISA.frequency.set_frequency_center",
+      "Driver_VISA.frequency.set_frequency_span",
+      "Driver_VISA.frequency.set_frequency_start",
+      "Driver_VISA.frequency.set_frequency_step",
+      "Driver_VISA.frequency.set_frequency_stop",
+      "Driver_VISA.frequency.set_points",
+      "Laser.set_GPIBAdress",
+      "Laser.set_GPIBID",
+      "Laser.set_connected",
+      "Laser.set_high_wavelength",
+      "Laser.set_low_wavelength"
+    ],
+    "actions": [
+      "Driver_VISA.abort"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/autolab-project__autolab-drivers --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

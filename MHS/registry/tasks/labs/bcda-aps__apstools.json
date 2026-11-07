@@ -1,0 +1,92 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.bcda-aps/apstools",
+  "track": "labs",
+  "local_path": "labs/bcda-aps/apstools",
+  "driver_dir": "MHS/drivers/labs/bcda-aps__apstools",
+  "upstream": {
+    "repo_url": "https://github.com/bcda-aps/apstools",
+    "commit": "6250dbaa2f0413611fab56d6956c523d9fe2d293",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:ophyd",
+  "role": "device-driver",
+  "family": "ophyd",
+  "helper": "OphydDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 22,
+  "exemplar": "MHS/drivers/labs/bcda-aps__apstools",
+  "entry_symbols": [
+    {
+      "symbol": "apstools.devices.aps_machine:ApsMachineParametersDevice",
+      "file": "apstools/devices/aps_machine.py",
+      "line": 38,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "apstools/devices/area_detector_support.py:831 SimDetectorCam_V34",
+      "apstools/devices/shutters.py:677 SimulatedApsPssShutterWithStatus",
+      "apstools/devices/simulated_controllers.py:19 SimulatedSwaitControllerPositioner",
+      "apstools/devices/simulated_controllers.py:84 SimulatedTransformControllerPositioner",
+      "apstools/synApps/epid.py:102 Fb_EpidDatabaseHeaterSimulator",
+      "ideas/issue_91/sscan_issue91.py:75 MockFlyer"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "UserScalcoutN.alarm_hysteresis (attribute)",
+      "UserScalcoutN.alarm_severity (attribute)",
+      "UserScalcoutN.alarm_status (attribute)",
+      "UserScalcoutN.calculated_value (attribute)",
+      "UserScalcoutN.calculated_value_string (attribute)",
+      "UserScalcoutN.calculation (attribute)",
+      "UserScalcoutN.calculation_valid (attribute)",
+      "UserScalcoutN.channels (attribute)",
+      "UserScalcoutN.description (attribute)",
+      "UserScalcoutN.device_type (attribute)",
+      "UserScalcoutN.disable_alarm_severity (attribute)",
+      "UserScalcoutN.disable_value (attribute)"
+    ],
+    "writes": [],
+    "actions": [
+      "UserScalcoutN.reset",
+      "UserCalcoutN.reset",
+      "UserAverageN.reset"
+    ],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "capabilities"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/bcda-aps__apstools --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

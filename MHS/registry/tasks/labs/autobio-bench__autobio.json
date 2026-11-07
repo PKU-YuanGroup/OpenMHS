@@ -1,0 +1,105 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.autobio-bench/autobio",
+  "track": "labs",
+  "local_path": "labs/autobio-bench/autobio",
+  "driver_dir": "MHS/drivers/labs/autobio-bench__autobio",
+  "upstream": {
+    "repo_url": "https://github.com/autobio-bench/autobio",
+    "commit": "08504213356cbfe9a82bcd33a43cd282945a45df",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 396,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "autobio/model/hand/dexhand021_right.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "autobio/model/hand/shadowhand_left.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "autobio/model/hand/shadowhand_right.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "autobio/model/hand/shadowhand_right_mjx.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "autobio/model/instrument/vortex_mixer_genie_2.xml",
+      "line": 2,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "autobio/model/hand/dexhand021_right.xml:2 MJCF robot model",
+      "autobio/model/hand/shadowhand_left.xml:2 MJCF robot model",
+      "autobio/model/hand/shadowhand_right.xml:2 MJCF robot model",
+      "autobio/model/hand/shadowhand_right_mjx.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model autobio/model/hand/dexhand021_right.xml:2",
+      "MJCF robot model autobio/model/hand/shadowhand_left.xml:2",
+      "MJCF robot model autobio/model/hand/shadowhand_right.xml:2",
+      "MJCF robot model autobio/model/hand/shadowhand_right_mjx.xml:1",
+      "MJCF robot model autobio/model/instrument/vortex_mixer_genie_2.xml:2",
+      "MJCF robot model autobio/model/misc/opt_bottlecap.xml:2",
+      "MJCF robot model autobio/model/misc/opt_dexhand021_right.xml:2",
+      "MJCF robot model autobio/model/misc/opt_phone.xml:2",
+      "MJCF robot model autobio/model/misc/opt_writing_tripod.xml:2",
+      "MJCF robot model autobio/model/robot/2f85.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/autobio-bench__autobio --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

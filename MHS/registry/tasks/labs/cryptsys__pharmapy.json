@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cryptsys/pharmapy",
+  "track": "labs",
+  "local_path": "labs/cryptsys/pharmapy",
+  "driver_dir": "MHS/drivers/labs/cryptsys__pharmapy",
+  "upstream": {
+    "repo_url": "https://github.com/cryptsys/pharmapy",
+    "commit": "97303477da1756815a34e70b8c22dd7059fa73fa",
+    "license_spdx": "LicenseRef-custom",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1618,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "PharmaPy/Results.py:204 SimulationResult",
+      "PharmaPy/SimExec.py:24 SimulationExec"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/cryptsys__pharmapy --backend fake",
+  "skip_reason": "override (labs.json): PharmaPy is a library for simulating pharmaceutical unit operations and flowsheets, not a device.",
+  "publish_review": "required"
+}

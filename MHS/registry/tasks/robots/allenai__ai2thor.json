@@ -1,0 +1,95 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.allenai/ai2thor",
+  "track": "robots",
+  "local_path": "robots/allenai/ai2thor",
+  "driver_dir": "MHS/drivers/robots/allenai__ai2thor",
+  "upstream": {
+    "repo_url": "https://github.com/allenai/ai2thor",
+    "commit": "24f79883b4889e3f0e6f4ae301808b9025872dfc",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "override:recon",
+  "role": "framework",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 151,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "ai2thor.controller:BFSController",
+      "file": "ai2thor/controller.py",
+      "line": 1560,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ai2thor.controller:Controller",
+      "file": "ai2thor/controller.py",
+      "line": 372,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ai2thor.robot_controller:Controller",
+      "file": "ai2thor/robot_controller.py",
+      "line": 15,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ai2thor.offline_controller:Controller",
+      "file": "ai2thor/offline_controller.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ai2thor.wsgi_server:WsgiServer",
+      "file": "ai2thor/wsgi_server.py",
+      "line": 149,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ai2thor/mock_real_server.py:19 MockServer",
+      "ai2thor/mock_real_server.py:1",
+      "arm_test/arm_counter_30fps_simulate.py:1",
+      "arm_test/arm_counter_30fps_simulate_pause_return_start.py:1"
+    ],
+    "upstream_tests": "ai2thor/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/allenai__ai2thor --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

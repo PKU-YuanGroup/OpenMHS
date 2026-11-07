@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.arena-rosnav/arena-rosnav",
+  "track": "robots",
+  "local_path": "robots/arena-rosnav/arena-rosnav",
+  "driver_dir": "MHS/drivers/robots/arena-rosnav__arena-rosnav",
+  "upstream": {
+    "repo_url": "https://github.com/arena-rosnav/arena-rosnav",
+    "commit": "5de9d380d94e01963dc48f7a3f62c1b99c9c9556",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "tooling",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 352,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "task_generator/task_generator/simulators/base_simulator.py:7 BaseSimulator",
+      "task_generator/task_generator/simulators/flatland_simulator.py:18 FlatlandSimulator",
+      "task_generator/task_generator/simulators/gazebo_simulator.py:16 GazeboSimulator",
+      "task_generator/task_generator/simulators/simulator_factory.py:8 SimulatorFactory",
+      "task_generator/task_generator/simulators/unity_simulator.py:32 UnitySimulator",
+      "utils/misc/rl_utils/rl_utils/utils/constants.py:4 Simulator"
+    ],
+    "upstream_tests": "utils/misc/map_generator/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/arena-rosnav__arena-rosnav --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

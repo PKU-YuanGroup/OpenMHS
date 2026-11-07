@@ -1,0 +1,65 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.carla-simulator/scenario_runner",
+  "track": "robots",
+  "local_path": "robots/carla-simulator/scenario_runner",
+  "driver_dir": "MHS/drivers/robots/carla-simulator__scenario_runner",
+  "upstream": {
+    "repo_url": "https://github.com/carla-simulator/scenario_runner",
+    "commit": "94ff3b8af752bad2b9d464ad5105868906aa34c0",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 209,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "srunner/autoagents/dummy_agent.py:17 DummyAgent",
+      "srunner/scenariomanager/timer.py:88 SimulationTimeCondition",
+      "srunner/autoagents/dummy_agent.py:1",
+      "srunner/scenariomanager/lights_sim.py:1",
+      "srunner/scenariomanager/weather_sim.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/carla-simulator__scenario_runner --backend fake",
+  "skip_reason": "registry tier D (peripheral, not a device)",
+  "publish_review": "not_required"
+}

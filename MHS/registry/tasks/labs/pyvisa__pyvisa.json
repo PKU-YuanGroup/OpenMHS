@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pyvisa/pyvisa",
+  "track": "labs",
+  "local_path": "labs/pyvisa/pyvisa",
+  "driver_dir": "MHS/drivers/labs/pyvisa__pyvisa",
+  "upstream": {
+    "repo_url": "https://github.com/pyvisa/pyvisa",
+    "commit": "14d7c1743bf3e98c4c94a819bd6787ccc44c1407",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:scpi",
+  "role": "transport",
+  "family": "scpi",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 17,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "pyvisa.ctwrapper.highlevel:IVIVisaLibrary",
+      "file": "pyvisa/ctwrapper/highlevel.py",
+      "line": 69,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyvisa.resources.serial:PrlgxASRLIntfc",
+      "file": "pyvisa/resources/serial.py",
+      "line": 90,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyvisa.resources.usb:USBInstrument",
+      "file": "pyvisa/resources/usb.py",
+      "line": 45,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyvisa.resources.usb:USBRaw",
+      "file": "pyvisa/resources/usb.py",
+      "line": 138,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyvisa.resources.gpib:GPIBInstrument",
+      "file": "pyvisa/resources/gpib.py",
+      "line": 119,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pyvisa/testsuite/fake-extensions/pyvisa_test_open.py:9",
+      "pyvisa/testsuite/keysight_assisted_tests/messagebased_resource_utils.py:33 DummyMonitoringDevice"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pyvisa__pyvisa --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

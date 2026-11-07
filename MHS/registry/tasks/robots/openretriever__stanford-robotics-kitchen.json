@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.openretriever/stanford-robotics-kitchen",
+  "track": "robots",
+  "local_path": "robots/openretriever/stanford-robotics-kitchen",
+  "driver_dir": "MHS/drivers/robots/openretriever__stanford-robotics-kitchen",
+  "upstream": {
+    "repo_url": "https://github.com/openretriever/stanford-robotics-kitchen",
+    "commit": "546fd4b108f093f776a1a7c5919547233945dc88",
+    "license_spdx": "LicenseRef-proprietary",
+    "license_class": "proprietary"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 232,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "src/retriever_src_kitchen/_scene/output/robots/panda.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "src/retriever_src_kitchen/_scene/output/robots/tiago.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "src/retriever_src_kitchen/_scene/output/robots/ur5e.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.11,<3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/retriever_src_kitchen/_scene/output/robots/panda.xml:1 MJCF robot model",
+      "src/retriever_src_kitchen/_scene/output/robots/tiago.xml:1 MJCF robot model",
+      "src/retriever_src_kitchen/_scene/output/robots/ur5e.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model src/retriever_src_kitchen/_scene/output/robots/panda.xml:1",
+      "MJCF robot model src/retriever_src_kitchen/_scene/output/robots/tiago.xml:1",
+      "MJCF robot model src/retriever_src_kitchen/_scene/output/robots/ur5e.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/openretriever__stanford-robotics-kitchen --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

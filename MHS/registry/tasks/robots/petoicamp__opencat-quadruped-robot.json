@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.petoicamp/opencat-quadruped-robot",
+  "track": "robots",
+  "local_path": "robots/petoicamp/opencat-quadruped-robot",
+  "driver_dir": "MHS/drivers/robots/petoicamp__opencat-quadruped-robot",
+  "upstream": {
+    "repo_url": "https://github.com/petoicamp/opencat-quadruped-robot",
+    "commit": "24563ca2e0218150f6299d013cd3a20c45433467",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 15,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "serialMaster.SerialCommunication:Communication",
+      "file": "serialMaster/SerialCommunication.py",
+      "line": 18,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Communication.Read_Line",
+      "Communication.Read_Size"
+    ],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "motion"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/petoicamp__opencat-quadruped-robot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

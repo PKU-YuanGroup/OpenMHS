@@ -1,0 +1,88 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tipith/py6632b",
+  "track": "labs",
+  "local_path": "labs/tipith/py6632b",
+  "driver_dir": "MHS/drivers/labs/tipith__py6632b",
+  "upstream": {
+    "repo_url": "https://github.com/tipith/py6632b",
+    "commit": "a91f78a004f592e7588d483f28daebcbab8572e8",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 356,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "py6632B.py6632B:HP6632B",
+      "file": "py6632B/py6632B.py",
+      "line": 22,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "HP6632B.get_output_state",
+      "HP6632B.get_volt_and_curr",
+      "HP6632B.identify"
+    ],
+    "writes": [
+      "HP6632B.set_cb",
+      "HP6632B.set_display_mode",
+      "HP6632B.set_display_text",
+      "HP6632B.set_output_state",
+      "HP6632B.set_volt_and_curr",
+      "HP6632B.write_and_read_dev",
+      "HP6632B.write_dev"
+    ],
+    "actions": [
+      "HP6632B.reset_device",
+      "HP6632B.run",
+      "HP6632B.stop"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.measure.voltage.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/tipith__py6632b --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

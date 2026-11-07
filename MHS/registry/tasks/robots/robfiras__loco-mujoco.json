@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.robfiras/loco-mujoco",
+  "track": "robots",
+  "local_path": "robots/robfiras/loco-mujoco",
+  "driver_dir": "MHS/drivers/robots/robfiras__loco-mujoco",
+  "upstream": {
+    "repo_url": "https://github.com/robfiras/loco-mujoco",
+    "commit": "3921fedbca93876c0595c90c535b24ec08ff623d",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 77,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "loco_mujoco.core.wrappers.gymnasium:GymnasiumWrapper",
+      "file": "loco_mujoco/core/wrappers/gymnasium.py",
+      "line": 12,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "loco_mujoco/environments/humanoids/__init__.py:58 gym env LocoMujoco"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env LocoMujoco registered at loco_mujoco/environments/humanoids/__init__.py:58"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/robfiras__loco-mujoco --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

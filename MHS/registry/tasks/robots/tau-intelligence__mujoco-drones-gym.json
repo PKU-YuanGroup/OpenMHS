@@ -1,0 +1,81 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tau-intelligence/mujoco-drones-gym",
+  "track": "robots",
+  "local_path": "robots/tau-intelligence/mujoco-drones-gym",
+  "driver_dir": "MHS/drivers/robots/tau-intelligence__mujoco-drones-gym",
+  "upstream": {
+    "repo_url": "https://github.com/tau-intelligence/mujoco-drones-gym",
+    "commit": "ca170dc6760d422e47ef46fb3af46f8cd20410eb",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 154,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "multi_drone_mujoco.envs.base_aviary:BaseAviary",
+      "file": "multi_drone_mujoco/envs/base_aviary.py",
+      "line": 267,
+      "confidence": "override"
+    },
+    {
+      "symbol": "multi_drone_mujoco.envs.hover_aviary:HoverAviary",
+      "file": "multi_drone_mujoco/envs/hover_aviary.py",
+      "line": 15,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "multi_drone_mujoco/envs/hover_aviary.py:15 HoverAviary environment class",
+      "multi_drone_mujoco/bench/env.py:100 BenchAviary environment class",
+      "multi_drone_mujoco/envs/base_aviary.py:267 BaseAviary environment class",
+      "multi_drone_mujoco/envs/fly_through_aviary.py:13 FlyThroughAviary environment class"
+    ],
+    "upstream_tests": "multi_drone_mujoco/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/tau-intelligence__mujoco-drones-gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

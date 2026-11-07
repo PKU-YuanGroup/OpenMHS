@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.vadter/hantek1008c",
+  "track": "labs",
+  "local_path": "labs/vadter/hantek1008c",
+  "driver_dir": "MHS/drivers/labs/vadter__hantek1008c",
+  "upstream": {
+    "repo_url": "https://github.com/vadter/hantek1008c",
+    "commit": "178773a7a7161e8ddf68a9230e944bb4c5205884",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 357,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pyhantek1008C:Hantek1008",
+      "file": "pyhantek1008C.py",
+      "line": 782,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyhantek1008C:Hantek1008CRaw",
+      "file": "pyhantek1008C.py",
+      "line": 39,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Hantek1008.get_active_channels",
+      "Hantek1008.get_generator_waveform_max_length",
+      "Hantek1008.get_time",
+      "Hantek1008.get_used_zero_offsets_shift_compensation_method",
+      "Hantek1008.get_vscale",
+      "Hantek1008.get_vscales",
+      "Hantek1008.get_zero_offset",
+      "Hantek1008.get_zero_offsets",
+      "Hantek1008.is_paused",
+      "Hantek1008CRaw.get_active_channels",
+      "Hantek1008CRaw.get_generator_waveform_max_length",
+      "Hantek1008CRaw.get_time"
+    ],
+    "writes": [
+      "Hantek1008.set_generator_on",
+      "Hantek1008.set_generator_speed",
+      "Hantek1008.set_generator_waveform",
+      "Hantek1008CRaw.set_generator_on",
+      "Hantek1008CRaw.set_generator_speed",
+      "Hantek1008CRaw.set_generator_waveform"
+    ],
+    "actions": [
+      "Hantek1008.cancel_pause",
+      "Hantek1008.pause",
+      "Hantek1008CRaw.cancel_pause",
+      "Hantek1008CRaw.pause"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/vadter__hantek1008c --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

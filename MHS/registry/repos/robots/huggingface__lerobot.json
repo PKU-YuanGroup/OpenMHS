@@ -1,0 +1,233 @@
+{
+  "adapter": {
+    "bridge": "lerobot",
+    "entry_points": [
+      "lerobot.rollout.inference.rtc:RTCInferenceEngine (src/lerobot/rollout/inference/rtc.py:189)",
+      "lerobot.cameras.realsense.camera_realsense:RealSenseCamera (src/lerobot/cameras/realsense/camera_realsense.py:48)",
+      "lerobot.robots.lekiwi.lekiwi:LeKiwi (src/lerobot/robots/lekiwi/lekiwi.py:41)",
+      "lerobot.robots.reachy2.robot_reachy2:Reachy2Robot (src/lerobot/robots/reachy2/robot_reachy2.py:75)",
+      "lerobot.teleoperators.openarm_mini.openarm_mini:OpenArmMini (src/lerobot/teleoperators/openarm_mini/openarm_mini.py:46)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "make",
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_f41f68c5cf0cb6c7",
+    "https://github.com/huggingface/lerobot"
+  ],
+  "description": "huggingface/lerobot: control framework; agent framework; dataset for robot manipulation / mobile / humanoid imitation learning and VLA policy deployment (robotics track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: controller; device SDK; task environment.",
+  "domains": [
+    "robot manipulation   mobile   humanoid imitation learning and VLA policy deployment"
+  ],
+  "evidence": {
+    "files_read": 9,
+    "notes": "bounded static scan: 733 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB); agent-read source notes in work/recon/robots/huggingface__lerobot.md (entry points with file:line; not executed)",
+    "provenance_refs": [
+      "work/recon/robots/huggingface__lerobot.md"
+    ],
+    "read_by": "agent",
+    "state": "agent_read",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "lerobot-real"
+  ],
+  "hardware_free": true,
+  "id": "gh.huggingface/lerobot",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver",
+      "NEEDS_GPU: an import or the catalogue requires a GPU"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this framework backs the lerobot helper; it is not a per-repo driver task.",
+    "reason_code": "override:partner-framework",
+    "recipe": "families/lerobot-real.md",
+    "role": "framework",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "Python API",
+    "Gymnasium VectorEnv",
+    "gRPC(transport/services.proto)",
+    "CLI(lerobot-record/replay/eval/teleoperate/rollout)",
+    "Hugging Face Hub",
+    "Python",
+    "HF",
+    "CLI",
+    "dm_env",
+    "Docker",
+    "Gymnasium",
+    "HTTP/REST"
+  ],
+  "languages": [
+    "Python",
+    "Jupyter Notebook"
+  ],
+  "last_commit_at": "2026-10-08T23:24:13+02:00",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "docs": "https://github.com/huggingface/lerobot",
+    "repo": "https://github.com/huggingface/lerobot"
+  },
+  "local_path": "robots/huggingface/lerobot",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "huggingface",
+  "package_id": "gh.huggingface/lerobot",
+  "quarantine": false,
+  "rank": 1,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "lerobot",
+  "repo_url": "https://github.com/huggingface/lerobot",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "b9cb121cb7d4e3e26ec5c906d08dda68d151ba52",
+    "repo_url": "https://github.com/huggingface/lerobot"
+  },
+  "stars": 28024,
+  "tags": [
+    "lerobot-real",
+    "robotics",
+    "control framework agent framework dataset",
+    "controller device sdk task environment",
+    "simulated",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "huggingface/lerobot",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lerobot-real",
+      "family_confidence": 0.91,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 94.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "控制器 | 设备SDK | 任务环境",
+      "archived": "false",
+      "backend_family_raw": "自研 Python 硬件抽象(Feetech/Dynamixel 电机总线、OpenCV/RealSense 相机) + Gymnasium 仿真(MuJoCo 等由外部 gym-* 包提供)",
+      "blockers_raw": "Python>=3.12 与部分旧仿真包不兼容；真机需校准；动作块模式依赖 pickle over gRPC(安全需评估)",
+      "category_zh": "控制框架 | Agent框架 | 数据集",
+      "description_zh": "Hugging Face 的端到端机器人学习库：统一 Robot 抽象(connect/get_observation/send_action/disconnect)对接 SO-100/Koch/LeKiwi/Reachy2/Unitree G1 等真机，LeRobotDataset 数据格式，ACT/Diffusion/pi0/SmolVLA 等策略，gym 仿真评测环境(aloha/pusht/libero/metaworld/robocasa 等)以及基于 gRPC 的异步动作块推理。",
+      "join": "exact",
+      "license_raw": "Apache-2.0(代码)；外部仿真环境与预训练模型各自许可（GitHub 识别: Apache-2.0）",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P0",
+      "row": 1037,
+      "rows_all": [
+        1037
+      ],
+      "scope": "core",
+      "track_raw": "robotics | shared_infrastructure",
+      "verification_level": "已核源码"
+    },
+    "classification": {
+      "catalog_family": "lerobot-real",
+      "catalog_tier": "B",
+      "family_matches": [
+        "analyst-profile:lerobot-real"
+      ],
+      "family_rule": "analyst-profile",
+      "family_score": 91,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/huggingface__lerobot/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "fake",
+        "device_id": "mhs://openmhs-registry/robots/huggingface__lerobot/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/huggingface__lerobot/hardware"
+        ],
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": "Apache-2.0",
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "make",
+        "python"
+      ],
+      "entry_evidence_count": 8,
+      "files": 733,
+      "markers": {
+        "camera": 3,
+        "cli": 3,
+        "dm_env": 2,
+        "docker": 8,
+        "gpu": 6,
+        "gymnasium": 7,
+        "http": 2,
+        "lerobot": 328,
+        "mujoco": 1,
+        "replay": 5,
+        "ros2": 1,
+        "serial": 7
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (partners.json): LeRobot robot abstraction (SO-100/101, Koch, LeKiwi, Reachy 2 and more) that the post-pilot LeRobot helper wraps; an SDK bridge task, not a repo task.",
+        "rules alone: bridge-runtime (bridge-runtime:lerobot, rule 6)"
+      ],
+      "family": "lerobot",
+      "flagship": true,
+      "hardware_transport": "class lerobot.motors.dynamixel.dynamixel:DynamixelMotorsBus uses the hardware transport dynamixel_sdk",
+      "helper": null,
+      "justification": "LeRobot robot abstraction (SO-100/101, Koch, LeKiwi, Reachy 2 and more) that the post-pilot LeRobot helper wraps; an SDK bridge task, not a repo task.",
+      "partner": "Hugging Face",
+      "reason_code": "override:partner-framework",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

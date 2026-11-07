@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.freeopcua/opcua-asyncio",
+  "track": "labs",
+  "local_path": "labs/freeopcua/opcua-asyncio",
+  "driver_dir": "MHS/drivers/labs/freeopcua__opcua-asyncio",
+  "upstream": {
+    "repo_url": "https://github.com/freeopcua/opcua-asyncio",
+    "commit": "c321a240e53d083fd6e167c67f795915d8f236fd",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:tag-bridge",
+  "role": "transport",
+  "family": "tag-bridge",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 164,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "asyncua.client.client:Client",
+      "file": "asyncua/client/client.py",
+      "line": 67,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "asyncua.sync:Client",
+      "file": "asyncua/sync.py",
+      "line": 236,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "asyncua.sync:Server",
+      "file": "asyncua/sync.py",
+      "line": 554,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "asyncua.common.node:Node",
+      "file": "asyncua/common/node.py",
+      "line": 55,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "asyncua.client.ha.ha_client:HaClient",
+      "file": "asyncua/client/ha/ha_client.py",
+      "line": 93,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "asyncua/client/ha/virtual_subscription.py:19 VirtualSubscription",
+      "asyncua/client/ha/virtual_subscription.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/freeopcua__opcua-asyncio --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

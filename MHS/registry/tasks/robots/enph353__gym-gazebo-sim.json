@@ -1,0 +1,76 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.enph353/gym-gazebo-sim",
+  "track": "robots",
+  "local_path": "robots/enph353/gym-gazebo-sim",
+  "driver_dir": "MHS/drivers/robots/enph353__gym-gazebo-sim",
+  "upstream": {
+    "repo_url": "https://github.com/enph353/gym-gazebo-sim",
+    "commit": "d8df39af7e7c405a6738fe752d51d2e90d5fb814",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 297,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_gazebo.envs.cartpole_env:CartpoleEnv",
+      "file": "src/gym_gazebo/envs/cartpole_env.py",
+      "line": 11,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.12.3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/gym_gazebo/__init__.py:6 gym env CartpoleEnv-v0",
+      "src/gym_gazebo/__init__.py:12 gym env LineFollowerEnv-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env CartpoleEnv-v0 registered at src/gym_gazebo/__init__.py:6",
+      "gym env LineFollowerEnv-v0 registered at src/gym_gazebo/__init__.py:12"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/enph353__gym-gazebo-sim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

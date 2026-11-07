@@ -1,0 +1,87 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.hgomersall/pyzaber",
+  "track": "labs",
+  "local_path": "labs/hgomersall/pyzaber",
+  "driver_dir": "MHS/drivers/labs/hgomersall__pyzaber",
+  "upstream": {
+    "repo_url": "https://github.com/hgomersall/pyzaber",
+    "commit": "1a3f1e712f3d5bb3dab8512cdfeda9d21244b374",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "serial",
+  "helper": "SerialDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 341,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "pyzaber.linear_slides:multiaxis_linear_slides",
+      "file": "pyzaber/linear_slides.py",
+      "line": 53,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pyzaber.dummy_linear_slides:multiaxis_linear_slides",
+      "file": "pyzaber/dummy_linear_slides.py",
+      "line": 9,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pyzaber/dummy_linear_slides.py:1",
+      "pyzaber/dummy_serial_connection.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "multiaxis_linear_slides.get_current_position"
+    ],
+    "writes": [
+      "multiaxis_linear_slides.set_position"
+    ],
+    "actions": [
+      "multiaxis_linear_slides.move_absolute"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/hgomersall__pyzaber --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

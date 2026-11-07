@@ -1,0 +1,127 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.f9r/ihcpmslib-wrappers",
+  "track": "labs",
+  "local_path": "labs/f9r/ihcpmslib-wrappers",
+  "driver_dir": "MHS/drivers/labs/f9r__ihcpmslib-wrappers",
+  "upstream": {
+    "repo_url": "https://github.com/f9r/ihcpmslib-wrappers",
+    "commit": "3e6bd4c47f395bc37122e0e814184c540a99dd4e",
+    "license_spdx": "BSD-2-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 18,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "ihcWrappers.device:DeviceWrapper",
+      "file": "src/ihcWrappers/device.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ihcWrappers.odtc:OdtcWrapper",
+      "file": "src/ihcWrappers/odtc.py",
+      "line": 28,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ihcWrappers.scila:ScilaWrapper",
+      "file": "src/ihcWrappers/scila.py",
+      "line": 36,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ihcWrappers.pms:PmsWrapper",
+      "file": "src/ihcWrappers/pms.py",
+      "line": 42,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ihcWrappers.odtc:DataEventOdtcSensorValue",
+      "file": "src/ihcWrappers/odtc.py",
+      "line": 181,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.6,<4",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "DeviceWrapper.GetDeviceIdentification",
+      "DeviceWrapper.GetStatus",
+      "OdtcWrapper.GetAssemblyVersion",
+      "OdtcWrapper.GetConfiguration",
+      "OdtcWrapper.GetDeviceIdentification",
+      "OdtcWrapper.GetLastData",
+      "OdtcWrapper.GetParameters",
+      "OdtcWrapper.GetStatus",
+      "OdtcWrapper.ReadActualTemperature",
+      "ScilaWrapper.GetAssemblyVersion",
+      "ScilaWrapper.GetAutoBoostCo2",
+      "ScilaWrapper.GetCo2FlowStatus"
+    ],
+    "writes": [
+      "DeviceWrapper.SetConfiguration",
+      "DeviceWrapper.SetParameters",
+      "OdtcWrapper.SetConfiguration",
+      "OdtcWrapper.SetParameters",
+      "ScilaWrapper.SetAutoBoostCo2"
+    ],
+    "actions": [
+      "DeviceWrapper.Abort",
+      "DeviceWrapper.Pause",
+      "DeviceWrapper.Reset",
+      "OdtcWrapper.Abort",
+      "OdtcWrapper.Pause",
+      "OdtcWrapper.Reset",
+      "OdtcWrapper.StopMethod",
+      "ScilaWrapper.Abort",
+      "ScilaWrapper.Pause",
+      "ScilaWrapper.Reset"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.temperature.v1",
+      "cap.measure.flow.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/f9r__ihcpmslib-wrappers --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

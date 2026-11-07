@@ -1,0 +1,118 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.zichunxx/panda_mujoco_gym",
+  "track": "robots",
+  "local_path": "robots/zichunxx/panda_mujoco_gym",
+  "driver_dir": "MHS/drivers/robots/zichunxx__panda_mujoco_gym",
+  "upstream": {
+    "repo_url": "https://github.com/zichunxx/panda_mujoco_gym",
+    "commit": "e9881d993234875ee1d55d717176bf7999bdb583",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 52,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "panda_mujoco_gym.envs.pick_and_place:FrankaPickAndPlaceEnv",
+      "file": "panda_mujoco_gym/envs/pick_and_place.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "panda_mujoco_gym.envs.push:FrankaPushEnv",
+      "file": "panda_mujoco_gym/envs/push.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "panda_mujoco_gym.envs.slide:FrankaSlideEnv",
+      "file": "panda_mujoco_gym/envs/slide.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "panda_mujoco_gym.envs.panda_env:FrankaEnv",
+      "file": "panda_mujoco_gym/envs/panda_env.py",
+      "line": 16,
+      "confidence": "ast"
+    }
+  ],
+  "models": [
+    {
+      "file": "panda_mujoco_gym/assets/pick_and_place.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "panda_mujoco_gym/assets/push.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "panda_mujoco_gym/assets/slide.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "panda_mujoco_gym/assets/panda_mocap.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "panda_mujoco_gym/assets/pick_and_place.xml:1 MJCF scene model",
+      "panda_mujoco_gym/assets/push.xml:1 MJCF scene model",
+      "panda_mujoco_gym/assets/slide.xml:1 MJCF scene model",
+      "panda_mujoco_gym/assets/panda_mocap.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model panda_mujoco_gym/assets/pick_and_place.xml:1",
+      "MJCF scene model panda_mujoco_gym/assets/push.xml:1",
+      "MJCF scene model panda_mujoco_gym/assets/slide.xml:1",
+      "MJCF robot model panda_mujoco_gym/assets/panda_mocap.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/zichunxx__panda_mujoco_gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

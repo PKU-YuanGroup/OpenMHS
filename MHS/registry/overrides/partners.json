@@ -1,0 +1,229 @@
+{
+  "$schema": "../schema/overrides.schema.json",
+  "overrides_version": "0.9",
+  "title": "Repos for products of the early-ecosystem partners named in Anthropic's MHS announcement",
+  "description": "Partner names follow MHS/spec/appendix-d-anthropic-mhs.md section 4 and only record whose product a repo drives; they claim no endorsement or affiliation. A partner flag adds 40 to the published rank score. Partners with no repo in the corpus: Doosan Robotics, QuEra, Tetsuwan, QIAGEN, Automata, Genentech, HHMI Janelia (only third-party Zaber code), CMU.",
+  "overrides": [
+    {
+      "package_id": "gh.aaronslaff/tecan_fluentcontrol",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:partner-driver",
+      "partner": "Tecan",
+      "justification": "FluentControlClient REST client for Tecan FluentControl with unit tests; a direct Driver over the client class."
+    },
+    {
+      "package_id": "gh.aaronslaff/tecan_sparkcontrol",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:partner-driver",
+      "partner": "Tecan",
+      "justification": "SparkControlClient for the Tecan Spark plate reader through SparkControl; a direct Driver over the client class."
+    },
+    {
+      "package_id": "gh.angli339/tecan-fluent-api",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:partner-driver",
+      "partner": "Tecan",
+      "justification": "Tecan class driving a Fluent through the FluentControl execution channel (LiHa get/drop tips, aspirate, dispense, MCA); a direct Driver over that class."
+    },
+    {
+      "package_id": "gh.benpruitt/tecancavro",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:partner-driver",
+      "partner": "Tecan",
+      "justification": "Tecan Cavro OEM syringe pump; the OEM frame (address, sequence, checksum) and commands built from parts need a direct Driver over XCaliburD, not a SerialDriver table."
+    },
+    {
+      "package_id": "gh.btownshend/pytecan",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "skip:tooling",
+      "partner": "Tecan",
+      "justification": "Generates Tecan EVO Gemini (.gem) programs; it does not talk to the instrument."
+    },
+    {
+      "package_id": "gh.christianrauch/raspicam2_node",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "ros",
+      "reason_code": "override:partner-driver",
+      "partner": "Raspberry Pi",
+      "justification": "ROS 2 node for the Raspberry Pi camera module (MMAL; upstream recommends camera_ros); a ROS-helper member."
+    },
+    {
+      "package_id": "gh.histedlab/scanimage-python-control",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:partner-driver",
+      "partner": "MBF Bioscience (ScanImage)",
+      "justification": "ScanimageTcpipClient(address, port) remote-controls ScanImage over JSON/TCP and ships dummy_json_server.py, which serves as the fake backend."
+    },
+    {
+      "package_id": "gh.huggingface/gym-aloha",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:partner-sim",
+      "partner": "Hugging Face",
+      "flagship": true,
+      "justification": "pip-installable Gymnasium env of the ALOHA bimanual robot on MuJoCo; a GymnasiumDriver family-config by env id."
+    },
+    {
+      "package_id": "gh.huggingface/gym-pusht",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:partner-sim",
+      "partner": "Hugging Face",
+      "justification": "pip-installable Gymnasium PushT env used by LeRobot policies; a GymnasiumDriver family-config by env id."
+    },
+    {
+      "package_id": "gh.huggingface/lerobot",
+      "strategy": "bridge-runtime",
+      "role": "framework",
+      "family": "lerobot",
+      "reason_code": "override:partner-framework",
+      "partner": "Hugging Face",
+      "flagship": true,
+      "justification": "LeRobot robot abstraction (SO-100/101, Koch, LeKiwi, Reachy 2 and more) that the post-pilot LeRobot helper wraps; an SDK bridge task, not a repo task."
+    },
+    {
+      "package_id": "gh.huggingface/lerobot-dataset-visualizer",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "skip:tooling",
+      "partner": "Hugging Face",
+      "justification": "Web viewer for LeRobot datasets; tooling, no device."
+    },
+    {
+      "package_id": "gh.huggingface/lerobot-humanoid",
+      "strategy": "family-config",
+      "role": "twin-candidate",
+      "family": "mujoco",
+      "reason_code": "override:partner-twin",
+      "partner": "Hugging Face",
+      "justification": "LeRobot humanoid workspace with MJCF models and simulation identification; a MuJoCo twin candidate of the humanoid hardware."
+    },
+    {
+      "package_id": "gh.huggingface/lerobot-libero",
+      "strategy": "direct-driver",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "override:direct-driver",
+      "partner": "Hugging Face",
+      "wave": 3,
+      "justification": "Model review of wave B: a direct Driver, not a MujocoDriver: the LIBERO entry class parses a BDDL task file and builds a robosuite scene in its constructor; there is no raw MJCF model to load."
+    },
+    {
+      "package_id": "gh.jubiotech/robotools",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "skip:tooling",
+      "partner": "Tecan",
+      "justification": "In-silico debugging and worklist generation for Tecan EVO/Fluent; it does not talk to the instrument."
+    },
+    {
+      "package_id": "gh.leylabmpi/pytecanfluent",
+      "strategy": "skip",
+      "role": "tooling",
+      "reason_code": "skip:tooling",
+      "partner": "Tecan",
+      "justification": "Generates Fluent worklists (gwl) and labware tables offline; it does not talk to the instrument."
+    },
+    {
+      "package_id": "gh.martinhjelmare/leicacam",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:partner-driver",
+      "partner": "Danaher / Leica",
+      "justification": "Python client for Leica microscope CAM (computer-assisted microscopy) socket control; a direct Driver over its socket client class."
+    },
+    {
+      "package_id": "gh.misterblue/ros2_raspicam_node",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "ros",
+      "reason_code": "override:partner-driver",
+      "partner": "Raspberry Pi",
+      "capability_classes": [
+        "cap.sensing.image.v1"
+      ],
+      "justification": "Model review of the helper integration, 2026-11-05: a ROS 2 node that only publishes JPEG CompressedImage frames; its parameters are read once at start (ros2_raspicam_node.py:77, 88-91), so camera observation, R0, not configure."
+    },
+    {
+      "package_id": "gh.strands-labs/robots",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:partner-driver",
+      "partner": "AWS (Strands Robots)",
+      "flagship": true,
+      "justification": "strands_robots.Robot() drives a MuJoCo simulation by default and real robots with mode=\"real\"; a direct Driver whose sim mode is the hardware-free backend."
+    },
+    {
+      "package_id": "gh.tolland/python-tecan-genesis",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "serial",
+      "reason_code": "override:partner-driver",
+      "partner": "Tecan",
+      "entry_symbols": [
+        {
+          "symbol": "tecan_funcs:do_cmd",
+          "file": "bin/tecan_funcs.py",
+          "line": 147
+        },
+        {
+          "symbol": "tecan_funcs:Cmd_delayed",
+          "file": "bin/tecan_funcs.py",
+          "line": 57
+        }
+      ],
+      "justification": "Model review of wave C: a direct Driver over Cmd_delayed for a later run: frames are STX + sequence letter + device + command + ETX + XOR; the card stays blocked until a stop exists."
+    },
+    {
+      "package_id": "gh.universalrobots/universal_robots_client_library",
+      "strategy": "skip",
+      "role": "framework",
+      "reason_code": "override:covered-by",
+      "partner": "Universal Robots",
+      "flagship": true,
+      "justification": "C++ client library underneath the UR ROS 2 driver; UR arms are integrated through gh.universalrobots/universal_robots_ros2_driver, not through this library."
+    },
+    {
+      "package_id": "gh.universalrobots/universal_robots_isaac_driver",
+      "strategy": "skip",
+      "role": "device-driver",
+      "reason_code": "override:superseded",
+      "partner": "Universal Robots",
+      "justification": "Driver for the retired NVIDIA Isaac SDK; superseded for integration purposes by the UR ROS 2 driver."
+    },
+    {
+      "package_id": "gh.universalrobots/universal_robots_ros2_description",
+      "strategy": "skip",
+      "role": "not-device",
+      "reason_code": "override:asset",
+      "partner": "Universal Robots",
+      "justification": "URDF and meshes for UR arms; an asset the UR ROS 2 driver and simulators load, not a device of its own."
+    },
+    {
+      "package_id": "gh.universalrobots/universal_robots_ros2_driver",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "ros",
+      "reason_code": "override:partner-driver",
+      "partner": "Universal Robots",
+      "flagship": true,
+      "justification": "Official UR ROS 2 driver (CB3, e-Series, PolyScope X) with mock hardware; integrated through the ROS helper, so it waits on helper:ros."
+    }
+  ]
+}

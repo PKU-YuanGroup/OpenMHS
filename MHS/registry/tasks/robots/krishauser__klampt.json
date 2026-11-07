@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.krishauser/klampt",
+  "track": "robots",
+  "local_path": "robots/krishauser/klampt",
+  "driver_dir": "MHS/drivers/robots/krishauser__klampt",
+  "upstream": {
+    "repo_url": "https://github.com/krishauser/klampt",
+    "commit": "371bb98478eb5edf170dc21c8c3f0aa200ce7bac",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1019,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "Python/klampt/robotsim.py:8927 SimRobotController",
+      "Python/klampt/robotsim.py:9379 SimBody",
+      "Python/klampt/robotsim.py:9659 SimJoint",
+      "Python/klampt/robotsim.py:9772 Simulator",
+      "Python/klampt/control/interop.py:9 SimRobotControllerToInterface",
+      "Python/klampt/control/robotinterfaceutils.py:4211 RobotInterfaceEmulator"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/krishauser__klampt --backend fake",
+  "skip_reason": "catalogue 'physics engines'/'physics engines' describes software and the scan finds no device or simulation evidence",
+  "publish_review": "not_required"
+}

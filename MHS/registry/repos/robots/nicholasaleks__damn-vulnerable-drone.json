@@ -1,0 +1,192 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "docker"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_1c4577668b065379",
+    "https://github.com/nicholasaleks/damn-vulnerable-drone"
+  ],
+  "description": "nicholasaleks/damn-vulnerable-drone: complete environment for UAVs (robotics track). OpenMHS plan: reference only (host). Language: JavaScript. Catalog keywords: ArduPilot, MAVLink, Docker.",
+  "domains": [
+    "UAVs"
+  ],
+  "evidence": {
+    "files_read": 7,
+    "notes": "bounded static scan: 117 files enumerated (max depth 3), 7 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "other"
+  ],
+  "hardware_free": false,
+  "id": "gh.nicholasaleks/damn-vulnerable-drone",
+  "integration": {
+    "blockers": [
+      "REFERENCE_ONLY: role host"
+    ],
+    "effort": "EX",
+    "next_action": "Reference only: a host, orchestrator or MCP wrapper of a covered backend; integrate the backend instead.",
+    "reason_code": "override:recon",
+    "role": "host",
+    "scenario_required": false,
+    "strategy": "reference"
+  },
+  "interfaces": [
+    "other:MAVLink",
+    "CLI",
+    "Docker",
+    "Gazebo",
+    "HTTP/REST",
+    "MAVLink",
+    "ROS 1",
+    "ROS 2",
+    "Serial"
+  ],
+  "languages": [
+    "JavaScript",
+    "Python",
+    "Shell",
+    "C++"
+  ],
+  "last_commit_at": "2026-09-28T20:13:22-04:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/nicholasaleks/damn-vulnerable-drone"
+  },
+  "local_path": "robots/nicholasaleks/damn-vulnerable-drone",
+  "modes": [],
+  "owner": "nicholasaleks",
+  "package_id": "gh.nicholasaleks/damn-vulnerable-drone",
+  "quarantine": false,
+  "rank": 196,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "damn-vulnerable-drone",
+  "repo_url": "https://github.com/nicholasaleks/damn-vulnerable-drone",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "221aed53de410c9ec59ee5c639dbad6abff59033",
+    "repo_url": "https://github.com/nicholasaleks/damn-vulnerable-drone"
+  },
+  "stars": 843,
+  "tags": [
+    "other",
+    "robotics",
+    "complete environment",
+    "task environment",
+    "simulated",
+    "reference"
+  ],
+  "tier": "D",
+  "title": "nicholasaleks/damn-vulnerable-drone",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "gazebo",
+      "family_confidence": 0.86,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 68.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.72
+    },
+    "catalog": {
+      "adapter_role_zh": "任务环境",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "完整环境",
+      "description_zh": "故意存在漏洞的ArduPilot/MAVLink无人机仿真器，用于安全训练，Docker部署",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 1761,
+      "rows_all": [
+        1761
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "other",
+      "catalog_tier": "B",
+      "family_matches": [
+        "mavlink"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_note": "tier B -> D: triage reference (override:recon)",
+      "tier_rule": "B5-task-env-wrap"
+    },
+    "device_plan": [],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "docker"
+      ],
+      "entry_evidence_count": 2,
+      "files": 117,
+      "markers": {
+        "camera": 8,
+        "cli": 1,
+        "docker": 38,
+        "gazebo": 28,
+        "gpu": 12,
+        "http": 13,
+        "imu": 1,
+        "mavlink": 55,
+        "ros1": 1,
+        "ros2": 26,
+        "serial": 3
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): Intentionally vulnerable drone-hacking lab that orchestrates external ArduPilot SITL, Gazebo and MAVLink tooling, not a Python device driver.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": null,
+      "helper": null,
+      "justification": "Intentionally vulnerable drone-hacking lab that orchestrates external ArduPilot SITL, Gazebo and MAVLink tooling, not a Python device driver.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

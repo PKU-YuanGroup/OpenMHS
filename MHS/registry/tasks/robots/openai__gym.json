@@ -1,0 +1,95 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.openai/gym",
+  "track": "robots",
+  "local_path": "robots/openai/gym",
+  "driver_dir": "MHS/drivers/robots/openai__gym",
+  "upstream": {
+    "repo_url": "https://github.com/openai/gym",
+    "commit": "bc212954b6713d5db303b3ead124de6cba66063e",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:gymnasium",
+  "role": "framework",
+  "family": "gymnasium",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 76,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "gym.envs.classic_control.cartpole:CartPoleEnv",
+      "file": "gym/envs/classic_control/cartpole.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym.envs.classic_control.mountain_car:MountainCarEnv",
+      "file": "gym/envs/classic_control/mountain_car.py",
+      "line": 16,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym.envs.classic_control.continuous_mountain_car:Continuous_MountainCarEnv",
+      "file": "gym/envs/classic_control/continuous_mountain_car.py",
+      "line": 27,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym.envs.classic_control.pendulum:PendulumEnv",
+      "file": "gym/envs/classic_control/pendulum.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym.envs.classic_control.acrobot:AcrobotEnv",
+      "file": "gym/envs/classic_control/acrobot.py",
+      "line": 26,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym/envs/__init__.py:11 gym env CartPole-v0",
+      "gym/envs/__init__.py:18 gym env CartPole-v1",
+      "gym/envs/__init__.py:25 gym env MountainCar-v0",
+      "gym/envs/__init__.py:32 gym env MountainCarContinuous-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/openai__gym --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

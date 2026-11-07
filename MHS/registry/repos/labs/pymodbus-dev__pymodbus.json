@@ -1,0 +1,211 @@
+{
+  "adapter": {
+    "bridge": "tag-bridge",
+    "entry_points": [
+      "pymodbus.client.serial:ModbusSerialClient (pymodbus/client/serial.py:120)",
+      "pymodbus.client.tls:ModbusTlsClient (pymodbus/client/tls.py:102)",
+      "pymodbus.client.udp:ModbusUdpClient (pymodbus/client/udp.py:103)",
+      "pymodbus.client.serial:AsyncModbusSerialClient (pymodbus/client/serial.py:23)",
+      "pymodbus.client.tls:AsyncModbusTlsClient (pymodbus/client/tls.py:16)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python",
+    "make"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_0f8209a579555da0",
+    "https://github.com/pymodbus-dev/pymodbus"
+  ],
+  "description": "pymodbus-dev/pymodbus: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: SDK bridge runtime, not a per-repo driver. Catalog role: protocol bridge. Language: Python. Catalog keywords: Modbus.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 175 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "tag-bridge"
+  ],
+  "hardware_free": true,
+  "id": "gh.pymodbus-dev/pymodbus",
+  "integration": {
+    "blockers": [
+      "SDK_BRIDGE_TASK: a framework or transport behind a helper, not a per-repo driver"
+    ],
+    "effort": "E3",
+    "next_action": "SDK bridge task: this transport backs the tag-bridge helper; it is not a per-repo driver task.",
+    "reason_code": "bridge-runtime:tag-bridge",
+    "recipe": "families/tag-bridge.md",
+    "role": "transport",
+    "scenario_required": false,
+    "strategy": "bridge-runtime"
+  },
+  "interfaces": [
+    "Modbus",
+    "serial",
+    "Python SDK",
+    "CLI",
+    "HTTP/REST",
+    "Serial"
+  ],
+  "languages": [
+    "Python",
+    "Shell"
+  ],
+  "last_commit_at": "2026-09-30T21:06:06+02:00",
+  "license": "BSD-3-Clause",
+  "license_class": "permissive",
+  "license_spdx": "BSD-3-Clause",
+  "links": {
+    "repo": "https://github.com/pymodbus-dev/pymodbus"
+  },
+  "local_path": "labs/pymodbus-dev/pymodbus",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "pymodbus-dev",
+  "package_id": "gh.pymodbus-dev/pymodbus",
+  "quarantine": false,
+  "rank": 9,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pymodbus",
+  "repo_url": "https://github.com/pymodbus-dev/pymodbus",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "e65808235d9922fec0c7b64f43e5a9f9e534bab5",
+    "repo_url": "https://github.com/pymodbus-dev/pymodbus"
+  },
+  "stars": 2778,
+  "tags": [
+    "tag-bridge",
+    "lab instrumentation",
+    "simulated",
+    "hardware interface",
+    "bridge runtime"
+  ],
+  "tier": "B",
+  "title": "pymodbus-dev/pymodbus",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 86.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "完整Python Modbus协议栈:客户端/服务端/模拟器,同步与异步API",
+      "join": "exact",
+      "license_raw": "NOASSERTION",
+      "mhs_support_raw": "unknown",
+      "priority": "P1",
+      "row": 2095,
+      "rows_all": [
+        2095
+      ],
+      "scope": "peripheral",
+      "track_raw": "shared_infrastructure",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "serial",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bmodbus\\b"
+      ],
+      "family_note": "triage family tag-bridge (catalogue family serial)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/pymodbus-dev__pymodbus/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/pymodbus-dev__pymodbus/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/pymodbus-dev__pymodbus/hardware"
+        ],
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": "BSD-3-Clause",
+      "file": "LICENSE",
+      "file_spdx": "BSD-3-Clause",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python",
+        "make"
+      ],
+      "entry_evidence_count": 9,
+      "files": 175,
+      "markers": {
+        "cli": 1,
+        "http": 3,
+        "serial": 20
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Modbus TCP/RTU client and server stack with simulators; the tag bridge's Modbus transport, not a device (FIT-01).",
+        "rules alone: bridge-runtime (bridge-runtime:tag-bridge, rule 6)"
+      ],
+      "family": "tag-bridge",
+      "flagship": true,
+      "hardware_transport": "class pymodbus.client.serial:ModbusSerialClient uses the hardware transport serial",
+      "helper": null,
+      "justification": "Modbus TCP/RTU client and server stack with simulators; the tag bridge's Modbus transport, not a device (FIT-01).",
+      "reason_code": "bridge-runtime:tag-bridge",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

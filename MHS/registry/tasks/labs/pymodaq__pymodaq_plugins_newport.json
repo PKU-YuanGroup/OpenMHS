@@ -1,0 +1,126 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pymodaq/pymodaq_plugins_newport",
+  "track": "labs",
+  "local_path": "labs/pymodaq/pymodaq_plugins_newport",
+  "driver_dir": "MHS/drivers/labs/pymodaq__pymodaq_plugins_newport",
+  "upstream": {
+    "repo_url": "https://github.com/pymodaq/pymodaq_plugins_newport",
+    "commit": "bad8a714aa079f9ae2aab95851efedc32a8505ba",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 25,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "pymodaq_plugins_newport.hardware.smc100:SMC100",
+      "file": "src/pymodaq_plugins_newport/hardware/smc100.py",
+      "line": 44,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_newport.hardware.esp100:ESP100",
+      "file": "src/pymodaq_plugins_newport/hardware/esp100.py",
+      "line": 6,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_newport.hardware.agilis_serial:AgilisSerial",
+      "file": "src/pymodaq_plugins_newport/hardware/agilis_serial.py",
+      "line": 27,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_newport.hardware.xps_q8_simplified:SimpleXPS",
+      "file": "src/pymodaq_plugins_newport/hardware/xps_q8_simplified.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodaq_plugins_newport.hardware.serial_base:SerialBase",
+      "file": "src/pymodaq_plugins_newport/hardware/serial_base.py",
+      "line": 12,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.8",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "SMC100.get_last_command_error",
+      "SMC100.idn",
+      "SMC100.is_moving",
+      "ESP100.get_controller_infos",
+      "ESP100.get_position",
+      "ESP100.get_ressources",
+      "ESP100.get_velocity",
+      "ESP100.get_velocity_max",
+      "AgilisSerial.get_axis_isready",
+      "AgilisSerial.get_channel",
+      "AgilisSerial.get_infos",
+      "AgilisSerial.get_step_counter"
+    ],
+    "writes": [
+      "ESP100.set_velocity",
+      "AgilisSerial.set_local_remote"
+    ],
+    "actions": [
+      "SMC100.disable",
+      "SMC100.enable",
+      "SMC100.home",
+      "SMC100.homing",
+      "SMC100.move_abs",
+      "SMC100.move_rel",
+      "SMC100.reset",
+      "SMC100.stop",
+      "SMC100.wait_move_finish",
+      "ESP100.move_axis",
+      "ESP100.move_home",
+      "ESP100.stop_motion"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.device.configure.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymodaq__pymodaq_plugins_newport --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

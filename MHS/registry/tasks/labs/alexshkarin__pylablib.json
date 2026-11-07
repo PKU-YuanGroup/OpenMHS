@@ -1,0 +1,144 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.alexshkarin/pylablib",
+  "track": "labs",
+  "local_path": "labs/alexshkarin/pylablib",
+  "driver_dir": "MHS/drivers/labs/alexshkarin__pylablib",
+  "upstream": {
+    "repo_url": "https://github.com/alexshkarin/pylablib",
+    "commit": "96d9504d3e668f18beb3b75503c01b93152dbcd5",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:driver-pack",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 9,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pylablib.devices.Thorlabs.kinesis:KinesisMotor",
+      "file": "pylablib/devices/Thorlabs/kinesis.py",
+      "line": 1171,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylablib.devices.Andor.AndorSDK2:AndorSDK2Camera",
+      "file": "pylablib/devices/Andor/AndorSDK2.py",
+      "line": 81,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylablib.devices.IDS.peak:IDSPeakCamera",
+      "file": "pylablib/devices/IDS/peak.py",
+      "line": 1141,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylablib.devices.AlliedVision.VimbaX:AlliedVisionVimbaXCamera",
+      "file": "pylablib/devices/AlliedVision/VimbaX.py",
+      "line": 292,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pylablib.devices.PrincetonInstruments.picam:PicamCamera",
+      "file": "pylablib/devices/PrincetonInstruments/picam.py",
+      "line": 285,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pylablib/core/utils/general.py:401 DummyResource",
+      "pylablib/devices/SiliconSoftware/fgrab_prototyp_defs.py:410 CameraSimulatorTriggerMode",
+      "pylablib/legacy/core/utils/general.py:274 DummyResource"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "KinesisMotor.get_all_axes",
+      "KinesisMotor.get_all_channels",
+      "KinesisMotor.get_device_info",
+      "KinesisMotor.get_number_of_channels",
+      "KinesisMotor.get_scale_units",
+      "KinesisMotor.get_stage",
+      "KinesisMotor.is_opened",
+      "KinesisMotor.CommData (attribute)",
+      "KinesisMotor.CommShort (attribute)",
+      "AndorSDK2Camera.get_EMCCD_gain",
+      "AndorSDK2Camera.get_accum_mode_parameters",
+      "AndorSDK2Camera.get_acquisition_mode"
+    ],
+    "writes": [
+      "KinesisMotor.set_default_channel",
+      "AndorSDK2Camera._frame_counter.set_first_valid_frame",
+      "IDSPeakCamera.set_all_attribute_values",
+      "IDSPeakCamera.set_attribute_value",
+      "IDSPeakCamera.set_exposure",
+      "IDSPeakCamera.set_frame_format",
+      "IDSPeakCamera.set_frame_info_format",
+      "IDSPeakCamera.set_frame_info_period",
+      "IDSPeakCamera.set_frame_period",
+      "IDSPeakCamera.set_image_indexing",
+      "IDSPeakCamera.set_roi",
+      "IDSPeakCamera._frame_counter.set_first_valid_frame"
+    ],
+    "actions": [
+      "AndorSDK2Camera.enable_frame_transfer_mode",
+      "AndorSDK2Camera._frame_counter.reset",
+      "AndorSDK2Camera._frame_counter.wait_start",
+      "IDSPeakCamera.enable_raw_readout",
+      "IDSPeakCamera.grab",
+      "IDSPeakCamera.snap",
+      "IDSPeakCamera.start_acquisition",
+      "IDSPeakCamera.stop_acquisition",
+      "IDSPeakCamera._frame_counter.reset",
+      "IDSPeakCamera._frame_counter.wait_start"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.sensing.image.v1",
+      "cap.measure.temperature.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "pylablib/devices/Mightex/MightexSSeries.py:123 _dim_min = [4, 4]",
+      "pylablib/devices/Mightex/MightexSSeries.py:175 _exposure_range = [5e-05, 0.75]",
+      "pylablib/devices/OZOptics/base.py:163 _voltage_limits = [-5.0, 5.0]",
+      "pylablib/devices/OZOptics/base.py:164 _frequency_limits = [0, 100]",
+      "pylablib/devices/Sirah/tuner.py:733 _tune_local_thinet_range = 100000000000.0",
+      "pylablib/devices/Sirah/tuner.py:734 _tune_local_fine_range = 25000000000.0",
+      "pylablib/devices/Windows/winmm_lib.py:47 MAX_JOYSTICKOEMVXDNAME = 260"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/alexshkarin__pylablib --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,255 @@
+{
+  "adapter": {
+    "bridge": "mavlink",
+    "entry_points": [
+      "modules.DroneCAN.pydronecan.dronecan.driver.mcast:mcast (modules/DroneCAN/pydronecan/dronecan/driver/mcast.py:168)",
+      "modules.DroneCAN.pydronecan.dronecan.driver.file:file (modules/DroneCAN/pydronecan/dronecan/driver/file.py:29)",
+      "modules.DroneCAN.pydronecan.dronecan.driver.slcan:SLCAN (modules/DroneCAN/pydronecan/dronecan/driver/slcan.py:677)",
+      "modules.DroneCAN.pydronecan.dronecan.driver.mavcan:MAVCAN (modules/DroneCAN/pydronecan/dronecan/driver/mavcan.py:197)",
+      "modules.DroneCAN.pydronecan.dronecan.driver.socketcan:SocketCAN (modules/DroneCAN/pydronecan/dronecan/driver/socketcan.py:178)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [
+    "HELPER_MISSING",
+    "helper:mavlink"
+  ],
+  "build_systems": [
+    "docker",
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_8441b85f76e65e17",
+    "https://github.com/ardupilot/ardupilot"
+  ],
+  "description": "ardupilot/ardupilot: control framework for UAVs; underwater robotics; mobile robots (robotics track). OpenMHS plan: family-config with mavlink helper (planned), wave 5. Catalog role: controller. Language: C++. Catalog keywords: SITL.",
+  "domains": [
+    "UAVs",
+    "underwater robotics",
+    "mobile robots"
+  ],
+  "evidence": {
+    "files_read": 4,
+    "notes": "bounded static scan: 5724 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "mavlink"
+  ],
+  "hardware_free": true,
+  "id": "gh.ardupilot/ardupilot",
+  "integration": {
+    "blockers": [
+      "HELPER_MISSING",
+      "HELPER_MISSING: helper:mavlink",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E1",
+    "next_action": "Review MHS/drivers/robots/ardupilot__ardupilot/RESULT.json: the package is blocked on HELPER_MISSING, helper:mavlink; clear the codes before MHS/registry/tasks/robots/ardupilot__ardupilot.json is dispatched again.",
+    "reason_code": "override:flagship-driver",
+    "recipe": "families/mavlink.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "family-config"
+  },
+  "interfaces": [
+    "other:MAVLink",
+    "C++ API",
+    "Docker",
+    "MAVLink",
+    "Replay",
+    "CLI"
+  ],
+  "languages": [
+    "C++",
+    "C",
+    "Python",
+    "Lua"
+  ],
+  "last_commit_at": "2026-10-09T15:03:22+11:00",
+  "license": "GPL-3.0",
+  "license_class": "copyleft",
+  "license_spdx": "GPL-3.0",
+  "links": {
+    "repo": "https://github.com/ardupilot/ardupilot"
+  },
+  "local_path": "robots/ardupilot/ardupilot",
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
+  "owner": "ardupilot",
+  "package_id": "gh.ardupilot/ardupilot",
+  "quarantine": false,
+  "rank": 2,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "ardupilot",
+  "repo_url": "https://github.com/ardupilot/ardupilot",
+  "ring": 3,
+  "simulation": true,
+  "source": {
+    "commit": "113108bd69954dfe9faed49f025601ffcaff2886",
+    "repo_url": "https://github.com/ardupilot/ardupilot"
+  },
+  "stars": 16018,
+  "tags": [
+    "mavlink",
+    "robotics",
+    "control framework",
+    "controller",
+    "simulated",
+    "hardware interface",
+    "family config"
+  ],
+  "tier": "B",
+  "title": "ardupilot/ardupilot",
+  "track": "robots",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 5,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "sdk-library",
+      "family_confidence": 0.62,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 85.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "控制器",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "控制框架",
+      "description_zh": "开源自动驾驶仪：多旋翼、固定翼、车船、潜航器，含SITL",
+      "join": "exact",
+      "license_raw": "GPL-3.0",
+      "mhs_support_raw": "unknown",
+      "priority": "P1",
+      "row": 240,
+      "rows_all": [
+        240
+      ],
+      "scope": "core",
+      "track_raw": "robotics",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "other",
+      "catalog_tier": "B",
+      "family_matches": [
+        "mavlink"
+      ],
+      "family_note": "triage family mavlink (catalogue family other)",
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_rule": "B6-role-without-entry"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/ardupilot__ardupilot/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/ardupilot__ardupilot/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/ardupilot__ardupilot/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "GPL-3.0",
+      "declared_spdx": null,
+      "file": "COPYING.txt",
+      "file_spdx": "GPL-3.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "blocked_on": [
+        "HELPER_MISSING"
+      ],
+      "driver_dir": "MHS/drivers/robots/ardupilot__ardupilot",
+      "files": [
+        "RESULT.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:1d8255169f9002c47f0338389121b65fd98fde32422798713e8034999b84dd94",
+      "reviewed": false,
+      "status": "blocked"
+    },
+    "scan": {
+      "build_systems": [
+        "docker",
+        "python"
+      ],
+      "entry_evidence_count": 3,
+      "files": 5724,
+      "markers": {
+        "balance": 1,
+        "docker": 3,
+        "mavlink": 116,
+        "replay": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (robots.json): ArduPilot flight stack with sim_vehicle.py SITL; integrated through the MAVLink helper (FIT-03).",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": "mavlink",
+      "flagship": true,
+      "hardware_transport": "class modules.DroneCAN.pydronecan.dronecan.driver.slcan:SLCAN uses the hardware transport serial",
+      "helper": null,
+      "justification": "ArduPilot flight stack with sim_vehicle.py SITL; integrated through the MAVLink helper (FIT-03).",
+      "reason_code": "override:flagship-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

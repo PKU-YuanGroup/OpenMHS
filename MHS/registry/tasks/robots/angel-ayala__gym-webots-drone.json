@@ -1,0 +1,105 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.angel-ayala/gym-webots-drone",
+  "track": "robots",
+  "local_path": "robots/angel-ayala/gym-webots-drone",
+  "driver_dir": "MHS/drivers/robots/angel-ayala__gym-webots-drone",
+  "upstream": {
+    "repo_url": "https://github.com/angel-ayala/gym-webots-drone",
+    "commit": "24eb199041403d108bc94fac0f522cb33a544c9c",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 287,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "webots_drone.envs:DroneEnvContinuous",
+      "file": "webots_drone/envs/drone_continuous.py",
+      "line": 35,
+      "confidence": "override"
+    },
+    {
+      "symbol": "webots_drone.envs:DroneEnvDiscrete",
+      "file": "webots_drone/envs/drone_discrete.py",
+      "line": 14,
+      "confidence": "override"
+    },
+    {
+      "symbol": "webots_drone.envs:CrazyflieEnvContinuous",
+      "file": "webots_drone/envs/crazyflie.py",
+      "line": 16,
+      "confidence": "override"
+    },
+    {
+      "symbol": "webots_drone.envs:CrazyflieEnvDiscrete",
+      "file": "webots_drone/envs/crazyflie.py",
+      "line": 111,
+      "confidence": "override"
+    },
+    {
+      "symbol": "webots_drone.envs:RealCrazyflieEnvContinuous",
+      "file": "webots_drone/envs/crazyflie_realworld.py",
+      "line": 18,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "webots_drone/__init__.py:23 gym env webots_drone/DroneEnvContinuous-v0",
+      "webots_drone/__init__.py:28 gym env webots_drone/DroneEnvDiscrete-v0",
+      "webots_drone/__init__.py:33 gym env webots_drone/CrazyflieEnvContinuous-v0",
+      "webots_drone/__init__.py:38 gym env webots_drone/CrazyflieEnvDiscrete-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env webots_drone/DroneEnvContinuous-v0 registered at webots_drone/__init__.py:23",
+      "gym env webots_drone/DroneEnvDiscrete-v0 registered at webots_drone/__init__.py:28",
+      "gym env webots_drone/CrazyflieEnvContinuous-v0 registered at webots_drone/__init__.py:33",
+      "gym env webots_drone/CrazyflieEnvDiscrete-v0 registered at webots_drone/__init__.py:38",
+      "gym env webots_drone/RealCrazyflieEnvContinuous-v0 registered at webots_drone/__init__.py:43"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/angel-ayala__gym-webots-drone --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

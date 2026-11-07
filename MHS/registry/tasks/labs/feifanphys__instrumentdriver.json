@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.feifanphys/instrumentdriver",
+  "track": "labs",
+  "local_path": "labs/feifanphys/instrumentdriver",
+  "driver_dir": "MHS/drivers/labs/feifanphys__instrumentdriver",
+  "upstream": {
+    "repo_url": "https://github.com/feifanphys/instrumentdriver",
+    "commit": "749c845066b5a0e5ac30a1f9f55ff36e76ca24e1",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:scpi",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 230,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "drivers.SignalGenerator.KeysightN5182B:KeysightN5182B",
+      "file": "drivers/SignalGenerator/KeysightN5182B.py",
+      "line": 5,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "transport.SerialTransport:SerialTransport",
+      "file": "transport/SerialTransport.py",
+      "line": 4,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "transport.VisaTransport:VisaTransport",
+      "file": "transport/VisaTransport.py",
+      "line": 7,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "transport.TcpSocketTransport:TcpSocketTransport",
+      "file": "transport/TcpSocketTransport.py",
+      "line": 4,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "transport.ScpiTransport:ScpiTransport",
+      "file": "transport/ScpiTransport.py",
+      "line": 4,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [
+      "KeysightN5182B.set_frequency",
+      "KeysightN5182B.set_power",
+      "SerialTransport.set_timeout",
+      "VisaTransport.set_timeout"
+    ],
+    "actions": [
+      "KeysightN5182B.reset"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/feifanphys__instrumentdriver --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

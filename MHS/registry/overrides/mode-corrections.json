@@ -1,0 +1,37 @@
+{
+  "$schema": "../schema/overrides.schema.json",
+  "overrides_version": "0.9",
+  "title": "Mode corrections: routing entries whose record mode a model review corrected",
+  "description": "Reviewed routing entries that also carry modes: the scan recorded these repositories' real-hardware routes as simulated (a README-head scan). The entries moved here from ros-wave-c-routing.json unchanged except for modes and the justification; each repository appears once across all override files. Model reviews, not human reviews.",
+  "overrides": [
+    {
+      "package_id": "gh.mgreiff/crazyflie-project",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "ros",
+      "reason_code": "family:ros",
+      "modes": [
+        "hardware"
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: the ROS route drives a real Crazyflie over a Crazyradio (trajectoryExample.launch:7-19); the clone's only simulation is a Simulink model no driver runs; mode hardware."
+    },
+    {
+      "package_id": "gh.mrw-code/ros_morphology_robot",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "v2_robot.src.robot_v2.scripts.src.control:ControlWindow",
+          "file": "v2_robot/src/robot_v2/scripts/src/control.py",
+          "line": 23
+        }
+      ],
+      "modes": [
+        "hardware"
+      ],
+      "justification": "Model review of the waiting cards, 2026-11-05: ControlWindow drives a real Arduino G-code stage over pyserial (control.py:45, 360, 372); the clone has no simulator; mode hardware. Route: wave C direct-driver review."
+    }
+  ]
+}

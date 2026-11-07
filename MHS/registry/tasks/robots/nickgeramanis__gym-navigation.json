@@ -1,0 +1,82 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nickgeramanis/gym-navigation",
+  "track": "robots",
+  "local_path": "robots/nickgeramanis/gym-navigation",
+  "driver_dir": "MHS/drivers/robots/nickgeramanis__gym-navigation",
+  "upstream": {
+    "repo_url": "https://github.com/nickgeramanis/gym-navigation",
+    "commit": "98be757c6aa2b2834cecbb7dde3c2c05e5f1b57b",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 99,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_navigation.envs.navigation_track:NavigationTrack",
+      "file": "gym_navigation/envs/navigation_track.py",
+      "line": 19,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "gym_navigation.envs.navigation_goal:NavigationGoal",
+      "file": "gym_navigation/envs/navigation_goal.py",
+      "line": 16,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "gym_navigation/__init__.py:4 gym env NavigationTrack-v0",
+      "gym_navigation/__init__.py:7 gym env NavigationGoal-v0"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env NavigationTrack-v0 registered at gym_navigation/__init__.py:4",
+      "gym env NavigationGoal-v0 registered at gym_navigation/__init__.py:7"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nickgeramanis__gym-navigation --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

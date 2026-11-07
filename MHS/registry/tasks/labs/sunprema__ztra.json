@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sunprema/ztra",
+  "track": "labs",
+  "local_path": "labs/sunprema/ztra",
+  "driver_dir": "MHS/drivers/labs/sunprema__ztra",
+  "upstream": {
+    "repo_url": "https://github.com/sunprema/ztra",
+    "commit": "03444d9087c66d3abfa74a84ca192f0397dcc3e8",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "reference",
+  "reason_code": "reference:host",
+  "role": "host",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1100,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/ztra/simulate.py:52 SimOutcome",
+      "src/ztra/simulate.py:60 SimulationResult",
+      "src/ztra/telemetry.py:33 SimulatedSensor",
+      "src/ztra/drivers/fake.py:21 FakeDriver",
+      "src/ztra/drivers/otsim.py:86 OpentronsSimDriver",
+      "src/ztra/simulate.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/sunprema__ztra --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,124 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.vector-wangel/xlerobot",
+  "track": "robots",
+  "local_path": "robots/vector-wangel/xlerobot",
+  "driver_dir": "MHS/drivers/robots/vector-wangel__xlerobot",
+  "upstream": {
+    "repo_url": "https://github.com/vector-wangel/xlerobot",
+    "commit": "b017b5e6354bd9f61f4247a920c72622ca0aade0",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:flagship-driver",
+  "role": "device-driver",
+  "family": "lerobot",
+  "helper": null,
+  "helper_status": "blocked",
+  "blocked_on": [
+    "HELPER_MISSING",
+    "helper:lerobot"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 5,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "simulation.Maniskill.envs.scenes.base_env:SceneManipulationEnv",
+      "file": "simulation/Maniskill/envs/scenes/base_env.py",
+      "line": 20,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "simulation/Maniskill/run_xlerobot_sim_host.py:79 XLeRobotSimHost",
+      "simulation/Maniskill/run_xlerobot_sim.py:1",
+      "simulation/Maniskill/run_xlerobot_sim_host.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "JoyconRobotics.get_control",
+      "JoyconRobotics.get_orientation",
+      "JoyconRobotics.get_stick",
+      "JoyconRobotics.joycon.get_accel_x",
+      "JoyconRobotics.joycon.get_accel_y",
+      "JoyconRobotics.joycon.get_accel_z",
+      "JoyconRobotics.joycon.get_battery_charging",
+      "JoyconRobotics.joycon.get_battery_level",
+      "JoyconRobotics.joycon.get_button_a",
+      "JoyconRobotics.joycon.get_button_b",
+      "JoyconRobotics.joycon.get_button_capture",
+      "JoyconRobotics.joycon.get_button_charging_grip"
+    ],
+    "writes": [
+      "JoyconRobotics.set_dof_speed",
+      "JoyconRobotics.set_gripper_close_value",
+      "JoyconRobotics.set_gripper_open_value",
+      "JoyconRobotics.set_position",
+      "JoyconRobotics.set_posture_limits",
+      "JoyconRobotics.joycon.set_accel_calibration",
+      "JoyconRobotics.joycon.set_gyro_calibration",
+      "JoyconRobotics.joycon.set_player_lamp",
+      "JoyconRobotics.joycon.set_player_lamp_flashing",
+      "JoyconRobotics.joycon.set_player_lamp_on",
+      "JoyconRobotics.orientation_sensor.set_yaw_diff"
+    ],
+    "actions": [
+      "JoyconRobotics.reset_joycon",
+      "JoyconRobotics.gyro.calibrate",
+      "JoyconRobotics.gyro.reset_orientation",
+      "JoyconRobotics.orientation_sensor.reset_yaw",
+      "XLerobot.calibrate",
+      "XLerobot.stop_base",
+      "XLerobotVRTeleop.calibrate",
+      "XLerobotVRTeleop.move_to_zero_position",
+      "XLerobotVRTeleop.reset_vr_events",
+      "XLerobotVRTeleop.vr_event_handler.reset_events",
+      "XLerobotVRTeleop.vr_monitor.start_monitoring",
+      "XLerobotVRTeleop.vr_monitor.stop_monitoring"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.device.calibrate.v1",
+      "cap.imaging.illumination.v1",
+      "cap.motion.cartesian_pose.v1",
+      "cap.manipulation.grasp.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "software/src/robots/xlerobot/config_xlerobot.py:100 max_loop_freq_hz = 30",
+      "software/src/robots/xlerobot_2wheels/config_xlerobot_2wheels.py:102 max_loop_freq_hz = 30",
+      "software/src/robots/xlerobot_mecanum/config_xlerobot.py:76 max_wheel_raw_command = 3000",
+      "software/src/robots/xlerobot_mecanum/config_xlerobot.py:110 max_loop_freq_hz = 30"
+    ]
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/vector-wangel__xlerobot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

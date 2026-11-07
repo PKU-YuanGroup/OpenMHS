@@ -1,0 +1,131 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.apirrone/open_duck_mini",
+  "track": "robots",
+  "local_path": "robots/apirrone/open_duck_mini",
+  "driver_dir": "MHS/drivers/robots/apirrone__open_duck_mini",
+  "upstream": {
+    "repo_url": "https://github.com/apirrone/open_duck_mini",
+    "commit": "b23317a485b3cec7d8417f352478778b3475173c",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 126,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "env_humanoid:BDXEnv",
+      "file": "experiments/RL/env_humanoid.py",
+      "line": 18,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "footsteps_env:BDXEnv",
+      "file": "experiments/RL/new/footsteps_env.py",
+      "line": 14,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "simple_env:BDXEnv",
+      "file": "experiments/RL/new/simple_env.py",
+      "line": 12,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "env:BDXEnv",
+      "file": "experiments/RL/pretrain_dbrm.py",
+      "line": 19,
+      "confidence": "recon"
+    }
+  ],
+  "models": [
+    {
+      "file": "mini_bdx/robots/bdx/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "mini_bdx/robots/open_duck_mini_v2/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "mini_bdx/robots/open_duck_mini_v2/scene_position.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "mini_bdx/robots/bdx/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "mini_bdx/robots/open_duck_mini_v2/robot.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "experiments/RL/play_policy.py:116 gym env BDX_env",
+      "experiments/RL/pretrain_bc.py:20 gym env BDX_env",
+      "experiments/RL/pretrain_dbrm.py:19 gym env BDX_env",
+      "experiments/RL/pretrain_gail.py:25 gym env BDX_env"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env BDX_env registered at experiments/RL/play_policy.py:116",
+      "gym env BDX_env registered at experiments/RL/pretrain_bc.py:20",
+      "gym env BDX_env registered at experiments/RL/pretrain_dbrm.py:19",
+      "gym env BDX_env registered at experiments/RL/pretrain_gail.py:25",
+      "gym env BDX_env registered at experiments/RL/train.py:129",
+      "gym env BDX_env registered at experiments/RL/new/eval.py:14",
+      "gym env BDX_env registered at experiments/RL/new/eval_simple.py:15",
+      "gym env BDX_env registered at experiments/RL/new/pretrain_bc.py:20",
+      "gym env BDX_env registered at experiments/RL/new/pretrain_gail.py:25",
+      "gym env BDX_env registered at experiments/RL/new/record_episodes.py:16",
+      "gym env BDX_env registered at experiments/RL/new/train.py:124"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/apirrone__open_duck_mini --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

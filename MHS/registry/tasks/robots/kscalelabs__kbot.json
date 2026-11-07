@@ -1,0 +1,104 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.kscalelabs/kbot",
+  "track": "robots",
+  "local_path": "robots/kscalelabs/kbot",
+  "driver_dir": "MHS/drivers/robots/kscalelabs__kbot",
+  "upstream": {
+    "repo_url": "https://github.com/kscalelabs/kbot",
+    "commit": "76aba70e3372fecf3583ed6dbe5f379d44c8511c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 259,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [],
+  "models": [
+    {
+      "file": "ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-feet/scene.mjcf",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-lw-feet/scene.mjcf",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-lw-feet/scene_fixed.mjcf",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-lw-feet/scene_terrain.mjcf",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-feet/robot.mjcf",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-feet/scene.mjcf:1 MJCF scene model",
+      "ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-lw-feet/scene.mjcf:1 MJCF scene model",
+      "ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-lw-feet/scene_fixed.mjcf:1 MJCF scene model",
+      "ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-lw-feet/scene_terrain.mjcf:1 MJCF scene model"
+    ],
+    "upstream_tests": "ksim-kbot/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-feet/scene.mjcf:1",
+      "MJCF scene model ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-lw-feet/scene.mjcf:1",
+      "MJCF scene model ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-lw-feet/scene_fixed.mjcf:1",
+      "MJCF scene model ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-lw-feet/scene_terrain.mjcf:1",
+      "MJCF robot model ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-feet/robot.mjcf:1",
+      "MJCF robot model ksim-kbot/ksim_kbot/kscale-assets/kbot-v2/robot.mjcf:1",
+      "MJCF robot model ksim-kbot/ksim_kbot/temp_assets/getup_robot.mjcf:1",
+      "MJCF robot model ksim-kbot/ksim_kbot/kscale-assets/default-humanoid/default-humanoid.mjcf:1",
+      "MJCF robot model ksim-kbot/ksim_kbot/kscale-assets/kbot-feet/robot.mjcf:1",
+      "MJCF robot model ksim-kbot/ksim_kbot/kscale-assets/kbot-v2-lw-feet/robot.mjcf:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/kscalelabs__kbot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

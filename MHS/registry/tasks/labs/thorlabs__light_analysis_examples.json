@@ -1,0 +1,71 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.thorlabs/light_analysis_examples",
+  "track": "labs",
+  "local_path": "labs/thorlabs/light_analysis_examples",
+  "driver_dir": "MHS/drivers/labs/thorlabs__light_analysis_examples",
+  "upstream": {
+    "repo_url": "https://github.com/thorlabs/light_analysis_examples",
+    "commit": "1e7f3aa6fe29ca9739c582464bf870232232567b",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 13,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pyfile:Python/Thorlabs BC207 BC210 Beam Profiler/TLBC2.py#TLBC2",
+      "file": "Python/Thorlabs BC207 BC210 Beam Profiler/TLBC2.py",
+      "line": 156,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": [
+      "Python/Thorlabs BC207 BC210 Beam Profiler/TLBC2.py:7 MAX_CAMERA_DEVICES = 16",
+      "Python/Thorlabs BC207 BC210 Beam Profiler/TLBC2.py:13 VI_SPECIFIC_STATUS_MIN = 1073481728",
+      "Python/Thorlabs BC207 BC210 Beam Profiler/TLBC2.py:14 VI_SPECIFIC_STATUS_MAX = 1073483775"
+    ]
+  },
+  "needs_recon": [
+    "install",
+    "capabilities"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/thorlabs__light_analysis_examples --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

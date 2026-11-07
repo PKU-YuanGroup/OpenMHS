@@ -1,0 +1,215 @@
+{
+  "adapter": {
+    "bridge": "serial",
+    "entry_points": [
+      "oscilloscope_functions:oscilloscope (oscilloscope_functions.py:6)",
+      "oscilloscope_functions:multimeter (oscilloscope_functions.py:66)",
+      "measure_interfaces:rs232 (measure_interfaces.py:6)",
+      "measure_interfaces:usb (measure_interfaces.py:30)",
+      "measure_interfaces:lan (measure_interfaces.py:80)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_3349206b3f5cd83f",
+    "https://github.com/pmezydlo/oscilloscope_lan_data_capture"
+  ],
+  "description": "pmezydlo/oscilloscope_lan_data_capture: device backend for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with SerialDriver, wave 3. Catalog role: device SDK. Declared backend: PyVISA. Language: Python. Catalog keywords: LAN, Rigol, DS1000Z, PostgreSQL.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 1,
+    "notes": "bounded static scan: 9 files enumerated (max depth 3), 1 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/pmezydlo__oscilloscope_lan_data_capture/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "serial"
+  ],
+  "hardware_free": false,
+  "id": "gh.pmezydlo/oscilloscope_lan_data_capture",
+  "integration": {
+    "blockers": [
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/pmezydlo__oscilloscope_lan_data_capture: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/pmezydlo__oscilloscope_lan_data_capture --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/serial.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "SCPI/VISA",
+    "other:PostgreSQL",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2017-03-27T16:28:51+02:00",
+  "license": "NOASSERTION",
+  "license_class": "unknown",
+  "license_spdx": "NOASSERTION",
+  "links": {
+    "repo": "https://github.com/pmezydlo/oscilloscope_lan_data_capture"
+  },
+  "local_path": "labs/pmezydlo/oscilloscope_lan_data_capture",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "pmezydlo",
+  "package_id": "gh.pmezydlo/oscilloscope_lan_data_capture",
+  "quarantine": false,
+  "rank": 308,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "oscilloscope_lan_data_capture",
+  "repo_url": "https://github.com/pmezydlo/oscilloscope_lan_data_capture",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "f68c0b8d5acb7592ad21fd39b453d5a4d892a91e",
+    "repo_url": "https://github.com/pmezydlo/oscilloscope_lan_data_capture"
+  },
+  "stars": 4,
+  "tags": [
+    "serial",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "pmezydlo/oscilloscope_lan_data_capture",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 3,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.91,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 32.0,
+      "quality_flags": [
+        "license_unknown"
+      ],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "PyVISA",
+      "category_zh": "设备后端",
+      "description_zh": "经LAN采集Rigol DS1000Z示波器数据并存入PostgreSQL",
+      "join": "exact",
+      "license_raw": "unknown",
+      "mhs_support_raw": "unknown",
+      "priority": "参考",
+      "row": 2011,
+      "rows_all": [
+        2011
+      ],
+      "scope": "peripheral",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bpyvisa\\b"
+      ],
+      "family_note": "triage family serial (catalogue family scpi-visa)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/pmezydlo__oscilloscope_lan_data_capture/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": null,
+      "file": null,
+      "file_spdx": null,
+      "review": true,
+      "source": "none"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "f68c0b8d5acb7592ad21fd39b453d5a4d892a91e",
+      "driver_dir": "MHS/drivers/labs/pmezydlo__oscilloscope_lan_data_capture",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:e20e17bce5f46acca4309ffd7eaedfa45da1da89593d0751e3fac89b4e6e0e95",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [],
+      "entry_evidence_count": 0,
+      "files": 9,
+      "markers": {}
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of the PUB batch: a direct Driver over the oscilloscope class, not a SerialDriver table: channel commands are assembled at run time (':' + channel + ':SCAL?').",
+        "rules alone: family-config (family:serial, rule 9)"
+      ],
+      "family": "serial",
+      "hardware_transport": "class oscilloscope_functions:oscilloscope uses the hardware transport serial",
+      "helper": "SerialDriver",
+      "justification": "Model review of the PUB batch: a direct Driver over the oscilloscope class, not a SerialDriver table: channel commands are assembled at run time (':' + channel + ':SCAL?').",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

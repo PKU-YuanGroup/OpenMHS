@@ -1,0 +1,62 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.astarvienna/scopesim",
+  "track": "labs",
+  "local_path": "labs/astarvienna/scopesim",
+  "driver_dir": "MHS/drivers/labs/astarvienna__scopesim",
+  "upstream": {
+    "repo_url": "https://github.com/astarvienna/scopesim",
+    "commit": "2d24516855e35bdffa5acd0485dbacd41855c727",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "skip",
+  "reason_code": "skip:peripheral",
+  "role": "not-device",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 475,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.12,<3.15",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "scopesim/commands/scopesimple.py:21 Simulation",
+      "scopesim/effects/fits_headers.py:645 SimulationConfigFitsKeywords"
+    ],
+    "upstream_tests": "scopesim/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/astarvienna__scopesim --backend fake",
+  "skip_reason": "catalogue 'device backend'/'measurement model' describes software and the scan finds no device or simulation evidence",
+  "publish_review": "not_required"
+}

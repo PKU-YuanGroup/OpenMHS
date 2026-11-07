@@ -1,0 +1,230 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "instruments.ismatec.ismatec:Ismatec (src/instruments/ismatec/ismatec.py:20)",
+      "instruments.ika.ika:Ika (src/instruments/ika/ika.py:20)",
+      "instruments.bronkhorst.bronkhorst:Bronkhorst (src/instruments/bronkhorst/bronkhorst.py:19)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "packaged"
+  },
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "build_systems": [
+    "docker"
+  ],
+  "capabilities_offered": [
+    "cap.actuation.pump.v1",
+    "cap.fluid.dispense.v1",
+    "cap.device.configure.v1"
+  ],
+  "catalog_refs": [
+    "repo_46cf4fad1229a0eb",
+    "https://github.com/dayr3n33/instruments"
+  ],
+  "description": "dayr3n33/instruments: protocol implementation/bridge for general (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 5. Catalog role: protocol bridge. Declared backend: OPC UA. Language: Python. Catalog keywords: OPC, UA, MQTT.",
+  "domains": [
+    "general"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 37 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.dayr3n33/instruments",
+  "integration": {
+    "blockers": [
+      "NO_HARDWARE_FREE_PATH",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
+    ],
+    "effort": "E3",
+    "next_action": "Review MHS/drivers/labs/dayr3n33__instruments/RESULT.json: the package is blocked on NO_HARDWARE_FREE_PATH; clear the codes before MHS/registry/tasks/labs/dayr3n33__instruments.json is dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "driver-pack",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "OPC UA",
+    "MQTT",
+    "HTTP/REST",
+    "serial",
+    "Docker"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2021-05-20T13:40:24-04:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/dayr3n33/instruments"
+  },
+  "local_path": "labs/dayr3n33/instruments",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "dayr3n33",
+  "package_id": "gh.dayr3n33/instruments",
+  "quarantine": false,
+  "rank": 18,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "instruments",
+  "repo_url": "https://github.com/dayr3n33/instruments",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "f7198e92172c7e069af7c79ebf7ed91c7fe25ef4",
+    "repo_url": "https://github.com/dayr3n33/instruments"
+  },
+  "stars": 0,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "dayr3n33/instruments",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 5,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "protocol-bridge",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 44.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "false",
+      "backend_family_raw": "OPC UA",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "为实验设备提供OPC UA、MQTT、HTTP接口的Python包",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P2",
+      "row": 603,
+      "rows_all": [
+        603
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "other",
+      "catalog_tier": "B",
+      "family_matches": [
+        "opc[- ]?ua"
+      ],
+      "family_note": "triage family python-object (catalogue family other)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/dayr3n33__instruments/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.actuation.pump.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "actuation.pump"
+          },
+          {
+            "capabilities": [
+              "cap.fluid.dispense.v1"
+            ],
+            "kind": "lab.liquid_handler"
+          }
+        ],
+        "risk_floor": "R2",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "NO_HARDWARE_FREE_PATH"
+      ],
+      "commit": "f7198e92172c7e069af7c79ebf7ed91c7fe25ef4",
+      "driver_dir": "MHS/drivers/labs/dayr3n33__instruments",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:fc07f4c387b77d03eb85646223aa0e48d21a526929bd27760c2b6526c5b55926",
+      "reviewed": false,
+      "status": "blocked"
+    },
+    "scan": {
+      "build_systems": [
+        "docker"
+      ],
+      "entry_evidence_count": 4,
+      "files": 37,
+      "markers": {
+        "docker": 3,
+        "mqtt": 2,
+        "opcua": 2
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (waiting-routing.json): Model review of the waiting cards, 2026-11-05: serial instruments; Ismatec (ismatec.py:20) builds pump commands from parts (1S plus a number, :50-53) with a 1I stop (:48-49), so a direct Driver; Ika and Bronkhorst are other devices.",
+        "rules alone: family-config (family:tag-bridge, rule 9)"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class instruments.ika.ika:Ika uses the hardware transport serial",
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of the waiting cards, 2026-11-05: serial instruments; Ismatec (ismatec.py:20) builds pump commands from parts (1S plus a number, :50-53) with a 1I stop (:48-49), so a direct Driver; Ika and Bronkhorst are other devices.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

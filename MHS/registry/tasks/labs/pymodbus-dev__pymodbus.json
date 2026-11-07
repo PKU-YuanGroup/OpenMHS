@@ -1,0 +1,97 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.pymodbus-dev/pymodbus",
+  "track": "labs",
+  "local_path": "labs/pymodbus-dev/pymodbus",
+  "driver_dir": "MHS/drivers/labs/pymodbus-dev__pymodbus",
+  "upstream": {
+    "repo_url": "https://github.com/pymodbus-dev/pymodbus",
+    "commit": "e65808235d9922fec0c7b64f43e5a9f9e534bab5",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "bridge-runtime",
+  "reason_code": "bridge-runtime:tag-bridge",
+  "role": "transport",
+  "family": "tag-bridge",
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 9,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "pymodbus.client.serial:ModbusSerialClient",
+      "file": "pymodbus/client/serial.py",
+      "line": 120,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodbus.client.tls:ModbusTlsClient",
+      "file": "pymodbus/client/tls.py",
+      "line": 102,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodbus.client.udp:ModbusUdpClient",
+      "file": "pymodbus/client/udp.py",
+      "line": 103,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodbus.client.serial:AsyncModbusSerialClient",
+      "file": "pymodbus/client/serial.py",
+      "line": 23,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "pymodbus.client.tls:AsyncModbusTlsClient",
+      "file": "pymodbus/client/tls.py",
+      "line": 16,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10.0",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "pymodbus/datastore/simulator.py:405 ModbusSimulatorContext",
+      "pymodbus/simulator/simcore.py:13 SimCore",
+      "pymodbus/simulator/simdata.py:26 SimData",
+      "pymodbus/simulator/simdevice.py:25 SimDevice",
+      "pymodbus/simulator/simruntime.py:15 SimRuntime",
+      "pymodbus/simulator/simutils.py:53 SimUtils"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/pymodbus-dev__pymodbus --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

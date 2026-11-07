@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.scadawire/tango-ads-simulator",
+  "track": "labs",
+  "local_path": "labs/scadawire/tango-ads-simulator",
+  "driver_dir": "MHS/drivers/labs/scadawire__tango-ads-simulator",
+  "upstream": {
+    "repo_url": "https://github.com/scadawire/tango-ads-simulator",
+    "commit": "e665c1d72e895444fefd43e6ee69faa4905675b0",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 2089,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/scadawire__tango-ads-simulator --backend fake",
+  "skip_reason": "override (labs.json): Skip: a Tango device server that emulates the Beckhoff ADS PLC side via pyads.testserver, not a client driver; use it only as an upstream-sim fake PLC on 127.0.0.1:48898; no license is declared.",
+  "publish_review": "required"
+}

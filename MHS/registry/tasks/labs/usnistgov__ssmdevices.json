@@ -1,0 +1,128 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.usnistgov/ssmdevices",
+  "track": "labs",
+  "local_path": "labs/usnistgov/ssmdevices",
+  "driver_dir": "MHS/drivers/labs/usnistgov__ssmdevices",
+  "upstream": {
+    "repo_url": "https://github.com/usnistgov/ssmdevices",
+    "commit": "4680dde885660d6aa467dc883aec1226f401589a",
+    "license_spdx": "NIST-PD",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 20,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "ssmdevices.instruments.attenuators:MiniCircuitsRCDAT",
+      "file": "src/ssmdevices/instruments/attenuators.py",
+      "line": 13,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ssmdevices.software.network_profiling:LocalPythonTrafficProfiler_ClosedLoopTCP",
+      "file": "src/ssmdevices/software/network_profiling.py",
+      "line": 833,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ssmdevices.instruments.signal_analyzers:RohdeSchwarzFSW26RealTime",
+      "file": "src/ssmdevices/instruments/signal_analyzers.py",
+      "line": 1180,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ssmdevices.instruments.signal_analyzers:RohdeSchwarzFSW43RealTime",
+      "file": "src/ssmdevices/instruments/signal_analyzers.py",
+      "line": 1205,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "ssmdevices.instruments.signal_analyzers:RohdeSchwarzFSW26IQAnalyzer",
+      "file": "src/ssmdevices/instruments/signal_analyzers.py",
+      "line": 1176,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.9,<3.14",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/ssmdevices/instruments/base_station_emulators.py:1",
+      "src/ssmdevices/instruments/gps_simulator.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "MiniCircuitsRCDAT.attenuation (attribute)",
+      "MiniCircuitsRCDAT.calibration_path (attribute)",
+      "MiniCircuitsRCDAT.channel (attribute)",
+      "MiniCircuitsRCDAT.frequency (attribute)",
+      "MiniCircuitsRCDAT.output_power (attribute)",
+      "MiniCircuitsRCDAT.output_power_offset (attribute)",
+      "MiniCircuitsRCDAT.resource (attribute)",
+      "MiniCircuitsRCDAT.timeout (attribute)",
+      "MiniCircuitsRCDAT.usb_path (attribute)",
+      "LocalPythonTrafficProfiler_ClosedLoopTCP.is_running",
+      "LocalPythonTrafficProfiler_ClosedLoopTCP.client (attribute)",
+      "LocalPythonTrafficProfiler_ClosedLoopTCP.delay (attribute)"
+    ],
+    "writes": [
+      "RohdeSchwarzFSW26RealTime.set_detector_type",
+      "RohdeSchwarzFSW26RealTime.set_frequency_mask",
+      "RohdeSchwarzFSW26RealTime.set_marker_position",
+      "RohdeSchwarzFSW26RealTime.set_spectrogram_depth"
+    ],
+    "actions": [
+      "LocalPythonTrafficProfiler_ClosedLoopTCP.start",
+      "LocalPythonTrafficProfiler_ClosedLoopTCP.stop",
+      "RohdeSchwarzFSW26RealTime.abort",
+      "RohdeSchwarzFSW26RealTime.acquire_spectrogram",
+      "RohdeSchwarzFSW26RealTime.acquire_spectrogram_sequence",
+      "RohdeSchwarzFSW26RealTime.arm_spectrogram",
+      "RohdeSchwarzFSW26RealTime.trigger_mask_threshold",
+      "RohdeSchwarzFSW26RealTime.trigger_output_pulse",
+      "RohdeSchwarzFSW26RealTime.trigger_single"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/usnistgov__ssmdevices --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

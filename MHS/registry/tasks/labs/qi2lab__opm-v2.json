@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.qi2lab/opm-v2",
+  "track": "labs",
+  "local_path": "labs/qi2lab/opm-v2",
+  "driver_dir": "MHS/drivers/labs/qi2lab__opm-v2",
+  "upstream": {
+    "repo_url": "https://github.com/qi2lab/opm-v2",
+    "commit": "db87d291f1edf41c1c116c7994e9341c01d0efbd",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "reference",
+  "reason_code": "override:recon",
+  "role": "host",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 692,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/opm_v2/hardware/mock_nidaq.py:13 MockDAQError",
+      "src/opm_v2/hardware/mock_nidaq.py:17 MockDAQRoutingError",
+      "src/opm_v2/hardware/mock_nidaq.py:23 MockDAQTaskError",
+      "src/opm_v2/hardware/mock_nidaq.py:28 MockDAQTask",
+      "src/opm_v2/hardware/mock_nidaq.py:64 MockOPMNIDAQ",
+      "src/opm_v2/hardware/mock_nidaq.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/qi2lab__opm-v2 --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

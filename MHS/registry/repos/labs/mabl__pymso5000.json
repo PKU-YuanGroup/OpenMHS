@@ -1,0 +1,227 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "pymso5000.scope:Scope (src/pymso5000/scope.py:189)",
+      "pymso5000.mso5000_scpi:MSO5000 (src/pymso5000/mso5000_scpi.py:255)",
+      "pymso5000.mcp_server.session:AsyncScopeSession (src/pymso5000/mcp_server/session.py:34)",
+      "pymso5000.scpi_definition_parser.commands:TotalItem (src/pymso5000/scpi_definition_parser/commands.py:24)",
+      "pymso5000.scpi_definition_parser.indexes:IndexesItem (src/pymso5000/scpi_definition_parser/indexes.py:94)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "just",
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_249275ef71da6b0e",
+    "https://github.com/mabl/pymso5000"
+  ],
+  "description": "mabl/pymso5000: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Declared backend: PyVISA; MCP. Language: Python. Catalog keywords: Rigol, MSO5000, MCP, SCPI.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 5,
+    "notes": "bounded static scan: 144 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/mabl__pymso5000/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.mabl/pymso5000",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/mabl__pymso5000: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/mabl__pymso5000 --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "Python SDK",
+    "MCP",
+    "SCPI/VISA",
+    "CLI",
+    "HTTP/REST",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-08-05T02:18:42+00:00",
+  "license": "MIT",
+  "license_class": "permissive",
+  "license_spdx": "MIT",
+  "links": {
+    "repo": "https://github.com/mabl/pymso5000"
+  },
+  "local_path": "labs/mabl/pymso5000",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "mabl",
+  "package_id": "gh.mabl/pymso5000",
+  "quarantine": false,
+  "rank": 14,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "pymso5000",
+  "repo_url": "https://github.com/mabl/pymso5000",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "48ebacc0317ada6d6f54a58ab03916c5d5a44e80",
+    "repo_url": "https://github.com/mabl/pymso5000"
+  },
+  "stars": 3,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "mabl/pymso5000",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-visa-scpi",
+      "family_confidence": 0.89,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 79.0,
+      "quality_flags": [],
+      "tier": "A",
+      "tier_confidence": 0.6
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "PyVISA; MCP",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "Rigol MSO5000示波器Python库与MCP服务器(固件提取SCPI校验)",
+      "join": "exact",
+      "license_raw": "MIT",
+      "mhs_support_raw": "无/需开发适配",
+      "priority": "P1",
+      "row": 1508,
+      "rows_all": [
+        1508
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "scpi-visa",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bpyvisa\\b"
+      ],
+      "family_note": "triage family python-object (catalogue family scpi-visa)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/mabl__pymso5000/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "MIT",
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "MIT",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "48ebacc0317ada6d6f54a58ab03916c5d5a44e80",
+      "driver_dir": "MHS/drivers/labs/mabl__pymso5000",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:f15a7ba958a54dbdae5ccf36716a2f53d57ec32fc295fb2171a86a5e57353397",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "just",
+        "python"
+      ],
+      "entry_evidence_count": 8,
+      "files": 144,
+      "markers": {
+        "balance": 3,
+        "cli": 1,
+        "http": 1,
+        "mcp": 46,
+        "scpi_visa": 28,
+        "serial": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): Model review of wave B: a direct Driver, not the card's ScpiDriver table (the card proposes a ScpiDriver (family-config, family scpi), but the upstream interface is the object pymso5000.scope:Scope with typed methods and read-back outco...)",
+        "rules alone: family-config (family:scpi, rule 9)"
+      ],
+      "family": "python-object",
+      "hardware_transport": "class pymso5000.mso5000_scpi:MSO5000 uses the hardware transport pyvisa",
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of wave B: a direct Driver, not the card's ScpiDriver table (the card proposes a ScpiDriver (family-config, family scpi), but the upstream interface is the object pymso5000.scope:Scope with typed methods and read-back outco...)",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

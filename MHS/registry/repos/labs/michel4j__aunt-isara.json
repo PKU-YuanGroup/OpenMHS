@@ -1,0 +1,222 @@
+{
+  "adapter": {
+    "bridge": "python-object",
+    "entry_points": [
+      "auntisara.ioc:AuntISARAApp (auntisara/ioc.py:560)",
+      "auntisara.ioc:AuntISARA (auntisara/ioc.py:207)"
+    ],
+    "manifest_ref": null,
+    "present": false,
+    "state": "runnable"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [
+    "cap.measure.temperature.v1",
+    "cap.device.configure.v1",
+    "cap.sensing.read.v1"
+  ],
+  "catalog_refs": [
+    "repo_cebb43d902158e2d",
+    "https://github.com/michel4j/aunt-isara"
+  ],
+  "description": "michel4j/aunt-isara: device backend for materials (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 2. Catalog role: device SDK. Declared backend: EPICS. Language: Python. Catalog keywords: ISARA, IOC, EPICS, PV.",
+  "domains": [
+    "materials"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 15 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [
+      "MHS/drivers/labs/michel4j__aunt-isara/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "python-object"
+  ],
+  "hardware_free": false,
+  "id": "gh.michel4j/aunt-isara",
+  "integration": {
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/michel4j__aunt-isara: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/michel4j__aunt-isara --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "PY_SDK_WITH_ENTRY",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
+    "scenario_required": false,
+    "strategy": "direct-driver"
+  },
+  "interfaces": [
+    "EPICS CA/PVA",
+    "CLI",
+    "EPICS",
+    "HTTP/REST"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2026-08-25T10:55:06-06:00",
+  "license": "BSD-3-Clause",
+  "license_class": "permissive",
+  "license_spdx": "BSD-3-Clause",
+  "links": {
+    "repo": "https://github.com/michel4j/aunt-isara"
+  },
+  "local_path": "labs/michel4j/aunt-isara",
+  "modes": [
+    "hardware"
+  ],
+  "owner": "michel4j",
+  "package_id": "gh.michel4j/aunt-isara",
+  "quarantine": false,
+  "rank": 67,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "aunt-isara",
+  "repo_url": "https://github.com/michel4j/aunt-isara",
+  "ring": 1,
+  "simulation": false,
+  "source": {
+    "commit": "f95cff5e6cec38e0b9945ae5673251fa5d11466f",
+    "repo_url": "https://github.com/michel4j/aunt-isara"
+  },
+  "stars": 1,
+  "tags": [
+    "python-object",
+    "lab instrumentation",
+    "device backend",
+    "device sdk",
+    "hardware interface",
+    "direct driver"
+  ],
+  "tier": "B",
+  "title": "michel4j/aunt-isara",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 2,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "protocol-bridge",
+      "family_confidence": 0.79,
+      "family_source": "catalog+content",
+      "merged": true,
+      "priority_score": 47.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "设备SDK",
+      "archived": "false",
+      "backend_family_raw": "EPICS",
+      "category_zh": "设备后端",
+      "description_zh": "ISARA自动换样机器人的Python软IOC服务器，通过EPICS PV暴露",
+      "join": "exact",
+      "license_raw": "NOASSERTION",
+      "mhs_support_raw": "unknown",
+      "priority": "P2",
+      "row": 1615,
+      "rows_all": [
+        1615
+      ],
+      "scope": "core",
+      "track_raw": "lab_instrument",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "other",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bepics\\b"
+      ],
+      "family_note": "triage family python-object (catalogue family other)",
+      "family_rule": "scored",
+      "family_score": 10,
+      "tier_rule": "B1-device-sdk"
+    },
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/michel4j__aunt-isara/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.measure.temperature.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "instrument.thermometer"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
+    "license": {
+      "agrees": null,
+      "catalog_spdx": null,
+      "declared_spdx": "MIT",
+      "file": "LICENSE",
+      "file_spdx": "BSD-3-Clause",
+      "review": false,
+      "source": "license-file"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "f95cff5e6cec38e0b9945ae5673251fa5d11466f",
+      "driver_dir": "MHS/drivers/labs/michel4j__aunt-isara",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:11b51681a1e6752b4256c702838c014fb284ea770bfc84991104291cef0db54e",
+      "reviewed": false,
+      "status": "pass"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 4,
+      "files": 15,
+      "markers": {
+        "epics": 1,
+        "http": 1
+      }
+    },
+    "triage": {
+      "evidence": [
+        "AST entry class auntisara.ioc:AuntISARA (auntisara/ioc.py:207, score 10)",
+        "device evidence: catalogue category 'device backend'"
+      ],
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "reason_code": "PY_SDK_WITH_ENTRY",
+      "rule": 10,
+      "version": "0.9.4"
+    }
+  }
+}

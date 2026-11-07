@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.internrobotics/genmanip",
+  "track": "robots",
+  "local_path": "robots/internrobotics/genmanip",
+  "driver_dir": "MHS/drivers/robots/internrobotics__genmanip",
+  "upstream": {
+    "repo_url": "https://github.com/internrobotics/genmanip",
+    "commit": "1958e3781e4fb1921d1834b658b295e3660899ab",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1921,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "configs/tasks/ebench/generalist/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/internrobotics__genmanip --backend fake",
+  "skip_reason": "override (robots.json): Skip: GenManip is an Isaac Sim-based manipulation simulation and benchmark suite, not a device driver or a Gymnasium/MuJoCo environment.",
+  "publish_review": "required"
+}

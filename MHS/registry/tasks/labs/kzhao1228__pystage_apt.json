@@ -1,0 +1,125 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.kzhao1228/pystage_apt",
+  "track": "labs",
+  "local_path": "labs/kzhao1228/pystage_apt",
+  "driver_dir": "MHS/drivers/labs/kzhao1228__pystage_apt",
+  "upstream": {
+    "repo_url": "https://github.com/kzhao1228/pystage_apt",
+    "commit": "34bf8886ae996f30469338be3b02c42455ffea65",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "PY_SDK_WITH_ENTRY",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 49,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "stage.motor_ctrl:MotorCtrl",
+      "file": "stage/motor_ctrl/__init__.py",
+      "line": 9,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "stage.motor_ini.port:SingleControllerPort",
+      "file": "stage/motor_ini/port.py",
+      "line": 235,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "stage.motor_ini.port:CardSlotPort",
+      "file": "stage/motor_ini/port.py",
+      "line": 215,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "stage.motor_ini.port:Port",
+      "file": "stage/motor_ini/port.py",
+      "line": 11,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "MotorCtrl.get_hardware_limit_switches",
+      "MotorCtrl.get_move_home_params",
+      "MotorCtrl.get_stage_axis_info",
+      "MotorCtrl.get_vel_params",
+      "MotorCtrl.is_in_motion",
+      "MotorCtrl.status",
+      "SingleControllerPort.get_stages",
+      "SingleControllerPort.static_port_list (attribute)",
+      "SingleControllerPort.static_port_list_lock (attribute)",
+      "CardSlotPort.get_stages",
+      "CardSlotPort.static_port_list (attribute)",
+      "CardSlotPort.static_port_list_lock (attribute)"
+    ],
+    "writes": [
+      "MotorCtrl.set_accn",
+      "MotorCtrl.set_home_dir",
+      "MotorCtrl.set_home_params",
+      "MotorCtrl.set_home_vel",
+      "MotorCtrl.set_limit_switch",
+      "MotorCtrl.set_max_vel",
+      "MotorCtrl.set_min_vel",
+      "MotorCtrl.set_pos",
+      "MotorCtrl.set_vel_params"
+    ],
+    "actions": [
+      "MotorCtrl.home_check",
+      "MotorCtrl.home_dir",
+      "MotorCtrl.home_dir_str",
+      "MotorCtrl.home_limit_switch",
+      "MotorCtrl.home_offset_dist",
+      "MotorCtrl.home_vel",
+      "MotorCtrl.home_zero_offset_dist",
+      "MotorCtrl.move_by",
+      "MotorCtrl.move_home",
+      "SingleControllerPort.run",
+      "CardSlotPort.run"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/kzhao1228__pystage_apt --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

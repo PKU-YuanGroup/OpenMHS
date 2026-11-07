@@ -1,0 +1,74 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.snu-pi/humanoidtoolbench",
+  "track": "robots",
+  "local_path": "robots/snu-pi/humanoidtoolbench",
+  "driver_dir": "MHS/drivers/robots/snu-pi__humanoidtoolbench",
+  "upstream": {
+    "repo_url": "https://github.com/snu-pi/humanoidtoolbench",
+    "commit": "2cd4f006f6f2ebc536a3fb45aff8ce2eaf1382d7",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 114,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "humanoidtoolbench.envs.sonic_loco_manip:SonicLocoManipEnv",
+      "file": "src/humanoidtoolbench/envs/sonic_loco_manip.py",
+      "line": 19,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": "==3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/humanoidtoolbench/envs/__init__.py:33 gym env humanoidtoolbench/{}-L{}-{}"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env humanoidtoolbench/{}-L{}-{} (id template, built at run time) registered at src/humanoidtoolbench/envs/__init__.py:33"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/snu-pi__humanoidtoolbench --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,175 @@
+{
+  "adapter": {
+    "bridge": "none",
+    "entry_points": [],
+    "manifest_ref": null,
+    "present": false,
+    "state": "none"
+  },
+  "blocked_on": [],
+  "build_systems": [
+    "python"
+  ],
+  "capabilities_offered": [],
+  "catalog_refs": [
+    "repo_a751d36d4fd2d47c",
+    "https://github.com/pymodbus-dev/modbus-simulator"
+  ],
+  "description": "pymodbus-dev/modbus-simulator: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: not integrated (override:recon). Language: Python. Catalog keywords: modbus-tk, pymodbus, Kivy, Modbus.",
+  "domains": [
+    "electronic measurement"
+  ],
+  "evidence": {
+    "files_read": 3,
+    "notes": "bounded static scan: 28 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
+    "provenance_refs": [],
+    "read_by": "static_analysis",
+    "state": "static_scan",
+    "verified_at": "2026-10-20T00:00:00Z"
+  },
+  "families": [
+    "serial"
+  ],
+  "hardware_free": false,
+  "id": "gh.pymodbus-dev/modbus-simulator",
+  "integration": {
+    "blockers": [
+      "NOT_A_DEVICE: override (labs.json): This is a Kivy GUI Modbus slave simulator, not a device driver: ModbusSimu starts a server and edits simulated register blocks, so it never controls hardware."
+    ],
+    "effort": "EX",
+    "next_action": "Not integrated: override (labs.json): This is a Kivy GUI Modbus slave simulator, not a device driver: ModbusSimu starts a server and edits simulated register blocks, so it never controls hardware.",
+    "reason_code": "override:recon",
+    "role": "tooling",
+    "scenario_required": false,
+    "strategy": "skip"
+  },
+  "interfaces": [
+    "Modbus",
+    "serial",
+    "CLI",
+    "Serial"
+  ],
+  "languages": [
+    "Python"
+  ],
+  "last_commit_at": "2019-05-28T10:32:39+05:30",
+  "license": "Apache-2.0",
+  "license_class": "permissive",
+  "license_spdx": "Apache-2.0",
+  "links": {
+    "repo": "https://github.com/pymodbus-dev/modbus-simulator"
+  },
+  "local_path": "labs/pymodbus-dev/modbus-simulator",
+  "modes": [],
+  "owner": "pymodbus-dev",
+  "package_id": "gh.pymodbus-dev/modbus-simulator",
+  "quarantine": false,
+  "rank": 699,
+  "record_type": "package",
+  "registry_id": "openmhs-registry",
+  "repo": "modbus-simulator",
+  "repo_url": "https://github.com/pymodbus-dev/modbus-simulator",
+  "ring": 3,
+  "simulation": false,
+  "source": {
+    "commit": "c0869f86d65875823b82158c044966b06e531e71",
+    "repo_url": "https://github.com/pymodbus-dev/modbus-simulator"
+  },
+  "stars": 191,
+  "tags": [
+    "serial",
+    "lab instrumentation",
+    "simulated",
+    "hardware interface",
+    "skip"
+  ],
+  "tier": "D",
+  "title": "pymodbus-dev/modbus-simulator",
+  "track": "labs",
+  "trust": "unsigned",
+  "updated_at": "2026-10-20T00:00:00Z",
+  "variant_of": null,
+  "wave": 9,
+  "x-vendor": {
+    "analyst_profile": {
+      "catalog_mapped_via": "manifest_path",
+      "catalog_status": "direct",
+      "family": "lab-serial",
+      "family_confidence": 0.86,
+      "family_source": "content",
+      "merged": true,
+      "priority_score": 47.0,
+      "quality_flags": [],
+      "tier": "B",
+      "tier_confidence": 0.62
+    },
+    "catalog": {
+      "adapter_role_zh": "协议桥接",
+      "archived": "false",
+      "backend_family_raw": "自研/独立",
+      "category_zh": "协议实现/桥接",
+      "description_zh": "基于modbus-tk/pymodbus和Kivy的带GUI的Modbus模拟器",
+      "join": "exact",
+      "license_raw": "Apache-2.0",
+      "mhs_support_raw": "unknown",
+      "priority": "参考",
+      "row": 2094,
+      "rows_all": [
+        2094
+      ],
+      "scope": "peripheral",
+      "track_raw": "shared_infrastructure",
+      "verification_level": "已读文档"
+    },
+    "classification": {
+      "catalog_family": "serial",
+      "catalog_tier": "B",
+      "family_matches": [
+        "\\bmodbus\\b"
+      ],
+      "family_rule": "scored",
+      "family_score": 7,
+      "tier_note": "tier B -> D: triage skip (override:recon)",
+      "tier_rule": "B2-protocol-bridge"
+    },
+    "device_plan": [],
+    "license": {
+      "agrees": true,
+      "catalog_spdx": "Apache-2.0",
+      "declared_spdx": null,
+      "file": "LICENSE",
+      "file_spdx": "Apache-2.0",
+      "review": false,
+      "source": "catalog"
+    },
+    "mhs_registry": {
+      "generated_at": "2026-10-20T00:00:00Z",
+      "generator": "MHS/registry/build_registry.py",
+      "registry_version": "0.9.0"
+    },
+    "scan": {
+      "build_systems": [
+        "python"
+      ],
+      "entry_evidence_count": 8,
+      "files": 28,
+      "markers": {
+        "cli": 2,
+        "serial": 16
+      }
+    },
+    "triage": {
+      "evidence": [
+        "override (labs.json): This is a Kivy GUI Modbus slave simulator, not a device driver: ModbusSimu starts a server and edits simulated register blocks, so it never controls hardware.",
+        "rules alone: untriaged (untriaged:weak_entry, rule 11)"
+      ],
+      "family": null,
+      "hardware_transport": "class modbus_simulator.utils.pymodbus_server:ModbusSimu uses the hardware transport pymodbus",
+      "helper": null,
+      "justification": "This is a Kivy GUI Modbus slave simulator, not a device driver: ModbusSimu starts a server and edits simulated register blocks, so it never controls hardware.",
+      "reason_code": "override:recon",
+      "rule": "override",
+      "version": "0.9.4"
+    }
+  }
+}

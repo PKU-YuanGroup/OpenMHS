@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.scadawire/tango-melsec-simulator",
+  "track": "labs",
+  "local_path": "labs/scadawire/tango-melsec-simulator",
+  "driver_dir": "MHS/drivers/labs/scadawire__tango-melsec-simulator",
+  "upstream": {
+    "repo_url": "https://github.com/scadawire/tango-melsec-simulator",
+    "commit": "0241a3cf42732aa21e4ebbfd28fdae4dc97f1e22",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "skip",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": null,
+  "helper": null,
+  "helper_status": null,
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "none",
+  "wave": 9,
+  "rank": 1852,
+  "exemplar": null,
+  "entry_symbols": [],
+  "models": [],
+  "install": {
+    "python": ">=3.6",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": null,
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 15,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/scadawire__tango-melsec-simulator --backend fake",
+  "skip_reason": "override (labs.json): Skip: this is a Tango device server that simulates the PLC side of the MELSEC MC protocol, so it answers MC requests and never controls a device.",
+  "publish_review": "required"
+}

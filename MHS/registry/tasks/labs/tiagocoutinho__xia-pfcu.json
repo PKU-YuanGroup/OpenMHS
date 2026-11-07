@@ -1,0 +1,102 @@
+{
+  "$schema": "https://openmhs.invalid/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tiagocoutinho/xia-pfcu",
+  "track": "labs",
+  "local_path": "labs/tiagocoutinho/xia-pfcu",
+  "driver_dir": "MHS/drivers/labs/tiagocoutinho__xia-pfcu",
+  "upstream": {
+    "repo_url": "https://github.com/tiagocoutinho/xia-pfcu",
+    "commit": "ed95e031f718c343842bc340f4ae91eb2cb6894a",
+    "license_spdx": "LGPL-3.0",
+    "license_class": "weak-copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 58,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "xia_pfcu.pfcu:PFCU",
+      "file": "xia_pfcu/pfcu.py",
+      "line": 17,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "xia_pfcu.tango.server.pfcu:PFCU",
+      "file": "xia_pfcu/tango/server/pfcu.py",
+      "line": 10,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "xia_pfcu.protocol:AIOProtocol",
+      "file": "xia_pfcu/protocol.py",
+      "line": 166,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "xia_pfcu.protocol:IOProtocol",
+      "file": "xia_pfcu/protocol.py",
+      "line": 203,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "xia_pfcu/simulator.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "PFCU.status"
+    ],
+    "writes": [
+      "PFCU.set_decimation",
+      "PFCU.set_filters",
+      "AIOProtocol.set_decimation"
+    ],
+    "actions": [
+      "PFCU.disable_shutter",
+      "PFCU.enable_shutter",
+      "PFCU.start_exposure",
+      "AIOProtocol.start_exposure"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/tiagocoutinho__xia-pfcu --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}
