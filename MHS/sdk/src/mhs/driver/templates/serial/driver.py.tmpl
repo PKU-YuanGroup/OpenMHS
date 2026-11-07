@@ -1,0 +1,32 @@
+"""OpenMHS driver for ${package_id} (serial family: configuration only).
+
+The hardware backend opens pyserial on options["port"]; the fake backend is
+fake.py.  Every Limit and Fact cites its source (vendor_doc or upstream_code,
+ref "path/in/clone.py:LINE" at commit ${commit}).  See MHS/sdk/docs/driver-authoring.md.
+"""
+
+from mhs.driver import Action, Fact, Field, Limit, SerialDriver
+
+
+class ${class_name}(SerialDriver):
+    device_id = "${device_id}"
+    device_kind = "${device_kind}"
+    mode = "${mode}"
+    risk = "${risk}"
+    native = "${native}"
+    backends = {"fake": ".fake:Fake${class_name}"}
+    tags = []
+    facts = []
+    safe_state = "${safe_state}"
+    # R2+ hardware needs an independent hardware e-stop cited as "path:LINE" (SAFE-045), or an action
+    # with safe_state=True: estop_physical_ref = "docs/manual.md:12"
+    baudrate = 9600
+    terminator = "\r\n"
+
+    parameters = {"status": Field("string", description="Status reported by the instrument")}
+    reads = {"status": {"command": "STATUS?", "parse": {"kind": "str"}}}
+    commands = {"x-cap.${cap_owner}.identify.v1": {"command": "*IDN?", "parse": {"kind": "str"},
+                                                  "result": {"map": {"identity": "output.value"}}}}
+    actions = {"x-cap.${cap_owner}.identify.v1": Action(name="identify", description="Identify the instrument",
+                                                       output={"identity": Field("string")})}
+    safety_bindings = {"estop": {"command": "STOP"}}

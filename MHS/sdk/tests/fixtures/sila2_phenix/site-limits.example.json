@@ -1,0 +1,65 @@
+{
+  "openmhs": "0.9",
+  "site": "controlled-fixture",
+  "issued_by": {
+    "id": "operator:fixture"
+  },
+  "issued_at": "2026-11-04T00:00:00Z",
+  "devices": {
+    "mhs://localhost/controlled_phenix": {
+      "x-cap.phenix.connect.v1": {
+        "PhenixHost": {
+          "allowed": [
+            "controlled-phenix.invalid",
+            "controlled-unreachable.invalid"
+          ],
+          "source": "operator"
+        }
+      },
+      "x-cap.phenix.stagein.v1": {
+        "PlateBarcode": {
+          "allowed": [
+            "plate1"
+          ],
+          "source": "operator"
+        }
+      },
+      "x-cap.phenix.stageout.v1": {
+        "PlateBarcode": {
+          "allowed": [
+            "plate1"
+          ],
+          "source": "operator"
+        }
+      },
+      "x-cap.phenix.gostandby.v1": {
+        "DurationSeconds": {
+          "min": 60,
+          "max": 60,
+          "source": "operator",
+          "unit": "s"
+        }
+      },
+      "x-cap.phenix.runacquisitionprotocol.v1": {
+        "ProtocolName": {
+          "allowed": [
+            "controlled_protocol"
+          ],
+          "source": "operator"
+        },
+        "PlateBarcode": {
+          "allowed": [
+            "plate1"
+          ],
+          "source": "operator"
+        },
+        "TimeoutMinutes": {
+          "min": 1,
+          "max": 1,
+          "source": "operator",
+          "unit": "min"
+        }
+      }
+    }
+  }
+}

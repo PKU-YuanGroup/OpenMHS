@@ -1,0 +1,27 @@
+"""OpenMHS rosbridge driver for ${package_id}; replace every placeholder binding with pinned source evidence.
+
+Hardware requires a human hardware review at every risk level. Fake and sim
+backends cannot fall back to endpoint. See MHS/sdk/docs/ros-driver.md.
+"""
+
+from mhs.driver import Action, Field, RosDriver
+
+
+class ${class_name}(RosDriver):
+    device_id = "${device_id}"
+    device_kind = "${device_kind}"
+    mode = "${mode}"
+    risk = "${risk}"
+    ros_version = 2  # Replace with the version of the upstream node.
+    backends = {"fake": ".fake:Fake${class_name}"}
+    tags = []
+    facts = []
+    parameters = {"status": Field("string", description="Replace with the upstream topic field")}
+    reads = {"status": {"topic": "/status", "type": "std_msgs/msg/String", "path": "data",
+                        "source_ref": "REPLACE_WITH_UPSTREAM_SOURCE:1"}}
+    commands = {"x-cap.${cap_owner}.status.v1": {"topic": "/status", "type": "std_msgs/msg/String",
+                "operation": "subscribe", "path": "data", "result": {"map": {"status": "output.$$"}},
+                "source_ref": "REPLACE_WITH_UPSTREAM_SOURCE:1"}}
+    actions = {"x-cap.${cap_owner}.status.v1": Action(name="status", output={"status": Field("string")})}
+    # Do not infer a native stop from action cancel or node shutdown.
+    # Add an acknowledged stop service and safe-state action when the scope requires them.

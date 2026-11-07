@@ -1,0 +1,13 @@
+"""Recording fake for ${class_name}; replace the sample topic and data with this repository's contract."""
+
+from mhs.bridge.ros_transport import RecordingRosTransport
+
+
+class Fake${class_name}(RecordingRosTransport):
+    def __init__(self, **_options):
+        super().__init__(handler=self._respond)
+
+    def _respond(self, message):
+        if message.get("op") == "subscribe" and message.get("topic") == "/status":
+            return {"op": "publish", "topic": "/status", "msg": {"data": "idle"}}  # placeholder
+        return None

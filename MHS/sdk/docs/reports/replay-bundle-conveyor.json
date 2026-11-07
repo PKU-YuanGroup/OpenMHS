@@ -1,0 +1,901 @@
+{
+  "bundle_digest": "sha256:6463d6e0afed4e0a0ee15f764ea4f688fac5c8f34ca357af3c3f5b27df540207",
+  "bundle_version": "1.0",
+  "device": {
+    "capabilities": [
+      {
+        "capability_id": "cap.world.step.v1",
+        "constraints": {
+          "cancellable": false,
+          "concurrency": "exclusive",
+          "max_duration_ms": 5000
+        },
+        "determinism": "exact",
+        "exclusive": true,
+        "input_schema": {
+          "properties": {
+            "ticks": {
+              "maximum": 10000,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "ticks"
+          ],
+          "type": "object"
+        },
+        "limits": {
+          "ticks": {
+            "max": 10000,
+            "min": 1,
+            "reason": "bounded step to keep calls bounded"
+          }
+        },
+        "native": "ConveyorSim::advance(ticks)",
+        "output_schema": {
+          "type": "object"
+        },
+        "resource": "workcell",
+        "semantics": {
+          "determinism": "exact",
+          "effects": [
+            "world.time",
+            "motion.transport"
+          ],
+          "hazards": [],
+          "notes": "",
+          "postconditions": [
+            "tick advanced by ticks",
+            "parts advanced by velocity"
+          ],
+          "preconditions": [
+            "workcell not latched",
+            "estop released",
+            "safety door closed"
+          ],
+          "summary": "Advance the deterministic integer workcell simulation by whole 1 ms ticks.",
+          "tags": [
+            "conveyor",
+            "simulation",
+            "deterministic",
+            "fixed step",
+            "world step"
+          ],
+          "units": {
+            "ticks": "ms"
+          }
+        },
+        "title": "Advance the simulated workcell",
+        "verb": "invoke"
+      },
+      {
+        "capability_id": "cap.world.state.v1",
+        "constraints": {
+          "cancellable": false,
+          "concurrency": "shared",
+          "max_duration_ms": 5000
+        },
+        "determinism": "exact",
+        "input_schema": {
+          "properties": {},
+          "type": "object"
+        },
+        "native": "ConveyorSim::state()",
+        "output_schema": {
+          "type": "object"
+        },
+        "resource": "workcell",
+        "semantics": {
+          "determinism": "exact",
+          "effects": [],
+          "hazards": [],
+          "notes": "",
+          "postconditions": [],
+          "preconditions": [],
+          "summary": "Read the complete conveyor workcell state document without mutating it.",
+          "tags": [
+            "conveyor",
+            "world state",
+            "read only",
+            "observation"
+          ],
+          "units": {}
+        },
+        "title": "Read the complete world state",
+        "verb": "read"
+      },
+      {
+        "capability_id": "cap.actuation.valve.v1",
+        "constraints": {
+          "cancellable": false,
+          "concurrency": "exclusive",
+          "max_duration_ms": 2000
+        },
+        "determinism": "exact",
+        "exclusive": true,
+        "input_schema": {
+          "properties": {
+            "gate": {
+              "enum": [
+                "main",
+                "divert"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "gate"
+          ],
+          "type": "object"
+        },
+        "native": "ConveyorSim::set_diverter(gate)",
+        "output_schema": {
+          "type": "object"
+        },
+        "requires_permit": true,
+        "resource": "workcell",
+        "semantics": {
+          "determinism": "exact",
+          "effects": [
+            "actuation.valve"
+          ],
+          "hazards": [
+            "part misrouting",
+            "jam"
+          ],
+          "notes": "",
+          "postconditions": [],
+          "preconditions": [
+            "safety door closed",
+            "workcell not latched"
+          ],
+          "summary": "Move the diverter gate so parts route to the main line or the divert bin.",
+          "tags": [
+            "conveyor",
+            "diverter",
+            "routing",
+            "valve",
+            "actuation"
+          ],
+          "units": {}
+        },
+        "title": "Set the diverter gate",
+        "verb": "write"
+      },
+      {
+        "capability_id": "cap.motion.stop.v1",
+        "constraints": {
+          "cancellable": false,
+          "concurrency": "shared",
+          "max_duration_ms": 1000
+        },
+        "determinism": "exact",
+        "input_schema": {
+          "properties": {},
+          "type": "object"
+        },
+        "native": "ConveyorSim::stop()",
+        "output_schema": {
+          "type": "object"
+        },
+        "resource": "workcell",
+        "semantics": {
+          "determinism": "exact",
+          "effects": [
+            "motion.stop"
+          ],
+          "hazards": [],
+          "notes": "",
+          "postconditions": [
+            "velocity is zero",
+            "gate is main"
+          ],
+          "preconditions": [],
+          "summary": "Stop the conveyor drive and return the diverter gate to the main position (declared safe state).",
+          "tags": [
+            "conveyor",
+            "stop",
+            "safe state",
+            "motion"
+          ],
+          "units": {}
+        },
+        "title": "Stop the conveyor in its safe state",
+        "verb": "invoke"
+      },
+      {
+        "capability_id": "cap.world.snapshot.v1",
+        "constraints": {
+          "cancellable": false,
+          "concurrency": "shared",
+          "max_duration_ms": 5000
+        },
+        "determinism": "exact",
+        "input_schema": {
+          "properties": {},
+          "type": "object"
+        },
+        "native": "ConveyorSim::snapshot()",
+        "output_schema": {
+          "type": "object"
+        },
+        "resource": "workcell",
+        "semantics": {
+          "determinism": "exact",
+          "effects": [],
+          "hazards": [],
+          "notes": "",
+          "postconditions": [],
+          "preconditions": [],
+          "summary": "Return a snapshot of the normative workcell state for later exact restore.",
+          "tags": [
+            "simulation",
+            "snapshot",
+            "determinism",
+            "replay"
+          ],
+          "units": {}
+        },
+        "title": "Take a deterministic snapshot",
+        "verb": "invoke"
+      },
+      {
+        "capability_id": "cap.world.restore.v1",
+        "constraints": {
+          "cancellable": false,
+          "concurrency": "exclusive",
+          "max_duration_ms": 5000
+        },
+        "determinism": "exact",
+        "exclusive": true,
+        "input_schema": {
+          "properties": {
+            "snapshot": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "snapshot"
+          ],
+          "type": "object"
+        },
+        "native": "ConveyorSim::restore(snapshot)",
+        "output_schema": {
+          "type": "object"
+        },
+        "resource": "workcell",
+        "semantics": {
+          "determinism": "exact",
+          "effects": [],
+          "hazards": [],
+          "notes": "",
+          "postconditions": [],
+          "preconditions": [
+            "snapshot was taken by this device",
+            "mode is simulated or replay"
+          ],
+          "summary": "Restore a previously taken snapshot; only valid on simulated/replay endpoints.",
+          "tags": [
+            "simulation",
+            "restore",
+            "determinism",
+            "replay"
+          ],
+          "units": {}
+        },
+        "title": "Restore a deterministic snapshot",
+        "verb": "invoke"
+      },
+      {
+        "capability_id": "x-cap.mhs-reference.start.v1",
+        "constraints": {
+          "cancellable": false,
+          "concurrency": "exclusive",
+          "max_duration_ms": 1000
+        },
+        "determinism": "exact",
+        "exclusive": true,
+        "input_schema": {
+          "properties": {
+            "speed_mm_s": {
+              "maximum": 200,
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "limits": {
+          "speed_mm_s": {
+            "max": 200,
+            "min": 0,
+            "reason": "bounded reference speed"
+          }
+        },
+        "native": "ConveyorSim::start(speed_mm_s)",
+        "output_schema": {
+          "type": "object"
+        },
+        "resource": "workcell",
+        "semantics": {
+          "determinism": "exact",
+          "effects": [
+            "motion.start"
+          ],
+          "hazards": [],
+          "notes": "",
+          "postconditions": [],
+          "preconditions": [
+            "workcell not latched",
+            "estop released",
+            "safety door closed"
+          ],
+          "summary": "Start the conveyor drive at a bounded integer speed in mm/s.",
+          "tags": [
+            "conveyor",
+            "start",
+            "drive",
+            "reference extension"
+          ],
+          "units": {
+            "speed_mm_s": "mm/s"
+          }
+        },
+        "title": "Start the conveyor drive (reference extension)",
+        "verb": "invoke"
+      },
+      {
+        "capability_id": "x-cap.mhs-reference.feed.v1",
+        "constraints": {
+          "cancellable": false,
+          "concurrency": "exclusive",
+          "max_duration_ms": 1000
+        },
+        "determinism": "exact",
+        "exclusive": true,
+        "input_schema": {
+          "properties": {
+            "count": {
+              "maximum": 32,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "limits": {
+          "count": {
+            "max": 32,
+            "min": 1,
+            "reason": "bounded feed batch"
+          }
+        },
+        "native": "ConveyorSim::feed(count)",
+        "output_schema": {
+          "type": "object"
+        },
+        "resource": "workcell",
+        "semantics": {
+          "determinism": "exact",
+          "effects": [
+            "material.feed"
+          ],
+          "hazards": [],
+          "notes": "",
+          "postconditions": [],
+          "preconditions": [
+            "infeed zone clear",
+            "workcell not latched"
+          ],
+          "summary": "Place parts on the infeed when the infeed zone is clear, up to a bounded count.",
+          "tags": [
+            "conveyor",
+            "infeed",
+            "material feed",
+            "reference extension"
+          ],
+          "units": {}
+        },
+        "title": "Feed parts onto the conveyor infeed (reference extension)",
+        "verb": "invoke"
+      }
+    ],
+    "conformance": {
+      "issued_at": "2026-10-22T15:57:36.010Z",
+      "issuer_kind": "self",
+      "level": "CL4",
+      "profile": "MHS-Sim",
+      "report_digest": "sha256:e24872f066429195e2d5bd4e93dddfd16110b6db4209650e5c21c4c4b3401d02",
+      "suite_version": "1.3.0"
+    },
+    "device_id": "mhs://localhost:7400/lab/conveyor-workcell",
+    "display_name": "Deterministic conveyor workcell (simulated)",
+    "fidelity": {
+      "determinism": {
+        "kind": "exact",
+        "notes": "Deterministic Python model; integer/fixed-point normative state, no wall-clock pacing.",
+        "seed_control": "none"
+      },
+      "engine": "custom-integer",
+      "fidelity_level": "F0",
+      "gaps": [
+        "No contact physics",
+        "No sensor noise model",
+        "Parts are points, not rigid bodies",
+        "The safety door and e-stop are simulated, not a safety-rated channel"
+      ],
+      "realtime_factor": 0,
+      "reset": "full",
+      "snapshot_restore": true,
+      "timestep_ms": 1
+    },
+    "instance_id": "01J8ZQ3V6Y7M2N4P6R8S0T2V4W",
+    "mhs_version": "1.0",
+    "mode": "simulated",
+    "model": "conveyor-workcell-sim",
+    "profile": {
+      "docs": [
+        "MHS/sdk/docs/reference-endpoints.md"
+      ],
+      "operating_notes": [
+        "Advance the model with cap.world.step.v1; each tick is 1 ms of simulated time.",
+        "Every mutation returns a receipt with a new revision and state hash.",
+        "Opening the safety door or engaging the e-stop latches the workcell; reset after clearing interlocks."
+      ],
+      "summary": "A small conveyor with a diverter, photoelectric eyes, a safety door and an emergency stop. Deterministic integer simulation intended for testing agent command semantics: revisions, command ids, interlocks, permits and receipts.",
+      "tags": [
+        "conveyor",
+        "lab automation",
+        "workcell",
+        "deterministic simulation",
+        "safety interlock",
+        "command semantics"
+      ],
+      "title": "Conveyor workcell"
+    },
+    "provenance": {
+      "adapter_id": "openmhs:reference.conveyor-workcell",
+      "evidence": [
+        "MHS/sdk/src/mhs/reference/conveyor.py"
+      ],
+      "generated_by": "mhs.reference (protocol fixture, not a driver template)"
+    },
+    "resources": [
+      {
+        "hash_exclusions": [
+          "/mono_ms"
+        ],
+        "kind": "world.sim",
+        "resource_id": "workcell",
+        "revision": 0,
+        "sampling": {
+          "mode": "on_change"
+        },
+        "state": {
+          "door": "closed",
+          "drive": "stopped",
+          "estop": "released",
+          "faults": [],
+          "gate": "main",
+          "latch_reason": null,
+          "latched": false,
+          "mono_ms": 0,
+          "part_seq": 0,
+          "parts": [],
+          "parts_delivered": 0,
+          "sensors": {
+            "diverter": "clear",
+            "infeed": "clear"
+          },
+          "tick": 0,
+          "velocity_mm_s": 0
+        },
+        "state_schema": {
+          "properties": {
+            "door": {
+              "enum": [
+                "closed",
+                "open"
+              ],
+              "type": "string"
+            },
+            "drive": {
+              "enum": [
+                "stopped",
+                "running"
+              ],
+              "type": "string"
+            },
+            "estop": {
+              "enum": [
+                "released",
+                "engaged"
+              ],
+              "type": "string"
+            },
+            "faults": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "gate": {
+              "enum": [
+                "main",
+                "divert"
+              ],
+              "type": "string"
+            },
+            "latch_reason": {
+              "enum": [
+                "door",
+                "estop",
+                null
+              ],
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "latched": {
+              "type": "boolean"
+            },
+            "mono_ms": {
+              "type": "integer",
+              "x-mhs-unit": "ms"
+            },
+            "part_seq": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "parts": {
+              "items": {
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "position_mm": {
+                    "type": "integer",
+                    "x-mhs-unit": "mm"
+                  },
+                  "position_um": {
+                    "type": "integer",
+                    "x-mhs-unit": "um"
+                  },
+                  "route": {
+                    "enum": [
+                      "main",
+                      "diverted",
+                      "stopped"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "position_mm",
+                  "route"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "parts_delivered": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "sensors": {
+              "type": "object"
+            },
+            "tick": {
+              "minimum": 0,
+              "type": "integer",
+              "x-mhs-unit": "ms"
+            },
+            "velocity_mm_s": {
+              "type": "integer",
+              "x-mhs-unit": "mm/s"
+            }
+          },
+          "required": [
+            "tick",
+            "door",
+            "estop",
+            "parts"
+          ],
+          "type": "object"
+        },
+        "title": "Workcell world state"
+      }
+    ],
+    "safety": {
+      "envelope": {
+        "cap.actuation.valve.v1": {
+          "gate": {
+            "allowed": [
+              "main",
+              "divert"
+            ],
+            "reason": "two-position gate"
+          }
+        },
+        "cap.world.step.v1": {
+          "ticks": {
+            "max": 10000,
+            "min": 1,
+            "reason": "bounded simulation step"
+          }
+        },
+        "x-cap.mhs-reference.feed.v1": {
+          "count": {
+            "max": 32,
+            "min": 1,
+            "reason": "bounded feed batch"
+          }
+        },
+        "x-cap.mhs-reference.start.v1": {
+          "speed_mm_s": {
+            "max": 200,
+            "min": 0,
+            "reason": "bounded drive speed",
+            "unit": "mm/s"
+          }
+        }
+      },
+      "estop": {
+        "kind": "software",
+        "latching": true,
+        "latency_ms": 50,
+        "physical_ref": "No physical e-stop exists on a simulated workcell; MHS never replaces one.",
+        "reset": "mhs.safety.reset"
+      },
+      "interlocks": [
+        {
+          "description": "Safety door is closed",
+          "id": "door_closed",
+          "required_for": [
+            "cap.actuation.*",
+            "cap.actuation.*",
+            "cap.world.step.v1",
+            "x-cap.mhs-reference.start.v1",
+            "x-cap.mhs-reference.feed.v1",
+            "cap.world.step.v1",
+            "cap.actuation.valve.v1",
+            "x-cap.mhs-reference.feed.v1"
+          ],
+          "source": "simulated"
+        }
+      ],
+      "requires_permit": [
+        "cap.actuation.*"
+      ],
+      "risk_class": "R1",
+      "safe_state": {
+        "achieved_by": [
+          "cap.motion.stop.v1"
+        ],
+        "description": "Conveyor stopped, diverter gate in main position, no parts moving"
+      }
+    },
+    "vendor": {
+      "name": "OpenMHS reference fixture"
+    }
+  },
+  "frames": [
+    {
+      "capability_id": null,
+      "command_id": null,
+      "revision": 0,
+      "state": {
+        "workcell": {
+          "door": "closed",
+          "drive": "stopped",
+          "estop": "released",
+          "faults": [],
+          "gate": "main",
+          "latch_reason": null,
+          "latched": false,
+          "mono_ms": 0,
+          "part_seq": 0,
+          "parts": [],
+          "parts_delivered": 0,
+          "sensors": {
+            "diverter": "clear",
+            "infeed": "clear"
+          },
+          "tick": 0,
+          "velocity_mm_s": 0
+        }
+      },
+      "state_hash": "sha256:ede0dd1b772794ca6f1025f4cf814e001c6a3e7cd77f5d420a397735736fe877"
+    },
+    {
+      "capability_id": "cap.world.step.v1",
+      "command_id": "01M60YR0H2AFTY5WXMK8N2VEP1",
+      "revision": 1,
+      "state": {
+        "workcell": {
+          "door": "closed",
+          "drive": "stopped",
+          "estop": "released",
+          "faults": [],
+          "gate": "main",
+          "latch_reason": null,
+          "latched": false,
+          "mono_ms": 200,
+          "part_seq": 0,
+          "parts": [],
+          "parts_delivered": 0,
+          "sensors": {
+            "diverter": "clear",
+            "infeed": "clear"
+          },
+          "tick": 200,
+          "velocity_mm_s": 0
+        }
+      },
+      "state_hash": "sha256:333d68f5e0affbe7373c893f7818b574a825da9754dfa99409603ec07cd62d0a"
+    }
+  ],
+  "head_digest": "sha256:e5edc6f92631eadec0dcd8c090f3c25cc04b72030555be72f340e049c0c7f902",
+  "kind": "mhs.reference.replay-bundle",
+  "primary_resource": "workcell",
+  "receipts": [
+    {
+      "accepted_at": "2026-10-28T09:51:30.339Z",
+      "capability_id": "cap.world.step.v1",
+      "command_id": "01M60YR0H2AFTY5WXMK8N2VEP1",
+      "device_id": "mhs://localhost:7400/lab/conveyor-workcell",
+      "effects": [
+        {
+          "kind": "world.time",
+          "reversible": true,
+          "severity": "R1",
+          "summary": "cap.world.step.v1 (completed)"
+        },
+        {
+          "kind": "motion.transport",
+          "reversible": true,
+          "severity": "R1",
+          "summary": "cap.world.step.v1 (completed)"
+        }
+      ],
+      "ended_at": "2026-10-28T09:51:30.339Z",
+      "endpoint_id": "mhs://localhost:7400",
+      "evidence": {
+        "digest": "sha256:e5edc6f92631eadec0dcd8c090f3c25cc04b72030555be72f340e049c0c7f902",
+        "prev_digest": "sha256:996c4f6a24d6da6f07071da9531f72a062ac04e09238871cd27119c8b077f2a3",
+        "seq": 1
+      },
+      "input_digest": "sha256:3aecdc2a61ecb6d4918931ee99402e2bb45d9d4c6b320e49d1da87fa7285c89b",
+      "mode": "simulated",
+      "operation_id": "op_01M60YR0H3K6S26185ESZRAJV1",
+      "output": {
+        "sensors": {
+          "diverter": "clear",
+          "infeed": "clear"
+        },
+        "state_hash": null,
+        "tick": 200
+      },
+      "principal": {
+        "id": "mhs-python-client",
+        "kind": "service"
+      },
+      "progress": {
+        "percent": 100
+      },
+      "receipt_id": "01M60YR0H3K6S26185ESZRAJV3",
+      "replayed": false,
+      "resource_ids": [
+        "workcell"
+      ],
+      "session_id": "mhs_s_01M60YR0H2AFTY5WXMK8N2VEP015669bc3937cbb95",
+      "started_at": "2026-10-28T09:51:30.339Z",
+      "state_hash_after": "sha256:333d68f5e0affbe7373c893f7818b574a825da9754dfa99409603ec07cd62d0a",
+      "state_revision_after": 1,
+      "state_revision_before": 0,
+      "status": "completed",
+      "x-vendor": {
+        "duration_ms": 0
+      }
+    }
+  ],
+  "recorded_at": "2026-10-28T09:51:30.340Z",
+  "source_endpoint": null,
+  "source_evidence": {
+    "bundle_version": "1.0.0",
+    "count": 1,
+    "created_at": "2026-10-28T09:51:30.340Z",
+    "endpoint": "mhs://localhost:7400",
+    "endpoint_info": {
+      "endpoint_id": "mhs://localhost:7400",
+      "genesis_digest": "sha256:996c4f6a24d6da6f07071da9531f72a062ac04e09238871cd27119c8b077f2a3",
+      "mhs_version": "1.0",
+      "server": {
+        "name": "mhs-reference-server",
+        "version": "0.9.0.dev0"
+      }
+    },
+    "genesis": {
+      "digest": "sha256:996c4f6a24d6da6f07071da9531f72a062ac04e09238871cd27119c8b077f2a3",
+      "genesis_document": {
+        "created_at": "2026-10-28T09:51:30.337Z",
+        "endpoint_id": "mhs://localhost:7400",
+        "instance_salt": "01M60YR0H2AFTY5WXMK8N2VENY",
+        "mhs_version": "1.0"
+      },
+      "kind": "genesis",
+      "seq": 0
+    },
+    "genesis_digest": "sha256:996c4f6a24d6da6f07071da9531f72a062ac04e09238871cd27119c8b077f2a3",
+    "head_digest": "sha256:e5edc6f92631eadec0dcd8c090f3c25cc04b72030555be72f340e049c0c7f902",
+    "include_telemetry": false,
+    "mhs_version": "1.0",
+    "receipts": [
+      {
+        "accepted_at": "2026-10-28T09:51:30.339Z",
+        "capability_id": "cap.world.step.v1",
+        "command_id": "01M60YR0H2AFTY5WXMK8N2VEP1",
+        "device_id": "mhs://localhost:7400/lab/conveyor-workcell",
+        "effects": [
+          {
+            "kind": "world.time",
+            "reversible": true,
+            "severity": "R1",
+            "summary": "cap.world.step.v1 (completed)"
+          },
+          {
+            "kind": "motion.transport",
+            "reversible": true,
+            "severity": "R1",
+            "summary": "cap.world.step.v1 (completed)"
+          }
+        ],
+        "ended_at": "2026-10-28T09:51:30.339Z",
+        "endpoint_id": "mhs://localhost:7400",
+        "evidence": {
+          "digest": "sha256:e5edc6f92631eadec0dcd8c090f3c25cc04b72030555be72f340e049c0c7f902",
+          "prev_digest": "sha256:996c4f6a24d6da6f07071da9531f72a062ac04e09238871cd27119c8b077f2a3",
+          "seq": 1
+        },
+        "input_digest": "sha256:3aecdc2a61ecb6d4918931ee99402e2bb45d9d4c6b320e49d1da87fa7285c89b",
+        "mode": "simulated",
+        "operation_id": "op_01M60YR0H3K6S26185ESZRAJV1",
+        "output": {
+          "sensors": {
+            "diverter": "clear",
+            "infeed": "clear"
+          },
+          "state_hash": null,
+          "tick": 200
+        },
+        "principal": {
+          "id": "mhs-python-client",
+          "kind": "service"
+        },
+        "progress": {
+          "percent": 100
+        },
+        "receipt_id": "01M60YR0H3K6S26185ESZRAJV3",
+        "replayed": false,
+        "resource_ids": [
+          "workcell"
+        ],
+        "session_id": "mhs_s_01M60YR0H2AFTY5WXMK8N2VEP015669bc3937cbb95",
+        "started_at": "2026-10-28T09:51:30.339Z",
+        "state_hash_after": "sha256:333d68f5e0affbe7373c893f7818b574a825da9754dfa99409603ec07cd62d0a",
+        "state_revision_after": 1,
+        "state_revision_before": 0,
+        "status": "completed",
+        "x-vendor": {
+          "duration_ms": 0
+        }
+      }
+    ],
+    "signature": null,
+    "telemetry": [],
+    "truncation": null
+  }
+}

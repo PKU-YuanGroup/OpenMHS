@@ -1,0 +1,8 @@
+"""Fake serial port of ${class_name}: answers the commands the driver sends (pyserial-like)."""
+
+from mhs.bridge.serial import FakeSerial
+
+
+class Fake${class_name}(FakeSerial):
+    def __init__(self, **_options):
+        super().__init__({"*IDN?": "Example,Instrument,0,1.0\r\n", "STATUS?": "IDLE\r\n", "STOP": "OK\r\n"})

@@ -1,0 +1,59 @@
+{
+  "card_version": "0.9",
+  "package_id": "gh.sdk-fixture/mcp-rigol",
+  "synthetic": true,
+  "notes": "Synthetic SDK-controlled complete 13-tool fixture. Pinned upstream bytes are text/AST inputs only; no actual package or native acceptance.",
+  "track": "labs",
+  "local_path": "vendor",
+  "driver_dir": "MHS/sdk/tests/fixtures/mcp_rigol",
+  "upstream": null,
+  "decision": "family-config",
+  "reason_code": "TUTORIAL",
+  "role": "device-driver",
+  "family": "mcp-proxy",
+  "helper": "McpClientDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "wave": 0,
+  "rank": 0,
+  "exemplar": null,
+  "entry_symbols": [
+    {
+      "symbol": "rigol_dho_mcp.scpi:ScpiClient",
+      "file": "rigol_dho_mcp/scpi.py",
+      "line": 60,
+      "confidence": "ast"
+    }
+  ],
+  "install": {
+    "python": ">=3.10",
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "trigger_status"
+    ],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 30,
+  "acceptance": "python -m mhs.driver check MHS/sdk/tests/fixtures/mcp_rigol --backend fake",
+  "skip_reason": null
+}

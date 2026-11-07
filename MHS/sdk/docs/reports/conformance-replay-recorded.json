@@ -1,0 +1,553 @@
+{
+  "coverage": {
+    "failed": 2,
+    "passed": 25,
+    "required": 25,
+    "skipped": 21
+  },
+  "disclaimers": [
+    {
+      "id": "not_certified",
+      "text": "MHS conformance is a behavioural test result, not a safety certification. MHS.SAFETY.NOT_CERTIFIED: MHS is not a safety-rated channel; an independent hardware emergency stop is required."
+    },
+    {
+      "id": "not_affiliated",
+      "text": "OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview."
+    },
+    {
+      "id": "simulation_only",
+      "text": "Simulation conformance does not establish equivalence to the physical device; see the fidelity gaps in the device manifest."
+    },
+    {
+      "id": "self_issued",
+      "text": "Self-issued report (issuer.kind self): it records the subject's own run of the suite; recompute it with 'python -m mhs.conformance verify'."
+    }
+  ],
+  "environment": {
+    "date": "2026-11-05T20:35:13.018Z",
+    "endpoint_ids": [
+      "mhs://localhost:7400/replay/recorded-device"
+    ],
+    "notes": "profile MHS-Sim; suite 1.4.1; transport in-process, fresh endpoint per group; allow_actuation=false; read_only=false; fixtures=none; approvals=none",
+    "os": "Darwin 27.0.0",
+    "python": "3.14.7",
+    "suite": "mhs-conformance 1.4.1"
+  },
+  "issuer": {
+    "kind": "self",
+    "name": "mhs reference conformance suite"
+  },
+  "level_achieved": "CL2",
+  "level_claimed": "CL4",
+  "limitations": [
+    "SAFE-014 skipped but required for CL3",
+    "optional test failures (do not demote the level): CAP-016, TCAP-002",
+    "skipped tests: FID-016, FID-025, OP-001, OP-003, OP-004, OP-005, OP-011, OP-013, PROTO-011, PROTO-027, PROTO-030, SAFE-011, SAFE-012, SAFE-014, SAFE-028, SAFE-031, SAFE-041, SAFE-045, TCAP-001, TCAP-003, TSAFE-001",
+    "requirement coverage (MHS-001 §5, SPEC-001): 582 normative ids; checked=52 tested=52 dispositioned=262 (out_of_profile=153, editorial=64, report_process=41, level_not_claimed=4) not_verified=268; the award covers only the executed checks and is not a claim of full normative coverage (inventory: mhs/conformance/applicability.json)."
+  ],
+  "profile": "MHS-Sim",
+  "report_digest": "sha256:c07efcfd6d20d0bdb1ffea5817c90476eed3fdf96758aff3930f36d002ab7665",
+  "report_version": "1.1.0",
+  "subject": {
+    "id": "mhs://localhost:7400",
+    "kind": "endpoint",
+    "manifest_digest": "sha256:a80681a5b8f938c1f8809dae39a0409d7f861fd071c5ed85c99f60fea1d4dc14",
+    "mhs_version": "1.0"
+  },
+  "suite_version": "1.4.1",
+  "tests": [
+    {
+      "detail": "1 device manifest(s) validate against device.schema.json",
+      "duration_ms": 2.918,
+      "id": "ADPT-005",
+      "level": "CL0",
+      "name": "device manifests validate against the MHS schema",
+      "required": true,
+      "spec_ref": "ADPT-005",
+      "status": "pass"
+    },
+    {
+      "detail": "endpoint subject under MHS-Sim; device modes replay",
+      "duration_ms": 0.005,
+      "id": "TCON-001",
+      "level": "CL0",
+      "name": "the profile matches the subject kind and every device mode",
+      "required": true,
+      "spec_ref": "CON-004, CON-005",
+      "status": "pass"
+    },
+    {
+      "detail": "8 binding(s) name catalogue classes or extension namespaces",
+      "duration_ms": 0.511,
+      "id": "CAP-035",
+      "level": "CL0",
+      "name": "bound classes are catalogue classes or extensions",
+      "required": true,
+      "spec_ref": "CAP-035",
+      "status": "pass"
+    },
+    {
+      "detail": "6 catalogue binding(s) respect their class risk floor",
+      "duration_ms": 0.004,
+      "id": "CAP-017",
+      "level": "CL0",
+      "name": "bindings do not lower their class risk floor",
+      "required": true,
+      "spec_ref": "CAP-017",
+      "status": "pass"
+    },
+    {
+      "detail": "mhs://localhost:7400/replay/recorded-device: cap.actuation.valve.v1 property-not-in-class at input.gate",
+      "duration_ms": 1.248,
+      "id": "CAP-016",
+      "level": "CL0",
+      "mhs_code": "MHS.INTERNAL.SCHEMA_DRIFT",
+      "name": "binding schemas do not drift from their class (advisory)",
+      "required": false,
+      "spec_ref": "CAP-016, CAP-018",
+      "status": "fail"
+    },
+    {
+      "detail": "mhs://localhost:7400/replay/recorded-device: cap.actuation.valve.v1 bound to resource kind 'world.sim'; mhs://localhost:7400/replay/recorded-device: cap.motion.stop.v1 bound to resource kind 'world.sim'",
+      "duration_ms": 1.214,
+      "id": "TCAP-002",
+      "level": "CL0",
+      "mhs_code": "MHS.CAPABILITY.KIND_MISMATCH",
+      "name": "bindings target a resource kind their class accepts (advisory)",
+      "required": false,
+      "spec_ref": "MHS-003 §3 resource_kinds, MHS.CAPABILITY.KIND_MISMATCH (no numbered requirement)",
+      "status": "fail"
+    },
+    {
+      "detail": "no hardware or hybrid device: the actuation gate was not engaged",
+      "duration_ms": 0.002,
+      "id": "CON-031",
+      "level": "CL0",
+      "name": "hardware is not actuated without allow_actuation (suite check)",
+      "required": true,
+      "spec_ref": "CON-031",
+      "status": "pass"
+    },
+    {
+      "detail": "mhs.safety.estop sent 0 time(s) and mhs.safety.reset 0 time(s), only to software/both e-stops",
+      "duration_ms": 0.003,
+      "id": "CON-032",
+      "level": "CL0",
+      "name": "e-stops are sent only to software/both e-stops (suite check)",
+      "required": true,
+      "spec_ref": "CON-032",
+      "status": "pass"
+    },
+    {
+      "detail": "8/8 CL1 mandatory methods reached dispatch; probes: mhs.hello=present, mhs.devices.list=present, mhs.devices.get=present, mhs.schema.get=present, mhs.session.open=present, mhs.session.close=MHS.SESSION.UNKNOWN, mhs.resource.read=present, mhs.evidence.export=present",
+      "duration_ms": 2.889,
+      "id": "TPROTO-901",
+      "level": "CL1",
+      "name": "every mandatory CL1 method is implemented (dispatch-level probe)",
+      "required": true,
+      "spec_ref": "PROTO-016, PROTO-017, CON-014, CON-018",
+      "status": "pass"
+    },
+    {
+      "detail": "4/4 CL2 mandatory methods reached dispatch; probes: mhs.command=present, mhs.subscribe=MHS.PROTOCOL.INVALID_PARAMS, mhs.unsubscribe=MHS.SESSION.UNKNOWN, mhs.operations.get=MHS.OPERATION.UNKNOWN",
+      "duration_ms": 0.475,
+      "id": "TPROTO-902",
+      "level": "CL2",
+      "name": "every mandatory CL2 method is implemented (dispatch-level probe)",
+      "required": true,
+      "spec_ref": "PROTO-016, PROTO-017, CON-014, CON-018",
+      "status": "pass"
+    },
+    {
+      "detail": "2/2 CL3 mandatory methods reached dispatch; probes: mhs.operations.cancel=MHS.OPERATION.UNKNOWN, mhs.safety.status=present",
+      "duration_ms": 0.107,
+      "id": "TPROTO-903",
+      "level": "CL3",
+      "name": "every mandatory CL3 method is implemented (dispatch-level probe)",
+      "required": true,
+      "spec_ref": "PROTO-016, PROTO-017, CON-014, CON-018",
+      "status": "pass"
+    },
+    {
+      "detail": "hello ok: 1.0, 1 device(s)",
+      "duration_ms": 0.271,
+      "evidence": {
+        "request_digest": "sha256:70bac8271a5f28b4aa9482c676696e78345ce2c56362140feaad9dd06f825a35"
+      },
+      "id": "PROTO-013",
+      "level": "CL1",
+      "name": "mhs.hello negotiates the protocol and lists devices",
+      "required": true,
+      "spec_ref": "PROTO-013",
+      "status": "pass"
+    },
+    {
+      "detail": "devices.list/get ok for 1 device(s)",
+      "duration_ms": 2.341,
+      "id": "PROTO-021",
+      "level": "CL1",
+      "name": "devices.list/get return complete manifests",
+      "required": true,
+      "spec_ref": "PROTO-021",
+      "status": "pass"
+    },
+    {
+      "detail": "read workcell@r1 hash verifies",
+      "duration_ms": 0.171,
+      "evidence": {
+        "response_digest": "sha256:333d68f5e0affbe7373c893f7818b574a825da9754dfa99409603ec07cd62d0a"
+      },
+      "id": "PROTO-023",
+      "level": "CL1",
+      "name": "resource.read returns a verifiable revision and state hash",
+      "required": true,
+      "spec_ref": "PROTO-023",
+      "status": "pass"
+    },
+    {
+      "detail": "read is stable at revision 1",
+      "duration_ms": 0.242,
+      "id": "PROTO-024",
+      "level": "CL1",
+      "name": "reads are stable without mutations",
+      "required": true,
+      "spec_ref": "PROTO-024",
+      "status": "pass"
+    },
+    {
+      "detail": "session opened with 8 granted capability(s)",
+      "duration_ms": 0.071,
+      "id": "SESS-001",
+      "level": "CL1",
+      "name": "session.open returns a grant, mode and expiry",
+      "required": true,
+      "spec_ref": "SESS-001",
+      "status": "pass"
+    },
+    {
+      "detail": "mode 'hardware' rejected with MHS.SESSION.MODE_MISMATCH",
+      "duration_ms": 0.032,
+      "id": "MODE-002",
+      "level": "CL1",
+      "mhs_code": "MHS.SESSION.MODE_MISMATCH",
+      "name": "session mode mismatch is rejected",
+      "required": true,
+      "spec_ref": "MODE-002",
+      "status": "pass"
+    },
+    {
+      "detail": "session heartbeat refreshed the lease",
+      "duration_ms": 0.023,
+      "id": "SESS-005",
+      "level": "CL3",
+      "name": "session heartbeat refreshes the lease",
+      "required": false,
+      "spec_ref": "SESS-005",
+      "status": "pass"
+    },
+    {
+      "detail": "no write/invoke capability with inputs to probe (read-only device, or every actuating binding is permit-gated or a safe-state action); not applicable (CON-026a)",
+      "duration_ms": 0.012,
+      "id": "OP-001",
+      "level": "CL2",
+      "name": "a valid command returns a completed receipt",
+      "required": false,
+      "spec_ref": "OP-001",
+      "status": "skip"
+    },
+    {
+      "detail": "no write/invoke capability with inputs to probe (read-only device, or every actuating binding is permit-gated or a safe-state action); not applicable (CON-026a)",
+      "duration_ms": 0.002,
+      "id": "TCAP-001",
+      "level": "CL2",
+      "name": "a completed command's output validates against its output_schema",
+      "required": false,
+      "spec_ref": "MHS-003 §3 output_schema, appendix B MHS.CAPABILITY.OUTPUT_INVALID (no numbered requirement)",
+      "status": "skip"
+    },
+    {
+      "detail": "no write/invoke capability with inputs to probe (read-only device, or every actuating binding is permit-gated or a safe-state action); not applicable (CON-026a)",
+      "duration_ms": 0.001,
+      "id": "TCAP-003",
+      "level": "CL2",
+      "name": "a probe command has an observable effect (writes change state)",
+      "required": false,
+      "spec_ref": "CAP-013",
+      "status": "skip"
+    },
+    {
+      "detail": "no write/invoke capability with inputs to probe (read-only device, or every actuating binding is permit-gated or a safe-state action); not applicable (CON-026a)",
+      "duration_ms": 0.001,
+      "id": "OP-003",
+      "level": "CL2",
+      "name": "command_id idempotency replays without re-execution",
+      "required": false,
+      "spec_ref": "OP-003",
+      "status": "skip"
+    },
+    {
+      "detail": "no write/invoke capability with inputs to probe (read-only device, or every actuating binding is permit-gated or a safe-state action); not applicable (CON-026a)",
+      "duration_ms": 0.001,
+      "id": "OP-004",
+      "level": "CL2",
+      "name": "command_id reuse with different input is a conflict",
+      "required": false,
+      "spec_ref": "OP-004",
+      "status": "skip"
+    },
+    {
+      "detail": "no write/invoke capability with inputs to probe (read-only device, or every actuating binding is permit-gated or a safe-state action); not applicable (CON-026a)",
+      "duration_ms": 0.002,
+      "id": "OP-005",
+      "level": "CL2",
+      "name": "expected_revision conflicts are rejected",
+      "required": false,
+      "spec_ref": "OP-005",
+      "status": "skip"
+    },
+    {
+      "detail": "no write/invoke capability with inputs to probe (read-only device, or every actuating binding is permit-gated or a safe-state action); not applicable (CON-026a)",
+      "duration_ms": 0.001,
+      "id": "PROTO-027",
+      "level": "CL2",
+      "name": "schema-invalid input is rejected without effects",
+      "required": false,
+      "spec_ref": "PROTO-027",
+      "status": "skip"
+    },
+    {
+      "detail": "unknown capability rejected with MHS.CAPABILITY.UNKNOWN",
+      "duration_ms": 0.262,
+      "id": "PROTO-014",
+      "level": "CL2",
+      "mhs_code": "MHS.CAPABILITY.UNKNOWN",
+      "name": "unknown capabilities are rejected",
+      "required": true,
+      "spec_ref": "PROTO-014",
+      "status": "pass"
+    },
+    {
+      "detail": "no write/invoke capability with inputs to probe (read-only device, or every actuating binding is permit-gated or a safe-state action); not applicable (CON-026a)",
+      "duration_ms": 0.002,
+      "id": "PROTO-030",
+      "level": "CL2",
+      "name": "operations can be queried for commands",
+      "required": false,
+      "spec_ref": "PROTO-030",
+      "status": "skip"
+    },
+    {
+      "detail": "no write/invoke capability with inputs to probe (read-only device, or every actuating binding is permit-gated or a safe-state action); not applicable (CON-026a)",
+      "duration_ms": 0.001,
+      "id": "PROTO-011",
+      "level": "CL2",
+      "name": "deadlines surface as a timeout outcome",
+      "required": false,
+      "spec_ref": "PROTO-011",
+      "status": "skip"
+    },
+    {
+      "detail": "endpoint does not declare a cancellable capability; OP-011 is not applicable",
+      "duration_ms": 0.007,
+      "id": "OP-011",
+      "level": "CL3",
+      "name": "cancellation resolves to a declared safe state",
+      "required": false,
+      "spec_ref": "OP-011",
+      "status": "skip"
+    },
+    {
+      "detail": "no write/invoke capability with inputs to probe (read-only device, or every actuating binding is permit-gated or a safe-state action); not applicable (CON-026a)",
+      "duration_ms": 0.003,
+      "id": "OP-013",
+      "level": "CL2",
+      "name": "unknown-outcome semantics survive a lost receipt",
+      "required": false,
+      "spec_ref": "OP-013",
+      "status": "skip"
+    },
+    {
+      "detail": "safety.status ok: risk R1, 0 interlock(s)",
+      "duration_ms": 0.109,
+      "id": "SAFE-001",
+      "level": "CL3",
+      "name": "safety.status exposes risk, e-stop, interlocks and safe state",
+      "required": true,
+      "spec_ref": "SAFE-001",
+      "status": "pass"
+    },
+    {
+      "detail": "no hardware or hybrid device at R2/R3; SAFE-045 is not applicable",
+      "duration_ms": 0.002,
+      "id": "SAFE-045",
+      "level": "CL3",
+      "name": "hardware R2+ devices declare an independent stop path",
+      "required": false,
+      "spec_ref": "SAFE-045",
+      "status": "skip"
+    },
+    {
+      "detail": "safe_state.achieved_by resolves on 1 device(s)",
+      "duration_ms": 0.005,
+      "id": "SAFE-029",
+      "level": "CL3",
+      "name": "safe_state.achieved_by resolves to bound, permit-free actions",
+      "required": true,
+      "spec_ref": "SAFE-029",
+      "status": "pass"
+    },
+    {
+      "detail": "primary device declares a non-latching e-stop",
+      "duration_ms": 0.002,
+      "id": "TSAFE-001",
+      "level": "CL3",
+      "name": "e-stop latches, blocks commands and reset releases it",
+      "required": false,
+      "spec_ref": "SAFE-040, SAFE-042, SAFE-048",
+      "status": "skip"
+    },
+    {
+      "detail": "replay endpoints are read-only",
+      "duration_ms": 0.001,
+      "id": "SAFE-028",
+      "level": "CL3",
+      "name": "the e-stop reaches the device and its safe state",
+      "required": false,
+      "spec_ref": "SAFE-028",
+      "status": "skip"
+    },
+    {
+      "detail": "no declared interlock gates an actuating binding",
+      "duration_ms": 0.004,
+      "id": "SAFE-011",
+      "level": "CL3",
+      "name": "open interlocks block actuation",
+      "required": false,
+      "spec_ref": "SAFE-011",
+      "status": "skip"
+    },
+    {
+      "detail": "no declared interlock gates an actuating binding",
+      "duration_ms": 0.002,
+      "id": "SAFE-012",
+      "level": "CL3",
+      "name": "interlocks in an unknown state block actuation",
+      "required": false,
+      "spec_ref": "SAFE-012",
+      "status": "skip"
+    },
+    {
+      "detail": "the primary device declares no interlock that gates actuation",
+      "duration_ms": 0.003,
+      "id": "SAFE-041",
+      "level": "CL3",
+      "name": "reset is refused while a hard interlock is open",
+      "required": false,
+      "spec_ref": "SAFE-041",
+      "status": "skip"
+    },
+    {
+      "detail": "endpoint declares no gated (requires_permit) capability",
+      "duration_ms": 0.002,
+      "id": "SAFE-031",
+      "level": "CL3",
+      "name": "gated capabilities require a valid single-use permit",
+      "required": false,
+      "spec_ref": "SAFE-030, SAFE-031",
+      "status": "skip"
+    },
+    {
+      "detail": "endpoint declares no limits on an actuating binding",
+      "duration_ms": 0.003,
+      "id": "SAFE-014",
+      "level": "CL3",
+      "name": "safety envelope bounds are enforced before effects",
+      "required": true,
+      "spec_ref": "SAFE-014",
+      "status": "skip"
+    },
+    {
+      "detail": "hello advertises MHS.SAFETY.NOT_CERTIFIED",
+      "duration_ms": 0.001,
+      "id": "SAFE-050",
+      "level": "CL3",
+      "name": "MHS.SAFETY.NOT_CERTIFIED is disclosed in hello",
+      "required": true,
+      "spec_ref": "SAFE-050",
+      "status": "pass"
+    },
+    {
+      "detail": "evidence bundle verified offline (1 receipts, head sha256:e5edc6f92631eadec0dcd8c090f3c25cc04b72030555be72f340e049c0c7f902)",
+      "duration_ms": 0.344,
+      "evidence": {
+        "response_digest": "sha256:e5edc6f92631eadec0dcd8c090f3c25cc04b72030555be72f340e049c0c7f902"
+      },
+      "id": "EVID-015",
+      "level": "CL4",
+      "name": "evidence exports and verifies offline",
+      "required": true,
+      "spec_ref": "EVID-015",
+      "status": "pass"
+    },
+    {
+      "detail": "tampered bundle rejected: {'seq': 1, 'mhs_code': 'MHS.EVIDENCE.CHAIN_BROKEN', 'detail': \"digest mismatch (recomputed sha256:0d4efb9baad87ef82ec35db152cb27491d84ba66d5674530d29f8353ee400125, receipt claims 'sha256:e5edc6f92631eadec0dcd8c090f3c25cc04b72030555be72f340e049c0c7f902')\"}",
+      "duration_ms": 0.326,
+      "id": "EVID-016",
+      "level": "CL4",
+      "name": "tampered evidence is detected",
+      "required": true,
+      "spec_ref": "EVID-016",
+      "status": "pass"
+    },
+    {
+      "detail": "evidence chain links verified across 1 receipt(s)",
+      "duration_ms": 0.039,
+      "id": "EVID-010",
+      "level": "CL4",
+      "name": "receipt evidence links form a hash chain",
+      "required": true,
+      "spec_ref": "EVID-010",
+      "status": "pass"
+    },
+    {
+      "detail": "fidelity contracts disclosed for 1 device(s)",
+      "duration_ms": 0.001,
+      "id": "FID-005",
+      "level": "CL4",
+      "name": "simulated devices disclose a complete fidelity contract",
+      "required": true,
+      "spec_ref": "FID-005",
+      "status": "pass"
+    },
+    {
+      "detail": "no write/invoke capability with inputs to probe (read-only device, or every actuating binding is permit-gated or a safe-state action); not applicable (CON-026a)",
+      "duration_ms": 0.004,
+      "id": "FID-016",
+      "level": "CL4",
+      "name": "restore reproduces an identical state_hash sequence",
+      "required": false,
+      "spec_ref": "FID-016",
+      "status": "skip"
+    },
+    {
+      "detail": "primary device does not declare seeded determinism",
+      "duration_ms": 0.003,
+      "id": "FID-025",
+      "level": "CL4",
+      "name": "seeded replay reproduces identical sequences for the same seed",
+      "required": false,
+      "spec_ref": "FID-025",
+      "status": "skip"
+    },
+    {
+      "detail": "replay device is read-only (MHS.MODE.READ_ONLY), unchanged, and snapshots work",
+      "duration_ms": 1.191,
+      "id": "MODE-005",
+      "level": "CL1",
+      "name": "replay endpoints are read-only but readable and snapshotable",
+      "required": true,
+      "spec_ref": "MODE-005",
+      "status": "pass"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+OpenMHS is independent and is not affiliated with, endorsed by, or a reimplementation of Anthropic's MHS research preview.
+
+# Controlled Phenix fixture facts
+
+This original SDK test fixture implements the complete eight-command/seven-property shape of `servers/phenix_imager/PhenixImager.sila.xml` at commit `0b572380e06977c1920510773b4bfee7bcd0eec5`. It imports no upstream runtime and proves no optical, timing, motion or physical safety fidelity. DisplayIcon is an instrument UI icon, not an acquired image. Source FDL protocol minima and maxima remain separate from operator-approved effect envelopes. `site-limits.example.json` authorizes only the named controlled fake values; it is not a deployable physical limit file.
+
+The native implementation's Stop acknowledgement, cached DeviceState and late stage eject remain unproven retirement paths. Only the explicitly separate controlled observe contract can establish fresh fake retirement. Every native factory remains refused. The task and lock honestly declare a synthetic SDK fixture with upstream null. The three bundled primary text files match the exact pinned FDL, proto and implementation hashes recorded in source-provenance.json; they are parsed, never imported. This is controlled declaration evidence, not a registry package, native acceptance or redistribution/license approval; reviewed_by remains null. All device/native/license blockers remain open.

@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+# Before building a wheel or sdist, copy the normative JSON into the package:
+#     python3 MHS/sdk/tools/sync_data.py && python3 MHS/sdk/tools/sync_data.py --check
+# Project identifiers (name, versions, schema namespace) are defined once in
+# src/mhs/_ids.py; keep `name` and `version` below equal to DIST_NAME and
+# SDK_VERSION there (tests/packaging checks this).
+
+[project]
+name = "openmhs"
+version = "0.9.0.dev0"
+description = "OpenMHS reference Python SDK (protocol client, endpoint runtime, reference endpoints). OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "The OpenMHS Authors" }]
+keywords = ["openmhs", "robotics", "lab-automation", "instruments", "agents", "json-rpc"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = []
+
+[project.optional-dependencies]
+ros = ["websocket-client>=1.8,<2"]
+images = ["Pillow>=13,<14"]
+
+[project.scripts]
+mhs = "mhs.cli:main"
+openmhs = "mhs.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+include-package-data = false
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["mhs*"]
+
+[tool.setuptools.package-data]
+mhs = ["_data/**/*", "conformance/*.json", "driver/templates/**/*"]

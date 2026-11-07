@@ -1,0 +1,26 @@
+"""Fake SCPI transport of ${class_name}: answers queries from a table and records writes."""
+
+
+class Fake${class_name}:
+    RESPONSES = {"*IDN?": "Example,Instrument,0,1.0", "STAT:OPER:COND?": "0"}
+
+    def __init__(self, **_options):
+        self.written = []
+        self._pending = []
+
+    def write(self, line, *, timeout_s=None):
+        self.written.append(line)
+        if line.endswith("?"):
+            self._pending.append(self.RESPONSES.get(line, ""))
+
+    def read(self, *, timeout_s=None):
+        if not self._pending:
+            raise TimeoutError("no response pending")
+        return self._pending.pop(0)
+
+    def query(self, line, *, timeout_s=None):
+        self.write(line, timeout_s=timeout_s)
+        return self.read(timeout_s=timeout_s)
+
+    def close(self):
+        pass
