@@ -1,0 +1,9 @@
+OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
+
+# ROS control without an acknowledged stop
+
+An effectful ROS profile could report an achieved safe state after a software-only e-stop in simulated mode while the external peer retained its last target. The local latch prevented later commands but did not stop the external controller. RosBridge now reports explicit unconfirmed safety when a profile declares effectful commands, writes or a native reset without an acknowledged stop binding or safe-state Action. The stock server returns `MHS.SAFETY.SAFE_STATE_UNREACHED` and retains the latch.
+
+Safe-state Actions without a separate estop binding now expose the same retained stop proof as direct bindings. New work and closed or failed connections invalidate that proof. Pure observation profiles keep their prior software-latch behavior. This change neither manufactures a native stop nor enables hardware admission.
+
+Private candidate validation on 2026-11-04: all 262 selected ROS tests pass, including seven new test methods covering retained publication/service targets on fake and explicit simulation deployments, missing stops before any send, write/reset-only profiles, readonly controls, direct-stop success/failure, and command-only service/action safety proofs. Explicit simulation tests use an in-process JSON socket peer; they do not launch ROS or use hardware. The unchanged-source counterfactual fails the five affected test groups while the direct-stop and readonly controls pass. Independent review, actual integration and fresh whole-tree/Docker/export validation are still pending at this candidate checkpoint.

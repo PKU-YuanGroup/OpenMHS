@@ -1,0 +1,9 @@
+OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
+
+# Controlled GNSDO fake clock
+
+The package fake previously read the host clock. Crossing a second between two post-reset reads changed only ptime_time and state_hash, causing intermittent TSAFE-001 failures in G8 or nested G9. A stock RPC boundary probe reproduced that change with no new command or revision.
+
+The fake now starts with a fixed placeholder time and exposes a test-only advance_time helper. Existing assertions remain unchanged. Added controls cross an ambient second without advancing the fake, then explicitly advance time and verify date/time, holdover duration, health and recovery behavior. The unchanged boundary probe and the actual complete G1-G9 gate pass; the stable gate digest is unchanged.
+
+This change affects the package fake, tests, explanatory facts and result/report metadata. It does not change the driver contract, source facts, runtime, safety gate or native behavior. No state-hash exclusion or gate waiver was introduced. The fake clock does not model GPS synchronization, oscillator drift or hardware timing; no native execution, human signature or publication is claimed. On 2026-11-04, all 587 existing passing packages pass their complete fake gates with matching stable RESULT digests. The separate unchanged MCM3000 binary-PDF citation remains unaccepted, so strict collection still needs attention. The combined SDK completes 2,763 tests (five skipped), with every executed test passing and no source or dependency drift. A later test-only regex-fixture correction is recorded explicitly; the package runtime and its gate evidence are unchanged.

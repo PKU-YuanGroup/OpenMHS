@@ -1,0 +1,11 @@
+# SiLA2 Stop confirmation retains the original settlement budget
+
+OpenMHS is an independent project, not affiliated with, endorsed by, or a reimplementation of Anthropic's MHS research preview. Controlled SiLA2 Stop confirmation now waits for cooperative receipt-state reads and retries invalidated observations within the caller's original deadline.
+
+The stock cancellation path reads state for its receipt while independent Stop actions confirm safety. A read taking longer than 50 ms, or two timely read settlements between observations, previously exhausted an internal wait or attempt limit even when nearly the full 500 ms Stop budget remained. Controlled schedules reproduce the same G6 failure through the unchanged server and gate. They do not establish the exact interleaving of the earlier untraced full-suite failure.
+
+Stop dispatch remains immediate. The first observation and the existing ordinary owner are retained. Only non-effectful state-read workers use extra bounded condition waits within the original absolute deadline; command and artifact-publication owners keep the prompt unsafe result. Close and caller abandonment end the wait. A settled ordinary generation requires a new Stop and a fresh proof; generation changes can retry within the same budget. Stable negative proofs keep the original two-attempt bound, and reset remains a separate one-observation operation with its Stop-request revision check.
+
+All safety predicates remain: no pending ordinary work, fresh authoritative quiescence, complete resource retirement, current epoch, open lifecycle, no fault or abandonment, the original deadline and every retained execution owner. Unknown resources, contrary state, unretired owners, exhausted deadlines and continuous read churn still refuse safety and reset. This changes controlled helper availability, not native device admission, physical stopping guarantees or human review requirements.
+
+Regression coverage includes multiple cooperative reads, a read settling after 50 ms, a never-settling read, fixed-deadline continuous churn, close, cancellation and stable negative proofs. Existing stock gate, reset/Stop ordering, stale-proof, resource-debt and lifecycle assertions are retained unchanged.

@@ -1,0 +1,11 @@
+OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
+
+# Emergency-stop retry and confirmation lifecycle
+
+An initial failed native stop now keeps its required background retry even when writing the initial receipt fails. The recording error still reaches the caller. A background confirmation settles its original command ids only after its own receipt is recorded; an evidence failure retains those ids and the bounded retry instead of escaping from the worker and claiming confirmation in a finally block.
+
+A closed endpoint cannot acquire a background retry supervisor or commit a new positive confirmation from an initial stop, restored replay or reset reassertion. An already-admitted reset still receives its final protective stop if it returns after close, because that reset may undo a concurrent stop. The change does not kill native callbacks, reopen evidence, clear an already-true diagnostic or suppress delivery of an earlier queued event.
+
+CORE-077 and CORE-171 still define confirmed as success of the current native attempt and latch generation. It is not a general claim about durable receipt storage: successful initial native stopping remains truthfully visible even if recording its receipt fails. An earlier private proposal for a uniform durability meaning was rejected during review and is preserved as historical evidence. Ordinary reset persistence/receipt ordering is outside this correction.
+
+The two-file candidate is integrated after 99 independent safety, generation, close and persisted-replay tests plus four exact original probes. The author separately passes 144 combined safety/Gym/MuJoCo tests, including ten new lifecycle regressions. Actual composed regression passes the same 144 tests after integration. Deliberate close tests still log ordinary late-operation receipt unavailability; there is no generic error suppression or physical stop certification. Final SDK/corpus/export checks remain pending. Exact candidates, probes, rejected evidence and integration receipts are preserved under work/handoff-runs/mhs-build-20261102/.

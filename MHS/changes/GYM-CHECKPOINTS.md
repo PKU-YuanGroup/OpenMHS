@@ -1,0 +1,13 @@
+OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
+
+# Explicit Gym checkpoints and retained restore ownership
+
+Gym snapshot support now requires a declared, backend-specific bounded JSON profile. The native checkpoint is part of the served world resource and normal state hash. The endpoint validates identities, aliases, digests, exact resource keys and schemas before effects, then checks the actual restored state. Hidden state, RNG completeness and native determinism still require package evidence. See `sdk/docs/gym-checkpoints.md` for the profile and its limits.
+
+Restore admission retains native ownership before descriptor resolution and preserves intervening stop history through verification and rollback. Caller timeout does not release an executing worker. Safety reset refuses unresolved work. An unsupported asynchronous setter completion remains unknown and cannot acknowledge safety. Closing fences new work immediately and defers exactly-once native cleanup until admitted synchronous owners settle; an unverified hidden worker deliberately withholds cleanup.
+
+Independent review rejected the first two versions for pre-setter stop/reset admission, unsupported completion and close-versus-setter races. The third version closes all three production reproductions. The actual integrated Gym and Python safe-action composition passes 265 selected tests; the independent Gym review separately passes 175 cases, including 24 checkpoint cases. These counts overlap. A final complete SDK and current package collection remains pending.
+
+The SimplerEnv package now exposes an explicit fake JSON checkpoint, complete fake RNG/reset continuation and truthful F0/50 ms logical timing. Its full G1-G9 fake gate and separate upstream-import isolation check pass on the integrated SDK. The package remains blocked: native reset advances physics and its base state omits task/controller/RNG/TimeLimit state. Live construction refuses before upstream imports. Its source pin, model authorship and null human signature are preserved. This record does not establish live SAPIEN or hardware operation.
+
+MuJoCo now has its separately reviewed representation and 69-package migration, recorded in `MUJOCO-CHECKPOINTS.md`; the shared schema guard still refuses the historical native-only shape. Selected close tests also exposed a separate background confirmation/evidence lifecycle issue under investigation, so their passing assertions are not described as clean shutdown evidence. Private review, originals and integration evidence are retained under `work/handoff-runs/mhs-build-20261102/`.

@@ -1,0 +1,13 @@
+OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
+
+# Declared MuJoCo checkpoint state
+
+MuJoCo resource reads and snapshots now share one declared world document, including a readonly native checkpoint. The endpoint validates its schema, identity, digests and public/native component agreement before restore and verifies the actual restored state. Complete native integration state and an explicitly limited basic fallback are separate profiles. State API presence no longer implies seeded or exact determinism. See `sdk/docs/mujoco-checkpoints.md`.
+
+The complete profile preserves integration inputs such as actuator activation and warm-start state without calling `mj_forward` during restore. The equality-activation component accepts only numeric 0 or 1 before any native setter dispatch. Independent review rejected v1 because finite but invalid values reached native byte conversion; v2 closes the exact production reproduction. Stop history, pending native ownership and unknown completion remain subject to the accepted shared endpoint rules.
+
+The six-file SDK correction and all 69 affected reference pairs are integrated. All 69 actual package gates pass, with no forbidden citation warnings, and every driver lock remains byte-identical. The ROBOTIS package's sole handwritten test change replaces an unsupported inherited seeded-determinism assertion with none; its behavioral and gate tests remain present. Result notes preserve original author identities and distinguish this fake contract migration from native package validation.
+
+Independent verification passes 48 selected tests and five additional adversarial cases. Parent verification separately passes the 48 selected assertions, the 69 actual gates, and isolated MuJoCo 3.3.0 contact/nonempty-actuator state plus 20-step continuation with zero restore-time control callbacks. A second engine fixture rejects seven malformed equality states before native dispatch and restores valid 0/1. These fixtures do not establish all corpus runtimes, compiled-model identity, external callback/plugin/RNG completeness, cross-platform determinism or physical fidelity.
+
+The selected close tests emitted background evidence-log errors. Investigation reproduced a separate server confirmation-order defect under an injected evidence write failure; its correction is tracked privately and is not claimed complete by this checkpoint change. Final whole-SDK, registry, corpus collection and export validation remain pending. Originals and exact evidence are retained under `work/handoff-runs/mhs-build-20261102/`.

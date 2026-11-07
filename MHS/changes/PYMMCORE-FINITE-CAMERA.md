@@ -1,0 +1,15 @@
+OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, and not a reimplementation or compatible dialect of Anthropic's MHS research preview.
+
+# Finite primary-pixel camera helper candidate
+
+The SDK candidate adds an explicitly owned single-camera fixture workflow through the selected ImSwitch `acquireSingleFrame` shape. Complete mono8, mono16 and RGB8 arrays become lossless PNG artifacts through stock endpoint/MCP publication. Geometry/exposure capture inputs assert current settings, finite configuration requires operator limits and verified readback, and native hardware/simulator admission remains refused.
+
+Construction, acquisition, stop and cleanup remain separately owned across timeouts and late returns. Reset never restarts acquisition or calls global core reset. Cold unconstructed e-stop remains failed rather than constructing a camera or inventing a safe state. The source-shaped ImSwitch exemplar is private and blocked; no registry family, package acceptance, human signature, publication or native runtime result follows from this generic implementation.
+
+The shared pixel utility extracts the accepted raw ROS PNG encoder without changing its bytes. Artifact capacity preflight is conservative and does not reserve quota; final publication retains the accepted HTTP generic artifact_ref and default camera image_ref contracts. Optional NumPy is loaded only at the camera pixel boundary.
+
+Validation evidence and exact failed controls are preserved in the private frozen handoff. Technical independent review and later actual-tree integration/validation are separate steps. No actual source, upstream source, device configuration, hardware or native dependency was changed by the candidate author.
+
+Each retained stop now carries its original ordinary-owner epoch, so an earlier idle readback cannot acknowledge a later acquisition effect after its owner retires. Final safety commit, status and reset recheck that proof. The stock gate also preloads the lazy camera pixel validator and protects the immutable ordinary-owner policy, while allowing legitimate live lease state to change. Complete isolated CLI controls reject both reported package tamper paths; this is gate admission protection, not a Python sandbox.
+
+The private v2 regression ran 1,129 SDK tests (two optional skips, all executed tests passed), two unchanged independent publisher/e-stop controls and six package workflow cases. Exact independent stale-stop, ownership and full-CLI controls pass their required boundaries. The byte-identical shared encoder retains the earlier 84 ROS PNG comparisons and 336 bound controls. The unchanged full package test and strict collection remain failed at G6/G7/G8. These are controlled fixture results; no native camera or hardware run is claimed.
