@@ -517,6 +517,23 @@ reported as a failed checkpoint; every wait is bounded.
 
 ---
 
+### 6.1 With a model: the OpenAI4S simulated lab
+
+The acceptance demo above needs no model. OpenAI4S's optional
+`openai4s/mhs_lab` package (OpenAI4S 0.4, which pins this repository as the
+`third_party/OpenMHS` submodule) runs the same
+reference host with a model in the loop: two simulated instruments written as
+`mhs.driver` packages (an enzyme-inhibition assay workstation and a flow
+reactor with inline HPLC) and the registry driver
+`MHS/drivers/robots/xarm-developer__xarm-python-sdk` on its fake backend,
+reached through three access paths at once (MCP connector over HTTP, native
+`mhs_*` tools over HTTP, MCP connector over stdio). Its workbench shows a Lab
+tab beside the Notebook that reads every endpoint's `--state-dir` evidence
+chain and lets the human operator e-stop and reset. Any package of the device
+market (`MHS/drivers/market.json`) can be added with `openai4s lab add <id>`,
+through either the MCP connector or the native tools. See OpenAI4S's
+`docs/openmhs.md`, section "Simulated lab and the Lab panel".
+
 ## 7. Tests
 
 ```bash

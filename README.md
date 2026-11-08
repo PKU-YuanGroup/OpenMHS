@@ -62,6 +62,22 @@ python3 -m mhs.conformance --endpoint http://127.0.0.1:7400 --profile MHS-Sim --
 
 The reference endpoints are simulations; none of them controls hardware.
 
+### The device market: 746 drivers ready to serve
+
+Every driver package that passed its gate is in the market (`MHS/drivers/market.json`, browsable at
+[mhs.openai4s.org/market](https://mhs.openai4s.org/market/)): 299 hardware drivers served on fake backends and 447
+simulations, each with an introduction and a one-line command.
+
+```bash
+export PYTHONPATH="$PWD/MHS/sdk/src"
+python3 -m mhs market search microscope
+python3 -m mhs market show julabo
+python3 -m mhs serve labs/tiagocoutinho__julabo --port 7400   # fake backend, no instrument
+```
+
+With [OpenAI4S](https://github.com/PKU-YuanGroup/OpenAI4S), which ships OpenMHS as a submodule, one command installs a
+device into its Lab and the agent can use it: `openai4s lab add labs/tiagocoutinho__julabo`.
+
 To install the SDK as a package, copy the schemas and catalogues into it
 first:
 
