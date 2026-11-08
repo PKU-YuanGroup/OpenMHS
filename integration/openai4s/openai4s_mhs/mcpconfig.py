@@ -75,7 +75,8 @@ def connector_argv(
     dropping it was HOST-001, where enabling the connector silently discarded
     the documented hardware restriction.
     """
-    argv = [python or sys.executable, "-m", MCP_MODULE]
+    launcher = source_launcher()
+    argv = [python or sys.executable, launcher] if launcher else [python or sys.executable, "-m", MCP_MODULE]
     if spec.command:
         argv.extend(["--command", shlex.join([str(part) for part in spec.command])])
     elif spec.url:
@@ -132,6 +133,23 @@ def _sdk_source_root() -> str | None:
     return str(root)
 
 
+#: The self-locating stdio launcher of this checkout (see the file's docstring).
+LAUNCHER = Path(__file__).resolve().parents[1] / "launch" / "mhs.mcp"
+
+
+def source_launcher() -> str | None:
+    """``launch/mhs.mcp`` when ``mhs`` is imported from this checkout's source tree, else ``None``.
+
+    With it a generated row needs no ``env`` (no ``PYTHONPATH``); an installed
+    ``openmhs``, or an SDK from another tree, keeps ``-m mhs.mcp``.
+    """
+    root = _sdk_source_root()
+    if not root or not LAUNCHER.is_file():
+        return None
+    own_src = Path(__file__).resolve().parents[3] / "MHS" / "sdk" / "src"
+    return str(LAUNCHER) if Path(root).resolve() == own_src.resolve() else None
+
+
 def connector_env() -> dict[str, str]:
     """``env`` of a generated row: ``PYTHONPATH`` when the SDK is a source tree.
 
@@ -177,8 +195,9 @@ def connector_entry(
     focused tests) also sets ``MHS_ENABLED=1`` in the child environment, the
     documented one-process override for "this caller explicitly enabled MHS";
     generated deployment rows always pass the path and never need the override.
-    ``env.PYTHONPATH`` names the SDK source tree when ``mhs`` is not installed
-    (:func:`connector_env`).
+    A source checkout runs ``launch/mhs.mcp`` (:func:`source_launcher`) and
+    needs no ``env``; ``env.PYTHONPATH`` names the SDK source tree only when
+    ``mhs`` comes from another source tree (:func:`connector_env`).
     """
     entry = {
         "id": connector_id(spec),
@@ -187,7 +206,8 @@ def connector_entry(
         "transport": "stdio",
         "enabled": bool(enabled),
     }
-    env = connector_env()
+    # The launcher finds the SDK itself; only `-m mhs.mcp` from a source tree needs PYTHONPATH.
+    env = {} if source_launcher() else connector_env()
     if enabled and config_path is None:
         env["MHS_ENABLED"] = "1"
     if env:
@@ -300,6 +320,7 @@ __all__ = [
     "refuse_unsafe_agent_rows",
     "connector_entry",
     "connector_env",
+    "source_launcher",
     "connector_id",
     "endpoint_target",
     "mcp_server_config",

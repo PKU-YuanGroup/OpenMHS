@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+"""Start the MHS stdio MCP projection (``mhs.mcp``) from this OpenMHS source checkout.
+
+Generated connector rows run ``python <this file> --endpoint ... --config ...``
+instead of ``python -m mhs.mcp`` plus ``env: {PYTHONPATH: ...}`` whenever the
+SDK is this checkout's source tree.  The file finds the SDK next to itself, so
+a row needs no environment at all: OpenAI4S stores every connector ``env``
+value as a secret, and a host should not have to keep a source path in a
+keychain.  ``PYTHONPATH`` is set for the endpoint processes the projection
+spawns (``--command``).  The name ends in ``mhs.mcp`` so hosts recognise the
+row as an MHS connector exactly as they recognise ``-m mhs.mcp``.
+"""
+
+import os
+import sys
+from pathlib import Path
+
+_SRC = str(Path(__file__).resolve().parents[3] / "MHS" / "sdk" / "src")
+if _SRC not in sys.path:
+    sys.path.insert(0, _SRC)
+_parts = [p for p in os.environ.get("PYTHONPATH", "").split(os.pathsep) if p and p != _SRC]
+os.environ["PYTHONPATH"] = os.pathsep.join([_SRC, *_parts])
+
+from mhs.mcp import main  # noqa: E402
+
+raise SystemExit(main())
