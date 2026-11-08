@@ -520,7 +520,7 @@ reported as a failed checkpoint; every wait is bounded.
 ### 6.1 With a model: the OpenAI4S simulated lab
 
 The acceptance demo above needs no model. OpenAI4S's optional
-`openai4s/mhs_lab` package (OpenAI4S 0.4, which pins this repository as the
+`openai4s/mhs_lab` package (OpenAI4S 1.0, which pins this repository as the
 `third_party/OpenMHS` submodule) runs the same
 reference host with a model in the loop: two simulated instruments written as
 `mhs.driver` packages (an enzyme-inhibition assay workstation and a flow
