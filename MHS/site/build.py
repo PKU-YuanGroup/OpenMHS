@@ -40,7 +40,7 @@ import sys
 import zipfile
 from dataclasses import dataclass, field
 from pathlib import Path
-from urllib.parse import urlsplit, unquote
+from urllib.parse import urlencode, urlsplit, unquote
 
 # ---------------------------------------------------------------------------
 # Paths and constants
@@ -1128,6 +1128,202 @@ def prepare_registry(raw: dict) -> Registry:
 
 
 # ---------------------------------------------------------------------------
+# Device market data
+# ---------------------------------------------------------------------------
+
+#: ``MHS/drivers/market.json`` is written by ``mhs market build`` (``MHS/sdk/src/mhs/market.py``): every driver package whose
+#: gate passed on the fake backend. The site renders it; it never edits or re-derives an entry.
+MARKET_FILE = MHS / "drivers" / "market.json"
+MARKET_FORMAT = "openmhs.market/1"
+MARKET_ID_RE = re.compile(r"(labs|robots)/[A-Za-z0-9._-]+")
+OPENMHS_REPO = "https://github.com/PKU-YuanGroup/OpenMHS"
+OPENAI4S_REPO = "https://github.com/PKU-YuanGroup/OpenAI4S"
+MARKET_EXAMPLE_ID = "labs/tiagocoutinho__julabo"
+MARKET_PAGE_SIZE = 60      # cards per category page (keeps every page well under the checker's 100 KiB budget)
+MARKET_FEATURED = 24       # cards rendered into the market index for readers without JavaScript
+MARKET_TRACK_LABELS = {"labs": "Labs", "robots": "Robots"}
+MARKET_RISK_TONES = {"R0": "good", "R1": "info", "R2": "warn", "R3": "bad"}
+#: Driver family (task card) -> bridge-family page, where the names differ.
+MARKET_FAMILY_PAGES = {"scpi": "scpi-visa", "ophyd": "bluesky-ophyd"}
+
+MARKET_START_OPENAI4S = """# OpenAI4S workbench with the OpenMHS lab (source checkout)
+git clone --recursive https://github.com/PKU-YuanGroup/OpenAI4S.git
+cd OpenAI4S && ./setup.sh && source .venv/bin/activate
+openai4s lab add labs/tiagocoutinho__julabo   # any market id
+openai4s serve                               # open the Lab tab"""
+
+MARKET_START_MHS = """git clone --depth 1 https://github.com/PKU-YuanGroup/OpenMHS.git && cd OpenMHS
+PYTHONPATH=MHS/sdk/src python3 -m mhs market search microscope
+PYTHONPATH=MHS/sdk/src python3 -m mhs serve labs/tiagocoutinho__julabo --port 7400"""
+
+MARKET_TWO_COMMANDS = """git clone --depth 1 https://github.com/PKU-YuanGroup/OpenMHS.git && cd OpenMHS
+PYTHONPATH=MHS/sdk/src python3 -m mhs serve labs/tiagocoutinho__julabo --port 7400"""
+
+
+@dataclass
+class MarketCategory:
+    name: str
+    slug: str
+    entries: list[dict]
+    pages: list[str]
+    hardware: int
+    simulated: int
+
+    @property
+    def path(self) -> str:
+        return self.pages[0]
+
+
+@dataclass
+class Market:
+    raw: dict
+    entries: list[dict]
+    by_key: dict
+    categories: list[MarketCategory]
+    stats: dict
+    repository: str
+    note: str
+
+    @property
+    def count(self) -> int:
+        return len(self.entries)
+
+    @property
+    def hardware(self) -> int:
+        return int(self.stats.get("mode", {}).get("hardware", 0))
+
+    @property
+    def simulated(self) -> int:
+        return int(self.stats.get("mode", {}).get("simulated", 0))
+
+
+def load_market() -> dict:
+    raw = load_json(MARKET_FILE)
+    if not isinstance(raw, dict) or not isinstance(raw.get("packages"), list) or not raw["packages"]:
+        raise SystemExit("MHS/drivers/market.json is missing or empty; run PYTHONPATH=MHS/sdk/src python3 -m mhs market build")
+    if raw.get("format") != MARKET_FORMAT:
+        raise SystemExit(f"MHS/drivers/market.json has format {raw.get('format')!r}; this generator renders {MARKET_FORMAT!r}")
+    if raw.get("count") != len(raw["packages"]):
+        raise SystemExit(f"MHS/drivers/market.json says count {raw.get('count')} but lists {len(raw['packages'])} packages; "
+                         "run PYTHONPATH=MHS/sdk/src python3 -m mhs market build")
+    return raw
+
+
+def market_license_label(raw) -> str:
+    raw = str(raw or "").strip()
+    if not raw or raw.lower().startswith("unknown"):
+        return "licence unknown"
+    if raw.upper() == "NOASSERTION":
+        return "licence not asserted"
+    return raw
+
+
+def market_excerpt(entry: dict, limit: int = 170) -> str:
+    """The introduction without its first sentence (it repeats the name), cut at ``limit`` visible characters; backtick
+    code spans are never split."""
+    intro = re.sub(r"\s+", " ", str(entry.get("intro") or "")).strip()
+    source = str(entry.get("upstream", {}).get("repo_url") or "").removeprefix("https://github.com/")
+    for prefix in (f"{entry['name']}, adapted from {source}. ", f"{entry['name']}. "):
+        if intro.startswith(prefix):
+            intro = intro[len(prefix):]
+            break
+    if len(intro.replace("`", "")) <= limit:
+        return intro
+    out, used = "", 0
+    for segment in re.split(r"(`[^`]+`)", intro):
+        visible = segment[1:-1] if segment.startswith("`") else segment
+        if used + len(visible) > limit:
+            if not segment.startswith("`"):
+                out += segment[: limit - used].rsplit(" ", 1)[0]
+            break
+        out += segment
+        used += len(visible)
+    return out.rstrip(" ,;:.") + "…"
+
+
+def inline_code(text: str) -> str:
+    """Escape ``text`` and render its backtick spans as ``<code>``."""
+    parts = re.split(r"`([^`]+)`", str(text or ""))
+    return "".join(f"<code>{esc(part)}</code>" if index % 2 else esc(part) for index, part in enumerate(parts))
+
+
+def prepare_market(raw: dict, registry: Registry) -> Market:
+    registry_slugs = {(rec["track"], rec["slug"]) for rec in registry.records}
+    entries: list[dict] = []
+    seen: set[str] = set()
+    for item in raw["packages"]:
+        package = str(item.get("id") or "")
+        if not MARKET_ID_RE.fullmatch(package) or ".." in package:
+            raise SystemExit(f"MHS/drivers/market.json: package id {package!r} is not <labs|robots>/<folder>")
+        if package in seen:
+            raise SystemExit(f"MHS/drivers/market.json: package id {package} is listed twice")
+        seen.add(package)
+        entry = dict(item)
+        track, folder = package.split("/", 1)
+        entry["track"] = track
+        entry["folder"] = folder
+        entry["name"] = str(entry.get("name") or folder)
+        entry["path"] = f"market/{package}/index.html"
+        entry["category"] = str(entry.get("category") or "Other devices")
+        entry["category_slug"] = slugify(entry["category"])
+        entry["topic"] = str(entry["topic"]) if entry.get("topic") else ""
+        entry["mode"] = str(entry.get("mode") or "")
+        entry["risk"] = str(entry.get("risk") or "")
+        entry["stars"] = int(entry.get("stars") or 0)
+        entry["measures"] = [str(v) for v in entry.get("measures") or []]
+        entry["adjusts"] = [str(v) for v in entry.get("adjusts") or []]
+        entry["actions"] = [a for a in entry.get("actions") or [] if isinstance(a, dict) and a.get("name")]
+        entry["tags"] = [str(v) for v in entry.get("tags") or []]
+        entry["backends"] = [str(v) for v in entry.get("backends") or []]
+        entry["upstream"] = dict(entry.get("upstream") or {})
+        entry["license_label"] = market_license_label(entry["upstream"].get("license"))
+        entry["excerpt"] = market_excerpt(entry)
+        install = dict(entry.get("install") or {})
+        install.setdefault("openai4s", f"openai4s lab add {package}")
+        entry["install"] = install
+        repo = folder.split("__", 1)[-1]
+        entry["short_name"] = re.sub(r"[^a-z0-9]+", "-", repo.lower()).strip("-") or re.sub(r"[^a-z0-9]+", "-", folder.lower())
+        entry["registry_path"] = f"registry/repo/{folder}.html" if (track, folder) in registry_slugs else ""
+        entry["has_reference"] = (MHS / "drivers" / package / "REFERENCE.md").is_file()
+        entries.append(entry)
+    entries.sort(key=lambda e: e["id"])
+    by_category: dict[str, list[dict]] = {}
+    for entry in entries:
+        by_category.setdefault(entry["category"], []).append(entry)
+    categories: list[MarketCategory] = []
+    for name, members in by_category.items():
+        members = sorted(members, key=lambda e: (-e["stars"], e["name"].lower(), e["id"]))
+        slug = slugify(name)
+        chunks = [members[i:i + MARKET_PAGE_SIZE] for i in range(0, len(members), MARKET_PAGE_SIZE)]
+        pages = [f"market/categories/{slug}.html" if n == 1 else f"market/categories/{slug}-{n}.html"
+                 for n in range(1, len(chunks) + 1)]
+        for page, chunk in zip(pages, chunks):
+            for entry in chunk:
+                entry["category_page"] = page
+        categories.append(MarketCategory(
+            name=name, slug=slug, entries=members, pages=pages,
+            hardware=sum(1 for e in members if e["mode"] == "hardware"),
+            simulated=sum(1 for e in members if e["mode"] == "simulated"),
+        ))
+    categories.sort(key=lambda c: (c.name == "Other devices", -len(c.entries), c.name))
+    if len({c.slug for c in categories}) != len(categories):
+        raise SystemExit("MHS/drivers/market.json: two market categories have the same slug")
+    stats: dict[str, dict[str, int]] = {"track": {}, "mode": {}}
+    for entry in entries:
+        for key in stats:
+            stats[key][entry[key]] = stats[key].get(entry[key], 0) + 1
+    return Market(
+        raw=raw,
+        entries=entries,
+        by_key={(e["track"], e["folder"]): e for e in entries},
+        categories=categories,
+        stats=stats,
+        repository=str(raw.get("repository") or OPENMHS_REPO).rstrip("/"),
+        note=str(raw.get("note") or ""),
+    )
+
+
+# ---------------------------------------------------------------------------
 # Capabilities, families, SDK
 # ---------------------------------------------------------------------------
 
@@ -1344,6 +1540,7 @@ FAVICON = (
 
 NAV = [
     ("spec/index.html", "Specification", "spec"),
+    ("market/index.html", "Market", "market"),
     ("registry/index.html", "Registry", "registry"),
     ("capabilities/index.html", "Capabilities", "capabilities"),
     ("families/index.html", "Families", "families"),
@@ -1420,6 +1617,7 @@ def footer_html(prefix: str) -> str:
     <div>
       <h2 class="footer-head">Ecosystem</h2>
       <ul class="footer-links">
+        <li><a href="{prefix}market/index.html">Device market</a></li>
         <li><a href="{prefix}registry/index.html">Registry explorer</a></li>
         <li><a href="{prefix}capabilities/index.html">Capability catalogue</a></li>
         <li><a href="{prefix}families/index.html">Bridge families</a></li>
@@ -1660,6 +1858,7 @@ def home_page(ctx) -> str:
     st = ctx.status
     reg = ctx.registry
     docs = ctx.docs
+    market = ctx.market
     status_note = (
         f"{fmt_int(reg.total)} packages indexed"
         if not reg.synthetic
@@ -1675,6 +1874,7 @@ def home_page(ctx) -> str:
       <p class="hero-definition">{esc(DEFINITION)}</p>
       <div class="hero-actions">
         {btn("Read the specification", "spec/index.html", "primary", icon=True)}
+        {btn(f"Browse {fmt_int(market.count)} devices", "market/index.html", "secondary") if market else ""}
         {btn("Explore the registry", "registry/index.html", "secondary")}
       </div>
       <p class="hero-meta"><span>{status_note}</span><span>{st['capabilities']} capability classes</span><span>CL0–CL5 conformance</span></p>
@@ -1716,6 +1916,28 @@ def home_page(ctx) -> str:
   </div>
 </section>
 """
+
+    market_band = f"""
+<section class="section market-band" id="market">
+  <div class="wrap market-band-grid">
+    <div class="market-band-copy">
+      <p class="eyebrow">Device market</p>
+      <h2>{fmt_int(market.count)} devices, one command each.</h2>
+      <p class="section-lead">Every OpenMHS driver package that passed its gate: {fmt_int(market.hardware)} hardware drivers served on their fake backends and {fmt_int(market.simulated)} simulations, from oscilloscopes and liquid handlers to robot arms and UAV simulators. Each comes with an introduction and a copy-paste install command.</p>
+      <div class="hero-actions">
+        {btn(f"Browse {fmt_int(market.count)} devices", "market/index.html", "primary", icon=True)}
+        {btn("Get started", "market/index.html#get-started", "secondary")}
+      </div>
+      <p class="market-band-note"><code>contract_checked</code> on the fake backend, not a hardware qualification. Real hardware stays an explicit operator decision.</p>
+    </div>
+    <div class="market-band-try">
+      <h3>Try it in two commands</h3>
+      {codeblock(MARKET_TWO_COMMANDS, "sh", "shell")}
+      <p class="field-hint">That serves a JULABO circulator on its fake backend at <code>http://127.0.0.1:7400</code>. Inspect it from a second terminal with <code>PYTHONPATH=MHS/sdk/src python3 -m mhs describe --endpoint http://127.0.0.1:7400</code>, or install any device into the OpenAI4S workbench with <code>openai4s lab add &lt;id&gt;</code>.</p>
+    </div>
+  </div>
+</section>
+""" if market else ""
 
     fixes = f"""
 <section class="section" id="why">
@@ -2006,7 +2228,7 @@ def home_page(ctx) -> str:
 </section>
 """
 
-    body = hero + fixes + surfaces + capabilities_section + dual + conformance + adoption + status + cta
+    body = hero + market_band + fixes + surfaces + capabilities_section + dual + conformance + adoption + status + cta
     return page_html(
         path="index.html",
         title=SITE_NAME,
@@ -2708,6 +2930,14 @@ def registry_detail_page(ctx, rec: dict, index: int) -> str:
     fact_html = "".join(
         f'<div class="fact"><dt>{esc(label)}</dt><dd>{value}</dd></div>' for label, value in facts
     )
+    market_entry = ctx.market.by_key.get((rec["track"], rec["slug"])) if ctx.market else None
+    market_callout = callout(
+        "Install from the market",
+        f'<p>This package passed its gate on the fake backend and is in the <a href="{p}{market_entry["path"]}">OpenMHS device market</a>. '
+        f'One command installs it into the OpenAI4S Lab: <code>{esc(market_entry["install"]["openai4s"])}</code></p>',
+        "note",
+        "package",
+    ) if market_entry else ""
     body = f"""
 <div class="wrap page-hero page-hero-package">
   {breadcrumbs_html(p, [("Registry", "registry/index.html"), (rec['title'], None)])}
@@ -2718,6 +2948,7 @@ def registry_detail_page(ctx, rec: dict, index: int) -> str:
       <p class="page-lead">{esc(rec['description']) or 'No description recorded.'}</p>
       <div class="package-badges">{tier_badge(rec['tier'])}{badge(f"Ring {rec['ring']}", "info")}{badge(evidence_label(rec['evidence_state']), "muted")}{badge(f"Adapter: {adapter_state}", "muted")}{badge(rec['license'], "muted")}</div>
       <div class="package-actions">{upstream_link}<a class="btn btn-secondary btn-sm" href="../index.html?family={attr(rec['family'])}">Find similar packages</a></div>
+      {market_callout}
     </div>
     <aside class="package-summary" aria-label="Package summary">
       <p class="package-summary-kicker">At a glance</p>
@@ -2818,6 +3049,550 @@ def registry_detail_page(ctx, rec: dict, index: int) -> str:
         breadcrumbs=[("Registry", "registry/index.html"), (rec["title"], None)],
         og_type="article",
     )
+
+
+# ---------------------------------------------------------------------------
+# Pages: device market
+# ---------------------------------------------------------------------------
+
+
+def market_risk_badge(risk: str) -> str:
+    return badge(f"Risk {risk}", MARKET_RISK_TONES.get(risk, "muted")) if risk else ""
+
+
+def market_cmd(command: str, large: bool = False) -> str:
+    """A one-line command with a copy button; the button stays hidden until app.js can copy."""
+    cls = "market-cmd market-cmd-lg" if large else "market-cmd"
+    return (
+        f'<div class="{cls}"><code>{esc(command)}</code>'
+        f'<button type="button" class="copy-btn copy-cmd" data-copy="{attr(command)}" '
+        'aria-label="Copy the install command" hidden>Copy</button></div>'
+    )
+
+
+def market_category_label(entry: dict) -> str:
+    if entry["topic"] and entry["mode"] == "simulated":
+        return f"{entry['category']} · {entry['topic']}"
+    return entry["category"]
+
+
+def market_card(entry: dict, base: str) -> str:
+    """One package card; ``base`` is the relative path from the page to ``market/``."""
+    href = f"{base}{entry['id']}/index.html"
+    return (
+        '<li class="market-card">'
+        f'<h3 class="market-card-title"><a href="{attr(href)}">{esc(entry["name"])}</a></h3>'
+        f'<p class="market-card-cat">{esc(market_category_label(entry))}</p>'
+        f'<div class="market-card-meta">{mode_chips([entry["mode"]] if entry["mode"] else [])}'
+        f'{market_risk_badge(entry["risk"])}{badge(entry["license_label"], "muted")}</div>'
+        f'<p class="market-card-desc">{inline_code(entry["excerpt"])}</p>'
+        f'{market_cmd(entry["install"]["openai4s"])}'
+        "</li>"
+    )
+
+
+def market_split(hardware: int, simulated: int) -> str:
+    parts = []
+    if hardware:
+        parts.append(f"{fmt_int(hardware)} hardware")
+    if simulated:
+        parts.append(f"{fmt_int(simulated)} simulated")
+    return " · ".join(parts)
+
+
+def market_safety(entry: dict | None = None) -> str:
+    if entry is not None and entry["mode"] == "simulated":
+        first = ("This simulator is served with a stand-in on the fake backend: no simulator install, no device. "
+                 "Hardware drivers in the market are served the same way.")
+    elif entry is not None:
+        first = "This is a hardware driver served on its fake backend: nothing here talks to an instrument."
+    else:
+        first = "Hardware drivers are served on their fake backends: nothing in the market talks to an instrument."
+    estop = ("A software stop is not a hardware e-stop." if entry is not None and entry["mode"] == "simulated"
+             else "A software stop is not a hardware e-stop: keep the device's own emergency stop within reach.")
+    return callout(
+        "Fake backend, not hardware",
+        f"<p>{first} Real hardware needs an explicit operator decision (<code>--backend hardware --allow-hardware</code>), "
+        f"and some drivers refuse it until a human review is signed. {estop}</p>",
+        "warn",
+        "shield",
+    )
+
+
+def market_index_page(ctx) -> str:
+    m = ctx.market
+    p = "../"
+    featured = sorted(m.entries, key=lambda e: (-e["stars"], e["id"]))[:MARKET_FEATURED]
+    cards = "".join(market_card(entry, "") for entry in featured)
+    category_opts = "".join(
+        f'<option value="{attr(c.name)}">{esc(c.name)} ({fmt_int(len(c.entries))})</option>' for c in m.categories
+    )
+    track_opts = "".join(
+        f'<option value="{attr(track)}">{esc(MARKET_TRACK_LABELS.get(track, track))} ({fmt_int(count)})</option>'
+        for track, count in sorted(m.stats["track"].items())
+    )
+    mode_opts = "".join(
+        f'<option value="{attr(mode)}">{esc(mode)} ({fmt_int(count)})</option>'
+        for mode, count in sorted(m.stats["mode"].items())
+    )
+    risk_counts: dict[str, int] = {}
+    for entry in m.entries:
+        if entry["risk"]:
+            risk_counts[entry["risk"]] = risk_counts.get(entry["risk"], 0) + 1
+    risk_opts = "".join(
+        f'<option value="{attr(risk)}">{esc(risk)} ({fmt_int(count)})</option>' for risk, count in sorted(risk_counts.items())
+    )
+    cat_cards = "".join(
+        f'<a class="market-cat" href="{attr(c.path[len("market/"):])}"><span class="market-cat-name">{esc(c.name)}</span>'
+        f'<span class="market-cat-count">{fmt_int(len(c.entries))}</span>'
+        f'<span class="market-cat-split">{esc(market_split(c.hardware, c.simulated))}</span></a>'
+        for c in m.categories
+    )
+    body = f"""
+<div class="wrap page-hero page-hero-market">
+  {breadcrumbs_html(p, [("Market", None)])}
+  <div class="registry-hero-grid">
+    <div>
+      <p class="eyebrow">Device market · {fmt_int(m.count)} packages</p>
+      <h1>The OpenMHS device market</h1>
+      <p class="page-lead">Every simulation-ready OpenMHS driver package, each with an introduction and a one-line install: {fmt_int(m.count)} packages, {fmt_int(m.hardware)} of them hardware drivers served on their fake backends and {fmt_int(m.simulated)} simulations. No instrument, no simulator install, no upstream checkout.</p>
+      <p class="market-evidence">{badge("contract_checked", "info")} <span>Every entry is <code>contract_checked</code> on the fake backend: its gate passed there. That is not a hardware qualification.</span></p>
+      <div class="hero-actions">
+        {btn("Get started", "#get-started", "primary", icon=True)}
+        {btn("Browse all packages", "#browse", "secondary")}
+      </div>
+    </div>
+    <div class="registry-hero-stats">
+      <div><strong>{fmt_int(m.count)}</strong><span>packages</span></div>
+      <div><strong>{fmt_int(m.hardware)}</strong><span>hardware drivers on fake backends</span></div>
+      <div><strong>{fmt_int(m.simulated)}</strong><span>simulations</span></div>
+      <div><strong>{len(m.categories)}</strong><span>categories</span></div>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="get-started">
+  <div class="wrap">
+    <div class="section-head"><p class="eyebrow">Get started</p><h2>Install a device in one command</h2>
+      <p class="section-lead">Every package has a market id such as <code>{esc(MARKET_EXAMPLE_ID)}</code>. Give it to the OpenAI4S workbench, or serve it as a standalone MHS endpoint.</p></div>
+    <div class="market-start">
+      <div class="market-start-card">
+        <h3>OpenAI4S workbench</h3>
+        <p>Installs the device into the OpenAI4S Lab on its fake backend and starts it.</p>
+        {codeblock(MARKET_START_OPENAI4S, "sh", "shell")}
+        <p class="field-hint">Already running the workbench? Open the Lab tab → Market → Install.</p>
+      </div>
+      <div class="market-start-card">
+        <h3>MHS alone</h3>
+        <p>A standalone MHS endpoint from an OpenMHS checkout: Python 3.10 or later, standard library only.</p>
+        {codeblock(MARKET_START_MHS, "sh", "shell")}
+        <p class="field-hint">Each package page also shows the MCP configuration for Claude Desktop, Cursor and other MCP hosts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tint" id="categories">
+  <div class="wrap">
+    {section_head("Categories", "Browse by category",
+      "Each category page lists its packages, most-starred first, with their install commands. Category pages work without JavaScript.")}
+    <div class="market-cat-grid">{cat_cards}</div>
+  </div>
+</section>
+
+<section class="section" id="browse" aria-labelledby="browse-heading">
+  <div class="wrap">
+    <div class="section-head"><p class="eyebrow">All packages</p><h2 id="browse-heading">Search the market</h2>
+      <p class="section-lead">Search names, vendors, device kinds, tags and what a device reads, sets and runs; filter by category, track, mode and risk class.</p></div>
+    <div class="market-layout" id="market-layout">
+      <form class="filter-panel" id="market-filters" aria-label="Filter market packages" hidden>
+        <div class="filter-head">
+          <h3>Filters</h3>
+          <button type="reset" class="link-btn" id="market-reset">Clear all</button>
+        </div>
+        <div class="filter-field">
+          <label for="market-q">Search packages</label>
+          <div class="search-input-wrap">
+            {ICONS['search']}
+            <input id="market-q" name="q" type="search" placeholder="microscope, pump, UAV…" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+        <details class="filter-group" id="market-refine" open>
+        <summary>Filter and sort</summary>
+        <div class="filter-field">
+          <label for="market-category">Category</label>
+          <select id="market-category" name="category"><option value="">All categories</option>{category_opts}</select>
+        </div>
+        <div class="filter-field">
+          <label for="market-track">Track</label>
+          <select id="market-track" name="track"><option value="">All tracks</option>{track_opts}</select>
+        </div>
+        <div class="filter-field">
+          <label for="market-mode">Mode</label>
+          <select id="market-mode" name="mode"><option value="">All modes</option>{mode_opts}</select>
+        </div>
+        <div class="filter-field">
+          <label for="market-risk">Risk class</label>
+          <select id="market-risk" name="risk"><option value="">All risk classes</option>{risk_opts}</select>
+        </div>
+        <div class="filter-field">
+          <label for="market-sort">Sort by</label>
+          <select id="market-sort" name="sort">
+            <option value="relevance">Relevance</option>
+            <option value="stars">Stars</option>
+            <option value="name">Name</option>
+          </select>
+        </div>
+        </details>
+        <p class="filter-note">Mode is the device's declared mode. The market serves every package on its fake backend.</p>
+      </form>
+      <div class="market-results">
+        <div class="results-toolbar">
+          <p class="results-count" id="market-count" aria-live="polite">The {len(featured)} most-starred of {fmt_int(m.count)} packages. Browse every package by category above.</p>
+          <div class="active-filters" id="market-active"></div>
+        </div>
+        <ol class="market-grid" id="market-results">{cards}</ol>
+        <div class="empty-state" id="market-empty" hidden>
+          <h3>No package matches those filters</h3>
+          <p>Try fewer words or clear the filters. Every package is also listed on its category page.</p>
+          <button type="button" class="btn btn-secondary" id="market-empty-reset">Clear filters</button>
+        </div>
+        <nav class="pagination" id="market-pagination" aria-label="Market result pages" hidden></nav>
+        <noscript><p class="field-hint">Search and filters need JavaScript. Without it, browse the complete lists by category above.</p></noscript>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap registry-notes">
+  {market_safety()}
+  <div class="notes-grid">
+    <div><h2>What a market entry means</h2><p>The package's gate ran on its fake backend and passed: the contract checks hold there. Hardware drivers have not been qualified on an instrument, and simulators are served with a stand-in, not the upstream simulator.</p><a class="text-link" href="{p}sdk/docs/driver-authoring.html">How a driver package is checked {ICONS['arrow']}</a></div>
+    <div><h2>Where entries come from</h2><p>Each entry is a driver package under <code>MHS/drivers/</code> that wraps one upstream repository at a pinned commit. Its registry record has the catalogue view of the same repository.</p><a class="text-link" href="{p}registry/index.html">Registry explorer {ICONS['arrow']}</a></div>
+    <div><h2>Use the data</h2><p>The full market is one JSON file in the format <code>{esc(MARKET_FORMAT)}</code>, the same file <code>mhs market</code> and <code>openai4s lab add</code> read. A compact search index sits beside it.</p><a class="text-link" href="market.json">market.json {ICONS['arrow']}</a> <a class="text-link" href="index.json">index.json {ICONS['arrow']}</a></div>
+  </div>
+</div>
+<script defer src="../assets/market-data.js"></script>
+<script defer src="../assets/market.js"></script>
+"""
+    return page_html(
+        path="market/index.html",
+        title="Device market",
+        description=(f"{fmt_int(m.count)} simulation-ready OpenMHS driver packages, {fmt_int(m.hardware)} hardware drivers served "
+                     f"on their fake backends and {fmt_int(m.simulated)} simulations, each with an introduction and a one-line install command."),
+        body=body,
+        section="market",
+        breadcrumbs=[("Market", "market/index.html")],
+        og_type="website",
+    )
+
+
+def market_category_page(ctx, cat: MarketCategory, number: int) -> str:
+    m = ctx.market
+    path = cat.pages[number - 1]
+    p = "../../"
+    chunk = cat.entries[(number - 1) * MARKET_PAGE_SIZE: number * MARKET_PAGE_SIZE]
+    cards = "".join(market_card(entry, "../") for entry in chunk)
+    total_pages = len(cat.pages)
+    title = cat.name if total_pages == 1 else f"{cat.name}, page {number} of {total_pages}"
+    first_rank = (number - 1) * MARKET_PAGE_SIZE + 1
+    if total_pages > 1:
+        links = []
+        for n, page in enumerate(cat.pages, start=1):
+            name = posixpath.basename(page)
+            if n == number:
+                links.append(f'<span aria-current="page" class="is-current">{n}</span>')
+            else:
+                links.append(f'<a href="{attr(name)}" aria-label="Page {n}">{n}</a>')
+        pager = f'<nav class="pagination market-pages" aria-label="{attr(cat.name)} pages">{"".join(links)}</nav>'
+        range_note = f"Packages {fmt_int(first_rank)}–{fmt_int(first_rank + len(chunk) - 1)} of {fmt_int(len(cat.entries))}, most-starred first."
+    else:
+        pager = ""
+        range_note = "Most-starred first."
+    topics: dict[str, int] = {}
+    for entry in cat.entries:
+        if entry["topic"] and entry["mode"] == "simulated":
+            topics[entry["topic"]] = topics.get(entry["topic"], 0) + 1
+    topic_html = ""
+    if len(topics) > 1:
+        chips = "".join(
+            f'<a class="family-chip" href="../index.html?{attr(urlencode({"category": cat.name, "topic": topic}))}#browse">'
+            f'{esc(topic)} <span>{fmt_int(count)}</span></a>'
+            for topic, count in sorted(topics.items(), key=lambda kv: (-kv[1], kv[0].lower())) if count > 1
+        )
+        topic_html = f'<div class="family-quick" aria-label="Simulation topics">{chips}</div>'
+    others = "".join(
+        f'<a class="family-chip" href="{attr(posixpath.basename(c.path))}">{esc(c.name)} <span>{fmt_int(len(c.entries))}</span></a>'
+        for c in m.categories if c.slug != cat.slug
+    )
+    lead = (f"{fmt_int(len(cat.entries))} market packages in this category: {esc(market_split(cat.hardware, cat.simulated))}. "
+            "Every card carries the one-line command that installs the package into the OpenAI4S Lab.")
+    crumbs = [("Market", "market/index.html"), (cat.name, None if number == 1 else cat.path)]
+    if number > 1:
+        crumbs.append((f"Page {number}", None))
+    body = f"""
+<div class="wrap page-hero page-hero-market">
+  {breadcrumbs_html(p, crumbs)}
+  <p class="eyebrow">Market category · {fmt_int(len(cat.entries))} packages</p>
+  <h1>{esc(cat.name)}</h1>
+  <p class="page-lead">{lead}</p>
+  <div class="package-actions">
+    <a class="btn btn-secondary btn-sm" href="../index.html?{attr(urlencode({"category": cat.name}))}#browse">Search and filter this category</a>
+    <a class="btn btn-secondary btn-sm" href="../index.html#get-started">How to install</a>
+  </div>
+  {topic_html}
+</div>
+<div class="wrap market-category-body">
+  <p class="results-count">{range_note}</p>
+  {pager}
+  <ol class="market-grid">{cards}</ol>
+  {pager}
+  {market_safety()}
+  <h2 class="market-other-head">Other categories</h2>
+  <div class="family-quick">{others}<a class="family-chip family-chip-all" href="../index.html">All {fmt_int(m.count)}</a></div>
+</div>
+"""
+    return page_html(
+        path=path,
+        title=f"{title} — device market",
+        description=(f"{fmt_int(len(cat.entries))} OpenMHS market packages in {cat.name} ({market_split(cat.hardware, cat.simulated)}), "
+                     "each with an introduction and a one-line install command."),
+        body=body,
+        section="market",
+        breadcrumbs=[("Market", "market/index.html"), (cat.name, cat.path)] + ([(f"Page {number}", path)] if number > 1 else []),
+        og_type="website",
+    )
+
+
+def market_package_page(ctx, entry: dict, prev_entry: dict | None, next_entry: dict | None) -> str:
+    m = ctx.market
+    p = "../../../"
+    package = entry["id"]
+    upstream = entry["upstream"]
+    repo_url = str(upstream.get("repo_url") or "")
+    repo_label = repo_url.removeprefix("https://github.com/") or "not recorded"
+    commit = str(upstream.get("commit") or "")
+    commit_html = '<span class="muted">not recorded</span>'
+    if commit and repo_url.startswith("https://github.com/"):
+        commit_html = f'<a href="{attr(repo_url)}/tree/{attr(commit)}" rel="noopener"><code>{esc(commit[:12])}</code></a>'
+    elif commit:
+        commit_html = f"<code>{esc(commit[:12])}</code>"
+    repo_html = f'<a href="{attr(repo_url)}" rel="noopener">{esc(repo_label)} {ICONS["external"]}</a>' if repo_url else '<span class="muted">not recorded</span>'
+    reference_url = f"{m.repository}/blob/main/MHS/drivers/{package}/REFERENCE.md"
+    package_url = f"{m.repository}/tree/main/MHS/drivers/{package}"
+    category_href = p + entry["category_page"]
+    family_slugs = {fam.slug for fam in ctx.families if not fam.placeholder}
+    family = str(entry.get("family") or "")
+    family_slug = MARKET_FAMILY_PAGES.get(family, family)
+    family_html = (f'<a href="{p}families/{attr(family_slug)}.html">{esc(family)}</a>' if family_slug in family_slugs
+                   else esc(family or "—"))
+    openai4s_cmd = entry["install"]["openai4s"]
+    mhs_cmds = (
+        f"git clone --depth 1 {OPENMHS_REPO}.git && cd OpenMHS\n"
+        f"PYTHONPATH=MHS/sdk/src python3 -m mhs serve {package} --port 7400\n"
+        "# in a second terminal, from the same directory:\n"
+        "PYTHONPATH=MHS/sdk/src python3 -m mhs describe --endpoint http://127.0.0.1:7400"
+    )
+    mcp_config = json.dumps(
+        {"mcpServers": {entry["short_name"]: {
+            "command": "python3",
+            "args": ["-m", "mhs", "serve", package, "--mcp"],
+            "env": {"PYTHONPATH": "/path/to/OpenMHS/MHS/sdk/src"},
+        }}},
+        indent=2,
+    )
+    setup_cmds = (
+        "# OpenAI4S workbench with the OpenMHS lab (source checkout)\n"
+        f"git clone --recursive {OPENAI4S_REPO}.git\n"
+        "cd OpenAI4S && ./setup.sh && source .venv/bin/activate\n"
+        f"{openai4s_cmd}\n"
+        "openai4s serve        # open the Lab tab"
+    )
+
+    def names_html(names: list[str], empty: str) -> str:
+        if not names:
+            return f'<p class="muted">{esc(empty)}</p>'
+        return '<ul class="pill-list market-names">' + "".join(f'<li><code>{esc(n)}</code></li>' for n in names) + "</ul>"
+
+    actions = entry["actions"]
+    actions_html = (
+        '<dl class="action-list">' + "".join(
+            f'<div><dt><code>{esc(a["name"])}</code></dt><dd>{inline_code(a.get("description") or "No description declared.")}</dd></div>'
+            for a in actions
+        ) + "</dl>"
+        if actions else '<p class="muted">No actions declared: this device is read and set through its values only.</p>'
+    )
+    license_note = ""
+    if entry["license_label"] == "licence not asserted":
+        license_note = ('<p class="section-note">The upstream repository asserts no licence (<code>NOASSERTION</code>); '
+                        "check it before you redistribute the upstream code.</p>")
+    elif entry["license_label"] == "licence unknown":
+        license_note = '<p class="section-note">No licence is recorded for the upstream repository; check it before you redistribute the upstream code.</p>'
+    registry_link = (f'<li><a href="{p}{entry["registry_path"]}">Registry record</a></li>' if entry["registry_path"] else "")
+    reference_link = (f'<li><a href="{attr(reference_url)}" rel="noopener">REFERENCE.md on GitHub {ICONS["external"]}</a></li>'
+                      if entry["has_reference"] else "")
+    reference_btn = (f'<a class="btn btn-secondary btn-sm" href="{attr(reference_url)}" rel="noopener">REFERENCE.md {ICONS["external"]}</a>'
+                     if entry["has_reference"] else "")
+    registry_btn = (f'<a class="btn btn-secondary btn-sm" href="{p}{entry["registry_path"]}">Registry record</a>'
+                    if entry["registry_path"] else "")
+    upstream_btn = (f'<a class="btn btn-secondary btn-sm" href="{attr(repo_url)}" rel="noopener">Upstream repository {ICONS["external"]}</a>'
+                    if repo_url else "")
+    topic_fact = f"<dt>Topic</dt><dd>{esc(entry['topic'])}</dd>" if entry["topic"] else ""
+    neighbours = []
+    if prev_entry:
+        neighbours.append(f'<a class="pager-prev" href="{p}{prev_entry["path"]}"><span>Previous in {esc(entry["category"])}</span>'
+                          f'<strong>{esc(prev_entry["name"])}</strong></a>')
+    if next_entry:
+        neighbours.append(f'<a class="pager-next" href="{p}{next_entry["path"]}"><span>Next in {esc(entry["category"])}</span>'
+                          f'<strong>{esc(next_entry["name"])}</strong></a>')
+    neighbours_html = f'<nav class="pager" aria-label="Packages in this category">{"".join(neighbours)}</nav>' if neighbours else ""
+    eyebrow = " · ".join(x for x in (MARKET_TRACK_LABELS.get(entry["track"], entry["track"]), entry["category"],
+                                     entry["topic"] if entry["mode"] == "simulated" else "") if x)
+    plain_intro = re.sub(r"\s+", " ", str(entry.get("intro") or "")).replace("`", "").strip()
+    body = f"""
+<div class="wrap page-hero page-hero-package page-hero-market">
+  {breadcrumbs_html(p, [("Market", "market/index.html"), (entry["category"], entry["category_page"]), (entry["name"], None)])}
+  <p class="eyebrow">{esc(eyebrow)}</p>
+  <h1 class="market-title">{esc(entry["name"])}</h1>
+  <p class="page-lead market-intro">{inline_code(entry.get("intro") or "")}</p>
+  <div class="package-badges">{mode_chips([entry["mode"]] if entry["mode"] else [])}{market_risk_badge(entry["risk"])}{badge(entry["license_label"], "muted")}{badge("contract_checked", "info")}{badge("served on the fake backend", "muted")}</div>
+  {market_cmd(openai4s_cmd, large=True)}
+  <div class="package-actions">
+    <a class="btn btn-primary btn-sm" href="#install">All install options</a>
+    {reference_btn}{upstream_btn}{registry_btn}
+  </div>
+</div>
+
+<div class="wrap package-layout">
+  <article class="package-main">
+    <section class="package-section" id="install">
+      <h2>Install</h2>
+      <p class="section-note">Three ways to run this device. Each one serves its fake backend: no instrument, no simulator install and no upstream checkout.</p>
+      <div class="install-tabs" data-install-tabs>
+        <div class="install-panel" id="install-openai4s">
+          <h3 class="install-panel-title">OpenAI4S (one command)</h3>
+          {codeblock(openai4s_cmd, "sh", "shell")}
+          <p>Installs the device into the OpenAI4S Lab on its fake backend and starts it. First time? See <a href="#setup">setup below</a>.</p>
+          <p class="field-hint">Or, in the workbench, open the Lab tab → Market → Install.</p>
+        </div>
+        <div class="install-panel" id="install-mhs">
+          <h3 class="install-panel-title">Standalone MHS endpoint</h3>
+          {codeblock(mhs_cmds, "sh", "shell")}
+          <p>Serves the device as an MHS endpoint on port 7400 from an OpenMHS clone (Python 3.10 or later, standard library only); <code>describe</code> prints what it offers.</p>
+        </div>
+        <div class="install-panel" id="install-mcp">
+          <h3 class="install-panel-title">Any MCP host (Claude Desktop, Cursor, …)</h3>
+          {codeblock(mcp_config, "json", "mcp configuration")}
+          <p>Add this server to the host's MCP configuration and replace <code>/path/to/OpenMHS</code> with the path of your OpenMHS clone. The host starts the server and talks to it on stdin and stdout.</p>
+        </div>
+      </div>
+      {market_safety(entry)}
+    </section>
+
+    <section class="package-section" id="capabilities">
+      <h2>What it does</h2>
+      <div class="market-io">
+        <div><h3>Measures</h3>{names_html(entry["measures"], "Nothing declared.")}</div>
+        <div><h3>Adjusts</h3>{names_html(entry["adjusts"], "Nothing declared.")}</div>
+      </div>
+      <h3 class="market-subhead">Actions</h3>
+      {actions_html}
+      <p class="section-note">Names as the driver declares them. Units, limits and the safety declaration are in the package's REFERENCE.md.</p>
+    </section>
+
+    <section class="package-section" id="setup">
+      <h2>First-time setup</h2>
+      <p>The OpenAI4S workbench with the OpenMHS lab, from a source checkout:</p>
+      {codeblock(setup_cmds, "sh", "shell")}
+      <p class="section-note">The standalone endpoint and the MCP server need only an OpenMHS clone and Python 3.10 or later. More in the <a href="{p}market/index.html#get-started">market's getting-started guide</a> and on the <a href="{p}hosts/openai4s/index.html">OpenAI4S host page</a>.</p>
+    </section>
+
+    <section class="package-section" id="source">
+      <h2>Source and evidence</h2>
+      <dl class="evidence-grid">
+        <div><dt>Upstream</dt><dd>{repo_html}</dd></div>
+        <div><dt>Pinned commit</dt><dd>{commit_html}</dd></div>
+        <div><dt>Licence</dt><dd>{esc(upstream.get("license") or "unknown")}</dd></div>
+        <div><dt>Stars</dt><dd>{fmt_int(entry["stars"])}</dd></div>
+        <div><dt>Evidence</dt><dd><code>{esc(entry.get("evidence") or "contract_checked")}</code> on the fake backend</dd></div>
+        <div><dt>Backends</dt><dd>{esc(", ".join(entry["backends"]) or "fake")}</dd></div>
+      </dl>
+      {license_note}
+      <p>The driver package <a href="{attr(package_url)}" rel="noopener"><code>MHS/drivers/{esc(package)}</code></a> wraps the upstream code at the pinned commit. Its <code>REFERENCE.md</code> documents the full contract: every value, action, unit, limit and the safety declaration.</p>
+    </section>
+
+    {neighbours_html}
+  </article>
+  <aside class="package-aside">
+    <div class="aside-card">
+      <h2>At a glance</h2>
+      <dl class="aside-facts">
+        <dt>Market id</dt><dd><code>{esc(package)}</code></dd>
+        <dt>Category</dt><dd><a href="{category_href}">{esc(entry["category"])}</a></dd>
+        {topic_fact}
+        <dt>Device kind</dt><dd><code>{esc(entry.get("kind") or "—")}</code></dd>
+        <dt>Vendor</dt><dd>{esc(entry.get("vendor") or "—")}</dd>
+        <dt>Model</dt><dd>{esc(entry.get("model") or "—")}</dd>
+        <dt>Mode / risk</dt><dd>{esc(entry["mode"] or "—")} · {esc(entry["risk"] or "—")}</dd>
+        <dt>Bridge family</dt><dd>{family_html}</dd>
+        <dt>Role</dt><dd>{esc(entry.get("role") or "—")}</dd>
+        <dt>Served backend</dt><dd>{esc(entry.get("served_backend") or "fake")}</dd>
+      </dl>
+    </div>
+    <div class="aside-card">
+      <h2>Links</h2>
+      <ul class="aside-links">
+        {reference_link}
+        <li><a href="{attr(package_url)}" rel="noopener">Driver package source {ICONS["external"]}</a></li>
+        {f'<li><a href="{attr(repo_url)}" rel="noopener">Upstream repository {ICONS["external"]}</a></li>' if repo_url else ""}
+        {registry_link}
+        <li><a href="{category_href}">More in {esc(entry["category"])}</a></li>
+        <li><a href="{p}market/index.html">All {fmt_int(m.count)} market packages</a></li>
+      </ul>
+    </div>
+  </aside>
+</div>
+<script defer src="{p}assets/market.js"></script>
+"""
+    return page_html(
+        path=entry["path"],
+        title=f"{entry['name']} — device market",
+        description=plain_intro or f"Install {entry['name']} from the OpenMHS device market.",
+        body=body,
+        section="market",
+        breadcrumbs=[("Market", "market/index.html"), (entry["category"], entry["category_page"]), (entry["name"], None)],
+        og_type="article",
+    )
+
+
+def write_market_assets(market: Market) -> int:
+    """``assets/market-data.js`` (works from file://) and ``market/index.json`` (the same compact index), plus a verbatim
+    copy of ``market.json`` at ``market/market.json``."""
+    fields = ["id", "name", "track", "category", "topic", "mode", "risk", "license", "stars", "excerpt", "search"]
+    rows = []
+    for entry in market.entries:
+        words = [str(entry.get("kind") or ""), str(entry.get("vendor") or ""), str(entry.get("model") or ""),
+                 str(entry.get("family") or ""), " ".join(entry["tags"]), " ".join(entry["measures"]),
+                 " ".join(entry["adjusts"]), " ".join(str(a["name"]) for a in entry["actions"]),
+                 str(entry["upstream"].get("license") or "")]
+        rows.append([
+            entry["id"], entry["name"], entry["track"], entry["category"], entry["topic"], entry["mode"], entry["risk"],
+            entry["license_label"], entry["stars"], entry["excerpt"], re.sub(r"\s+", " ", " ".join(words)).strip().lower(),
+        ])
+    payload = {
+        "format": "openmhs.market-index/1",
+        "source": "market.json",
+        "source_format": MARKET_FORMAT,
+        "sdk_version": str(market.raw.get("sdk_version") or ""),
+        "count": market.count,
+        "stats": market.stats,
+        "fields": fields,
+        "rows": rows,
+    }
+    text = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+    write_text("market/index.json", text + "\n")
+    write_bytes("market/market.json", MARKET_FILE.read_bytes())
+    return write_text("assets/market-data.js", "window.MHS_MARKET = " + text + ";\n")
 
 
 # ---------------------------------------------------------------------------
@@ -4404,7 +5179,7 @@ def deterministic_zip(entries: list[tuple[str, bytes]]) -> bytes:
 
 def page_source_paths() -> list[Path]:
     """Files the pages are rendered from, beyond the download inputs: the specification text, the SDK guides, the published
-    conformance reports, the site assets and deploy files, and this generator. Their digests go into the download manifest so a
+    conformance reports, the device market, the site assets and deploy files, and this generator. Their digests go into the download manifest so a
     stale build is noticed even when no download changed."""
     found: set[Path] = set()
     for folder, pattern in (
@@ -4415,7 +5190,8 @@ def page_source_paths() -> list[Path]:
         found.update(path for path in folder.glob(pattern) if path.is_file())
     for folder in (HERE / "assets", HERE / "deploy"):
         found.update(path for path in folder.rglob("*") if path.is_file())
-    for path in (MHS / "sdk" / "README.md", MHS / "sdk" / "INTERFACE.md", WORKSPACE / "integration" / "openai4s" / "DESIGN.md", Path(__file__).resolve()):
+    for path in (MHS / "sdk" / "README.md", MHS / "sdk" / "INTERFACE.md", WORKSPACE / "integration" / "openai4s" / "DESIGN.md",
+                 MARKET_FILE, Path(__file__).resolve()):
         if path.is_file():
             found.add(path)
     return sorted(found)
@@ -4792,8 +5568,8 @@ def search_page(ctx) -> str:
   {breadcrumbs_html(p, [("Search", None)])}
   <header class="page-hero search-hero">
     <p class="eyebrow">Search</p>
-    <h1>Find a document, capability or family</h1>
-    <p class="page-lead">Search the specification, the capability catalogue, bridge families and site pages. Registry records have their own explorer and filter surface.</p>
+    <h1>Find a document, capability, family or device</h1>
+    <p class="page-lead">Search the specification, the capability catalogue, bridge families, the device market and site pages. Registry records have their own explorer and filter surface.</p>
     <form class="search-form" id="site-search-form" role="search" action="index.html" method="get">
       <label class="sr-only" for="site-search">Search the site</label>
       <div class="search-input-wrap search-input-lg">
@@ -4807,6 +5583,7 @@ def search_page(ctx) -> str:
       <button type="button" class="filter-btn" data-type="spec">Specification</button>
       <button type="button" class="filter-btn" data-type="capability">Capabilities</button>
       <button type="button" class="filter-btn" data-type="family">Families</button>
+      <button type="button" class="filter-btn" data-type="market">Market</button>
       <button type="button" class="filter-btn" data-type="site">Site</button>
     </div>
   </header>
@@ -4834,7 +5611,7 @@ def search_page(ctx) -> str:
     return page_html(
         path="search/index.html",
         title="Search",
-        description="Search OpenMHS specification sections, capability classes, bridge families and site pages.",
+        description="Search OpenMHS specification sections, capability classes, bridge families, market devices and site pages.",
         body=body,
         section="search",
         breadcrumbs=[("Search", None)],
@@ -4921,6 +5698,7 @@ class BuildContext:
     downloads: dict
     interface_copied: bool
     search_entries: list = field(default_factory=list)
+    market: Market | None = None
 
 
 def write_data_assets(registry: Registry, caps: Capabilities) -> tuple[int, int]:
@@ -5010,7 +5788,7 @@ def copy_sources(known: set[str]) -> tuple[bool, int]:
 
 
 def copy_assets(known: set[str]) -> None:
-    for name in ("style.css", "app.js", "search.js", "playground.js", "registry.js", "capabilities.js"):
+    for name in ("style.css", "app.js", "search.js", "playground.js", "registry.js", "capabilities.js", "market.js"):
         path = ASSETS / name
         if not path.is_file():
             raise SystemExit(f"missing required asset: {path}")
@@ -5105,6 +5883,10 @@ def make_search_entries(ctx: BuildContext, pages: list[tuple[str, str]]) -> list
             "Family",
             fam.description,
         )
+    if ctx.market:
+        for entry in ctx.market.entries:
+            add(entry["name"], entry["path"], "Market",
+                f'{market_category_label(entry)} · {entry["id"]} · {entry["excerpt"].replace("`", "")}')
     entries.sort(key=lambda e: (e[2], e[0].lower(), e[1]))
     return entries
 
@@ -5164,6 +5946,7 @@ def build_site(quiet: bool = False) -> int:
     docs = discover_docs()
     doc_parts = build_doc_parts(docs)
     registry = prepare_registry(load_registry())
+    market = prepare_market(load_market(), registry)
     caps = load_capabilities()
     families = load_families(registry)
     sdk = load_sdk()
@@ -5194,8 +5977,11 @@ def build_site(quiet: bool = False) -> int:
         "download/index.html",
         "about/index.html",
         "search/index.html",
+        "market/index.html",
     ]
     pages += [part.output for part in doc_parts]
+    pages += [page for cat in market.categories for page in cat.pages]
+    pages += [entry["path"] for entry in market.entries]
     pages += [f"registry/repo/{rec['slug']}.html" for rec in registry.records]
     pages += [f"families/{fam.slug}.html" for fam in families]
     sdk_docs = [f"sdk/docs/{doc.stem}.html" for doc in sdk.docs]
@@ -5204,6 +5990,7 @@ def build_site(quiet: bool = False) -> int:
         "assets/style.css", "assets/app.js", "assets/search.js", "assets/playground.js",
         "assets/registry.js", "assets/capabilities.js", "assets/registry-data.js",
         "assets/capabilities-data.js", "assets/search-index.js", "assets/search-index.json",
+        "assets/market.js", "assets/market-data.js", "market/index.json", "market/market.json",
         "favicon.svg", "robots.txt", "_headers", ".nojekyll",
     ]
     if SITE_URL:
@@ -5226,6 +6013,7 @@ def build_site(quiet: bool = False) -> int:
     copy_deploy(known)
     write_robots(known)
     size_reg, size_cap = write_data_assets(registry, caps)
+    size_market = write_market_assets(market)
 
     ctx = BuildContext(
         docs=docs,
@@ -5239,6 +6027,7 @@ def build_site(quiet: bool = False) -> int:
         family_titles=family_titles,
         downloads=downloads,
         interface_copied=interface_copied,
+        market=market,
     )
 
     noindex_paths: set[str] = {"404.html", "search/index.html"}
@@ -5265,6 +6054,19 @@ def build_site(quiet: bool = False) -> int:
     emit("registry/index.html", registry_explorer_page(ctx), "Registry")
     for index, rec in enumerate(registry.records):
         emit(f"registry/repo/{rec['slug']}.html", registry_detail_page(ctx, rec, index))
+    emit("market/index.html", market_index_page(ctx), "Market")
+    for cat in market.categories:
+        for number, page in enumerate(cat.pages, start=1):
+            emit(page, market_category_page(ctx, cat, number), "Market")
+        for index, entry in enumerate(cat.entries):
+            emit(
+                entry["path"],
+                market_package_page(
+                    ctx, entry,
+                    cat.entries[index - 1] if index > 0 else None,
+                    cat.entries[index + 1] if index + 1 < len(cat.entries) else None,
+                ),
+            )
     emit("capabilities/index.html", capabilities_page(ctx), "Capabilities")
     emit("families/index.html", families_index_page(ctx), "Families")
     for fam in families:
@@ -5293,6 +6095,12 @@ def build_site(quiet: bool = False) -> int:
     sitemap_entries.append(("registry/index.html", "weekly", "0.9"))
     for rec in registry.records:
         sitemap_entries.append((f"registry/repo/{rec['slug']}.html", "monthly", "0.4"))
+    sitemap_entries.append(("market/index.html", "weekly", "0.9"))
+    for cat in market.categories:
+        for page in cat.pages:
+            sitemap_entries.append((page, "weekly", "0.7"))
+    for entry in market.entries:
+        sitemap_entries.append((entry["path"], "monthly", "0.6"))
     sitemap_entries.append(("capabilities/index.html", "monthly", "0.8"))
     sitemap_entries.append(("families/index.html", "monthly", "0.7"))
     for fam in families:
@@ -5325,10 +6133,12 @@ def build_site(quiet: bool = False) -> int:
         print(f"  site url    {SITE_URL + '/' if SITE_URL else '(none: no canonical links, no sitemap)'}")
         print(f"  docs        {len([d for d in docs if not d.placeholder])}/{len(docs)} published, {len([d for d in docs if d.placeholder])} in preparation")
         print(f"  registry    {registry.total:,} records" + (" (SYNTHETIC FALLBACK)" if registry.synthetic else ""))
+        print(f"  market      {market.count:,} packages ({market.hardware:,} hardware, {market.simulated:,} simulated) · "
+              f"{len(market.categories)} categories · {sum(len(c.pages) for c in market.categories)} category pages")
         print(f"  caps        {caps.count} classes · {len(caps.domains)} domains")
         print(f"  families    {len(families)} pages · {len([f for f in families if not f.placeholder])} recipes published")
         print(f"  sdk         {'README present' if sdk.present else 'no README'}; {len(sdk.docs)} guides")
-        print(f"  assets      registry-data {fmt_bytes(size_reg)} · capabilities-data {fmt_bytes(size_cap)}")
+        print(f"  assets      registry-data {fmt_bytes(size_reg)} · capabilities-data {fmt_bytes(size_cap)} · market-data {fmt_bytes(size_market)}")
         print("  area        pages     HTML")
         for area in sorted(areas):
             sizes = areas[area]

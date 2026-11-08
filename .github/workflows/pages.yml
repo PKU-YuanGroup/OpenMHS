@@ -1,0 +1,65 @@
+# Deploy https://mhs.openai4s.org to GitHub Pages (repository settings: Pages source "GitHub Actions", custom domain
+# mhs.openai4s.org). The build regenerates the git-ignored registry aggregates, refuses a stale device market
+# (MHS/drivers/market.json), builds the site, verifies links, assets, data and source digests, and deploys the artifact.
+# The site writes CNAME itself for this domain. Generated output is never committed.
+name: Deploy the OpenMHS site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/pages.yml"
+      - "MHS/**"
+      - "LICENSE"
+      - "LICENSE-docs"
+      - "NOTICE"
+      - "integration/openai4s/DESIGN.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; a newer push waits instead of cancelling a deployment that is under way.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  PYTHONDONTWRITEBYTECODE: "1"
+  SITE_URL: https://mhs.openai4s.org
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Mirror the generated SDK data
+        run: python3 MHS/sdk/tools/sync_data.py
+      - name: Build the registry aggregates
+        # index.json, index.jsonl and records.csv are git-ignored: generated from MHS/registry/repos, never committed
+        run: python3 MHS/registry/build_index.py
+      - name: The device market is current
+        run: PYTHONPATH=MHS/sdk/src python3 -m mhs market build --check
+      - name: Build the site
+        run: python3 MHS/site/build.py --release --site-url "$SITE_URL" --out _site
+      - name: Verify links, assets, data and source digests
+        run: python3 MHS/site/check.py --site _site --site-url "$SITE_URL" --fresh
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

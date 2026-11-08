@@ -21,6 +21,7 @@
     spec: "Specification",
     capability: "Capability",
     family: "Family",
+    market: "Market",
     site: "Site"
   };
 
