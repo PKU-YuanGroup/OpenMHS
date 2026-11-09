@@ -118,7 +118,7 @@ class InstallTests(unittest.TestCase):
         # An e-stop must never sit behind an approval prompt.
         self.assertFalse(by_name["mhs_safety"].requires_approval)
         self.assertEqual(by_name["mhs_safety"].side_effect_class, "high_risk")
-        self.assertTrue(by_name["mhs_evidence"].writes_files)
+        self.assertFalse(by_name["mhs_evidence"].writes_files)
 
     def test_network_tools_screen_untrusted_output(self) -> None:
         for tool in self.tools:
@@ -154,3 +154,19 @@ class InstallTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class EvidenceFilesystemBoundaryTests(unittest.TestCase):
+    def test_model_paths_are_refused_before_host_or_filesystem_access(self):
+        import tempfile
+        from pathlib import Path
+
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory) / "access-token"
+            target.write_text('{"private": "sentinel"}')
+            for action in ("export", "verify", "ledger"):
+                with self.subTest(action=action), mock.patch.object(mhs_tools, "_host", side_effect=AssertionError("host must not run")):
+                    result = mhs_tools._m_mhs_evidence(object(), {"action": action, "path": str(target)})
+                    self.assertIn("MHS.HOST.INVALID_ARGUMENT", str(result))
+                    self.assertNotIn("sentinel", str(result))
+                    self.assertEqual(target.read_text(), '{"private": "sentinel"}')

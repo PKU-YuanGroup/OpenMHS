@@ -88,8 +88,8 @@ def require_decoder() -> Any:
         major = int(__version__.split(".", 1)[0])
     except (ValueError, AttributeError) as exc:
         raise ValueError("cannot verify the installed image decoder version") from exc
-    if major != 13:
-        raise ValueError("compressed ROS images require Pillow 13.x")
+    if major not in (12, 13):
+        raise ValueError("compressed ROS images require Pillow 12.x or 13.x")
     if ImageFile.LOAD_TRUNCATED_IMAGES:
         raise ValueError("compressed ROS images refuse a decoder configured to accept truncated images")
     return Image

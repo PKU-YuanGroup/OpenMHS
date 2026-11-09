@@ -234,7 +234,8 @@ class StdioTransport:
     kind = "stdio"
 
     def __init__(self, argv: Sequence[str], *, env: Mapping[str, str] | None = None,
-                 cwd: str | None = None, timeout: float = DEFAULT_TIMEOUT_S) -> None:
+                 cwd: str | None = None, timeout: float = DEFAULT_TIMEOUT_S,
+                 inherit_env: bool = True) -> None:
         self.argv = [str(part) for part in argv]
         self.timeout = float(timeout)
         self._process: subprocess.Popen[bytes] | None = None
@@ -247,7 +248,7 @@ class StdioTransport:
         self._stderr: list[str] = []
         self._closed = False
         self._failure: str | None = None
-        child_env = dict(os.environ)
+        child_env = dict(os.environ) if inherit_env else {}
         child_env.update(dict(env or {}))
         try:
             self._process = subprocess.Popen(
@@ -1689,6 +1690,7 @@ def connect(
     if isinstance(target, (list, tuple)):
         transport = StdioTransport([str(part) for part in target],
                                    env=kwargs.get("env"), cwd=kwargs.get("cwd"),
+                                   inherit_env=kwargs.get("inherit_env", True),
                                    timeout=kwargs.get("timeout", DEFAULT_TIMEOUT_S))
         client = MHSClient(transport)
         try:

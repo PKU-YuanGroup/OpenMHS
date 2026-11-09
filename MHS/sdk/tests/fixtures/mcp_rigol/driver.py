@@ -151,7 +151,7 @@ TOOLS['get_waveform']['prerequisite']={'when':{'argument':'mode','equals':'memor
     'observe':'get_status','path':'trigger_status','equals':'STOP','source_ref':SOURCE+':518-525'}
 CONFIG = {'tools':TOOLS,'source':{'path':SOURCE,'sha256':SHA,'commit':PIN,'receiver':'mcp'},
     'safety':{'command':'run_control','arguments':{'action':'stop'},'observe':'get_status','path':'trigger_status','equals':'STOP'},
-    'request_timeout_ms':500,'stop_timeout_ms':500,'max_message_bytes':4*1024*1024,'owned_transport':True}
+    'request_timeout_ms':3000,'stop_timeout_ms':500,'max_message_bytes':4*1024*1024,'owned_transport':True}
 
 CURSOR_TIME='x-cap.sdk-fixture.configure_cursors_time.v1'
 CURSOR_AMPLITUDE='x-cap.sdk-fixture.configure_cursors_amplitude.v1'

@@ -1,4 +1,4 @@
-/* MHS site shell: colour scheme, mobile navigation, copy buttons, docs TOC. */
+/* MHS site shell: colour scheme, mobile navigation, copy buttons (code blocks and one-line commands), docs TOC. */
 (function () {
   "use strict";
   var root = document.documentElement;
@@ -19,6 +19,22 @@
 
   applyTheme(preferredTheme(), false);
 
+  /* Copy text to the clipboard and confirm on the button that asked for it. */
+  function copyText(text, button) {
+    var label = button.getAttribute("data-label") || button.textContent;
+    button.setAttribute("data-label", label);
+    var done = function () { button.textContent = "Copied"; setTimeout(function () { button.textContent = label; }, 1600); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, done);
+    } else {
+      var area = document.createElement("textarea");
+      area.value = text; area.setAttribute("readonly", ""); area.style.position = "fixed"; area.style.opacity = "0";
+      document.body.appendChild(area); area.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(area); done();
+    }
+  }
+
   document.addEventListener("click", function (event) {
     var toggle = event.target.closest(".theme-toggle");
     if (toggle) {
@@ -26,11 +42,14 @@
       applyTheme(next, true);
       return;
     }
+    /* One-line commands (market cards and package pages) carry their text in data-copy. */
+    var command = event.target.closest(".copy-cmd[data-copy]");
+    if (command) copyText(command.getAttribute("data-copy") || "", command);
   });
 
   document.addEventListener("keydown", function (event) {
     if (event.key === "/" && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) {
-      var target = document.getElementById("registry-q") || document.getElementById("site-search") || document.getElementById("cap-q");
+      var target = document.getElementById("registry-q") || document.getElementById("market-q") || document.getElementById("site-search") || document.getElementById("cap-q");
       if (target) { event.preventDefault(); target.focus(); }
     }
     if (event.key === "Escape") {
@@ -81,7 +100,7 @@
     });
   }
 
-  /* Copy-to-clipboard for every code block. */
+  /* Copy-to-clipboard for every code block; reveal the server-rendered command copy buttons. */
   function addCopyButtons() {
     document.querySelectorAll(".codeblock").forEach(function (block) {
       var bar = block.querySelector(".codeblock-bar");
@@ -92,19 +111,11 @@
       button.textContent = "Copy";
       button.addEventListener("click", function () {
         var code = block.querySelector("pre");
-        var text = code ? code.innerText : "";
-        var done = function () { button.textContent = "Copied"; setTimeout(function () { button.textContent = "Copy"; }, 1600); };
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(done, done);
-        } else {
-          var area = document.createElement("textarea");
-          area.value = text; document.body.appendChild(area); area.select();
-          try { document.execCommand("copy"); } catch (e) {}
-          document.body.removeChild(area); done();
-        }
+        copyText(code ? code.innerText : "", button);
       });
       bar.appendChild(button);
     });
+    document.querySelectorAll(".copy-cmd[hidden]").forEach(function (button) { button.hidden = false; });
   }
 
   /* Highlight the current section in a document TOC. */

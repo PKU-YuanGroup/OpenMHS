@@ -23,7 +23,6 @@ dispatcher :class:`MHSHost` is created lazy on first use.
 from __future__ import annotations
 
 import json
-from pathlib import Path
 from typing import Any, Callable
 
 from openai4s.tools.base import Tool
@@ -418,11 +417,21 @@ def _m_mhs_safety(self: Any, spec: dict | None = None) -> dict:
     return _guard(run)
 
 
+def _refuse_evidence_path() -> None:
+    raise MHSHostError(
+        "MHS.HOST.INVALID_ARGUMENT",
+        "Native evidence tools do not access filesystem paths; export the bundle "
+        "and use the host's governed file tools to save or read it.",
+    )
+
+
 def _m_mhs_evidence(self: Any, spec: dict | None = None) -> dict:
     """Export, verify or read the local receipt ledger."""
     arguments = _spec(spec)
     action = str(arguments.get("action") or "verify")
     endpoint_id = _endpoint_id(arguments)
+    if arguments.get("path") not in (None, ""):
+        return _guard(lambda: _refuse_evidence_path())
 
     def run() -> dict:
         host = _host(self)
@@ -432,28 +441,9 @@ def _m_mhs_evidence(self: Any, spec: dict | None = None) -> dict:
             return {"entries": entries, "count": len(entries)}
         if action == "export":
             bundle = host.evidence_export(endpoint_id)
-            path = arguments.get("path")
-            if path not in (None, ""):
-                target = Path(str(path)).expanduser().resolve()
-                target.parent.mkdir(parents=True, exist_ok=True)
-                with open(target, "w", encoding="utf-8") as handle:
-                    json.dump(bundle, handle, sort_keys=True, indent=2)
-                return {
-                    "endpoint_id": bundle.get("endpoint_id") or bundle.get("endpoint"),
-                    "path": str(target),
-                    "head_digest": bundle.get("head_digest"),
-                    "count": bundle.get("count"),
-                    "receipts": len(bundle.get("receipts") or []),
-                }
             return bundle
         if action == "verify":
-            bundle = None
-            path = arguments.get("path")
-            if path not in (None, ""):
-                target = Path(str(path)).expanduser().resolve()
-                with open(target, "r", encoding="utf-8") as handle:
-                    bundle = json.load(handle)
-            return host.evidence_verify(bundle, endpoint_id)
+            return host.evidence_verify(None, endpoint_id)
         raise MHSHostError(
             "MHS.HOST.INVALID_ARGUMENT",
             "action must be one of: export, verify, ledger",
@@ -758,7 +748,7 @@ class MHSEvidenceTool(Tool):
     host_method = "mhs_evidence"
     description = (
         "Work with MHS receipts and the evidence chain. action='export' returns an "
-        "endpoint's evidence bundle (or writes it to path and returns the summary); "
+        "endpoint's evidence bundle for saving through the host's governed file tools; "
         "action='verify' recomputes the hash chain and reports valid/checked/"
         "head_digest; action='ledger' lists receipts this OpenAI4S host has itself "
         "observed. A rejected or unknown receipt is chained too -- evidence shows "
@@ -777,7 +767,7 @@ class MHSEvidenceTool(Tool):
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 2000,
-                "description": "Bundle destination for export, or bundle source for verify.",
+                "description": "Deprecated: filesystem paths are refused. Use governed host file tools.",
             },
             "limit": {
                 "type": "integer",
@@ -790,7 +780,7 @@ class MHSEvidenceTool(Tool):
         "additionalProperties": False,
     }
     read_only = False
-    writes_files = True
+    writes_files = False
     secret_path_key = "path"
     needs_network = True
     screen_untrusted_output = True

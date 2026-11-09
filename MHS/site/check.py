@@ -468,7 +468,7 @@ def check(
             json.loads(path.read_text(encoding="utf-8"))
         except (UnicodeDecodeError, json.JSONDecodeError) as exc:
             errors.append(f"{rel}: invalid JSON ({exc})")
-    for name in ("registry-data.js", "capabilities-data.js", "search-index.js"):
+    for name in ("registry-data.js", "capabilities-data.js", "search-index.js", "market-data.js"):
         path = SITE / "assets" / name
         if not path.is_file():
             errors.append(f"missing data asset: assets/{name}")
@@ -614,8 +614,8 @@ def check(
     required = [
         "index.html", "404.html", "favicon.svg", "assets/style.css", "assets/app.js",
         "assets/search.js", "assets/playground.js", "assets/registry.js",
-        "assets/capabilities.js", "robots.txt", "_headers",
-        "download/download-manifest.json",
+        "assets/capabilities.js", "assets/market.js", "robots.txt", "_headers",
+        "download/download-manifest.json", "market/index.html", "market/index.json",
     ]
     if base:
         required.append("sitemap.xml")

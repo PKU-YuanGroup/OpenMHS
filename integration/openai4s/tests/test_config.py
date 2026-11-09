@@ -18,6 +18,15 @@ from openai4s_mhs.mcpconfig import (
 )
 
 
+
+
+def _launch_prefix(python: str) -> list[str]:
+    """The argv prefix of a generated row: the checkout's launcher, else ``-m mhs.mcp``."""
+    from openai4s_mhs.mcpconfig import source_launcher
+
+    launcher = source_launcher()
+    return [python, launcher] if launcher else [python, "-m", "mhs.mcp"]
+
 class ConfigTests(unittest.TestCase):
     def test_explicit_file(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -103,9 +112,7 @@ class MCPConfigTests(unittest.TestCase):
         self.assertEqual(
             entry["command"],
             [
-                "/usr/bin/python3",
-                "-m",
-                "mhs.mcp",
+                *_launch_prefix("/usr/bin/python3"),
                 "--endpoint",
                 "http://127.0.0.1:7401",
                 "--config",
@@ -121,8 +128,9 @@ class MCPConfigTests(unittest.TestCase):
         spec = EndpointSpec(id="arm", command=["python3", "-m", "mhs.reference", "arm"])
         self.assertEqual(endpoint_target(spec), "mhs+stdio://python3,-m,mhs.reference,arm")
         argv = connector_argv(spec, python="/usr/bin/python3")
-        self.assertEqual(argv[:4], ["/usr/bin/python3", "-m", "mhs.mcp", "--command"])
-        self.assertEqual(argv[4], "python3 -m mhs.reference arm")
+        launch = _launch_prefix("/usr/bin/python3")
+        self.assertEqual(argv[: len(launch) + 1], [*launch, "--command"])
+        self.assertEqual(argv[len(launch) + 1], "python3 -m mhs.reference arm")
 
     def test_connector_config_for_config(self) -> None:
         config = MHSConfig(
@@ -138,13 +146,17 @@ class MCPConfigTests(unittest.TestCase):
         self.assertTrue(payload["experimental"])
         ids = [entry["id"] for entry in payload["connectors"]]
         self.assertEqual(ids, ["mhs-lab", "mhs-arm"])
+        launch = _launch_prefix("/usr/bin/python3")
+        n = len(launch)
         for entry in payload["connectors"]:
-            self.assertEqual(entry["command"][:3], ["/usr/bin/python3", "-m", "mhs.mcp"])
-            self.assertIn(entry["command"][3], ("--endpoint", "--command"))
+            self.assertEqual(entry["command"][:n], launch)
+            self.assertIn(entry["command"][n], ("--endpoint", "--command"))
+            # A row from this checkout launches without any env (no PYTHONPATH to store).
+            self.assertNotIn("PYTHONPATH", entry.get("env") or {})
         by_id = {entry["id"]: entry for entry in payload["connectors"]}
-        self.assertEqual(by_id["mhs-lab"]["command"][3], "--endpoint")
-        self.assertEqual(by_id["mhs-lab"]["command"][4], "http://127.0.0.1:7401")
-        self.assertEqual(by_id["mhs-arm"]["command"][3], "--command")
+        self.assertEqual(by_id["mhs-lab"]["command"][n], "--endpoint")
+        self.assertEqual(by_id["mhs-lab"]["command"][n + 1], "http://127.0.0.1:7401")
+        self.assertEqual(by_id["mhs-arm"]["command"][n], "--command")
 
     def test_disabled_config_emits_connectors_that_are_disabled(self) -> None:
         config = MHSConfig(

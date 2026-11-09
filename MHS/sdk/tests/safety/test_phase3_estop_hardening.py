@@ -101,7 +101,8 @@ class SettleTests(unittest.TestCase):
         holder = tempfile.TemporaryDirectory(prefix="mhs-s10-3-")
         self.addCleanup(holder.cleanup)
         state_dir = Path(holder.name)
-        server = build_server(Blocking(backend="fake"), state_dir=state_dir)
+        driver = Blocking(backend="fake")
+        server = build_server(driver, state_dir=state_dir)
         self.addCleanup(close_server, server)
         self.addCleanup(env.release.set)
         client = support.Client(server)
@@ -113,6 +114,10 @@ class SettleTests(unittest.TestCase):
         original = server_module._settle_native_work
 
         def observed(bridge, timeout):
+            # Other tests may still have a bounded background stop finishing.
+            # Only this device's settle hook witnesses this server's latch.
+            if bridge is not driver:
+                return original(bridge, timeout)
             latch = state_dir / "latch.json"
             persisted = latch.exists() and json.loads(latch.read_text()).get("devices", {}) != {}
             seen.append((bool(server._latched.get(client.device_id)), persisted))

@@ -732,6 +732,19 @@ def _cmd_conform(args: argparse.Namespace) -> int:
     return EXIT_OK
 
 
+def _cmd_market(args: argparse.Namespace) -> int:
+    from .market import run_cli
+
+    verb, words = args.verb, list(args.query)
+    if verb not in ("", "search", "show", "build"):
+        verb, words = "search", [verb, *words]
+    try:
+        return run_cli(verb, " ".join(words), track=args.track, mode=args.mode, limit=args.limit or 0,
+                       as_json=args.json, check=args.check)
+    except FileNotFoundError as exc:
+        raise UsageError(str(exc)) from exc
+
+
 def _cmd_registry(args: argparse.Namespace) -> int:
     from .registry import Registry
 
@@ -1122,8 +1135,13 @@ def _serve_driver(args: argparse.Namespace) -> int:
     from .adapter import LoadError, close_server, load
 
     if not Path(args.target).exists():
-        raise UsageError(f"{args.target} is neither a driver directory, an mhs-adapter.json nor one of "
-                         f"{', '.join(_REFERENCE_NAMES)}")
+        from .market import resolve_package
+
+        resolved = resolve_package(args.target)
+        if resolved is None:
+            raise UsageError(f"{args.target} is neither a driver directory, an mhs-adapter.json, a market package "
+                             f"(mhs market search <words>) nor one of {', '.join(_REFERENCE_NAMES)}")
+        args.target = str(resolved)
     if args.arm and not args.allow_hardware:
         raise UsageError("--arm arms hardware actuation: it needs --backend hardware --allow-hardware")
     options: dict[str, Any] = {}
@@ -1430,6 +1448,19 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--stats", action="store_true")
     p.add_argument("--json", action="store_true")
     p.set_defaults(func=_cmd_registry)
+
+    p = sub.add_parser("market", help="find and serve the driver packages that passed their gate",
+                       description="The OpenMHS device market (MHS/drivers/market.json): every driver package whose "
+                                   "gate passed on the fake backend, with an introduction and the command that serves "
+                                   "it. Verbs: search <words>, show <id>, build [--check]; no verb prints a summary.")
+    p.add_argument("verb", nargs="?", default="", help="search | show | build (or search words directly)")
+    p.add_argument("query", nargs="*", help="search words, or the package id for show")
+    p.add_argument("--track", choices=("labs", "robots"), default=None, help="only this track")
+    p.add_argument("--mode", choices=("hardware", "simulated"), default=None, help="only this device mode")
+    p.add_argument("--limit", type=int, default=25, help="search: at most this many rows (0: all)")
+    p.add_argument("--check", action="store_true", help="build: report a stale market.json without writing")
+    p.add_argument("--json", action="store_true", help="machine-readable output")
+    p.set_defaults(func=_cmd_market)
 
     p = sub.add_parser("version", help="print the SDK, specification and protocol versions")
     p.set_defaults(func=_cmd_version)

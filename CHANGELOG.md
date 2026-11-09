@@ -4,6 +4,20 @@ All notable changes to OpenMHS are recorded here. OpenMHS 0.9 is a first public 
 wire revision 1. Nothing here is a safety certification; OpenMHS is a supervisory software contract and never replaces a
 hardware emergency stop.
 
+## Unreleased: the device market (2026-11-08)
+
+- **`mhs market`** (`mhs/market.py`): every driver package whose gate passed (746) is listed in
+  `MHS/drivers/market.json` with an introduction, a curated category, what it measures, adjusts and does, its upstream
+  source and licence, and the commands that serve it on its fake backend. `mhs market search <words>`,
+  `mhs market show <id>`, `mhs market build [--check]`. All 746 fake backends were started and answered `mhs.hello`.
+- **`mhs serve <market id>`**: `mhs serve julabo` or `mhs serve labs/tiagocoutinho__julabo` resolves the driver directory
+  in the checkout (`MHS_DRIVERS` overrides), so no path is needed.
+- **Website market** at `/market/`: search and filters, 18 category pages and one page per package with OpenAI4S,
+  standalone and MCP-host install commands; the GitHub Pages workflow (`.github/workflows/pages.yml`) is active for
+  `https://mhs.openai4s.org`.
+- **OpenAI4S**: the reference host guide points at OpenAI4S's Lab (`openai4s lab add <id>`), which pins this repository
+  as the `third_party/OpenMHS` submodule.
+
 ## 0.9.0.dev0, first public preview (2026-11-06)
 
 The first optimized draft. An independent review of the earlier implementation (189 verified findings across the
@@ -543,6 +557,10 @@ One section per file in `MHS/changes/`. The fragments are the detailed record of
 ### Source-file lab drivers and concrete Panda review
 
 [`MHS/changes/RECON-LAB-PANDA-REVIEW.md`](MHS/changes/RECON-LAB-PANDA-REVIEW.md): The next four DeepSeek-authored packages have completed model review. Both Keithley power-supply packages pass strict fake collection with no acceptance warnings. The concrete PandaReach and Thorlabs beam-profiler packages retain blocked outcomes where source-backed native behavior conflicts with the current execution contract. An author-side fake gate pass was not accepted as native compatibility evidence. Model attribution, pinned sources and null human-review signatures ...
+
+### Release preparation: portable image tests and host boundaries
+
+[`MHS/changes/RELEASE-PREP-20261108.md`](MHS/changes/RELEASE-PREP-20261108.md): with the same strict image validation and truncated-image refusal.
 
 ### Complete replay snapshots and consistent revision selection
 

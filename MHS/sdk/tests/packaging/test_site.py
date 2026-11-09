@@ -181,5 +181,61 @@ class StalenessInputTests(unittest.TestCase):
         self.assertFalse(check.SPEC_EXAMPLE_IDS & catalogue, "an example id that became a real class no longer needs the exemption")
 
 
+
+class MarketPageTests(unittest.TestCase):
+    """The device market renders ``MHS/drivers/market.json`` as written: every entry gets a page and a category page, and
+    every package page carries the three install commands and the safety line."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.build = load_build()
+        # The registry aggregates may not be built yet (the suites run before build_index.py): no registry records.
+        cls.market = cls.build.prepare_market(cls.build.load_market(), types.SimpleNamespace(records=[]))
+
+    def test_every_entry_has_one_page_and_one_category_page(self):
+        market = self.market
+        self.assertEqual(market.count, market.raw["count"])
+        self.assertEqual(len({entry["path"] for entry in market.entries}), market.count)
+        self.assertEqual(sum(len(cat.entries) for cat in market.categories), market.count)
+        for cat in market.categories:
+            with self.subTest(cat.name):
+                self.assertEqual(len(cat.pages), -(-len(cat.entries) // self.build.MARKET_PAGE_SIZE))
+                for entry in cat.entries:
+                    self.assertIn(entry["category_page"], cat.pages)
+        self.assertEqual(market.hardware + market.simulated, market.count)
+
+    def test_an_excerpt_never_splits_a_code_span(self):
+        entry = {"name": "Probe", "upstream": {"repo_url": "https://github.com/o/r"},
+                 "intro": "Probe, adapted from o/r. It reads " + ", ".join(f"`value_{i}`" for i in range(40)) + "."}
+        excerpt = self.build.market_excerpt(entry, limit=120)
+        self.assertFalse(excerpt.startswith("Probe"), "the first sentence repeats the name and is dropped")
+        self.assertEqual(excerpt.count("`") % 2, 0)
+        self.assertTrue(excerpt.endswith("…"))
+        self.assertLessEqual(len(excerpt.replace("`", "")), 121)
+        self.assertEqual(self.build.inline_code("a `<b>` c"), "a <code>&lt;b&gt;</code> c")
+
+    def test_a_package_page_has_the_install_commands_and_the_safety_line(self):
+        ctx = types.SimpleNamespace(market=self.market, families=[])
+        for mode in ("hardware", "simulated"):
+            entry = next(e for e in self.market.entries if e["mode"] == mode)
+            cat = next(c for c in self.market.categories if c.name == entry["category"])
+            page = self.build.market_package_page(ctx, entry, None, None)
+            with self.subTest(entry["id"]):
+                self.assertIn(f"openai4s lab add {entry['id']}", page)
+                self.assertIn(f"python3 -m mhs serve {entry['id']} --port 7400", page)
+                self.assertIn("python3 -m mhs describe --endpoint http://127.0.0.1:7400", page)
+                self.assertIn('"--mcp"', page)
+                self.assertIn(f"blob/main/MHS/drivers/{entry['id']}/REFERENCE.md", page)
+                self.assertIn("A software stop is not a hardware e-stop", page)
+                self.assertIn("--backend hardware --allow-hardware", page)
+                self.assertIn(entry["category_page"], page.replace("../../../", ""))
+                self.assertTrue(cat.pages)
+
+    def test_an_id_that_is_not_a_track_folder_is_refused(self):
+        for bad in ("labs/../x", "other/x", "labs/a b", "labs"):
+            with self.subTest(bad), self.assertRaises(SystemExit):
+                self.build.prepare_market({"packages": [{"id": bad}]}, types.SimpleNamespace(records=[]))
+
+
 if __name__ == "__main__":
     unittest.main()
