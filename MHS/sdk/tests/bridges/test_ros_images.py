@@ -191,3 +191,19 @@ class RosImageCodecTests(unittest.TestCase):
             out = io.BytesIO(); Image.new(mode, (2, 2)).save(out, format="PNG")
             with self.subTest(mode=mode), self.assertRaises(ValueError):
                 self.convert({"format": "png", "data": base64.b64encode(out.getvalue()).decode()}, COMPRESSED)
+
+
+class DecoderVersionTests(unittest.TestCase):
+    @unittest.skipIf(Image is None, "optional Pillow unavailable")
+    def test_supported_major_versions_and_future_version_refusal(self):
+        import PIL
+        from unittest.mock import patch
+        from mhs.bridge.ros_images import require_decoder
+
+        for version in ("12.3.0", "13.0.0"):
+            with self.subTest(version=version), patch.object(PIL, "__version__", version):
+                self.assertIs(require_decoder(), Image)
+        for version in ("11.0.0", "14.0.0", "unknown"):
+            with self.subTest(version=version), patch.object(PIL, "__version__", version):
+                with self.assertRaises(ValueError):
+                    require_decoder()

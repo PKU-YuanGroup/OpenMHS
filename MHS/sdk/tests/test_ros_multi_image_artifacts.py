@@ -9,6 +9,7 @@ import random
 from pathlib import Path
 import tempfile
 import threading
+import time
 from unittest.mock import patch
 
 from mhs import canonical
@@ -312,6 +313,8 @@ class RosMultiImageArtifactTests(unittest.TestCase):
                         client.estop("controlled publication barrier", device_id=device, deadline_ms=100)
                     elif interrupt == "cancel":
                         client.cancel(early["operation_id"], deadline_ms=50)
+                    if interrupt == "deadline":
+                        time.sleep(0.15)
                     release.set()
                     self.assertTrue(operation.done.wait(2))
                 self.assertIn(operation.final_receipt["status"], ("failed", "cancelled"), operation.final_receipt)

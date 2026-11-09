@@ -244,3 +244,25 @@ class CloseTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class IsolatedStdioEnvironmentTests(unittest.TestCase):
+    def test_explicit_replacement_does_not_inherit_host_credentials(self):
+        import os
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory) / "environment.json"
+            script = "import os,json,sys;open(sys.argv[1],'w').write(json.dumps(dict(os.environ)))"
+            with patch.dict(os.environ, {"MHS_TEST_PROVIDER_KEY": "private-sentinel"}):
+                transport = StdioTransport([sys.executable, "-c", script, str(target)],
+                                           env={"EXPLICIT_RUNTIME": "yes"}, inherit_env=False)
+                try:
+                    transport._process.wait(timeout=5)
+                    environment = json.loads(target.read_text())
+                    self.assertNotIn("MHS_TEST_PROVIDER_KEY", environment)
+                    self.assertEqual(environment["EXPLICIT_RUNTIME"], "yes")
+                finally:
+                    transport.close()

@@ -98,7 +98,7 @@ depth units, calibration and a visualization colormap are not inferred. Float
 depth, YUV, Bayer and other encodings are refused.
 
 `CompressedImage` supports simple `jpeg`, `jpg`, and `png` format strings. It
-requires the optional `openmhs[images]` extra (Pillow 13.x, Python 3.11+), loaded
+requires the optional `openmhs[images]` extra (Pillow 12.3+ or 13.x, Python 3.10+), loaded
 only when compressed images are requested. Missing/unsupported decoders refuse
 before subscription. Actual dimensions come from decoded content.
 

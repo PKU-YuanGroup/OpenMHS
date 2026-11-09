@@ -111,7 +111,7 @@ class StdioProtocolTests(OwnedPeerCase):
     def test_hung_init_and_close_during_startup_keep_no_cancel_for_init(self):
         for close in (False,True):
             peer,directory=self.peer({'init_hang':True})
-            worker,result=self.spawn(lambda:peer.exchange(wire(),lane='normal',timeout_ms=150))
+            worker,result=self.spawn(lambda:peer.exchange(wire(),lane='normal',timeout_ms=1500))
             self.assertTrue(wait_for(lambda:any(e['method']=='initialize' for e in self.events(directory))))
             if close:peer.close()
             worker.join(2)

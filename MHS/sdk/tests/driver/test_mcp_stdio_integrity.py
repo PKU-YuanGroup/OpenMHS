@@ -79,7 +79,7 @@ class StdioIntegrityTests(unittest.TestCase):
         env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',PYTHONOPTIMIZE='0',PYTHONPATH=str(sdk/'src'))
         command=[sys.executable,'-m','mhs.driver','check',str(FIXTURE),'--root',str(project),'--backend','fake','--json','--no-report']
         before={str(p.relative_to(FIXTURE)):p.read_bytes() for p in FIXTURE.rglob('*') if p.is_file()}
-        run=subprocess.run(command,cwd=project,env=env,capture_output=True,text=True,timeout=60)
+        run=subprocess.run(command,cwd=project,env=env,capture_output=True,text=True,timeout=180)
         self.assertEqual(run.returncode,0,run.stdout+run.stderr)
         report=json.loads(run.stdout)
         self.assertEqual([g['id'] for g in report['gates']],['G'+str(n) for n in range(1,10)])

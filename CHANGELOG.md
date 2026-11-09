@@ -558,6 +558,10 @@ One section per file in `MHS/changes/`. The fragments are the detailed record of
 
 [`MHS/changes/RECON-LAB-PANDA-REVIEW.md`](MHS/changes/RECON-LAB-PANDA-REVIEW.md): The next four DeepSeek-authored packages have completed model review. Both Keithley power-supply packages pass strict fake collection with no acceptance warnings. The concrete PandaReach and Thorlabs beam-profiler packages retain blocked outcomes where source-backed native behavior conflicts with the current execution contract. An author-side fake gate pass was not accepted as native compatibility evidence. Model attribution, pinned sources and null human-review signatures ...
 
+### Release preparation: portable image tests and host boundaries
+
+[`MHS/changes/RELEASE-PREP-20261108.md`](MHS/changes/RELEASE-PREP-20261108.md): with the same strict image validation and truncated-image refusal.
+
 ### Complete replay snapshots and consistent revision selection
 
 [`MHS/changes/REPLAY-SNAPSHOTS.md`](MHS/changes/REPLAY-SNAPSHOTS.md): Replay snapshots now include the endpoint's declared recording resource alongside every recorded source resource. Unknown optional metadata is absent instead of schema-invalid null. All replay resources read from the selected frame or current recording view; stale static manifest state no longer overrides those reads. Source frames, their receipt-bound hashes and exported source evidence remain unchanged. A source resource named recording is refused explicitly because it ...
