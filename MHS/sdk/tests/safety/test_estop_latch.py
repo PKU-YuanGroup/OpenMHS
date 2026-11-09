@@ -710,16 +710,19 @@ class LatchScopeTests(unittest.TestCase):
         that lands while ``bridge.restore()`` runs is followed by the stop path
         again once the restore returned (the restore may rewrite the stopped state)."""
         server, rpc, device, session = conveyor()
+        self.addCleanup(server.close)
         snapshot = rpc("mhs.snapshot", session_id=session, deadline_ms=2000)
         bridge = device.bridge
         original_restore, original_estop = bridge.restore, bridge.estop
         events: list[str] = []
         entered = threading.Event()
+        release = threading.Event()
+        self.addCleanup(release.set)
 
         def slow_restore(state, *args, **kwargs):  # noqa: ANN001, ANN002, ANN003
             events.append("restore_enter")
             entered.set()
-            time.sleep(0.3)
+            release.wait(5)
             result = original_restore(state, *args, **kwargs)
             events.append("restore_exit")
             return result
@@ -733,10 +736,15 @@ class LatchScopeTests(unittest.TestCase):
         thread, _holder = in_thread(lambda: rpc.raw(
             "mhs.restore", session_id=session, snapshot=snapshot, deadline_ms=3000))
         self.assertTrue(entered.wait(2.0))
-        estop = rpc("mhs.safety.estop", session_id=session, reason="x", deadline_ms=1000)
-        self.assertTrue(estop["output"]["latched"])
+        try:
+            estop = rpc("mhs.safety.estop", session_id=session, reason="x", deadline_ms=1000)
+            self.assertTrue(estop["output"]["latched"])
+        finally:
+            release.set()
         thread.join(3.0)
-        self.assertTrue(wait_until(lambda: events.count("estop") >= 2, timeout=2.0), events)
+        self.assertFalse(thread.is_alive())
+        self.assertTrue(wait_until(lambda: "restore_exit" in events and
+                                   "estop" in events[events.index("restore_exit") + 1:], timeout=2.0), events)
         exit_at = events.index("restore_exit")
         self.assertIn("estop", events[:exit_at], events)
         self.assertIn("estop", events[exit_at + 1:], f"no stop path after the restore: {events}")

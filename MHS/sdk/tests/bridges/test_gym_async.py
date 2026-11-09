@@ -326,7 +326,9 @@ class AsyncEstopTests(unittest.TestCase):
         caller = threading.Thread(target=lambda: self.assertRaises(Exception, bridge.call, STEP,
                                                                    {"ticks": 1, "action": ACTION}))
         caller.start()
-        self.assertTrue(_wait(lambda: bridge._owned_loop.owned() is not None))
+        # Ownership can briefly belong to the implicit reset before the step.
+        # The unknown-stop assertion needs a remote move that actually began.
+        self.assertTrue(_wait(lambda: env.steps_started == 1 and env.remote_done is not None))
         with self.assertRaises(Exception) as caught:
             bridge.estop("owned")
         self.assertEqual(code(caught.exception), "MHS.OUTCOME.UNKNOWN")

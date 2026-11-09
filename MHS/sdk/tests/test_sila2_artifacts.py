@@ -127,9 +127,14 @@ class SilaStockOwnershipTests(unittest.TestCase):
         self.invoke(client, device, 'Connect')
         entered, release = peer.block('after:property:DisplayIcon')
         sid = client.session_id
-        worker, receipts, errors = launch(lambda: client.invoke(ICON, {}, device_id=device, deadline_ms=25, session_id=sid))
+        # Allow dispatch to reach the controlled peer on a loaded runner, then
+        # hold the response until the owned work actually abandons its budget.
+        worker, receipts, errors = launch(lambda: client.invoke(ICON, {}, device_id=device, deadline_ms=500, session_id=sid))
         try:
-            self.assertTrue(entered.wait(1)); worker.join(.2)
+            self.assertTrue(entered.wait(2)); worker.join(2)
+            self.assertFalse(worker.is_alive()); self.assertFalse(errors)
+            bridge = server.devices[device].bridge.inner
+            until(self, lambda: any(w.abandoned for w in bridge._works.values()))
             self.assertTrue(peer.binaries); self.assertEqual(store._grants, {})
             release.set(); until(self, lambda: server.devices[device].bridge.inner._normal is None)
             self.assertEqual(store._grants, {})

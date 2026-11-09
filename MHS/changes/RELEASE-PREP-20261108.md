@@ -9,6 +9,9 @@
   its conversion barrier held past the separate execution budget.
 - Scope the latch-persistence test's global settle observer to its own device,
   so a background stop from another test cannot alter its callback count.
+- Synchronize async Gym stop tests with the actual remote step, wait for a
+  post-restore stop rather than two arbitrarily timed callbacks, and hold a
+  SiLA binary response until the owning work has abandoned its deadline.
 - Add `inherit_env=False` to the Python stdio client for hosts supplying an
   isolated child environment. The compatibility default still inherits.
 - Refuse model-supplied filesystem paths in the native OpenAI4S evidence tool.
@@ -20,5 +23,6 @@
 - Controlled stdio regressions: 11 tests passed, including the complete CLI gate.
 - OpenAI4S integration suite: 130 tests, OK (3 skipped).
 - E-stop hardening and multi-image artifact regressions: 26 tests passed.
+- SiLA artifact ownership, async Gym and e-stop latch regressions: 74 tests passed.
 - Full SDK regression is checked in CI on Python 3.10 and 3.14; no hardware
   execution or human qualification is claimed.
