@@ -53,6 +53,18 @@ jobs:
         run: python3 MHS/sdk/tools/spec_doctest.py MHS/spec
       - name: Test dependencies (image and array artifacts)
         run: python3 -m pip install -r MHS/sdk/requirements-test.txt
+      - name: The wheel builds and works outside the checkout
+        run: |
+          python3 -m pip install --upgrade pip build
+          python3 MHS/sdk/tools/sync_data.py
+          python3 -m build --wheel --outdir "$RUNNER_TEMP/wheel" MHS/sdk
+          python3 -m venv "$RUNNER_TEMP/venv"
+          cd "$RUNNER_TEMP"
+          # Ignore the source PYTHONPATH and its build-generated egg-info during installation.
+          env -u PYTHONPATH "$RUNNER_TEMP/venv/bin/python" -I -m pip install --no-deps "$RUNNER_TEMP"/wheel/openmhs-*.whl
+          env -u PYTHONPATH "$RUNNER_TEMP/venv/bin/python" -I -m mhs.conformance --help
+          env -u PYTHONPATH "$RUNNER_TEMP/venv/bin/python" -I -c "import mhs; print(mhs.__version__)"
+
       - name: SDK tests (schema examples, safety, persistence, conformance, drivers, surfaces)
         run: python3 -m unittest discover -s MHS/sdk/tests -t MHS/sdk
       - name: Registry
@@ -69,16 +81,6 @@ jobs:
           python3 -m mhs.conformance verify MHS/conformance/reports/arm-cl4.json --reference arm
           python3 -m mhs.conformance verify MHS/sdk/docs/reports/conformance-arm-2dof-seeded.json --reference arm --noise
           python3 -m mhs.conformance verify MHS/sdk/docs/reports/conformance-replay-recorded.json --reference replay --bundle MHS/sdk/docs/reports/replay-bundle-conveyor.json
-      - name: The wheel builds and works outside the checkout
-        run: |
-          python3 -m pip install --upgrade pip build
-          python3 MHS/sdk/tools/sync_data.py
-          python3 -m build --wheel --outdir "$RUNNER_TEMP/wheel" MHS/sdk
-          python3 -m venv "$RUNNER_TEMP/venv"
-          "$RUNNER_TEMP/venv/bin/pip" install "$RUNNER_TEMP"/wheel/openmhs-*.whl
-          cd "$RUNNER_TEMP"
-          env -u PYTHONPATH "$RUNNER_TEMP/venv/bin/python" -I -m mhs.conformance --help
-          env -u PYTHONPATH "$RUNNER_TEMP/venv/bin/python" -I -c "import mhs; print(mhs.__version__)"
 
   drivers:
     name: driver packages
