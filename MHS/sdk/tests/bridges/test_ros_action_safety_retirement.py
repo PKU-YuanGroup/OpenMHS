@@ -161,9 +161,20 @@ class RosActionSafetyRetirementTests(unittest.TestCase):
 
     def unknown_then_terminal(self, peer, bridge):
         count = len(peer.named_goals(support.STOP_NAME))
-        with self.assertRaises(signals.OutcomeUnknown):
-            bridge.call(support.SAFE, {}, BridgeContext(deadline_ms=20))
-        goal = peer.wait_goal(support.STOP_NAME, count + 1)
+        # Establish an owned, unsettled native goal before interrupting the
+        # caller. A 20 ms deadline could instead expire during ROS setup on a
+        # busy runner, leaving no transmitted goal for retirement to exercise.
+        cancelled = threading.Event()
+        thread, outcome = self.worker(lambda: bridge.call(
+            support.SAFE, {}, BridgeContext(deadline_ms=2000, cancel_event=cancelled)))
+        try:
+            goal = peer.wait_goal(support.STOP_NAME, count + 1)
+        finally:
+            cancelled.set()
+            self.joined(thread, outcome)
+        self.assertIsInstance(outcome.get("error"), signals.OutcomeUnknown)
+        with bridge._condition:
+            self.assertTrue(bridge._actions[support.goal_id(goal)].abandoned)
         peer.complete(goal)
         self.wait_terminal(bridge, goal)
         return goal
