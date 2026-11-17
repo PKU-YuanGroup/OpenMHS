@@ -1,0 +1,67 @@
+{
+ "$schema": "https://mhs.openai4s.org/schema/0.9/sim-lock.schema.json",
+ "openmhs": "0.9",
+ "backend": "sim",
+ "environment": {
+  "platform": "linux/arm64",
+  "base_image": "python:3.10-slim-bookworm",
+  "system_packages": [
+   "git",
+   "build-essential",
+   "cmake",
+   "swig",
+   "pkg-config",
+   "patchelf",
+   "libgl1",
+   "libegl1",
+   "libgles2",
+   "libosmesa6",
+   "libglfw3",
+   "libglew2.2",
+   "libglib2.0-0",
+   "libsm6",
+   "libxext6",
+   "libxrender1",
+   "ffmpeg"
+  ],
+  "python": "3.10",
+  "install": [
+   "pip install 'setuptools<61' wheel",
+   "pip install --no-build-isolation .",
+   "pip install mujoco"
+  ],
+  "constraints": [],
+  "resolved": [
+   "absl-py==2.5.1",
+   "etils==1.13.0",
+   "fsspec==2026.9.0",
+   "glfw==2.11.0",
+   "importlib-resources==7.1.0",
+   "mujoco==3.17.0",
+   "numpy==2.2.6",
+   "packaging==26.3",
+   "pyopengl==3.1.10",
+   "setuptools==60.10.0",
+   "typing-extensions==4.16.0",
+   "websockets==16.1.1",
+   "wheel==0.48.0",
+   "zipp==4.1.2"
+  ]
+ },
+ "upstream": {
+  "commit": "df9ade0fa8df984bfe6853fda7604edf10440b65"
+ },
+ "gate": {
+  "sdk_version": "0.9.0.dev0",
+  "digest": "sha256:9122a36c4eee5c16a727ed28076be0a68d342c5031dcc9f1b02c1741723ba9ab",
+  "evidence_state": "contract_checked",
+  "warnings": [
+   "G6.NOT_RECORDED",
+   "G7.UPSTREAM_BACKEND",
+   "G8.NO_UNIT"
+  ]
+ },
+ "fake_gate_digest": "sha256:ad4f34d9ce73c9b962c6c1cf99e438f566bcb9ec2df02ddab04e07eb46b9b897",
+ "checked_at": "2026-11-17",
+ "notes": "installed with setuptools<61 and no build isolation (the current setuptools refuses the layout); mujoco added as the mujoco family runtime (the upstream does not declare it)"
+}
