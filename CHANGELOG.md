@@ -662,6 +662,10 @@ One section per file in `MHS/changes/`. The fragments are the detailed record of
 
 [`MHS/changes/SILA2-STOP-SETTLEMENT.md`](MHS/changes/SILA2-STOP-SETTLEMENT.md): OpenMHS is an independent project, not affiliated with, endorsed by, or a reimplementation of Anthropic's MHS research preview. Controlled SiLA2 Stop confirmation now waits for cooperative receipt-state reads and retries invalidated observations within the caller's original deadline.
 
+### Three gate fixes found by running simulator packages on their real upstream
+
+[`MHS/changes/SIM-BACKEND-GATE.md`](MHS/changes/SIM-BACKEND-GATE.md): On 2026-11-17 the gate was run with `--backend sim` over a pilot of 18 published simulator packages, each installed from its pinned upstream commit in an isolated container (claude-opus-5-5, a model and not a human). Three SDK defects stopped packages that had nothing wrong with them: a false `G3.GATE_TAMPERED` for every pybind11 extension, no way to name the module that registers a Gymnasium environment, and a `G5.STALE` that no `mhs.driver reference` run could clear. Each ...
+
 ### SIM-HOST — an isolated simulator host for environments that own a ROS and Gazebo lifecycle
 
 [`MHS/changes/SIM-HOST.md`](MHS/changes/SIM-HOST.md): A `GymnasiumDriver` backend can now declare `isolated_process_v1`: its environment is built and driven in a child process that the endpoint starts and owns, an exit or a global ROS shutdown inside the environment ends only that process, every call is bounded, and the e-stop is the declared simulator stop confirmed by a declared state read-back, or an unreached safe state. gh.rickstaa/ros-gazebo-gym passes on it (risk raised to R2); gh.ut-amrl/socialgym2 stays blocked because ...
