@@ -1,0 +1,1242 @@
+{
+  "$schema": "../schema/overrides.schema.json",
+  "overrides_version": "0.9",
+  "title": "Re-triage wave 1 (2026-11-17)",
+  "description": "Cards the registry heuristics had marked skip, reference or bridge-runtime that a model re-read (DeepSeek deepseek-v4.1-flash:1017) and a second model reviewed (Codex gpt-6.1-sol): 71 driver tasks. Evidence and the review are in each card's recon proposal; no person has checked them.",
+  "overrides": [
+    {
+      "package_id": "gh.ad-sdl/digitaltwin",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "rpl_centrifuge.openarm.mimic_env:CentrifugeBimanualOpenArmIKAbsMimicEnv",
+          "file": "tasks/centrifuge/tasks/src/rpl_centrifuge/openarm/mimic_env.py",
+          "line": 44
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): Use the actual environment at tasks/centrifuge/tasks/src/rpl_centrifuge/openarm/mimic_env.py:44."
+    },
+    {
+      "package_id": "gh.adlink-ros/adlink_ddsbot",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "base_control:BaseControl",
+          "file": "script/base_control.py",
+          "line": 26
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 uses a direct Driver with a Python 3 serial port of BaseControl; runtime wheel conversion and checksums do not fit a SerialDriver table.",
+      "capability_classes": [
+        "cap.motion.mobile_base.v1"
+      ]
+    },
+    {
+      "package_id": "gh.agibottech/agibot_x1_train",
+      "strategy": "direct-driver",
+      "role": "sim-env",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "humanoid.envs.x1.x1_dh_stand_env:X1DHStandEnv",
+          "file": "humanoid/envs/x1/x1_dh_stand_env.py",
+          "line": 79
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): humanoid/scripts/sim2sim.py:136 is a policy loop."
+    },
+    {
+      "package_id": "gh.aimoda/rigol-dho824-mcp",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "scpi",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "rigol_dho824_mcp.server:RigolDHO824",
+          "file": "src/rigol_dho824_mcp/server.py",
+          "line": 1297
+        }
+      ],
+      "justification": "server.py owns the pyvisa VISA/SCPI transport and sends raw Rigol commands itself, so this is a family-config SCPI driver, not a host wrapping another driver."
+    },
+    {
+      "package_id": "gh.aisenginn/evogym_data_generation",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "evogym.envs.walk:WalkingFlat",
+          "file": "evogym/envs/walk.py",
+          "line": 15
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): Use concrete Walker-v0 class evogym/envs/walk.py:15, with step at :39 and reset at :74."
+    },
+    {
+      "package_id": "gh.albusgive/wheel_legged_genesis",
+      "strategy": "direct-driver",
+      "role": "sim-env",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "locomotion.wheel_legged_env:WheelLeggedEnv",
+          "file": "locomotion/wheel_legged_env.py",
+          "line": 15
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): sim2sim/gs2mj.py:95 is a policy demo."
+    },
+    {
+      "package_id": "gh.amathislab/musclemimic",
+      "strategy": "direct-driver",
+      "role": "sim-env",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "musclemimic.environments.humanoids.myofullbody:MyoFullBody",
+          "file": "musclemimic/environments/humanoids/myofullbody.py",
+          "line": 17
+        }
+      ],
+      "capability_classes": [
+        "cap.world.reset.v1",
+        "cap.world.step.v1"
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): MyoFullBody exposes a custom reset/step API and resolves its MJCF through external musclemimic_models. Use the direct Python-object contract, scoped to MyoFullBody."
+    },
+    {
+      "package_id": "gh.amazon-far/abc",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "abc_sim.env:MuJoCoYAMEnv",
+          "file": "abc_sim/env.py",
+          "line": 72
+        },
+        {
+          "symbol": "abc_sim:make_env",
+          "file": "abc_sim/__init__.py",
+          "line": 125
+        }
+      ],
+      "justification": "abc_sim is a self-contained Gymnasium/MuJoCo sim-env for a bimanual YAM, so family-config sim-env."
+    },
+    {
+      "package_id": "gh.anoryth/alim_seq",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): Retriage-drivers-1 binds alim_seq.psu:HMP4040 through a decorated Driver and native factory, rather than a ScpiDriver command table; retain the device-driver role."
+    },
+    {
+      "package_id": "gh.antercreeper/keyscope-mcp",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): Retriage-drivers-1 serves Oscilloscope methods and scalar settings through a decorated Driver with a native lifecycle override; use python-object rather than ScpiDriver routing."
+    },
+    {
+      "package_id": "gh.araffin/robotics-rl-srl",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "environments.omnirobot_gym.omnirobot_env:OmniRobotEnv",
+          "file": "environments/omnirobot_gym/omnirobot_env.py",
+          "line": 57
+        }
+      ],
+      "justification": "The repo registers legacy Gym robot envs, so it is family-config/sim-env; import environments.registry before gym.make and prefer OmnirobotEnv-v0's in-process simulator over the Python 2 ROS path."
+    },
+    {
+      "package_id": "gh.aravindr93/mjrl",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "mjrl.envs.swimmer:SwimmerEnv",
+          "file": "mjrl/envs/swimmer.py",
+          "line": 6
+        }
+      ],
+      "justification": "MJRL ships and registers four MuJoCo environments (mjrl_swimmer-v0 and others) with bundled MJCF models, so family-config/mujoco sim-env fits despite its RL algorithm content."
+    },
+    {
+      "package_id": "gh.aravindr93/trajopt",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "trajopt.envs.reacher_env:Reacher7DOFEnv",
+          "file": "trajopt/envs/reacher_env.py",
+          "line": 8
+        },
+        {
+          "symbol": "trajopt.envs.reacher_env:ContinualReacher7DOFEnv",
+          "file": "trajopt/envs/reacher_env.py",
+          "line": 116
+        }
+      ],
+      "justification": "The clone registers two Gym environments backed by its own MuJoCo sawyer.xml, so this is a MuJoCo sim-env rather than the peripheral catalog entry the registry assumed."
+    },
+    {
+      "package_id": "gh.cai23sbp/isaaclab_parkour",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "parkour_isaaclab.envs:ParkourManagerBasedRLEnv",
+          "file": "parkour_isaaclab/envs/parkour_manager_based_rl_env.py",
+          "line": 22
+        },
+        {
+          "symbol": "parkour_tasks.parkour_tasks.extreme_parkour_task.config.go2.parkour_teacher_cfg:UnitreeGo2TeacherParkourEnvCfg",
+          "file": "parkour_tasks/parkour_tasks/extreme_parkour_task/config/go2/parkour_teacher_cfg.py",
+          "line": 33
+        }
+      ],
+      "justification": "Family-config/gymnasium is right: Isaac Lab extension registering gym tasks for a simulated Unitree Go2, not hardware."
+    },
+    {
+      "package_id": "gh.ch30245/mktrace-rf-analyzer",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "pna:NaClient",
+          "file": "pna.py",
+          "line": 236
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 confirms NaClient needs multi-step vendor SCPI, binary file transfer and query-back restoration; a direct Python Driver expresses that interface."
+    },
+    {
+      "package_id": "gh.chirikjianlab/ravens_visual_foresight",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "ravens.environments.environment:Environment",
+          "file": "ravens/environments/environment.py",
+          "line": 42
+        },
+        {
+          "symbol": "ravens.environments.environment_mcts:EnvironmentMCTS",
+          "file": "ravens/environments/environment_mcts.py",
+          "line": 26
+        }
+      ],
+      "justification": "Ravens-Visual-Foresight is a legacy gym.Env/PyBullet rearrangement-task benchmark, so it is a family-config sim-env, not hardware."
+    },
+    {
+      "package_id": "gh.cnpem/sophys-common",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "sophys.common.devices.motor:ControllableMotor",
+          "file": "src/sophys/common/devices/motor.py",
+          "line": 30
+        },
+        {
+          "symbol": "sophys.common.devices.compacteras:CompactERAS",
+          "file": "src/sophys/common/devices/compacteras.py",
+          "line": 49
+        },
+        {
+          "symbol": "sophys.common.devices.aravis:AravisDetector",
+          "file": "src/sophys/common/devices/aravis.py",
+          "line": 51
+        },
+        {
+          "symbol": "sophys.common.devices.pimega:Pimega",
+          "file": "src/sophys/common/devices/pimega.py",
+          "line": 222
+        },
+        {
+          "symbol": "sophys.common.devices.mobipix:Mobipix",
+          "file": "src/sophys/common/devices/mobipix.py",
+          "line": 85
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): src/sophys/common/devices/motor.py:30 exposes a concrete EPICS motor; src/sophys/common/devices/pimega.py:228 controls detector acquisition."
+    },
+    {
+      "package_id": "gh.cvzone/pysimverse",
+      "strategy": "direct-driver",
+      "role": "sim-env",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "pysimverse.simulators.drone.drone:Drone",
+          "file": "simulators/drone/drone.py",
+          "line": 8
+        },
+        {
+          "symbol": "pysimverse.simulators.drone.drone_manager:DroneManager",
+          "file": "simulators/drone/drone_manager.py",
+          "line": 7
+        }
+      ],
+      "justification": "Drone is a ZMQ control API (take-off, land, RC, video) for a simulated drone, so direct-driver fits; the simulator is not shipped, so the fake backend must emulate the ZMQ peers (pyzmq/numpy/opencv)."
+    },
+    {
+      "package_id": "gh.daylily-informatics/zebra_day",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "zebra_day.cmd_mgr:ZebraPrinter",
+          "file": "zebra_day/cmd_mgr.py",
+          "line": 21
+        }
+      ],
+      "justification": "ZebraPrinter sends ZPL commands to Zebra label printers over raw TCP 9100, so direct-driver/python-object fits."
+    },
+    {
+      "package_id": "gh.deeproboticslab/rl_training",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "rl_training.envs.amp_locomotion_env:AmpLocomotionEnv",
+          "file": "source/rl_training/rl_training/envs/amp_locomotion_env.py",
+          "line": 63
+        },
+        {
+          "symbol": "rl_training.tasks.manager_based.locomotion.amp.config.humanoid.dr02.flat_env_cfg:DR02AmpFlatEnvCfg",
+          "file": "source/rl_training/rl_training/tasks/manager_based/locomotion/amp/config/humanoid/dr02/flat_env_cfg.py",
+          "line": 55
+        },
+        {
+          "symbol": "rl_training.tasks.manager_based.locomotion.velocity.config.quadruped.deeprobotics_lite3.rough_env_cfg:DeeproboticsLite3RoughEnvCfg",
+          "file": "source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/quadruped/deeprobotics_lite3/rough_env_cfg.py",
+          "line": 18
+        }
+      ],
+      "justification": "IsaacLab Gymnasium sim tasks for DeepRobotics robots make this family-config/gymnasium sim-env, not a driver; a driver needs Isaac Sim 5.1, Isaac Lab 2.3.2, GPU and the deep_robotics_model submodule."
+    },
+    {
+      "package_id": "gh.dobot-arm/dobot_6axis_ros2_v4",
+      "strategy": "family-config",
+      "role": "device-driver",
+      "family": "ros",
+      "reason_code": "family:ros",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): the C++ ROS 2 node owns the arm; adderClient is only a service client. Route to RosDriver and retain the block: suppressed dashboard errors can return res=0 without a confirmed stop."
+    },
+    {
+      "package_id": "gh.edem-ai/robosynchallenge",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "robosynchallenge.tasks.click_bell.click_bell:ClickBellEnv",
+          "file": "robosynchallenge/tasks/click_bell/click_bell.py",
+          "line": 35
+        }
+      ],
+      "justification": "Gymnasium task suite over the external EmbodiChain simulator, not a hardware driver."
+    },
+    {
+      "package_id": "gh.fan-ziqi/robot_lab",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "robot_lab.tasks.direct.g1_amp.g1_amp_env:G1AmpEnv",
+          "file": "source/robot_lab/robot_lab/tasks/direct/g1_amp/g1_amp_env.py",
+          "line": 28
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): The proposed entries are configuration classes."
+    },
+    {
+      "package_id": "gh.ferrolho/rotary-inverted-pendulum",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "pendulum_env:RotaryInvertedPendulumEnv",
+          "file": "policy/pendulum_env.py",
+          "line": 387
+        }
+      ],
+      "justification": "Gymnasium/MuJoCo sim of a real rotary inverted pendulum, so family-config sim-env rather than a peripheral."
+    },
+    {
+      "package_id": "gh.gainsec/autoprober",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "autoprober.cnc:CNC",
+          "file": "autoprober/cnc.py",
+          "line": 46
+        },
+        {
+          "symbol": "autoprober.scope:Scope",
+          "file": "autoprober/scope.py",
+          "line": 17
+        },
+        {
+          "symbol": "autoprober.microscope:Microscope",
+          "file": "autoprober/microscope.py",
+          "line": 13
+        }
+      ],
+      "justification": "AutoProber ships first-party Python wrappers for a GRBL CNC, SCPI scope and microscope, so it is a driver pack, not just a host."
+    },
+    {
+      "package_id": "gh.gensim2/gensim2",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "gensim2.env.wrappers:GenSimTaskWrapper",
+          "file": "gensim2/env/wrappers.py",
+          "line": 5
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): gensim2/env/create_task.py:21 returns GenSimTaskWrapper, with step/reset at gensim2/env/wrappers.py:66 and :112."
+    },
+    {
+      "package_id": "gh.hoangtranngoc/airsim-rl",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "gym_airsim.airsim_car_env:AirSimCarEnv",
+          "file": "gym_airsim/airsim_car_env.py",
+          "line": 12
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): Valid legacy Gym AirSim environment: gym_airsim/airsim_car_env.py:40 and :61 implement step/reset."
+    },
+    {
+      "package_id": "gh.ice-mao/rl_auv_tracking",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "auv_env:make",
+          "file": "auv_env/__init__.py",
+          "line": 11
+        },
+        {
+          "symbol": "auv_env.envs.base:TargetTrackingBase",
+          "file": "auv_env/envs/base.py",
+          "line": 27
+        }
+      ],
+      "justification": "auv_env is a Gymnasium AUV-tracking environment (TargetTrackingBase) built by auv_env.make and backed by the external HoloOcean simulator, so this is a sim-env family-config."
+    },
+    {
+      "package_id": "gh.ilovebacteria/test-instrument-automation-open-version",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "devices.afg2225:AFG2225",
+          "file": "src/test_engine/devices/afg2225.py",
+          "line": 90
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 serves only AFG2225 through a decorated Driver for its descriptor-backed channels and checked stop; the three HP instrument classes are outside this package."
+    },
+    {
+      "package_id": "gh.indystrycc/spdrbot",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "spdrbot3.tasks.direct.spdrbot3.spdrbot3_env:Spdrbot3Env",
+          "file": "spdrbot3_direct_project/source/spdrbot3/spdrbot3/tasks/direct/spdrbot3/spdrbot3_env.py",
+          "line": 20
+        }
+      ],
+      "justification": "Family-config/gymnasium sim-env is right because the repository registers the Gymnasium task Template-Spdrbot3-Direct-v0 and ships a local Spdrbot3Env over Isaac Lab, with no hardware transport."
+    },
+    {
+      "package_id": "gh.jdmax/pt-atarg",
+      "strategy": "family-config",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:family-config",
+      "entry_symbols": [
+        {
+          "symbol": "devices.ls218:DeviceConnection",
+          "file": "devices/ls218.py",
+          "line": 22
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 serves the read-only DeviceConnection through PythonObjectDriver; the softioc Device wrapper and four Datexel drivers are outside this package."
+    },
+    {
+      "package_id": "gh.jeongeun980906/lerobot-mujoco-tutorial",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "mujoco_env.y_env:SimpleEnv",
+          "file": "mujoco_env/y_env.py",
+          "line": 13
+        },
+        {
+          "symbol": "mujoco_env.y_env2:SimpleEnv2",
+          "file": "mujoco_env/y_env2.py",
+          "line": 13
+        }
+      ],
+      "justification": "The tutorial ships an importable MuJoCo task environment: SimpleEnv and SimpleEnv2 load an MJCF scene and expose step, grab_image, teleop_robot and check_success."
+    },
+    {
+      "package_id": "gh.k-dense-ai/lab-instrument-mcps",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "labmcp_julabo.driver:JulaboCirculator",
+          "file": "servers/chemistry/julabo-circulator/src/labmcp_julabo/driver.py",
+          "line": 137
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 selects JulaboCirculator only; a decorated Driver checks its boolean stop result. Other instrument classes remain outside this package, whose unsafe start remains blocked."
+    },
+    {
+      "package_id": "gh.kitour/rigol-mho98-mcp",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "rigol_mcp.mho98.session:Session",
+          "file": "src/rigol_mcp/mho98/session.py",
+          "line": 75
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 uses a decorated Driver over Session for binary waveform decoding, SCPI error handling and confirmed acquisition stop; the ScpiDriver card does not describe this package."
+    },
+    {
+      "package_id": "gh.krystalmonolith/skippy-mcp",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "skippy_mcp.driver.scope:Scope",
+          "file": "packages/skippy-mcp/src/skippy_mcp/driver/scope.py",
+          "line": 53
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 implements a typed Scope facade as a direct driver; inferred SCPI readbacks still keep the package blocked."
+    },
+    {
+      "package_id": "gh.kscalelabs/ksim-legacy",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "ksim.mjx_gym.envs.stompy_env.stompy:StompyEnv",
+          "file": "ksim/mjx_gym/envs/stompy_env/stompy.py",
+          "line": 21
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): Classification and entry are correct, but fix the evidence: ksim/mjx_gym/train.py:29 passes name=, not env_name=."
+    },
+    {
+      "package_id": "gh.kyleellefsen/light_sheet_controller",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "light_sheet_controller:LightSheetDriver",
+          "file": "light_sheet_controller.py",
+          "line": 118
+        }
+      ],
+      "justification": "LightSheetDriver drives two NI USB-6001 boards for piezo scan, camera and laser TTL, so it is a device driver; a port needs PyDAQmx, Qt, a fake DAQ layer and configurable Dev1/Dev2 channels."
+    },
+    {
+      "package_id": "gh.leggedrobotics/sru-navigation-sim",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "family:gymnasium",
+      "entry_symbols": [
+        {
+          "symbol": "isaaclab_nav_task.navigation.navigation_env:NavigationEnv",
+          "file": "isaaclab_nav_task/navigation/navigation_env.py",
+          "line": 19
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): NavigationEnv is the environment; B2WNavigationEnvCfg and AowDNavigationEnvCfg are configuration classes. Keep the Gymnasium family and only the NavigationEnv entry."
+    },
+    {
+      "package_id": "gh.levylabpitt/levylab-qcodes",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "levylabinst.MCLockin:MCLockin",
+          "file": "levylabinst/MCLockin.py",
+          "line": 16
+        }
+      ],
+      "justification": "MCLockin is a QCoDeS Instrument driving the LevyLab lock-in over ZMQ JSON-RPC, so it is a direct python-object driver; its add_parameter fields defeat QcodesDriver and setup.py is empty."
+    },
+    {
+      "package_id": "gh.lhy6900/mujoco-viewer-plus",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "deploy_robot.sim.mujoco_simulator:MujocoSimulator",
+          "file": "deploy_robot/sim/mujoco_simulator.py",
+          "line": 59
+        }
+      ],
+      "justification": "Family-config/mujoco/sim-env is right: MujocoSimulator loads the G1 MJCF and steps it with mj_step."
+    },
+    {
+      "package_id": "gh.lightwheelai/leisaac",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "leisaac.tasks.pick_orange.direct.pick_orange_env:PickOrangeEnv",
+          "file": "source/leisaac/leisaac/tasks/pick_orange/direct/pick_orange_env.py",
+          "line": 61
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): Use PickOrangeEnv at source/leisaac/leisaac/tasks/pick_orange/direct/pick_orange_env.py:61 as the environment entry."
+    },
+    {
+      "package_id": "gh.lpender3672/mcp-hardware-tools",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "hwtools.drivers.joyit.jds6600:JDS6600",
+          "file": "src/hwtools/drivers/joyit/jds6600.py",
+          "line": 119
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 serves the JDS6600 only; narrow the entry symbols to that class and retain DS1054Z scope adaptation for a separate card."
+    },
+    {
+      "package_id": "gh.lucasgerads/lecroy-mcp",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "oscilloscope:LeCroyScope",
+          "file": "oscilloscope.py",
+          "line": 198
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): the served source-backed object needs a direct Driver; the proposed family helper does not express this package contract."
+    },
+    {
+      "package_id": "gh.makijanus/easy_drl_isaac_sim",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "DRL_Isaac_lib.env:Isaac_envs",
+          "file": "DRL_Isaac_lib/env.py",
+          "line": 15
+        }
+      ],
+      "justification": "Family-config/gymnasium is right because Isaac_envs is a gym.Env that steps simulated Jetbot, Carter, Kaya and Transporter robots in Isaac Sim rather than hardware."
+    },
+    {
+      "package_id": "gh.mosesandlily/whip-project-targeting",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "modules.simulation:Simulation",
+          "file": "modules/simulation.py",
+          "line": 16
+        }
+      ],
+      "justification": "Family-config/mujoco sim-env: the repository ships MuJoCo MJCF scenes plus a Simulation class that loads and torque-steps them, so a MujocoDriver can serve a scene directly."
+    },
+    {
+      "package_id": "gh.mrpt/mrpt",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "mrpt.hwdrivers:CTaoboticsIMU",
+          "file": "modules/mrpt_hwdrivers/python_bindings/mrpt_hwdrivers_py.cpp",
+          "line": 121
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): Select the concrete CTaoboticsIMU binding at modules/mrpt_hwdrivers/python_bindings/mrpt_hwdrivers_py.cpp:121."
+    },
+    {
+      "package_id": "gh.netlist-studio/scope-mcp",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "scope:Scope",
+          "file": "scope.py",
+          "line": 13
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): the served source-backed object needs a direct Driver; the proposed family helper does not express this package contract."
+    },
+    {
+      "package_id": "gh.nico-bohlinger/one_policy_to_run_them_all",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "one_policy_to_run_them_all.environments.multi_robot.create_env:create_env",
+          "file": "one_policy_to_run_them_all/environments/multi_robot/create_env.py",
+          "line": 15
+        },
+        {
+          "symbol": "one_policy_to_run_them_all.environments.anymal_b.environment:AnymalB",
+          "file": "one_policy_to_run_them_all/environments/anymal_b/environment.py",
+          "line": 27
+        }
+      ],
+      "justification": "Family-config/mujoco fits because this is a Gymnasium/MuJoCo multi-robot simulation package (20 robot classes), not a hardware library."
+    },
+    {
+      "package_id": "gh.nvidia-isaac/video_to_data",
+      "strategy": "family-config",
+      "role": "twin-candidate",
+      "family": "mujoco",
+      "reason_code": "family:mujoco",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): serve only the planner's scene_29dof.xml as a MuJoCo model twin; FlashCHORD RLEnv requires Scene/Reference construction and Warp-array adaptation and is not the served device."
+    },
+    {
+      "package_id": "gh.pythondev0/zscan-optical-system",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "camera:ThorlabsCamera",
+          "file": "camera.py",
+          "line": 9
+        },
+        {
+          "symbol": "stage:AerotechStage",
+          "file": "stage.py",
+          "line": 9
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): camera.py:9 and stage.py:9 define separate, independently instantiated camera and nanopositioner drivers."
+    },
+    {
+      "package_id": "gh.qcodespp/qcodespp",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "qcodespp.instrument_drivers.Lakeshore.Model_340:Model_340",
+          "file": "qcodespp/instrument_drivers/Lakeshore/Model_340.py",
+          "line": 416
+        },
+        {
+          "symbol": "qcodespp.instrument_drivers.tektronix.Keithley_2450:Keithley_2450",
+          "file": "qcodespp/instrument_drivers/tektronix/Keithley_2450.py",
+          "line": 5
+        },
+        {
+          "symbol": "qcodespp.instrument_drivers.oxford.mercuryiPS_serial:MercuryiPS_120",
+          "file": "qcodespp/instrument_drivers/oxford/mercuryiPS_serial.py",
+          "line": 42
+        },
+        {
+          "symbol": "qcodespp.instrument_drivers.attocube.AMC100:AttocubeAMC100",
+          "file": "qcodespp/instrument_drivers/attocube/AMC100.py",
+          "line": 250
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): the served source-backed object needs a direct Driver; the proposed family helper does not express this package contract."
+    },
+    {
+      "package_id": "gh.rail-berkeley/fmb",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "robot_infra.envs.franka_fmb_env:FrankaFMB",
+          "file": "robot_infra/envs/franka_fmb_env.py",
+          "line": 36
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): robot_infra/envs/franka_fmb_env.py:4 imports legacy Gym; line 137 sends hardware poses over HTTP and line 221 returns a four-tuple."
+    },
+    {
+      "package_id": "gh.renforce-dynamics/trackerlab",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "trackerLab.tracker_env:ManagerBasedTrackerEnv",
+          "file": "source/trackerLab/trackerLab/tracker_env/manager_based_tracker_env/manager_based_tracker_env.py",
+          "line": 9
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): Correct registration evidence to source/trackerTask/trackerTask/trackerLab/tracking/humanoid/robots/g1/__init__.py:5; cited line 6 only disables checking."
+    },
+    {
+      "package_id": "gh.rgalljamov/drloco",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "drloco.mujoco.mimic_walker3d:MimicWalker3dEnv",
+          "file": "drloco/mujoco/mimic_walker3d.py",
+          "line": 27
+        },
+        {
+          "symbol": "drloco.mujoco.mimic_walker_165cm_65kg:MimicWalker165cm65kgEnv",
+          "file": "drloco/mujoco/mimic_walker_165cm_65kg.py",
+          "line": 20
+        }
+      ],
+      "justification": "MuJoCo sim-env, not hardware: MimicWalker3dEnv drives a bundled 8-motor MJCF via gym's MujocoEnv step/reset."
+    },
+    {
+      "package_id": "gh.rgalljamov/learn2walk",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "family:gymnasium",
+      "entry_symbols": [
+        {
+          "symbol": "gym_mimic_envs.mujoco.mimic_walker3d:MimicWalker3dEnv",
+          "file": "mujoco/gym_mimic_envs/mujoco/mimic_walker3d.py",
+          "line": 31
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): MimicWalker3dEnv is a legacy Gym environment; GymnasiumDriver retains its observation, reward and termination contract. Only the disclosed analytic fake is declared."
+    },
+    {
+      "package_id": "gh.rohanpsingh/learninghumanoidwalking",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "envs.h1.h1_env:H1Env",
+          "file": "envs/h1/h1_env.py",
+          "line": 11
+        },
+        {
+          "symbol": "envs.jvrc.jvrc_walk:JvrcWalkEnv",
+          "file": "envs/jvrc/jvrc_walk.py",
+          "line": 13
+        }
+      ],
+      "justification": "Family-config/mujoco sim-env: this is a MuJoCo humanoid reinforcement-learning package with five reset/step environments, not a peripheral tool, so skip:peripheral is wrong."
+    },
+    {
+      "package_id": "gh.shafinulh/rax-labscript",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "user_devices.NuvuCamera.Nuvu_sdk.Nuvu_cam_utils:NuvuCamUtils",
+          "file": "userlib/user_devices/NuvuCamera/Nuvu_sdk/Nuvu_cam_utils.py",
+          "line": 23
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): README.md:93 is only a heading; the implementation statement is at README.md:94."
+    },
+    {
+      "package_id": "gh.sharpa-robotics/sharpa-rl-lab",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "family:gymnasium",
+      "entry_symbols": [
+        {
+          "symbol": "rl_isaaclab.tasks.inhand_rotate.sharpa_wave_env:SharpaWaveInhandRotateEnv",
+          "file": "rl_isaaclab/tasks/inhand_rotate/sharpa_wave_env.py",
+          "line": 28
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): SharpaWaveEnvCfg is configuration, not a reset/step device entry. Keep the concrete in-hand rotation environment and retain the GPU requirement; the package declares only a fake backend."
+    },
+    {
+      "package_id": "gh.soltanilara/av-aloha",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "gym_guided_vision.env:GuidedVisionEnv",
+          "file": "gym_guided_vision/gym_guided_vision/env.py",
+          "line": 32
+        },
+        {
+          "symbol": "gym_guided_vision.env:InsertPegEnv",
+          "file": "gym_guided_vision/gym_guided_vision/env.py",
+          "line": 412
+        },
+        {
+          "symbol": "gym_guided_vision.env:SlotInsertionEnv",
+          "file": "gym_guided_vision/gym_guided_vision/env.py",
+          "line": 503
+        },
+        {
+          "symbol": "gym_guided_vision.env:SewNeedleEnv",
+          "file": "gym_guided_vision/gym_guided_vision/env.py",
+          "line": 592
+        },
+        {
+          "symbol": "gym_guided_vision.env:TubeTransferEnv",
+          "file": "gym_guided_vision/gym_guided_vision/env.py",
+          "line": 693
+        }
+      ],
+      "justification": "This repository ships a pip-installable Gymnasium/MuJoCo environment, so it is a family-config sim-env, not a peripheral."
+    },
+    {
+      "package_id": "gh.sunnyshi0310/rsr-mjx",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "mujoco_playground._src.locomotion.go2.joystick:Joystick",
+          "file": "ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/joystick.py",
+          "line": 83
+        },
+        {
+          "symbol": "mujoco_playground._src.registry:load",
+          "file": "ppo_train/go2_training/mujoco_playground/_src/registry.py",
+          "line": 24
+        }
+      ],
+      "justification": "Family-config/mujoco sim-env: the repo bundles registered Go2 MJCF/MJX environments (Go2JoystickFlatTerrain) alongside its RSR algorithm, so the simulator contract is in-tree."
+    },
+    {
+      "package_id": "gh.synqs/pennylane-ls",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "pennylane_ls.single_qudit_device:SingleQuditDevice",
+          "file": "pennylane_ls/single_qudit_device.py",
+          "line": 23
+        },
+        {
+          "symbol": "pennylane_ls.multi_qudit_device:MultiQuditDevice",
+          "file": "pennylane_ls/multi_qudit_device.py",
+          "line": 23
+        },
+        {
+          "symbol": "pennylane_ls.fermion_device:FermionDevice",
+          "file": "pennylane_ls/fermion_device.py",
+          "line": 26
+        }
+      ],
+      "justification": "pennylane-ls is a PennyLane device SDK whose SingleQuditDevice, MultiQuditDevice and FermionDevice classes submit cold-atom jobs to a remote Django JSON control API."
+    },
+    {
+      "package_id": "gh.tmsangohan/bact2",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "ophyd",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "bact2.ophyd.devices.raw.power_converter:PowerConverter",
+          "file": "bact2/ophyd/devices/raw/power_converter.py",
+          "line": 7
+        },
+        {
+          "symbol": "bact2.ophyd.devices.raw.steerers:Steerer",
+          "file": "bact2/ophyd/devices/raw/steerers.py",
+          "line": 96
+        },
+        {
+          "symbol": "bact2.ophyd.devices.pp.bpm.bpm:BPMStorageRing",
+          "file": "bact2/ophyd/devices/pp/bpm/bpm.py",
+          "line": 245
+        },
+        {
+          "symbol": "bact2.ophyd.devices.raw.vacuum:VacuumSensor",
+          "file": "bact2/ophyd/devices/raw/vacuum.py",
+          "line": 3
+        }
+      ],
+      "justification": "Bact2 is an ophyd driver pack for BESSY II: in-tree Device classes bind EPICS PVs for power converters, steerers, BPMs and vacuum sensors, and examples instantiate the steerer and BPM classes."
+    },
+    {
+      "package_id": "gh.unitreerobotics/unitree_lerobot",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "unitree_lerobot.eval_robot.robot_control.robot_arm:G1_29_ArmController",
+          "file": "unitree_lerobot/eval_robot/robot_control/robot_arm.py",
+          "line": 69
+        },
+        {
+          "symbol": "unitree_lerobot.eval_robot.robot_control.robot_hand_unitree:Dex3_1_Controller",
+          "file": "unitree_lerobot/eval_robot/robot_control/robot_hand_unitree.py",
+          "line": 30
+        },
+        {
+          "symbol": "unitree_lerobot.eval_robot.robot_control.uniarml1.uniarm_l1_bus:UnitreeMotorSDK",
+          "file": "unitree_lerobot/eval_robot/robot_control/uniarml1/uniarm_l1_bus.py",
+          "line": 47
+        }
+      ],
+      "justification": "Direct-driver/driver-pack: eval_robot carries its own DDS controllers for G1 arms and Dex3 hands plus a serial motor bus for the UniArm L1, so the peripheral skip is wrong."
+    },
+    {
+      "package_id": "gh.unitreerobotics/unitree_rl_gym",
+      "strategy": "direct-driver",
+      "role": "sim-env",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "legged_gym.envs.base.legged_robot:LeggedRobot",
+          "file": "legged_gym/envs/base/legged_robot.py",
+          "line": 21
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): Use the Isaac Gym object: step is at legged_gym/envs/base/legged_robot.py:49 and inherited reset at legged_gym/envs/base/base_task.py:82."
+    },
+    {
+      "package_id": "gh.ursa-laboratories/cubos",
+      "strategy": "direct-driver",
+      "role": "driver-pack",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "cubos.gantry.gantry:Gantry",
+          "file": "packages/core/src/cubos/gantry/gantry.py",
+          "line": 37
+        },
+        {
+          "symbol": "cubos.instruments.pipette.vendors.sartorius:SartoriusPicus2Pipette",
+          "file": "packages/core/src/cubos/instruments/pipette/vendors/sartorius.py",
+          "line": 106
+        },
+        {
+          "symbol": "cubos.instruments.uv_curing.vendors.excelitas:ExcelitasUVCuring",
+          "file": "packages/core/src/cubos/instruments/uv_curing/vendors/excelitas.py",
+          "line": 32
+        },
+        {
+          "symbol": "cubos.instruments.uvvis_ccs.vendors.thorlabs:ThorlabsUVVisCCS",
+          "file": "packages/core/src/cubos/instruments/uvvis_ccs/vendors/thorlabs.py",
+          "line": 32
+        },
+        {
+          "symbol": "cubos.instruments.pipette.vendors.opentrons:OpentronsPipette",
+          "file": "packages/core/src/cubos/instruments/pipette/vendors/opentrons.py",
+          "line": 45
+        }
+      ],
+      "justification": "CubOS ships first-party Python drivers for a GRBL gantry and many instruments, so it is a driver pack, not only a host."
+    },
+    {
+      "package_id": "gh.valiantandupright/oscilloscope-mcp",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "osc.scope:Scope",
+          "file": "osc/scope.py",
+          "line": 112
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 uses a direct Driver over Scope; runtime channel commands and binary waveform conversion do not fit a fixed text SCPI table."
+    },
+    {
+      "package_id": "gh.zhenwei2972/model-hardware-standard-bambu-labs",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "mhs.drivers.bambu.printer:BambuPrinter",
+          "file": "src/mhs/drivers/bambu/printer.py",
+          "line": 61
+        }
+      ],
+      "justification": "BambuPrinter is a native in-tree LAN driver for Bambu Lab printers, so direct-driver/python-object fits despite the MCP server around it."
+    },
+    {
+      "package_id": "gh.zhouyikaiii/ddc",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "mujoco",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "eval.wbt_rollout:G1Sim",
+          "file": "eval/wbt_rollout.py",
+          "line": 199
+        }
+      ],
+      "justification": "Family-config/mujoco is right because the repository ships an in-tree Unitree G1 MJCF plant and a steppable MuJoCo environment class, G1Sim, so it is a sim-env rather than a hardware driver."
+    },
+    {
+      "package_id": "gh.zihanwang0422/legged_rl_lab",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "legged_rl_lab.tasks.locomotion.cross_emboided.config.g1go2_mixed.g1go2_flat_env_cfg:CrossEmbodiedG1Go2Env",
+          "file": "source/legged_rl_lab/legged_rl_lab/tasks/locomotion/cross_emboided/config/g1go2_mixed/g1go2_flat_env_cfg.py",
+          "line": 553
+        }
+      ],
+      "justification": "Reviewed by gpt-6.1-sol (a model): Proposed entries are configs."
+    },
+    {
+      "package_id": "gh.zinntikumugai/rigol-oscilloscope-mcp",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "family": "python-object",
+      "reason_code": "override:direct-driver",
+      "entry_symbols": [
+        {
+          "symbol": "rigol_oscilloscope_mcp.driver.scope:ScopeDriver",
+          "file": "src/rigol_oscilloscope_mcp/driver/scope.py",
+          "line": 836
+        }
+      ],
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 uses a direct Driver over the profile-driven ScopeDriver, with parsed object results and a lazy native factory rather than a fixed SCPI table."
+    },
+    {
+      "package_id": "gh.zzzjie-robot/go2arm_lab",
+      "strategy": "family-config",
+      "role": "sim-env",
+      "family": "gymnasium",
+      "reason_code": "override:recon",
+      "entry_symbols": [
+        {
+          "symbol": "Go2Arm_Lab.env.manager_env:ManagerRLEnv",
+          "file": "source/Go2Arm_Lab/Go2Arm_Lab/env/manager_env.py",
+          "line": 4
+        }
+      ],
+      "justification": "Family-config/gymnasium fits: Isaac Lab sim tasks for a Go2+WidowX run through ManagerRLEnv, not hardware."
+    }
+  ]
+}
