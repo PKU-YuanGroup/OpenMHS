@@ -566,6 +566,10 @@ One section per file in `MHS/changes/`. The fragments are the detailed record of
 
 [`MHS/changes/REPLAY-SNAPSHOTS.md`](MHS/changes/REPLAY-SNAPSHOTS.md): Replay snapshots now include the endpoint's declared recording resource alongside every recorded source resource. Unknown optional metadata is absent instead of schema-invalid null. All replay resources read from the selected frame or current recording view; stale static manifest state no longer overrides those reads. Source frames, their receipt-bound hashes and exported source evidence remain unchanged. A source resource named recording is refused explicitly because it ...
 
+### Re-triage wave 1: 72 repositories the heuristics had skipped, 53 new passing packages
+
+[`MHS/changes/RETRIAGE-WAVE-1.md`](MHS/changes/RETRIAGE-WAVE-1.md): On 2026-11-17 the owner asked to adapt more repositories for the Playground. 1,364 registry cards had been decided only by the scanner's keyword and file-pattern heuristics (skip 1,070, reference 190, bridge-runtime 104); no model or person had read them. DeepSeek (deepseek-v4.1-flash:1017, a model) read each one and wrote a recon proposal; Codex (gpt-6.1-sol, a model) reviewed every proposal that turned a card into a driver task; DeepSeek wrote the driver packages; Codex ...
+
 ### Action-backed ROS safety and Franka gripper contract
 
 [`MHS/changes/ROS-ACTION-SAFETY.md`](MHS/changes/ROS-ACTION-SAFETY.md): RosDriver supports an explicitly declared fixed action as an independent stop/safe-state path. ROS 1 actionlib and ROS 2 native profiles validate goal identity, terminal status, application success and the declared output schema before acknowledging safety. Action safety has its own bounded admission lane, separate from ordinary transactions. An accepted cancellation or a dispatched goal does not establish native completion or stopping.
