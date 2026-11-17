@@ -4,15 +4,11 @@ from __future__ import annotations
 
 import os
 import re
-import sys
 from collections import Counter
 
 import recipes as RECIPES
 import taskcards as TC
 import triage as T
-
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sdk", "src"))
-from mhs import _ids  # noqa: E402
 
 
 def spotcheck_summary(path=None):
@@ -40,7 +36,7 @@ def _table(rows, headers):
 def render_readme(records, cards, summary, stats, uncloned, manifest, build_ts, decisions_summary) -> str:
     total = len(records)
     waves = summary["by_wave"]
-    lines = [_ids.NON_AFFILIATION, "", "# OpenMHS registry", "",
+    lines = ["# OpenMHS registry", "",
              f"Generated **{build_ts}** by `MHS/registry/build_registry.py` (registry version "
              f"{manifest['registry_version']}, publisher id `{manifest['registry_id']}`). Stdlib only, offline and "
              "deterministic: a rebuild from the same inputs is byte-identical (`MHS_REGISTRY_DATE` sets the date; "
@@ -178,7 +174,7 @@ def render_readme(records, cards, summary, stats, uncloned, manifest, build_ts, 
 
 
 def render_coverage(records, cards, summary, stats, uncloned, build_ts, decisions_summary) -> str:
-    lines = [_ids.NON_AFFILIATION, "", "# OpenMHS registry coverage", "",
+    lines = ["# OpenMHS registry coverage", "",
              f"Generated {build_ts} by `MHS/registry/build_registry.py`; every number is computed from the records "
              "and cards.", "", "## Decisions", ""]
     lines.append(_table(sorted(decisions_summary["by_strategy_role"].items()), ["strategy / role", "repos"]))

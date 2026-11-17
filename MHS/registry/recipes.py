@@ -60,8 +60,6 @@ SIM_ROWS = (
     ("close()", "lifecycle: teardown", "never cap.world.restore.v1"),
 )
 
-ROS_PREFACE = ("OpenMHS is an independent open-source project, not affiliated with or endorsed by Anthropic, "
-               "and not a reimplementation or compatible dialect of Anthropic's MHS research preview.")
 ROS_ROWS = (
     ("topic observation", "`reads[field]`, or a read capability with `operation: subscribe`",
      "declare the topic, type, selected `path` and output schema; every package needs a capability, including sensors"),
@@ -259,7 +257,7 @@ FAMILY = {
     ),
     "ros2": dict(
         title="ROS 2 topics, services and actions through RosDriver",
-        preface=ROS_PREFACE, rows=ROS_ROWS,
+        rows=ROS_ROWS,
         applicability=("ROS 2 packages (package.xml) in a repo whose main family is ROS: triage rule 9, "
                        "`family:ros`; set `ros_version = 2`. " + ROS_SCOPE),
         safety_requirements="Hardware at R1 or above needs a declared native stop and a non-empty safe state. ",
@@ -269,7 +267,7 @@ FAMILY = {
     ),
     "ros1": dict(
         title="ROS 1 topics, services and actions through RosDriver",
-        preface=ROS_PREFACE, rows=ROS_ROWS,
+        rows=ROS_ROWS,
         applicability="ROS 1 packages; set `ros_version = 1`. " + ROS_SCOPE,
         safety_requirements="Hardware at R1 or above needs a declared native stop and a non-empty safe state. ",
         hazards=ROS_HAZARDS, fidelity=ROS_FIDELITY,
@@ -278,7 +276,7 @@ FAMILY = {
     ),
     "gazebo": dict(
         title="Gazebo ROS interfaces through RosDriver",
-        preface=ROS_PREFACE, rows=ROS_ROWS,
+        rows=ROS_ROWS,
         applicability=("Gazebo worlds/plugins with explicit ROS interfaces. Bind reset or stepping only when "
                        "the pinned service actually provides the catalogue operation; the helper does not infer "
                        "world control or speak native Gazebo Transport. " + ROS_SCOPE),
@@ -336,7 +334,6 @@ for _name, (_title, _mapping, _hazards, _pitfalls) in _PLANNED.items():
 _FAMILY_STOP = "Hardware at R1 or above needs a native stop (`safety_bindings.estop`) and a non-empty safe state. "
 FAMILY["bluesky-ophyd"] = dict(
     title="Classic Ophyd Devices through OphydDriver",
-    preface=ROS_PREFACE,
     applicability=(
         "Classic (synchronous) Ophyd Devices: triage rule 9, `family:ophyd`. `OphydDriver` is a configuration-only "
         "helper over the Python-object bridge. Each field is a `Field` in `parameters` plus one `signal_bindings` "
@@ -399,7 +396,6 @@ FAMILY["bluesky-ophyd"] = dict(
 )
 FAMILY["qcodes"] = dict(
     title="QCoDeS instruments through QcodesDriver",
-    preface=ROS_PREFACE,
     applicability=(
         "QCoDeS instrument classes: triage rule 9, `family:qcodes`. `QcodesDriver` is a configuration-only helper "
         "over the Python-object bridge. Each field is a `Field` in `parameters` plus one `parameter_bindings` entry: "
@@ -514,7 +510,7 @@ MCP_SCOPE = (
 )
 FAMILY["mcp-proxy"] = dict(
     title="MCP servers through McpClientDriver (finite controlled tool contract)",
-    preface=ROS_PREFACE, rows=MCP_ROWS, applicability=MCP_SCOPE,
+    rows=MCP_ROWS, applicability=MCP_SCOPE,
     safety_requirements=("Hardware at R1 or above needs the `mcp_config[\"safety\"]` protective transaction (it is the "
                          "e-stop; `@estop` methods are not allowed) and a non-empty safe state; R2 and R3 cannot pass "
                          "SAFE-045 with this helper today. "),
@@ -538,7 +534,6 @@ FAMILY["mcp-proxy"] = dict(
 # --- PyLabRobot helper (plr-liquid-handler-v1): replaces the planned pylabrobot entry ---
 FAMILY["pylabrobot"] = dict(
     title="PyLabRobot liquid handlers through PyLabRobotDriver (profile plr-liquid-handler-v1)",
-    preface=ROS_PREFACE,  # integration (2026-11-05): the independence sentence, as on the other helper pages
     rows=(
         ("the upstream object or `LiquidHandler(backend=..., deck=...)`",
          "lifecycle: the backend factory (`fake.py`; `native.py` for hardware)",
@@ -623,7 +618,7 @@ TAG_ROWS = (
 )
 FAMILY["tag-bridge"] = dict(
     title="Tag, register and PV devices through TagDriver (Modbus, EPICS Channel Access, ASCOM Alpaca)",
-    preface=ROS_PREFACE, rows=TAG_ROWS,
+    rows=TAG_ROWS,
     applicability=(
         "Devices a server exposes by register number, PV name or Alpaca member: triage rule 9, `family:tag-bridge`. "
         "The implemented `TagDriver` is a configuration-only helper with three profiles, `modbus`, `epics-ca` and "
@@ -729,7 +724,7 @@ SILA_SCOPE = (
 )
 FAMILY["sila2"] = dict(
     title="SiLA 2 features through Sila2Driver (controlled peer, one pinned Phenix source profile)",
-    preface=ROS_PREFACE, rows=SILA_ROWS, applicability=SILA_SCOPE,
+    rows=SILA_ROWS, applicability=SILA_SCOPE,
     safety_requirements=("Sila2Driver accepts only a `hardware` declaration at R2 or R3: every effectful route needs a "
                          "stock input-bound permit and an operator envelope on each input, and the e-stop is the "
                          "feature's explicit Stop command (`safety_bindings`), never an `@estop` method. "),
