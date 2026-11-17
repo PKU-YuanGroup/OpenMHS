@@ -114,6 +114,7 @@ from . import upstream as _upstream
 from .loader import LOCK_FILE, driver_class, read_lock
 from .ref_numeric import ones_box_bounds
 from .package import REFERENCE_JSON, REFERENCE_MD, TASK_FILE, find_root, read_json, reference_documents, relative_to_root
+from ..sim_lock import SIM_LOCK_FILE, SIM_LOCK_SCHEMA
 from .spec import DriverDefinitionError
 
 __all__ = [
@@ -1403,7 +1404,8 @@ def _g1(ctx: _Context, gate: Gate) -> None:
         if path.name == "__pycache__" and path.is_dir():
             gate.warning("BYTECODE", f"{relative.as_posix()}/ holds bytecode; delete it (never commit __pycache__)",
                          relative.as_posix())
-    for name, schema in (("RESULT.json", "driver-result.schema.json"), (EXAMPLE_OVERLAY, "site-limits.schema.json")):
+    for name, schema in (("RESULT.json", "driver-result.schema.json"), (EXAMPLE_OVERLAY, "site-limits.schema.json"),
+                         (SIM_LOCK_FILE, SIM_LOCK_SCHEMA)):
         if not (ctx.dir / name).is_file():
             continue
         document, problem = read_json(ctx.dir / name)
