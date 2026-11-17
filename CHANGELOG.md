@@ -670,6 +670,10 @@ One section per file in `MHS/changes/`. The fragments are the detailed record of
 
 [`MHS/changes/SIM-HOST.md`](MHS/changes/SIM-HOST.md): A `GymnasiumDriver` backend can now declare `isolated_process_v1`: its environment is built and driven in a child process that the endpoint starts and owns, an exit or a global ROS shutdown inside the environment ends only that process, every call is bounded, and the e-stop is the declared simulator stop confirmed by a declared state read-back, or an unreached safe state. gh.rickstaa/ros-gazebo-gym passes on it (risk raised to R2); gh.ut-amrl/socialgym2 stays blocked because ...
 
+### sim.lock.json: a package's record of passing on its real upstream simulator
+
+[`MHS/changes/SIM-LOCK.md`](MHS/changes/SIM-LOCK.md): A simulator package may now carry `sim.lock.json`, the record of a gate run with `--backend sim` against its upstream installed at the pinned commit (decided by the owner on 2026-11-17; written by claude-opus-5-5, a model and not a human). It names the environment (container platform, base image, Python, install commands, author pins, every resolved distribution), the digest of the passing sim report and the fake gate digest at that moment. CI cannot repeat the run and never ...
+
 ### SIMULATION-RISK-ERRATUM — align the safety examples with the catalogue
 
 [`MHS/changes/SIMULATION-RISK-ERRATUM.md`](MHS/changes/SIMULATION-RISK-ERRATUM.md): The safety chapter listed simulation stepping as an R1 example, while the machine-readable `cap.world.step.v1` class, the generated capability catalogue, the driver profile and the SDK simulator families use R0. The precedence rule in `MHS/spec/README.md` places the JSON registries above the safety chapter and requires an erratum to the lower document when they disagree.

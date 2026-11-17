@@ -39,6 +39,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from . import _ids
+from .sim_lock import market_sim
 
 MARKET_FORMAT = "openmhs.market/1"
 MARKET_FILE = "market.json"
@@ -242,7 +243,7 @@ def build_entry(package_dir: Path, root: Path, registry_dir: Path | None = None)
         },
         "stars": (record or {}).get("stars"),
         "install": _commands(package),
-    }
+    } | ({"sim": sim} if (sim := market_sim(package_dir)) else {})
 
 
 def build(root: Path | str | None = None) -> dict[str, Any]:
