@@ -1,44 +1,53 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "gym_airsim.airsim_car_env:AirSimCarEnv (gym_airsim/airsim_car_env.py:12)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_e48d0b9893f06713",
     "https://github.com/hoangtranngoc/airsim-rl"
   ],
-  "description": "hoangtranngoc/airsim-rl: catalog/discovery tooling (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Jupyter Notebook. Catalog keywords: Experiments, Deep, Reinforcement, Learning, autonomous, vehicles.",
+  "description": "hoangtranngoc/airsim-rl: catalog/discovery tooling (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 3. Catalog role: physics engines. Language: Jupyter Notebook. Catalog keywords: Experiments, Deep, Reinforcement, Learning, autonomous, vehicles.",
   "domains": [],
   "evidence": {
     "files_read": 1,
     "notes": "bounded static scan: 15 files enumerated (max depth 3), 1 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/hoangtranngoc__airsim-rl/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "airsim"
+    "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.hoangtranngoc/airsim-rl",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
-      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata"
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/hoangtranngoc__airsim-rl: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/hoangtranngoc__airsim-rl --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "AirSim",
@@ -58,36 +67,38 @@
     "repo": "https://github.com/hoangtranngoc/airsim-rl"
   },
   "local_path": "robots/hoangtranngoc/airsim-rl",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "hoangtranngoc",
   "package_id": "gh.hoangtranngoc/airsim-rl",
   "quarantine": false,
-  "rank": 1787,
+  "rank": 423,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "airsim-rl",
   "repo_url": "https://github.com/hoangtranngoc/airsim-rl",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "b4700049d8c2c519476d4ee15f2504795f80df9d",
     "repo_url": "https://github.com/hoangtranngoc/airsim-rl"
   },
   "stars": 60,
   "tags": [
-    "airsim",
+    "gymnasium",
     "robotics",
     "catalog discovery tooling",
     "physics engines",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "hoangtranngoc/airsim-rl",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -129,11 +140,30 @@
         "airsim",
         "airsim"
       ],
+      "family_note": "triage family gymnasium (catalogue family airsim)",
       "family_rule": "scored",
       "family_score": 4,
+      "tier_note": "tier D -> B: triage family-config (override:recon)",
       "tier_rule": "D2-peripheral-category"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/hoangtranngoc__airsim-rl/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -148,6 +178,21 @@
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
     },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "b4700049d8c2c519476d4ee15f2504795f80df9d",
+      "driver_dir": "MHS/drivers/robots/hoangtranngoc__airsim-rl",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:4be2a37cd73f936cc28c53daaac422a0c8b8bfa9997c6624cdd1a0e0f03bf632",
+      "reviewed": false,
+      "status": "pass"
+    },
     "scan": {
       "build_systems": [],
       "entry_evidence_count": 1,
@@ -161,12 +206,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Reviewed by gpt-6.1-sol (a model): Valid legacy Gym AirSim environment: gym_airsim/airsim_car_env.py:40 and :61 implement step/reset.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "Reviewed by gpt-6.1-sol (a model): Valid legacy Gym AirSim environment: gym_airsim/airsim_car_env.py:40 and :61 implement step/reset.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

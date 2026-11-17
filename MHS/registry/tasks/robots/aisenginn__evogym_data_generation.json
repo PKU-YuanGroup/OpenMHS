@@ -11,20 +11,27 @@
     "license_spdx": "MIT",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "tooling",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 933,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 267,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "evogym.envs.walk:WalkingFlat",
+      "file": "evogym/envs/walk.py",
+      "line": 15,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": ">=3.7,<3.11",
@@ -38,25 +45,44 @@
   "mock_strategy": {
     "preferred": "upstream-sim",
     "hints": [
-      "evogym/sim.py:15 EvoSim",
-      "evogym/sim.py:1"
+      "data_generator/__init__.py:17 gym env Walker-v0",
+      "data_generator/__init__.py:23 gym env BridgeWalker-v0",
+      "data_generator/__init__.py:29 gym env CaveCrawler-v0",
+      "data_generator/__init__.py:35 gym env Jumper-v0"
     ],
     "upstream_tests": "tests"
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "gym env Walker-v0 registered at data_generator/__init__.py:17",
+      "gym env BridgeWalker-v0 registered at data_generator/__init__.py:23",
+      "gym env CaveCrawler-v0 registered at data_generator/__init__.py:29",
+      "gym env Jumper-v0 registered at data_generator/__init__.py:35",
+      "gym env Flipper-v0 registered at data_generator/__init__.py:41",
+      "gym env Balancer-v0 registered at data_generator/__init__.py:47",
+      "gym env Balancer-v1 registered at data_generator/__init__.py:53",
+      "gym env UpStepper-v0 registered at data_generator/__init__.py:59",
+      "gym env DownStepper-v0 registered at data_generator/__init__.py:65",
+      "gym env ObstacleTraverser-v0 registered at data_generator/__init__.py:71",
+      "gym env ObstacleTraverser-v1 registered at data_generator/__init__.py:77",
+      "gym env Hurdler-v0 registered at data_generator/__init__.py:83"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
   "needs_recon": [],
-  "timebox_min": 15,
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/aisenginn__evogym_data_generation --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

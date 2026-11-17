@@ -1,47 +1,54 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "mujoco",
+    "entry_points": [
+      "one_policy_to_run_them_all.environments.multi_robot.create_env:create_env (one_policy_to_run_them_all/environments/multi_robot/create_env.py:15)",
+      "one_policy_to_run_them_all.environments.anymal_b.environment:AnymalB (one_policy_to_run_them_all/environments/anymal_b/environment.py:27)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1"
+  ],
   "catalog_refs": [
     "repo_dde02efa12b86587",
     "https://github.com/nico-bohlinger/one_policy_to_run_them_all"
   ],
-  "description": "nico-bohlinger/one_policy_to_run_them_all: policy/algorithm for legged robots (robotics track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: MuJoCo. Language: Python, Shell. Catalog keywords: CoRL, MuJoCo.",
+  "description": "nico-bohlinger/one_policy_to_run_them_all: policy/algorithm for legged robots (robotics track). OpenMHS plan: family-config with MujocoDriver, wave 2. Catalog role: task environment. Declared backend: MuJoCo. Language: Python, Shell. Catalog keywords: CoRL, MuJoCo.",
   "domains": [
     "legged robots"
   ],
   "evidence": {
     "files_read": 4,
     "notes": "bounded static scan: 168 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/nico-bohlinger__one_policy_to_run_them_all/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "gymnasium"
+    "mujoco"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.nico-bohlinger/one_policy_to_run_them_all",
   "integration": {
-    "blockers": [
-      "NOT_A_DEVICE: catalogue category 'policy/algorithm' with no env registration or device evidence"
-    ],
-    "effort": "EX",
-    "next_action": "Not integrated: catalogue category 'policy/algorithm' with no env registration or device evidence",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "blockers": [],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/nico-bohlinger__one_policy_to_run_them_all: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/nico-bohlinger__one_policy_to_run_them_all --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/mujoco.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Python SDK",
@@ -66,37 +73,39 @@
     "repo": "https://github.com/nico-bohlinger/one_policy_to_run_them_all"
   },
   "local_path": "robots/nico-bohlinger/one_policy_to_run_them_all",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "nico-bohlinger",
   "package_id": "gh.nico-bohlinger/one_policy_to_run_them_all",
   "quarantine": false,
-  "rank": 1503,
+  "rank": 152,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "one_policy_to_run_them_all",
   "repo_url": "https://github.com/nico-bohlinger/one_policy_to_run_them_all",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "7c1819444028c529b0a964fe3f32878333b1310a",
     "repo_url": "https://github.com/nico-bohlinger/one_policy_to_run_them_all"
   },
   "stars": 0,
   "tags": [
-    "gymnasium",
+    "mujoco",
     "robotics",
     "policy algorithm",
     "task environment",
     "simulated",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "A",
   "title": "nico-bohlinger/one_policy_to_run_them_all",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 2,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -134,12 +143,28 @@
       "family_matches": [
         "\\bmujoco"
       ],
+      "family_note": "triage family mujoco (catalogue family gymnasium)",
       "family_rule": "scored",
       "family_score": 10,
-      "tier_note": "tier A -> D: triage skip (skip:peripheral)",
       "tier_rule": "A2-task-env-entry"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/nico-bohlinger__one_policy_to_run_them_all/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -153,6 +178,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "7c1819444028c529b0a964fe3f32878333b1310a",
+      "driver_dir": "MHS/drivers/robots/nico-bohlinger__one_policy_to_run_them_all",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:e6765407263f8aa98cf5e072e120562c0ec43241c8f5d92527a998236f6afdd5",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -172,12 +212,14 @@
     },
     "triage": {
       "evidence": [
-        "catalogue category 'policy/algorithm' with no env registration or device evidence"
+        "override (retriage-wave1.json): Family-config/mujoco fits because this is a Gymnasium/MuJoCo multi-robot simulation package (20 robot classes), not a hardware library.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "mujoco",
+      "helper": "MujocoDriver",
+      "justification": "Family-config/mujoco fits because this is a Gymnasium/MuJoCo multi-robot simulation package (20 robot classes), not a hardware library.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

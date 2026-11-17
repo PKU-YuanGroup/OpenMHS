@@ -1,46 +1,56 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "rl_training.envs.amp_locomotion_env:AmpLocomotionEnv (source/rl_training/rl_training/envs/amp_locomotion_env.py:63)",
+      "rl_training.tasks.manager_based.locomotion.amp.config.humanoid.dr02.flat_env_cfg:DR02AmpFlatEnvCfg (source/rl_training/rl_training/tasks/manager_based/locomotion/amp/config/humanoid/dr02/flat_env_cfg.py:55)",
+      "rl_training.tasks.manager_based.locomotion.velocity.config.quadruped.deeprobotics_lite3.rough_env_cfg:DeeproboticsLite3RoughEnvCfg (source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/quadruped/deeprobotics_lite3/rough_env_cfg.py:18)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_682610659aa31591",
     "https://github.com/deeproboticslab/rl_training"
   ],
-  "description": "deeproboticslab/rl_training: catalog/discovery tooling (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Python. Catalog keywords: RL_Training, Repo, Isaaclab.",
+  "description": "deeproboticslab/rl_training: catalog/discovery tooling (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 6. Catalog role: physics engines. Language: Python. Catalog keywords: RL_Training, Repo, Isaaclab.",
   "domains": [],
   "evidence": {
     "files_read": 3,
     "notes": "bounded static scan: 47 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/deeproboticslab__rl_training/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "mujoco"
+    "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.deeproboticslab/rl_training",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
       "NEEDS_GPU: an import or the catalogue requires a GPU"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/deeproboticslab__rl_training: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/deeproboticslab__rl_training --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Gymnasium",
@@ -62,36 +72,38 @@
     "repo": "https://github.com/deeproboticslab/rl_training"
   },
   "local_path": "robots/deeproboticslab/rl_training",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "deeproboticslab",
   "package_id": "gh.deeproboticslab/rl_training",
   "quarantine": false,
-  "rank": 1590,
+  "rank": 85,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "rl_training",
   "repo_url": "https://github.com/deeproboticslab/rl_training",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "3d05d3b97f7a2390f003547f23a02b3b42eea195",
     "repo_url": "https://github.com/deeproboticslab/rl_training"
   },
   "stars": 285,
   "tags": [
-    "mujoco",
+    "gymnasium",
     "robotics",
     "catalog discovery tooling",
     "physics engines",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "deeproboticslab/rl_training",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 6,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -130,11 +142,30 @@
         "\\bmujoco",
         "\\bmujoco"
       ],
+      "family_note": "triage family gymnasium (catalogue family mujoco)",
       "family_rule": "scored",
       "family_score": 4,
+      "tier_note": "tier D -> B: triage family-config (override:recon)",
       "tier_rule": "D2-peripheral-category"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/deeproboticslab__rl_training/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "BSD-3-Clause",
@@ -148,6 +179,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "3d05d3b97f7a2390f003547f23a02b3b42eea195",
+      "driver_dir": "MHS/drivers/robots/deeproboticslab__rl_training",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:6187ebd59db14c8982c65f2b87f6009646af8314cb6871388d59f6fdffc358a4",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -167,12 +213,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): IsaacLab Gymnasium sim tasks for DeepRobotics robots make this family-config/gymnasium sim-env, not a driver; a driver needs Isaac Sim 5.1, Isaac Lab 2.3.2, GPU and the deep_robotics_model submodule.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "IsaacLab Gymnasium sim tasks for DeepRobotics robots make this family-config/gymnasium sim-env, not a driver; a driver needs Isaac Sim 5.1, Isaac Lab 2.3.2, GPU and the deep_robotics_model submodule.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

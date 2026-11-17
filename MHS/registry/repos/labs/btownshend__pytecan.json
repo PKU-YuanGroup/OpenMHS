@@ -1,22 +1,29 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "gemini:Gemini (Gemini/gemini.py:8)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "packaged"
   },
-  "blocked_on": [],
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
   "build_systems": [
     "make",
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1"
+  ],
   "catalog_refs": [
     "repo_d9806df46547b745",
     "https://github.com/btownshend/pytecan"
   ],
-  "description": "btownshend/pytecan: device backend for liquid handling (lab instrumentation track). OpenMHS plan: not integrated (skip:tooling). Language: Python. Catalog keywords: Tecan, EVO, Gemini, gem.",
+  "description": "btownshend/pytecan: device backend for liquid handling (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 5. Catalog role: device SDK. Language: Python. Catalog keywords: Tecan, EVO, Gemini, gem.",
   "domains": [
     "liquid handling"
   ],
@@ -35,16 +42,18 @@
   "id": "gh.btownshend/pytecan",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: override (partners.json): Generates Tecan EVO Gemini (.gem) programs; it does not talk to the instrument.",
+      "HELPER_MISSING",
       "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
-      "PLATFORM_WINDOWS: Windows-only imports"
+      "PLATFORM_WINDOWS: Windows-only imports",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: override (partners.json): Generates Tecan EVO Gemini (.gem) programs; it does not talk to the instrument.",
-    "reason_code": "skip:tooling",
-    "role": "tooling",
+    "effort": "E2",
+    "next_action": "Review MHS/drivers/labs/btownshend__pytecan/RESULT.json: the package is blocked on HELPER_MISSING; clear the codes before MHS/registry/tasks/labs/btownshend__pytecan.json is dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "Python SDK",
@@ -65,11 +74,13 @@
     "repo": "https://github.com/btownshend/pytecan"
   },
   "local_path": "labs/btownshend/pytecan",
-  "modes": [],
+  "modes": [
+    "hardware"
+  ],
   "owner": "btownshend",
   "package_id": "gh.btownshend/pytecan",
   "quarantine": false,
-  "rank": 70,
+  "rank": 1,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "pytecan",
@@ -87,15 +98,15 @@
     "device backend",
     "device sdk",
     "hardware interface",
-    "skip"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "btownshend/pytecan",
   "track": "labs",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 5,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -135,10 +146,26 @@
       ],
       "family_rule": "scored",
       "family_score": 7,
-      "tier_note": "tier B -> D: triage skip (skip:tooling)",
       "tier_rule": "B1-device-sdk"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/btownshend__pytecan/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -152,6 +179,23 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "HELPER_MISSING"
+      ],
+      "commit": "b80ab8d5549856998269f4bd60edab75986a17d6",
+      "driver_dir": "MHS/drivers/labs/btownshend__pytecan",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:9a0ddd4a5c12f501c1c9f365dd93d33e0c767865d1fbb679143b6736f06fd321",
+      "reviewed": false,
+      "status": "blocked"
     },
     "scan": {
       "build_systems": [
@@ -169,15 +213,15 @@
     },
     "triage": {
       "evidence": [
-        "override (partners.json): Generates Tecan EVO Gemini (.gem) programs; it does not talk to the instrument.",
+        "override (partners.json): Gemini/gemini.py:23 talks to Tecan's Gemini control software over a live pipe, so it drives the instrument (Python 2; owner's decision 2026-11-17 after DeepSeek and Codex re-triage; it also generates .gem programs).",
         "rules alone: direct-driver (PY_SDK_WITH_ENTRY, rule 10)"
       ],
-      "family": null,
+      "family": "python-object",
       "hardware_transport": "class elitech_datareader.elitech:Device uses the hardware transport serial",
-      "helper": null,
-      "justification": "Generates Tecan EVO Gemini (.gem) programs; it does not talk to the instrument.",
+      "helper": "PythonObjectDriver",
+      "justification": "Gemini/gemini.py:23 talks to Tecan's Gemini control software over a live pipe, so it drives the instrument (Python 2; owner's decision 2026-11-17 after DeepSeek and Codex re-triage; it also generates .gem programs).",
       "partner": "Tecan",
-      "reason_code": "skip:tooling",
+      "reason_code": "override:recon",
       "rule": "override",
       "version": "0.9.4"
     }

@@ -1,47 +1,56 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "robot_lab.tasks.direct.g1_amp.g1_amp_env:G1AmpEnv (source/robot_lab/robot_lab/tasks/direct/g1_amp/g1_amp_env.py:28)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python",
     "docker"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_bbd11100c00d5636",
     "https://github.com/fan-ziqi/robot_lab"
   ],
-  "description": "fan-ziqi/robot_lab: catalog/discovery tooling (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Python. Catalog keywords: RL, Extension, Robots, IsaacLab..",
+  "description": "fan-ziqi/robot_lab: catalog/discovery tooling (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 6. Catalog role: physics engines. Language: Python. Catalog keywords: RL, Extension, Robots, IsaacLab..",
   "domains": [],
   "evidence": {
     "files_read": 5,
     "notes": "bounded static scan: 58 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/fan-ziqi__robot_lab/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "isaac-lab"
+    "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.fan-ziqi/robot_lab",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
-      "NEEDS_GPU: an import or the catalogue requires a GPU"
+      "NEEDS_GPU: an import or the catalogue requires a GPU",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/fan-ziqi__robot_lab: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/fan-ziqi__robot_lab --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Docker",
@@ -63,36 +72,38 @@
     "repo": "https://github.com/fan-ziqi/robot_lab"
   },
   "local_path": "robots/fan-ziqi/robot_lab",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "fan-ziqi",
   "package_id": "gh.fan-ziqi/robot_lab",
   "quarantine": false,
-  "rank": 1412,
+  "rank": 74,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "robot_lab",
   "repo_url": "https://github.com/fan-ziqi/robot_lab",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "500399ed75f510aeaff28705a8ce736c514dbec3",
     "repo_url": "https://github.com/fan-ziqi/robot_lab"
   },
   "stars": 1935,
   "tags": [
-    "isaac-lab",
+    "gymnasium",
     "robotics",
     "catalog discovery tooling",
     "physics engines",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "fan-ziqi/robot_lab",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 6,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -131,12 +142,30 @@
         "gazebo",
         "gazebo"
       ],
-      "family_note": "catalogue family gazebo has no structural marker; the code shows isaac-lab (imports isaaclab)",
+      "family_note": "triage family gymnasium (catalogue family gazebo)",
       "family_rule": "scored",
       "family_score": 4,
+      "tier_note": "tier D -> B: triage family-config (override:recon)",
       "tier_rule": "D2-peripheral-category"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/fan-ziqi__robot_lab/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "Apache-2.0",
@@ -150,6 +179,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "500399ed75f510aeaff28705a8ce736c514dbec3",
+      "driver_dir": "MHS/drivers/robots/fan-ziqi__robot_lab",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:2de9695e325b05fafe3e6db253c498fd1070ae4f5604833c7c7acae7f2f72b59",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -169,12 +213,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Reviewed by gpt-6.1-sol (a model): The proposed entries are configuration classes.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "Reviewed by gpt-6.1-sol (a model): The proposed entries are configuration classes.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

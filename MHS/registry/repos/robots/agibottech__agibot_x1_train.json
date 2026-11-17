@@ -1,48 +1,56 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "humanoid.envs.x1.x1_dh_stand_env:X1DHStandEnv (humanoid/envs/x1/x1_dh_stand_env.py:79)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_3ae62bf647ef7501",
     "https://github.com/agibottech/agibot_x1_train"
   ],
-  "description": "agibottech/agibot_x1_train: policy/algorithm for humanoid robots (robotics track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: MuJoCo. Language: Python. Catalog keywords: AgiBot, X1.",
+  "description": "agibottech/agibot_x1_train: policy/algorithm for humanoid robots (robotics track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 6. Catalog role: task environment. Declared backend: MuJoCo. Language: Python. Catalog keywords: AgiBot, X1.",
   "domains": [
     "humanoid robots"
   ],
   "evidence": {
     "files_read": 2,
     "notes": "bounded static scan: 35 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/agibottech__agibot_x1_train/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "mujoco"
+    "python-object"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.agibottech/agibot_x1_train",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: catalogue category 'policy/algorithm' with no env registration or device evidence",
       "NEEDS_GPU: an import or the catalogue requires a GPU"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: catalogue category 'policy/algorithm' with no env registration or device evidence",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/robots/agibottech__agibot_x1_train: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/agibottech__agibot_x1_train --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/python-object.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "Python SDK",
@@ -62,37 +70,39 @@
     "repo": "https://github.com/agibottech/agibot_x1_train"
   },
   "local_path": "robots/agibottech/agibot_x1_train",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "agibottech",
   "package_id": "gh.agibottech/agibot_x1_train",
   "quarantine": false,
-  "rank": 1415,
+  "rank": 75,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "agibot_x1_train",
   "repo_url": "https://github.com/agibottech/agibot_x1_train",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "e6651b9ab843fd1b1be70c087bfb7e8b28e44ccd",
     "repo_url": "https://github.com/agibottech/agibot_x1_train"
   },
   "stars": 1701,
   "tags": [
-    "mujoco",
+    "python-object",
     "robotics",
     "policy algorithm",
     "task environment",
     "simulated",
-    "skip"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "A",
   "title": "agibottech/agibot_x1_train",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 6,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -132,12 +142,29 @@
       "family_matches": [
         "\\bmujoco"
       ],
+      "family_note": "triage family python-object (catalogue family mujoco)",
       "family_rule": "scored",
       "family_score": 10,
-      "tier_note": "tier A -> D: triage skip (skip:peripheral)",
       "tier_rule": "A2-task-env-entry"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/agibottech__agibot_x1_train/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -151,6 +178,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "e6651b9ab843fd1b1be70c087bfb7e8b28e44ccd",
+      "driver_dir": "MHS/drivers/robots/agibottech__agibot_x1_train",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:5e14583b1680a5ff6ce667d5b45c0ace3f5e319299b02d27863f512bbdca117b",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -167,12 +209,14 @@
     },
     "triage": {
       "evidence": [
-        "catalogue category 'policy/algorithm' with no env registration or device evidence"
+        "override (retriage-wave1.json): Reviewed by gpt-6.1-sol (a model): humanoid/scripts/sim2sim.py:136 is a policy loop.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "justification": "Reviewed by gpt-6.1-sol (a model): humanoid/scripts/sim2sim.py:136 is a policy loop.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

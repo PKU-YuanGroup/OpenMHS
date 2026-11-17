@@ -60,11 +60,11 @@ PyLabRobot tip tracking is off unless the upstream switches it on: fresh-tip sel
 
 ## First task cards
 
-- `gh.oelemento/star-sim`: family-config, wave 2, rank 149, `MHS/registry/tasks/labs/oelemento__star-sim.json`
-- `gh.aicell-lab/hamilton-control`: family-config, wave 5, rank 47, `MHS/registry/tasks/labs/aicell-lab__hamilton-control.json`
+- `gh.oelemento/star-sim`: family-config, wave 2, rank 153, `MHS/registry/tasks/labs/oelemento__star-sim.json`
+- `gh.aicell-lab/hamilton-control`: family-config, wave 5, rank 61, `MHS/registry/tasks/labs/aicell-lab__hamilton-control.json`
 - `gh.pylabrobot/pylabrobot`: bridge-runtime, wave 9, rank 20, `MHS/registry/tasks/labs/pylabrobot__pylabrobot.json`
-- `gh.bioprotocols/labop`: reference, wave 9, rank 459, `MHS/registry/tasks/labs/bioprotocols__labop.json`
-- `gh.maraxen/praxis`: reference, wave 9, rank 684, `MHS/registry/tasks/labs/maraxen__praxis.json`
+- `gh.bioprotocols/labop`: reference, wave 9, rank 449, `MHS/registry/tasks/labs/bioprotocols__labop.json`
+- `gh.maraxen/praxis`: reference, wave 9, rank 666, `MHS/registry/tasks/labs/maraxen__praxis.json`
 
 ## Sources
 

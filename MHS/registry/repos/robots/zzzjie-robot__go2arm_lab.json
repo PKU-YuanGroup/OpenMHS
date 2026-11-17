@@ -1,21 +1,29 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "Go2Arm_Lab.env.manager_env:ManagerRLEnv (source/Go2Arm_Lab/Go2Arm_Lab/env/manager_env.py:4)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "packaged"
   },
-  "blocked_on": [],
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_33ca5d4202bf59d0",
     "https://github.com/zzzjie-robot/go2arm_lab"
   ],
-  "description": "zzzjie-robot/go2arm_lab: catalog/discovery tooling (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Python. Catalog keywords: legged, manipulator, IsaacLab.",
+  "description": "zzzjie-robot/go2arm_lab: catalog/discovery tooling (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 5. Catalog role: physics engines. Language: Python. Catalog keywords: legged, manipulator, IsaacLab.",
   "domains": [],
   "evidence": {
     "files_read": 1,
@@ -26,22 +34,24 @@
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "isaac-lab"
+    "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.zzzjie-robot/go2arm_lab",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
+      "HELPER_MISSING",
       "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
-      "NEEDS_GPU: an import or the catalogue requires a GPU"
+      "NEEDS_GPU: an import or the catalogue requires a GPU",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Review MHS/drivers/robots/zzzjie-robot__go2arm_lab/RESULT.json: the package is blocked on HELPER_MISSING; clear the codes before MHS/registry/tasks/robots/zzzjie-robot__go2arm_lab.json is dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Gazebo",
@@ -63,36 +73,38 @@
     "repo": "https://github.com/zzzjie-robot/go2arm_lab"
   },
   "local_path": "robots/zzzjie-robot/go2arm_lab",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "zzzjie-robot",
   "package_id": "gh.zzzjie-robot/go2arm_lab",
   "quarantine": false,
-  "rank": 2125,
+  "rank": 92,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "go2arm_lab",
   "repo_url": "https://github.com/zzzjie-robot/go2arm_lab",
   "ring": 3,
-  "simulation": false,
+  "simulation": true,
   "source": {
     "commit": "5791648e28c1878f4fa5b97ccf111d97f8843f0e",
     "repo_url": "https://github.com/zzzjie-robot/go2arm_lab"
   },
   "stars": 180,
   "tags": [
-    "isaac-lab",
+    "gymnasium",
     "robotics",
     "catalog discovery tooling",
     "physics engines",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "zzzjie-robot/go2arm_lab",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 5,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -133,12 +145,30 @@
         "gazebo",
         "gazebo"
       ],
-      "family_note": "catalogue family gazebo has no structural marker; the code shows isaac-lab (imports isaaclab)",
+      "family_note": "triage family gymnasium (catalogue family gazebo)",
       "family_rule": "scored",
       "family_score": 4,
+      "tier_note": "tier D -> B: triage family-config (override:recon)",
       "tier_rule": "D2-peripheral-category"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/zzzjie-robot__go2arm_lab/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -152,6 +182,23 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "HELPER_MISSING"
+      ],
+      "commit": "5791648e28c1878f4fa5b97ccf111d97f8843f0e",
+      "driver_dir": "MHS/drivers/robots/zzzjie-robot__go2arm_lab",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:2ff4c608767ccb3966c3a652b3e19f8367e160f704a0aa076cbeea2dfde38862",
+      "reviewed": false,
+      "status": "blocked"
     },
     "scan": {
       "build_systems": [
@@ -168,12 +215,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Family-config/gymnasium fits: Isaac Lab sim tasks for a Go2+WidowX run through ManagerRLEnv, not hardware.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "Family-config/gymnasium fits: Isaac Lab sim tasks for a Go2+WidowX run through ManagerRLEnv, not hardware.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

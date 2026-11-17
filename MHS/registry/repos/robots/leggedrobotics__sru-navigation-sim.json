@@ -1,46 +1,54 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "isaaclab_nav_task.navigation.navigation_env:NavigationEnv (isaaclab_nav_task/navigation/navigation_env.py:19)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_defe9dd4c1cad4b1",
     "https://github.com/leggedrobotics/sru-navigation-sim"
   ],
-  "description": "leggedrobotics/sru-navigation-sim: catalog/discovery tooling (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Python. Catalog keywords: IsaacLab, SRU, RL, Navigation, Extension.",
+  "description": "leggedrobotics/sru-navigation-sim: catalog/discovery tooling (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 6. Catalog role: physics engines. Language: Python. Catalog keywords: IsaacLab, SRU, RL, Navigation, Extension.",
   "domains": [],
   "evidence": {
     "files_read": 3,
     "notes": "bounded static scan: 35 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/leggedrobotics__sru-navigation-sim/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "isaac-lab"
+    "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.leggedrobotics/sru-navigation-sim",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
       "NEEDS_GPU: an import or the catalogue requires a GPU"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/leggedrobotics__sru-navigation-sim: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/leggedrobotics__sru-navigation-sim --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "family:gymnasium",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Isaac Lab",
@@ -60,36 +68,38 @@
     "repo": "https://github.com/leggedrobotics/sru-navigation-sim"
   },
   "local_path": "robots/leggedrobotics/sru-navigation-sim",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "leggedrobotics",
   "package_id": "gh.leggedrobotics/sru-navigation-sim",
   "quarantine": false,
-  "rank": 1631,
+  "rank": 95,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "sru-navigation-sim",
   "repo_url": "https://github.com/leggedrobotics/sru-navigation-sim",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "80f6c01c2d9f171374c9f9dba289abd38bcf0c6c",
     "repo_url": "https://github.com/leggedrobotics/sru-navigation-sim"
   },
   "stars": 107,
   "tags": [
-    "isaac-lab",
+    "gymnasium",
     "robotics",
     "catalog discovery tooling",
     "physics engines",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "leggedrobotics/sru-navigation-sim",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 6,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -127,11 +137,30 @@
       "family_matches": [
         "isaaclab"
       ],
+      "family_note": "triage family gymnasium (catalogue family isaac-lab)",
       "family_rule": "scored",
       "family_score": 2,
+      "tier_note": "tier D -> B: triage family-config (family:gymnasium)",
       "tier_rule": "D2-peripheral-category"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/leggedrobotics__sru-navigation-sim/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "MIT",
@@ -146,6 +175,21 @@
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
     },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "80f6c01c2d9f171374c9f9dba289abd38bcf0c6c",
+      "driver_dir": "MHS/drivers/robots/leggedrobotics__sru-navigation-sim",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:4f9f353bc9afc1cc945e119f4e5639152f9a0c5d6c84382b84e17c59f1f95464",
+      "reviewed": false,
+      "status": "pass"
+    },
     "scan": {
       "build_systems": [
         "python"
@@ -159,12 +203,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Model review of re-triage wave 1 (gpt-6.1-sol): NavigationEnv is the environment; B2WNavigationEnvCfg and AowDNavigationEnvCfg are configuration classes. Keep the Gymnasium family and only the NavigationEnv entry.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): NavigationEnv is the environment; B2WNavigationEnvCfg and AowDNavigationEnvCfg are configuration classes. Keep the Gymnasium family and only the NavigationEnv entry.",
+      "reason_code": "family:gymnasium",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

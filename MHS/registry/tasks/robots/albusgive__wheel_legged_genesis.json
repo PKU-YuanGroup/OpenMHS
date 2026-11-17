@@ -11,21 +11,54 @@
     "license_spdx": "MIT",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1577,
-  "exemplar": null,
-  "entry_symbols": [],
-  "models": [],
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 81,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "locomotion.wheel_legged_env:WheelLeggedEnv",
+      "file": "locomotion/wheel_legged_env.py",
+      "line": 15,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "assets/mjcf/CJ-003/scence.xml",
+      "line": 2,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/mjcf/nz/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "assets/mjcf/CJ-003/CJ-003-wheelfoot.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "assets/mjcf/nz/nz.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "assets/mjcf/nz/nz_mapping.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
   "install": {
     "python": ">=3.10,<3.13",
     "commands": [
@@ -36,24 +69,40 @@
     "platform": "any"
   },
   "mock_strategy": {
-    "preferred": "fake",
-    "hints": [],
+    "preferred": "upstream-sim",
+    "hints": [
+      "assets/mjcf/CJ-003/scence.xml:2 MJCF scene model",
+      "assets/mjcf/nz/scene.xml:1 MJCF scene model",
+      "assets/mjcf/CJ-003/CJ-003-wheelfoot.xml:1 MJCF robot model",
+      "assets/mjcf/nz/nz.xml:1 MJCF robot model"
+    ],
     "upstream_tests": null
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "MJCF scene model assets/mjcf/CJ-003/scence.xml:2",
+      "MJCF scene model assets/mjcf/nz/scene.xml:1",
+      "MJCF robot model assets/mjcf/CJ-003/CJ-003-wheelfoot.xml:1",
+      "MJCF robot model assets/mjcf/nz/nz.xml:1",
+      "MJCF robot model assets/mjcf/nz/nz_mapping.xml:1",
+      "MJCF robot model assets/mjcf/nz/nz_view.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
   "needs_recon": [],
-  "timebox_min": 15,
+  "timebox_min": 90,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/albusgive__wheel_legged_genesis --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

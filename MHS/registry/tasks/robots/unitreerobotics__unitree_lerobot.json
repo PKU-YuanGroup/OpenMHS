@@ -11,20 +11,41 @@
     "license_spdx": "Apache-2.0",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "tooling",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
-  "blocked_on": [],
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 202,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 3,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "unitree_lerobot.eval_robot.robot_control.robot_arm:G1_29_ArmController",
+      "file": "unitree_lerobot/eval_robot/robot_control/robot_arm.py",
+      "line": 69,
+      "confidence": "override"
+    },
+    {
+      "symbol": "unitree_lerobot.eval_robot.robot_control.robot_hand_unitree:Dex3_1_Controller",
+      "file": "unitree_lerobot/eval_robot/robot_control/robot_hand_unitree.py",
+      "line": 30,
+      "confidence": "override"
+    },
+    {
+      "symbol": "unitree_lerobot.eval_robot.robot_control.uniarml1.uniarm_l1_bus:UnitreeMotorSDK",
+      "file": "unitree_lerobot/eval_robot/robot_control/uniarml1/uniarm_l1_bus.py",
+      "line": 47,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": ">=3.10,<3.11",
@@ -48,19 +69,55 @@
     "upstream_tests": "test"
   },
   "hints": {
-    "reads": [],
-    "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "reads": [
+      "RealSenseCamera.get_bgr_frame",
+      "RealSenseCamera.get_depth_frame",
+      "RealSenseCamera.get_fps",
+      "RealSenseCamera.get_jpeg_bytes",
+      "RealSenseCamera.get_webrtc_codec",
+      "RealSenseCamera.get_webrtc_port",
+      "RealSenseCamera.get_zmq_port",
+      "OpenCVCamera.get_bgr_frame",
+      "OpenCVCamera.get_depth_frame",
+      "OpenCVCamera.get_fps",
+      "OpenCVCamera.get_jpeg_bytes",
+      "OpenCVCamera.get_webrtc_codec"
+    ],
+    "writes": [
+      "HopeJrArm.bus.configure_motors",
+      "HopeJrArm.bus.write_calibration"
+    ],
+    "actions": [
+      "RealSenseCamera.enable_webrtc",
+      "RealSenseCamera.enable_zmq",
+      "RealSenseCamera.release",
+      "OpenCVCamera.enable_webrtc",
+      "OpenCVCamera.enable_zmq",
+      "OpenCVCamera.release",
+      "HopeJrArm.calibrate",
+      "HopeJrArm.bus.disable_torque",
+      "HopeJrArm.bus.enable_torque"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.device.calibrate.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
-    "risk_floor": "R0",
-    "limit_hints": []
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "unitree_lerobot/lerobot/src/lerobot/envs/configs.py:33 max_parallel_tasks = 1",
+      "unitree_lerobot/lerobot/src/lerobot/envs/configs.py:209 max_gripper_pos = 100.0",
+      "unitree_lerobot/lerobot/src/lerobot/processor/hil_processor.py:328 max_gripper_pos = 30.0"
+    ]
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "motion"
+  ],
+  "timebox_min": 120,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/unitreerobotics__unitree_lerobot --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

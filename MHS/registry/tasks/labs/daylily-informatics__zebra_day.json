@@ -11,20 +11,29 @@
     "license_spdx": "GPL-3.0",
     "license_class": "copyleft"
   },
-  "decision": "skip",
-  "reason_code": "skip:tooling",
-  "role": "tooling",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
-  "blocked_on": [],
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 528,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 12,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "zebra_day.cmd_mgr:ZebraPrinter",
+      "file": "zebra_day/cmd_mgr.py",
+      "line": 21,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": ">=3.12",
@@ -46,19 +55,39 @@
     "upstream_tests": "tests"
   },
   "hints": {
-    "reads": [],
-    "writes": [],
+    "reads": [
+      "ZebraPrinter.get_configuration",
+      "ZebraPrinter.get_error_status",
+      "ZebraPrinter.get_full_status",
+      "ZebraPrinter.get_host_identification",
+      "ZebraPrinter.get_host_status",
+      "ZebraPrinter.get_odometer",
+      "ZebraPrinter.get_serial_number",
+      "ZebraDayApiClient.get_label_profile",
+      "ZebraDayApiClient.get_printer",
+      "ZebraDayApiClient.get_template",
+      "ZebraDayClient.get_label_profile",
+      "ZebraDayClient.get_printer"
+    ],
+    "writes": [
+      "ZebraPrinter.set_configuration"
+    ],
     "actions": [],
-    "candidate_classes": []
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
-    "risk_floor": "R0",
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/daylily-informatics__zebra_day --backend fake",
-  "skip_reason": "catalogue category auxiliary tool, role peripheral tool",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

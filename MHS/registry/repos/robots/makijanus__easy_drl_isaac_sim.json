@@ -1,45 +1,54 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "DRL_Isaac_lib.env:Isaac_envs (DRL_Isaac_lib/env.py:15)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_decac88599746cae",
     "https://github.com/makijanus/easy_drl_isaac_sim"
   ],
-  "description": "makijanus/easy_drl_isaac_sim: catalog/discovery tooling (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Python. Catalog keywords: makiJanus, Easy_DRL_Isaac_Sim.",
+  "description": "makijanus/easy_drl_isaac_sim: catalog/discovery tooling (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 6. Catalog role: physics engines. Language: Python. Catalog keywords: makiJanus, Easy_DRL_Isaac_Sim.",
   "domains": [],
   "evidence": {
     "files_read": 1,
     "notes": "bounded static scan: 12 files enumerated (max depth 3), 1 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/makijanus__easy_drl_isaac_sim/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
     "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.makijanus/easy_drl_isaac_sim",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
       "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
-      "NEEDS_GPU: an import or the catalogue requires a GPU"
+      "NEEDS_GPU: an import or the catalogue requires a GPU",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/makijanus__easy_drl_isaac_sim: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/makijanus__easy_drl_isaac_sim --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Gymnasium",
@@ -57,17 +66,19 @@
     "repo": "https://github.com/makijanus/easy_drl_isaac_sim"
   },
   "local_path": "robots/makijanus/easy_drl_isaac_sim",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "makijanus",
   "package_id": "gh.makijanus/easy_drl_isaac_sim",
   "quarantine": false,
-  "rank": 2133,
+  "rank": 129,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "easy_drl_isaac_sim",
   "repo_url": "https://github.com/makijanus/easy_drl_isaac_sim",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "aa7fcf6d8a8c707ca3d94a8db7dad0de13a45245",
     "repo_url": "https://github.com/makijanus/easy_drl_isaac_sim"
@@ -78,15 +89,15 @@
     "robotics",
     "catalog discovery tooling",
     "physics engines",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "makijanus/easy_drl_isaac_sim",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 6,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -129,9 +140,27 @@
       ],
       "family_rule": "scored",
       "family_score": 4,
+      "tier_note": "tier D -> B: triage family-config (override:recon)",
       "tier_rule": "D2-peripheral-category"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/makijanus__easy_drl_isaac_sim/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -145,6 +174,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "aa7fcf6d8a8c707ca3d94a8db7dad0de13a45245",
+      "driver_dir": "MHS/drivers/robots/makijanus__easy_drl_isaac_sim",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:e6884a5f6e3e3363ee575688ca94c7246d78e7dcc3d5d2120a112ce0310cb98e",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [],
@@ -160,12 +204,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Family-config/gymnasium is right because Isaac_envs is a gym.Env that steps simulated Jetbot, Carter, Kaya and Transporter robots in Isaac Sim rather than hardware.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "Family-config/gymnasium is right because Isaac_envs is a gym.Env that steps simulated Jetbot, Carter, Kaya and Transporter robots in Isaac Sim rather than hardware.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

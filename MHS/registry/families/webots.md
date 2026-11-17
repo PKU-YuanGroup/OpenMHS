@@ -56,11 +56,11 @@ Controllers are separate processes; the supervisor API is needed for state.
 
 ## First task cards
 
-- `gh.cyberbotics/webots`: bridge-runtime, wave 9, rank 123, `MHS/registry/tasks/robots/cyberbotics__webots.json`
-- `gh.felipenmartins/robotics-simulation-labs`: skip, wave 9, rank 321, `MHS/registry/tasks/robots/felipenmartins__robotics-simulation-labs.json`
-- `gh.robocup-junior/rcj-soccersim`: skip, wave 9, rank 480, `MHS/registry/tasks/robots/robocup-junior__rcj-soccersim.json`
-- `gh.huninghe/closed_loop_ankle`: skip, wave 9, rank 481, `MHS/registry/tasks/robots/huninghe__closed_loop_ankle.json`
-- `gh.bitcraze/crazyflie-simulation`: skip, wave 9, rank 802, `MHS/registry/tasks/robots/bitcraze__crazyflie-simulation.json`
+- `gh.cyberbotics/webots`: bridge-runtime, wave 9, rank 122, `MHS/registry/tasks/robots/cyberbotics__webots.json`
+- `gh.felipenmartins/robotics-simulation-labs`: skip, wave 9, rank 314, `MHS/registry/tasks/robots/felipenmartins__robotics-simulation-labs.json`
+- `gh.robocup-junior/rcj-soccersim`: skip, wave 9, rank 469, `MHS/registry/tasks/robots/robocup-junior__rcj-soccersim.json`
+- `gh.huninghe/closed_loop_ankle`: skip, wave 9, rank 470, `MHS/registry/tasks/robots/huninghe__closed_loop_ankle.json`
+- `gh.bitcraze/crazyflie-simulation`: skip, wave 9, rank 783, `MHS/registry/tasks/robots/bitcraze__crazyflie-simulation.json`
 
 ## Sources
 

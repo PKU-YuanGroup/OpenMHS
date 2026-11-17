@@ -1,47 +1,55 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "ravens.environments.environment:Environment (ravens/environments/environment.py:42)",
+      "ravens.environments.environment_mcts:EnvironmentMCTS (ravens/environments/environment_mcts.py:26)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_aac66ff932dfd614",
     "https://github.com/chirikjianlab/ravens_visual_foresight"
   ],
-  "description": "chirikjianlab/ravens_visual_foresight: policy/algorithm for robot arm manipulation (robotics track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: PyBullet. Language: Python. Catalog keywords: Transporters, Visual, Foresight, IROS.",
+  "description": "chirikjianlab/ravens_visual_foresight: policy/algorithm for robot arm manipulation (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 3. Catalog role: task environment. Declared backend: PyBullet. Language: Python. Catalog keywords: Transporters, Visual, Foresight, IROS.",
   "domains": [
     "robot arm manipulation"
   ],
   "evidence": {
     "files_read": 4,
     "notes": "bounded static scan: 98 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/chirikjianlab__ravens_visual_foresight/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
     "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.chirikjianlab/ravens_visual_foresight",
   "integration": {
-    "blockers": [
-      "NOT_A_DEVICE: catalogue category 'policy/algorithm' with no env registration or device evidence"
-    ],
-    "effort": "EX",
-    "next_action": "Not integrated: catalogue category 'policy/algorithm' with no env registration or device evidence",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "blockers": [],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/chirikjianlab__ravens_visual_foresight: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/chirikjianlab__ravens_visual_foresight --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Gymnasium",
@@ -59,17 +67,19 @@
     "repo": "https://github.com/chirikjianlab/ravens_visual_foresight"
   },
   "local_path": "robots/chirikjianlab/ravens_visual_foresight",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "chirikjianlab",
   "package_id": "gh.chirikjianlab/ravens_visual_foresight",
   "quarantine": false,
-  "rank": 558,
+  "rank": 205,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "ravens_visual_foresight",
   "repo_url": "https://github.com/chirikjianlab/ravens_visual_foresight",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "9d3c95555d420c086f465dc11bcb2758cf05247a",
     "repo_url": "https://github.com/chirikjianlab/ravens_visual_foresight"
@@ -81,15 +91,15 @@
     "policy algorithm",
     "task environment",
     "simulated",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "A",
   "title": "chirikjianlab/ravens_visual_foresight",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -129,10 +139,26 @@
       ],
       "family_rule": "scored",
       "family_score": 10,
-      "tier_note": "tier A -> D: triage skip (skip:peripheral)",
       "tier_rule": "A2-task-env-entry"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/chirikjianlab__ravens_visual_foresight/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "Apache-2.0",
@@ -146,6 +172,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "9d3c95555d420c086f465dc11bcb2758cf05247a",
+      "driver_dir": "MHS/drivers/robots/chirikjianlab__ravens_visual_foresight",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:2b1559cfa200abfbd4eccd56a7b71d18c9ece05b45c352db0ede5a6e60c7556a",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -163,12 +204,14 @@
     },
     "triage": {
       "evidence": [
-        "catalogue category 'policy/algorithm' with no env registration or device evidence"
+        "override (retriage-wave1.json): Ravens-Visual-Foresight is a legacy gym.Env/PyBullet rearrangement-task benchmark, so it is a family-config sim-env, not hardware.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "Ravens-Visual-Foresight is a legacy gym.Env/PyBullet rearrangement-task benchmark, so it is a family-config sim-env, not hardware.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

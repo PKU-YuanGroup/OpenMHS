@@ -11,19 +11,21 @@
     "license_spdx": "MIT",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "tooling",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
-  "blocked_on": [],
+  "decision": "family-config",
+  "reason_code": "family:ros",
+  "role": "device-driver",
+  "family": "ros",
+  "helper": "RosDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 364,
-  "exemplar": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 7,
+  "exemplar": "MHS/drivers/robots/avidbots__flatland",
   "entry_symbols": [],
   "models": [],
   "install": {
@@ -52,13 +54,18 @@
     "candidate_classes": []
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "hardware",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "entry_symbol",
+    "install",
+    "capabilities",
+    "motion"
+  ],
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/dobot-arm__dobot_6axis_ros2_v4 --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

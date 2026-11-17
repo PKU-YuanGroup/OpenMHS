@@ -1,23 +1,30 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "zebra_day.cmd_mgr:ZebraPrinter (zebra_day/cmd_mgr.py:21)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "packaged"
   },
-  "blocked_on": [],
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "build_systems": [
     "docker",
     "conda",
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1"
+  ],
   "catalog_refs": [
     "repo_a00fdac4fdfb7597",
     "https://github.com/daylily-informatics/zebra_day"
   ],
-  "description": "daylily-informatics/zebra_day: auxiliary tooling for general (lab instrumentation track). OpenMHS plan: not integrated (skip:tooling). Language: Python. Catalog keywords: Zebra, ZPL.",
+  "description": "daylily-informatics/zebra_day: auxiliary tooling for general (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 5. Catalog role: peripheral tooling. Language: Python. Catalog keywords: Zebra, ZPL.",
   "domains": [
     "general"
   ],
@@ -30,20 +37,21 @@
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "cli-process"
+    "python-object"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.daylily-informatics/zebra_day",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: catalogue category auxiliary tool, role peripheral tool"
+      "NO_HARDWARE_FREE_PATH"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: catalogue category auxiliary tool, role peripheral tool",
-    "reason_code": "skip:tooling",
-    "role": "tooling",
+    "effort": "E2",
+    "next_action": "Review MHS/drivers/labs/daylily-informatics__zebra_day/RESULT.json: the package is blocked on NO_HARDWARE_FREE_PATH; clear the codes before MHS/registry/tasks/labs/daylily-informatics__zebra_day.json is dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "HTTP/REST",
@@ -63,36 +71,39 @@
     "repo": "https://github.com/daylily-informatics/zebra_day"
   },
   "local_path": "labs/daylily-informatics/zebra_day",
-  "modes": [],
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
   "owner": "daylily-informatics",
   "package_id": "gh.daylily-informatics/zebra_day",
   "quarantine": false,
-  "rank": 528,
+  "rank": 12,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "zebra_day",
   "repo_url": "https://github.com/daylily-informatics/zebra_day",
   "ring": 3,
-  "simulation": false,
+  "simulation": true,
   "source": {
     "commit": "d46df53ff3d9b7fbe78aef837a5299656573ba14",
     "repo_url": "https://github.com/daylily-informatics/zebra_day"
   },
   "stars": 18,
   "tags": [
-    "cli-process",
+    "python-object",
     "lab instrumentation",
     "auxiliary tooling",
     "peripheral tooling",
-    "skip"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "daylily-informatics/zebra_day",
   "track": "labs",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 5,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -130,11 +141,48 @@
       "family_matches": [
         "\\bcli\\b"
       ],
+      "family_note": "triage family python-object (catalogue family cli-process)",
       "family_rule": "scored",
       "family_score": 7,
+      "tier_note": "tier D -> B: triage direct-driver (override:recon)",
       "tier_rule": "D1-peripheral-role"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/daylily-informatics__zebra_day/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/daylily-informatics__zebra_day/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/daylily-informatics__zebra_day/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "GPL-3.0",
@@ -148,6 +196,23 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "NO_HARDWARE_FREE_PATH"
+      ],
+      "commit": "d46df53ff3d9b7fbe78aef837a5299656573ba14",
+      "driver_dir": "MHS/drivers/labs/daylily-informatics__zebra_day",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:8f033638b023aeccc0889bf44fe7d3249f31cf564d8c4dbb8e73ea0e5f51d91f",
+      "reviewed": false,
+      "status": "blocked"
     },
     "scan": {
       "build_systems": [
@@ -165,12 +230,14 @@
     },
     "triage": {
       "evidence": [
-        "catalogue category auxiliary tool, role peripheral tool"
+        "override (retriage-wave1.json): ZebraPrinter sends ZPL commands to Zebra label printers over raw TCP 9100, so direct-driver/python-object fits.",
+        "rules alone: skip (skip:tooling, rule 7)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:tooling",
-      "rule": 7,
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "justification": "ZebraPrinter sends ZPL commands to Zebra label printers over raw TCP 9100, so direct-driver/python-object fits.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

@@ -21,10 +21,10 @@ A package is done when `python3 -m mhs.driver check <driver-dir> --backend fake`
 ## Registry coverage
 
 - Repos: **28**
-- Decisions: bridge-runtime 4, family-config 3, reference 7, skip 14
-- Waves: 2: 1, 3: 1, 5: 1, 9: 25
+- Decisions: bridge-runtime 4, direct-driver 1, family-config 3, reference 7, skip 13
+- Waves: 2: 1, 3: 2, 5: 1, 9: 24
 - Dispatchable now: 0
-- Modes: hardware 7, simulated 5
+- Modes: hardware 8, simulated 5
 
 ## Applicability
 
@@ -63,9 +63,9 @@ EPICS PV names are deployment-specific; area detectors produce large arrays (`NE
 
 - `gh.diamondlightsource/dodal`: family-config, wave 2, rank 8, `MHS/registry/tasks/labs/diamondlightsource__dodal.json`
 - `gh.bcda-aps/apstools`: family-config, wave 3, rank 22, `MHS/registry/tasks/labs/bcda-aps__apstools.json`
-- `gh.bec-project/ophyd_devices`: family-config, wave 5, rank 15, `MHS/registry/tasks/labs/bec-project__ophyd_devices.json`
+- `gh.tmsangohan/bact2`: direct-driver, wave 3, rank 252, `MHS/registry/tasks/labs/tmsangohan__bact2.json`
+- `gh.bec-project/ophyd_devices`: family-config, wave 5, rank 24, `MHS/registry/tasks/labs/bec-project__ophyd_devices.json`
 - `gh.bluesky/ophyd`: bridge-runtime, wave 9, rank 46, `MHS/registry/tasks/labs/bluesky__ophyd.json`
-- `gh.bluesky/ophyd-async`: bridge-runtime, wave 9, rank 58, `MHS/registry/tasks/labs/bluesky__ophyd-async.json`
 
 ## Sources
 

@@ -1,49 +1,58 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "environments.omnirobot_gym.omnirobot_env:OmniRobotEnv (environments/omnirobot_gym/omnirobot_env.py:57)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "conda",
     "make"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_d4d2e435e7004651",
     "https://github.com/araffin/robotics-rl-srl"
   ],
-  "description": "araffin/robotics-rl-srl: policy/algorithm for robot arm manipulation (robotics track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: PyBullet. Language: Python.",
+  "description": "araffin/robotics-rl-srl: policy/algorithm for robot arm manipulation (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 3. Catalog role: task environment. Declared backend: PyBullet. Language: Python.",
   "domains": [
     "robot arm manipulation"
   ],
   "evidence": {
     "files_read": 5,
     "notes": "bounded static scan: 213 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/araffin__robotics-rl-srl/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
     "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.araffin/robotics-rl-srl",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: catalogue category 'policy/algorithm' with no env registration or device evidence",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml",
       "ARCHIVED: the upstream repository is archived"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: catalogue category 'policy/algorithm' with no env registration or device evidence",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/araffin__robotics-rl-srl: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/araffin__robotics-rl-srl --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "CLI",
@@ -69,17 +78,19 @@
     "repo": "https://github.com/araffin/robotics-rl-srl"
   },
   "local_path": "robots/araffin/robotics-rl-srl",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "araffin",
   "package_id": "gh.araffin/robotics-rl-srl",
   "quarantine": false,
-  "rank": 210,
+  "rank": 105,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "robotics-rl-srl",
   "repo_url": "https://github.com/araffin/robotics-rl-srl",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "eae7c1ab310c79662f6e68c0d255e08641037ffa",
     "repo_url": "https://github.com/araffin/robotics-rl-srl"
@@ -91,15 +102,15 @@
     "policy algorithm",
     "task environment",
     "simulated",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "A",
   "title": "araffin/robotics-rl-srl",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -139,10 +150,26 @@
       ],
       "family_rule": "scored",
       "family_score": 10,
-      "tier_note": "tier A -> D: triage skip (skip:peripheral)",
       "tier_rule": "A2-task-env-entry"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/araffin__robotics-rl-srl/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "MIT",
@@ -156,6 +183,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "eae7c1ab310c79662f6e68c0d255e08641037ffa",
+      "driver_dir": "MHS/drivers/robots/araffin__robotics-rl-srl",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:94e9d602e1a19fc5f31bfdf92d578db8e2f26e76e48ca0ff227464d451b50ffe",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -179,12 +221,14 @@
     },
     "triage": {
       "evidence": [
-        "catalogue category 'policy/algorithm' with no env registration or device evidence"
+        "override (retriage-wave1.json): The repo registers legacy Gym robot envs, so it is family-config/sim-env; import environments.registry before gym.make and prefer OmnirobotEnv-v0's in-process simulator over the Python 2 ROS path.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "The repo registers legacy Gym robot envs, so it is family-config/sim-env; import environments.registry before gym.make and prefer OmnirobotEnv-v0's in-process simulator over the Python 2 ROS path.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

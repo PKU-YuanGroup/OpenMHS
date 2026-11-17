@@ -1,19 +1,28 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "pysimverse.simulators.drone.drone:Drone (simulators/drone/drone.py:8)",
+      "pysimverse.simulators.drone.drone_manager:DroneManager (simulators/drone/drone_manager.py:7)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "packaged"
   },
-  "blocked_on": [],
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
   "build_systems": [],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.motion.joint_position.v1",
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1"
+  ],
   "catalog_refs": [
     "repo_4aaf3347c7e972f3",
     "https://github.com/cvzone/pysimverse"
   ],
-  "description": "cvzone/pysimverse: complete environment for general (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Python.",
+  "description": "cvzone/pysimverse: complete environment for general (robotics track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 5. Catalog role: peripheral tooling. Language: Python.",
   "domains": [
     "general"
   ],
@@ -26,20 +35,22 @@
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "http-api"
+    "python-object"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.cvzone/pysimverse",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)"
+      "HELPER_MISSING",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "tooling",
+    "effort": "E2",
+    "next_action": "Review MHS/drivers/robots/cvzone__pysimverse/RESULT.json: the package is blocked on HELPER_MISSING; clear the codes before MHS/registry/tasks/robots/cvzone__pysimverse.json is dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/python-object.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "ZeroMQ"
@@ -55,36 +66,38 @@
     "repo": "https://github.com/cvzone/pysimverse"
   },
   "local_path": "robots/cvzone/pysimverse",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "cvzone",
   "package_id": "gh.cvzone/pysimverse",
   "quarantine": false,
-  "rank": 1449,
+  "rank": 69,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "pysimverse",
   "repo_url": "https://github.com/cvzone/pysimverse",
   "ring": 3,
-  "simulation": false,
+  "simulation": true,
   "source": {
     "commit": "ec3f362f50f24278c7f30e5fe09bc2a7ae98e72f",
     "repo_url": "https://github.com/cvzone/pysimverse"
   },
   "stars": 0,
   "tags": [
-    "http-api",
+    "python-object",
     "robotics",
     "complete environment",
     "peripheral tooling",
-    "skip"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "cvzone/pysimverse",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 5,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -122,11 +135,35 @@
       "family_matches": [
         "analyst-profile:protocol-bridge"
       ],
+      "family_note": "triage family python-object (catalogue family http-api)",
       "family_rule": "analyst-profile",
       "family_score": 77,
+      "tier_note": "tier D -> B: triage direct-driver (override:recon)",
       "tier_rule": "D1-peripheral-role"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/cvzone__pysimverse/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.motion.joint_position.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "robot.arm"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -141,6 +178,23 @@
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
     },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "HELPER_MISSING"
+      ],
+      "commit": "ec3f362f50f24278c7f30e5fe09bc2a7ae98e72f",
+      "driver_dir": "MHS/drivers/robots/cvzone__pysimverse",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:fb3c40ab741895e8b1cd874afbac7b3d83056f52f30edd22bd14dc543b385b16",
+      "reviewed": false,
+      "status": "blocked"
+    },
     "scan": {
       "build_systems": [],
       "entry_evidence_count": 2,
@@ -149,12 +203,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Drone is a ZMQ control API (take-off, land, RC, video) for a simulated drone, so direct-driver fits; the simulator is not shipped, so the fake backend must emulate the ZMQ peers (pyzmq/numpy/opencv).",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "justification": "Drone is a ZMQ control API (take-off, land, RC, video) for a simulated drone, so direct-driver fits; the simulator is not shipped, so the fake backend must emulate the ZMQ peers (pyzmq/numpy/opencv).",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

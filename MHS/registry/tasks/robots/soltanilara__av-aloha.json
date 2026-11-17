@@ -11,21 +11,78 @@
     "license_spdx": "NOASSERTION",
     "license_class": "unknown"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1599,
-  "exemplar": null,
-  "entry_symbols": [],
-  "models": [],
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 389,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_guided_vision.env:GuidedVisionEnv",
+      "file": "gym_guided_vision/gym_guided_vision/env.py",
+      "line": 32,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gym_guided_vision.env:InsertPegEnv",
+      "file": "gym_guided_vision/gym_guided_vision/env.py",
+      "line": 412,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gym_guided_vision.env:SlotInsertionEnv",
+      "file": "gym_guided_vision/gym_guided_vision/env.py",
+      "line": 503,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gym_guided_vision.env:SewNeedleEnv",
+      "file": "gym_guided_vision/gym_guided_vision/env.py",
+      "line": 592,
+      "confidence": "override"
+    },
+    {
+      "symbol": "gym_guided_vision.env:TubeTransferEnv",
+      "file": "gym_guided_vision/gym_guided_vision/env.py",
+      "line": 693,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "data_collection_scripts/assets/aloha_real.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "data_collection_scripts/assets/aloha_sim.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "data_collection_scripts/assets/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "eval_scripts/assets/aloha_real.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "eval_scripts/assets/aloha_sim.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
   "install": {
     "python": null,
     "commands": [
@@ -38,26 +95,44 @@
   "mock_strategy": {
     "preferred": "upstream-sim",
     "hints": [
-      "data_collection_scripts/record_sim_episodes.py:1",
-      "data_collection_scripts/replay_sim_episode.py:1",
-      "data_collection_scripts/sim_env.py:1"
+      "data_collection_scripts/assets/aloha_real.xml:1 MJCF scene model",
+      "data_collection_scripts/assets/aloha_sim.xml:1 MJCF scene model",
+      "data_collection_scripts/assets/scene.xml:1 MJCF scene model",
+      "eval_scripts/assets/aloha_real.xml:1 MJCF scene model"
     ],
     "upstream_tests": "lerobot/tests"
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "MJCF scene model data_collection_scripts/assets/aloha_real.xml:1",
+      "MJCF scene model data_collection_scripts/assets/aloha_sim.xml:1",
+      "MJCF scene model data_collection_scripts/assets/scene.xml:1",
+      "MJCF scene model eval_scripts/assets/aloha_real.xml:1",
+      "MJCF scene model eval_scripts/assets/aloha_sim.xml:1",
+      "MJCF scene model eval_scripts/assets/scene.xml:1",
+      "MJCF scene model gym_guided_vision/gym_guided_vision/assets/aloha_sim.xml:1",
+      "MJCF scene model gym_guided_vision/gym_guided_vision/assets/scene.xml:1",
+      "MJCF scene model data_collection_scripts/assets/task_hook_package.xml:1",
+      "MJCF scene model data_collection_scripts/assets/task_insert_peg.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/soltanilara__av-aloha --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "required"
 }

@@ -1,47 +1,57 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "auv_env:make (auv_env/__init__.py:11)",
+      "auv_env.envs.base:TargetTrackingBase (auv_env/envs/base.py:27)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "conda"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_ccec64f3ed85bf7f",
     "https://github.com/ice-mao/rl_auv_tracking"
   ],
-  "description": "ice-mao/rl_auv_tracking: policy/algorithm for underwater robotics (robotics track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: Unreal. Language: Python. Catalog keywords: SB3+HoloOcean, AUV, RL.",
+  "description": "ice-mao/rl_auv_tracking: policy/algorithm for underwater robotics (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 3. Catalog role: task environment. Declared backend: Unreal. Language: Python. Catalog keywords: SB3+HoloOcean, AUV, RL.",
   "domains": [
     "underwater robotics"
   ],
   "evidence": {
     "files_read": 3,
     "notes": "bounded static scan: 316 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/ice-mao__rl_auv_tracking/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "other"
+    "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.ice-mao/rl_auv_tracking",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: catalogue category 'policy/algorithm' with no env registration or device evidence"
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: catalogue category 'policy/algorithm' with no env registration or device evidence",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/ice-mao__rl_auv_tracking: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/ice-mao__rl_auv_tracking --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Gymnasium",
@@ -60,37 +70,39 @@
     "repo": "https://github.com/ice-mao/rl_auv_tracking"
   },
   "local_path": "robots/ice-mao/rl_auv_tracking",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "ice-mao",
   "package_id": "gh.ice-mao/rl_auv_tracking",
   "quarantine": false,
-  "rank": 344,
+  "rank": 148,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "rl_auv_tracking",
   "repo_url": "https://github.com/ice-mao/rl_auv_tracking",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "8ff39512f796801aa461fa074f7972e3a4e3a81f",
     "repo_url": "https://github.com/ice-mao/rl_auv_tracking"
   },
   "stars": 143,
   "tags": [
-    "other",
+    "gymnasium",
     "robotics",
     "policy algorithm",
     "task environment",
     "simulated",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "ice-mao/rl_auv_tracking",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -128,12 +140,29 @@
       "family_matches": [
         "\\bunreal\\b"
       ],
+      "family_note": "triage family gymnasium (catalogue family other)",
       "family_rule": "scored",
       "family_score": 10,
-      "tier_note": "tier B -> D: triage skip (skip:peripheral)",
       "tier_rule": "B5-task-env-wrap"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/ice-mao__rl_auv_tracking/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "GPL-3.0",
@@ -147,6 +176,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "8ff39512f796801aa461fa074f7972e3a4e3a81f",
+      "driver_dir": "MHS/drivers/robots/ice-mao__rl_auv_tracking",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:171f8d2370c05083cea083c05e18c06961962114ab13cf4ea1b4fd9b682a454f",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -162,13 +206,15 @@
     },
     "triage": {
       "evidence": [
-        "catalogue category 'policy/algorithm' with no env registration or device evidence"
+        "override (retriage-wave1.json): auv_env is a Gymnasium AUV-tracking environment (TargetTrackingBase) built by auv_env.make and backed by the external HoloOcean simulator, so this is a sim-env family-config.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
+      "family": "gymnasium",
       "hardware_transport": "class diffusion_policy.real_world.single_realsense:SingleRealsense uses the hardware transport pyrealsense2",
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "helper": "GymnasiumDriver",
+      "justification": "auv_env is a Gymnasium AUV-tracking environment (TargetTrackingBase) built by auv_env.make and backed by the external HoloOcean simulator, so this is a sim-env family-config.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

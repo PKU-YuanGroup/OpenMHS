@@ -51,10 +51,10 @@ Protocol Engine versions differ; the simulator models deck logic, not liquid phy
 ## First task cards
 
 - `gh.opentrons/opentrons`: bridge-runtime, wave 9, rank 22, `MHS/registry/tasks/labs/opentrons__opentrons.json`
-- `gh.noel-research-group/robochem_flex`: reference, wave 9, rank 466, `MHS/registry/tasks/labs/noel-research-group__robochem_flex.json`
-- `gh.opentrons/ot3-firmware`: skip, wave 9, rank 519, `MHS/registry/tasks/labs/opentrons__ot3-firmware.json`
-- `gh.nvidiagameworks/flex`: skip, wave 9, rank 524, `MHS/registry/tasks/robots/nvidiagameworks__flex.json`
-- `gh.tanaes/opentrons_functions`: skip, wave 9, rank 575, `MHS/registry/tasks/labs/tanaes__opentrons_functions.json`
+- `gh.noel-research-group/robochem_flex`: reference, wave 9, rank 456, `MHS/registry/tasks/labs/noel-research-group__robochem_flex.json`
+- `gh.opentrons/ot3-firmware`: skip, wave 9, rank 508, `MHS/registry/tasks/labs/opentrons__ot3-firmware.json`
+- `gh.nvidiagameworks/flex`: skip, wave 9, rank 513, `MHS/registry/tasks/robots/nvidiagameworks__flex.json`
+- `gh.tanaes/opentrons_functions`: skip, wave 9, rank 560, `MHS/registry/tasks/labs/tanaes__opentrons_functions.json`
 
 ## Sources
 

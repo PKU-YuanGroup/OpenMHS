@@ -11,21 +11,60 @@
     "license_spdx": "Apache-2.0",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1898,
-  "exemplar": null,
-  "entry_symbols": [],
-  "models": [],
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 114,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "abc_sim.env:MuJoCoYAMEnv",
+      "file": "abc_sim/env.py",
+      "line": 72,
+      "confidence": "override"
+    },
+    {
+      "symbol": "abc_sim:make_env",
+      "file": "abc_sim/__init__.py",
+      "line": 125,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "abc_sim/models/yam_ball_sorting_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "abc_sim/models/yam_ball_tray_balancing_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "abc_sim/models/yam_blocks_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "abc_sim/models/yam_bottles_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "abc_sim/models/yam_building_blocks_scene.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
   "install": {
     "python": ">=3.10",
     "commands": [
@@ -38,29 +77,44 @@
   "mock_strategy": {
     "preferred": "upstream-sim",
     "hints": [
-      "abc_minimal/config.py:258 SimEvalConfig",
-      "abc_minimal/config.py:299 VizSimEvalConfig",
-      "abc_minimal/sim_env.py:35 SimTaskEnv",
-      "abc_sim/task_specs.py:15 SimTaskSpec",
-      "abc_sim/rendering/replay/camera_providers.py:67 SimRenderCameraProvider",
-      "abc_minimal/sim_env.py:1"
+      "abc_sim/models/yam_ball_sorting_scene.xml:1 MJCF scene model",
+      "abc_sim/models/yam_ball_tray_balancing_scene.xml:1 MJCF scene model",
+      "abc_sim/models/yam_blocks_scene.xml:1 MJCF scene model",
+      "abc_sim/models/yam_bottles_scene.xml:1 MJCF scene model"
     ],
     "upstream_tests": null
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "MJCF scene model abc_sim/models/yam_ball_sorting_scene.xml:1",
+      "MJCF scene model abc_sim/models/yam_ball_tray_balancing_scene.xml:1",
+      "MJCF scene model abc_sim/models/yam_blocks_scene.xml:1",
+      "MJCF scene model abc_sim/models/yam_bottles_scene.xml:1",
+      "MJCF scene model abc_sim/models/yam_building_blocks_scene.xml:1",
+      "MJCF scene model abc_sim/models/yam_chess_scene.xml:1",
+      "MJCF scene model abc_sim/models/yam_conveyor_pick_scene.xml:1",
+      "MJCF scene model abc_sim/models/yam_count_into_opaque_box_scene.xml:1",
+      "MJCF scene model abc_sim/models/yam_drawer_scene.xml:1",
+      "MJCF scene model abc_sim/models/yam_flexible_chess_scene.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/amazon-far__abc --backend fake",
-  "skip_reason": "catalogue category 'policy/algorithm' with no env registration or device evidence",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

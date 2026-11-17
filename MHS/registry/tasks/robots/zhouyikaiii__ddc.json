@@ -11,21 +11,34 @@
     "license_spdx": "Apache-2.0",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1270,
-  "exemplar": null,
-  "entry_symbols": [],
-  "models": [],
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 147,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "eval.wbt_rollout:G1Sim",
+      "file": "eval/wbt_rollout.py",
+      "line": 199,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "robot/g1_29dof/g1_29dof.xml",
+      "line": 12,
+      "kind": "robot"
+    }
+  ],
   "install": {
     "python": null,
     "commands": [
@@ -38,25 +51,29 @@
   "mock_strategy": {
     "preferred": "upstream-sim",
     "hints": [
-      "eval/wbt_rollout.py:199 G1Sim",
-      "benchmark/baselines/proto_eval.py:39 DummyPol"
+      "robot/g1_29dof/g1_29dof.xml:12 MJCF robot model"
     ],
     "upstream_tests": null
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "MJCF robot model robot/g1_29dof/g1_29dof.xml:12"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
   "needs_recon": [],
-  "timebox_min": 15,
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/zhouyikaiii__ddc --backend fake",
-  "skip_reason": "catalogue category 'policy/algorithm' with no env registration or device evidence",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

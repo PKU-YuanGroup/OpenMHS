@@ -53,8 +53,8 @@ Properties are untyped strings; configurations are hardware-specific.
 - `gh.micro-manager/pycro-manager`: bridge-runtime, wave 9, rank 36, `MHS/registry/tasks/labs/micro-manager__pycro-manager.json`
 - `gh.pymmcore-plus/pymmcore-plus`: bridge-runtime, wave 9, rank 48, `MHS/registry/tasks/labs/pymmcore-plus__pymmcore-plus.json`
 - `gh.micro-manager/pymmcore`: bridge-runtime, wave 9, rank 54, `MHS/registry/tasks/labs/micro-manager__pymmcore.json`
-- `gh.pymmcore-plus/pymmcore-nano`: bridge-runtime, wave 9, rank 73, `MHS/registry/tasks/labs/pymmcore-plus__pymmcore-nano.json`
-- `gh.pymmcore-plus/napari-micromanager`: skip, wave 9, rank 407, `MHS/registry/tasks/labs/pymmcore-plus__napari-micromanager.json`
+- `gh.pymmcore-plus/pymmcore-nano`: bridge-runtime, wave 9, rank 72, `MHS/registry/tasks/labs/pymmcore-plus__pymmcore-nano.json`
+- `gh.pymmcore-plus/napari-micromanager`: skip, wave 9, rank 397, `MHS/registry/tasks/labs/pymmcore-plus__napari-micromanager.json`
 
 ## Sources
 

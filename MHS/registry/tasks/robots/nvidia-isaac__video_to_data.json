@@ -11,21 +11,54 @@
     "license_spdx": "CC-BY-4.0 AND Apache-2.0",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "family:mujoco",
+  "role": "twin-candidate",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1133,
-  "exemplar": null,
-  "entry_symbols": [],
-  "models": [],
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 38,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "isaaclab.envs:ManagerBasedRLEnv",
+      "file": "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/config/sharpa_wave/__init__.py",
+      "line": 17,
+      "confidence": "recon"
+    }
+  ],
+  "models": [
+    {
+      "file": "robotic_grounding/source/robotic_grounding/robotic_grounding/planner/assets/mujoco/scene_29dof.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "robotic_grounding/source/robotic_grounding/robotic_grounding/assets/xmls/g1/g1.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "robotic_grounding/source/robotic_grounding/robotic_grounding/assets/xmls/g1/g1_29dof.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "robotic_grounding/source/robotic_grounding/robotic_grounding/assets/xmls/g1/g1_29dof_rev_1_0.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "robotic_grounding/source/robotic_grounding/robotic_grounding/assets/xmls/sharpawave/left_sharpawave.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
   "install": {
     "python": null,
     "commands": [],
@@ -34,24 +67,48 @@
     "platform": "any"
   },
   "mock_strategy": {
-    "preferred": "fake",
-    "hints": [],
+    "preferred": "upstream-sim",
+    "hints": [
+      "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/config/sharpa_wave/__init__.py:17 gym env Sharpa-V2D-v0",
+      "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/config/sharpa_wave/__init__.py:27 gym env Sharpa-V2D-v0-Play",
+      "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/config/sharpa_wave/__init__.py:37 gym env Sharpa-V2D-Record-v0",
+      "robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/config/sharpa_wave/__init__.py:47 gym env Sharpa-V2D-DR-v0"
+    ],
     "upstream_tests": "tests"
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "gym env Sharpa-V2D-v0 registered at robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/config/sharpa_wave/__init__.py:17",
+      "gym env Sharpa-V2D-v0-Play registered at robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/config/sharpa_wave/__init__.py:27",
+      "gym env Sharpa-V2D-Record-v0 registered at robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/config/sharpa_wave/__init__.py:37",
+      "gym env Sharpa-V2D-DR-v0 registered at robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/config/sharpa_wave/__init__.py:47",
+      "gym env Sharpa-V2D-DR-Record-v0 registered at robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/config/sharpa_wave/__init__.py:57",
+      "gym env Sharpa-V2D-Gr00t-Record-v0 registered at robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/config/sharpa_wave/__init__.py:67",
+      "gym env Sharpa-V2D-Gr00t-Inference-v0 registered at robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/config/sharpa_wave/__init__.py:77",
+      "gym env VegaSharpa-WholeBody-v0 registered at robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/config/vega_sharpa/__init__.py:14",
+      "gym env VegaSharpa-WholeBody-Manip-v0 registered at robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/config/vega_sharpa/__init__.py:24",
+      "gym env VegaSharpa-WholeBody-Gr00t-Record-v0 registered at robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/config/vega_sharpa/__init__.py:34",
+      "gym env VegaSharpa-WholeBody-Gr00t-Inference-v0 registered at robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/config/vega_sharpa/__init__.py:50",
+      "gym env VegaSharpa-WholeBody-Gr00t-Joint-Inference-v0 registered at robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d_whole_body/config/vega_sharpa/__init__.py:66"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "install",
+    "artifacts"
+  ],
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nvidia-isaac__video_to_data --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

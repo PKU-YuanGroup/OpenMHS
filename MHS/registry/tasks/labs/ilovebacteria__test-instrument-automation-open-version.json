@@ -11,20 +11,27 @@
     "license_spdx": "NOASSERTION",
     "license_class": "unknown"
   },
-  "decision": "reference",
-  "reason_code": "reference:host",
-  "role": "host",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1753,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 249,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "devices.afg2225:AFG2225",
+      "file": "src/test_engine/devices/afg2225.py",
+      "line": 90,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": null,
@@ -52,12 +59,16 @@
     "candidate_classes": []
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "hardware",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "install",
+    "capabilities",
+    "license"
+  ],
+  "timebox_min": 120,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ilovebacteria__test-instrument-automation-open-version --backend fake",
   "skip_reason": null,
   "publish_review": "required"

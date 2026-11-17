@@ -1,47 +1,55 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "mujoco",
+    "entry_points": [
+      "isaaclab.envs:ManagerBasedRLEnv (robotic_grounding/source/robotic_grounding/robotic_grounding/tasks/v2d/config/sharpa_wave/__init__.py:17)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python",
     "docker"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1"
+  ],
   "catalog_refs": [
     "repo_d01609593360a9e0",
     "https://github.com/nvidia-isaac/video_to_data"
   ],
-  "description": "nvidia-isaac/video_to_data: catalog/discovery tooling (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Python. Catalog keywords: Nvidia, Isaac, Video, Data, Pipeline.",
+  "description": "nvidia-isaac/video_to_data: catalog/discovery tooling (robotics track). OpenMHS plan: family-config with MujocoDriver, wave 6. Catalog role: physics engines. Language: Python. Catalog keywords: Nvidia, Isaac, Video, Data, Pipeline.",
   "domains": [],
   "evidence": {
     "files_read": 5,
     "notes": "bounded static scan: 598 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/nvidia-isaac__video_to_data/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
     "mujoco"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.nvidia-isaac/video_to_data",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
-      "NEEDS_GPU: an import or the catalogue requires a GPU"
+      "NEEDS_GPU: an import or the catalogue requires a GPU",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/nvidia-isaac__video_to_data: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/nvidia-isaac__video_to_data --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "family:mujoco",
+    "recipe": "families/mujoco.md",
+    "role": "twin-candidate",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "CLI",
@@ -69,17 +77,19 @@
     "repo": "https://github.com/nvidia-isaac/video_to_data"
   },
   "local_path": "robots/nvidia-isaac/video_to_data",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "nvidia-isaac",
   "package_id": "gh.nvidia-isaac/video_to_data",
   "quarantine": false,
-  "rank": 1133,
+  "rank": 38,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "video_to_data",
   "repo_url": "https://github.com/nvidia-isaac/video_to_data",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "193382a184308f6800331f3db829f76dc4294cfe",
     "repo_url": "https://github.com/nvidia-isaac/video_to_data"
@@ -90,15 +100,15 @@
     "robotics",
     "catalog discovery tooling",
     "physics engines",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "nvidia-isaac/video_to_data",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 6,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -138,9 +148,26 @@
       ],
       "family_rule": "scored",
       "family_score": 4,
+      "tier_note": "tier D -> B: triage family-config (family:mujoco)",
       "tier_rule": "D2-peripheral-category"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/nvidia-isaac__video_to_data/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -154,6 +181,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "193382a184308f6800331f3db829f76dc4294cfe",
+      "driver_dir": "MHS/drivers/robots/nvidia-isaac__video_to_data",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:de70717752175af501fd99aeeb521207e9cedecc8c690ff4a51820a2ff3d440a",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -179,12 +221,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Model review of re-triage wave 1 (gpt-6.1-sol): serve only the planner's scene_29dof.xml as a MuJoCo model twin; FlashCHORD RLEnv requires Scene/Reference construction and Warp-array adaptation and is not the served device.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "mujoco",
+      "helper": "MujocoDriver",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): serve only the planner's scene_29dof.xml as a MuJoCo model twin; FlashCHORD RLEnv requires Scene/Reference construction and Warp-array adaptation and is not the served device.",
+      "reason_code": "family:mujoco",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

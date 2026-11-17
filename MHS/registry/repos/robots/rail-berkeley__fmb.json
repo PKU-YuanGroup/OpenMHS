@@ -1,21 +1,28 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "robot_infra.envs.franka_fmb_env:FrankaFMB (robot_infra/envs/franka_fmb_env.py:36)"
+    ],
     "manifest_ref": null,
     "present": false,
     "state": "none"
   },
-  "blocked_on": [],
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.measure.mass.v1"
+  ],
   "catalog_refs": [
     "repo_7caa077e54d7bb87",
     "https://github.com/rail-berkeley/fmb"
   ],
-  "description": "rail-berkeley/fmb: dataset for robot arm manipulation (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Python, Shell. Catalog keywords: FMB.",
+  "description": "rail-berkeley/fmb: dataset for robot arm manipulation (robotics track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 5. Catalog role: peripheral tooling. Language: Python, Shell. Catalog keywords: FMB.",
   "domains": [
     "robot arm manipulation"
   ],
@@ -30,19 +37,21 @@
   "families": [
     "python-object"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.rail-berkeley/fmb",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
-      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata"
+      "NO_HARDWARE_FREE_PATH",
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "tooling",
+    "effort": "E2",
+    "next_action": "Review MHS/drivers/robots/rail-berkeley__fmb/RESULT.json: the package is blocked on NO_HARDWARE_FREE_PATH; clear the codes before MHS/registry/tasks/robots/rail-berkeley__fmb.json is dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "Python SDK",
@@ -65,17 +74,20 @@
     "repo": "https://github.com/rail-berkeley/fmb"
   },
   "local_path": "robots/rail-berkeley/fmb",
-  "modes": [],
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
   "owner": "rail-berkeley",
   "package_id": "gh.rail-berkeley/fmb",
   "quarantine": false,
-  "rank": 2074,
+  "rank": 71,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "fmb",
   "repo_url": "https://github.com/rail-berkeley/fmb",
   "ring": 3,
-  "simulation": false,
+  "simulation": true,
   "source": {
     "commit": "d4da6ce044a9806f41e58bf7423b5a3c05289925",
     "repo_url": "https://github.com/rail-berkeley/fmb"
@@ -86,15 +98,15 @@
     "robotics",
     "dataset",
     "peripheral tooling",
-    "skip"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "rail-berkeley/fmb",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 5,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -134,9 +146,55 @@
       ],
       "family_rule": "scored",
       "family_score": 7,
+      "tier_note": "tier D -> B: triage direct-driver (override:recon)",
       "tier_rule": "D1-peripheral-role"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/rail-berkeley__fmb/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.measure.mass.v1"
+            ],
+            "kind": "instrument.balance"
+          }
+        ],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/rail-berkeley__fmb/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/rail-berkeley__fmb/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.measure.mass.v1"
+            ],
+            "kind": "instrument.balance"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -150,6 +208,19 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "blocked_on": [
+        "NO_HARDWARE_FREE_PATH"
+      ],
+      "driver_dir": "MHS/drivers/robots/rail-berkeley__fmb",
+      "files": [
+        "RESULT.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:036b71fffebf80f10f8ac86835e7c9b8db6c4b848fde87ecdfe43baed299880b",
+      "reviewed": false,
+      "status": "blocked"
     },
     "scan": {
       "build_systems": [
@@ -169,13 +240,15 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Reviewed by gpt-6.1-sol (a model): robot_infra/envs/franka_fmb_env.py:4 imports legacy Gym; line 137 sends hardware poses over HTTP and line 221 returns a four-tuple.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
+      "family": "python-object",
       "hardware_transport": "class robot_infra.camera.rs_capture:RSCapture uses the hardware transport pyrealsense2",
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "helper": "PythonObjectDriver",
+      "justification": "Reviewed by gpt-6.1-sol (a model): robot_infra/envs/franka_fmb_env.py:4 imports legacy Gym; line 137 sends hardware poses over HTTP and line 221 returns a four-tuple.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

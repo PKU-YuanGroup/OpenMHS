@@ -1,12 +1,18 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "pennylane_ls.single_qudit_device:SingleQuditDevice (pennylane_ls/single_qudit_device.py:23)",
+      "pennylane_ls.multi_qudit_device:MultiQuditDevice (pennylane_ls/multi_qudit_device.py:23)",
+      "pennylane_ls.fermion_device:FermionDevice (pennylane_ls/fermion_device.py:26)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "packaged"
   },
-  "blocked_on": [],
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "build_systems": [
     "make",
     "python"
@@ -16,7 +22,7 @@
     "repo_6c1b660f1f73310c",
     "https://github.com/synqs/pennylane-ls"
   ],
-  "description": "synqs/pennylane-ls: control framework for physics (lab instrumentation track). OpenMHS plan: not integrated (skip:peripheral). Language: Python. Catalog keywords: PennyLane.",
+  "description": "synqs/pennylane-ls: control framework for physics (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 5. Catalog role: peripheral tooling. Language: Python. Catalog keywords: PennyLane.",
   "domains": [
     "physics"
   ],
@@ -29,20 +35,21 @@
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "cli-process"
+    "python-object"
   ],
   "hardware_free": false,
   "id": "gh.synqs/pennylane-ls",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)"
+      "NO_HARDWARE_FREE_PATH"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "tooling",
+    "effort": "E2",
+    "next_action": "Review MHS/drivers/labs/synqs__pennylane-ls/RESULT.json: the package is blocked on NO_HARDWARE_FREE_PATH; clear the codes before MHS/registry/tasks/labs/synqs__pennylane-ls.json is dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "CLI",
@@ -61,11 +68,13 @@
     "repo": "https://github.com/synqs/pennylane-ls"
   },
   "local_path": "labs/synqs/pennylane-ls",
-  "modes": [],
+  "modes": [
+    "hardware"
+  ],
   "owner": "synqs",
   "package_id": "gh.synqs/pennylane-ls",
   "quarantine": false,
-  "rank": 630,
+  "rank": 19,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "pennylane-ls",
@@ -78,19 +87,19 @@
   },
   "stars": 6,
   "tags": [
-    "cli-process",
+    "python-object",
     "lab instrumentation",
     "control framework",
     "peripheral tooling",
-    "skip"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "synqs/pennylane-ls",
   "track": "labs",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 5,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -128,11 +137,22 @@
       "family_matches": [
         "\\bcli\\b"
       ],
+      "family_note": "triage family python-object (catalogue family cli-process)",
       "family_rule": "scored",
       "family_score": 4,
+      "tier_note": "tier D -> B: triage direct-driver (override:recon)",
       "tier_rule": "D1-peripheral-role"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/synqs__pennylane-ls/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "BSD-2-Clause",
@@ -146,6 +166,23 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "NO_HARDWARE_FREE_PATH"
+      ],
+      "commit": "4bd2a7a20c70cf2756edda4343922b0e5a680090",
+      "driver_dir": "MHS/drivers/labs/synqs__pennylane-ls",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:39e7e8e42ca3c432ffcb8ed59c29faa929ddbdfa3f84d47b82cf37d98d773080",
+      "reviewed": false,
+      "status": "blocked"
     },
     "scan": {
       "build_systems": [
@@ -162,12 +199,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): pennylane-ls is a PennyLane device SDK whose SingleQuditDevice, MultiQuditDevice and FermionDevice classes submit cold-atom jobs to a remote Django JSON control API.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "justification": "pennylane-ls is a PennyLane device SDK whose SingleQuditDevice, MultiQuditDevice and FermionDevice classes submit cold-atom jobs to a remote Django JSON control API.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

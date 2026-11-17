@@ -1,12 +1,14 @@
 {
   "adapter": {
-    "bridge": "none",
+    "bridge": "ros",
     "entry_points": [],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "packaged"
   },
-  "blocked_on": [],
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "build_systems": [
     "cmake",
     "ros"
@@ -16,7 +18,7 @@
     "repo_95cb28c0f7148baa",
     "https://github.com/dobot-arm/dobot_6axis_ros2_v4"
   ],
-  "description": "dobot-arm/dobot_6axis_ros2_v4: catalog/discovery tooling (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: C++. Catalog keywords: About, Demo, CRA, E6, Dobot, V4.",
+  "description": "dobot-arm/dobot_6axis_ros2_v4: catalog/discovery tooling (robotics track). OpenMHS plan: family-config with RosDriver, wave 5. Catalog role: peripheral tooling. Language: C++. Catalog keywords: About, Demo, CRA, E6, Dobot, V4.",
   "domains": [],
   "evidence": {
     "files_read": 10,
@@ -29,18 +31,21 @@
   "families": [
     "gazebo"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.dobot-arm/dobot_6axis_ros2_v4",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)"
+      "NO_HARDWARE_FREE_PATH",
+      "NO_ENTRY_SYMBOL: no AST device class or env registration found",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "tooling",
+    "effort": "E1",
+    "next_action": "Review MHS/drivers/robots/dobot-arm__dobot_6axis_ros2_v4/RESULT.json: the package is blocked on NO_HARDWARE_FREE_PATH; clear the codes before MHS/registry/tasks/robots/dobot-arm__dobot_6axis_ros2_v4.json is dispatched again.",
+    "reason_code": "family:ros",
+    "recipe": "families/gazebo.md",
+    "role": "device-driver",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Gazebo",
@@ -62,17 +67,20 @@
     "repo": "https://github.com/dobot-arm/dobot_6axis_ros2_v4"
   },
   "local_path": "robots/dobot-arm/dobot_6axis_ros2_v4",
-  "modes": [],
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
   "owner": "dobot-arm",
   "package_id": "gh.dobot-arm/dobot_6axis_ros2_v4",
   "quarantine": false,
-  "rank": 364,
+  "rank": 7,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "dobot_6axis_ros2_v4",
   "repo_url": "https://github.com/dobot-arm/dobot_6axis_ros2_v4",
   "ring": 3,
-  "simulation": false,
+  "simulation": true,
   "source": {
     "commit": "ec201c40d5db63185a3593ec9c39f80fe25aa527",
     "repo_url": "https://github.com/dobot-arm/dobot_6axis_ros2_v4"
@@ -83,15 +91,15 @@
     "robotics",
     "catalog discovery tooling",
     "peripheral tooling",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "dobot-arm/dobot_6axis_ros2_v4",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 5,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -132,9 +140,29 @@
       ],
       "family_rule": "scored",
       "family_score": 4,
+      "tier_note": "tier D -> B: triage family-config (family:ros)",
       "tier_rule": "D1-peripheral-role"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/dobot-arm__dobot_6axis_ros2_v4/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/dobot-arm__dobot_6axis_ros2_v4/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/dobot-arm__dobot_6axis_ros2_v4/hardware"
+        ],
+        "resources": [],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "MIT",
@@ -148,6 +176,23 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "NO_HARDWARE_FREE_PATH"
+      ],
+      "commit": "ec201c40d5db63185a3593ec9c39f80fe25aa527",
+      "driver_dir": "MHS/drivers/robots/dobot-arm__dobot_6axis_ros2_v4",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:bc19538da8a56d026a390b7e111aa0ab9000aad4c8a358efe2ca4c1b027afb69",
+      "reviewed": false,
+      "status": "blocked"
     },
     "scan": {
       "build_systems": [
@@ -163,12 +208,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Model review of re-triage wave 1 (gpt-6.1-sol): the C++ ROS 2 node owns the arm; adderClient is only a service client. Route to RosDriver and retain the block: suppressed dashboard errors can return res=0 without a confirmed stop.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "ros",
+      "helper": "RosDriver",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): the C++ ROS 2 node owns the arm; adderClient is only a service client. Route to RosDriver and retain the block: suppressed dashboard errors can return res=0 without a confirmed stop.",
+      "reason_code": "family:ros",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

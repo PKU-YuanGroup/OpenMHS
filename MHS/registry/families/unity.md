@@ -56,11 +56,11 @@ Closed binaries, Windows or macOS builds and a GPU; ML-Agents protocol versions 
 
 ## First task cards
 
-- `gh.allenai/ai2thor`: bridge-runtime, wave 9, rank 151, `MHS/registry/tasks/robots/allenai__ai2thor.json`
-- `gh.gkjohnson/urdf-loaders`: skip, wave 9, rank 199, `MHS/registry/tasks/robots/gkjohnson__urdf-loaders.json`
-- `gh.robotflow-initiative/rfuniverse`: bridge-runtime, wave 9, rank 341, `MHS/registry/tasks/robots/robotflow-initiative__rfuniverse.json`
-- `gh.unity-technologies/articulations-robot-demo`: skip, wave 9, rank 592, `MHS/registry/tasks/robots/unity-technologies__articulations-robot-demo.json`
-- `gh.loongopen/unity-rl-playground`: bridge-runtime, wave 9, rank 602, `MHS/registry/tasks/robots/loongopen__unity-rl-playground.json`
+- `gh.allenai/ai2thor`: bridge-runtime, wave 9, rank 149, `MHS/registry/tasks/robots/allenai__ai2thor.json`
+- `gh.gkjohnson/urdf-loaders`: skip, wave 9, rank 196, `MHS/registry/tasks/robots/gkjohnson__urdf-loaders.json`
+- `gh.robotflow-initiative/rfuniverse`: bridge-runtime, wave 9, rank 334, `MHS/registry/tasks/robots/robotflow-initiative__rfuniverse.json`
+- `gh.unity-technologies/articulations-robot-demo`: skip, wave 9, rank 577, `MHS/registry/tasks/robots/unity-technologies__articulations-robot-demo.json`
+- `gh.loongopen/unity-rl-playground`: bridge-runtime, wave 9, rank 587, `MHS/registry/tasks/robots/loongopen__unity-rl-playground.json`
 
 ## Sources
 
