@@ -216,6 +216,22 @@ def _owns_native(method):
     return owned
 
 
+def _registry_holding(env_id: str) -> Any:
+    """The already-imported ``gymnasium`` or legacy ``gym`` module whose registry holds ``env_id`` (gymnasium first)."""
+    for name in ("gymnasium", "gym"):
+        module = sys.modules.get(name)
+        registry = getattr(getattr(module, "envs", None), "registry", None)
+        if registry is None:
+            continue
+        specs = getattr(registry, "env_specs", registry)   # gym <= 0.21 keeps the specs in EnvRegistry.env_specs
+        try:
+            if env_id in specs:
+                return module
+        except TypeError:
+            continue
+    return None
+
+
 class GymnasiumBridge(Bridge):
     """Bridge a Gymnasium environment onto the ``cap.world.*`` classes."""
 
@@ -932,6 +948,10 @@ class GymnasiumBridge(Bridge):
                     "MHS.DEVICE.NOT_READY", f"import of env_module {str(registering)!r} failed ({type(exc).__name__})",
                     {"retryable": False},
                 ) from exc
+        if registering:
+            # The import registered env_id in gymnasium's registry or, for a legacy environment, in gym's: make it
+            # where it was registered (a gymnasium.make of a gym-only id raises NameNotFound).
+            gym = _registry_holding(self._env_id) or gym
         kwargs = dict(self._env_spec.get("kwargs") or {})
         if self._render_mode is not None:
             kwargs.setdefault("render_mode", self._render_mode)
