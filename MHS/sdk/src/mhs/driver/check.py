@@ -89,6 +89,7 @@ from __future__ import annotations
 
 import ast
 import contextlib
+import builtins
 import hashlib
 import importlib
 import inspect
@@ -652,9 +653,18 @@ def _integrity_snapshot() -> dict[tuple[str, str], Any]:
         for key, value in items:
             if key == "__warningregistry__":
                 continue
+            if key == "__builtins__":
+                # Every module shares the interpreter's builtins, and extensions add private names to them on import
+                # (pybind11 internals, MuJoCo 3's __MUJOCO_* lookups). Only a rebinding of the module's reference is
+                # compared here; the builtins themselves are compared once, below.
+                out[(name, key)] = ("bi", id(value))
+                continue
             print_ = _fingerprint(key, value, core and (name, key) not in _RUNTIME_CONTAINERS)
             if print_ is not None:
                 out[(name, key)] = print_
+    # A replaced or removed builtin is tampering; a name added after the snapshot is not (it changes no SDK lookup).
+    for key, value in list(vars(builtins).items()):
+        out[("builtins", key)] = ("b", id(value))
     return out
 
 
