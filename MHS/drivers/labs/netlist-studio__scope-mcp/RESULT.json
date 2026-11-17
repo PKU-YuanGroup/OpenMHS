@@ -1,0 +1,48 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:d1197dbf6b93955a8510ed63d4f68de23ed1225ac0ba7e3145511c98af0ea6fc",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.netlist-studio.measure.v1",
+      "reason": "No catalogue class binds one scalar automatic measurement selected from an oscilloscope's PARAMETERS map: cap.sensing.read.v1 declares only sensor, sensor.imu and sensor.force_torque resource kinds, not instrument, and cap.measure.voltage.v1 is a DMM/SMU voltage measurement. The action returns the scalar value or fails when the scope reports no_signal.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1",
+        "cap.measure.voltage.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.netlist-studio.run.v1",
+      "reason": "No catalogue class starts continuous acquisition on an instrument: cap.process.run.v1 is a process-controller recipe bound to process.controller, and cap.device.self_test.v1 runs a self-test. The action sends :RUN and returns :OPERegister:CONDition?.",
+      "verb": "invoke",
+      "similar": [
+        "cap.process.run.v1",
+        "cap.device.self_test.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.netlist-studio.single.v1",
+      "reason": "No catalogue class arms one triggered acquisition on an instrument. The action sends :SINGle and returns :OPERegister:CONDition?.",
+      "verb": "invoke",
+      "similar": [
+        "cap.process.run.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.netlist-studio.stop.v1",
+      "reason": "No catalogue class stops an oscilloscope acquisition: cap.motion.stop.v1 binds robot.arm, robot.mobile_base and other motion kinds, not instrument, and the native :STOP halts the acquisition. The action returns :OPERegister:CONDition?.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check MHS/drivers/labs/netlist-studio__scope-mcp --backend fake; evidence is contract_checked, never an MHS-Device level. DEVIATION FROM THE CARD: the card proposes family-config/scpi (ScpiDriver), but the upstream commands are assembled from parts (the channel number is formatted into :CHANnel<n>: and into CHANnel<n>, set_trigger writes a command sequence, and the waveform and screenshot replies are IEEE 488.2 binary blocks). A fixed text command table cannot reproduce those lines or carry those blocks, so this package is a direct Driver over scope:Scope with a native.py factory, as driver-authoring.md 'Choosing the shape' requires. Covered: identity; the :OPERegister:CONDition? bit mask; channel 1 scale, offset, coupling, display and bandwidth limit; timebase scale, delay and mode; edge-trigger mode, source channel, level, slope and sweep; one scalar automatic measurement on channels 1 to 4; :RUN, :SINGle and :STOP; and the native e-stop. NOT COVERED: the get_waveform time and voltage arrays (:WAVeform:DATA? IEEE block), the PNG screenshot (:DISPlay:DATA? PNG), the UART serial decode paths (setup_uart, setup_uart_trigger, get_serial_data, get_bus_state), measure_all, get_state, reset (*RST and *CLS), autoscale, and the settings of channels 2 to 4 (the measurement action can name any analog channel). No catalogue class of this package carries those arrays; the scalar measurements and settings are served instead. The numeric writes channel1_scale_v_per_div, channel1_offset_v, timebase_scale_s_per_div, timebase_delay_s and trigger_level_v are Limit.operator_required because the clone states no numeric range; without site-limits.json they are refused with MHS.SAFETY.LIMITS_UNSET, and site-limits.example.json is an example narrowing overlay, not a source of device bounds. The enum bounds come from the clone (scope.py:79, scope.py:112, scope_server.py:108, scope_server.py:152, scope.py:137-151). The e-stop sends :STOP and does not poll :OPERegister:CONDition?; the user-facing stop action reads the condition after the command but does not wait for the RUN bit to clear. A trigger source, level or slope write calls the upstream set_trigger with its default edge mode, so it puts the trigger subsystem in edge mode. The fake is an in-memory stand-in for the upstream class, not a recording: the clone ships no simulator and no test or transcript, so the card's preferred transcript could not be recorded, and the fake answers immediately (no acquisition timing is simulated). Every number in fake.py is marked # placeholder and the fake implements only methods of Scope (G7). The native hardware backend .native:connect exists but was never started; a deployment must install pyvisa, pyvisa-py and numpy (scope.py imports numpy and pyvisa; README.md:17) and put the pinned clone on PYTHONPATH. The hardware run is unvalidated. This package is model-authored and unreviewed: driver.lock.json authored_by is the model run and reviewed_by is null. No human reviewed or tested this package, and nothing here ran on hardware. The package is R1, so the loader's unreviewed-model hardware guard for R2 and R3 does not apply and is not claimed. The gate digest is the digest line the last check printed; check-report.json is regenerated by every gate run and is not a package source.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-17; reviewed_by stays null): Model review checked the pinned source, every Fact and Limit, native.py, the fake and the stop path. driver.py now requires the RUN bit to clear after STOP, rejects negative status masks, closes the VISA session at teardown and corrects the edge-trigger and bounded polling Facts; test_driver.py contains regressions for an ignored stop and the missing teardown. facts.md, reference.json and REFERENCE.md were updated, and check-report.json was regenerated. The fake gate and strict collector pass; evidence remains contract_checked and RESULT.json and provenance files were preserved. For the human reviewer: The stop confirms acquisition status only; external circuits are unaffected. A concurrent VISA query and the upstream 10 s default timeout can exceed the endpoint stop budget, which must remain a failed/unconfirmed stop. Waveforms, screenshots and UART decode remain outside the served scope. Decide the proposed direct-driver/python-object override."
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "gate": {
+    "digest": "sha256:f9a47a21c2f1964a420d5951d93db23fb47e02b1d6e8068957a400b551b21d86",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.kyleellefsen.start_scan.v1",
+      "reason": "No catalogue class starts a continuous DAQ waveform scan. cap.motion.joint_position and cap.motion.home are motion-only, and cap.actuation.gpio drives one declared pin, not two analog-output tasks with a generated waveform. The extension has an inline output schema and is the primary start control.",
+      "verb": "invoke",
+      "summary": "Start the continuous piezo, camera TTL and laser TTL waveform from the stopped state.",
+      "similar": [
+        "cap.actuation.gpio.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.kyleellefsen.stop_scan.v1",
+      "reason": "No catalogue class stops a DAQ waveform scan and zeros its piezo, camera and dither outputs. cap.motion.stop.v1 is motion-only and its resource kinds are robot.arm, robot.mobile_base and motion.axis. This input-free extension is also the safe-state action.",
+      "verb": "invoke",
+      "summary": "Clear the laser-selection settings, stop both analog-output tasks and write finite zero waveforms.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.kyleellefsen.goto_zero.v1",
+      "reason": "No catalogue class drives a piezo scan channel to zero through a DAQ waveform task. cap.motion.home homing is not the upstream gotozero operation, and cap.motion.cartesian_pose takes a pose, which this open-loop DAQ does not expose.",
+      "verb": "invoke",
+      "summary": "Drive the piezo to zero and stop the waveform (native gotozero).",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.kyleellefsen.goto_end.v1",
+      "reason": "No catalogue class drives a piezo scan channel to its configured maximum displacement through a DAQ waveform task. cap.motion.cartesian_pose takes a Cartesian target, but this clone exposes only the configured maximum displacement and no position feedback.",
+      "verb": "invoke",
+      "summary": "Drive the piezo to the configured maximum displacement and stop (native gotoend).",
+      "similar": [
+        "cap.motion.cartesian_pose.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.kyleellefsen.select_laser.v1",
+      "reason": "No catalogue class selects one of two TTL-gated laser channels. cap.optics.shutter.v1 describes a mechanical or electronic shutter with an open/closed state, while the upstream offers gotobluelaser and gotoyellowlaser selections and does not document a shutter or an off state.",
+      "verb": "invoke",
+      "summary": "Select the blue or yellow laser selection with the native method.",
+      "similar": [
+        "cap.optics.shutter.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.kyleellefsen.set_scan_mode.v1",
+      "reason": "No catalogue class sets the triangle-scan and alternate-lasers flags of a DAQ waveform controller. cap.device.configure.v1 carries the numeric settings, but the two boolean mode flags are not catalogue state fields and keeping them out of that binding keeps its tool under the 2048-byte limit.",
+      "verb": "invoke",
+      "summary": "Set the triangle_scan and alternate_lasers settings and recalculate the waveform.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "PASS on the fake backend only (evidence contract_checked, never an MHS-Device level). python3 -m mhs.driver check exited 0 with G1-G9 pass and no findings or warnings; the digest above is the line the last check printed. No hardware, NI board, laser or Qt display was attached or tested, and the hardware backend was never imported or run. The package is model-authored and unreviewed (driver.lock.json reviewed_by is null): the loader refuses its R2 hardware backend until a human signs reviewed_by, and fake evidence is not a real hardware or ROS run.\n\nDEVIATION FROM THE CARD: the card's helper is PythonObjectDriver (family python-object), but the entry class light_sheet_controller:LightSheetDriver is a QtWidgets.QWidget with two PyDAQmx analog-output tasks and its own start/stop/zero/end/laser methods. A direct decorated Driver is the shape that can bind those controls, the operator-required settings writes and the input-free safe-state action; a plain PythonObjectDriver config would not express the safety envelope or the generated waveforms. No task.json field was edited. The card's entry symbol was confirmed at light_sheet_controller.py:118 and G7 checks the fake against it.\n\nScope: reads the controller's own state and settings (stop state, laser selection, scan mode, sample rate, samples per period and the eight waveform settings). Writes the eight numeric settings through cap.device.configure.v1; every numeric write is Limit.operator_required because the clone states no safe range for the installed piezo, objective, camera or sample, so hardware writes are refused MHS.SAFETY.LIMITS_UNSET until the site overlay supplies a range. site-limits.example.json is an example only; its numbers reproduce the upstream GUI sliders' ranges (light_sheet_controller.py:376-383), not device safety facts. Actions start and stop the scan, go to zero or the configured end, select the blue or yellow laser, and set the two scan-mode flags.\n\nSafety: risk R2 because the clone drives a laser TTL channel (blue and yellow selections) and states no laser class; a laser above class 1 is at least R2. The clone documents no independent hardware e-stop, shutter, interlock or mains switch, so estop_physical_ref is not set and no independent stop is claimed. The input-free safe-state action x-cap.kyleellefsen.stop_scan.v1 (also the @estop body) clears alternate_lasers and blue_laser_on so calc_ttl writes zeros (calc_waveforms.py:140-149), then calls gotozero, which stops both analog-output tasks, writes finite zero piezo/camera waveforms and returns the dither to zero (light_sheet_controller.py:204-218). This is a software actuation, not sensed quiescence: the clone has no readback of the output voltage, the piezo position or laser emission, and StopTask may leave a board holding its last value. An external laser shutter or power switch remains the operator's responsibility. The upstream constructor starts both tasks immediately (light_sheet_controller.py:145-148); native.py calls gotozero after construction so the endpoint starts stopped, and the fake models that post-factory state. The e-stop and the safe-state action both reach gotozero; the operation is idempotent and is not a toggle or a re-arm.\n\nThe fake (fake.py) is an in-memory F0 stand-in, not a recording and not an upstream simulator (the clone has neither). It implements only methods and attributes of the pinned LightSheetDriver, keeps state in plain attributes and starts stopped to model the factory's post-construction zeroing. Every starting number is placeholder test data marked # placeholder; none is a Fact, a Limit or a reference. It models no DAQ timing, finite-sample waveform, Qt event loop or physical output. The clone has no hardware mock or transcript, so this is the best available mock path; no analytic stand-in is called a recording. The adapter was exercised through the stock server by test_driver.py, which keeps the check_driver call and adds cases for the scan, operator-required refusal, the example overlay, the laser selection, the e-stop and reset, goto zero/end and the scan-mode action.\n\nNot covered: the camera TTL is an output only - no camera image, camera settings or camera status are captured (this is a DAQ waveform controller, not a camera driver); no laser power, wavelength, class, shutter state or emission sensor is read; no piezo position feedback is read; the upstream GUI, waveform plot and saved-settings pages are not reproduced. A settings write while the scan is running calls the upstream refresh(), which stops both tasks, rewrites the waveform and restarts them (light_sheet_controller.py:175-188): that is a brief output interruption, not a safe stop. gotozero and gotoend block for 0.2 s and dither_gotozero for 0.02 s in the upstream (light_sheet_controller.py:201,215,232); the runtime's e-stop path is the only timing guarantee offered here.\n\nDeployment: the clone has no setup.py and the card's install block is empty; native.py accepts clone_root, inserts it on sys.path and imports the clone only at hardware time. The deployment must provide PyDAQmx, qtpy, pyqtgraph, numpy and scipy (light_sheet_controller.py:15-31, calc_waveforms.py:1-3), a Qt application (the factory sets QT_QPA_PLATFORM=offscreen by default) and NI MAX devices Dev1/Dev2 as USB-6001 boards (light_sheet_controller.py:7,46-57). The factory has never been run. The clone was not modified or imported, and no network was used. check-report.json is regenerated by every gate run and is not part of the package; the gate digest above is the last passing run's line. Licence is NOASSERTION/unknown in the card: publication is a human review decision.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-17; reviewed_by stays null): Traced the DAQ construction and zeroing paths: zero laser TTL is also used by the yellow-laser selector, and the source provides no laser-off stop or emission confirmation. Changed driver.py to remove safe_state=True, describe the unconfirmed state, correct the continuous-sampling and import facts, and fail the e-stop with SAFE_STATE_UNREACHED after its best-effort zeroing. Changed native.py to document construction and blocking hazards, test_driver.py to assert the failed stop and held latch, and facts.md to match; regenerated reference.json, REFERENCE.md and check-report.json. All six targeted cases pass; the final gate fails G3 SAFE-045 and strict collection reports RESULT_UNTRUSTED because the author RESULT.json remains unchanged for the orchestrator. The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it. For the human reviewer: The hardware constructor starts continuous tasks from saved pickle settings before MHS limits apply (light_sheet_controller.py:73-92,120-147); the later gotozero does not prevent that transient or clear the saved laser flags. dither_gotozero computes calc_ttl before stopping task two and uses timeout -1 DAQ writes (190-218); piezo clamp warnings can open modal dialogs (calc_waveforms.py:80-87,140-142). The short sleeps do not bound stopping. Start/goto-end/laser actions can also use persisted settings without an operator envelope. A bounded construction and a source-backed independent laser-off stop are required; the class of the installed laser is unspecified and may require R3. Qt thread/application ownership and import-time chdir remain deployment hazards. NOASSERTION and publish_review=required remain a maintainer publication decision; no upstream code or hardware was run."
+}

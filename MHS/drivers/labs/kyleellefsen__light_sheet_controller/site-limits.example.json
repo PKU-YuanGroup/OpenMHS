@@ -1,0 +1,27 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (light sheet controller)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example operator bounds only, not device facts. They reproduce the upstream desktop sliders' ranges; narrow them to the installed piezo, objective, camera and sample before hardware use.",
+  "devices": {
+    "mhs://localhost/light-sheet-controller": {
+      "mv_per_pixel": {"min": 0, "max": 100, "unit": "mV/{pixel}", "source": "operator",
+                       "reason": "example only: upstream slider range 0 to 100 mV/pixel (light_sheet_controller.py:376); confirm the installed piezo"},
+      "maximum_displacement": {"min": 0, "max": 1000, "unit": "{pixel}", "source": "operator",
+                               "reason": "example only: upstream slider range 0 to 1000 pixels (light_sheet_controller.py:377); confirm the objective and sample"},
+      "n_steps": {"min": 1, "max": 1000, "unit": "1", "source": "operator",
+                  "reason": "example only: upstream slider range 1 to 1000 steps (light_sheet_controller.py:378)"},
+      "step_duration": {"min": 1, "max": 200, "unit": "ms", "source": "operator",
+                        "reason": "example only: upstream slider range 1 to 200 ms (light_sheet_controller.py:379)"},
+      "flyback_duration": {"min": 0, "max": 1000, "unit": "ms", "source": "operator",
+                           "reason": "example only: upstream slider range 0 to 1000 ms (light_sheet_controller.py:380)"},
+      "total_cycle_period": {"min": 0, "max": 10, "unit": "s", "source": "operator",
+                             "reason": "example only: upstream slider range 0 to 10 s (light_sheet_controller.py:381)"},
+      "dither_amp": {"min": 0, "max": 1000, "unit": "mV", "source": "operator",
+                     "reason": "example only: upstream slider range 0 to 1000 mV (light_sheet_controller.py:382); confirm the dither stage"},
+      "offset": {"min": 0, "max": 1000, "unit": "{pixel}", "source": "operator",
+                 "reason": "example only: upstream slider range 0 to 1000 pixels (light_sheet_controller.py:383); confirm the piezo travel"}
+    }
+  }
+}

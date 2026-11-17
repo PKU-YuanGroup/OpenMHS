@@ -1,0 +1,25 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (MHO98)",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only. The MHO98 clone states no numeric range for the timebase, CH1 vertical or cursor time settings, so the driver declares them operator_required and this overlay supplies narrow example bounds.",
+  "devices": {
+    "mhs://localhost/rigol-mho98": {
+      "timebase_scale_s_div": {"min": 1e-9, "max": 50.0, "unit": "s", "source": "operator",
+                               "reason": "example: the bench uses 1 ns/div through 50 s/div"},
+      "timebase_offset_s": {"min": -5.0, "max": 5.0, "unit": "s", "source": "operator",
+                            "reason": "example: keep the horizontal window within five seconds of the trigger"},
+      "ch1_scale_v_div": {"min": 0.001, "max": 10.0, "unit": "V", "source": "operator",
+                          "reason": "example: 1X probe range of the MHO98 channel guide"},
+      "ch1_offset_v": {"min": -5.0, "max": 5.0, "unit": "V", "source": "operator",
+                       "reason": "example: keep the trace on screen for the bench signals"},
+      "x-cap.kitour.set_cursor.v1": {
+        "a_s": {"min": -5.0, "max": 5.0, "unit": "s", "source": "operator",
+                "reason": "example: keep cursor A within the displayed window"},
+        "b_s": {"min": -5.0, "max": 5.0, "unit": "s", "source": "operator",
+                "reason": "example: keep cursor B within the displayed window"}
+      }
+    }
+  }
+}

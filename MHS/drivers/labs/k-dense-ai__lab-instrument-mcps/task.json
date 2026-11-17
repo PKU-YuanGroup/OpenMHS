@@ -1,0 +1,115 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.k-dense-ai/lab-instrument-mcps",
+  "track": "labs",
+  "local_path": "labs/k-dense-ai/lab-instrument-mcps",
+  "driver_dir": "MHS/drivers/labs/k-dense-ai__lab-instrument-mcps",
+  "upstream": {
+    "repo_url": "https://github.com/k-dense-ai/lab-instrument-mcps",
+    "commit": "46545ea7eb818249a524c3340dc80657f448430f",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 13,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "labmcp_julabo.driver:JulaboCirculator",
+      "file": "servers/chemistry/julabo-circulator/src/labmcp_julabo/driver.py",
+      "line": 137,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "packages/labmcp/tests"
+  },
+  "hints": {
+    "reads": [
+      "SRSLockIn.identify",
+      "SRSLockIn.query_float",
+      "SRSLockIn.query_int",
+      "IKAStirrer.identify",
+      "IKAStirrer.query_number",
+      "JulaboCirculator.identify",
+      "JulaboCirculator.is_running",
+      "JulaboCirculator.query_number",
+      "JulaboCirculator.status"
+    ],
+    "writes": [
+      "SRSLockIn.set_amplitude_minimum",
+      "SRSLockIn.set_amplitude_v",
+      "SRSLockIn.set_coupling",
+      "SRSLockIn.set_filter_slope_db",
+      "SRSLockIn.set_frequency_hz",
+      "SRSLockIn.set_harmonic",
+      "SRSLockIn.set_input_configuration",
+      "SRSLockIn.set_input_range_v",
+      "SRSLockIn.set_phase_deg",
+      "SRSLockIn.set_reference_internal",
+      "SRSLockIn.set_reserve",
+      "SRSLockIn.set_sensitivity_index"
+    ],
+    "actions": [
+      "IKAStirrer.disable_watchdog",
+      "IKAStirrer.enable_watchdog",
+      "IKAStirrer.start_heater",
+      "IKAStirrer.start_motor",
+      "IKAStirrer.stop_all",
+      "IKAStirrer.stop_heater",
+      "IKAStirrer.stop_motor",
+      "JulaboCirculator.start",
+      "JulaboCirculator.start_keepalive",
+      "JulaboCirculator.stop"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.thermal.setpoint.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": [
+      "packages/labmcp/src/labmcp/audit.py:24 MAX_ENTRY_CHARS = 2048",
+      "servers/biology/new-era-syringe-pump/src/labmcp_new_era/driver.py:70 NE1000_MAX_SPEED_CM_MIN = 5.1005",
+      "servers/biology/new-era-syringe-pump/src/labmcp_new_era/simulator.py:20 MAX_SPEED_CM_MIN = 5.1005",
+      "servers/biology/new-era-syringe-pump/src/labmcp_new_era/simulator.py:21 MIN_SPEED_CM_H = 0.004205",
+      "servers/chemistry/ms-data/src/labmcp_ms_data/simulator.py:70 DROPOUT_RT_MIN = 10.6",
+      "servers/chemistry/ms-worklist/src/labmcp_ms_worklist/driver.py:91 max_vial = 120",
+      "servers/chemistry/thermo-iapi/src/labmcp_thermo_iapi/pythonnet_backend.py:108 MAX_CENTROIDS_KEPT = 5000",
+      "servers/engineering/labjack/src/labmcp_labjack/driver.py:38 MAX_STREAM_SAMPLES = 2000000"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/k-dense-ai__lab-instrument-mcps --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

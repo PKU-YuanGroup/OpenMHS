@@ -1,0 +1,74 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.levylabpitt/levylab-qcodes",
+  "track": "labs",
+  "local_path": "labs/levylabpitt/levylab-qcodes",
+  "driver_dir": "MHS/drivers/labs/levylabpitt__levylab-qcodes",
+  "upstream": {
+    "repo_url": "https://github.com/levylabpitt/levylab-qcodes",
+    "commit": "d001dc1a34e9ec4ea7f7effdfae0da0450e2c5f3",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 237,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "levylabinst.MCLockin:MCLockin",
+      "file": "levylabinst/MCLockin.py",
+      "line": 16,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "MCLockin.get_idn",
+      "MCLockin2.get_idn",
+      "ZMQInstrument.get_idn"
+    ],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/levylabpitt__levylab-qcodes --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

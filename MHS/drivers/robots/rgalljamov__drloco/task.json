@@ -1,0 +1,102 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.rgalljamov/drloco",
+  "track": "robots",
+  "local_path": "robots/rgalljamov/drloco",
+  "driver_dir": "MHS/drivers/robots/rgalljamov__drloco",
+  "upstream": {
+    "repo_url": "https://github.com/rgalljamov/drloco",
+    "commit": "3a1e4999b726be67dccc5d332b52edb76a7bde09",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 425,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "drloco.mujoco.mimic_walker3d:MimicWalker3dEnv",
+      "file": "drloco/mujoco/mimic_walker3d.py",
+      "line": 27,
+      "confidence": "override"
+    },
+    {
+      "symbol": "drloco.mujoco.mimic_walker_165cm_65kg:MimicWalker165cm65kgEnv",
+      "file": "drloco/mujoco/mimic_walker_165cm_65kg.py",
+      "line": 20,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "drloco/mujoco/xml/walker3d_flat_feet.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "drloco/mujoco/xml/walker3d_hip3d.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "drloco/mujoco/xml/walker_165cm_65kg.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "drloco/mujoco/xml/walker3d_flat_feet.xml:1 MJCF robot model",
+      "drloco/mujoco/xml/walker3d_hip3d.xml:1 MJCF robot model",
+      "drloco/mujoco/xml/walker_165cm_65kg.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model drloco/mujoco/xml/walker3d_flat_feet.xml:1",
+      "MJCF robot model drloco/mujoco/xml/walker3d_hip3d.xml:1",
+      "MJCF robot model drloco/mujoco/xml/walker_165cm_65kg.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rgalljamov__drloco --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

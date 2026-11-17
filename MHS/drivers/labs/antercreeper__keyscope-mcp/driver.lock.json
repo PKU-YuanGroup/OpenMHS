@@ -1,0 +1,32 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.antercreeper/keyscope-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/antercreeper/keyscope-mcp",
+    "commit": "344dc93cf9f151672d0b07dc4b29f780ae38bd08",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "pyproject.toml requires Python 3.10 or later and pyvisa, pyvisa-py, pyusb, numpy, lmdb and mcp (pyproject.toml:12-19). Only native.py imports keyscope_mcp, inside the hardware factory; the gate never installs, imports or runs the upstream package, and the fake backend does not need it."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeOscilloscope"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "retriage-drivers-1-015",
+    "date": "2026-11-17"
+  },
+  "reviewed_by": null
+}

@@ -1,0 +1,104 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:77a53197575e98bbc707df567d1ffccc0f7503915ca140f5e08449a60a43a32f",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.valiantandupright.identify.v1",
+      "reason": "No catalogue class returns the *IDN? identity of an instrument; cap.sensing.read.v1 binds sensor, sensor.imu and sensor.force_torque resources, not the instrument kind used here.",
+      "verb": "invoke",
+      "summary": "Read the manufacturer, model, serial number and firmware of the oscilloscope.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.valiantandupright.measure.v1",
+      "reason": "No catalogue class carries an oscilloscope's automatic scalar measurements. cap.measure.voltage.v1 binds instrument.dmm, instrument.smu and sensor resources and returns only a DC or RMS voltage, while the upstream exposes thirteen automatic items (vpp, vmax, vmin, vavg, vrms, amplitude, top, base, frequency, period, dutycycle, rise_time, fall_time).",
+      "verb": "invoke",
+      "summary": "Read one automatic measurement item on one channel.",
+      "similar": [
+        "cap.measure.voltage.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.valiantandupright.capture.v1",
+      "reason": "No catalogue class carries an oscilloscope trace. cap.sensing.image.v1 is a camera image artifact and cap.measure.spectrum.v1 is a spectrum; neither describes a time/voltage waveform record with envelope decimation and statistics.",
+      "verb": "invoke",
+      "summary": "Capture one waveform and return the decimated time and voltage arrays with min/max/mean/vpp/rms statistics.",
+      "similar": [
+        "cap.sensing.image.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.valiantandupright.configure_channel.v1",
+      "reason": "cap.device.configure.v1 is the writable-state class and is already used; no catalogue class writes per-channel display, coupling, probe, vertical scale and offset of an oscilloscope as one action. The action covers channels 1 to 4, while cap.device.configure.v1 carries the continuously read channel-1 state within the MCP tool-size bound.",
+      "verb": "invoke",
+      "summary": "Configure one analog channel and return the values read back from the instrument.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.valiantandupright.configure_timebase.v1",
+      "reason": "No catalogue class configures an oscilloscope timebase; cap.device.configure.v1 is the state write class already used and does not carry the action's read-back of mode, scale and position.",
+      "verb": "invoke",
+      "summary": "Configure the timebase mode, s/div scale and horizontal position, with a read-back.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.valiantandupright.configure_trigger.v1",
+      "reason": "No catalogue class configures an edge trigger; cap.device.configure.v1 is the state write class already used and does not carry the action's read-back of source, level, slope and sweep.",
+      "verb": "invoke",
+      "summary": "Configure the edge-trigger source, level, slope and sweep, with a read-back.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.valiantandupright.run.v1",
+      "reason": "No catalogue class starts continuous acquisition on a measurement instrument; cap.process.run.v1 is a process recipe and does not apply.",
+      "verb": "invoke",
+      "summary": "Send :RUN and report the acquisition points the instrument reports.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.valiantandupright.single.v1",
+      "reason": "No catalogue class arms one acquisition on a measurement instrument.",
+      "verb": "invoke",
+      "summary": "Send :SINGle and report the acquisition points the instrument reports.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.valiantandupright.autoscale.v1",
+      "reason": "No catalogue class auto-configures an oscilloscope's vertical, timebase and trigger settings.",
+      "verb": "invoke",
+      "summary": "Send :AUToscale and return the channel-1 scale/offset and timebase scale afterwards.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.valiantandupright.stop_acquisition.v1",
+      "reason": "cap.motion.stop.v1 binds robot.arm, robot.mobile_base and motion.axis; it does not describe stopping an instrument acquisition. The action is input-free and is the safe-state action.",
+      "verb": "invoke",
+      "summary": "Send :STOP, the oscilloscope safe state; the clone has no run-state readback, so this is a command acknowledgement.",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "Pass on the fake backend only: python3 -m mhs.driver check MHS/drivers/labs/valiantandupright__oscilloscope-mcp --backend fake exited 0 with G1-G9 pass and no warnings; evidence is contract_checked, never an MHS-Device level. No hardware, VISA library or upstream code was imported or run. Model-authored by deepseek-v4.1-flash:1017, run retriage-drivers-1-041; driver.lock.json reviewed_by stays null, so no human reviewed or tested this package, and no hardware run is claimed.\n\nDEVIATION FROM THE CARD: the card proposes a ScpiDriver (family scpi, family-config). The confirmed entry symbol osc.scope:Scope (osc/scope.py:112) is a Python object whose methods assemble SCPI lines from a channel prefix at run time (scope.py:264-274) and transfer the waveform as an IEEE 488.2 binary block through query_binary_values (scope.py:326-339); a fixed text command table cannot reproduce either, so this package is a direct Driver over Scope with native.py (driver-authoring.md, 'Choosing the shape'). The card's entry symbol and file are unchanged; the driver uses no other upstream class.\n\nCOVERAGE: reads are identity, channel-1 display/coupling/probe/scale/offset, timebase mode/scale/position/sample rate and trigger source/level/slope/sweep; writable state is channel-1 display/coupling/scale/offset, timebase scale/position and trigger source/level (eight fields, kept within the 2048-byte MCP tool bound). Probe ratio, timebase mode, trigger slope and trigger sweep are read-only state and are written by the configure_channel/configure_timebase/configure_trigger actions. Actions cover identify, one automatic measurement, a waveform capture with the returned time/voltage arrays, per-channel/timebase/trigger configuration, run, single, autoscale and an input-free safe-state stop. NOT COVERED: the PNG screen capture (Scope.screenshot, a binary :DISPlay:DATA? image); no catalogue class carries it and this package has no artifact store. The upstream simulator (osc/simulator.py:49) is upstream code and was not imported or replayed.\n\nWAVEFORM SIZE: the real capture requests 2000 points (config.py:40) and envelope-decimates to at most 500 (config.py:42), capped by the instrument's :WAVeform:POINts? reply (scope.py:326-328). The fake returns 8 placeholder points (marked # placeholder in fake.py) so the gate receipt stays small; this is not the device's size.\n\nLIMITS: coupling DC/AC, slope POS/NEG/EITH, sweep AUTO/NORM, timebase mode MAIN/XY/ROLL, probe 1/10/100/1000 and trigger sources CHANNEL1..4/EXT are the upstream web control's allowed sets (web/server.py:119-123); the trigger-level bound -1000..1000 V is that control's explicit clamp (web/server.py:224-225); the channel index 1-4 cites the clone's CH1..CH4 comment (config.py:52). The clone gives no continuous range for vertical scale, vertical offset, timebase scale or horizontal position; those are Limit.operator_required and are refused MHS.SAFETY.LIMITS_UNSET until a site overlay supplies them. site-limits.example.json is an example overlay only, not a statement about any instrument; it supplies the ranges the G8 conformance run needs and narrows the operator paths.\n\nSTOP AND SAFETY: the e-stop and the safe-state action both call Scope.stop, which writes :STOP (scope.py:248-249); :STOP is idempotent, so the runtime's e-stop followed by the safe-state action may send it twice without changing state. The clone never reads a run state (it has no :RSTATus? query), so the stop is a command acknowledgement, not sensed quiescence; the frozen display is the declared safe state. The upstream Scope serialises all SCPI traffic with one RLock (scope.py:123, 158-170), so a stop arriving during an in-flight capture waits for that capture, bounded by the 10 s SCPI timeout (config.py:32); there is no independent stop channel. This is R1, a measurement instrument with no actuator, no heating and no source output; no independent hardware e-stop is claimed and estop_physical_ref is not set. The loader's model-written hardware refusal applies only at R2 and R3, so an operator could still open the R1 hardware backend; this package claims no protection beyond the SDK.\n\nFAKE: FakeScope is an analytic in-memory stand-in at fidelity F0, not a recording and not captured traffic. It preserves the upstream method surface checked by G7 and the upstream status/capture/measure shapes, but it models no VISA/USBTMC bus, no timing or latency, no instrument error queue, no trigger or acquisition engine, no decimation and no hardware failure. Its identity, settings, eight samples and measurement table are placeholders; it returns errors() as an empty list. The status acquire points stay a placeholder and run/single do not change them.\n\nHARDWARE: native.py lazily imports the pinned osc.scope:Scope and opens a VISA resource; it was never imported or run. The clone has no setup.py/pyproject, so a deployment must make the clone's osc package importable (for example PYTHONPATH=<clone>), install the requirement pins (pyvisa 1.16.2) and have NI-VISA or a compatible VISA library. No instrument was attached.\n\nLICENCE: the clone states no licence (the card and lock record NOASSERTION, class unknown); publication is a human decision. check-report.json is regenerated by every gate run and is not authored content; the digest above is the one the passing run printed.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-17; reviewed_by stays null): Model review against the pinned clone corrected unsupported fact ranges and colour/default/guard-based bounds in driver.py, made channel and trigger limits operator_required, checked native error-queue and capture failures, refused missing acquisition/measurement fields, and limited safe_state to STOP request acceptance rather than sensed quiescence. Updated site-limits.example.json and test_driver.py, synchronized facts.md, and regenerated reference.json, REFERENCE.md and check-report.json. The fake gate and strict collector pass without provenance warnings; evidence remains contract_checked and author metadata was left unchanged. The card needs the owner's publication decision (publish_review required; licence not stated (NOASSERTION)); the package may not be published or merged into a published tree before it. For the human reviewer: Publication still requires an owner decision: the clone has no licence file and the card declares NOASSERTION / publish_review=required. The R1 factory was inspected as source only; no upstream code, VISA library or instrument was run. STOP is checked through the instrument error queue, with no acquisition-state readback or electrical isolation. The VISA lock can delay STOP behind capture, and the error drain can perform 32 queries at the configurable timeout; an over-budget stop must remain failed and latched. Capture retains upstream approximate decimated timestamps. Numeric and channel/source overlays must describe the installed instrument, not the example bench."
+}

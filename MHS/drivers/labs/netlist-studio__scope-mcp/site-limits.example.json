@@ -1,0 +1,20 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (scope-mcp MSOX2024A driver)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/msox2024a": {
+      "channel1_scale_v_per_div": {"min": 0.001, "max": 10, "unit": "V", "source": "operator",
+                                   "reason": "example only: this bench uses vertical scales from 1 mV/div to 10 V/div"},
+      "channel1_offset_v": {"min": -10, "max": 10, "unit": "V", "source": "operator",
+                            "reason": "example only: the probe and the vertical scale keep the offset within +/-10 V"},
+      "timebase_scale_s_per_div": {"min": 0.000000001, "max": 1, "unit": "s", "source": "operator",
+                                   "reason": "example only: this bench observes events from 1 ns/div to 1 s/div"},
+      "timebase_delay_s": {"min": -0.001, "max": 0.001, "unit": "s", "source": "operator",
+                           "reason": "example only: the horizontal delay stays within 1 ms of the trigger"},
+      "trigger_level_v": {"min": -10, "max": 10, "unit": "V", "source": "operator",
+                          "reason": "example only: trigger levels stay within the +/-10 V window of the probe"}
+    }
+  }
+}

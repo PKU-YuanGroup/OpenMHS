@@ -1,0 +1,48 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "gate": {
+    "digest": "sha256:6212b70cecf7310bbe92a770a82017a4034f2e864a8b392a941dd38c13bd46d5",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.zhenwei2972.start_print.v1",
+      "reason": "No catalogue class starts a print job on a process.controller. The extension sends the printer's own project_file command for a sliced file already on its storage; it is not a robot motion, a thermal setpoint or a generic device parameter.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.zhenwei2972.pause_print.v1",
+      "reason": "No catalogue class pauses a print job. cap.motion.stop.v1 is restricted to robot.arm, robot.mobile_base and motion.axis and reports a stopping position and deceleration, which the printer's print.pause command does not take or return.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.zhenwei2972.resume_print.v1",
+      "reason": "No catalogue class resumes a paused print job; no motion or configuration class models the printer's print.resume command.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.zhenwei2972.stop_print.v1",
+      "reason": "No catalogue class stops a print job on a process.controller. cap.motion.stop.v1 is kind-restricted and carries a deceleration and a stopped position that the printer's print.stop command does not expose.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.zhenwei2972.calibrate_printer.v1",
+      "reason": "cap.device.calibrate.v1 is restricted to robot.arm, instrument, sensor and optics.laser resources, and its standard_ref/targets inputs do not match the firmware calibration bitmask (bed level, vibration, motor noise, lidar).",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.zhenwei2972.safe_stop.v1",
+      "reason": "No catalogue class expresses a printer's safe state: stop the print job and set both heater targets to 0 C. cap.motion.stop.v1 is motion-only and kind-restricted; cap.thermal.setpoint.v1 is kind-restricted and sets one thermal zone. This input-free extension is the R2 safe-state action.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check (evidence contract_checked, never an MHS-Device level). Model-authored (deepseek-v4.1-flash:1017) and unreviewed: reviewed_by is null, so the loader refuses the R2 hardware backend until a human signs it. No printer, MQTT broker or camera was attached; no hardware run is claimed.\n\nDEVIATION FROM THE CARD: the card's helper is PythonObjectDriver, but the pinned entry is a concrete asyncio vendor driver (mhs.drivers.bambu.printer:BambuPrinter) with print-job, thermal and camera methods and an input-free safe state. A direct Driver expresses those methods and keeps the upstream class as native; the card's decision remains direct-driver.\n\nThe fake is an analytic in-process stand-in, not a recording and not the upstream simulator. It has no MQTT/TLS/FTPS or camera protocol, no physical motion or thermal dynamics, and transitions immediately; it returns a 1x1 placeholder JPEG while the real A1/P1 camera streams 1280x720 JPEG at roughly 1 fps. It is deliberately lenient about the upstream start_print busy preflight so the conformance suite can re-invoke the action on one endpoint. The hardware factory builds the upstream BambuPrinter; the upstream distribution installs the top-level package 'mhs', the same name as the OpenMHS SDK, so a live backend needs the upstream renamed or vendored under another top-level name (native.py upstream_module) or an isolated bridge, plus a human hardware review. That namespace collision and the unreviewed lock are the deployment blockers for the live backend; they do not affect the fake acceptance.\n\nThe native stop is print.stop over the same LAN MQTT link (stop_print -> publish_and_wait, a 6 s report wait), so it is an acknowledgement, not an independent physical stop or sensed quiescence; the clone documents no physical e-stop. The R2 safe state is the input-free x-cap.zhenwei2972.safe_stop.v1 action: it sends the native stop, sets both heater targets to 0 C and reads the merged status back, refusing to report success while the printer still reports an active job. The @estop and the safe-state action both reach the same idempotent print.stop command; neither re-arms or restarts anything. There is no @reset hook and no re-enable: a reset only releases the latch, because a stopped job cannot be resumed.\n\nThe bed target is operator-required because the rating differs per model (80 C A1 mini, 100 C A1/P1P/P1S, 110 C X1 Carbon); site-limits.example.json fills the A1 mini 80 C bound, and the write also refuses a value above the configured model's spec. Not covered: file listing/upload/delete over FTPS 990, raw gcode, the live camera stream (stream_frames), the slicer, the MCP server, the print monitor/scheduler and the Roborock vacuum half of the repository. The camera is served one frame per cap.sensing.image.v1 call. The gate passed with no warning; G4.REF_VALUE is cleared by citing the lines that show 0-300 C and the four speed presets. The six extension ids are listed in catalogue_requests.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-17; reviewed_by stays null): Blocked because a print.stop sequence-id echo and merged cached telemetry do not confirm physical standstill or heater shutdown, and the clone documents no independent physical stop. Changed driver.py to send best-effort stop/zero-target requests concurrently, always fail the e-stop with the latch held, remove safe-state status from the ordinary stop request, refuse invalid cached targets/job states, preserve missing telemetry and report integer native temperature setpoints. Corrected fake.py busy preflights and setpoint truncation; updated test_driver.py, whose 16 additional cases pass while the stock gate assertion remains unchanged. Corrected facts.md and regenerated reference.json and REFERENCE.md. check-report.json fails G3 SAFE-045; strict collection reports RESULT_UNTRUSTED until the orchestrator applies the block to the unchanged author RESULT.json. For the human reviewer: Unblocking needs a source-backed acknowledged physical stop/heater safe-state path and an R2 independent-stop/safe-state declaration; merged status can retain old target values when unrelated reports arrive. The upstream top-level mhs package collides with the OpenMHS SDK, so native.py also needs a concrete renamed installation or isolated adapter before live use. The TCP 6000 camera path covers A1/A1 mini/P1; the clone names RTSPS for X1/H2. No printer, MQTT or camera connection was run."
+}

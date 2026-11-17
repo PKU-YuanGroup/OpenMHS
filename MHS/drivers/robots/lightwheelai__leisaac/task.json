@@ -1,0 +1,88 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.lightwheelai/leisaac",
+  "track": "robots",
+  "local_path": "robots/lightwheelai/leisaac",
+  "driver_dir": "MHS/drivers/robots/lightwheelai__leisaac",
+  "upstream": {
+    "repo_url": "https://github.com/lightwheelai/leisaac",
+    "commit": "24d3bcd3f1e4585740fc79921782c41617237812",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 39,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "leisaac.tasks.pick_orange.direct.pick_orange_env:PickOrangeEnv",
+      "file": "source/leisaac/leisaac/tasks/pick_orange/direct/pick_orange_env.py",
+      "line": 61,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/leisaac/leisaac/tasks/assemble_hamburger/__init__.py:3 gym env LeIsaac-SO101-AssembleHamburger-v0",
+      "source/leisaac/leisaac/tasks/assemble_hamburger/__init__.py:12 gym env LeIsaac-SO101-AssembleHamburger-BiArm-v0",
+      "source/leisaac/leisaac/tasks/clean_toy_table/__init__.py:3 gym env LeIsaac-SO101-CleanToyTable-v0",
+      "source/leisaac/leisaac/tasks/clean_toy_table/__init__.py:12 gym env LeIsaac-SO101-CleanToyTable-BiArm-v0"
+    ],
+    "upstream_tests": "dependencies/IsaacLab/docker/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env LeIsaac-SO101-AssembleHamburger-v0 registered at source/leisaac/leisaac/tasks/assemble_hamburger/__init__.py:3",
+      "gym env LeIsaac-SO101-AssembleHamburger-BiArm-v0 registered at source/leisaac/leisaac/tasks/assemble_hamburger/__init__.py:12",
+      "gym env LeIsaac-SO101-CleanToyTable-v0 registered at source/leisaac/leisaac/tasks/clean_toy_table/__init__.py:3",
+      "gym env LeIsaac-SO101-CleanToyTable-BiArm-v0 registered at source/leisaac/leisaac/tasks/clean_toy_table/__init__.py:12",
+      "gym env LeIsaac-SO101-CleanToyTable-BiArm-Direct-v0 registered at source/leisaac/leisaac/tasks/clean_toy_table/__init__.py:21",
+      "gym env LeIsaac-LeKiwi-CleanupTrash-v0 registered at source/leisaac/leisaac/tasks/cleanup_trash/__init__.py:3",
+      "gym env LeIsaac-SO101-FoldCloth-BiArm-v0 registered at source/leisaac/leisaac/tasks/fold_cloth/__init__.py:3",
+      "gym env LeIsaac-SO101-FoldCloth-BiArm-Direct-v0 registered at source/leisaac/leisaac/tasks/fold_cloth/__init__.py:12",
+      "gym env LeIsaac-SO101-LiftCube-v0 registered at source/leisaac/leisaac/tasks/lift_cube/__init__.py:3",
+      "gym env LeIsaac-SO101-LiftCube-DigitalTwin-v0 registered at source/leisaac/leisaac/tasks/lift_cube/__init__.py:12",
+      "gym env LeIsaac-SO101-LiftCube-Mimic-v0 registered at source/leisaac/leisaac/tasks/lift_cube/__init__.py:21",
+      "gym env LeIsaac-SO101-LiftCube-Direct-v0 registered at source/leisaac/leisaac/tasks/lift_cube/__init__.py:30"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/lightwheelai__leisaac --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

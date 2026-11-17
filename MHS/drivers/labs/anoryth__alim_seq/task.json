@@ -1,0 +1,136 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.anoryth/alim_seq",
+  "track": "labs",
+  "local_path": "labs/anoryth/alim_seq",
+  "driver_dir": "MHS/drivers/labs/anoryth__alim_seq",
+  "upstream": {
+    "repo_url": "https://github.com/anoryth/alim_seq",
+    "commit": "4264b54bdb8087636da640420735c0633fd1dcb9",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 28,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "alim_seq.psu:HMP4030",
+      "file": "alim_seq/psu.py",
+      "line": 403,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "alim_seq.psu:HMP2030",
+      "file": "alim_seq/psu.py",
+      "line": 409,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "alim_seq.psu:HMP2020",
+      "file": "alim_seq/psu.py",
+      "line": 417,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "alim_seq.controller:Controller",
+      "file": "alim_seq/controller.py",
+      "line": 102,
+      "confidence": "ast"
+    },
+    {
+      "symbol": "alim_seq.daq:NIDaq",
+      "file": "alim_seq/daq.py",
+      "line": 36,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "alim_seq/controller_simtune.py:20 SimTuneMixin",
+      "alim_seq/daq.py:84 MockDAQ",
+      "alim_seq/psu.py:423 MockPSU",
+      "alim_seq/relay.py:57 MockRelay",
+      "alim_seq/gui_qt/sim_tab.py:18 SimMixin",
+      "alim_seq/gui_qt/sim_tab.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "HMP4030.measure_current",
+      "HMP4030.measure_mode",
+      "HMP4030.measure_status",
+      "HMP4030.measure_voltage",
+      "HMP2030.measure_current",
+      "HMP2030.measure_mode",
+      "HMP2030.measure_status",
+      "HMP2030.measure_voltage",
+      "HMP2020.measure_current",
+      "HMP2020.measure_mode",
+      "HMP2020.measure_status",
+      "HMP2020.measure_voltage"
+    ],
+    "writes": [
+      "HMP4030.set_current",
+      "HMP4030.set_output",
+      "HMP4030.set_voltage",
+      "HMP2030.set_current",
+      "HMP2030.set_output",
+      "HMP2030.set_voltage",
+      "HMP2020.set_current",
+      "HMP2020.set_output",
+      "HMP2020.set_voltage"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.measure.current.v1",
+      "cap.measure.voltage.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "alim_seq/config.py:20 max_voltage = 32.0",
+      "alim_seq/config.py:21 max_current = 10.0",
+      "alim_seq/config.py:36 max_voltage = 0.0",
+      "alim_seq/config.py:37 max_current = 0.0",
+      "alim_seq/config.py:58 ai_min = -10.0",
+      "alim_seq/config.py:59 ai_max = 10.0",
+      "alim_seq/psu.py:158 max_voltage = 32.0",
+      "alim_seq/psu.py:159 max_current = 10.0"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/anoryth__alim_seq --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

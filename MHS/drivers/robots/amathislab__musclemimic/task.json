@@ -1,0 +1,90 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.amathislab/musclemimic",
+  "track": "robots",
+  "local_path": "robots/amathislab/musclemimic",
+  "driver_dir": "MHS/drivers/robots/amathislab__musclemimic",
+  "upstream": {
+    "repo_url": "https://github.com/amathislab/musclemimic",
+    "commit": "47b653db2bce25de834360d2ee6b2dd88142bd78",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "sim-env",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 124,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "musclemimic.environments.humanoids.myofullbody:MyoFullBody",
+      "file": "musclemimic/environments/humanoids/myofullbody.py",
+      "line": 17,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "MjxMyoBimanualArm.get_action_indices",
+      "MjxMyoBimanualArm.get_data",
+      "MjxMyoBimanualArm.get_default_xml_file_path",
+      "MjxMyoBimanualArm.get_model",
+      "MjxMyoBimanualArm.registered_envs (attribute)",
+      "TrajectoryData.get_attribute_names",
+      "TrajectoryData.get_cvel",
+      "TrajectoryData.get_cvel_slice",
+      "TrajectoryData.get_qpos",
+      "TrajectoryData.get_qpos_slice",
+      "TrajectoryData.get_qvel",
+      "TrajectoryData.get_qvel_slice"
+    ],
+    "writes": [
+      "MjxMyoBimanualArm.set_actuation_spec",
+      "MjxMyoBimanualArm.set_observation_spec",
+      "MjxMyoBimanualArm.set_sim_state_from_traj_data"
+    ],
+    "actions": [
+      "MjxMyoBimanualArm.mjx_reset",
+      "MjxMyoBimanualArm.reset",
+      "MjxMyoBimanualArm.stop"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/amathislab__musclemimic --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.pythondev0/zscan-optical-system",
+  "upstream": {
+    "repo_url": "https://github.com/pythondev0/zscan-optical-system",
+    "commit": "114c2838f5c3cc7a5a211ed34b38f0745c386f74",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The upstream clone is a flat source tree (camera.py at its root), not an installable package; native.py imports camera.py from a deployment-provided source_root or the operator's PYTHONPATH. pyueye also needs the IDS uEye SDK installed outside pip (README.md:85). The gate never installs or imports the clone."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeThorlabsCamera"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "retriage-drivers-1-027",
+    "date": "2026-11-17"
+  },
+  "reviewed_by": null
+}

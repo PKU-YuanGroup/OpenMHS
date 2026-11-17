@@ -1,0 +1,86 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.synqs/pennylane-ls",
+  "track": "labs",
+  "local_path": "labs/synqs/pennylane-ls",
+  "driver_dir": "MHS/drivers/labs/synqs__pennylane-ls",
+  "upstream": {
+    "repo_url": "https://github.com/synqs/pennylane-ls",
+    "commit": "4bd2a7a20c70cf2756edda4343922b0e5a680090",
+    "license_spdx": "BSD-2-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 19,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pennylane_ls.single_qudit_device:SingleQuditDevice",
+      "file": "pennylane_ls/single_qudit_device.py",
+      "line": 23,
+      "confidence": "override"
+    },
+    {
+      "symbol": "pennylane_ls.multi_qudit_device:MultiQuditDevice",
+      "file": "pennylane_ls/multi_qudit_device.py",
+      "line": 23,
+      "confidence": "override"
+    },
+    {
+      "symbol": "pennylane_ls.fermion_device:FermionDevice",
+      "file": "pennylane_ls/fermion_device.py",
+      "line": 26,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "FermionDevice.reset",
+      "MultiQuditDevice.reset",
+      "SingleQuditDevice.reset"
+    ],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "capabilities"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/synqs__pennylane-ls --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

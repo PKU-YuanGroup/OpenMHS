@@ -1,0 +1,95 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cvzone/pysimverse",
+  "track": "robots",
+  "local_path": "robots/cvzone/pysimverse",
+  "driver_dir": "MHS/drivers/robots/cvzone__pysimverse",
+  "upstream": {
+    "repo_url": "https://github.com/cvzone/pysimverse",
+    "commit": "ec3f362f50f24278c7f30e5fe09bc2a7ae98e72f",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 69,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "pysimverse.simulators.drone.drone:Drone",
+      "file": "simulators/drone/drone.py",
+      "line": 8,
+      "confidence": "override"
+    },
+    {
+      "symbol": "pysimverse.simulators.drone.drone_manager:DroneManager",
+      "file": "simulators/drone/drone_manager.py",
+      "line": 7,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Drone.get_battery",
+      "Drone.get_frame",
+      "Drone.is_port_available",
+      "DroneManager.get_portlist"
+    ],
+    "writes": [
+      "Drone.set_rotation_speed",
+      "Drone.set_speed"
+    ],
+    "actions": [
+      "Drone.land",
+      "Drone.move_backward",
+      "Drone.move_down",
+      "Drone.move_forward",
+      "Drone.move_left",
+      "Drone.move_right",
+      "Drone.move_up",
+      "DroneManager.takeoff_all_drones"
+    ],
+    "candidate_classes": [
+      "cap.motion.joint_position.v1",
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cvzone__pysimverse --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

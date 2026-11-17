@@ -1,0 +1,80 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ferrolho/rotary-inverted-pendulum",
+  "track": "robots",
+  "local_path": "robots/ferrolho/rotary-inverted-pendulum",
+  "driver_dir": "MHS/drivers/robots/ferrolho__rotary-inverted-pendulum",
+  "upstream": {
+    "repo_url": "https://github.com/ferrolho/rotary-inverted-pendulum",
+    "commit": "bd911756ec8d14947a29ae582721f067b47d8847",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 153,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "pendulum_env:RotaryInvertedPendulumEnv",
+      "file": "policy/pendulum_env.py",
+      "line": 387,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "website/public/sim/model.xml",
+      "line": 2,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "website/public/sim/model.xml:2 MJCF robot model"
+    ],
+    "upstream_tests": "website/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model website/public/sim/model.xml:2"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ferrolho__rotary-inverted-pendulum --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

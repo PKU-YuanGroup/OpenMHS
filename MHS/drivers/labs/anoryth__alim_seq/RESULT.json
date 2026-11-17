@@ -1,0 +1,36 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "gate": {
+    "digest": "sha256:395b5a4fa3bebf30f7f87307bf2fc02f3a8181aadb4ee3e4e24f05d97605bd92",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.anoryth.set_output.v1",
+      "reason": "No catalogue class switches one channel output of a power supply. cap.device.configure.v1 is a state-write class and cannot be used as an action with a channel input. The action calls the upstream set_output(channel, on) and reports the measured voltage.",
+      "verb": "invoke",
+      "summary": "Switch one HMP4040 channel output on or off (OUTP:SEL ON/OFF) and report the measured channel voltage.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.anoryth.all_outputs_off.v1",
+      "reason": "No catalogue class is a no-input safe-state action that switches every channel output off. cap.device.configure.v1 is a write class and cannot be a safe_state action. The action calls HMP4040.all_outputs_off() and reports the measured voltages.",
+      "verb": "invoke",
+      "summary": "Switch every HMP4040 channel output off (the declared safe state) and report the measured voltages.",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by `python3 -m mhs.driver check MHS/drivers/labs/anoryth__alim_seq --backend fake`: all nine gates pass with no warnings, evidence contract_checked, never an MHS-Device level. No hardware was attached; native.py was never imported or run; the upstream clone was not modified. DEVIATION FROM THE CARD: the card names helper ScpiDriver (family scpi), but HMP4040 builds each command from parts (`INST OUT{ch}`, `VOLT {voltage:.4f}`, `CURR {current:.4f}`, `OUTP:SEL ...`, `MEAS:VOLT?`/`MEAS:CURR?`), so a command table cannot reproduce the wire traffic. The package is a decorated direct Driver over `alim_seq.psu:HMP4040` with a native.py that opens the VISA resource; no wire syntax was changed. The card's entry symbol exists at psu.py:148. COVERED: channels 1-4 measured voltage/current (MEAS:VOLT?/MEAS:CURR?), the *IDN? identity, voltage and current set points through cap.device.configure.v1, one channel output on/off action, the no-input all-outputs-off safe-state action, and the native e-stop all_outputs_off(). The measured values are read state; the set points are write-only state because HMP4040 has no set-point getter. LIMITS: voltage 0..32.0 V and current 0..10.0 A per channel, from `alim_seq/psu.py:158-159`; the class states a positive-only output (config.py:23) and 0 is the zero floor. The channel input of set_output is allowed 1..4 (BasePSU n_channels=4, psu.py:119). HMP4040 also declares max_power=160.0 W (psu.py:160), but the upstream config validator checks only max_voltage and max_current (config.py:402-410), so the driver declares no V*I product bound; the firmware owns that. No PDF or binary was cited; G4 reports no warning. SAFETY / STOP: risk R2, above the card floor R1, because the device can source 32 V at 10 A and 160 W per channel and the upstream README warns that its protections are software and do not replace a hardware safety device (README.md:11-15). No independent hardware e-stop is documented in the clone, so none is claimed. The independent stop route is the no-input safe_state=True action `x-cap.anoryth.all_outputs_off.v1`, which calls HMP4040.all_outputs_off() (OUTP:SEL OFF on every channel) and then reports the MEAS:VOLT? readings. HMP4040 has no output-state query; the outputs_off boolean is the acknowledgement of the writes, not a sensed quiescence, and an externally back-driven channel can read nonzero. The general output OUTP:GEN stays on while the channel outputs are off. The e-stop does not close the VISA session, so no @reset or reenable action is declared: a reset only releases the runtime latch and the next ordinary command is the new start. The upstream controller's emergency_stop() takes each instrument lock non-blocking and still calls all_outputs_off() (controller.py:1056-1078); this driver has no controller and no lock, so the e-stop deliberately does not wait for an in-flight action. That non-blocking attempt is not a guarantee that a pending VISA query has finished. MOCK PATH: the card prefers the upstream simulator MockPSU (psu.py:423-528). The package uses its own in-memory fake instead: it does not import the clone, and MockPSU exposes set_load, set_current_source and output_power that HMP4040 does not. The fake preserves only the HMP4040 method surface used by the driver; all values are marked # placeholder; it is not a recording, has no load model or noise, and does not prove real timing. NOT COVERED: measure_mode/measure_status (CV/CC/OVP/FUSE) are not exposed because the optional status-register read is disabled by default (use_cc_status=False) and its mode can be None; the HMP4030/HMP2030/HMP2020 variants are not instantiated because the card's entry symbol is HMP4040 and the field set covers four channels; the raw scan/probe helpers and the NI-DAQ path are not part of this package; no hardware run, no recording, no wire-level conformance, no VISA timeout behavior, and no concurrency test was done. DEPLOYMENT: the clone has no setup.py/pyproject.toml; alim_seq must be importable (clone root on PYTHONPATH) before the hardware backend can open. The card's install command only installs pyvisa, pyvisa-py, psutil, pyserial and nidaqmx. native.py accepts resource, timeout_ms, use_opc, visa_backend, use_cc_status, query_delay_s and log. The loader refuses the hardware backend of this unreviewed model-written R2 package until a human signs reviewed_by; no human review or hardware run is claimed. AUTHORSHIP: authored_by is the model deepseek-v4.1-flash:1017 (run retriage-drivers-1-014); reviewed_by is null. The fake evidence is contract_checked only. check-report.json is regenerated by every gate run; gate.digest is the digest the last check printed.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-17; reviewed_by stays null): Model review found unchecked optional *OPC? replies and a shared, unprotected channel selector in the native shutdown path. driver.py removes safe-state certification, keeps a failing off attempt, corrects facts and requires operator envelopes for undocumented lower bounds; fake.py and test_driver.py cover command rounding, envelopes and failed/latching stops. facts.md and site-limits.example.json document the block and test bounds; reference.json, REFERENCE.md and check-report.json were regenerated. Eight functional fake cases pass, but the gate and strict collector fail G3/SAFE-045; the unchanged author RESULT also yields RESULT_UNTRUSTED. For the human reviewer: A source-backed helper must serialize/interrupt shared VISA traffic, validate shutdown acknowledgement and bound stop latency; the default per-query timeout is 5000 ms. An off request or teardown proves no output-disabled state. Validate the load envelope and 160 W/channel SOA before deployment; smaller HMP models and NI-DAQ are not served. The hardware factory was not started."
+}

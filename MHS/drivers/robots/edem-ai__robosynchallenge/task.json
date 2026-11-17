@@ -1,0 +1,81 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.edem-ai/robosynchallenge",
+  "track": "robots",
+  "local_path": "robots/edem-ai/robosynchallenge",
+  "driver_dir": "MHS/drivers/robots/edem-ai__robosynchallenge",
+  "upstream": {
+    "repo_url": "https://github.com/edem-ai/robosynchallenge",
+    "commit": "8818c82df5fa2522809b8105e7018950dcc9a9a8",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 261,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robosynchallenge.tasks.click_bell.click_bell:ClickBellEnv",
+      "file": "robosynchallenge/tasks/click_bell/click_bell.py",
+      "line": 35,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "robosynchallenge/tasks/_other_tasks/open_pan/open_pan.py:39 gym env OpenPanPickAndPlaceEnv-v1",
+      "robosynchallenge/tasks/_other_tasks/open_pan/open_pan.py:271 gym env OpenPanPickAndPlaceTest-v1",
+      "robosynchallenge/tasks/_other_tasks/open_pan/open_pan.py:281 gym env OpenPanPickAndPlaceAgent-v1",
+      "robosynchallenge/tasks/_other_tasks/sample_loading/sample_loading.py:33 gym env SampleLoading-v1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env OpenPanPickAndPlaceEnv-v1 registered at robosynchallenge/tasks/_other_tasks/open_pan/open_pan.py:39",
+      "gym env OpenPanPickAndPlaceTest-v1 registered at robosynchallenge/tasks/_other_tasks/open_pan/open_pan.py:271",
+      "gym env OpenPanPickAndPlaceAgent-v1 registered at robosynchallenge/tasks/_other_tasks/open_pan/open_pan.py:281",
+      "gym env SampleLoading-v1 registered at robosynchallenge/tasks/_other_tasks/sample_loading/sample_loading.py:33",
+      "gym env SampleLoadingAgent-v1 registered at robosynchallenge/tasks/_other_tasks/sample_loading/sample_loading.py:133"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/edem-ai__robosynchallenge --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

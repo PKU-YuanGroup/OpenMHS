@@ -1,0 +1,32 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.lucasgerads/lecroy-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/lucasgerads/lecroy-mcp",
+    "commit": "3c866b341605ca689069d729c7b918f1c725d2e6",
+    "license_spdx": "AGPL-3.0"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "pyproject.toml requires Python >=3.10 and pyvisa>=1.13/pyvisa-py>=0.7 (pyproject.toml:10-17); only native.py imports the upstream oscilloscope module, at hardware time. The gate never installs or imports the upstream clone."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeLeCroyScope"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "retriage-drivers-1-020",
+    "date": "2026-11-17"
+  },
+  "reviewed_by": null
+}

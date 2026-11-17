@@ -1,0 +1,89 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.valiantandupright/oscilloscope-mcp",
+  "track": "labs",
+  "local_path": "labs/valiantandupright/oscilloscope-mcp",
+  "driver_dir": "MHS/drivers/labs/valiantandupright__oscilloscope-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/valiantandupright/oscilloscope-mcp",
+    "commit": "20c25de5a2f01cdf037b10c7d68a170bc233f4c4",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 358,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "osc.scope:Scope",
+      "file": "osc/scope.py",
+      "line": 112,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "osc/simulator.py:49 SimulatedScope",
+      "osc/simulator.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Scope.identify",
+      "Scope.query_binary",
+      "Scope.status"
+    ],
+    "writes": [
+      "Scope.configure_channel",
+      "Scope.configure_timebase",
+      "Scope.configure_trigger"
+    ],
+    "actions": [
+      "Scope.capture",
+      "Scope.measure",
+      "Scope.run",
+      "Scope.stop"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/valiantandupright__oscilloscope-mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

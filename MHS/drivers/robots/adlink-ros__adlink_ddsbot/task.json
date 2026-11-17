@@ -1,0 +1,76 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.adlink-ros/adlink_ddsbot",
+  "track": "robots",
+  "local_path": "robots/adlink-ros/adlink_ddsbot",
+  "driver_dir": "MHS/drivers/robots/adlink-ros__adlink_ddsbot",
+  "upstream": {
+    "repo_url": "https://github.com/adlink-ros/adlink_ddsbot",
+    "commit": "6b077391af87b61f72b26f5046b04dd2b3576ab2",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 11,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "base_control:BaseControl",
+      "file": "script/base_control.py",
+      "line": 26,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "catkin_make"
+    ],
+    "system_deps": [
+      "Catkin workspace with this package in src; run catkin_make from the workspace root"
+    ],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "script/test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "Motor.spin"
+    ],
+    "candidate_classes": [
+      "cap.motion.mobile_base.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/adlink-ros__adlink_ddsbot --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

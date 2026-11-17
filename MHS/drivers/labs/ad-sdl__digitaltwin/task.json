@@ -1,0 +1,89 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ad-sdl/digitaltwin",
+  "track": "labs",
+  "local_path": "labs/ad-sdl/digitaltwin",
+  "driver_dir": "MHS/drivers/labs/ad-sdl__digitaltwin",
+  "upstream": {
+    "repo_url": "https://github.com/ad-sdl/digitaltwin",
+    "commit": "c8dfbd5998462d6fd0c1afb197f66b5a52c2d126",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 133,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "rpl_centrifuge.openarm.mimic_env:CentrifugeBimanualOpenArmIKAbsMimicEnv",
+      "file": "tasks/centrifuge/tasks/src/rpl_centrifuge/openarm/mimic_env.py",
+      "line": 44,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:57 gym env Isaac-Centrifuge-Bimanual-OpenArm-IK-Rel-v0",
+      "tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:66 gym env Isaac-Centrifuge-Bimanual-OpenArm-IK-Abs-v0",
+      "tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:75 gym env Isaac-Centrifuge-Bimanual-OpenArm-IK-Abs-Mimic-v0",
+      "tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:87 gym env Isaac-Centrifuge-Bimanual-OpenArm-IK-Abs-Visuomotor-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Isaac-Centrifuge-Bimanual-OpenArm-IK-Rel-v0 registered at tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:57",
+      "gym env Isaac-Centrifuge-Bimanual-OpenArm-IK-Abs-v0 registered at tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:66",
+      "gym env Isaac-Centrifuge-Bimanual-OpenArm-IK-Abs-Mimic-v0 registered at tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:75",
+      "gym env Isaac-Centrifuge-Bimanual-OpenArm-IK-Abs-Visuomotor-v0 registered at tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:87",
+      "gym env Isaac-Centrifuge-Bimanual-OpenArm-IK-Abs-Visuomotor-Mimic-v0 registered at tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:96",
+      "gym env Isaac-Centrifuge-GR1T2-WaistEnabled-Abs-v0 registered at tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:107",
+      "gym env Isaac-Centrifuge-SO101-Leader-v0 registered at tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:116",
+      "gym env Isaac-Centrifuge-SO101-LeRobot-Leader-v0 registered at tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:125",
+      "gym env Isaac-Centrifuge-SO101-LeRobot-Leader-DR-v0 registered at tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:134",
+      "gym env Isaac-Centrifuge-SO101-IK-Abs-v0 registered at tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:143",
+      "gym env Isaac-Centrifuge-SO101-IK-Abs-Mimic-v0 registered at tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:152",
+      "gym env Isaac-Centrifuge-SO101-IK-Abs-Visuomotor-v0 registered at tasks/centrifuge/tasks/src/rpl_centrifuge/__init__.py:162"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ad-sdl__digitaltwin --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}
