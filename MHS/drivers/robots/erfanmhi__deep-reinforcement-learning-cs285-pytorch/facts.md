@@ -6,6 +6,13 @@ Every fact cites its source at commit `6da04f367e52a451c202ae7e5477994c1d149baf`
 | fact | source | ref |
 |---|---|---|
 | The environment is registered as obstacles-cs285-v0 with max_episode_steps=500 | upstream_code | hw4/cs285/envs/obstacles/__init__.py:3-7 |
+| The registration module then imports Obstacles through the package path | upstream_code | hw4/cs285/envs/obstacles/__init__.py:8 |
+| Importing cs285.envs imports ant, cheetah, obstacles and reacher | upstream_code | hw4/cs285/envs/__init__.py:1-4 |
+| The ant environment module imports mujoco_py at module scope | upstream_code | hw4/cs285/envs/ant/ant.py:16 |
+| The cheetah environment module imports mujoco_py at module scope | upstream_code | hw4/cs285/envs/cheetah/cheetah.py:2 |
+| The reacher environment module imports mujoco_env and mujoco_py.MjViewer at module scope | upstream_code | hw4/cs285/envs/reacher/reacher_env.py:3-4 |
+| The obstacles module imports gym, numpy and gym.spaces and does not import mujoco_py | upstream_code | hw4/cs285/envs/obstacles/obstacles_env.py:1-3 |
+| hw4/setup.py installs only the top-level cs285 package and declares no dependencies | upstream_code | hw4/setup.py:4-8 |
 | The action dimension is 2 and the observation dimension is 4 | upstream_code | hw4/cs285/envs/obstacles/obstacles_env.py:11-12 |
 | The action space is a Box of 2 elements bounded by boundary_min -0.99 and boundary_max 0.99 | upstream_code | hw4/cs285/envs/obstacles/obstacles_env.py:13-18 |
 | The observation space is a Box of 4 elements bounded by -inf and inf | upstream_code | hw4/cs285/envs/obstacles/obstacles_env.py:20-22 |
@@ -33,6 +40,18 @@ navigation, no forces or contacts), determinism `seeded` with `seed_control` `pa
 `ticks` count discrete moves), `realtime_factor` 0, clock `lockstep`, reset `full`, no snapshot and restore. The gaps
 say what is not modelled (including the 500-step gym TimeLimit and the render image array) and that this package's
 fake was not compared with the upstream environment.
+
+Sim path (`driver.py`): `backends["sim"]` is `_build_sim_env`. It executes the pinned
+`hw4/cs285/envs/obstacles/obstacles_env.py` and wraps `Obstacles()` from that file (`obstacles_env.py:5-6`)
+in the registration's 500-step `TimeLimit` (`hw4/cs285/envs/obstacles/__init__.py:6`).
+`env_module` is not set. Importing `cs285.envs.obstacles` runs `hw4/cs285/envs/__init__.py:1-4` before the
+`register` call at `hw4/cs285/envs/obstacles/__init__.py:3-7`, and that parent imports `mujoco_py`
+(`hw4/cs285/envs/ant/ant.py:16`, `hw4/cs285/envs/cheetah/cheetah.py:2`, `hw4/cs285/envs/reacher/reacher_env.py:3-4`).
+`hw4/setup.py:4-8` lists `packages=['cs285']` only, and `hw4/cs285` has no `__init__.py`, so installing the homework
+does not expose `cs285.envs`. The factory looks for the file under `/src` or under the pinned clone next to this
+worktree. It does not search the working directory or `PYTHONPATH`. The constructor imports `matplotlib.pyplot` and
+creates a figure (`obstacles_env.py:8`, `:41`); the factory preserves its rendering configuration.
+The fake backend is still `.fake:FakeObstacles` and does not call the factory.
 
 Safety: simulated R0 device. The e-stop is the runtime's software latch (no native stop exists); after it no step,
 seed or reset is accepted until `mhs.safety.reset` clears the latch, and the state stays readable.

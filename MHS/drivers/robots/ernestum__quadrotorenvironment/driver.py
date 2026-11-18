@@ -8,14 +8,17 @@ derives the contract from the environment's spaces.  ``cap.world.step.v1`` takes
 ``{seed, options}`` and ``cap.world.seed.v1`` ``{seed}``.  The device is simulated (R0): there is no hardware
 backend, no e-stop path to a machine and no operator-required limit.
 
-The environment is not registered with ``gymnasium.make``, so ``env_id`` stays ``None`` and no ``sim`` backend opens
-the upstream package.  The gate cannot import the clone (no ``gym``, numpy or numpy-quaternion where it runs), so the
-``fake`` backend is this package's pure Python ``QuadrotorModel``/``ToObservationMap``/``RewardFunction``
-(``fake.py``).  That upstream path was not run here (README.md).
+The clone registers no environment id.  Its unit test builds ``QuadrotorEnvironment()``
+(``quadrotor_environment/tests/test_quadrotorEnvironment.py:98``) with the default constructor
+(``quadrotor_environment/quadrotor_environment.py:49-58``).  ``enable_rendering`` defaults to false, so ``render``
+is not called (``quadrotor_environment.py:175`` and ``:221``).  ``backends["sim"]`` is ``make_sim_env``, which
+imports that class and returns ``QuadrotorEnvironment()``.  ``env_id`` stays ``None``.  The ``fake`` backend is
+this package's pure Python stand-in (``fake.py``).
 
-The ``fidelity`` attribute is the fidelity contract of the model as deployed (spec 05-fidelity FID-002).  Every
-constant and rule cites a line of the clone at the pinned commit 597f8e3294c6a5d3ffc6907749f94a97dee700f3.  This
-package is model-authored and unreviewed: it is checked on the fake backend only.
+The ``fidelity`` attribute is the fidelity contract of the model as deployed on the fake backend (spec 05-fidelity
+FID-002).  The sim backend publishes its own determinism through ``fidelity_by_backend``.  Every constant and rule
+cites a line of the clone at the pinned commit 597f8e3294c6a5d3ffc6907749f94a97dee700f3.  This package is
+model-authored and unreviewed.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -31,19 +34,34 @@ NOISE = "quadrotor_environment/noise_model.py"
 SPR = "quadrotor_environment/simulation_parameter_randomization.py"
 
 
+def make_sim_env(**_options):
+    """Build the real ``QuadrotorEnvironment`` the clone's test constructs.
+
+    ``quadrotor_environment/tests/test_quadrotorEnvironment.py:98`` calls ``QuadrotorEnvironment()``.
+    Defaults are ``quadrotor_environment/quadrotor_environment.py:49-58`` (``enable_rendering`` false, so
+    ``render`` is not called: ``quadrotor_environment.py:175`` and ``:221``).
+    """
+    from quadrotor_environment.quadrotor_environment import QuadrotorEnvironment
+
+    return QuadrotorEnvironment()
+
+
 class Quadrotor(GymnasiumDriver):
     device_id = "quadrotor"
-    #: The upstream environment is a legacy Gym class, not a registered gymnasium id: there is no gymnasium.make()
-    #: path, so no ``sim`` backend is declared and env_id stays unset.
+    #: The upstream environment is a legacy Gym class, not a registered gymnasium id
+    #: (quadrotor_environment/tests/test_quadrotorEnvironment.py:98 constructs QuadrotorEnvironment()).
+    #: env_id stays unset; the sim backend is make_sim_env.
     env_id = None
     native = "quadrotor_environment.quadrotor_environment:QuadrotorEnvironment"
-    backends = {"fake": ".fake:FakeQuadrotorEnvironment"}
+    backends = {"fake": ".fake:FakeQuadrotorEnvironment", "sim": make_sim_env}
     display_name = "QuadrotorEnvironment quadrotor simulator"
     vendor, model = "Maximilian Ernestus", "QuadrotorEnvironment"
     tags = ["quadrotor", "drone", "reinforcement-learning", "simulation", "gym"]
     facts = [
         Fact("QuadrotorEnvironment is a Gym environment that simulates a quadrotor; it is not a hardware "
              "interface", source="upstream_code", ref=f"{ENVIRONMENT}:26-28"),
+        Fact("The clone's unit test builds QuadrotorEnvironment() with the default constructor",
+             source="upstream_code", ref="quadrotor_environment/tests/test_quadrotorEnvironment.py:98"),
         Fact("The action space is Box(-1, 1, (4,), dtype float32): four continuous command values in [-1, 1]",
              source="upstream_code", ref=f"{ENVIRONMENT}:132"),
         Fact("step() returns (observation, reward, done, {}) and done is delayed_model.time >= max_time",
@@ -118,10 +136,11 @@ class Quadrotor(GymnasiumDriver):
             "kind": "seeded",
             "seed_control": "parameter",
             "notes": "This package's fake reseeds its Python random generator from reset(seed) or "
-                     "cap.world.seed.v1 and is deterministic from there; the upstream QuadrotorEnvironment.reset "
-                     "has no seed argument (quadrotor_environment.py:196-197) and draws its initial state from "
-                     "numpy's global generator (quadrotor_environment.py:190-193), so the seeded claim covers the "
-                     "fake backend that is actually served, not an unrun upstream path",
+                     "cap.world.seed.v1 and is deterministic from there. The upstream "
+                     "QuadrotorEnvironment.reset takes no seed (quadrotor_environment.py:196-197) and "
+                     "random_state draws from numpy's global generator (quadrotor_environment.py:190-193). "
+                     "The seeded claim covers the fake backend; the sim backend's contract is "
+                     "fidelity_by_backend",
         },
         "timestep_ms": 10.0,
         "realtime_factor": 0,
@@ -134,12 +153,24 @@ class Quadrotor(GymnasiumDriver):
             "the default configuration has no observation noise, delay or jitter (noise_model.py:24-29, "
             "model_delay_wrapper.py:16-23); the fake models the zero-noise, zero-delay defaults only",
             "the fake re-implements the dynamics, the default observation map and the default reward in pure "
-            "Python floats with Python's random generator; it was never compared with the upstream environment "
-            "(numpy and numpy-quaternion are not installed where the gate runs), so trajectories can differ from "
-            "upstream's numpy float64 results and numpy random stream",
+            "Python floats with Python's random generator; it was never compared with the upstream environment, "
+            "so trajectories can differ from upstream's numpy float64 results and numpy random stream",
             "no wall-clock pacing: realtime_factor 0, one tick advances simulated time by timestep_ms (one "
             "controller period of 0.01 s) only",
             "no physical device is modelled and the model was never validated against one",
             "snapshot and restore are not offered: the environment exposes no get_state or set_state",
         ],
+    }
+    #: The sim backend serves QuadrotorEnvironment() (tests/test_quadrotorEnvironment.py:98).  reset takes no
+    #: seed (quadrotor_environment.py:196-197) and random_state uses numpy's global generator
+    #: (quadrotor_environment.py:190-193), so this backend does not claim a replayable seed.
+    fidelity_by_backend = {
+        "sim": {
+            "determinism": {
+                "kind": "statistical",
+                "seed_control": "none",
+                "notes": "QuadrotorEnvironment.reset takes no seed (quadrotor_environment.py:196-197) and "
+                         "random_state draws from numpy's global generator (quadrotor_environment.py:190-193)",
+            },
+        },
     }
