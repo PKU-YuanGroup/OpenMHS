@@ -7,17 +7,14 @@ contract from the environment's spaces, so ``cap.world.step.v1`` takes ``{ticks,
 ``cap.world.reset.v1`` takes ``{seed, options}`` and ``cap.world.seed.v1`` takes ``{seed}``.  The device is
 simulated (R0): there is no hardware backend, no e-stop path to a machine and no operator-required limit.
 
-The environment is not registered with ``gymnasium.make`` anywhere in the clone.  The Isaac Lab registrations in
-``isaac_lab/__init__.py`` name the external entry point ``isaaclab.envs:ManagerBasedRLEnv``, and
-``learning/smoke_test.py`` constructs ``YertleEnv`` directly.  The ``fake`` backend is a pure Python stand-in for
-the environment interface.  The ``sim`` backend is ``_build_sim_env``: it imports ``learning.yertle_env:YertleEnv``
-and constructs it with the constructor defaults (``config`` None, ``render_mode`` None), which connects a DIRECT
-PyBullet client.  The import stays inside the factory, so the fake backend does not import PyBullet.  The URDF path
-is the repository root beside that module.  The fake was never compared with a PyBullet run, and the fidelity
-``gaps`` say what it does not model.
+The environment is not registered with ``gymnasium.make`` anywhere in the clone (the Isaac Lab registrations in
+``isaac_lab/__init__.py`` name an external entry point), so this package does not offer a ``sim`` backend: opening the
+real environment would require importing the read-only clone, which package code must not do.  The ``fake`` backend is
+a pure Python stand-in for the environment interface; it is checked by the gate.  It was never compared with a
+PyBullet run, and the fidelity ``gaps`` say what it does not model.
 
 Every Fact cites a line of the clone at the pinned commit 9d04e2d2c1da07d5845807bd36b242b1d0eff843.  This package is
-model-authored and unreviewed.
+model-authored and unreviewed; it is checked on the fake backend only.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -25,30 +22,11 @@ from mhs.driver import Fact, GymnasiumDriver
 ENV = "learning/yertle_env.py"
 
 
-def _build_sim_env(**_options):
-    """Build the real upstream ``learning.yertle_env:YertleEnv`` for the ``sim`` backend.
-
-    The import is inside the factory so the fake backend never needs PyBullet.  ``YertleEnv`` is not registered
-    with gymnasium; ``learning/smoke_test.py:18`` constructs the class directly.  The constructor defaults
-    ``config`` and ``render_mode`` to None (``learning/yertle_env.py:131``), and a ``render_mode`` other than
-    ``human`` connects a DIRECT client (``learning/yertle_env.py:166-171``).  The URDF is
-    ``<repository>/simulation/yertle.urdf``, resolved from this module's location
-    (``learning/yertle_env.py:48-49``), so the repository root has to be the import root of ``learning``.  The
-    returned object is the upstream instance; nothing on it is wrapped, patched or replaced.
-    """
-    from learning.yertle_env import YertleEnv
-
-    return YertleEnv()
-
-
 class Yertle(GymnasiumDriver):
     device_id = "yertle"
-    env_id = None  # no gymnasium id is registered for YertleEnv; smoke_test constructs the class
+    env_id = None  # no gymnasium id is registered for this environment in the clone
     native = "learning.yertle_env:YertleEnv"
-    # `fake` is this package's stand-in.  `sim` constructs YertleEnv (learning/yertle_env.py:126) through
-    # `_build_sim_env`.  The sim entry is a callable, so the lock's string entry (`fake` only) still describes
-    # the package's declared string backend and G2 compares a lock only when every entry is a string.
-    backends = {"fake": ".fake:FakeYertleEnv", "sim": _build_sim_env}
+    backends = {"fake": ".fake:FakeYertleEnv"}
     action_space_ref = f"{ENV}:151"
     display_name = "Yertle quadruped locomotion environment (PyBullet)"
     vendor, model = "Jerome Graves", "Yertle"
@@ -57,12 +35,6 @@ class Yertle(GymnasiumDriver):
         Fact("YertleEnv is a Gymnasium environment for the Yertle quadruped that loads simulation/yertle.urdf in "
              "PyBullet and exposes the standard Gymnasium API", source="upstream_code", ref=f"{ENV}:1-4"),
         Fact("YertleEnv subclasses gym.Env", source="upstream_code", ref=f"{ENV}:126"),
-        Fact("The constructor takes an optional config and render_mode and defaults both to None",
-             source="upstream_code", ref=f"{ENV}:131"),
-        Fact("The URDF path is the repository root beside this module, simulation/yertle.urdf",
-             source="upstream_code", ref=f"{ENV}:48-49"),
-        Fact("smoke_test constructs YertleEnv directly", source="upstream_code",
-             ref="learning/smoke_test.py:18"),
         Fact("The robot has 12 actuated joints: the four leg prefixes lf, rf, lb and rb times the three segments "
              "shoulder, thigh and shin", source="upstream_code", ref=f"{ENV}:47-51"),
         Fact("The action space is one residual per actuated joint: a Box with low -1.0 and high 1.0",
@@ -137,8 +109,8 @@ class Yertle(GymnasiumDriver):
             "Python's random.Random, so a seed gives different values on the two",
             "no rendering: render() and the 640x480 rgb_array frame are not modelled, and the bridge does not bind "
             "cap.world.render.v1",
-            "the sim backend constructs learning.yertle_env:YertleEnv with the constructor defaults (DIRECT PyBullet); "
-            "the fake imports neither pybullet nor gymnasium and was not compared with a PyBullet run",
+            "the upstream package needs pybullet>=3.2, gymnasium>=0.29 and numpy; the package imports none of them, "
+            "and no sim backend is declared because no gymnasium id is registered for YertleEnv",
             "no physical Yertle is modelled and no hardware run was made",
         ],
     }
