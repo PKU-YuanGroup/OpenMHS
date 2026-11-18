@@ -108,8 +108,8 @@ jobs:
           python3 MHS/handoff/tools/prepare.py --sync --check
           changed=$(python3 tools/changed_packages.py "$base")
           if [ -z "$changed" ]; then echo "no driver package changed"; exit 0; fi
-          # A package recorded as pass must pass; a blocked or skip-proposed record must fail the gate as it says
-          # (MHS/handoff/BLOCKED.md). collect.py --recorded checks both; it runs the gate itself.
+          # A package recorded as pass must pass; a blocked or skip-proposed record (MHS/handoff/BLOCKED.md) is in
+          # order as it is. collect.py --recorded checks that; it runs the gate itself.
           for d in $changed; do
             test -f "$d/task.json" || { echo "$d was deleted or has no task.json"; exit 1; }
             status=$(python3 -c 'import json, sys; print(json.load(open(sys.argv[1])).get("status"))' "$d/RESULT.json" 2>/dev/null || true)

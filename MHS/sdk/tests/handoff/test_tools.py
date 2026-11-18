@@ -539,17 +539,17 @@ class CollectVerdictTests(unittest.TestCase):
         row = self.package(result=self.passing(), helper="PythonObjectDriver", decision="direct-driver")
         self.assertEqual(row["notes"], [], "a direct-driver card may use Driver or its family helper")
 
-    def test_recorded_asks_whether_the_record_is_true(self):
+    def test_recorded_asks_whether_the_record_holds(self):
         cases = {"a pass that passes": ("pass", True, True), "a pass that fails": ("pass", False, False),
                  "a blocked record that fails": ("blocked", False, True),
-                 "a blocked record that passes": ("blocked", True, False),
+                 "a record a review blocked although the gate passes": ("blocked", True, True),
                  "a skip proposal that fails": ("skip-proposed", False, True),
                  "no RESULT.json": (None, False, False), "an unreadable RESULT.json": ("unreadable", False, False)}
         for label, (claimed, passed, expected) in cases.items():
             with self.subTest(label):
                 self.assertIs(collect.recorded_outcome({"result_json_status": claimed, "gate_passed": passed}), expected)
 
-    def test_the_recorded_exit_code_accepts_a_blocked_record_and_nothing_untrue(self):
+    def test_the_recorded_exit_code_accepts_a_blocked_record_and_no_failing_pass(self):
         root = Path(tempfile.mkdtemp(prefix="collect-recorded-"))
         self.addCleanup(shutil.rmtree, root, True)
         directory = root / "MHS/drivers/labs/acme__widgetron"
@@ -567,10 +567,12 @@ class CollectVerdictTests(unittest.TestCase):
         self.assertEqual(run("blocked", False)[0], 1, "without --recorded every package must pass")
         self.assertEqual(run("blocked", False, "--recorded")[0], 0)
         self.assertEqual(run("pass", True, "--recorded")[0], 0)
-        code, err = run("blocked", True, "--recorded")
+        self.assertEqual(run("blocked", True, "--recorded")[0], 0, "a review may block what the gate accepts")
+        untrusted = ["RESULT_UNTRUSTED: the gate passes but RESULT.json says 'blocked'"]
+        self.assertEqual(run("blocked", True, "--recorded", "--strict", warnings=untrusted)[0], 1)
+        code, err = run("pass", False, "--recorded")
         self.assertEqual(code, 1)
-        self.assertIn("RESULT.json says 'blocked', the gate passes", err)
-        self.assertEqual(run("pass", False, "--recorded")[0], 1)
+        self.assertIn("RESULT.json says 'pass', the gate fails", err)
         self.assertEqual(run(None, False, "--recorded")[0], 1)
         self.assertEqual(run("blocked", False, "--recorded", "--strict", warnings=["RESULT_SCHEMA: x"])[0], 1)
 

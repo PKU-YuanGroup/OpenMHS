@@ -41,9 +41,10 @@ A package whose ``driver.lock.json`` carries ``reviewed_by`` has its last two ki
 instead of warnings: signing is the act of reading them (MHS/handoff/REVIEW.md).
 
 Exit code: 0 when every package passes the gate (and, with --strict, has no warnings), 1 otherwise, 2 on a usage error.
-With ``--recorded`` the question is whether each record is true, not whether each package passes: a ``pass`` must pass
-the gate, and a ``blocked`` or ``skip-proposed`` record must fail it (the repository keeps such records, see
-``BLOCKED.md``); a package without RESULT.json is never in order.
+With ``--recorded`` the question is whether each record holds, not whether each package passes: a ``pass`` must pass
+the gate; a ``blocked`` or ``skip-proposed`` record is in order whether its gate fails or passes (the repository keeps
+such records, see ``BLOCKED.md``; a review can block a package the gate accepts, which stays the ``RESULT_UNTRUSTED``
+warning above); a package without a readable RESULT.json is never in order.
 """
 
 from __future__ import annotations
@@ -358,11 +359,12 @@ def summarise(root: Path, directory: Path, companions_root: Path | None = None) 
 
 
 def recorded_outcome(row: dict) -> bool:
-    """Whether the gate outcome of a summarised package is the one its RESULT.json records (``--recorded``)."""
+    """Whether the record of a summarised package holds (``--recorded``): a pass must pass the gate; a blocked or
+    skip-proposed record does not claim a pass, so it is in order whatever its gate says."""
     claimed = row["result_json_status"]
     if claimed == "pass":
         return bool(row["gate_passed"])
-    return claimed in ("blocked", "skip-proposed") and not row["gate_passed"]
+    return claimed in ("blocked", "skip-proposed")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -372,9 +374,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", type=Path, help="write the summary as JSON here")
     parser.add_argument("--strict", action="store_true", help="exit 1 on warnings too")
     parser.add_argument("--recorded", action="store_true",
-                        help="exit 0 when the gate outcome of every package is the one its RESULT.json records: a "
-                             "blocked or skip-proposed record whose gate fails is in order (CI uses it for the "
-                             "packages a pull request changes)")
+                        help="exit 0 when every record holds: a pass passes the gate, and a blocked or skip-proposed "
+                             "record is in order as it is (CI uses it for the packages a pull request changes)")
     parser.add_argument("--companions-root", type=Path,
                         help="the directory of fetched companion clones and their LOCK.json, passed to the gate "
                              "(default: work/companions under the root)")
