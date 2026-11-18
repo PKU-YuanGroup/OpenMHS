@@ -1278,6 +1278,20 @@ class ChangelogTests(unittest.TestCase):
         (root / "MHS/changes/WP-02.md").write_text("# WP-02 — Second\n\nMore.\n")
         self.assertEqual(run_main(build_changelog, ["--check", "--root", str(root)])[0], 1)
 
+    def test_a_link_between_fragments_points_into_the_fragment_directory(self):
+        root = Path(tempfile.mkdtemp(prefix="changelog-links-"))
+        self.addCleanup(shutil.rmtree, root, True)
+        (root / "MHS/changes").mkdir(parents=True)
+        (root / "MHS/changes/WP-01.md").write_text("# WP-01 — First\n\nSee [the second](WP-02.md#part), "
+                                                   "[the spec](../spec/core.md) and [a missing note](NOPE.md).\n")
+        (root / "MHS/changes/WP-02.md").write_text("# WP-02 — Second\n\nMore.\n")
+        (root / "CHANGELOG.md").write_text(f"# Changelog\n\n{build_changelog.BEGIN}\n{build_changelog.END}\n")
+        self.assertEqual(run_main(build_changelog, ["--root", str(root)])[0], 0)
+        text = (root / "CHANGELOG.md").read_text()
+        self.assertIn("[the second](MHS/changes/WP-02.md#part)", text)
+        self.assertIn("[the spec](../spec/core.md)", text, "a path is left as written")
+        self.assertIn("[a missing note](NOPE.md)", text, "a name that is not a fragment is left as written")
+
     def test_the_shipped_changelog_lists_every_fragment(self):
         self.assertEqual(run_main(build_changelog, ["--check", "--root", str(REPO)])[0], 0)
 
