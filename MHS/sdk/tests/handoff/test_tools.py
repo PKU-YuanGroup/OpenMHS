@@ -1138,6 +1138,66 @@ class FetchCloneTests(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertIn("already at", out)
 
+    def source_with_submodule(self):
+        source = Path(tempfile.mkdtemp(prefix="fetch-sub-"))
+        self.addCleanup(shutil.rmtree, source, True)
+        make_clone(source / "sub", {"scene.xml": "<mujoco/>\n"})
+        make_clone(source / "up", {"a.txt": "hello\n"})
+        git("-c", "protocol.file.allow=always", "submodule", "add", "-q", str(source / "sub"), "models", cwd=source / "up")
+        git("commit", "-q", "-m", "add the models submodule", cwd=source / "up")
+        commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=source / "up", capture_output=True, text=True,
+                                check=True).stdout.strip()
+        return source / "up", commit
+
+    def package_root(self, commit, driver_text):
+        root = SyntheticRoot([card(commit=commit)])
+        self.addCleanup(root.close)
+        package = root.dir / "MHS/drivers/labs/acme__widgetron"
+        package.mkdir(parents=True)
+        (package / "driver.py").write_text(driver_text, encoding="utf-8")
+        return root.dir
+
+    def test_a_submodule_the_package_names_is_fetched_at_its_gitlink(self):
+        up, commit = self.source_with_submodule()
+        root = self.package_root(commit, 'MODEL = "models/scene.xml"\n')
+        args = ["gh.acme/widgetron", "--root", str(root), "--source", str(up)]
+        dest = root / "labs/acme/widgetron"
+        code, out, err = run_main(fetch_clone, args + ["--submodules", "none"])
+        self.assertEqual(code, 0, err)
+        self.assertFalse((dest / "models/scene.xml").exists(), "none fetches no submodule")
+        code, out, err = run_main(fetch_clone, args)
+        self.assertEqual(code, 0, err)
+        self.assertIn("submodule models at", out)
+        self.assertTrue((dest / "models/scene.xml").is_file())
+        gitlink = subprocess.run(["git", "ls-files", "--stage", "--", "models"], cwd=dest, capture_output=True,
+                                 text=True).stdout.split()[1]
+        head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=dest / "models", capture_output=True, text=True).stdout.strip()
+        self.assertEqual(head, gitlink)
+        code, out, err = run_main(fetch_clone, args)
+        self.assertEqual(code, 0, err)
+        self.assertIn("submodule models is already at", out)
+
+    def test_a_submodule_the_package_does_not_name_is_fetched_only_with_all(self):
+        up, commit = self.source_with_submodule()
+        root = self.package_root(commit, 'MODEL = "assets/scene.xml"  # not in the models submodule\n')
+        args = ["gh.acme/widgetron", "--root", str(root), "--source", str(up)]
+        dest = root / "labs/acme/widgetron"
+        code, out, err = run_main(fetch_clone, args)
+        self.assertEqual(code, 0, err)
+        self.assertFalse((dest / "models/scene.xml").exists())
+        code, out, err = run_main(fetch_clone, args + ["--submodules", "all"])
+        self.assertEqual(code, 0, err)
+        self.assertTrue((dest / "models/scene.xml").is_file())
+
+    def test_a_submodule_the_source_never_checked_out_is_an_error(self):
+        up, commit = self.source_with_submodule()
+        bare = up.parent / "plain"
+        git("clone", "-q", str(up), str(bare), cwd=up.parent)  # a clone of the source without its submodule
+        root = self.package_root(commit, 'MODEL = "models/scene.xml"\n')
+        code, out, err = run_main(fetch_clone, ["gh.acme/widgetron", "--root", str(root), "--source", str(bare)])
+        self.assertEqual(code, 1)
+        self.assertIn("no checkout of submodule models", err)
+
 
 class ChangelogTests(unittest.TestCase):
     def test_a_new_fragment_makes_check_fail_until_rebuilt(self):

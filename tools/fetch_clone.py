@@ -12,6 +12,13 @@ read the card's ``local_path`` clone at the card's pinned commit.  This fetches 
 It makes a shallow clone of ``upstream.repo_url`` (``--source`` replaces the URL) at exactly ``upstream.commit`` into
 ``<root>/<local_path>``.  An existing directory is left alone if it is already at the pinned commit and has no local changes;
 otherwise the command stops (it never deletes or resets anything).  Exit code 0 on success, 1 on a failure, 2 on usage.
+
+Git submodules.  The gates read a path inside a git submodule from the submodule's own checkout at the commit the pinned
+tree records (``mhs.driver.upstream``, SUBMODULES), so a package that names such a path (a MuJoCo model, a cited source
+line) needs that submodule too.  After the clone this fetches every submodule whose path the driver package's files
+name (``--submodules cited``, the default), every submodule (``all``) or none (``none``), each shallow and at its
+gitlink commit, with ``git@github.com:`` URLs read over https.  With ``--source`` a submodule comes from the source
+clone's own checkout of it.  A submodule that cannot be fetched is an error: the gate would refuse the paths in it.
 """
 
 from __future__ import annotations
@@ -29,6 +36,68 @@ def git(*args: str, cwd: Path | None = None) -> subprocess.CompletedProcess:
     return subprocess.run(["git", "--no-optional-locks", *args], cwd=cwd, capture_output=True, text=True, check=False)
 
 
+#: ssh forms of a GitHub URL that an anonymous fetch (CI, a reader without keys) cannot use, and their https form
+HTTPS_FOR = {"git@github.com:": "https://github.com/", "ssh://git@github.com/": "https://github.com/"}
+#: package files whose text may name a path of the upstream tree
+PACKAGE_TEXT = (".py", ".md", ".json", ".txt", ".yaml", ".yml", ".toml")
+
+
+def gitlinks(clone: Path) -> list[str]:
+    """Paths of the git submodules the checked-out tree records (mode 160000 entries of the index)."""
+    listing = git("ls-files", "--stage", cwd=clone).stdout
+    return sorted(line.split("\t", 1)[1] for line in listing.splitlines() if line.startswith("160000 ") and "\t" in line)
+
+
+def cited_submodules(root: Path, card: dict, links: list[str]) -> list[str]:
+    """The submodules whose path the driver package names in one of its text files (``<path>/`` as a path prefix)."""
+    directory = root / (card.get("driver_dir") or "")
+    if not card.get("driver_dir") or not directory.is_dir():
+        return []
+    text = "\n".join(path.read_text(encoding="utf-8", errors="replace") for path in sorted(directory.iterdir())
+                     if path.is_file() and path.suffix in PACKAGE_TEXT)
+    return [link for link in links if link + "/" in text]
+
+
+def fetch_submodules(root: Path, card: dict, source: str | None, mode: str) -> int:
+    """Check out the submodules the package needs at their gitlink commits.  0 when all of them are in place."""
+    clone = root / card["local_path"]
+    links = gitlinks(clone)
+    wanted = links if mode == "all" else cited_submodules(root, card, links)
+    status = 0
+    for link in wanted:
+        gitlink = git("ls-files", "--stage", "--", link, cwd=clone).stdout.split()[1]
+        head = git("rev-parse", "HEAD", cwd=clone / link).stdout.strip() if (clone / link / ".git").exists() else ""
+        if head == gitlink:
+            print(f"ok      {card['package_id']}: submodule {link} is already at {gitlink[:12]}")
+            continue
+        config = ["-c", "protocol.file.allow=always"]
+        for ssh, https in HTTPS_FOR.items():
+            config += ["-c", f"url.{https}.insteadOf={ssh}"]
+        if source:  # offline: the source clone's own checkout of the submodule, if it has one
+            local = Path(source) / link
+            if not (local / ".git").exists():
+                print(f"error: {card['package_id']}: the source clone has no checkout of submodule {link}", file=sys.stderr)
+                status = 1
+                continue
+            name = git("config", "-f", ".gitmodules", "--get-regexp", r"^submodule\..*\.path$", cwd=clone).stdout
+            names = [line.split()[0][len("submodule."):-len(".path")] for line in name.splitlines()
+                     if line.split(None, 1)[1:] == [link]]
+            if len(names) != 1:
+                print(f"error: {card['package_id']}: .gitmodules does not name submodule {link} once", file=sys.stderr)
+                status = 1
+                continue
+            config += ["-c", f"submodule.{names[0]}.url={local}"]
+        result = git(*config, "submodule", "update", "--init", "--depth", "1", "--", link, cwd=clone)
+        head = git("rev-parse", "HEAD", cwd=clone / link).stdout.strip() if result.returncode == 0 else ""
+        if head != gitlink:
+            print(f"error: submodule {link} of {card['package_id']} is not at {gitlink[:12]}: "
+                  f"{result.stderr.strip()[-300:] or 'HEAD ' + (head[:12] or '?')}", file=sys.stderr)
+            status = 1
+            continue
+        print(f"fetched {card['package_id']}: submodule {link} at {gitlink[:12]}")
+    return status
+
+
 def load_card(root: Path, target: str) -> dict:
     path = Path(target)
     if not path.is_absolute():
@@ -44,7 +113,7 @@ def load_card(root: Path, target: str) -> dict:
     raise SystemExit(f"error: {target!r} is neither a driver directory with task.json nor a known package id")
 
 
-def fetch(root: Path, card: dict, source: str | None) -> int:
+def fetch(root: Path, card: dict, source: str | None, submodules: str = "cited") -> int:
     url = source or card["upstream"]["repo_url"]
     commit = card["upstream"]["commit"]
     dest = root / card["local_path"]
@@ -53,7 +122,7 @@ def fetch(root: Path, card: dict, source: str | None) -> int:
         dirty = git("status", "--porcelain", cwd=dest).stdout.strip()
         if head == commit and not dirty:
             print(f"ok      {card['package_id']}: {card['local_path']} is already at {commit[:12]}")
-            return 0
+            return 0 if submodules == "none" else fetch_submodules(root, card, source, submodules)
         print(f"error: {card['local_path']} exists (HEAD {head[:12] or '?'}, {'modified' if dirty else 'clean'}) and is not the "
               f"pinned commit {commit[:12]}; remove it yourself if you want a fresh copy", file=sys.stderr)
         return 1
@@ -77,7 +146,7 @@ def fetch(root: Path, card: dict, source: str | None) -> int:
         print(f"error: fetched {head[:12]}, expected {commit[:12]}", file=sys.stderr)
         return 1
     print(f"fetched {card['package_id']}: {card['local_path']} at {commit[:12]} from {url}")
-    return 0
+    return 0 if submodules == "none" else fetch_submodules(root, card, source, submodules)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -86,6 +155,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--exemplars", action="store_true", help="the packages listed in MHS/drivers/EXEMPLARS.txt")
     parser.add_argument("--source", help="clone from this path or URL instead of the card's repo_url (one target only)")
     parser.add_argument("--root", type=Path, default=DEFAULT_ROOT, help="repository root (default: found from this file)")
+    parser.add_argument("--submodules", choices=("cited", "all", "none"), default="cited",
+                        help="git submodules to fetch at their gitlink commits: those whose path the driver package "
+                             "names (default), all, or none")
     args = parser.parse_args(argv)
 
     root = args.root.resolve()
@@ -99,7 +171,7 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("--source works with exactly one target")
     status = 0
     for target in targets:
-        status |= fetch(root, load_card(root, target), args.source)
+        status |= fetch(root, load_card(root, target), args.source, args.submodules)
     return status
 
 
