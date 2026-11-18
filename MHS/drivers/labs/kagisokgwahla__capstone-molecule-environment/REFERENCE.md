@@ -78,6 +78,9 @@ Outputs:
 
 - The environment is registered under the id molecule-v0 with entry point gym_molecule.envs:MoleculeEnvironment (upstream_code: gym_molecule/__init__.py:3-6)
 - MoleculeEnvironment is a gym.Env subclass (upstream_code: gym_molecule/envs/molecule_env.py:14)
+- gym_molecule.envs re-exports MoleculeEnvironment from gym_molecule.envs.molecule_env (upstream_code: gym_molecule/envs/__init__.py:1)
+- The pip metadata declares gym as its only install requirement (upstream_code: setup.py:5)
+- The environment module imports RDKit and builds its chemical feature factory at module scope (upstream_code: gym_molecule/envs/molecule_env.py:4-12)
 - The constructor starts the current molecule as carbon, Chem.MolFromSmiles('C') (upstream_code: gym_molecule/envs/molecule_env.py:39)
 - The constructor starts molecule_list as ['C'] (upstream_code: gym_molecule/envs/molecule_env.py:41)
 - step adds action_ob.mol at the front or the back of molecule_list when action_c is Add (upstream_code: gym_molecule/envs/molecule_env.py:46-50)

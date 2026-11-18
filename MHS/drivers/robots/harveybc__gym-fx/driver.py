@@ -7,18 +7,90 @@ default six-block ``Dict`` of the preprocessor plugin (prices, returns, position
 unrealized_pnl_norm, steps_remaining_norm).  The device is simulated (R0): there is no hardware backend and no
 operator-required limit.
 
-The upstream environment cannot be opened here: ``GymFxEnv`` needs a config plus six plugin instances
-(``app/env.py:113-124``), a pandas CSV feed and backtrader, and package code never imports the clone.  The ``fake``
-backend is therefore the package's own pure Python stand-in (``fake.py``); it mirrors the default spaces,
-``reset(seed=..., options=...)`` and ``step(action)`` only.  No Gymnasium environment id is registered by the
-upstream project, so the ``sim`` backend (``gymnasium.make``) was not used; the fake backend is the checked one.
+The upstream registers no Gymnasium environment id: ``gym_fx/__init__.py:4-12`` builds ``GymFxEnv`` from a config
+and six plugin instances, and the clone's own smoke test constructs it that way (``tools/smoke_test.py:58-67``).
+The ``sim`` backend is therefore built by ``make_sim_env`` below, a package factory that imports the pinned
+package's ``app.env:GymFxEnv`` and its six default plugin classes and passes the clone's sample CSV as an absolute
+path; it substitutes no physics, observation or reward value.  The ``fake`` backend is the package's own pure
+Python stand-in (``fake.py``); it mirrors the default spaces, ``reset(seed=..., options=...)`` and
+``step(action)`` only.
 
 The ``fidelity`` attribute is the contract of the model as deployed (spec 05-fidelity FID-002), not of the
 upstream engine: the fake is an analytic price walk, so the level is F0 and the gaps say what is missing.  Facts
 cite the clone at commit 1eeecb789965f3e01e9e51f479c6f89265b03859.  This package is model-authored and unreviewed.
 """
 
+from pathlib import Path
+
 from mhs.driver import Fact, GymnasiumDriver
+
+#: The clone's own smoke test feeds examples/data/eurusd_sample.csv (tools/smoke_test.py:37); the checkout is /src
+#: for the orchestrator's install and robots/harveybc/gym-fx in the gate's read-only tree (task.json local_path).
+CLONE = "robots/harveybc/gym-fx"
+SAMPLE = "examples/data/eurusd_sample.csv"
+
+
+def _pinned_checkout() -> Path:
+    """The pinned checkout that holds the sample CSV the upstream smoke test reads (tools/smoke_test.py:37)."""
+    here = Path(__file__).resolve()
+    roots: list[Path] = []
+    if len(here.parents) > 4:
+        roots.append(here.parents[4])
+    roots.extend((Path("/src"), Path.cwd()))
+    for root in roots:
+        for candidate in (root / CLONE, root):
+            if (candidate / SAMPLE).is_file():
+                return candidate
+    try:  # an editable/checkout install resolves the package next to the data directory
+        import app
+    except Exception:  # noqa: BLE001 - the installed package is outside the checkout
+        pass
+    else:
+        package = getattr(app, "__file__", None)
+        if package:
+            candidate = Path(package).resolve().parent.parent
+            if (candidate / SAMPLE).is_file():
+                return candidate
+    raise FileNotFoundError(f"{SAMPLE} is not in /src, the gate clone {CLONE}, or the current directory")
+
+
+def make_sim_env(**_options):
+    """Build the real ``app.env:GymFxEnv`` exactly as the clone's smoke test does (tools/smoke_test.py:58-67)."""
+    from app.config import DEFAULT_VALUES
+    from app.env import GymFxEnv
+    from broker_plugins.default_broker import Plugin as BrokerPlugin
+    from data_feed_plugins.default_data_feed import Plugin as DataFeedPlugin
+    from metrics_plugins.default_metrics import Plugin as MetricsPlugin
+    from preprocessor_plugins.default_preprocessor import Plugin as PreprocessorPlugin
+    from reward_plugins.pnl_reward import Plugin as RewardPlugin
+    from strategy_plugins.default_strategy import Plugin as StrategyPlugin
+
+    # The smoke test's config (tools/smoke_test.py:40-55), with the CSV made absolute because the plugin opens
+    # config["input_data_file"] directly (data_feed_plugins/default_data_feed.py:36-40).
+    config = {
+        **DEFAULT_VALUES,
+        "mode": "inference",
+        "driver_mode": "flat",
+        "steps": 480,
+        "input_data_file": str(_pinned_checkout() / SAMPLE),
+        "date_column": "DATE_TIME",
+        "price_column": "CLOSE",
+        "headers": True,
+        "window_size": 32,
+        "initial_cash": 10000.0,
+        "position_size": 1.0,
+        "commission": 0.0,
+        "slippage": 0.0,
+    }
+    return GymFxEnv(
+        config=config,
+        data_feed_plugin=DataFeedPlugin(config),
+        broker_plugin=BrokerPlugin(config),
+        strategy_plugin=StrategyPlugin(config),
+        preprocessor_plugin=PreprocessorPlugin(config),
+        reward_plugin=RewardPlugin(config),
+        metrics_plugin=MetricsPlugin(config),
+    )
 
 
 class GymFx(GymnasiumDriver):
@@ -27,7 +99,7 @@ class GymFx(GymnasiumDriver):
     #: the environment from a config and six plugin objects; it never calls gymnasium.register).
     env_id = "gym-fx.backtrader"
     native = "app.env:GymFxEnv"
-    backends = {"fake": ".fake:FakeGymFxEnv"}
+    backends = {"fake": ".fake:FakeGymFxEnv", "sim": make_sim_env}
     action_space_ref = "app/env.py:181"
     display_name = "gym-fx backtrader trading environment"
     vendor, model = "harveybc", "gym-fx"
@@ -66,6 +138,17 @@ class GymFx(GymnasiumDriver):
              "fixed wall-clock duration", source="upstream_code", ref="app/env.py:666-684"),
         Fact("build_environment returns GymFxEnv when simulation_engine is backtrader (the default)",
              source="upstream_code", ref="gym_fx/__init__.py:4-12"),
+        Fact("The constructor takes a config and the six plugin objects: data feed, broker, strategy, preprocessor, "
+             "reward and metrics", source="upstream_code", ref="app/env.py:107-124"),
+        Fact("The clone's smoke test builds GymFxEnv with the six default plugin instances",
+             source="upstream_code", ref="tools/smoke_test.py:58-67"),
+        Fact("The smoke test's config uses examples/data/eurusd_sample.csv and the default window, cash and "
+             "position size", source="upstream_code", ref="tools/smoke_test.py:37-55"),
+        Fact("The default plugin selection is default_data_feed, default_broker, default_strategy, "
+             "default_preprocessor, pnl_reward and default_metrics", source="upstream_code",
+             ref="app/config.py:7-13"),
+        Fact("The data feed plugin opens config['input_data_file'] directly with pandas",
+             source="upstream_code", ref="data_feed_plugins/default_data_feed.py:36-40"),
         Fact("NautilusGymFxEnv subclasses GymFxEnv", source="upstream_code",
              ref="simulation_engines/nautilus_gym.py:230"),
         Fact("The default data feed and broker are offline simulations over CSV files with no network access and "
@@ -106,6 +189,8 @@ class GymFx(GymnasiumDriver):
             "min_equity termination rule; truncated is always false",
             "snapshot and restore are not offered: GymFxEnv declares no get_state/set_state, and the fake "
             "declares none either",
-            "the fake was not compared with an upstream run and no upstream package was imported or executed",
+            "the fake was not compared with the sim backend, and this workspace never imported or executed the "
+            "upstream; the fidelity contract above describes the fake only, while the sim backend is the upstream "
+            "environment itself",
         ],
     }

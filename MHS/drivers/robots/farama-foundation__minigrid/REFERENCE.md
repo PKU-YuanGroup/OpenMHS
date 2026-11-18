@@ -99,6 +99,7 @@ Outputs:
 ## Facts
 
 - BlockedUnlockPickupEnv is registered as MiniGrid-BlockedUnlockPickup-v0 with the entry point minigrid.envs:BlockedUnlockPickupEnv (upstream_code: minigrid/__init__.py:17-20)
+- The module body calls register_minigrid_envs() when minigrid is imported, so the registered id exists only after that import (upstream_code: minigrid/__init__.py:1134)
 - The seven actions are left 0, right 1, forward 2, pickup 3, drop 4, toggle 5 and done 6 (upstream_code: minigrid/core/actions.py:6-20)
 - The action space is Discrete(len(actions)), i.e. Discrete(7) (upstream_code: minigrid/minigrid_env.py:63)
 - The observation space is a Dict of image = Box(low=0, high=255, shape=(agent_view_size, agent_view_size, 3), dtype=uint8), direction = Discrete(4) and the mission space (upstream_code: minigrid/minigrid_env.py:72-83)

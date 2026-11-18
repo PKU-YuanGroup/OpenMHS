@@ -6,6 +6,7 @@ from this page.
 
 | fact | source | ref |
 |---|---|---|
+| Importing `tactile_gym.rl_envs` runs the module-level `register` call (line 1 imports it from `gym.envs.registration`, lines 3-6 register `edge_follow-v0`), so importing the module makes the id available to `gym.make` | upstream_code | `tactile_gym/rl_envs/__init__.py:1-6` |
 | `edge_follow-v0` is registered with entry point `tactile_gym.rl_envs.exploration.edge_follow.edge_follow_env:EdgeFollowEnv` | upstream_code | `tactile_gym/rl_envs/__init__.py:3-6` |
 | `EdgeFollowEnv` computes a simulation time step of 1/240 s, a control rate of 1/10 s and a velocity action repeat of `floor(control_rate / sim_time_step)` | upstream_code | `tactile_gym/rl_envs/exploration/edge_follow/edge_follow_env.py:32-37` |
 | The `EdgeFollowEnv` constructor's default `max_steps` is 250 | upstream_code | `tactile_gym/rl_envs/exploration/edge_follow/edge_follow_env.py:25` |
@@ -58,6 +59,29 @@ generator, that only the oracle observation is modelled, and that the `sim` back
 constructor reads at `edge_follow_env.py:59` but the default dict omits; the demo sets that key at
 `examples/demo_edge_env.py:23`. This is deployment configuration, not a Fact and not a bound. The fake implements the
 `xy` action dimension (2) and the oracle observation space of this configuration.
+
+`env_module = "tactile_gym.rl_envs"` names the module whose import runs the module-level registration at
+`tactile_gym/rl_envs/__init__.py:1-6`; the bridge imports it only when it builds the environment itself with
+`gym.make`, never for the package's `fake` backend entry, so the fake backend is unchanged.
+
+## Install pins
+
+The registration is written against the legacy `gym` package, not Gymnasium: `tactile_gym/rl_envs/__init__.py:1`
+imports `gym.envs.registration`, `tactile_gym/rl_envs/base_tactile_env.py:2` imports `gym`, `:61-64` calls
+`gym.utils.seeding.np_random` and expects its `(np_random, seed)` return, and `:166-185` returns the legacy
+`(observation, reward, done, info)` four-tuple. `requirements.txt:7` allows `stable_baselines3>=1.0`, but the sim
+path never imports it: `stable_baselines3` appears only in `tactile_gym/sb3_helpers/train_agent.py:7`, while the
+registration (`tactile_gym/rl_envs/__init__.py:1-6`) and the environment
+(`tactile_gym/rl_envs/base_tactile_env.py:2,61-64,166-185`) use legacy `gym` directly. The constraints pin
+`stable-baselines3==1.2.0` (inside the declared range; its metadata requires `gym>=0.17` with no upper bound, so it
+pulls legacy `gym` and lets the next pin choose the version) and `gym==0.23.1` (the legacy release whose sdist builds
+under the gate's setuptools; 1.8.0 instead pins `gym==0.21.0` exactly). `gym==0.21.0` cannot be installed here: its
+sdist declares the invalid extra `opencv-python>=3.` and the gate's setuptools refuses it (last install log).
+`gym==0.23.1` still returns the `(np_random, seed)` pair (`base_tactile_env.py:61-64`) and the four-tuple step
+(`:166-185`), and its sdist builds under the gate's setuptools (the same run's chemistrygym install log builds it).
+`requirements.txt:1` and `:5` leave numpy and OpenCV unpinned; the constraints keep numpy on 1.x and OpenCV at
+4.11.0.86, the 4.x release whose wheel accepts numpy 1.x (4.12 and later require numpy 2), matching the 2023-01-24
+commit. Each dependency constraint has a `# why:` citation explaining the pin.
 
 ## Other entry symbols
 

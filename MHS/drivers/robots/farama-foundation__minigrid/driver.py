@@ -10,10 +10,11 @@ The card is a driver pack: the repository holds one environment class per file a
 This package covers the first of them, ``minigrid.envs:BlockedUnlockPickupEnv``, registered as
 MiniGrid-BlockedUnlockPickup-v0 (minigrid/__init__.py:17-20); facts.md names the other four classes as not covered.
 
-The gate cannot import the clone (the upstream needs numpy, gymnasium and pygame-ce, pyproject.toml), so the ``fake``
-backend is the package's own pure Python MiniGrid world (fake.py).  A backend name that ``backends`` does not list
-(``sim``) is served by ``gymnasium.make(env_id)`` (GymnasiumDriver.open_native); that path needs the upstream package
-and was not run here (README.md).
+The gate's ``fake`` backend is the package's own pure Python MiniGrid world (fake.py).  A backend name that
+``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id)`` (GymnasiumDriver.open_native); the id is
+registered only when the package is imported, so ``env_module = "minigrid"`` makes the bridge import it first
+(minigrid/__init__.py:1134 runs the registration at :17-20).  The upstream needs numpy, gymnasium and pygame-ce
+(pyproject.toml:27); the sim path was not run here, its evidence is the orchestrator's run.
 
 The ``fidelity`` attribute is the fidelity contract of the model as deployed (spec 05-fidelity FID-002).  Every
 constant and rule cites a line of the clone at the pinned commit (b34a5755dbef71e3f1662552259a94b255c1a8bb).  This
@@ -32,6 +33,7 @@ ACTIONS = "minigrid/core/actions.py"
 class BlockedUnlockPickup(GymnasiumDriver):
     device_id = "minigrid-blocked-unlock-pickup"
     env_id = "MiniGrid-BlockedUnlockPickup-v0"
+    env_module = "minigrid"    # importing it runs register_minigrid_envs() at minigrid/__init__.py:1134 (:17-20)
     native = "minigrid.envs:BlockedUnlockPickupEnv"
     backends = {"fake": ".fake:FakeBlockedUnlockPickupEnv"}
     display_name = "MiniGrid BlockedUnlockPickup (MiniGrid-BlockedUnlockPickup-v0)"
@@ -40,6 +42,8 @@ class BlockedUnlockPickup(GymnasiumDriver):
     facts = [
         Fact("BlockedUnlockPickupEnv is registered as MiniGrid-BlockedUnlockPickup-v0 with the entry point "
              "minigrid.envs:BlockedUnlockPickupEnv", source="upstream_code", ref="minigrid/__init__.py:17-20"),
+        Fact("The module body calls register_minigrid_envs() when minigrid is imported, so the registered id exists "
+             "only after that import", source="upstream_code", ref="minigrid/__init__.py:1134"),
         Fact("The seven actions are left 0, right 1, forward 2, pickup 3, drop 4, toggle 5 and done 6",
              source="upstream_code", ref=f"{ACTIONS}:6-20"),
         Fact("The action space is Discrete(len(actions)), i.e. Discrete(7)", source="upstream_code",

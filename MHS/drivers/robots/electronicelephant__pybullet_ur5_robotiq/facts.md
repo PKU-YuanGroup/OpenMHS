@@ -7,6 +7,13 @@ Every fact cites its source at commit `37f7d66d3196490618bf89ffe2b49dcb7e07aec3`
 |---|---|---|
 | ClutteredPushGrasp is the user-facing environment class | upstream_code | env.py:19 |
 | The constructor opens an in-process PyBullet connection, GUI or DIRECT, and loads the plane, the robot and a fixed box; it opens no serial, VISA, USB or network transport | upstream_code | env.py:23-58 |
+| The constructor takes the robot, a Models instance, camera=None and vis=False, and connects to PyBullet with p.DIRECT when vis is false | upstream_code | env.py:23-31 |
+| The documented demo builds UR5Robotiq85((0, 0.5, 0), (0, 0, 0)) and passes it to ClutteredPushGrasp | upstream_code | main.py:23-25 |
+| main.py imports env, robot and utilities as top-level modules | upstream_code | main.py:7-9 |
+| The environment loads the box URDF from ./urdf/skew-box-button.urdf, a path relative to the process working directory | upstream_code | env.py:48-53 |
+| UR5Robotiq85 loads ./urdf/ur5_robotiq_85.urdf, a path relative to the process working directory | upstream_code | robot.py:174-175 |
+| env imports Models and Camera from utilities | upstream_code | env.py:9 |
+| utilities imports pybullet, attrdict, torch, cv2, scipy and numpy at module scope, so importing env needs all of them even though the sim path uses only Models | upstream_code | utilities.py:1-9 |
 | SIMULATION_STEP_DELAY is 1/240 s | upstream_code | env.py:21 |
 | step_simulation calls p.stepSimulation and sleeps the delay only when the GUI is shown | upstream_code | env.py:60-67 |
 | step accepts a seven-element action, asserts control_method is joint or end, calls move_ee(action[:-1], control_method) and move_gripper(action[-1]), and runs 120 simulation steps | upstream_code | env.py:81-92 |
@@ -24,6 +31,7 @@ Every fact cites its source at commit `37f7d66d3196490618bf89ffe2b49dcb7e07aec3`
 | UR5Robotiq85 loads ur5_robotiq_85.urdf with fixed base, eef 7, six arm dofs and gripper range 0..0.085 | upstream_code | robot.py:168-176 |
 | UR5Robotiq140 loads ur5_robotiq_140.urdf with the same eef, six arm dofs and 0..0.085 gripper range | upstream_code | robot.py:209-218 |
 | The README lists a Gym-styled API for reinforcement learning in push-and-grasp, 6D end-effector IK with Position XYZ and Orientation RPY, and PyBullet as the only prerequisite | vendor_doc | README.md:11-20 |
+| The README lists Python 3 and PyBullet as the only prerequisites | vendor_doc | README.md:18-20 |
 
 Limits: the driver binds the action envelope of the clone's own interactive sliders (`env.py:40-46`): x and y are
 -0.224 to 0.224 m, z is 0 to 1.0 m, roll and pitch are -3.14 to 3.14 rad, yaw is -pi/2 to pi/2 rad and the gripper
@@ -44,5 +52,14 @@ reset is accepted until `mhs.safety.reset` clears the latch, and the last observ
 `cap.world.seed.v1` is not bound: `ClutteredPushGrasp` has no seed method and reset restores fixed rest poses and a
 fixed box (`robot.py:86-108`, `env.py:127-134`). A `seed` supplied to `cap.world.reset.v1` is recorded only, and the
 required `seed` output defaults to 0, because there is no random generator to seed.
+
+The package already builds its environment through the fake factory (`.fake:FakeClutteredPushGrasp`) and the upstream
+has a real environment class (`env.py:19`), so the `sim` entry is the callable `_build_sim_env` in `driver.py`. It
+imports the upstream's own top-level modules (`main.py:7-9`) and constructs `ClutteredPushGrasp` with the demo robot
+(`main.py:23-25`) and the constructor's default `camera=None, vis=False` DIRECT connection (`env.py:23-31`). The
+upstream loads its URDFs by relative paths (`env.py:48-53`, `robot.py:174-175`), so the factory runs the constructor
+from the directory of the imported upstream module and restores the working directory afterwards. The sim path was
+not run as part of this model review. The flat source tree must be on PYTHONPATH, and the distributions that
+`env.py:5-12` and `utilities.py:1-9` import must be installed.
 
 Tags: ur5, robotiq, gripper, pybullet, simulation, reinforcement-learning

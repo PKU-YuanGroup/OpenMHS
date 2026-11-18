@@ -1,0 +1,61 @@
+{
+ "$schema": "https://mhs.openai4s.org/schema/0.9/sim-lock.schema.json",
+ "openmhs": "0.9",
+ "backend": "sim",
+ "environment": {
+  "platform": "linux/arm64",
+  "base_image": "python:3.10-slim-bookworm",
+  "system_packages": [
+   "git",
+   "build-essential",
+   "cmake",
+   "swig",
+   "pkg-config",
+   "patchelf",
+   "libgl1",
+   "libegl1",
+   "libgles2",
+   "libosmesa6",
+   "libglfw3",
+   "libglew2.2",
+   "libglib2.0-0",
+   "libsm6",
+   "libxext6",
+   "libxrender1",
+   "ffmpeg"
+  ],
+  "python": "3.10",
+  "install": [
+   "pip install -v /Users/gongbozhang/Documents/ai4s-dev/runs/sim-fix-full/src/labs__cooper-group-uol-robotics__panda_chemistry_gym:/src:ro"
+  ],
+  "constraints": [
+   "gym==0.23.1",
+   "numpy<2"
+  ],
+  "resolved": [
+   "cloudpickle==3.1.2",
+   "gym==0.23.1",
+   "gym-notices==0.1.0",
+   "gym-robotics==0.1.0",
+   "numpy==1.26.4",
+   "pybullet==3.2.7"
+  ]
+ },
+ "upstream": {
+  "commit": "10e82317010f662f5f8f0602e068447d170d9bb0"
+ },
+ "gate": {
+  "sdk_version": "0.9.0.dev0",
+  "digest": "sha256:f0ee620be4901d6274355e4a6cf45f12710083b6713e7408bcbe0f50d3ea76cc",
+  "evidence_state": "contract_checked",
+  "warnings": [
+   "G5.BACKEND_SURFACE",
+   "G6.NOT_RECORDED",
+   "G7.UPSTREAM_BACKEND",
+   "G8.NO_UNIT"
+  ]
+ },
+ "fake_gate_digest": "sha256:79a8b25625ef4a174a5ab1cf519f07ff37833af06c6ac9ac9982cf738dcf6fd0",
+ "checked_at": "2026-11-17",
+ "notes": "the source tree of the pinned commit is on PYTHONPATH (it does not install)"
+}

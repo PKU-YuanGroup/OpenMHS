@@ -6,36 +6,78 @@ contract from the environment's spaces.  ``cap.world.step.v1`` takes ``{ticks, a
 ``cap.world.seed.v1`` ``{seed}``.  The device is simulated (R0): there is no hardware backend, no e-stop path to a
 machine and no operator-required limit.
 
-The gate cannot import the upstream package (it needs pandas, numpy and gymnasium, ``pyproject.toml:22``), so the
-``fake`` backend is the package's own pure Python stand-in.  A backend name that ``backends`` does not list (``sim``)
-is served by ``gymnasium.make(env_id)`` (``GymnasiumDriver.open_native``); ``TradingEnv`` needs a market DataFrame,
-so that path is not offered here and was not run.
+The ``fake`` backend is the package's own pure Python stand-in (fake.py).  A backend name that ``backends`` does
+not list (``sim``) is served by ``gymnasium.make(env_id, **env_kwargs)`` (``GymnasiumDriver.open_native``): the
+driver names ``env_module = "gym_trading_env"`` because importing it runs the module-level ``register`` calls
+(``src/gym_trading_env/__init__.py:1-14``), and ``env_kwargs`` supplies the constructor's required ``df``
+(``src/gym_trading_env/environments.py:37`` and ``:79-80``) as a deterministic 120-row OHLC frame with one
+``feature_close`` column and a second-resolution ``DatetimeIndex``, so the observation space is one static plus the
+two default dynamic features (the same width the fake models).  The index resolution matters: reset and step copy
+``self.df.index.values[idx]`` into the history info (``environments.py:189`` and ``:256``), and a nanosecond
+``datetime64`` turns into an integer nanoseconds count above 2**53-1, which the bridge's canonical state hash
+refuses; a second-resolution one turns into a Python datetime, which the bridge treats as non-JSON info and omits.
+The gate's fake-only interpreter may not have pandas; then ``env_kwargs`` is empty, which the fake backend ignores.
+The sim install has pandas because it is a declared dependency (``pyproject.toml:20``).
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002).
 Every constant and rule cites a line of the clone at the pinned commit
-(a86fc03d29759374fae2db7df4d878485808a730).  This package is model-authored and unreviewed: it is checked on the
-fake backend only.
+(a86fc03d29759374fae2db7df4d878485808a730).  This package is model-authored and unreviewed.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
 
 ENV = "src/gym_trading_env/environments.py"
 INIT = "src/gym_trading_env/__init__.py"
+FRAME_ROWS = 120
+
+try:  # pandas is a declared dependency (pyproject.toml:20); the fake gate's interpreter need not have it
+    import numpy as _np
+    import pandas as _pd
+except ImportError:  # the fake backend ignores env_kwargs; the sim install provides both distributions
+    _np = _pd = None
+
+
+def _market_frame():
+    """The deterministic market DataFrame the constructor requires (environments.py:37 and :79-80)."""
+    close = _np.arange(100.0, 100.0 + FRAME_ROWS)
+    return _pd.DataFrame(
+        {
+            "open": close - 0.5,
+            "high": close + 1.0,
+            "low": close - 1.0,
+            "close": close,
+            "feature_close": _np.concatenate(([0.0], close[1:] / close[:-1] - 1.0)),
+        },
+        # A DatetimeIndex is required (environments.py:37) but its resolution is free.  reset and step record the
+        # row date from df.index.values (environments.py:189 and :256); a nanosecond datetime64 becomes an integer
+        # nanoseconds count above 2**53-1, which the bridge's canonical state hash refuses, while a second-resolution
+        # datetime64 becomes a Python datetime, which the bridge's jsonable() refuses as info, so the state is JSON.
+        index=_pd.date_range("2024-01-01", periods=FRAME_ROWS, freq="h", unit="s"),
+    )
 
 
 class TradingEnvDriver(GymnasiumDriver):
     device_id = "gym-trading-env"
     env_id = "TradingEnv"
+    env_module = "gym_trading_env"  # importing it runs register(...) at src/gym_trading_env/__init__.py:3-14
+    env_kwargs = {"df": _market_frame()} if _pd is not None else {}
     native = "gym_trading_env.environments:TradingEnv"
     backends = {"fake": ".fake:FakeTradingEnv"}
     display_name = "Gym Trading Env TradingEnv"
     vendor, model = "Clement Perroud", "gym-trading-env"
     tags = ["trading", "reinforcement-learning", "simulation", "gymnasium"]
     facts = [
-        Fact("The package registers the environment as TradingEnv with entry point "
-             "gym_trading_env.environments:TradingEnv", source="upstream_code", ref=f"{INIT}:3-8"),
+        Fact("Importing gym_trading_env runs the module-level register(...) call that registers TradingEnv with "
+             "entry point gym_trading_env.environments:TradingEnv", source="upstream_code", ref=f"{INIT}:1-8"),
         Fact("The package also registers MultiDatasetTradingEnv, a TradingEnv that switches dataset on reset",
              source="upstream_code", ref=f"{INIT}:9-14"),
+        Fact("The TradingEnv constructor requires a pandas DataFrame df whose columns contain open, high, low and "
+             "close and whose index is a DatetimeIndex; each column whose name contains 'feature' is an "
+             "observation", source="upstream_code", ref=f"{ENV}:37"),
+        Fact("df is the constructor's first argument and has no default", source="upstream_code",
+             ref=f"{ENV}:79-80"),
+        Fact("Reset records the row's date in the history info as self.df.index.values[idx]; step records it the "
+             "same way at environments.py:256", source="upstream_code", ref=f"{ENV}:189"),
         Fact("The constructor's default positions list is [0, 1]", source="upstream_code", ref=f"{ENV}:81"),
         Fact("The action space is spaces.Discrete(len(positions)): the integer action indexes the positions list",
              source="upstream_code", ref=f"{ENV}:112"),

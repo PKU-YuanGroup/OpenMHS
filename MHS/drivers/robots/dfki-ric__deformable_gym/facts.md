@@ -6,7 +6,7 @@ clone such as README.md) or `upstream_code` (`path/in/clone.py:LINE`). The same 
 
 | fact | source | ref |
 |---|---|---|
-| The package registers FloatingMiaGraspInsole-v0 with entry point deformable_gym.envs.floating_mia_grasp_env:FloatingMiaGraspEnv, object_name 'insole_on_conveyor_belt/back' and observable_object_pos True | upstream_code | deformable_gym/__init__.py:6-14 |
+| Importing deformable_gym runs the module-level register(...) call that registers FloatingMiaGraspInsole-v0 with entry point deformable_gym.envs.floating_mia_grasp_env:FloatingMiaGraspEnv, object_name 'insole_on_conveyor_belt/back' and observable_object_pos True | upstream_code | deformable_gym/__init__.py:6-14 |
 | The documented example creates the environment with gymnasium.make('FloatingMiaGraspInsole-v0') | vendor_doc | README.md:78 |
 | The floating Mia action space bounds the 3 end-effector position offsets by +-0.0005 and the 4 orientation offsets by +-0.000005 | upstream_code | deformable_gym/envs/floating_mia_grasp_env.py:65-66 |
 | The action space has 10 values: 3 position offsets, 4 orientation offsets and 3 finger commands | upstream_code | deformable_gym/envs/floating_mia_grasp_env.py:117-134 |
@@ -30,10 +30,24 @@ clone such as README.md) or `upstream_code` (`path/in/clone.py:LINE`). The same 
 
 The driver declares no limit of its own. The 10 action values are bounded by the environment's Box action space,
 which the Gymnasium bridge derives from the live environment (`cap.world.step.v1`, limit paths `action.values[*]`)
-at load time; those rules carry no source and the reference
-`action_space of the fake backend .fake:FakeFloatingMiaGraspEnv`, and the family path is exempt from the clone-line
-reference check (`_derived` in the gate). The fake publishes the bounds above so it can serve the same contract on
-the gate. The device is simulated (R0), so no limit is `operator_required` and no operator overlay is needed.
+at load time. The committed reference is the fake view, whose rules carry no source and the reference
+`action_space of the fake backend .fake:FakeFloatingMiaGraspEnv`; on the sim backend the same paths are derived from
+the real Box, and the family path is exempt from the clone-line reference check (`_derived` in the gate). The fake
+publishes the bounds above so it can serve the contract on the fake gate. The device is simulated (R0), so no limit
+is `operator_required` and no operator overlay is needed.
+
+## Sim backend configuration
+
+`driver.py` sets `env_module = "deformable_gym"`. Importing that package runs the module-level `register(...)` call at
+`deformable_gym/__init__.py:6-14`, which registers `FloatingMiaGraspInsole-v0` with entry point
+`deformable_gym.envs.floating_mia_grasp_env:FloatingMiaGraspEnv`, `object_name` `"insole_on_conveyor_belt/back"` and
+`observable_object_pos=True`; the bridge then calls `gymnasium.make(env_id)`, the call the README shows
+(`README.md:78`). No `backends["sim"]` entry and no `env_kwargs` are needed: the registration supplies both kwargs.
+The fake backend still builds `.fake:FakeFloatingMiaGraspEnv` directly and is unchanged.
+
+Constrain a simulator installation to `numpy<2`, because `requirements.txt:2` says `numpy>=1.23.5,<2.0.0` while
+`pyproject.toml:31` only says `numpy>1.23.5`. The environment reads numpy arrays at
+`deformable_gym/envs/floating_mia_grasp_env.py:4,91-134` and `deformable_gym/objects/bullet_object.py:7-11`.
 
 ## Fidelity contract
 

@@ -6,10 +6,13 @@ t1]}`` bounded per link by ``+-max_torque`` (1000), ``cap.world.reset.v1`` takes
 ``cap.world.seed.v1`` ``{seed}``.  The device is simulated (R0): there is no hardware backend, no e-stop path to a
 machine and no operator-required limit.
 
-The gate cannot import fancy_gym (the clone imports gymnasium, numpy and matplotlib at module import,
-``simple_reacher.py:3-5``), so the ``fake`` backend is the package's own pure Python reacher.  A backend name that
-``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id)`` (GymnasiumDriver.open_native); that path
-needs the upstream package and was not run here.
+The gate cannot import fancy_gym for the fake backend (the clone imports matplotlib, numpy and gymnasium at module
+import, ``simple_reacher.py:3-5``), so the ``fake`` backend is the package's own pure Python reacher.  A backend name
+that ``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id)`` (GymnasiumDriver.open_native); the
+bridge first imports ``env_module = "fancy_gym.envs"``, whose module body runs the registration at
+``fancy_gym/envs/__init__.py:38-46``, and then makes the environment in the gymnasium registry.  The dependency
+constraints keep that install on gymnasium 0.29.1 and numpy 1.x (the dependency ranges upstream declares at
+``setup.py:61-66`` date from the 2024-04-17 commit) instead of the unconstrained 1.4.0/numpy 2 resolve.
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002):
 every member of ``device.schema.json`` that applies to a simulator without a physical counterpart.  Every constant
@@ -28,6 +31,7 @@ REGISTRY = "fancy_gym/envs/__init__.py"
 class SimpleReacher(GymnasiumDriver):
     device_id = "simple-reacher"
     env_id = "fancy/SimpleReacher-v0"
+    env_module = "fancy_gym.envs"                 # importing it runs register(...) at fancy_gym/envs/__init__.py:38
     native = "fancy_gym.envs.classic_control.simple_reacher.simple_reacher:SimpleReacherEnv"
     backends = {"fake": ".fake:FakeSimpleReacherEnv"}
     action_space_ref = 'fancy_gym/envs/classic_control/base_reacher/base_reacher_torque.py:16-18'
@@ -37,6 +41,8 @@ class SimpleReacher(GymnasiumDriver):
     facts = [
         Fact("fancy/SimpleReacher-v0 is registered with entry point SimpleReacherEnv and n_links=2",
              source="upstream_code", ref=f"{REGISTRY}:38-45"),
+        Fact("Importing fancy_gym.envs runs the module-level register call at fancy_gym/envs/__init__.py:38-46, "
+             "which registers fancy/SimpleReacher-v0", source="upstream_code", ref=f"{REGISTRY}:38-46"),
         Fact("fancy/SimpleReacher-v0 is registered with max_episode_steps=200", source="upstream_code",
              ref=f"{REGISTRY}:42"),
         Fact("The action space is a Box with one torque per link, low=-1000 and high=+1000 (max_torque 1000)",

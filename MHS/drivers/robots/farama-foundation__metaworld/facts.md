@@ -26,6 +26,7 @@ This package implements one of the card's five entry symbols: `assembly-v3`
 | SawyerXYZEnv.reset(seed, options) ignores both arguments and resets curr_path_length to 0 | upstream_code | metaworld/sawyer_xyz_env.py:664-682 |
 | seed(seed) seeds np_random and the action, observation and goal spaces | upstream_code | metaworld/sawyer_xyz_env.py:275-290 |
 | Meta-World/goal_observable is registered with an entry_point that selects the observable-goal class for env_name and passes seed=seed | upstream_code | metaworld/__init__.py:696-706 |
+| Importing metaworld calls register_mw_envs() at module level, so the id is registered only after that import | upstream_code | metaworld/__init__.py:823 |
 | assembly-v3 maps to SawyerNutAssemblyEnvV3 | upstream_code | metaworld/env_dict.py:26-27 |
 | The goal_observable constructor seeds numpy before construction and calls env.seed(seed) after the first reset when a seed is given | upstream_code | metaworld/env_dict.py:184-199 |
 | reward_function_version is v2 by default | upstream_code | metaworld/envs/sawyer_assembly_peg_v3.py:19-24 |
@@ -36,6 +37,18 @@ environment (`Box([-1,-1,-1,-1], [1,1,1,1])`: `action.values` from -1 to +1 per 
 `upstream_code` and the ref `metaworld/sawyer_xyz_env.py:239-243`). `ticks` is bounded by the catalogue class and
 `max_ticks` (1 to 10000 by default). The device is simulated (R0), so no limit is `operator_required`; there is
 nothing for an operator overlay to fill and no `site-limits.example.json`.
+
+Sim inputs: the id is registered only by importing `metaworld`, whose module body calls `register_mw_envs()` at
+`metaworld/__init__.py:823` (the `register(...)` call for `Meta-World/goal_observable` is at
+`metaworld/__init__.py:696-706`), so `driver.py` sets `env_module = "metaworld"` and the bridge imports it before
+`gymnasium.make`. The clone declares its dependencies in `pyproject.toml:25-30` (`gymnasium>=1.1`,
+`mujoco==3.3.0`, `numpy>=1.18`, `scipy>=1.4.1`, `imageio`), and `MANIFEST.in:1` grafts `metaworld/assets` into the
+sdist/wheel. The import at `metaworld/sawyer_xyz_env.py:13` also runs gymnasium's `gymnasium.envs.mujoco`. In the
+installed Gymnasium 1.4.0 distribution, `gymnasium/envs/mujoco/mujoco_rendering.py:8` imports `packaging.version`,
+and `gymnasium-1.4.0.dist-info/METADATA:41` declares `packaging>=23.0` for the optional `mujoco` extra. The clone
+omits `packaging` from its dependency list at `pyproject.toml:25-30`, so install `packaging>=23.0` for the sim backend.
+No `source-path.txt` is needed: the clone is installable and its assets are regular git blobs, not
+submodules or LFS pointers.
 
 Fidelity contract (`driver.py`, `fidelity = {...}`): engine `mujoco:metaworld/SawyerNutAssemblyEnvV3`, level F1
 (rigid-body MuJoCo scene, no validated actuator, sensor or noise model), determinism `seeded` with `seed_control`

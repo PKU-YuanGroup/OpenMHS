@@ -99,6 +99,7 @@ Outputs:
 ## Facts
 
 - fancy/SimpleReacher-v0 is registered with entry point SimpleReacherEnv and n_links=2 (upstream_code: fancy_gym/envs/__init__.py:38-45)
+- Importing fancy_gym.envs runs the module-level register call at fancy_gym/envs/__init__.py:38-46, which registers fancy/SimpleReacher-v0 (upstream_code: fancy_gym/envs/__init__.py:38-46)
 - fancy/SimpleReacher-v0 is registered with max_episode_steps=200 (upstream_code: fancy_gym/envs/__init__.py:42)
 - The action space is a Box with one torque per link, low=-1000 and high=+1000 (max_torque 1000) (upstream_code: fancy_gym/envs/classic_control/base_reacher/base_reacher_torque.py:16-18)
 - The simulation timestep is 0.01 s (upstream_code: fancy_gym/envs/classic_control/base_reacher/base_reacher.py:21)

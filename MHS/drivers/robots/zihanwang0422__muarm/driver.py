@@ -1,17 +1,28 @@
 """OpenMHS driver for gh.zihanwang0422/muarm: the panda_pick_place MuJoCo scene (a MuJoCo family driver).
 
-A MujocoDriver is configuration only: ``model_path`` names the MJCF scene (the card's ``models[0]``,
-``learning/assets/panda_pick_place.xml``) and the bridge derives the whole contract from the model it loads.  The step
-action is ``data.ctrl``, bounded per actuator by the model's ``actuator_ctrlrange`` (eight general actuators: seven
-arm joints and one gripper tendon), the world state is the integration state of the model (``time``, ``qpos``,
-``qvel``, ``ctrl``) plus the tick count, and ``cap.world.reset.v1`` restores the model defaults.
+A MujocoDriver is configuration only: ``model_xml`` is a small wrapper around the MJCF scene (the card's
+``models[0]``, ``learning/assets/panda_pick_place.xml``) and the bridge derives the whole contract from the model it
+loads.  The step action is ``data.ctrl``, bounded per actuator by the model's ``actuator_ctrlrange`` (eight general
+actuators: seven arm joints and one gripper tendon), the world state is the integration state of the model
+(``time``, ``qpos``, ``qvel``, ``ctrl``) plus the tick count, and ``cap.world.reset.v1`` restores the model defaults.
 
-The device is simulated (R0): there is no hardware backend and no operator-required limit.  The gate cannot install
-MuJoCo where it runs, so the ``fake`` backend is this package's stand-in ``mujoco`` module (fake.py).  It reads the
-same model file for the model shape (joint dimensions, actuator count, per-actuator control ranges, time step) but
-its integration is a placeholder, not MuJoCo's physics; the fidelity ``gaps`` say so.  A backend name that
-``backends`` does not list (``sim``) imports the real ``mujoco`` module and loads the same file; that path was not run
-here.
+The wrapper is needed because the included robot model declares ``<compiler ... meshdir="assets">``
+(models/franka_emika_panda/panda.xml:2) and MuJoCo resolves that mesh directory against the top-level scene's
+directory: loading ``learning/assets/panda_pick_place.xml`` by path makes it look for ``learning/assets/assets``,
+which the clone does not contain.  The upstream environment avoids the path and builds the model from an XML string
+with the scene included and the mesh bytes passed as assets (learning/robots/panda.py:3-5,64-79).  The wrapper here
+does the same with ``model_xml``: it includes the upstream scene by absolute path and restates the asset directory in
+a compiler placed after the include, which MuJoCo applies last.  It never copies the scene.  ``_model_name`` keeps
+the derived ctrlrange ref ``learning/assets/panda_pick_place.xml:actuator_ctrlrange`` because the base method reads
+``model_path``, which the wrapper replaces.
+
+The device is simulated (R0): there is no hardware backend and no operator-required limit.  The fake acceptance gate
+runs without MuJoCo installed, so the ``fake`` backend is this package's stand-in ``mujoco`` module (fake.py).  It
+reads the same model file for the model shape (joint dimensions, actuator count, per-actuator control ranges, time
+step) but its integration is a placeholder, not MuJoCo's physics; the fidelity ``gaps`` say so.  A backend name that
+``backends`` does not list (``sim``) imports the real ``mujoco`` module and loads ``model_xml`` with
+``MjModel.from_xml_string``; the fake expands the same absolute include and ignores the compiler, so the wrapper
+leaves its shape unchanged.
 
 The model file is read from the read-only upstream clone at the pinned commit (it is never copied into this package
 and never imported).  Every Fact cites a line of the clone at commit 9d328f16df05b5a6199ebd0c59048d58c6cd6326.  The
@@ -19,20 +30,40 @@ card's entry symbols are Gymnasium environment classes; this package serves the 
 the driver declares no ``native`` class.  It is model-authored and unreviewed: it is checked on the fake backend only.
 """
 
+from pathlib import Path
+
 from mhs.driver import Fact, MujocoDriver
 
 from .fake import FakeMujoco
 
 #: The card's models[0], relative to this package directory: the read-only clone under robots/ at the pinned commit.
 MODEL = "learning/assets/panda_pick_place.xml"
-MODEL_PATH = "../../../../robots/zihanwang0422/muarm/" + MODEL
 PANDA = "models/franka_emika_panda/panda.xml"
 SCENE = "models/franka_emika_panda/scene.xml"
+#: The clone root and the scene and asset directory panda.xml's ``meshdir`` names (panda.xml:2), as absolute paths
+#: for the wrapper: ``from_xml_string`` has no file directory to resolve a relative include against.
+CLONE = Path(__file__).resolve().parent / "../../../../robots/zihanwang0422/muarm"
+MODEL_PATH = (CLONE / MODEL).resolve()
+MESH_DIR = (CLONE / "models/franka_emika_panda/assets").resolve()
+#: MuJoCo resolves the included panda.xml's ``meshdir="assets"`` against the top-level scene's directory, so a load
+#: of ``learning/assets/panda_pick_place.xml`` by path looks for ``learning/assets/assets`` (absent).  The upstream
+#: loader builds the model from an XML string instead (learning/robots/panda.py:3-5,64-79); this wrapper includes the
+#: upstream scene by absolute path and restates the asset directory in a compiler AFTER the include, which is the
+#: compiler MuJoCo applies last.  The fake expands the same include and ignores the compiler, so its shape is
+#: unchanged.
+MODEL_XML = (
+    '<mujoco model="panda_pick_place">\n'
+    f'  <include file="{MODEL_PATH}"/>\n'
+    f'  <compiler angle="radian" autolimits="true" meshdir="{MESH_DIR}"/>\n'
+    '</mujoco>'
+)
 
 
 class MuArmPandaPickPlace(MujocoDriver):
     device_id = "muarm-panda-pick-place"
-    model_path = MODEL_PATH
+    #: The wrapper includes the upstream scene, so the bridge loads ``model_xml`` with ``from_xml_string``; the
+    #: inherited ``model_path`` stays None (a set path would take precedence and fail on the missing meshdir).
+    model_xml = MODEL_XML
     backends = {"fake": FakeMujoco}
     display_name = "muarm Franka Panda pick-and-place (MuJoCo)"
     vendor, model = "zihanwang0422", "muarm panda_pick_place"
@@ -71,6 +102,11 @@ class MuArmPandaPickPlace(MujocoDriver):
              ref=f"{PANDA}:260-261"),
         Fact("The model has a home keyframe with qpos '0 0 0 -1.57079 0 1.57079 -0.7853 0.04 0.04' and ctrl "
              "'0 0 0 -1.57079 0 1.57079 -0.7853 255'", source="upstream_code", ref=f"{PANDA}:280-281"),
+        Fact("The upstream environment says it builds the model from an XML string, avoiding relative-path include "
+             "issues when the XML is not co-located with the robot assets", source="upstream_code",
+             ref="learning/robots/panda.py:3-5"),
+        Fact("That loader includes scene.xml in its XML string and passes an assets dictionary of the mesh files to "
+             "mujoco.MjModel.from_xml_string", source="upstream_code", ref="learning/robots/panda.py:64-79"),
     ]
     safe_state = ("the simulation stops advancing: no step or reset is accepted after an e-stop until "
                   "mhs.safety.reset clears the latch; the integration state is kept and stays readable")
@@ -104,3 +140,7 @@ class MuArmPandaPickPlace(MujocoDriver):
             "hardware",
         ],
     }
+
+    def _model_name(self) -> str:
+        """The upstream scene the wrapper includes: the base reads ``model_path``, which the wrapper replaces."""
+        return MODEL

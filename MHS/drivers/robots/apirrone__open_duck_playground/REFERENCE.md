@@ -106,6 +106,8 @@ Outputs:
 - The rough scene defines a home keyframe with a qpos list and a ctrl list; the ctrl list has the 14 actuator targets (upstream_code: playground/open_duck_mini_v2/xmls/scene_rough_terrain_backlash.xml:32-74)
 - The README documents MuJoCo inference for open_duck_mini_v2 with mujoco_infer.py (vendor_doc: README.md:31-38)
 - The inference script's default model path is playground/open_duck_mini_v2/xmls/scene_flat_terrain.xml (upstream_code: playground/open_duck_mini_v2/mujoco_infer.py:254-257)
+- The upstream loads the scene from its text with mujoco.MjModel.from_xml_string and an asset map, not from a filesystem path (upstream_code: playground/open_duck_mini_v2/mujoco_infer_base.py:10-11)
+- base.get_assets collects the xmls directory and its assets subdirectory into that asset map (upstream_code: playground/open_duck_mini_v2/base.py:31-38)
 
 Tags: biped, humanoid, locomotion, mujoco, open-duck-mini, robot, simulation.
 

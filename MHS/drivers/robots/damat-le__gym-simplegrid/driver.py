@@ -13,14 +13,16 @@ The package serves the pre-registered ``SimpleGrid-4x4-v0`` entry (``gym_simpleg
 ``obstacle_map`` that the generic ``SimpleGrid-v0`` requires is supplied by the registration itself.  The gate cannot
 import gym_simplegrid (it needs gymnasium, numpy and matplotlib), so the ``fake`` backend is the package's own pure
 Python implementation of the same state machine.  A backend name that ``backends`` does not list (``sim``) is served
-by ``gymnasium.make(env_id)`` through ``GymnasiumDriver.open_native``; that path needs the upstream package and was not
-run here (README.md).
+by ``gymnasium.make(env_id)`` through ``GymnasiumDriver.open_native`` after importing ``env_module``; importing
+``gym_simplegrid`` runs the module-level ``register(...)`` calls at ``gym_simplegrid/__init__.py:21-41``, and the
+upstream integration test imports the package for exactly that reason before ``gym.make``
+(``tests/test_integration.py:3-7``).  That path needs the upstream package and was not run here (README.md).
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002):
 every member of ``device.schema.json`` that applies to a simulator without a physical counterpart.  The environment
 is a discrete state machine with no time base, so ``timestep_ms`` is 0.  Every constant and rule cites a line of the
 clone at the pinned commit (6ded2fcf684727b27b5569688cad6f92bc3bc52b).  This package is model-authored and
-unreviewed: it is checked on the fake backend only.
+unreviewed; the fake-backend gate is the check that ran in this workspace.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -33,6 +35,9 @@ GRID = "gym_simplegrid/grid.py"
 class SimpleGrid(GymnasiumDriver):
     device_id = "simplegrid"
     env_id = "SimpleGrid-4x4-v0"
+    #: Importing the package runs the register(...) calls at gym_simplegrid/__init__.py:21-41; the upstream integration
+    #: test imports it before gym.make for the same reason (tests/test_integration.py:3-7).
+    env_module = "gym_simplegrid"
     #: The bridge's configured seed for the first episode (GymnasiumDriver.seed); the environment itself has no
     #: default seed.  Placeholder configuration, not a device parameter.
     seed = 21
@@ -70,6 +75,9 @@ class SimpleGrid(GymnasiumDriver):
              "start or goal raises ValueError", source="upstream_code", ref=f"{ENV}:158-174"),
         Fact("SimpleGrid-4x4-v0 is registered with entry point gym_simplegrid.envs:SimpleGridEnv, kwargs "
              "obstacle_map=MAP_4x4 and max_episode_steps=200", source="upstream_code", ref=f"{INIT}:28-33"),
+        Fact("The upstream integration test imports gym_simplegrid (which runs the register calls at "
+             "gym_simplegrid/__init__.py:21-41) before gym.make('SimpleGrid-4x4-v0')", source="upstream_code",
+             ref="tests/test_integration.py:3-7"),
         Fact("MAP_4x4 has four rows of four cells: 0000, 0101, 0001 and 1000", source="upstream_code",
              ref=f"{INIT}:5"),
         Fact("The environment declares the render modes human, rgb_array and ansi with render_fps 8",

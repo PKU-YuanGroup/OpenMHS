@@ -20,6 +20,11 @@ clone such as README.md) or `upstream_code` (`path/in/clone.py:LINE`). The same 
 | initial_cash defaults to 10000.0 and min_equity defaults to one percent of initial_cash; both are config overrides | upstream_code | app/env.py:127-131 |
 | The timeframe comes from the config; with no timeframe the env reports 0 hours, so a bar has no fixed wall-clock duration | upstream_code | app/env.py:666-684 |
 | build_environment returns GymFxEnv when simulation_engine is backtrader (the default) | upstream_code | gym_fx/__init__.py:4-12 |
+| The constructor takes a config and the six plugin objects: data feed, broker, strategy, preprocessor, reward and metrics | upstream_code | app/env.py:107-124 |
+| The clone's smoke test builds GymFxEnv with the six default plugin instances | upstream_code | tools/smoke_test.py:58-67 |
+| The smoke test's config uses examples/data/eurusd_sample.csv and the default window, cash and position size | upstream_code | tools/smoke_test.py:37-55 |
+| The default plugin selection is default_data_feed, default_broker, default_strategy, default_preprocessor, pnl_reward and default_metrics | upstream_code | app/config.py:7-13 |
+| The data feed plugin opens config['input_data_file'] directly with pandas | upstream_code | data_feed_plugins/default_data_feed.py:36-40 |
 | NautilusGymFxEnv subclasses GymFxEnv | upstream_code | simulation_engines/nautilus_gym.py:230 |
 | The default data feed and broker are offline simulations over CSV files with no network access and no live-trading path | vendor_doc | README.md:215-218 |
 
@@ -30,12 +35,22 @@ the bridge's `cap.world.step.v1` schema, and a reset or seed must be a non-negat
 operator-required bound. The device is simulated (R0), so no write or invoke input needs an operator-supplied
 envelope.
 
+Sim path (`driver.py`): `backends["sim"] = make_sim_env`. The upstream registers no Gymnasium id; `build_environment`
+constructs `GymFxEnv` from a config and six plugin instances (`gym_fx/__init__.py:4-12`, `app/env.py:107-124`), and
+the clone's smoke test constructs exactly that with the six default plugin classes (`tools/smoke_test.py:58-67`).
+The factory imports those upstream modules and passes the smoke test's config (`tools/smoke_test.py:40-55`) with
+`examples/data/eurusd_sample.csv` made absolute, because the default data feed plugin opens
+`config["input_data_file"]` directly with pandas (`data_feed_plugins/default_data_feed.py:36-40`). It replaces no
+space, observation, reward or physics value and adds no wrapper; `env_id` remains a package label, not a
+registration.
+
 Fidelity contract (`driver.py`, `fidelity = {...}`): engine `gym-fx:backtrader`, level F0 (an analytic price walk
 with no dynamics), determinism `seeded` with `seed_control` `parameter`, `timestep_ms` 0 because a bar has no fixed
 duration (`app/env.py:666-684`), `realtime_factor` 0, clock `lockstep`, reset `full`, no snapshot and restore. The
 gaps say what the fake does not model: the backtrader fill engine, commissions, slippage, margin, solvency,
-stop-loss/take-profit orders, the continuous action mode and the optional observation blocks. The package fake was
-not compared with an upstream run, and no upstream package was imported or executed.
+stop-loss/take-profit orders, the continuous action mode and the optional observation blocks. The fidelity contract
+describes the fake only: it was not compared with the sim backend, and this workspace never imported or executed the
+upstream. The sim backend is the upstream environment itself.
 
 Safety: simulated R0 device. The e-stop is the runtime's software latch (no native stop exists); after it no step,
 reset or seed is accepted until `mhs.safety.reset` clears the latch, and the last observation stays readable.

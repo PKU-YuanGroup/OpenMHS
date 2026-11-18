@@ -7,10 +7,16 @@ into `driver.py`; `reference.json` and `REFERENCE.md` are generated from the dri
 The package serves the card's first model, the MJCF scene
 `playground/open_duck_mini_v2/xmls/scene_rough_terrain_backlash.xml`, as a `MujocoDriver` (device kind
 `world.sim`, simulated, R0).  It reads the model file from the clone; the package copies neither the model nor its
-assets.  The card's other models are not served by this package; changing `model_path` and the facts serves
-another scene.  The clone's own inference script defaults to the flat terrain scene
-(`playground/open_duck_mini_v2/mujoco_infer.py:254-257`), while the card lists the rough terrain backlash scene
-first.
+assets.  The `sim` backend is served by the real `mujoco` module: the driver hands the bridge the scene text as
+`model_xml`, with the included robot, the robot's `meshdir="assets"` directory and the height field made absolute.
+A path load applies the included robot's `meshdir="assets"` (`open_duck_mini_v2_backlash.xml:9`) to the scene's
+`assets/hfield.png` (`scene_rough_terrain_backlash.xml:22`) and looks for `assets/assets/hfield.png`; the upstream
+loads the scene text with `mujoco.MjModel.from_xml_string` and an asset map instead
+(`playground/open_duck_mini_v2/mujoco_infer_base.py:10-11`, `playground/open_duck_mini_v2/base.py:31-38`).  The
+physics and all values stay the scene's; only the file lookups differ.  The card's other models are not served by
+this package; changing `model_path`/`model_xml` and the facts serves another scene.  The clone's own inference
+script defaults to the flat terrain scene (`playground/open_duck_mini_v2/mujoco_infer.py:254-257`), while the card
+lists the rough terrain backlash scene first.
 
 | fact | source | ref |
 |---|---|---|
@@ -42,6 +48,8 @@ first.
 | The rough scene defines a home keyframe with a qpos list and a ctrl list; the ctrl list has the 14 actuator targets | upstream_code | playground/open_duck_mini_v2/xmls/scene_rough_terrain_backlash.xml:32-74 |
 | The README documents MuJoCo inference for open_duck_mini_v2 with mujoco_infer.py | vendor_doc | README.md:31-38 |
 | The inference script's default model path is playground/open_duck_mini_v2/xmls/scene_flat_terrain.xml | upstream_code | playground/open_duck_mini_v2/mujoco_infer.py:254-257 |
+| The upstream loads the scene from its text with mujoco.MjModel.from_xml_string and an asset map, not from a filesystem path | upstream_code | playground/open_duck_mini_v2/mujoco_infer_base.py:10-11 |
+| base.get_assets collects the xmls directory and its assets subdirectory into that asset map | upstream_code | playground/open_duck_mini_v2/base.py:31-38 |
 
 Limits: the bridge derives `cap.world.step.v1` input `action.ctrl` from the model itself, one interval per
 actuator (`actuator_ctrlrange`).  Each position actuator sets `inheritrange="1"` and names the joint it drives
@@ -51,5 +59,6 @@ source is `upstream_code`, so no driver-declared or `operator_required` bound is
 Fidelity: the fake backend is a stand-in for the MuJoCo library (`fake.py`), not MuJoCo.  It reads the model file
 for the joint count, the actuator count and the control ranges, but its integration is a placeholder first-order
 motion toward the control target, it loads no mesh, texture or hfield, and it resolves no contact, equality or
-tendon constraint.  MuJoCo was not importable where the gate ran, so no trajectory was compared with the real
-engine.  The gaps are listed in the `fidelity` attribute of `driver.py`.
+tendon constraint.  The fake acceptance gate does not import MuJoCo, so its stand-in was not compared with the
+real engine; the sim backend imports the real `mujoco` module and loads `model_xml`.  The gaps are listed in the
+`fidelity` attribute of `driver.py`.

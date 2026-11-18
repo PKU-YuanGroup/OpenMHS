@@ -18,15 +18,29 @@ The device is simulated (R0): there is no hardware backend, no hardware e-stop
 path and no operator-required limit.  The gate cannot import pybullet, NumPy or
 the clone, so the checked ``fake`` backend is this package's pure-Python
 stand-in (fake.py); it was never compared with the upstream simulator.  This
-package is model-authored and unreviewed: every run here is a fake run.
+package is model-authored and unreviewed.
+
+The real observation carries the upstream camera arrays: at the 512x512
+defaults (camera.py:18-19), ``template_env.py:179`` calls ``obs()`` and
+``template_env.py:190-204`` returns 1,310,720 rgb/depth/seg values per native
+step.  The bridge form carries each large camera array compactly and
+losslessly as a base64 envelope with its dtype, shape and raw bytes.  The
+5000 ms class bound of ``cap.world.step.v1`` remains unchanged
+(MHS/spec/capabilities.json:422).  The
+pixel values are unchanged; only the JSON representation differs.  The fake
+omits cameras and stays a pure-Python stand-in.
 
 Every fact cites the pinned clone at
 eee9f38f86ac636ba4b4ddd1e6b9cfb783f0e203.
 """
 
 from collections.abc import Mapping
+import array
+import base64
 import copy
 import math
+import numbers
+import sys
 from types import MappingProxyType
 
 from mhs import canonical
@@ -40,6 +54,7 @@ TEMPLATE = "grip/environments/template_env.py"
 BASE = "grip/environments/base_env.py"
 PANDA = "grip/robot/panda_robot.py"
 PANDA_GRIPPER = "grip/robot/panda_gripper.py"
+CAMERA = "grip/sensors/camera.py"
 README = "README.md"
 SETUP = "setup.py"
 PYPROJECT = "pyproject.toml"
@@ -52,6 +67,10 @@ DEFAULT_SEED = 77
 #: (1/240 s); both are constructor defaults (template_env.py:42-43), so the
 #: deployed value is configurable and the fake repeats the defaults.
 TIMESTEP_MS = 1000.0 * 10.0 / 240.0
+#: Camera fields of an upstream sensor observation (template_env.py:197-202).
+CAMERA_FIELDS = frozenset({"rgb", "depth", "seg"})
+#: Camera arrays at or above this many elements use the lossless envelope.
+ARRAY_ENCODING_THRESHOLD = 1024
 
 
 def _plain_scalar(value):
@@ -65,12 +84,66 @@ def _plain_scalar(value):
     return value
 
 
-def _plain(value):
-    """JSON-safe observation data; the upstream entity states embed a non-JSON ``entity`` pointer."""
+def _array_envelope(value):
+    """Lossless JSON envelope for one large camera array (the values are unchanged).
+
+    The upstream camera defaults to 512x512 (camera.py:18-19) and returns rgb,
+    depth and seg arrays (camera.py:153-218); ``TemplateEnvironment.obs`` adds
+    them under each sensor (template_env.py:190-204).  Instead of a nested JSON
+    number list, the bridge form carries the dtype, shape and raw
+    bytes and a reader reconstructs exactly the same values.
+    """
+    if not isinstance(value, (list, tuple)):
+        size = getattr(value, "size", None)
+        if not isinstance(size, int) or size < ARRAY_ENCODING_THRESHOLD:
+            return None
+        dtype = getattr(value, "dtype", None)
+        shape = getattr(value, "shape", None)
+        tobytes = getattr(value, "tobytes", None)
+        kind = getattr(dtype, "kind", None)
+        if dtype is None or shape is None or not callable(tobytes) or (
+                isinstance(kind, str) and kind not in "buifc"):
+            return None
+        return {"encoding": "base64",
+                "dtype": str(getattr(dtype, "str", dtype)),
+                "shape": list(shape),
+                "data": base64.b64encode(tobytes()).decode("ascii")}
+    if len(value) < ARRAY_ENCODING_THRESHOLD:
+        return None
+    try:
+        first = value[0]
+    except (IndexError, TypeError):
+        return None
+    if isinstance(first, bool) or not isinstance(first, numbers.Real):
+        return None
+    # PyBullet without its NumPy extension returns a flat tuple (camera.py:195-199).
+    byte_order = "<" if sys.byteorder == "little" else ">"
+    try:
+        if isinstance(first, numbers.Integral):
+            code, dtype = "q", f"{byte_order}i8"
+        else:
+            code, dtype = "d", f"{byte_order}f8"
+        raw = array.array(code, value).tobytes()
+    except (OverflowError, TypeError, ValueError):
+        return None
+    return {"encoding": "base64", "dtype": dtype, "shape": [len(value)],
+            "data": base64.b64encode(raw).decode("ascii")}
+
+
+def _plain(value, *, field=None):
+    """JSON-safe observation data; the upstream entity states embed a non-JSON ``entity`` pointer.
+
+    Large camera arrays use :func:`_array_envelope`; every other array keeps
+    the existing JSON number-list projection.
+    """
+    if field in CAMERA_FIELDS:
+        envelope = _array_envelope(value)
+        if envelope is not None:
+            return envelope
     if hasattr(value, "tolist"):
         value = value.tolist()
     if isinstance(value, Mapping):
-        return {str(key): _plain(item) for key, item in value.items() if key != "entity"}
+        return {str(key): _plain(item, field=str(key)) for key, item in value.items() if key != "entity"}
     if isinstance(value, (list, tuple)):
         return [_plain(item) for item in value]
     if isinstance(value, (str, bool, int, float)) or value is None:
@@ -145,6 +218,11 @@ class GripPickAndPlace(Driver):
              source="upstream_code", ref=f"{TEMPLATE}:160-185"),
         Fact("obs returns each entity's state and, unless camera_mode is none, each camera's rgb, depth, seg and "
              "pose", source="upstream_code", ref=f"{TEMPLATE}:190-204"),
+        Fact("The RGBD camera defaults to a 512x512 image", source="upstream_code", ref=f"{CAMERA}:18-19"),
+        Fact("RGBDCamera.obs returns rgb, depth and seg arrays from getCameraImage with the hardware-OpenGL "
+             "renderer", source="upstream_code", ref=f"{CAMERA}:153-218"),
+        Fact("step calls obs after every sim_steps physics steps, so each native step returns the camera arrays",
+             source="upstream_code", ref=f"{TEMPLATE}:176-179"),
         Fact("sample returns seven joint-position values and one gripper value drawn with np.random.randn",
              source="upstream_code", ref=f"{TEMPLATE}:206-210"),
         Fact("PickAndPlaceEnvironment adds a fixed tray and a free duck object loaded from pybullet_data URDFs",
@@ -222,6 +300,8 @@ class GripPickAndPlace(Driver):
                 "non-realtime world configured with default Panda gripper; no hardware",
                 "constructor seed is recorded; reset does not reseed or restore RNG state",
                 "one environment call per tick; physics receipt accounting remains unverified",
+                "camera rgb/depth/seg arrays are preserved losslessly as base64 envelopes (dtype, shape, raw "
+                "bytes); the fake omits them",
                 "no portable snapshot/restore or hardware fidelity validation"]
         return model
 
@@ -240,7 +320,9 @@ class GripPickAndPlace(Driver):
         self._adapter.close()
 
     # ------------------------------------------------------------------ state
-    @read("observation", type="object", description="Last environment observation (JSON projection)")
+    @read("observation", type="object",
+          description="Last environment observation (JSON projection; sim camera arrays are a lossless "
+                      "base64 envelope with dtype, shape and raw bytes)")
     def observation(self) -> dict:
         return dict(getattr(self, "_last_observation", {}))
 

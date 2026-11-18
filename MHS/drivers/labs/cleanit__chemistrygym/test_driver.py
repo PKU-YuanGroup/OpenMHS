@@ -1,7 +1,7 @@
 """Acceptance run of the ChemistryLab package: the gate, plus cases for what is specific to this driver.
 
-The cases run on the fake backend (fake.py); the upstream environment is not importable where the gate runs, so
-nothing here compares the fake with a real run of the upstream environment.
+The cases run on the fake backend (fake.py).  The sim backend is the real upstream environment, opened through
+``env_module = "chemistrylab"`` and the legacy ``gym`` package; these cases do not exercise that path.
 """
 
 import unittest

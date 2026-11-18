@@ -1,0 +1,75 @@
+{
+ "$schema": "https://mhs.openai4s.org/schema/0.9/sim-lock.schema.json",
+ "openmhs": "0.9",
+ "backend": "sim",
+ "environment": {
+  "platform": "linux/arm64",
+  "base_image": "python:3.10-slim-bookworm",
+  "system_packages": [
+   "git",
+   "build-essential",
+   "cmake",
+   "swig",
+   "pkg-config",
+   "patchelf",
+   "libgl1",
+   "libegl1",
+   "libgles2",
+   "libosmesa6",
+   "libglfw3",
+   "libglew2.2",
+   "libglib2.0-0",
+   "libsm6",
+   "libxext6",
+   "libxrender1",
+   "ffmpeg"
+  ],
+  "python": "3.10",
+  "install": [
+   "pip install -v /Users/gongbozhang/Documents/ai4s-dev/runs/sim-fix-full/src/robots__electronicelephant__pybullet_ur5_robotiq:/src:ro",
+   "pip install gymnasium"
+  ],
+  "constraints": [
+   "pybullet==3.2.7",
+   "numpy<2",
+   "attrdict3==2.0.2",
+   "torch==2.3.1",
+   "opencv-python-headless==4.11.0.86",
+   "scipy==1.11.4",
+   "tqdm==4.67.1"
+  ],
+  "resolved": [
+   "attrdict3==2.0.2",
+   "cloudpickle==3.1.2",
+   "farama-notifications==0.0.6",
+   "filelock==4.1.0",
+   "fsspec==2026.9.0",
+   "gymnasium==1.4.0",
+   "jinja2==3.1.6",
+   "markupsafe==3.0.4",
+   "mpmath==1.3.0",
+   "networkx==3.4.2",
+   "numpy==1.26.4",
+   "opencv-python-headless==4.11.0.86",
+   "pybullet==3.2.7",
+   "scipy==1.11.4",
+   "six==1.17.0",
+   "sympy==1.14.0",
+   "torch==2.3.1",
+   "tqdm==4.67.1",
+   "typing-extensions==4.16.0"
+  ]
+ },
+ "upstream": {
+  "commit": "37f7d66d3196490618bf89ffe2b49dcb7e07aec3"
+ },
+ "gate": {
+  "sdk_version": "0.9.0.dev0",
+  "digest": "sha256:7cae6a2785a801b5dc39ea2072b66bad5f0f0ce63f7fc502f8b18ca56aeee65b",
+  "evidence_state": "contract_checked",
+  "warnings": []
+ },
+ "fake_gate_digest": "sha256:86e0a3e8a19f4b7f2121cf611c3e9998ebd5b183c97101fc67727cdc86e2969a",
+ "checked_at": "2026-11-17",
+ "notes": "the source tree of the pinned commit is on PYTHONPATH (it does not install); gymnasium added as the gymnasium family runtime (the upstream does not declare it)"
+}

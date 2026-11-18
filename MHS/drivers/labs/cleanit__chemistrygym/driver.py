@@ -6,11 +6,13 @@ action is the environment's ``MultiDiscrete`` space shaped as ``{"values": [sele
 ``cap.world.reset.v1`` takes ``{seed, options}`` and ``cap.world.seed.v1`` takes ``{seed}``.  The device is simulated
 (R0): there is no hardware backend, no e-stop path to a machine and no operator-required limit.
 
-The upstream clone is not importable where the gate runs (it needs the legacy ``gym`` package, numpy, matplotlib and
-cmocean), and package code never imports the clone.  The ``fake`` backend is therefore the package's own pure Python
-stand-in for ``ExtractWorldEnv`` (see fake.py); a backend name that ``backends`` does not list (``sim``) is served by
-``gymnasium.make(env_id)`` (GymnasiumDriver.open_native), which needs the upstream package and its legacy ``gym``
-registration and was not run here.
+The ``fake`` backend is the package's own pure Python stand-in for
+``ExtractWorldEnv`` (see fake.py).  A backend name that ``backends`` does not list (``sim``) is served by importing
+``env_module = "chemistrylab"``, whose module body runs the ``register(...)`` call that registers
+``ExtractWorld_0-v1`` (chemistrylab/__init__.py:1-9), and then ``gym.make(env_id)`` (GymnasiumDriver.open_native).
+The upstream environment implements the legacy gym API -- ``reset()`` takes no seed and ``step()`` returns the four
+values ``(state, reward, done, {})`` (chemistrylab/extractworldgym/extractworld_v1_engine.py:50-67) -- so use
+``gym==0.23.1`` for that legacy API. The package's tests exercise only the fake backend.
 
 The ``fidelity`` attribute is the fidelity contract of the model as deployed (spec 05-fidelity): the environment is a
 chemical extraction process, not a rigid-body simulation, so the level is F0 and the gaps say what the fake does not
@@ -29,6 +31,7 @@ REGISTRATION = "chemistrylab/__init__.py"
 class ExtractWorld(GymnasiumDriver):
     device_id = "extractworld"
     env_id = "ExtractWorld_0-v1"
+    env_module = "chemistrylab"                 # importing it runs register(...) (chemistrylab/__init__.py:1-9)
     native = "chemistrylab.extractworldgym.extractworld_v1:ExtractWorld_v1"
     backends = {"fake": ".fake:FakeExtractWorld"}
     display_name = "ChemistryLab ExtractWorld_0-v1"
@@ -37,6 +40,11 @@ class ExtractWorld(GymnasiumDriver):
     facts = [
         Fact("ExtractWorld_0-v1 is registered with max_episode_steps=100", source="upstream_code",
              ref=f"{REGISTRATION}:8"),
+        Fact("Importing chemistrylab runs the module-level register(...) call that registers ExtractWorld_0-v1; "
+             "chemistrylab/__init__.py:1 imports register from gym.envs.registration", source="upstream_code",
+             ref=f"{REGISTRATION}:1-9"),
+        Fact("The upstream ExtractWorld demo imports chemistrylab before gym.make('ExtractWorld_0-v1')",
+             source="upstream_code", ref="tests/demo_ExtractWorld.py:1-7"),
         Fact("ExtractWorld_v1 is constructed with extraction='water_oil_2' and target_material='Na'",
              source="upstream_code", ref=f"{ENTRY}:44-49"),
         Fact("ExtractWorldEnv takes dt=0.01 s and stores it as the environment timestep; the ExtractWorld_v1 subclass "

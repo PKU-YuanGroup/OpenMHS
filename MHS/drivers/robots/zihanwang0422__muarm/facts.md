@@ -23,6 +23,8 @@ page. The package serves the card's first MJCF model, `learning/assets/panda_pic
 | actuator8 has ctrlrange 0 to 255 on the split tendon and forcerange -100 to 100 | upstream_code | models/franka_emika_panda/panda.xml:275-277 |
 | The two finger joints are coupled by an equality constraint | upstream_code | models/franka_emika_panda/panda.xml:260-261 |
 | The model has a home keyframe with qpos `0 0 0 -1.57079 0 1.57079 -0.7853 0.04 0.04` and ctrl `0 0 0 -1.57079 0 1.57079 -0.7853 255` | upstream_code | models/franka_emika_panda/panda.xml:280-281 |
+| The upstream environment says it builds the model from an XML string, avoiding relative-path include issues when the XML is not co-located with the robot assets | upstream_code | learning/robots/panda.py:3-5 |
+| That loader includes scene.xml in its XML string and passes an assets dictionary of the mesh files to mujoco.MjModel.from_xml_string | upstream_code | learning/robots/panda.py:64-79 |
 
 Limits: the driver declares none. The only bound of the step action is `action.ctrl`, which the bridge derives per
 actuator from the model's `actuator_ctrlrange` (`cap.world.step.v1` in `reference.json`); it is a bound of the model,
@@ -34,6 +36,15 @@ The card's entry symbols are Gymnasium environment classes (`learning/robots/pan
 clone, but this package serves the card's first MJCF model directly through `MujocoDriver` (the card's `helper`), so
 it declares no `native` class; the environments are not served. Their reset and step behavior is not part of this
 package.
+
+Model load: `model_xml` is a wrapper, not a second model. It includes `learning/assets/panda_pick_place.xml` by
+absolute path and restates the asset directory in a `<compiler>` placed after the include. The wrapper is needed
+because the included robot model sets `meshdir="assets"` (`models/franka_emika_panda/panda.xml:2`) and MuJoCo
+resolves an included compiler's mesh directory against the top-level scene's directory, so a path load would look
+for `learning/assets/assets` (absent). The upstream loader builds the model from an XML string with an absolute scene
+include and the mesh bytes as assets for the same reason (`learning/robots/panda.py:3-5,64-79`); the wrapper keeps
+the upstream scene verbatim and only restates the mesh directory. `_model_name` keeps the derived ctrlrange citation
+`learning/assets/panda_pick_place.xml:actuator_ctrlrange`.
 
 Fidelity contract (`driver.py`, `fidelity = {...}`): engine `mujoco:panda_pick_place`, level F1, determinism
 seeded, `seed_control` none, `realtime_factor` 0, clock `lockstep`, reset full. The time step is read from the model's

@@ -6,6 +6,7 @@ reference file is generated from the driver, not from this page.
 
 | fact | source | ref |
 |---|---|---|
+| Importing `gymnasium_robotics` runs `register_robotics_envs()` at module scope, which registers `FetchSlide-v4` with `gymnasium.register` | upstream_code | gymnasium_robotics/__init__.py:1264 |
 | FetchSlide-v4 is registered with entry point `gymnasium_robotics.envs.fetch.slide:MujocoFetchSlideEnv` and `max_episode_steps=50` | upstream_code | gymnasium_robotics/__init__.py:33-38 |
 | The action space is `Box(-1.0, 1.0, (4,), float32)`: the Cartesian displacement dx, dy, dz of the end effector and a gripper command | upstream_code | gymnasium_robotics/envs/fetch/slide.py:53 |
 | The action vector has four entries, created with `n_actions=4` | upstream_code | gymnasium_robotics/envs/fetch/fetch_env.py:69 |
@@ -26,6 +27,13 @@ Limits: the driver declares none. The only bound is the action space, which the 
 (`Box(-1.0, 1.0, (4,), float32)`: `action.values` per element from -1 to 1, with the source `upstream_code` and the ref
 `gymnasium_robotics/envs/robot_env.py:87`), and `ticks` (1 to `max_ticks`, 10000 by default). The device is simulated
 (R0), so no limit is `operator_required`.
+
+Configuration: `env_id = "FetchSlide-v4"` is the pre-registered environment and `env_kwargs` is empty because the
+registration supplies `reward_type="sparse"` (`gymnasium_robotics/__init__.py:22-38`). `env_module = "gymnasium_robotics"`
+is imported by the bridge before `gymnasium.make(env_id)` on the sim backend, because the module body calls
+`register_robotics_envs()` at `gymnasium_robotics/__init__.py:1264` and that function registers `FetchSlide-v4` at
+`:33-38`. The fake backend is built directly from `.fake:FakeFetchSlideEnv` (`driver.py:backends`) and ignores
+`env_module`.
 
 Fidelity contract (`driver.py`, `fidelity = {...}`): engine `gymnasium-robotics:FetchSlide-v4`, level F1 (a kinematic
 stand-in, no contacts, friction, actuator, sensor or noise model), determinism `seeded` with `seed_control` `parameter`,

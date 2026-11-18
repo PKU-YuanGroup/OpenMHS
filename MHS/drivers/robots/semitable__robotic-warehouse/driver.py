@@ -7,15 +7,20 @@ A GymnasiumDriver is configuration only: ``env_id`` names the registered environ
 and ``cap.world.seed.v1`` takes ``{seed}``.  The device is simulated (R0): there is no hardware backend and no
 operator-required limit.
 
-The gate does not install or import ``rware`` (it needs gymnasium, numpy, networkx and pyglet), so the ``fake``
-backend is this package's pure Python ``FakeWarehouse`` (fake.py).  A backend name that ``backends`` does not list
-(``sim``) is served by ``gymnasium.make(env_id)`` (GymnasiumDriver.open_native); that path needs the upstream package
-and was not run here.  The upstream ``Warehouse.step`` returns one reward per agent (a list) while the Gymnasium
-bridge carries one scalar reward; the registered layout has one agent, and the fake returns that single value.  The
-``fidelity`` contract is F0: a discrete grid-world with no continuous dynamics, no physical timestep and no wall-clock
-pacing.  Every constant and rule cites a line of the clone at the pinned commit
-96fbc64e3eae5fee915e0d390f864fa06ddccd47.  This package is model-authored and unreviewed: it is checked on the fake
-backend only.
+The gate does not install or import ``rware`` for the fake backend (it needs gymnasium, numpy, networkx and pyglet),
+so the ``fake`` backend is this package's pure Python ``FakeWarehouse`` (fake.py).  The ``sim`` backend is the
+package's factory for the real environment: ``_build_sim_warehouse`` imports the registered class
+``rware.warehouse:Warehouse`` (the registration entry point at rware/__init__.py:24-26), constructs it with the tiny
+one-agent layout arguments the registration supplies (rware/__init__.py:27-38) and wraps it so the per-agent reward
+list of ``Warehouse.step`` (rware/warehouse.py:946) becomes the one scalar the Gymnasium bridge carries.  The
+registered layout has exactly one agent, so element 0 is that scalar.  ``env_module = "rware"`` remains the
+registration-on-import fact for the ``gymnasium.make(env_id)`` fallback a backend the ``backends`` map does not list
+would use (rware/__init__.py:3-24); the ``sim`` backend does not need it because its factory builds the class
+directly.  The real upstream was not installed, imported or run here: the gate checks the fake, and the
+orchestrator's ``--backend sim`` run is what imports the installed ``rware``.  The ``fidelity`` contract is F0: a
+discrete grid-world with no continuous dynamics, no physical timestep and no wall-clock pacing.  Every constant and
+rule cites a line of the clone at the pinned commit 96fbc64e3eae5fee915e0d390f864fa06ddccd47.  This package is
+model-authored and unreviewed: it is checked on the fake backend here.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -24,15 +29,72 @@ WAREHOUSE = "rware/warehouse.py"
 REGISTRATION = "rware/__init__.py"
 
 
+class _SingleAgentReward:
+    """The registered one-agent environment, returning its reward list element as the bridge's scalar.
+
+    ``Warehouse.step`` builds ``rewards = np.zeros(self.n_agents)`` and returns ``list(rewards)`` as the second
+    element of its five-tuple (rware/warehouse.py:878 and 946).  The Gymnasium bridge carries one ``number`` reward
+    (``cap.world.step.v1`` output) and converts it with ``float(...)``, so a list is not accepted.  The registered
+    tiny layout has ``n_agents`` 1 (rware/__init__.py:31), which makes element 0 the whole reward.  Everything else
+    is forwarded to the real environment object.
+    """
+
+    def __init__(self, env):
+        self._env = env
+
+    def __getattr__(self, name):
+        return getattr(self._env, name)
+
+    def reset(self, **kwargs):
+        return self._env.reset(**kwargs)
+
+    def step(self, action):
+        observation, rewards, terminated, truncated, info = self._env.step(action)
+        return observation, float(rewards[0]), terminated, truncated, info
+
+    def close(self):
+        return self._env.close()
+
+
+def _build_sim_warehouse(**_options):
+    """Build ``rware.warehouse:Warehouse`` as the tiny one-agent registration does (``sim`` backend only).
+
+    The registration at rware/__init__.py:24-39 names ``entry_point="rware.warehouse:Warehouse"`` (line 26) and
+    supplies the constructor arguments below.  Importing ``rware.warehouse`` also runs ``rware/__init__.py``, whose
+    top-level ``register`` calls publish ``rware-tiny-1ag-v2`` (rware/__init__.py:3-24), but the factory builds the
+    class directly so no gymnasium wrapper or env checker sits between the bridge and the environment.  The module
+    is imported here, never at driver import time: the fake backend runs where ``rware`` is not installed.
+    """
+    from rware.warehouse import RewardType, Warehouse
+
+    return _SingleAgentReward(Warehouse(
+        column_height=8,                       # rware/__init__.py:28
+        shelf_rows=1,                          # rware/__init__.py:29; tiny is (1, 3) at rware/__init__.py:8
+        shelf_columns=3,                       # rware/__init__.py:30
+        n_agents=1,                            # rware/__init__.py:31; one agent
+        msg_bits=0,                            # rware/__init__.py:32
+        sensor_range=1,                        # rware/__init__.py:33
+        request_queue_size=1,                  # rware/__init__.py:34; int(1 * 1)
+        max_inactivity_steps=None,             # rware/__init__.py:35
+        max_steps=500,                         # rware/__init__.py:36
+        reward_type=RewardType.INDIVIDUAL,     # rware/__init__.py:37
+    ))
+
+
 class RwareTiny(GymnasiumDriver):
     device_id = "rware-tiny-1ag"
     env_id = "rware-tiny-1ag-v2"
+    env_module = "rware"                          # importing it runs the register call (rware/__init__.py:3-24)
     native = "rware.warehouse:Warehouse"
-    backends = {"fake": ".fake:FakeWarehouse"}
+    backends = {"fake": ".fake:FakeWarehouse", "sim": _build_sim_warehouse}
     display_name = "RWARE tiny warehouse with one agent"
     vendor, model = "Semitable", "rware-tiny-1ag-v2"
     tags = ["rware", "warehouse", "multi-robot", "reinforcement-learning", "simulation", "gymnasium"]
     facts = [
+        Fact("Importing rware runs the module-level registration: rware/__init__.py imports register from "
+             "gymnasium (line 3) and its top-level loop calls register(id=f\"rware-{size}-{agents}ag{diff}-v2\", "
+             "entry_point=\"rware.warehouse:Warehouse\", ...) at line 24, so importing rware makes "
+             "rware-tiny-1ag-v2 available to gymnasium.make", source="upstream_code", ref=f"{REGISTRATION}:3-24"),
         Fact("The normal registration loop registers rware-{size}-{agents}ag{diff}-v2 with entry_point "
              "rware.warehouse:Warehouse for the tiny, small, medium and large layouts, the default, easy and hard "
              "difficulties and 1 to 19 agents; for tiny, 1 agent and the default difficulty the id is "
@@ -59,6 +121,15 @@ class RwareTiny(GymnasiumDriver):
              ref=f"{WAREHOUSE}:757-799"),
         Fact("step maps each tuple element to an Action and a forward move of an agent carrying a shelf into a "
              "standing shelf is cancelled to NOOP", source="upstream_code", ref=f"{WAREHOUSE}:804-844"),
+        Fact("The registration names entry_point rware.warehouse:Warehouse (line 26) and gives the constructor "
+             "arguments it uses (lines 27-38); the sim backend builds that class with those arguments",
+             source="upstream_code", ref=f"{REGISTRATION}:24-38"),
+        Fact("Warehouse.__init__ takes shelf_columns, column_height, shelf_rows, n_agents, msg_bits, sensor_range, "
+             "request_queue_size, max_inactivity_steps, max_steps and reward_type as required arguments",
+             source="upstream_code", ref=f"{WAREHOUSE}:146-157"),
+        Fact("Warehouse.step returns a five-tuple whose reward element is list(rewards), one reward per agent; the "
+             "registered layout has one agent, so the sim backend returns element 0 as the bridge's scalar reward",
+             source="upstream_code", ref=f"{WAREHOUSE}:944-946"),
         Fact("A requested shelf delivered to a goal is replaced in the request queue by a uniformly sampled shelf "
              "that is not currently requested", source="upstream_code", ref=f"{WAREHOUSE}:905-918"),
         Fact("With RewardType.INDIVIDUAL the agent that delivers a requested shelf to a goal receives +1",
@@ -97,8 +168,8 @@ class RwareTiny(GymnasiumDriver):
             "is 0 and one tick advances one discrete transition (warehouse.py:933-946); a receipt reports tick, "
             "not simulated milliseconds",
             "the Gymnasium bridge carries one scalar reward while upstream Warehouse.step returns one reward per "
-            "agent (warehouse.py:946); the registered layout has one agent, so the fake returns that single "
-            "reward as a float",
+            "agent as a list (warehouse.py:946); the registered layout has one agent, so both the fake and the "
+            "sim backend return that single value as a float",
             "the fake backend re-implements the one-agent tiny layout in pure Python and was not compared with a "
             "run of the upstream environment; it seeds Python's random.Random instead of numpy's np_random and "
             "has no multi-agent collision graph, rendering or gymnasium wrapper chain",

@@ -98,7 +98,11 @@ Outputs:
 
 ## Facts
 
-- OT2Env is a Gymnasium environment wrapper for the OT-2 pipetting robot digital twin (upstream_code: src/ot2/ot2_gym_wrapper.py:9)
+- OT2Env is the real environment class the sim backend builds (a Gymnasium environment wrapper for the OT-2 pipetting robot digital twin) (upstream_code: src/ot2/ot2_gym_wrapper.py:7-9)
+- OT2Env.__init__ takes render and max_steps (defaults False and 1000) and builds the one-agent Simulation the sim backend constructs (upstream_code: src/ot2/ot2_gym_wrapper.py:19-24)
+- The clone is run from its repository root as a top-level src package (python -m src.integration.test_wrapper) (vendor_doc: README.md:219)
+- The clone's own smoke test imports the environment as src.ot2.ot2_gym_wrapper (upstream_code: src/integration/test_wrapper.py:1)
+- The wrapper imports its sibling simulation relatively (from .sim_class import Simulation) (upstream_code: src/ot2/ot2_gym_wrapper.py:4)
 - The observation is [pipette_x, pipette_y, pipette_z, goal_x, goal_y, goal_z] (upstream_code: src/ot2/ot2_gym_wrapper.py:10)
 - The action is [vx, vy, vz] continuous velocities in [-1, 1] (upstream_code: src/ot2/ot2_gym_wrapper.py:11)
 - The reward is the negative Euclidean distance to the goal with a +10 bonus on success (upstream_code: src/ot2/ot2_gym_wrapper.py:12)

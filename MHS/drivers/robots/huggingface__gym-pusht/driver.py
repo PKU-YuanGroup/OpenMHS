@@ -14,7 +14,10 @@ observation type is the 5-value state vector; the other types ``environment_stat
 The gate cannot import gym_pusht (pymunk, shapely, pygame, opencv-python and scikit-image, ``pyproject.toml:24-30``),
 and package code never imports the clone, so the ``fake`` backend is the package's own pure Python environment.  A
 backend name that ``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id)``
-(GymnasiumDriver.open_native); that path needs the upstream package and was not run here.
+(GymnasiumDriver.open_native); that path needs the upstream package, and ``env_module`` names ``gym_pusht`` so the
+bridge imports it and runs the module-level registration (``gym_pusht/__init__.py:3``) before the lookup.  The
+upstream lock selects pymunk 6.8.0 (``poetry.lock:681-682``); keep pymunk below 7 because the environment calls
+``Space.add_collision_handler`` (``gym_pusht/envs/pusht.py:452``).
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002):
 every member of ``device.schema.json`` that applies to a simulator without a physical counterpart.  Every constant and
@@ -31,6 +34,7 @@ REGISTRATION = "gym_pusht/__init__.py"
 class PushT(GymnasiumDriver):
     device_id = "pusht"
     env_id = "gym_pusht/PushT-v0"
+    env_module = "gym_pusht"                    # importing it runs register(...) at gym_pusht/__init__.py:3
     env_kwargs = {"obs_type": "state"}          # the kwargs of the registration (gym_pusht/__init__.py:7)
     native = "gym_pusht.envs:PushTEnv"
     backends = {"fake": ".fake:FakePushTEnv"}
@@ -41,6 +45,8 @@ class PushT(GymnasiumDriver):
     facts = [
         Fact("PushT-v0 is registered with entry point gym_pusht.envs:PushTEnv, max_episode_steps 300 and kwargs "
              "obs_type state", source="upstream_code", ref=f"{REGISTRATION}:3-8"),
+        Fact("Importing gym_pusht runs the module-level register call that registers gym_pusht/PushT-v0",
+             source="upstream_code", ref=f"{REGISTRATION}:3"),
         Fact("The action space is a Box of two values in the range 0 to 512", source="upstream_code",
              ref=f"{PUSHT}:161"),
         Fact("The action [x, y] is the target position of the agent", source="upstream_code",

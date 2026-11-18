@@ -4,6 +4,8 @@ Add cases, never remove the check_driver call.  The cases run on the fake backen
 upstream clone are not imported or run where the gate runs, so nothing here compares the fake with upstream.
 """
 
+import array
+import base64
 import unittest
 from pathlib import Path
 
@@ -20,6 +22,49 @@ class DriverGate(unittest.TestCase):
     def test_gate(self) -> None:
         report = check_driver(HERE, backend="fake")
         self.assertEqual(report["failed"], [], report)
+
+
+class PlainProjectionCases(unittest.TestCase):
+    """The sim camera arrays use a lossless JSON envelope; the values are unchanged."""
+
+    def module(self):
+        from mhs.driver.loader import import_driver_module
+
+        return import_driver_module(HERE)
+
+    def test_a_large_camera_array_is_a_lossless_base64_envelope(self) -> None:
+        payload = bytes(range(256)) * 12
+
+        class Array:
+            dtype = "|u1"
+            shape = (32, 32, 3)
+            size = 32 * 32 * 3
+
+            def tobytes(self) -> bytes:
+                return payload
+
+            def tolist(self):
+                raise AssertionError("a large camera array must not become a JSON number list")
+
+        out = self.module()._plain({"camera": {"rgb": Array(), "pose": [[0.0] * 3, [0.0] * 4]}})
+        envelope = out["camera"]["rgb"]
+        self.assertEqual(envelope["encoding"], "base64")
+        self.assertEqual(envelope["dtype"], "|u1")
+        self.assertEqual(envelope["shape"], [32, 32, 3])
+        self.assertEqual(base64.b64decode(envelope["data"]), payload)
+        self.assertEqual(out["camera"]["pose"], [[0.0] * 3, [0.0] * 4])
+
+    def test_a_flat_camera_tuple_is_a_lossless_base64_envelope(self) -> None:
+        # PyBullet without its NumPy extension returns a flat tuple (camera.py:195-199).
+        out = self.module()._plain({"camera": {"seg": tuple(range(1024))}})
+        envelope = out["camera"]["seg"]
+        self.assertEqual(envelope["encoding"], "base64")
+        self.assertEqual(envelope["shape"], [1024])
+        self.assertEqual(base64.b64decode(envelope["data"]), array.array("q", range(1024)).tobytes())
+
+    def test_a_small_camera_value_stays_a_json_list(self) -> None:
+        out = self.module()._plain({"camera": {"rgb": [1, 2, 3]}})
+        self.assertEqual(out["camera"]["rgb"], [1, 2, 3])
 
 
 class GripCases(unittest.TestCase):
@@ -197,6 +242,9 @@ class RawNativeCases(unittest.TestCase):
         self.assertFalse(first.is_alive() or second.is_alive())
         self.assertEqual(len(raw.calls), 1)
         self.assertEqual(raw.substeps, 3)
+        state = client.read("world", **ids)["state"]
+        self.assertEqual(state["tick"], 1)
+        self.assertEqual(state["observation"], {"robot": {"positions": [0.] * 7}})
         stopped = client.estop("native call is now idle", **ids)
         self.assertTrue(stopped["output"]["safe_state_achieved"], stopped)
         self.assertEqual(client.reset(**ids)["status"], "completed")

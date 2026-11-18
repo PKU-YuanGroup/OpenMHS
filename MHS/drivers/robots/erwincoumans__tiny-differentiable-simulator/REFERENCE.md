@@ -99,11 +99,13 @@ Outputs:
 ## Facts
 
 - CartpolePyTinyDiffSim is registered as CartpolePyTinyDiffSim-v0 with entry point tds_environments.cartpole_tds_env:CartpolePyTinyDiffSim and max_episode_steps 200 (upstream_code: python/tds_environments/__init__.py:12-17)
+- Importing tds_environments runs its module-level register(...) call, so CartpolePyTinyDiffSim-v0 is in the legacy gym registry after the import (upstream_code: python/tds_environments/__init__.py:1-17)
+- The wrapper imports the legacy gym package, its spaces and gym.utils.seeding, and subclasses gym.Env (upstream_code: python/tds_environments/cartpole_tds_env.py:2-9)
 - The wrapper creates pytinydiffsim.CartpoleEnv (upstream_code: python/tds_environments/cartpole_tds_env.py:14)
 - The action space is a one-dimensional Box bounded by +-force_mag, and force_mag is 10 (upstream_code: python/tds_environments/cartpole_tds_env.py:30-35)
 - x_threshold is 0.4 and theta_threshold_radians is 12 degrees; the observation space is a four-element Box with high [x_threshold*2, float32 max, theta_threshold*2, float32 max] (upstream_code: python/tds_environments/cartpole_tds_env.py:19-28)
-- step passes action[0] to the wrapped environment and returns its observation with reward 1.0 and the done flag (upstream_code: python/tds_environments/cartpole_tds_env.py:65-73)
-- reset returns the wrapped environment's reset state as the observation (upstream_code: python/tds_environments/cartpole_tds_env.py:75-79)
+- step passes action[0] to the wrapped environment and returns the legacy four-value (observation, reward, done, info) tuple with reward 1.0 and the done flag (upstream_code: python/tds_environments/cartpole_tds_env.py:65-73)
+- reset takes no seed argument and returns the wrapped environment's reset state as the observation (upstream_code: python/tds_environments/cartpole_tds_env.py:75-79)
 - seed masks the seed to 32 bits, seeds the wrapped environment and returns [seed] (upstream_code: python/tds_environments/cartpole_tds_env.py:49-55)
 - The compiled step2 returns the observation in [q0, q1, qd0, qd1] order when COMPATIBILITY is not defined (upstream_code: examples/environments/cartpole_environment2.h:221-242)
 - A reset draws every state value uniformly from -0.05 to 0.05 with std::rand (upstream_code: examples/environments/cartpole_environment2.h:182-192)

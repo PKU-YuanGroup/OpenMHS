@@ -9,6 +9,7 @@ because the clone has no separate vendor documentation of the bounds.
 | fact | source | ref |
 |---|---|---|
 | PushT-v0 is registered with entry point gym_pusht.envs:PushTEnv, max_episode_steps 300 and kwargs obs_type state | upstream_code | gym_pusht/__init__.py:3-8 |
+| Importing gym_pusht runs the module-level register call that registers gym_pusht/PushT-v0 | upstream_code | gym_pusht/__init__.py:3 |
 | The action space is a Box of two values in the range 0 to 512 | upstream_code | gym_pusht/envs/pusht.py:161 |
 | The action [x, y] is the target position of the agent | upstream_code | gym_pusht/envs/pusht.py:50-51 |
 | With obs_type state the observation space is a Box of five values: the agent x and y and the block x and y bounded by 0 and 512 and the block angle bounded by 0 and 2*pi | upstream_code | gym_pusht/envs/pusht.py:184-190 |

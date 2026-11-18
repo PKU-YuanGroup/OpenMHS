@@ -98,6 +98,7 @@ Outputs:
 
 ## Facts
 
+- Importing chemistrylab runs a module-level registration: chemistrylab/__init__.py imports register from gymnasium (line 11) and calls register(id='GenWurtzExtract-v2', entry_point='chemistrylab.benches.extract_bench:GeneralWurtzExtract_v2') at lines 15-18, so importing chemistrylab makes the id available to gymnasium.make (upstream_code: chemistrylab/__init__.py:11-18)
 - GenWurtzExtract-v2 is registered with entry point chemistrylab.benches.extract_bench:GeneralWurtzExtract_v2 (upstream_code: chemistrylab/__init__.py:15-18)
 - The registration passes only id and entry_point: there is no max_episode_steps wrapper, so the environment's own max_steps is the only step bound (upstream_code: chemistrylab/__init__.py:15-18)
 - GenBench defaults max_steps to 50 (upstream_code: chemistrylab/benches/general_bench.py:68)

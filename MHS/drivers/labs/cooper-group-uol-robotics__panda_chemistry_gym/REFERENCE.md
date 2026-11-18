@@ -100,6 +100,8 @@ Outputs:
 
 - Capping_Env builds a PyBullet simulation and a Panda robot with the gripper enabled, base position [-0.6, 0, 0], ee control and the Capping task (upstream_code: custom_envs/envs/Insertion_PandaTasks/Capping/Capping_PandaTask.py:15-19)
 - Capping_Env is registered as Capping{}{}-v1 in both control and reward variants, with max_episode_steps=100; the ee/sparse instance is Capping-v1 (upstream_code: custom_envs/__init__.py:8-19)
+- Importing custom_envs runs its module-level registration: line 6 imports register from gym.envs.registration and lines 14-19 register Capping-v1 in the legacy gym registry (upstream_code: custom_envs/__init__.py:6-19)
+- Capping._create_scene builds the cap mesh paths as os.getcwd()+'/Objects/...', so the upstream constructor resolves those meshes relative to the process working directory (upstream_code: custom_envs/envs/Insertion_Tasks/Capping/Capping_Task.py:50-51)
 - In ee control the Panda action space is Box(-1.0, 1.0) with four values: three displacement values and one gripper value (3 + 1 because the gripper is not blocked) (upstream_code: custom_envs/envs/robots/panda.py:22-24)
 - Panda.set_action clips the action to the action space low and high before using it (upstream_code: custom_envs/envs/robots/panda.py:44-46)
 - In ee control the first three action values are an end-effector displacement scaled by 0.05 (upstream_code: custom_envs/envs/robots/panda.py:64-68)

@@ -8,6 +8,8 @@ driver, not from this page.
 |---|---|---|
 | Capping_Env builds a PyBullet simulation and a Panda robot with the gripper enabled, base position [-0.6, 0, 0], ee control and the Capping task | upstream_code | custom_envs/envs/Insertion_PandaTasks/Capping/Capping_PandaTask.py:15-19 |
 | Capping_Env is registered as Capping{}{}-v1 in both control and reward variants, with max_episode_steps=100; the ee/sparse instance is Capping-v1 | upstream_code | custom_envs/__init__.py:8-19 |
+| Importing custom_envs runs its module-level registration: line 6 imports register from gym.envs.registration and lines 14-19 register Capping-v1 in the legacy gym registry | upstream_code | custom_envs/__init__.py:6-19 |
+| Capping._create_scene builds the cap mesh paths as os.getcwd()+'/Objects/...', so the upstream constructor resolves those meshes relative to the process working directory | upstream_code | custom_envs/envs/Insertion_Tasks/Capping/Capping_Task.py:50-51 |
 | In ee control the Panda action space is Box(-1.0, 1.0) with four values: three displacement values and one gripper value (3 + 1 because the gripper is not blocked) | upstream_code | custom_envs/envs/robots/panda.py:22-24 |
 | Panda.set_action clips the action to the action space low and high before using it | upstream_code | custom_envs/envs/robots/panda.py:44-46 |
 | In ee control the first three action values are an end-effector displacement scaled by 0.05 | upstream_code | custom_envs/envs/robots/panda.py:64-68 |
@@ -40,6 +42,18 @@ Fidelity contract (`driver.py`, `fidelity = {...}`): engine `pybullet:panda_chem
 physics timestep 2 ms with 50 substeps (100 ms control interval, `pybullet.py:25-54`), `realtime_factor` 0, clock
 `lockstep`, reset `full`, no snapshot and restore. The gaps say what the fake does not model and that it was not
 compared with the upstream environment.
+
+Sim path (`driver.py`): `env_module = "custom_envs"` names the module whose import runs the module-level
+registration at `custom_envs/__init__.py:6-19` (the id is looked up in legacy `gym`). The `sim` backend
+`_build_sim_capping` imports `custom_envs`, computes the clone root from `custom_envs.__file__`, and enters that
+root while the upstream `Capping._create_scene` resolves
+its `os.getcwd()+'/Objects/...'` mesh paths (`Capping_Task.py:50-51,73-74,98-99,129-130`), calls the registration's
+own `gym.make("Capping-v1")` (the real `Capping_Env` of `Capping_PandaTask.py:15-19` with the registration's
+`reward_type="sparse"` and `control_type="ee"` kwargs and 100-step limit, `custom_envs/__init__.py:8-19`), and
+restores the working directory. Object meshes are resolved from that checkout. Install `gym==0.23.1`,
+`gym-robotics==0.1.0`, `pybullet==3.2.7` and `numpy<2`: the upstream imports gym and gym_robotics
+(`panda_chemistry_gym/core.py:4-8`) and PyBullet (`panda_chemistry_gym/pybullet.py:8-10`), and documents its legacy
+gym stack at `README.md:171-181`. The clone has no packaging metadata, so its pinned root must be on `PYTHONPATH`.
 
 Safety: simulated R0 device. The e-stop is the runtime's software latch (no native stop exists); after it no step or
 reset is accepted until `mhs.safety.reset` clears the latch (a simulator needs no operator for that), and the state

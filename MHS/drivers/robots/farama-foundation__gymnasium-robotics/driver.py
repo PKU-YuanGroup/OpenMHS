@@ -6,10 +6,13 @@ gripper]}`` bounded element by element by ``Box(-1.0, 1.0, (4,), float32)``; ``c
 options}`` and ``cap.world.seed.v1`` ``{seed}``.  The device is simulated (R0): there is no hardware backend, no
 e-stop path to a machine and no operator-required limit.
 
-The gate cannot import the upstream package (it needs Python 3.11 or newer, MuJoCo, numpy and the MuJoCo model
-assets; pyproject.toml:11 and :31-38), so the ``fake`` backend is this package's own pure Python FetchSlide stand-in
-(fake.py).  A backend name that ``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id)``
-(GymnasiumDriver.open_native); that path needs the upstream package and was not run here.
+The gate in this workspace cannot import the upstream package (it needs Python 3.11 or newer, MuJoCo, numpy and the
+MuJoCo model assets; pyproject.toml:11, :26-35 and :55-63), so the ``fake`` backend is this package's own pure Python
+FetchSlide stand-in (fake.py).  A backend name that ``backends`` does not list (``sim``) is served by
+``gymnasium.make(env_id)`` (GymnasiumDriver.open_native) after importing ``env_module``; importing
+``gymnasium_robotics`` runs its module-level ``register_robotics_envs()`` call
+(gymnasium_robotics/__init__.py:1264), which registers FetchSlide-v4 at :33-38.  That path needs the upstream
+package and was not run here.
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002):
 every member of ``device.schema.json`` that applies to a simulator without a physical counterpart.  Every constant
@@ -28,6 +31,9 @@ REGISTRY = "gymnasium_robotics/__init__.py"
 class FetchSlide(GymnasiumDriver):
     device_id = "fetch-slide"
     env_id = "FetchSlide-v4"
+    #: Importing gymnasium_robotics runs register_robotics_envs() at gymnasium_robotics/__init__.py:1264, which
+    #: registers FetchSlide-v4 (gymnasium_robotics/__init__.py:33-38) before the bridge calls gymnasium.make.
+    env_module = "gymnasium_robotics"
     native = "gymnasium_robotics.envs.fetch.slide:MujocoFetchSlideEnv"
     backends = {"fake": ".fake:FakeFetchSlideEnv"}
     action_space_ref = f"{ROBOT}:87"
@@ -35,6 +41,9 @@ class FetchSlide(GymnasiumDriver):
     vendor, model = "Farama Foundation", "FetchSlide-v4"
     tags = ["fetch", "fetch-slide", "mujoco", "robotics", "reinforcement-learning", "simulation", "gymnasium"]
     facts = [
+        Fact("Importing gymnasium_robotics runs register_robotics_envs() at module scope, which registers "
+             "FetchSlide-v4 with gymnasium.register",
+             source="upstream_code", ref=f"{REGISTRY}:1264"),
         Fact("FetchSlide-v4 is registered with entry point "
              "gymnasium_robotics.envs.fetch.slide:MujocoFetchSlideEnv and max_episode_steps=50",
              source="upstream_code", ref=f"{REGISTRY}:33-38"),

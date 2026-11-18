@@ -5,6 +5,7 @@ Every fact cites its source at commit `ab8227b6b33f13617b7e551bdf6b894df7eec68d`
 
 | fact | source | ref |
 |---|---|---|
+| Importing chemistrylab runs a module-level registration: chemistrylab/__init__.py imports register from gymnasium (line 11) and calls register(id='GenWurtzExtract-v2', entry_point='chemistrylab.benches.extract_bench:GeneralWurtzExtract_v2') at lines 15-18, so importing chemistrylab makes the id available to gymnasium.make | upstream_code | chemistrylab/__init__.py:11-18 |
 | GenWurtzExtract-v2 is registered with entry point chemistrylab.benches.extract_bench:GeneralWurtzExtract_v2 | upstream_code | chemistrylab/__init__.py:15-18 |
 | The registration passes only id and entry_point: there is no max_episode_steps wrapper, so the environment's own max_steps is the only step bound | upstream_code | chemistrylab/__init__.py:15-18 |
 | GenBench defaults max_steps to 50 | upstream_code | chemistrylab/benches/general_bench.py:68 |
@@ -25,6 +26,12 @@ Every fact cites its source at commit `ab8227b6b33f13617b7e551bdf6b894df7eec68d`
 | step applies the selected action, advances every working vessel and returns (state, reward, done, False, {}) | upstream_code | chemistrylab/benches/general_bench.py:201-222 |
 | Most actions advance a vessel by dt=0.01 s; the two solvent pours and the final mixing action use dt=0 and the final Action is terminal | upstream_code | chemistrylab/benches/extract_bench.py:169-178 |
 | The bench metadata declares rgb_array rendering at 10 frames per second | upstream_code | chemistrylab/benches/extract_bench.py:152-155 |
+
+Configuration: `env_id = "GenWurtzExtract-v2"`, `env_module = "chemistrylab"` (importing the module registers the id,
+`chemistrylab/__init__.py:11-18`), and no `env_kwargs` (the registered constructor `GeneralWurtzExtract_v2.__init__`
+takes no arguments, `chemistrylab/benches/extract_bench.py:157`). The `fake` backend stays
+`.fake:FakeGeneralWurtzExtract`; the bridge imports `env_module` only when it builds the environment itself with
+`gymnasium.make`, so the fake backend is unchanged.
 
 Limits: the driver declares none. The only bound is the action space, which the bridge derives from the fake
 environment's `Discrete(41)` (`action.index` from 0 to 40, with no source and the ref

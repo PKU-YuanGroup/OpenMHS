@@ -8,12 +8,14 @@ simulated (R0): there is no hardware backend, no e-stop path to a machine and no
 
 The fake backend is the package's own pure Python environment (``fake.py``), because the upstream package needs
 PyBullet, a deformable-body simulation and numpy, and package code never imports or runs the clone.  A backend name
-that ``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id)`` (GymnasiumDriver.open_native);
-that path needs the upstream package installed and was not run here (README.md).
+that ``backends`` does not list (``sim``) is served by ``GymnasiumDriver.open_native``: the bridge imports
+``env_module = "deformable_gym"`` (the module body runs the ``register(...)`` call at
+``deformable_gym/__init__.py:6-14``) and then calls ``gymnasium.make(env_id)``; that path needs the upstream package
+installed and is left to the orchestrator's sim run (README.md:78 documents the same ``gymnasium.make``).
 
 The ``fidelity`` attribute is the fidelity contract of the model as deployed.  Every constant and rule cites a line
 of the clone at the pinned commit (5b67bc9eb28f3c4356c49d0192906fec1752d1a1).  This package is model-authored and
-unreviewed: it is checked on the fake backend only.
+unreviewed: the local gate checks the fake backend, and the orchestrator runs the sim backend separately.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -29,13 +31,16 @@ URDF = "deformable_gym/assets/robots/urdf/mia_hand.urdf"
 class FloatingMiaGrasp(GymnasiumDriver):
     device_id = "floating_mia_grasp"
     env_id = "FloatingMiaGraspInsole-v0"
+    #: Importing this package runs the register(...) call at deformable_gym/__init__.py:6-14.
+    env_module = "deformable_gym"
     native = "deformable_gym.envs.floating_mia_grasp_env:FloatingMiaGraspEnv"
     backends = {"fake": ".fake:FakeFloatingMiaGraspEnv"}
     display_name = "deformable_gym FloatingMiaGraspInsole-v0 (PyBullet simulation)"
     vendor, model = "DFKI RIC", "FloatingMiaGraspInsole-v0"
     tags = ["grasping", "deformable-object", "reinforcement-learning", "simulation", "pybullet", "gymnasium"]
     facts = [
-        Fact("The package registers FloatingMiaGraspInsole-v0 with entry point "
+        Fact("Importing deformable_gym runs the module-level register(...) call that registers "
+             "FloatingMiaGraspInsole-v0 with entry point "
              "deformable_gym.envs.floating_mia_grasp_env:FloatingMiaGraspEnv, object_name "
              "'insole_on_conveyor_belt/back' and observable_object_pos True", source="upstream_code",
              ref=f"{INIT}:6-14"),
@@ -106,8 +111,8 @@ class FloatingMiaGrasp(GymnasiumDriver):
             "time_step subsystem of deformable_gym/envs/base_env.py:72) only",
             "the fake returns 19-value Python lists; upstream returns numpy float64 observation arrays and has a "
             "render_mode with a PyBullet GUI",
-            "the fake was never compared with a run of the upstream environment; pybullet, numpy and "
-            "pytransform3d are not needed by the gate and were not installed",
+            "the fake was never compared with a run of the upstream environment; the fake itself needs no "
+            "pybullet, numpy or pytransform3d, though the sim install supplies them",
             "snapshot and restore are not offered: the environment exposes no get_state or set_state",
             "no physical device is modelled and the model was never validated against one",
         ],

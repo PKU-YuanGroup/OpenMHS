@@ -10,14 +10,15 @@ declared.
 
 The gate does not install metaworld, MuJoCo or numpy (metaworld/pyproject.toml), and package code never imports the
 clone.  The ``fake`` backend is therefore a pure-Python stand-in for the upstream class (see fake.py); a backend
-name that ``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id, **env_kwargs)`` through
-``GymnasiumDriver.open_native``.  That path needs the upstream package and a registered Meta-World install and was
-not run here.
+name that ``backends`` does not list (``sim``) is served by importing ``env_module = "metaworld"`` -- whose module
+body calls ``register_mw_envs()`` (metaworld/__init__.py:823) and so registers ``Meta-World/goal_observable``
+(metaworld/__init__.py:696-706) -- and then ``gymnasium.make(env_id, **env_kwargs)`` through
+``GymnasiumDriver.open_native``.  That path was not run here.
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002):
 every member of ``device.schema.json`` that applies to a simulator without a physical counterpart.  Every constant
 and rule cites a line of the clone at the pinned commit (c0dafaf1557f31cad3b96ba2b62462f45638f5a5).  This package
-is model-authored and unreviewed: it is checked on the fake backend only.
+is model-authored and unreviewed.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -32,6 +33,7 @@ DICT = "metaworld/env_dict.py"
 class MetaWorldAssembly(GymnasiumDriver):
     device_id = "metaworld-assembly-v3"
     env_id = "Meta-World/goal_observable"
+    env_module = "metaworld"  # importing it runs register_mw_envs() (metaworld/__init__.py:823)
     env_kwargs = {"env_name": "assembly-v3", "seed": 0}
     seed = 0
     native = "metaworld.envs.sawyer_assembly_peg_v3:SawyerNutAssemblyEnvV3"
@@ -66,6 +68,8 @@ class MetaWorldAssembly(GymnasiumDriver):
              ref=f"{BASE}:275-290"),
         Fact("Meta-World/goal_observable is registered with an entry_point that selects the observable-goal class "
              "for env_name and passes seed=seed", source="upstream_code", ref=f"{INIT}:696-706"),
+        Fact("Importing metaworld calls register_mw_envs() at module level, so the id is registered only after "
+             "that import", source="upstream_code", ref=f"{INIT}:823"),
         Fact("assembly-v3 maps to SawyerNutAssemblyEnvV3", source="upstream_code", ref=f"{DICT}:26-27"),
         Fact("The goal_observable constructor seeds numpy before construction and calls env.seed(seed) after the "
              "first reset when a seed is given", source="upstream_code", ref=f"{DICT}:184-199"),
