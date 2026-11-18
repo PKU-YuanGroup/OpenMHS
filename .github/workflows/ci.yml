@@ -109,17 +109,20 @@ jobs:
           changed=$(python3 tools/changed_packages.py "$base")
           if [ -z "$changed" ]; then echo "no driver package changed"; exit 0; fi
           # A package recorded as pass must pass; a blocked or skip-proposed record (MHS/handoff/BLOCKED.md) is in
-          # order as it is. collect.py --recorded checks that; it runs the gate itself.
+          # order as it is. collect.py --recorded checks that.
           for d in $changed; do
             test -f "$d/task.json" || { echo "$d was deleted or has no task.json"; exit 1; }
             status=$(python3 -c 'import json, sys; print(json.load(open(sys.argv[1])).get("status"))' "$d/RESULT.json" 2>/dev/null || true)
             if [ "$status" = "pass" ]; then
               python3 tools/fetch_clone.py "$d"
-              python3 -m mhs.driver check "$d" --backend fake --no-report
             else
               python3 tools/fetch_clone.py "$d" || echo "no clone for $d (a record that is not a pass may have none)"
             fi
-            python3 MHS/handoff/tools/collect.py "$d" --recorded
+            # collect.py runs the gate once; the gate's own output is printed only when the record does not hold
+            python3 MHS/handoff/tools/collect.py "$d" --recorded || {
+              python3 -m mhs.driver check "$d" --backend fake --no-report || true
+              exit 1
+            }
           done
 
   site:
