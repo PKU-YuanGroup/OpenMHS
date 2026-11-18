@@ -13,10 +13,13 @@ registers ``SpotMicroEnv-v0`` (``spotmicro/spot_gym_env.py:47-51``).  The Bezier
 motors from its own state machine and ignores the passed action, and the Minitaur environment belongs to a separate
 ``mini_bullet`` package.
 
-The gate cannot import the clone (it needs gym, numpy and PyBullet), so the ``fake`` backend is this package's pure
-Python stand-in (fake.py).  A backend name that ``backends`` does not list (``sim``) is served by
-``gym.make("SpotMicroEnv-v0")`` (GymnasiumDriver.open_native); that path needs the upstream stack and the module that
-performs the registration, and was not run here.
+The ``fake`` backend is this package's pure Python stand-in (fake.py) and does not import the clone.  A backend name
+that ``backends`` does not list (``sim``) is served by ``gym.make("SpotMicroEnv-v0", render=False)`` after the bridge
+imports ``env_module`` (GymnasiumDriver.open_native).  ``spotmicro.spot_gym_env`` is that module: its body imports
+``gym.envs.registration.register`` and calls it for ``SpotMicroEnv-v0`` (``spotmicro/spot_gym_env.py:24``,
+``:47-51``).  ``render=False`` selects ``BulletClient()`` with no connection mode instead of the GUI client
+(``:103``, ``:264-268``).  The clone has no setup.py; the sim run puts the pinned tree on ``PYTHONPATH`` and installs
+the legacy ``gym``, PyBullet and ``pkg_resources`` that module imports.  That sim path was not run in this workspace.
 
 The ``fidelity`` attribute is the contract of the model as deployed (spec 05-fidelity FID-002), with the fake's
 limitations in ``gaps``.  Every constant and rule cites a line of the clone at the pinned commit
@@ -29,13 +32,20 @@ from mhs.driver import Fact, GymnasiumDriver
 ENV = "spotmicro/spot_gym_env.py"
 SPOT = "spotmicro/spot.py"
 RANDOMIZER = "spotmicro/spot_env_randomizer.py"
+DATA = "spotmicro/util/pybullet_data/__init__.py"
+CLIENT = "spotmicro/util/bullet_client.py"
 
 
 class SpotMicro(GymnasiumDriver):
     device_id = "spot-micro"
     env_id = "SpotMicroEnv-v0"
+    #: spotmicro/spot_gym_env.py:24 imports register and :47-51 call it at module scope.  The bridge imports this
+    #: module before gym.make only when it builds the environment itself; the fake entry is built directly.
+    env_module = "spotmicro.spot_gym_env"
     native = "spotmicro.spot_gym_env:spotGymEnv"
     backends = {"fake": ".fake:FakeSpotGymEnv"}
+    #: render defaults to True and opens BulletClient(connection_mode=pybullet.GUI) (spot_gym_env.py:103, :264-266).
+    #: False builds BulletClient() with no connection mode (:267-268).
     env_kwargs = {"render": False}
     mode, risk = "simulated", "R0"
     display_name = "openquadruped spot_mini_mini SpotMicroEnv-v0 (PyBullet quadruped)"
@@ -44,6 +54,27 @@ class SpotMicro(GymnasiumDriver):
     facts = [
         Fact("SpotMicroEnv-v0 is registered with entry point spotmicro.spot_gym_env:spotGymEnv and "
              "max_episode_steps 1000", source="upstream_code", ref=f"{ENV}:47-51"),
+        Fact("The register call is at module scope, so importing spotmicro.spot_gym_env registers SpotMicroEnv-v0",
+             source="upstream_code", ref=f"{ENV}:47-51"),
+        Fact("spot_gym_env imports register from gym.envs.registration", source="upstream_code", ref=f"{ENV}:24"),
+        Fact("spot_gym_env imports pybullet, pybullet_data and pybullet_utils.bullet_client",
+             source="upstream_code", ref=f"{ENV}:17-23"),
+        Fact("spot_gym_env imports parse_version from pkg_resources", source="upstream_code", ref=f"{ENV}:21"),
+        Fact("The class body compares gym.__version__ with 0.9.6 and keeps the new method names at or above that "
+             "version", source="upstream_code", ref=f"{ENV}:705"),
+        Fact("The constructor default render is True", source="upstream_code", ref=f"{ENV}:103"),
+        Fact("render True builds BulletClient with connection_mode pybullet.GUI, and render False builds "
+             "BulletClient with no connection mode", source="upstream_code", ref=f"{ENV}:264-268"),
+        Fact("The vendored BulletClient treats a missing connection mode as SHARED_MEMORY and then DIRECT",
+             source="upstream_code", ref=f"{CLIENT}:25-31"),
+        Fact("The urdf_root default is pybullet_data.getDataPath()", source="upstream_code", ref=f"{ENV}:85"),
+        Fact("reset loads plane.urdf from urdf_root", source="upstream_code", ref=f"{ENV}:319-320"),
+        Fact("Spot.Reset loads assets/urdf/spot.urdf from spotmicro.util.pybullet_data.getDataPath()",
+             source="upstream_code", ref=f"{SPOT}:375-376"),
+        Fact("The vendored getDataPath returns the directory of spotmicro.util.pybullet_data",
+             source="upstream_code", ref=f"{DATA}:3-6"),
+        Fact("docs/requirements.txt pins pybullet==2.6.4, numpy==1.18.4 and gym==0.17.2",
+             source="vendor_doc", ref="docs/requirements.txt:1-3"),
         Fact("spotGymEnv simulates the locomotion of a quadruped robot; its docstring says the action space is the "
              "desired motor angle for each motor", source="upstream_code", ref=f"{ENV}:62-69"),
         Fact("NUM_MOTORS is 12", source="upstream_code", ref=f"{ENV}:31"),

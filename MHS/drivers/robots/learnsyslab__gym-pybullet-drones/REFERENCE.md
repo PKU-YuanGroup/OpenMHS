@@ -98,6 +98,7 @@ Outputs:
 
 ## Facts
 
+- Importing gym_pybullet_drones runs the module-level register call: line 1 imports register from gymnasium.envs.registration and lines 3-6 call register(id='ctrl-aviary-v0', entry_point='gym_pybullet_drones.envs:CtrlAviary'), so the id exists only after that import (upstream_code: gym_pybullet_drones/__init__.py:1-6)
 - ctrl-aviary-v0 is registered with entry point gym_pybullet_drones.envs:CtrlAviary and no keyword arguments (upstream_code: gym_pybullet_drones/__init__.py:3-6)
 - CtrlAviary defaults to drone model CF2X, one drone, physics PYB (PyBullet), pyb_freq 240 Hz, ctrl_freq 240 Hz, no GUI and no recording (CtrlAviary.py:12-26) (upstream_code: gym_pybullet_drones/envs/CtrlAviary.py:12-26)
 - The gravity constant is 9.8 m/s^2 (upstream_code: gym_pybullet_drones/envs/BaseAviary.py:74)

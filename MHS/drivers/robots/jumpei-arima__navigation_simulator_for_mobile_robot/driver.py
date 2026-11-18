@@ -6,14 +6,16 @@ A GymnasiumDriver is configuration only: ``env_id`` names the registered environ
 The device is simulated (R0): it has no hardware backend, no machine to stop and no operator-required limit.
 
 The upstream package is a legacy ``gym`` environment (``gym>=0.10.5``, ``requirements.txt:1``) with numpy
-(``requirements.txt:2``) and a Cython raycasting extension (``setup.py:13-15``).  The gate never installs or imports
-the clone, so the ``fake`` backend is this package's pure Python stand-in for ``NsmrGymEnv``.  A backend name that
-``backends`` does not list (``sim``) is served by ``gym.make(env_id)`` through GymnasiumBridge; that path was not run
-and is not claimed here.
+(``requirements.txt:2``) and a Cython raycasting extension (``setup.py:13-15``).  The ``fake`` backend is this
+package's pure Python stand-in for ``NsmrGymEnv``; package code does not import the clone.  A backend name that
+``backends`` does not list (``sim``) is served by ``gym.make(env_id)`` through GymnasiumBridge.
+``env_module = "nsmr.envs"`` makes the bridge import that module before the lookup, and its module body runs the
+legacy-gym ``register`` call at ``nsmr/envs/__init__.py:1-11``.  ``reset`` returns only the observation and
+``step`` returns the four-tuple (``nsmr/envs/NsmrGymEnv.py:53-72``).  That sim path was not run in this workspace.
 
 Every Fact and every fidelity constant cites a line of the clone at the pinned commit
-(4727fa696f363e88d757c0896f1c3f0dacc83af3).  This package is model-authored and unreviewed and is checked on the
-fake backend only (the upstream environment itself was never run).
+(4727fa696f363e88d757c0896f1c3f0dacc83af3).  This package is model-authored and unreviewed.  The checks run here
+use the fake backend only (the upstream environment itself was never run).
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -26,6 +28,7 @@ ROBOT = "nsmr/robots/robot.json"
 class NsmrGym(GymnasiumDriver):
     device_id = "nsmr-gym"
     env_id = "Nsmr-v1"
+    env_module = "nsmr.envs"    # importing it runs register(...) at nsmr/envs/__init__.py:1-11
     native = "nsmr.envs.NsmrGymEnv:NsmrGymEnv"
     backends = {"fake": ".fake:FakeNsmrGymEnv"}
     action_space_ref = f"{ROBOT}:3-6"
@@ -33,6 +36,11 @@ class NsmrGym(GymnasiumDriver):
     vendor, model = "Jumpei Arima", "Nsmr-v1"
     tags = ["navigation", "mobile-robot", "lidar", "reinforcement-learning", "simulation", "gym"]
     facts = [
+        Fact("Importing nsmr.envs runs the module-level register call: line 1 imports register from "
+             "gym.envs.registration and lines 7-11 call register(id='Nsmr-v1', "
+             "entry_point='nsmr.envs.NsmrGymEnv:NsmrGymEnv', max_episode_steps=500), so importing the module "
+             "makes the id available to gym.make",
+             source="upstream_code", ref="nsmr/envs/__init__.py:1-11"),
         Fact("Nsmr-v1 is registered with entry_point nsmr.envs.NsmrGymEnv:NsmrGymEnv and max_episode_steps=500",
              source="upstream_code", ref="nsmr/envs/__init__.py:7-11"),
         Fact("The observation space is a Dict of a lidar Box with num_range elements from min_range to max_range "

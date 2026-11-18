@@ -10,8 +10,12 @@ limit.
 
 The gate cannot import MyoSuite, MuJoCo, gymnasium or numpy (see fake.py), so the ``fake`` backend is the package's own
 kinematic stand-in for ``BaodingEnv``.  A backend name that ``backends`` does not list (``sim``) is served by
-``gymnasium.make("myoChallengeBaodingP1-v1")`` (GymnasiumDriver.open_native); that path needs the upstream package and
-its MuJoCo assets and was not run here.
+``gymnasium.make("myoChallengeBaodingP1-v1")`` (GymnasiumDriver.open_native) after the bridge imports ``env_module``.
+Importing ``myosuite.envs.myo.tasks.challenge`` runs the module-level ``_reg`` call that registers
+``myoChallengeBaodingP1-v1`` (``myosuite/envs/myo/tasks/challenge/__init__.py:500-511``); ``register_env`` then calls
+``gymnasium.register`` (``myosuite/core/registry.py:146``).  Importing the package does the same thing:
+``register_all_envs`` imports that module (``myosuite/__init__.py:83``, called at ``myosuite/__init__.py:123``).  That
+path needs the upstream package and its MuJoCo assets and was not run here.
 
 The ``fidelity`` attribute describes the model as deployed on the fake backend (spec 05-fidelity FID-002).  It is F0:
 the fake is a kinematic stand-in with no dynamics, and the gaps say so.  This package is model-authored and
@@ -29,12 +33,20 @@ MODEL = "myosuite/envs/myo/assets/hand/myohand_baoding.xml"
 class Baoding(GymnasiumDriver):
     device_id = "myosuite-baoding"
     env_id = "myoChallengeBaodingP1-v1"
+    #: Importing the challenge package runs _reg(...) at module scope (challenge/__init__.py:500-511), which
+    #: calls register_env and then gymnasium.register (myosuite/core/registry.py:146) for this id.
+    env_module = "myosuite.envs.myo.tasks.challenge"
     native = "myosuite.envs.myo.tasks.challenge.baoding:BaodingEnv"
     backends = {"fake": ".fake:FakeBaodingEnv"}
     display_name = "MyoSuite Baoding balls (myoChallengeBaodingP1-v1)"
     vendor, model = "MyoHub", "myoChallengeBaodingP1-v1"
     tags = ["baoding", "musculoskeletal", "reinforcement-learning", "simulation", "gymnasium", "myosuite"]
     facts = [
+        Fact("Importing myosuite.envs.myo.tasks.challenge runs the module-level _reg call that registers "
+             "myoChallengeBaodingP1-v1; register_env then calls gymnasium.register",
+             source="upstream_code", ref=f"{REGISTRY}:500"),
+        Fact("register_env passes the id, entry point and step limit to gymnasium.register",
+             source="upstream_code", ref="myosuite/core/registry.py:146"),
         Fact("myoChallengeBaodingP1-v1 is registered with entry point BaodingEnv, model hand/myohand_baoding.xml "
              "and max_episode_steps=200", source="upstream_code", ref=f"{REGISTRY}:501-505"),
         Fact("The normalized action space is a symmetric Box from -ones to +ones with one value per actuator",

@@ -101,6 +101,7 @@ Outputs:
 - panda-gym is a set of robotic environments based on the PyBullet physics engine and gymnasium (vendor_doc: README.md:3)
 - The documented use is gym.make('PandaReach-v3', render_mode='human') followed by reset() and step(action) (vendor_doc: docs/guide/quick_start.rst:6-19)
 - PandaReach-v3 is registered with entry point panda_gym.envs:PandaReachEnv, kwargs reward_type='sparse' and control_type='ee', and max_episode_steps=50 (100 only for Stack) (upstream_code: panda_gym/__init__.py:10-21)
+- The register calls sit at module level in panda_gym, so PandaReach-v3 is in the gymnasium registry only after that module is imported (upstream_code: panda_gym/__init__.py:10-22)
 - PandaReachEnv builds the Panda robot with block_gripper=True, so the gripper is not part of the action (upstream_code: panda_gym/envs/panda_tasks.py:202)
 - Panda's action space is Box(-1.0, 1.0, shape=(n_action,)) in float32, with n_action 3 for end-effector control and 7 for joint control, plus one for the gripper when it is not blocked (upstream_code: panda_gym/envs/robots/panda.py:31-33)
 - An end-effector action moves the target by at most 0.05 per step and the target height is clipped to 0 or above (upstream_code: panda_gym/envs/robots/panda.py:81-86)

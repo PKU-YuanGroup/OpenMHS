@@ -14,10 +14,13 @@ Every fact cites its source at commit `d015e9bfe441bd90ae431bac24c55cb74bdbce26`
 | The actuator section declares the model's actuators as general and adhesion elements | upstream_code | flybody/fruitfly/assets/fruitfly.xml:819-898 |
 | The default section scales the meshes by 0.1 and gives the geoms friction 0.5 | upstream_code | flybody/fruitfly/assets/fruitfly.xml:9-10 |
 | The main default class makes every general actuator ctrl-limited | upstream_code | flybody/fruitfly/assets/fruitfly.xml:11 |
+| Each mesh asset is a file attribute naming an .obj in the same directory as fruitfly.xml, starting with head_body.obj | upstream_code | flybody/fruitfly/assets/fruitfly.xml:219 |
 
-Model: `model.xml` is a byte-identical copy of `flybody/fruitfly/assets/fruitfly.xml` (918 lines, 65 787 bytes); the
-package carries the model XML only. The 80 mesh `.obj` assets the XML references (about 154 MB) are not carried, so a
-real MuJoCo load of this package needs them beside `model.xml`.
+Model: `model.xml` is a byte-identical copy of `flybody/fruitfly/assets/fruitfly.xml` (918 lines, 65 787 bytes). The
+mesh elements name bare `.obj` files (`fruitfly.xml:219`). Those files are not beside the package copy. The sim
+bridge uses an absolute path computed at run time to load the unmodified clone file
+`flybody/fruitfly/assets/fruitfly.xml`, the path selected by `fruitfly.py:21`. The mesh filenames resolve beside
+that XML without rewriting it. The fake backend keeps loading the package's `model.xml` and opens no mesh.
 
 Fake backend: the MuJoCo engine is not installed where the gate runs. The card's mock path is the upstream simulator,
 so `fake.py` is a stand-in `mujoco` module that parses the integration step and the joint and actuator counts of

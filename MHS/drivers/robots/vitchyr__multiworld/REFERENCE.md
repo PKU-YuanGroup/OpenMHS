@@ -100,7 +100,7 @@ Outputs:
 
 - The ACTIONS list defines five actions, in order (-1, 0), (0, 1), (1, 0), (0, -1) and (0, 0) (upstream_code: multiworld/envs/gridworlds/goal_gridworld.py:13)
 - The action space is Discrete(nA), where nA is the length of the ACTIONS list (upstream_code: multiworld/envs/gridworlds/goal_gridworld.py:39-45)
-- GoalGridworld-v0 is registered with entry point multiworld.envs.gridworlds.goal_gridworld:GoalGridworld and no keyword arguments (upstream_code: multiworld/envs/gridworlds/__init__.py:2-5)
+- Importing multiworld.envs.gridworlds runs register from gym.envs.registration and registers GoalGridworld-v0 with entry point multiworld.envs.gridworlds.goal_gridworld:GoalGridworld and no keyword arguments (upstream_code: multiworld/envs/gridworlds/__init__.py:1-5)
 - The constructor's default grid is 10 rows by 10 columns (upstream_code: multiworld/envs/gridworlds/goal_gridworld.py:35-36)
 - The observation space is a Dict with the members observation, achieved_goal and desired_goal; each member is a Box of shape (rows, columns, 1) with low 0 and high 1 (upstream_code: multiworld/envs/gridworlds/goal_gridworld.py:46-49)
 - A reset draws the agent cell and the goal cell from one random permutation of all grid cells, so the two cells are distinct, and starts the step count at 0 (upstream_code: multiworld/envs/gridworlds/goal_gridworld.py:69-76)

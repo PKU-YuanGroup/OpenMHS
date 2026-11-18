@@ -7,14 +7,16 @@ legacy Gym environment (``gym.Env``; its ``step`` returns the four-value tuple a
 the bridge serves through the same ``cap.world.*`` classes.  The device is simulated (R0): there is no hardware
 backend, no e-stop path to a machine and no operator-required limit.
 
-The upstream environment is not registered with ``gym.make`` and the gate must not import the clone, so the ``fake``
-backend is the package's own pure-Python re-implementation (fake.py).  The ``native`` class is the card's entry
-symbol; gate G7 checks the fake against it and never imports it.
+The upstream environment is not registered with ``gym.make``: the clone has no ``register`` call, and
+``drone_sim/gym/test.py:5`` constructs ``SimpleDroneEnv()`` directly.  The ``fake`` backend is the package's own
+pure-Python re-implementation (fake.py) and does not import the clone.  The ``sim`` backend is ``_build_sim_env``,
+which imports ``drone_sim.gym.simple_drone_env:SimpleDroneEnv`` and constructs it the same way.  The ``native``
+class is the card's entry symbol; gate G7 checks the fake against it.
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002).
 Every constant and rule cites a line of the clone at the pinned commit
-(1a324f178a5719676bdb0caaa2a2d545a7158fdd).  This package is model-authored and unreviewed: it is checked on the
-fake backend only.
+(1a324f178a5719676bdb0caaa2a2d545a7158fdd).  This package is model-authored and unreviewed.  The sim factory was
+not executed in this session.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -24,15 +26,36 @@ DRONE = "drone_sim/sim/drone.py"
 PARAMS = "drone_sim/sim/parameters.py"
 
 
+def _build_sim_env(**_options):
+    """Build the upstream ``SimpleDroneEnv`` for the ``sim`` backend.
+
+    The clone never calls ``gym.register``.  ``drone_sim/gym/test.py:5`` constructs ``SimpleDroneEnv()`` with the
+    constructor default ``goal_position=[0, 5, 5]`` (``simple_drone_env.py:14``).  ``__init__`` also builds a
+    matplotlib ``Graphics`` figure (``simple_drone_env.py:24``, ``visualiser.py:12-14``) before any ``render``
+    call.  The import stays inside the factory so the fake backend does not load gym, numpy or matplotlib.  The
+    returned object is the upstream instance; nothing on it is wrapped, patched or replaced.
+    """
+    from drone_sim.gym.simple_drone_env import SimpleDroneEnv
+
+    return SimpleDroneEnv()
+
+
 class SimpleDrone(GymnasiumDriver):
     device_id = "drone-sim"
     native = "drone_sim.gym.simple_drone_env:SimpleDroneEnv"
-    backends = {"fake": ".fake:FakeSimpleDroneEnv"}
+    # `fake` is this package's stand-in.  `sim` constructs SimpleDroneEnv (simple_drone_env.py:11, test.py:5)
+    # through `_build_sim_env`.  The sim entry is a callable, so the lock's string entry (`fake` only) still
+    # describes the package's declared string backend and G2 compares a lock only when every entry is a string.
+    backends = {"fake": ".fake:FakeSimpleDroneEnv", "sim": _build_sim_env}
     display_name = "drone_sim SimpleDroneEnv (legacy Gym quadcopter)"
     vendor, model = "Suhrudh Sarathy", "SimpleDroneEnv"
     tags = ["drone", "quadcopter", "rigid-body", "reinforcement-learning", "simulation", "gym"]
     facts = [
         Fact("The environment class SimpleDroneEnv subclasses gym.Env", source="upstream_code", ref=f"{ENV}:11"),
+        Fact("The gym test constructs SimpleDroneEnv() with no arguments", source="upstream_code",
+             ref="drone_sim/gym/test.py:5"),
+        Fact("SimpleDroneEnv.__init__ constructs a Graphics object and adds the drone to it", source="upstream_code",
+             ref=f"{ENV}:24-25"),
         Fact("The action space is a Box of four float32 values in [0, 1]", source="upstream_code", ref=f"{ENV}:35"),
         Fact("The observation space is a Box of shape (3, 3) whose low and high are both -inf", source="upstream_code",
              ref=f"{ENV}:30-36"),

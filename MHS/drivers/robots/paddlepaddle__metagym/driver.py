@@ -12,12 +12,20 @@ operator-required limit.  ``Bandits`` draws from numpy's global random generator
 per-environment generator, so the honest determinism kind is ``statistical``; the bridge records a
 supplied seed, but the class's own task and reward draws are not tied to it.
 
-The gate environment has no gym, and package code never imports the clone or numpy, so ``backends =
-{"fake": ".fake:FakeBandits"}`` is a pure Python standard-library stand-in for the upstream class.  The fake starts with a fixed
+``backends["fake"]`` is ``.fake:FakeBandits``, a pure Python standard-library stand-in: the fake gate
+has no gym, and importing this module does not import the clone.  The fake starts with a fixed
 placeholder gain table because the upstream ``reset()`` raises until ``set_task`` has run; that
-difference is one of the fidelity ``gaps``.  Every constant and rule cites a line of the clone at the
-pinned commit ``ca724c22fd0c2ade8ec905edc688a1befdf98a3c``.  This package is model-authored and
-unreviewed: it is checked on the fake backend only.
+difference is one of the fidelity ``gaps``.  ``env_module = "metagym.bandits"`` names the module whose
+import runs ``register`` for ``bandits-v0`` (``metagym/bandits/__init__.py:15-24``).  The ``sim``
+backend is ``open_sim``: it imports that module and constructs ``Bandits(arms=50, max_steps=1000)``,
+the class and kwargs the registration names (``metagym/bandits/__init__.py:18-23``), then calls
+``sample_task`` and ``set_task`` the way the quick start does (``metagym/bandits/README.md:37-44``)
+so a later ``reset`` has a gain table.  The factory constructs that class itself.
+``observation_space`` is ``None`` (``metagym/bandits/bandits_env.py:24``), and ``gym==0.25.2``'s
+``gym.make`` wraps the instance in a checker that rejects a space that is not a ``gym.spaces.Space``
+(the previous sim run's G3 error).  Every constant and rule cites a line of the clone at
+``ca724c22fd0c2ade8ec905edc688a1befdf98a3c``.  This package is model-authored and unreviewed; the
+check run here is the fake backend.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -26,11 +34,36 @@ BANDITS_ENV = "metagym/bandits/bandits_env.py"
 BANDITS_INIT = "metagym/bandits/__init__.py"
 
 
+def open_sim(**_options):
+    """Construct the registered ``bandits-v0`` class and install one task from ``sample_task``.
+
+    Importing ``metagym.bandits`` runs ``register`` (``metagym/bandits/__init__.py:15-24``).
+    The entry point is ``metagym.bandits:Bandits`` with ``arms=50`` and ``max_steps=1000``
+    (``:18-23``); those are the constructor arguments, not the defaults ``arms=10`` and
+    ``max_steps=5000`` (``metagym/bandits/bandits_env.py:14-15``).  ``gym.make`` is not called.
+    ``Bandits`` sets ``observation_space = None`` (``:24``), and the ``gym==0.25.2`` pin's
+    ``make`` wraps that instance in a checker which raises ``observation space does not inherit
+    from gym.spaces.Space`` (the previous sim run).  The object this returns is the class the
+    registration builds, before that wrapper.  ``reset`` raises until ``set_task`` has stored a
+    gain table (``metagym/bandits/bandits_env.py:62-64``).  The quick start samples a task and
+    calls ``set_task`` before ``reset`` (``metagym/bandits/README.md:37-44``); ``sample_task()``
+    with no arguments uses the method defaults Classical, mean 0.50 and dev 0.05
+    (``metagym/bandits/bandits_env.py:33-36``).
+    """
+    import metagym.bandits
+
+    env = metagym.bandits.Bandits(arms=50, max_steps=1000)
+    env.set_task(env.sample_task())
+    return env
+
+
 class Bandits(GymnasiumDriver):
     device_id = "metagym-bandits"
     env_id = "bandits-v0"
+    #: Importing metagym.bandits runs register(...) at metagym/bandits/__init__.py:15-24.
+    env_module = "metagym.bandits"
     native = "metagym.bandits:Bandits"
-    backends = {"fake": ".fake:FakeBandits"}
+    backends = {"fake": ".fake:FakeBandits", "sim": open_sim}
     display_name = "MetaGym Bandits (bandits-v0)"
     vendor, model = "PaddlePaddle", "bandits-v0"
     tags = ["bandits", "meta-reinforcement-learning", "reinforcement-learning", "simulation", "gymnasium"]
@@ -62,6 +95,13 @@ class Bandits(GymnasiumDriver):
              "defines no seed method", source="upstream_code", ref=f"{BANDITS_ENV}:12-83"),
         Fact("The registered bandits-v0 environment passes arms=50 and max_steps=1000",
              source="upstream_code", ref=f"{BANDITS_INIT}:18-23"),
+        Fact("Importing metagym.bandits imports register from gym.envs.registration and registers "
+             "bandits-v0 with entry point metagym.bandits:Bandits",
+             source="upstream_code", ref=f"{BANDITS_INIT}:15-24"),
+        Fact("bandits_env.py imports pygame at module scope, on the import that registers bandits-v0",
+             source="upstream_code", ref=f"{BANDITS_ENV}:6"),
+        Fact("The quick start imports metagym.bandits, makes bandits-v0, samples a task, calls set_task "
+             "and then reset", source="vendor_doc", ref="metagym/bandits/README.md:30-44"),
     ]
     safe_state = ("the simulation stops advancing: no step, reset or seed is accepted after an e-stop until "
                   "mhs.safety.reset clears the latch; the gain table and step counter stay readable")

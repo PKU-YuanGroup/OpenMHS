@@ -1,0 +1,63 @@
+{
+ "$schema": "https://mhs.openai4s.org/schema/0.9/sim-lock.schema.json",
+ "openmhs": "0.9",
+ "backend": "sim",
+ "environment": {
+  "platform": "linux/arm64",
+  "base_image": "python:3.10-slim-bookworm",
+  "system_packages": [
+   "git",
+   "build-essential",
+   "cmake",
+   "swig",
+   "pkg-config",
+   "patchelf",
+   "libgl1",
+   "libegl1",
+   "libgles2",
+   "libosmesa6",
+   "libglfw3",
+   "libglew2.2",
+   "libglib2.0-0",
+   "libsm6",
+   "libxext6",
+   "libxrender1",
+   "ffmpeg"
+  ],
+  "python": "3.10",
+  "install": [
+   "pip install 'setuptools<61' wheel",
+   "pip install --no-build-isolation ."
+  ],
+  "constraints": [
+   "mujoco==2.3.6",
+   "numpy==1.23.5"
+  ],
+  "resolved": [
+   "absl-py==2.5.1",
+   "glfw==2.11.0",
+   "mujoco==2.3.6",
+   "numpy==1.23.5",
+   "packaging==26.3",
+   "pyopengl==3.1.10",
+   "setuptools==60.10.0",
+   "wheel==0.48.0"
+  ]
+ },
+ "upstream": {
+  "commit": "86b2e85a2e6093e478dea8c8a48bbe4adbfc7445"
+ },
+ "gate": {
+  "sdk_version": "0.9.0.dev0",
+  "digest": "sha256:b050c0662b48205c1364e07e01ae5deb67afcc20c5c826557d92f7220a3af2ef",
+  "evidence_state": "contract_checked",
+  "warnings": [
+   "G6.NOT_RECORDED",
+   "G7.UPSTREAM_BACKEND",
+   "G8.NO_UNIT"
+  ]
+ },
+ "fake_gate_digest": "sha256:b8b6f146312ed517017af0b2abb2001849d0073d2c9a775b3e5af965d37abbbd",
+ "checked_at": "2026-11-18",
+ "notes": "installed with setuptools<61 and no build isolation (the current setuptools refuses the layout)"
+}

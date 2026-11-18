@@ -12,10 +12,12 @@ The contract is derived from the environment's spaces: the action is a ``Box`` o
 ``cap.world.reset.v1`` takes ``{seed, options}`` and ``cap.world.seed.v1`` takes ``{seed}``.  The device is simulated
 (R0): there is no hardware backend and no operator-required limit.
 
-The ``fake`` backend is the package's own kinematic stand-in (``fake.py``); pybullet and ``gym==0.14.0`` are not
-installed where the gate runs (``README.md:21-29``) and package code never imports the clone.  A backend name that
-``backends`` does not list (``sim``) would be served by ``gym.make(env_id)`` (``GymnasiumDriver.open_native``); that
-path needs the upstream packages and was not run here.
+The ``fake`` backend is the package's own kinematic stand-in (``fake.py``).  Package code never imports the clone, so
+the fake gate does not need pybullet or gym.  A backend name that ``backends`` does not list (``sim``) is served by
+``gym.make(env_id, **env_kwargs)`` (``GymnasiumDriver.open_native``) after the bridge imports ``env_module``.
+Importing ``my_pybullet_envs`` runs the legacy ``register`` call for ``HopperURDFEnv-v3``
+(``my_pybullet_envs/__init__.py:15-38``).  ``render=False`` is the constructor's headless client
+(``hopper_env_v3.py:77-80``).  That sim path was not run in this workspace.
 
 The ``fidelity`` attribute describes the model as deployed (spec 05-fidelity FID-002): the fake is a kinematic
 reimplementation, so it claims F0, not the F1 rigid-body simulation of the upstream.  Every fact cites a line of the
@@ -32,6 +34,11 @@ ROBOT = "my_pybullet_envs/hopper.py"
 class Hopper(GymnasiumDriver):
     device_id = "simgan-hopper"
     env_id = "HopperURDFEnv-v3"
+    #: Importing the package body runs register(...) for HopperURDFEnv-v3 (my_pybullet_envs/__init__.py:15-38).
+    #: The bridge imports it before gym.make only when it builds the environment itself; the fake entry is built directly.
+    env_module = "my_pybullet_envs"
+    #: The constructor default render=True opens a PyBullet GUI (hopper_env_v3.py:77-78).  render=False uses
+    #: BulletClient() with no connection mode (hopper_env_v3.py:79-80), which is the upstream headless client.
     env_kwargs = {"render": False}
     native = "my_pybullet_envs:HopperURDFEnvV3"
     backends = {"fake": ".fake:FakeHopperURDFEnvV3"}
@@ -42,6 +49,12 @@ class Hopper(GymnasiumDriver):
         Fact("HopperURDFEnvV3 subclasses gym.Env", source="upstream_code", ref=f"{ENV}:32"),
         Fact("HopperURDFEnv-v3 is registered with entry point my_pybullet_envs:HopperURDFEnvV3 and "
              "max_episode_steps=500", source="upstream_code", ref="my_pybullet_envs/__init__.py:34-38"),
+        Fact("Importing my_pybullet_envs imports gym and calls register for HopperURDFEnv-v3 at module scope",
+             source="upstream_code", ref="my_pybullet_envs/__init__.py:15-38"),
+        Fact("utils.py imports torch at module scope", source="upstream_code", ref="my_pybullet_envs/utils.py:15"),
+        Fact("hopper.py imports utils at module scope", source="upstream_code", ref="my_pybullet_envs/hopper.py:24"),
+        Fact("The README installs requirements.txt inside the project directory and installs pytorch separately",
+             source="vendor_doc", ref="README.md:27-33"),
         Fact("The physics timestep is 1/500 s per Bullet substep", source="upstream_code", ref=f"{ENV}:60"),
         Fact("An environment step advances the simulation for range(control_skip) physics substeps and increments "
              "the timer at each substep", source="upstream_code", ref=f"{ENV}:243-250"),

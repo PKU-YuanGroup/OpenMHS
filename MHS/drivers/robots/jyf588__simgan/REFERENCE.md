@@ -100,6 +100,10 @@ Outputs:
 
 - HopperURDFEnvV3 subclasses gym.Env (upstream_code: my_pybullet_envs/hopper_env_v3.py:32)
 - HopperURDFEnv-v3 is registered with entry point my_pybullet_envs:HopperURDFEnvV3 and max_episode_steps=500 (upstream_code: my_pybullet_envs/__init__.py:34-38)
+- Importing my_pybullet_envs imports gym and calls register for HopperURDFEnv-v3 at module scope (upstream_code: my_pybullet_envs/__init__.py:15-38)
+- utils.py imports torch at module scope (upstream_code: my_pybullet_envs/utils.py:15)
+- hopper.py imports utils at module scope (upstream_code: my_pybullet_envs/hopper.py:24)
+- The README installs requirements.txt inside the project directory and installs pytorch separately (vendor_doc: README.md:27-33)
 - The physics timestep is 1/500 s per Bullet substep (upstream_code: my_pybullet_envs/hopper_env_v3.py:60)
 - An environment step advances the simulation for range(control_skip) physics substeps and increments the timer at each substep (upstream_code: my_pybullet_envs/hopper_env_v3.py:243-250)
 - control_skip has constructor default 10 (upstream_code: my_pybullet_envs/hopper_env_v3.py:40)

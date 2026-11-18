@@ -1,0 +1,68 @@
+{
+ "$schema": "https://mhs.openai4s.org/schema/0.9/sim-lock.schema.json",
+ "openmhs": "0.9",
+ "backend": "sim",
+ "environment": {
+  "platform": "linux/arm64",
+  "base_image": "python:3.10-slim-bookworm",
+  "system_packages": [
+   "git",
+   "build-essential",
+   "cmake",
+   "swig",
+   "pkg-config",
+   "patchelf",
+   "libgl1",
+   "libegl1",
+   "libgles2",
+   "libosmesa6",
+   "libglfw3",
+   "libglew2.2",
+   "libglib2.0-0",
+   "libsm6",
+   "libxext6",
+   "libxrender1",
+   "ffmpeg"
+  ],
+  "python": "3.10",
+  "install": [
+   "pip install -v /Users/gongbozhang/Documents/ai4s-dev/runs/sim-fix-full/src/robots__medevilunknown__water-pouring-robot-simulation:/src:ro",
+   "pip install gymnasium"
+  ],
+  "constraints": [
+   "mujoco==3.3.7"
+  ],
+  "resolved": [
+   "absl-py==2.5.1",
+   "cloudpickle==3.1.2",
+   "etils==1.13.0",
+   "farama-notifications==0.0.6",
+   "fsspec==2026.9.0",
+   "glfw==2.11.0",
+   "gymnasium==1.4.0",
+   "importlib-resources==7.1.0",
+   "mujoco==3.3.7",
+   "numpy==2.2.6",
+   "pyopengl==3.1.10",
+   "typing-extensions==4.16.0",
+   "zipp==4.1.2"
+  ]
+ },
+ "upstream": {
+  "commit": "ff33ae12ae58ef9569ff40d75c88635a14c61d27"
+ },
+ "gate": {
+  "sdk_version": "0.9.0.dev0",
+  "digest": "sha256:bbc671b52b54a0d497783e219120c747e70c0d472161d27c7d093f466491bc52",
+  "evidence_state": "contract_checked",
+  "warnings": [
+   "G5.BACKEND_SURFACE",
+   "G6.NOT_RECORDED",
+   "G7.UPSTREAM_BACKEND",
+   "G8.NO_UNIT"
+  ]
+ },
+ "fake_gate_digest": "sha256:8e64fd81ebce0940fce292f018b986dcedce514661351bacdc02f176e247bd44",
+ "checked_at": "2026-11-18",
+ "notes": "the source tree of the pinned commit is on PYTHONPATH (it does not install); gymnasium added as the gymnasium family runtime (the upstream does not declare it)"
+}

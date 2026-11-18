@@ -99,6 +99,7 @@ Outputs:
 ## Facts
 
 - cube-transfer-v1 is registered with entry point gym_av_aloha.env.tasks.cube_transfer_env:CubeTransferEnv (upstream_code: gym_av_aloha/__init__.py:19-21)
+- The cube-transfer-v1 register(...) call is at module level in gym_av_aloha, so the id is in the gymnasium registry only after that module is imported (upstream_code: gym_av_aloha/__init__.py:1-25)
 - The registration marks cube-transfer-v1 nondeterministic=True because rendered observations differ even after seeding (upstream_code: gym_av_aloha/__init__.py:22-24)
 - The default camera set has six cameras, each rendered at 480x640 pixels (upstream_code: gym_av_aloha/env/sim_config.py:7-14)
 - AVAlohaEnv adds a pixels observation only when len(cameras) > 0 (upstream_code: gym_av_aloha/env/sim_env.py:151-163)

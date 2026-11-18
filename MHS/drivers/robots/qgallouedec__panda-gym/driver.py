@@ -9,8 +9,9 @@ no e-stop path to a machine and no operator-required limit.
 PandaReach-v3 is a PyBullet simulation of a Franka Panda arm that must move its end-effector to a sampled goal.  The
 gate cannot import panda-gym (it needs gymnasium, pybullet, numpy and scipy, setup.py:23), so the ``fake`` backend is
 the package's own pure Python stand-in (fake.py).  A backend name that ``backends`` does not list (``sim``) is served
-by ``gymnasium.make("PandaReach-v3")`` (GymnasiumDriver.open_native); that path needs the upstream package and was not
-run here.
+by ``gymnasium.make("PandaReach-v3")`` (GymnasiumDriver.open_native) after the bridge imports ``env_module``.
+Importing ``panda_gym`` runs the module-level ``register(...)`` calls (panda_gym/__init__.py:10-22).  The upstream
+package was not run here.
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002):
 every member of ``device.schema.json`` that applies to a simulator without a physical counterpart.  Every constant
@@ -32,6 +33,7 @@ PYBULLET = "panda_gym/pybullet.py"
 class PandaReach(GymnasiumDriver):
     device_id = "panda-reach"
     env_id = "PandaReach-v3"
+    env_module = "panda_gym"  # importing it runs register(...) at panda_gym/__init__.py:17
     native = "panda_gym.envs.panda_tasks:PandaReachEnv"
     backends = {"fake": ".fake:FakePandaReachEnv"}
     action_space_ref = f"{PANDA}:31-33"
@@ -46,6 +48,9 @@ class PandaReach(GymnasiumDriver):
         Fact("PandaReach-v3 is registered with entry point panda_gym.envs:PandaReachEnv, kwargs reward_type='sparse' "
              "and control_type='ee', and max_episode_steps=50 (100 only for Stack)",
              source="upstream_code", ref=f"{INIT}:10-21"),
+        Fact("The register calls sit at module level in panda_gym, so PandaReach-v3 is in the gymnasium registry "
+             "only after that module is imported",
+             source="upstream_code", ref=f"{INIT}:10-22"),
         Fact("PandaReachEnv builds the Panda robot with block_gripper=True, so the gripper is not part of the action",
              source="upstream_code", ref=f"{TASKS}:202"),
         Fact("Panda's action space is Box(-1.0, 1.0, shape=(n_action,)) in float32, with n_action 3 for end-effector "

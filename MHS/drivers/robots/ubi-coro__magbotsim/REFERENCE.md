@@ -99,6 +99,12 @@ Outputs:
 ## Facts
 
 - StateBasedPushBoxEnv-v0 is registered with max_episode_steps=25 (upstream_code: magbotsim/__init__.py:58-62)
+- Importing magbotsim calls register_gymnasium_envs(), which performs that registration (upstream_code: magbotsim/__init__.py:91)
+- The constructor defaults render_mode to human (upstream_code: magbotsim/rl_envs/object_manipulation/pushing/state_based_push_box_env.py:94)
+- render_mode None initializes no viewer (upstream_code: magbotsim/rl_envs/object_manipulation/pushing/state_based_push_box_env.py:36-37)
+- A viewer collection is created only when render_mode is not None (upstream_code: magbotsim/basic_magbot_env.py:313-314)
+- reset calls render() after the forward step (upstream_code: magbotsim/rl_envs/basic_single_agent_env.py:156)
+- step calls render() after the control cycles (upstream_code: magbotsim/rl_envs/basic_single_agent_env.py:256)
 - The observation space is a Dict with the keys observation, achieved_goal and desired_goal (upstream_code: magbotsim/rl_envs/object_manipulation/pushing/state_based_global_pushing_env.py:272-286)
 - With learn_jerk and learn_mover_c_rotation false, the observation array is num_movers*4 values: the (x,y) position and (x,y) velocity of each mover (upstream_code: magbotsim/rl_envs/object_manipulation/pushing/state_based_global_pushing_env.py:1157-1158)
 - When learn_pose is false, achieved_goal is the object's (x,y) position (2 values) and desired_goal the desired (x,y) position (2 values) (upstream_code: magbotsim/rl_envs/object_manipulation/pushing/state_based_global_pushing_env.py:1162-1175)

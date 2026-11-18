@@ -127,6 +127,7 @@ Outputs:
 - reset(seed, options) seeds the environment, reinitialises or creates the simulation and returns the first observation and an info dict (upstream_code: jsbgym/environment.py:102-134)
 - NoFGJsbSimEnv is the training variant: it constructs the simulation with allow_flightgear_output=False (upstream_code: jsbgym/environment.py:225-246)
 - The package registers every aircraft/task/shaping setting and uses NoFGJsbSimEnv as the entry point when FlightGear is disabled (upstream_code: jsbgym/__init__.py:18-29)
+- Those register calls run when the jsbgym module is imported, so the id is absent from the gymnasium registry until that import (upstream_code: jsbgym/__init__.py:18-29)
 - Environment ids are built as aircraft-task-shaping-FG or NoFG-v0 (upstream_code: jsbgym/utils.py:39-51)
 - The simulation constructs an in-process jsbsim.FGFDMExec and sets sim_dt to 1/sim_frequency_hz (upstream_code: jsbgym/simulation.py:39-46)
 

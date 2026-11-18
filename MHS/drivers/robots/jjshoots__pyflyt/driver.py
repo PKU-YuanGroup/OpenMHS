@@ -7,11 +7,13 @@ and the default observation space is a 21-element ``Box`` (angular velocity, qua
 position, previous action and four motor throttles).  The device is simulated (R0): there is no hardware backend, no
 physical e-stop path and no operator-required limit.
 
-The gate does not install or import PyFlyt, pybullet or numpy, so the ``fake`` backend is this package's own pure
-Python stand-in for the environment (``fake.py``).  A backend name that ``backends`` does not list (``sim``) would be
-served by ``gymnasium.make(env_id)`` (``GymnasiumDriver.open_native``); that path needs the upstream package and its
-system dependencies and was not run here.  This package is model-authored and unreviewed; it is checked on the fake
-backend only.
+The ``fake`` backend is this package's own pure Python stand-in (``fake.py``), so the local gate can run without
+importing PyFlyt.  A backend name that ``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id)``
+(``GymnasiumDriver.open_native``) after the bridge imports ``env_module``.  ``PyFlyt.gym_envs`` registers
+``PyFlyt/QuadX-Hover-v4`` at import (``PyFlyt/gym_envs/__init__.py:8-11``); ``pyproject.toml`` declares no
+``gymnasium.envs`` entry point, so the id is absent until that import.  The upstream tests do the same import before
+``gym.make`` (``tests/test_gym_envs.py:12``).  That path needs the upstream package and was not run here.  This
+package is model-authored and unreviewed; it is checked on the fake backend only.
 
 The ``fidelity`` attribute is the contract of the model as deployed.  It is F0 because the fake is a kinematic
 stand-in, not a rigid-body contact model, and its ``gaps`` say what it does not reproduce.  The upstream defaults
@@ -29,6 +31,7 @@ AVIARY = "PyFlyt/core/aviary.py"
 class QuadXHover(GymnasiumDriver):
     device_id = "quadx-hover"
     env_id = "PyFlyt/QuadX-Hover-v4"
+    env_module = "PyFlyt.gym_envs"    # importing it runs register(...) at PyFlyt/gym_envs/__init__.py:8-11
     native = "PyFlyt.gym_envs.quadx_envs.quadx_hover_env:QuadXHoverEnv"
     backends = {"fake": ".fake:FakeQuadXHoverEnv"}
     display_name = "PyFlyt QuadX Hover (Gymnasium environment)"
@@ -38,6 +41,9 @@ class QuadXHover(GymnasiumDriver):
         Fact("PyFlyt/QuadX-Hover-v4 is registered with entry point "
              "PyFlyt.gym_envs.quadx_envs.quadx_hover_env:QuadXHoverEnv", source="upstream_code",
              ref="PyFlyt/gym_envs/__init__.py:8-11"),
+        Fact("The PyFlyt.gym_envs module body calls register for PyFlyt/QuadX-Hover-v4 when the module is imported, "
+             "so the id exists only after that import", source="upstream_code",
+             ref="PyFlyt/gym_envs/__init__.py:3-11"),
         Fact("The hover action is [vp, vq, vr, T]: angular velocity setpoints and thrust", source="upstream_code",
              ref=f"{HOVER}:15"),
         Fact("The flight-mode-0 action space is a four-element Box with low [-pi, -pi, -pi, 0.0] and high "

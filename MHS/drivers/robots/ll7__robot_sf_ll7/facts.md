@@ -6,6 +6,12 @@ Every fact cites its source at commit `53721be3248600e08641a9816d094b605e3c93e4`
 | fact | source | ref |
 |---|---|---|
 | Robot SF registers the single-robot environment under the env id "robot" with RobotEnv as its class, and calls it the primary supported training/evaluation environment | upstream_code | robot_sf/gym_env/env_registry.py:165-174 |
+| register_env stores the catalog entry on the module-level _REGISTRY and does not call gymnasium.register | upstream_code | robot_sf/gym_env/env_registry.py:94-116 |
+| The catalog names make_robot_env as the factory for the env id robot | upstream_code | robot_sf/gym_env/env_registry.py:169 |
+| make_robot_env defaults debug to false | upstream_code | robot_sf/gym_env/environment_factory.py:529 |
+| create_robot_env selects RobotEnv when image observations are off and returns that instance | upstream_code | robot_sf/gym_env/environment_factory.py:262-268 |
+| make_robot_env builds the environment with EnvironmentFactory.create_robot_env and returns that instance | upstream_code | robot_sf/gym_env/environment_factory.py:672-688 |
+| BaseEnv constructs a SimulationView only when debug or record_video is set | upstream_code | robot_sf/gym_env/base_env.py:249-250 |
 | RobotEnv is the Gymnasium environment facade and the public environment API for simulation episodes | upstream_code | robot_sf/gym_env/robot_env.py:526-531 |
 | The default DifferentialDriveSettings sets max_linear_speed 2.0, max_angular_speed 1.0, max_linear_accel 1.0 and max_angular_accel 1.0 | upstream_code | robot_sf/robot/differential_drive.py:29-44 |
 | The linear speed is clipped to min_linear_speed, which is 0.0 when allow_backwards is false | upstream_code | robot_sf/robot/differential_drive.py:103-108 |

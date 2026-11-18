@@ -7,6 +7,7 @@ generated from the driver, not from this page.
 | fact | source | ref |
 |---|---|---|
 | NavigationTrack-v0 is registered with entry point gym_navigation.envs.navigation_track:NavigationTrack | upstream_code | gym_navigation/__init__.py:4-6 |
+| Importing gym_navigation runs the module-level register call that registers NavigationTrack-v0 | upstream_code | gym_navigation/__init__.py:4-6 |
 | The action space is Discrete(3): one integer per Action enum member | upstream_code | gym_navigation/envs/navigation_track.py:46 |
 | The three actions are FORWARD (0, linear shift 0.2 m, angular 0), ROTATE_RIGHT (1, 0.04 m, 0.2 rad) and ROTATE_LEFT (2, 0.04 m, -0.2 rad) | upstream_code | gym_navigation/enums/action.py:21-23 |
 | The observation is five range measurements at -pi/2, -pi/4, 0, pi/4 and pi/2 from the heading | upstream_code | gym_navigation/envs/navigation_track.py:30-34 |
@@ -30,6 +31,11 @@ Limits: the driver declares none. The only input bound is the action space, whic
 environment (`Discrete(3)`: `action.index` from 0 to 2, with no source and the ref
 `action_space of the fake backend .fake:FakeNavigationTrack`), and `ticks` (1 to `max_ticks`, 10000 by default) from
 the bridge's step schema. The device is simulated (R0), so no limit is `operator_required`.
+
+The sim backend is `gymnasium.make("NavigationTrack-v0")` after importing `env_module = "gym_navigation"`. That import
+runs `register(id='NavigationTrack-v0', ...)` (`gym_navigation/__init__.py:4-6`). `setup.py:3-14` declares no entry
+point, so nothing else loads the registration. The constructor defaults `track_id` to 1 and `render_mode` to None
+(`gym_navigation/envs/navigation_track.py:39-42`), so no `env_kwargs` are set and no display is opened.
 
 Fidelity contract (`driver.py`, `fidelity = {...}`): engine `gymnasium:NavigationTrack-v0`, level F0 (kinematic
 geometry, no dynamics or contacts), determinism `seeded` with `seed_control` `parameter`, `timestep_ms` 0 (the

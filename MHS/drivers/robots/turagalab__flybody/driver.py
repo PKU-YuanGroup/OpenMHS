@@ -2,23 +2,27 @@
 
 A MujocoDriver (configuration only) over the model file the repository builds, ``flybody/fruitfly/assets/fruitfly.xml``
 (a 918-line MJCF model of the fly's body and its 78 actuators, with a free root joint).  The package carries that model
-as ``model.xml`` and the bridge serves ``cap.world.step.v1`` and ``cap.world.reset.v1`` on it.
+as ``model.xml`` for the fake backend.  The sim backend loads the unmodified XML directly from the pinned clone,
+using an absolute path computed at run time.  Its mesh filenames (``fruitfly.xml:219``) then resolve beside the
+clone's XML, the path selected by ``fruitfly.py:21``.  The bridge serves ``cap.world.step.v1`` and
+``cap.world.reset.v1`` on that raw model.
 
 The card names the upstream simulator as the mock path.  The MuJoCo engine is not installed where the gate runs, so the
 fake backend is a stand-in ``mujoco`` module (``fake.py``): it reads the integration step, the dimension counts and the
 actuator control ranges of ``model.xml`` and advances a minimal state, and it does not reproduce the engine's dynamics.
 The step limits are the model's own ``ctrlrange`` per actuator: the main default makes every actuator ctrl-limited
 (``fruitfly.xml:11``) and the classes give the ranges.  The fidelity ``gaps``
-below state every difference, including that the model's 80 mesh assets are not carried.
+below state every difference.  The stand-in opens no mesh; a real load resolves the clone's mesh filenames unchanged.
 
 Every Fact cites a line of the clone at the pinned commit (d015e9bfe441bd90ae431bac24c55cb74bdbce26).  This package is
 model-authored and unreviewed: it is checked on the fake backend only.
 """
 
+from pathlib import Path
+
 from mhs.driver import Fact, MujocoDriver
 
 from .fake import fake_mujoco
-
 
 class FlyBody(MujocoDriver):
     device_id = "flybody"
@@ -46,6 +50,8 @@ class FlyBody(MujocoDriver):
              source="upstream_code", ref="flybody/fruitfly/assets/fruitfly.xml:9-10"),
         Fact("The main default class makes every general actuator ctrl-limited", source="upstream_code",
              ref="flybody/fruitfly/assets/fruitfly.xml:11"),
+        Fact("Each mesh asset is a file attribute naming an .obj in the same directory as fruitfly.xml, starting "
+             "with head_body.obj", source="upstream_code", ref="flybody/fruitfly/assets/fruitfly.xml:219"),
     ]
     safe_state = ("the simulation stops advancing: no step or reset is accepted after an e-stop until mhs.safety.reset "
                   "clears the latch, and the world state stays readable")
@@ -71,9 +77,9 @@ class FlyBody(MujocoDriver):
             "the joint and actuator counts of model.xml and advances time (qpos follows qvel, which stays zero); it "
             "computes no equations of motion, contacts, adhesion or actuator dynamics, so a ctrl vector changes "
             "nothing in it",
-            "the package carries the model XML only (918 lines); the 80 mesh assets the XML references (.obj files, "
-            "about 154 MB in flybody/fruitfly/assets) are not carried, so a real MuJoCo load needs that assets "
-            "directory beside model.xml",
+            "the package copy model.xml has no mesh files beside it; the sim backend loads the unmodified clone XML "
+            "at flybody/fruitfly/assets/fruitfly.xml (fruitfly.py:21) through an absolute runtime path, so mesh "
+            "filenames resolve beside that XML (fruitfly.xml:219); the fake still loads model.xml and opens no mesh",
             "the stand-in resolves each actuator's ctrlrange and ctrllimited from model.xml's default classes as the "
             "MJCF rules say (fruitfly.xml:11 makes every actuator ctrl-limited), so action.ctrl is bounded per "
             "actuator by the model's ranges; that resolution is the stand-in's, not MuJoCo's compiler",
@@ -85,3 +91,16 @@ class FlyBody(MujocoDriver):
             "the fly model was never validated against a physical fly or against the upstream environment",
         ],
     }
+
+    def make_bridge(self, native):
+        """Use the clone's XML on sim; retain the published fake loader and model citation."""
+        if self.backend != "sim":
+            return super().make_bridge(native)
+
+        from mhs.bridge.mujoco import MujocoBridge
+
+        # fruitfly.py:21 selects this XML; its meshes have bare filenames (fruitfly.xml:219).
+        path = (Path(__file__).resolve().parent /
+                "../../../../robots/turagalab/flybody/flybody/fruitfly/assets/fruitfly.xml").resolve()
+        return MujocoBridge(model_path=str(path), model_name=self._model_name(), device_id=self.device_id,
+                            seed=type(self).seed, mujoco=native, max_ticks=type(self).max_ticks)

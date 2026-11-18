@@ -8,6 +8,7 @@ clone, here README.md) or `upstream_code` (`path/in/clone:LINE`). The same facts
 |---|---|---|
 | The README's quick-start example makes block-cpu-single-task1-v0 and steps it with an action sampled from its action space | vendor_doc | README.md:62-70 |
 | block-cpu-single-task1-v0 is registered with entry point ocbench.envs.block_env:BlockEnv, max_episode_steps=1250 and kwargs env_type='single', task_id=1 | upstream_code | ocbench/__init__.py:74-79 |
+| Importing ocbench runs the module-level register call that registers block-cpu-single-task1-v0 | upstream_code | ocbench/__init__.py:74-79 |
 | ocbench.make returns gymnasium.make(env_name, **kwargs) for CPU environments | upstream_code | ocbench/__init__.py:35-44 |
 | BlockEnv subclasses ManipulationEnv and the single env_type installs one cube | upstream_code | ocbench/envs/block_env.py:9-21 |
 | The single task is named move and its goal position is [0.425, 0.0, 0.03] | upstream_code | ocbench/envs/block_env.py:58-65 |
@@ -26,6 +27,10 @@ clone, here README.md) or `upstream_code` (`path/in/clone:LINE`). The same facts
 | terminate_at_success defaults to True | upstream_code | ocbench/envs/manipulation_env.py:18 |
 | CustomMuJoCoEnv.truncate_episode returns False, so the environment itself never truncates | upstream_code | ocbench/envs/env.py:118-123 |
 | A reset calls Gymnasium's reset(seed=seed, options=options), initializes the episode and returns the observation and info | upstream_code | ocbench/envs/env.py:184-211 |
+
+The sim backend imports `ocbench` before `gymnasium.make`. `register(...)` at `ocbench/__init__.py:74-79` is
+module-level, and `pyproject.toml:5-46` has no gymnasium entry point, so the id exists only after that import.
+`env_kwargs` repeats the registration kwargs `env_type='single'` and `task_id=1` (`ocbench/__init__.py:78`).
 
 For the single-cube task the observation is 28 values, read from the two cited composition rules: 6 joint positions,
 6 joint velocities, 3 scaled effector positions, cos and sin of the effector yaw (2), scaled gripper opening (1),

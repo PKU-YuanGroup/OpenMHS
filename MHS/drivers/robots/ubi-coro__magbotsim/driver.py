@@ -6,11 +6,15 @@ spaces: ``cap.world.step.v1`` takes ``{ticks, action}`` with ``action.values`` b
 space, ``cap.world.reset.v1`` takes ``{seed, options}`` and ``cap.world.seed.v1`` takes ``{seed}``.  The device is
 simulated (R0): there is no hardware backend, no e-stop path to a machine and no operator-required limit.
 
-The upstream environment needs Python 3.11 or newer, numpy, MuJoCo and shapely (pyproject.toml:9 and :22-30), and the
-gate never imports the clone.  The ``fake`` backend is therefore the package's own pure Python kinematic stand-in for
-``StateBasedPushBoxEnv``.  A backend name that ``backends`` does not list (``sim``) is served by
-``gymnasium.make(env_id, **env_kwargs)`` (GymnasiumDriver.open_native); that path needs the upstream package and was
-not run here.
+The upstream environment needs Python 3.11 or newer, numpy, MuJoCo and shapely (pyproject.toml:9 and :22-30).  The
+``fake`` backend is the package's own pure Python kinematic stand-in for ``StateBasedPushBoxEnv`` and does not import
+the clone.  A backend name that ``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id,
+**env_kwargs)`` (GymnasiumDriver.open_native) after the bridge imports ``env_module``.  Importing ``magbotsim`` runs
+``register_gymnasium_envs()`` (magbotsim/__init__.py:91), which registers ``StateBasedPushBoxEnv-v0``
+(magbotsim/__init__.py:58-62).  ``env_kwargs`` passes ``render_mode=None``: the constructor's default is ``'human'``
+(state_based_push_box_env.py:94), and ``reset`` and ``step`` always call ``render()`` (basic_single_agent_env.py:156
+and :256), which opens a window viewer.  ``None`` builds no viewer (basic_magbot_env.py:313-314); that is the mode
+the environment's own example and tests use.  The upstream package was not run here.
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002):
 every member of ``device.schema.json`` that applies to a simulator without a physical counterpart.  Every constant
@@ -28,6 +32,10 @@ BASIC = "magbotsim/basic_magbot_env.py"
 class MagBotSimPushBox(GymnasiumDriver):
     device_id = "magbotsim-push-box"
     env_id = "StateBasedPushBoxEnv-v0"
+    env_module = "magbotsim"  # importing it runs register_gymnasium_envs() at magbotsim/__init__.py:91
+    # human is the constructor default and opens a GLFW window on the first render(); None builds no viewer
+    # (state_based_push_box_env.py:94, basic_magbot_env.py:313-314).
+    env_kwargs = {"render_mode": None}
     native = ("magbotsim.rl_envs.object_manipulation.pushing.state_based_push_box_env:"
               "StateBasedPushBoxEnv")
     backends = {"fake": ".fake:FakeStateBasedPushBoxEnv"}
@@ -38,6 +46,18 @@ class MagBotSimPushBox(GymnasiumDriver):
     facts = [
         Fact("StateBasedPushBoxEnv-v0 is registered with max_episode_steps=25",
              source="upstream_code", ref="magbotsim/__init__.py:58-62"),
+        Fact("Importing magbotsim calls register_gymnasium_envs(), which performs that registration",
+             source="upstream_code", ref="magbotsim/__init__.py:91"),
+        Fact("The constructor defaults render_mode to human",
+             source="upstream_code", ref="magbotsim/rl_envs/object_manipulation/pushing/state_based_push_box_env.py:94"),
+        Fact("render_mode None initializes no viewer",
+             source="upstream_code", ref="magbotsim/rl_envs/object_manipulation/pushing/state_based_push_box_env.py:36-37"),
+        Fact("A viewer collection is created only when render_mode is not None",
+             source="upstream_code", ref=f"{BASIC}:313-314"),
+        Fact("reset calls render() after the forward step",
+             source="upstream_code", ref=f"{SINGLE_AGENT}:156"),
+        Fact("step calls render() after the control cycles",
+             source="upstream_code", ref=f"{SINGLE_AGENT}:256"),
         Fact("The observation space is a Dict with the keys observation, achieved_goal and desired_goal",
              source="upstream_code", ref=f"{GLOBAL_PUSHING}:272-286"),
         Fact("With learn_jerk and learn_mover_c_rotation false, the observation array is num_movers*4 values: "

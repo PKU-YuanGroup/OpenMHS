@@ -11,10 +11,11 @@ episode at 5 agent interactions per second (12 JSBSim integration steps of 1/60 
 ``step``.  The device is simulated (R0): there is no hardware backend, no e-stop path to a machine and no
 operator-required bound.
 
-The gate does not install gymnasium, jsbsim or numpy and package code never imports the clone, so the ``fake``
-backend is this package's pure-Python kinematic stand-in (fake.py).  A backend name that ``backends`` does not list
-(``sim``) would be served by ``gymnasium.make(env_id)`` through GymnasiumDriver.open_native; that path was not run
-here.
+The local fake gate has no gymnasium, jsbsim or numpy, so ``fake`` stays this package's pure-Python kinematic
+stand-in (fake.py).  ``sim`` is ``gymnasium.make(env_id)`` through GymnasiumDriver.open_native after the bridge
+imports ``env_module`` ``jsbgym``.  That import runs the module-level ``register`` loop
+(jsbgym/__init__.py:18-29), which places ``C172-HeadingControlTask-Shaping.STANDARD-NoFG-v0`` in the gymnasium
+registry.  The upstream environment was not executed in this workspace.
 
 The ``fidelity`` attribute describes the model actually deployed by this package (spec 05-fidelity FID-002): F0
 kinematics of the fake backend, not the JSBSim aerodynamics of the upstream environment.  The gaps state that
@@ -33,6 +34,7 @@ PROPERTIES = "jsbgym/properties.py"
 class JsbGym(GymnasiumDriver):
     device_id = "jsbgym"
     env_id = "C172-HeadingControlTask-Shaping.STANDARD-NoFG-v0"
+    env_module = "jsbgym"  # importing it runs gym.envs.registration.register at jsbgym/__init__.py:29
     native = "jsbgym.environment:NoFGJsbSimEnv"
     backends = {"fake": ".fake:FakeNoFGJsbSimEnv"}
     action_space_ref = f"{PROPERTIES}:93-101"
@@ -96,6 +98,8 @@ class JsbGym(GymnasiumDriver):
              "allow_flightgear_output=False", source="upstream_code", ref=f"{ENVIRONMENT}:225-246"),
         Fact("The package registers every aircraft/task/shaping setting and uses NoFGJsbSimEnv as the entry point "
              "when FlightGear is disabled", source="upstream_code", ref="jsbgym/__init__.py:18-29"),
+        Fact("Those register calls run when the jsbgym module is imported, so the id is absent from the gymnasium "
+             "registry until that import", source="upstream_code", ref="jsbgym/__init__.py:18-29"),
         Fact("Environment ids are built as aircraft-task-shaping-FG or NoFG-v0", source="upstream_code",
              ref="jsbgym/utils.py:39-51"),
         Fact("The simulation constructs an in-process jsbsim.FGFDMExec and sets sim_dt to 1/sim_frequency_hz",

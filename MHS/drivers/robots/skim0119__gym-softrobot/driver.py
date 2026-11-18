@@ -8,9 +8,12 @@ exists, no e-stop reaches a machine and no operator-required limit is declared.
 
 The gate runs without the upstream stack (gymnasium, numpy, PyElastica, COOMM and the other dependencies in
 pyproject.toml:20-29), so the ``fake`` backend is the package's own pure-Python point-mass surrogate in fake.py.  A
-backend name that ``backends`` does not list (``sim``) would be served by ``gymnasium.make(env_id)`` through
-``GymnasiumDriver.open_native``; that upstream path was not run here.  The fidelity contract therefore describes the
-fake as deployed (F0, kinematic/analytic) and its gaps say what it does not model.
+backend name that ``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id)`` through
+``GymnasiumDriver.open_native`` after importing ``env_module``.  Importing ``gym_softrobot`` runs the module-level
+``register(...)`` call for ``OctoMuscleCrawl-v0`` (``gym_softrobot/__init__.py:1``, ``:27-30``); the upstream example
+imports the package for that reason before ``gym.make`` (``examples/octopus_crawling/replay_policy.py:18`` and
+``README.md:70-73``).  That upstream path was not run here.  The fidelity contract therefore describes the fake as
+deployed (F0, kinematic/analytic) and its gaps say what it does not model.
 
 This package is model-authored and unreviewed; it is checked on the fake backend only.  Every Fact cites a text file
 of the clone at the pinned commit e4a73ed86191747f4d0af56e612a6e339e952448.
@@ -28,6 +31,9 @@ REGISTER = "gym_softrobot/__init__.py"
 class OctoMuscleCrawl(GymnasiumDriver):
     device_id = "octo-muscle-crawl"
     env_id = "OctoMuscleCrawl-v0"
+    #: Importing the package runs register(id="OctoMuscleCrawl-v0", ...) at gym_softrobot/__init__.py:27-30.
+    #: The crawling example imports it before gym.make for the same reason (examples/octopus_crawling/replay_policy.py:18).
+    env_module = "gym_softrobot"
     native = "gym_softrobot.envs.octopus:OctoMuscleCrawlEnv"
     backends = {"fake": ".fake:FakeOctoMuscleCrawlEnv"}
     display_name = "gym-softrobot OctoMuscleCrawl-v0 (eight-arm soft crawler)"
@@ -36,6 +42,9 @@ class OctoMuscleCrawl(GymnasiumDriver):
     facts = [
         Fact("OctoMuscleCrawl-v0 registers the environment gym_softrobot.envs.octopus:OctoMuscleCrawlEnv",
              source="upstream_code", ref=f"{REGISTER}:27-30"),
+        Fact("Importing gym_softrobot runs that module-level register call; the crawling example imports the "
+             "package before gym.make('OctoMuscleCrawl-v0')",
+             source="upstream_code", ref="examples/octopus_crawling/replay_policy.py:18"),
         Fact("The default configuration has 8 arms", source="upstream_code", ref=f"{CONFIG}:23"),
         Fact("OctopusMuscleConfig sets n_channels to 9", source="upstream_code", ref=f"{CONFIG}:163-164"),
         Fact("The action space is a Box from -1.0 to 1.0 with shape (n_arms, n_channels)",

@@ -99,6 +99,7 @@ Outputs:
 ## Facts
 
 - NavigationTrack-v0 is registered with entry point gym_navigation.envs.navigation_track:NavigationTrack (upstream_code: gym_navigation/__init__.py:4-6)
+- Importing gym_navigation runs the module-level register call that registers NavigationTrack-v0 (upstream_code: gym_navigation/__init__.py:4-6)
 - The action space is Discrete(3): one integer per Action enum member (upstream_code: gym_navigation/envs/navigation_track.py:46)
 - The three actions are FORWARD (0, linear shift 0.2 m, angular 0), ROTATE_RIGHT (1, 0.04 m, 0.2 rad) and ROTATE_LEFT (2, 0.04 m, -0.2 rad) (upstream_code: gym_navigation/enums/action.py:21-23)
 - The observation is five range measurements at -pi/2, -pi/4, 0, pi/4 and pi/2 from the heading (upstream_code: gym_navigation/envs/navigation_track.py:30-34)

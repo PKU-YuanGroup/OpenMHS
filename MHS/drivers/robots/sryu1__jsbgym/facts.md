@@ -35,6 +35,7 @@ reference file is generated from the driver, not from this page.
 | reset(seed, options) seeds the environment, reinitialises or creates the simulation and returns the first observation and an info dict | upstream_code | jsbgym/environment.py:102-134 |
 | NoFGJsbSimEnv is the training variant: it constructs the simulation with allow_flightgear_output=False | upstream_code | jsbgym/environment.py:225-246 |
 | The package registers every aircraft/task/shaping setting and uses NoFGJsbSimEnv as the entry point when FlightGear is disabled | upstream_code | jsbgym/__init__.py:18-29 |
+| Those register calls run when the jsbgym module is imported, so the id is absent from the gymnasium registry until that import | upstream_code | jsbgym/__init__.py:18-29 |
 | Environment ids are built as aircraft-task-shaping-FG or NoFG-v0 | upstream_code | jsbgym/utils.py:39-51 |
 | The simulation constructs an in-process jsbsim.FGFDMExec and sets sim_dt to 1/sim_frequency_hz | upstream_code | jsbgym/simulation.py:39-46 |
 
@@ -60,8 +61,8 @@ Honest limits of this package:
 - The fake is a hand-written kinematic stand-in, not JSBSim and not a recorded JSBSim transcript. Its observation,
   reward and terminal behaviour are test data; only the interface shape and the action space come from the upstream
   environment.
-- The upstream package needs Python 3.10 or newer plus numpy, gymnasium, jsbsim and matplotlib
-  (`pyproject.toml:22-23`); none of them is installed where the gate runs, and the package never imports or installs
-  the clone. The `sim` backend (`gymnasium.make(env_id)`) was not run.
+- The fake gate has no numpy, gymnasium, jsbsim or matplotlib (`pyproject.toml:22-23`), so the tests stay on the
+  fake backend. The sim backend imports `jsbgym` (`env_module`) before `gymnasium.make(env_id)`, which runs the
+  registrations at `jsbgym/__init__.py:18-29`. That sim path was not executed in this workspace.
 - The seed is accepted and recorded, but the default HeadingControlTask initial conditions are fixed, so a seed
   alone does not change the first observation.

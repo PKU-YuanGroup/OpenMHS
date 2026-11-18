@@ -1,0 +1,63 @@
+{
+ "$schema": "https://mhs.openai4s.org/schema/0.9/sim-lock.schema.json",
+ "openmhs": "0.9",
+ "backend": "sim",
+ "environment": {
+  "platform": "linux/arm64",
+  "base_image": "python:3.10-slim-bookworm",
+  "system_packages": [
+   "git",
+   "build-essential",
+   "cmake",
+   "swig",
+   "pkg-config",
+   "patchelf",
+   "libgl1",
+   "libegl1",
+   "libgles2",
+   "libosmesa6",
+   "libglfw3",
+   "libglew2.2",
+   "libglib2.0-0",
+   "libsm6",
+   "libxext6",
+   "libxrender1",
+   "ffmpeg"
+  ],
+  "python": "3.10",
+  "install": [
+   "pip install -v /Users/gongbozhang/Documents/ai4s-dev/runs/sim-fix-full/src/robots__xarm-developer__uf-gym:/src:ro"
+  ],
+  "constraints": [
+   "gymnasium==0.29.1",
+   "numpy<2",
+   "pybullet==3.2.7"
+  ],
+  "resolved": [
+   "cloudpickle==3.1.2",
+   "farama-notifications==0.0.6",
+   "gymnasium==0.29.1",
+   "numpy==1.26.4",
+   "panda-gym==3.0.7",
+   "pybullet==3.2.7",
+   "scipy==1.15.3",
+   "typing-extensions==4.16.0"
+  ]
+ },
+ "upstream": {
+  "commit": "5d93e0419193bfed8a7cefc7bbe9b045a650f049"
+ },
+ "gate": {
+  "sdk_version": "0.9.0.dev0",
+  "digest": "sha256:3f19fc79730d3ae9582ef8b5ccbf191cd1fbcca4924081745fe644e89e884940",
+  "evidence_state": "contract_checked",
+  "warnings": [
+   "G6.NOT_RECORDED",
+   "G7.UPSTREAM_BACKEND",
+   "G8.NO_UNIT"
+  ]
+ },
+ "fake_gate_digest": "sha256:5b6ac4398533f5238b630ecfd2ba483a80f1b88b02c00285c403aa7daa8055df",
+ "checked_at": "2026-11-18",
+ "notes": "the source tree of the pinned commit is on PYTHONPATH (it does not install)"
+}

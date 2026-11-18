@@ -7,9 +7,16 @@ shapes (it falls back to the four-tuple and to a seedless reset), so the card's 
 right shape: this class is configuration only and the bridge derives the contract from the environment's spaces.
 
 The selected entry symbol is the card's first one, ``multiworld.envs.gridworlds.goal_gridworld:GoalGridworld``.
-The card's MuJoCo Sawyer entry symbols (push, door, pick-and-place, reach) are not covered by this package: they
-need mujoco-py and the MuJoCo 2.1 binaries, and every one of them is an actuated robot arm rather than a simulated
-grid world.  The card's risk floor is R0 and the device is simulated (no hardware backend).
+A backend this class does not list (``sim``) is ``gym.make(env_id)`` after ``env_module`` is imported
+(``GymnasiumDriver.open_native``).  ``env_module`` is ``multiworld.envs.gridworlds``: that module's body imports
+``register`` from ``gym.envs.registration`` and calls it for ``GoalGridworld-v0``
+(``multiworld/envs/gridworlds/__init__.py:1-5``).  Importing it also loads ``multiworld``, whose package init
+imports the pygame environments (``multiworld/__init__.py:2``), and that module imports ``pygame``
+(``multiworld/envs/pygame/pick_and_place.py:6``, ``multiworld/envs/pygame/pygame_viewer.py:1``).  ``setup.py``
+declares none of those dependencies.  The card's MuJoCo Sawyer entry symbols (push, door, pick-and-place, reach)
+are not covered by this package: they need mujoco-py and the MuJoCo 2.1 binaries, and every one of them is an
+actuated robot arm rather than a simulated grid world.  The card's risk floor is R0 and the device is simulated
+(no hardware backend).
 
 The fake backend is a pure Python re-implementation of the upstream class (the gate never installs or imports the
 clone), with the same public members: ``reset``, ``step``, ``move_agent``, ``from_s``, ``to_s``, ``get_obs``,
@@ -27,6 +34,8 @@ GRIDWORLD_REGISTRATION = "multiworld/envs/gridworlds/__init__.py"
 class GoalGridworldDriver(GymnasiumDriver):
     device_id = "goal_gridworld"
     env_id = "GoalGridworld-v0"
+    #: Importing it runs register(...) for GoalGridworld-v0 (multiworld/envs/gridworlds/__init__.py:1-5).
+    env_module = "multiworld.envs.gridworlds"
     native = "multiworld.envs.gridworlds.goal_gridworld:GoalGridworld"
     backends = {"fake": ".fake:FakeGoalGridworld"}
     display_name = "Multiworld GoalGridworld-v0 (10 x 10 goal grid)"
@@ -38,9 +47,10 @@ class GoalGridworldDriver(GymnasiumDriver):
              source="upstream_code", ref=f"{GRIDWORLD}:13"),
         Fact("The action space is Discrete(nA), where nA is the length of the ACTIONS list",
              source="upstream_code", ref=f"{GRIDWORLD}:39-45"),
-        Fact("GoalGridworld-v0 is registered with entry point "
-             "multiworld.envs.gridworlds.goal_gridworld:GoalGridworld and no keyword arguments",
-             source="upstream_code", ref=f"{GRIDWORLD_REGISTRATION}:2-5"),
+        Fact("Importing multiworld.envs.gridworlds runs register from gym.envs.registration and registers "
+             "GoalGridworld-v0 with entry point multiworld.envs.gridworlds.goal_gridworld:GoalGridworld and no "
+             "keyword arguments",
+             source="upstream_code", ref=f"{GRIDWORLD_REGISTRATION}:1-5"),
         Fact("The constructor's default grid is 10 rows by 10 columns", source="upstream_code",
              ref=f"{GRIDWORLD}:35-36"),
         Fact("The observation space is a Dict with the members observation, achieved_goal and desired_goal; each "

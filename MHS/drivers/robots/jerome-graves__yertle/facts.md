@@ -8,6 +8,9 @@ numbers marked `# placeholder` are test data and appear in no fact, limit or ref
 |---|---|---|
 | YertleEnv is a Gymnasium environment for the Yertle quadruped that loads simulation/yertle.urdf in PyBullet and exposes the standard Gymnasium API | upstream_code | learning/yertle_env.py:1-4 |
 | YertleEnv subclasses gym.Env | upstream_code | learning/yertle_env.py:126 |
+| The constructor takes an optional config and render_mode and defaults both to None | upstream_code | learning/yertle_env.py:131 |
+| The URDF path is the repository root beside this module, simulation/yertle.urdf | upstream_code | learning/yertle_env.py:48-49 |
+| smoke_test constructs YertleEnv directly | upstream_code | learning/smoke_test.py:18 |
 | The robot has 12 actuated joints: the four leg prefixes lf, rf, lb and rb times the three segments shoulder, thigh and shin | upstream_code | learning/yertle_env.py:47-51 |
 | The action space is one residual per actuated joint: a Box with low -1.0 and high 1.0 | upstream_code | learning/yertle_env.py:150-151 |
 | The default action_scale is 0.4 rad | upstream_code | learning/yertle_env.py:83-84 |
@@ -38,12 +41,18 @@ Fidelity contract (`driver.py`, `fidelity = {...}`): engine `gymnasium:learning.
 (the interface and reward of the environment, not its PyBullet dynamics), determinism `seeded` with `seed_control`
 `parameter`, timestep 16.67 ms (four physics steps of 1/240 s per environment step, `learning/yertle_env.py:78-81`),
 `realtime_factor` 0, clock `lockstep`, reset `full`, no snapshot and restore. The gaps say that the fake models no
-contact, friction, servo, inertia override or fall, that a seed does not reproduce upstream's numpy stream, and that
-rendering is not covered.
+contact, friction, servo, inertia override or fall, that a seed does not reproduce upstream's numpy stream, that
+rendering is not covered, and that the sim backend constructs `YertleEnv` with the constructor defaults while the
+fake was not compared with a PyBullet run.
 
-No `sim` backend is declared: no gymnasium id is registered for this environment in the clone (the Isaac Lab entries
-in `isaac_lab/__init__.py` name the external `isaaclab.envs:ManagerBasedRLEnv`), and constructing `YertleEnv` means
-importing the read-only clone, which package code must not do. The package is checked on the fake backend only.
+No gymnasium id is registered for `YertleEnv`. The Isaac Lab entries in `isaac_lab/__init__.py` name the external
+`isaaclab.envs:ManagerBasedRLEnv` (`isaac_lab/__init__.py:10-12`), and `learning/smoke_test.py:18` constructs
+`YertleEnv` directly. The `fake` backend is the package's pure Python stand-in (`.fake:FakeYertleEnv`). The `sim`
+backend is the callable `_build_sim_env`, which imports `learning.yertle_env:YertleEnv` (`learning/yertle_env.py:126`)
+and calls it with the constructor defaults (`learning/yertle_env.py:131`): `render_mode` None connects a DIRECT
+PyBullet client (`learning/yertle_env.py:166-171`). The URDF is `simulation/yertle.urdf` under the repository root
+beside the module (`learning/yertle_env.py:48-49`). The import is inside the factory, so the fake backend does not
+import PyBullet. The `sim` entry is a callable, so the lock's string entry (`fake` only) is unchanged.
 
 Safety: simulated R0 device. The e-stop is the runtime's software latch (no native stop exists); after it no step or
 reset is accepted until `mhs.safety.reset` clears the latch, and the environment state stays readable.

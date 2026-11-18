@@ -9,6 +9,7 @@ clone such as README.md) or `upstream_code` (`path/in/clone.py:LINE`). The same 
 | The README runs the Point Goal1 task as SafetyPointGoal1-v0 and states that its step returns (observation, reward, cost, terminated, truncated, info) | vendor_doc | README.md:483-494 |
 | The README also documents the standard Gymnasium id SafetyPointGoal1Gymnasium-v0, whose step returns five items without the separate cost | vendor_doc | README.md:547-554 |
 | Each task is also registered in the Gymnasium registry under a Gymnasium suffix, served by the conversion wrapper make_gymnasium_environment | upstream_code | safety_gymnasium/__init__.py:61-66 |
+| Importing safety_gymnasium runs the module-level Goal registration, which calls gymnasium_register for SafetyPointGoal1Gymnasium-v0 | upstream_code | safety_gymnasium/__init__.py:136-137 |
 | The conversion wrapper calls the Safety-Gymnasium environment and returns (observation, reward, terminated, truncated, info), putting cost into info | upstream_code | safety_gymnasium/wrappers/gymnasium_conversion.py:26-34 |
 | The Goal task family registers Goal0, Goal1 and Goal2 for all robots with max_episode_steps 1000 | upstream_code | safety_gymnasium/__init__.py:136-137 |
 | A registered task uses the entry point safety_gymnasium.builder:Builder | upstream_code | safety_gymnasium/__init__.py:80 |

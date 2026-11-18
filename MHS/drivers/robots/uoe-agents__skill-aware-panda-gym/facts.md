@@ -10,6 +10,7 @@ clone such as README.md) or `upstream_code` (`path/in/clone.py:LINE`). The same 
 | The documented use is gym.make('PandaSkillAware-v3', render_mode='rgb_array', friction=1.0, mass=1.0) followed by reset() and step(action), which returns observation, reward, terminated, truncated and info | vendor_doc | README.md:20-26 |
 | info['state'] is one of push, roll, pick and down | vendor_doc | README.md:27 |
 | PandaSkillAware-v3 is registered with entry point skill_aware_panda_gym.envs:PandaPushEnv and max_episode_steps=50 | upstream_code | skill_aware_panda_gym/__init__.py:7-11 |
+| The register call for PandaSkillAware-v3 is at module level, so the id is in the gymnasium registry only after skill_aware_panda_gym is imported | upstream_code | skill_aware_panda_gym/__init__.py:6-11 |
 | PandaPushEnv is a RobotTaskEnv task environment | upstream_code | skill_aware_panda_gym/envs/__init__.py:70 |
 | PandaPushEnv builds PyBullet with the requested render mode and renderer and a Panda robot in that simulation, with block_gripper=False and base_position [-0.6, 0.0, 0.0] | upstream_code | skill_aware_panda_gym/envs/__init__.py:107-108 |
 | control_type selects end-effector control ('ee', the default) or joint control ('joints') | upstream_code | skill_aware_panda_gym/envs/__init__.py:76-77 |
@@ -27,6 +28,13 @@ Limits: the driver declares none. The only bound is the action space, which the 
 panda-gym's `Panda` class in the external dependency, so this page does not claim it as a sourced limit, and the fake's
 Box is test data (`fake.py` marks it `# placeholder`). The device is simulated (R0), so no limit is `operator_required`
 and no site-limits overlay exists.
+
+Sim path: `env_module = "skill_aware_panda_gym"` makes the bridge import that module before `gymnasium.make`. The
+import runs `register(id="PandaSkillAware-v3", ...)` (`skill_aware_panda_gym/__init__.py:6-11`). The registration
+passes no constructor kwargs, so `gym.make("PandaSkillAware-v3")` uses `PandaPushEnv`'s defaults
+`render_mode="rgb_array"`, `renderer="Tiny"`, `friction=1.0` and `mass=1.0`
+(`skill_aware_panda_gym/envs/__init__.py:92-95`, `:104-107`). Those match the documented call (`README.md:15-20`).
+The `fake` backend does not use `env_module`.
 
 Fidelity contract (`driver.py`, `fidelity = {...}`): engine `python:skill_aware_panda_gym.fake:FakePandaPushEnv`, level
 F0 (analytic kinematics, no dynamics), determinism `seeded` with `seed_control` `parameter`, `timestep_ms` 0 because

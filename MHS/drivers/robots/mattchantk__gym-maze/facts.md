@@ -21,6 +21,9 @@ this page.
 | reset takes no arguments and returns the fixed zero state; it does not draw from the generator set by seed | upstream_code | gym_maze/envs/maze_env.py:92-97 |
 | step moves the robot on the fixed maze data and does not draw from a random generator | upstream_code | gym_maze/envs/maze_env.py:73-90 |
 | maze-v0 is registered to MazeEnvSample5x5 with max_episode_steps=2000 | upstream_code | gym_maze/__init__.py:4-8 |
+| Importing gym_maze runs that registration: line 1 imports register from gym.envs.registration and lines 4-8 register maze-v0 in the legacy gym registry | upstream_code | gym_maze/__init__.py:1-8 |
+| MazeEnvSample5x5 defaults enable_render to True and passes it through to MazeEnv | upstream_code | gym_maze/envs/maze_env.py:111-112 |
+| MazeView2D always calls pygame.init and pygame.display.set_caption, and calls pygame.display.set_mode only when enable_render is true | upstream_code | gym_maze/envs/maze_view_2d.py:14-36 |
 | The upstream package declares gym, pygame and numpy as install requirements | upstream_code | setup.py:12 |
 
 Limits: the driver declares none. The only bound is the action space, which the bridge derives from the

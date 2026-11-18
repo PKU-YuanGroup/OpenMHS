@@ -6,10 +6,11 @@ normalized motor commands in [-1, 1], ``cap.world.reset.v1`` takes ``{seed, opti
 ``{seed}``.  The device is simulated (R0): there is no hardware backend, no e-stop path to a machine and no
 operator-required limit.
 
-The gate cannot import the upstream package (setup.py:24-34 needs gymnasium, pybullet, numpy, torch and more), so the
-``fake`` backend is this package's pure Python implementation of the simplified hover dynamics (fake.py).  A backend
-name that ``backends`` does not list (``sim``) would be served by ``gymnasium.make(env_id)``
-(GymnasiumDriver.open_native); that path needs the upstream package and was not run here.
+The ``fake`` backend is this package's pure Python implementation of the simplified hover dynamics (fake.py).  A
+backend name that ``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id)`` after the bridge
+imports ``env_module`` (GymnasiumDriver.open_native).  Importing ``phoenix_drone_simulation`` runs the module-level
+``register`` call (phoenix_drone_simulation/__init__.py:8-12).  The documented use imports that module before
+``gym.make`` (README.md:78-79).  The upstream package was not run here.
 
 Every Fact cites a line of the clone at the pinned commit c5d690732976351f5bbea4161913d98c376a4f04.  This package is
 model-authored and unreviewed: it is checked on the fake backend only.
@@ -25,6 +26,7 @@ AGENTS = "phoenix_drone_simulation/envs/agents.py"
 class DroneHover(GymnasiumDriver):
     device_id = "phoenix-hover"
     env_id = "DroneHoverSimpleEnv-v0"
+    env_module = "phoenix_drone_simulation"  # importing it runs register(...) at phoenix_drone_simulation/__init__.py:8
     native = "phoenix_drone_simulation.envs.hover:DroneHoverSimpleEnv"
     backends = {"fake": ".fake:FakeDroneHoverEnv"}
     action_space_ref = 'phoenix_drone_simulation/envs/base.py:148-150'
@@ -37,6 +39,9 @@ class DroneHover(GymnasiumDriver):
              source="vendor_doc", ref="README.md:30"),
         Fact("DroneHoverSimpleEnv-v0 is registered with max_episode_steps=500", source="upstream_code",
              ref="phoenix_drone_simulation/__init__.py:9-11"),
+        Fact("Importing phoenix_drone_simulation runs the module-level register call that adds "
+             "DroneHoverSimpleEnv-v0 to the gymnasium registry",
+             source="upstream_code", ref="phoenix_drone_simulation/__init__.py:1-12"),
         Fact("The CrazyFlie agent has four control channels (act_dim=4)", source="upstream_code",
              ref=f"{AGENTS}:134"),
         Fact("The action space bounds each of the four control channels to [-1, 1]", source="upstream_code",

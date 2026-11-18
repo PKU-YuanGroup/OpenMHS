@@ -99,6 +99,8 @@ Outputs:
 ## Facts
 
 - The environment class SimpleDroneEnv subclasses gym.Env (upstream_code: drone_sim/gym/simple_drone_env.py:11)
+- The gym test constructs SimpleDroneEnv() with no arguments (upstream_code: drone_sim/gym/test.py:5)
+- SimpleDroneEnv.__init__ constructs a Graphics object and adds the drone to it (upstream_code: drone_sim/gym/simple_drone_env.py:24-25)
 - The action space is a Box of four float32 values in [0, 1] (upstream_code: drone_sim/gym/simple_drone_env.py:35)
 - The observation space is a Box of shape (3, 3) whose low and high are both -inf (upstream_code: drone_sim/gym/simple_drone_env.py:30-36)
 - The environment constructs Drone(0, 0, 2, enable_death=False) and sets init_position to [0, 0, 2] (upstream_code: drone_sim/gym/simple_drone_env.py:19-28)

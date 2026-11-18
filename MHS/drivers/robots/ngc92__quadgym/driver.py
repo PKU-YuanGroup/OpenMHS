@@ -6,11 +6,12 @@ motor commands bounded by the base class's ``Box(0, 1, (4,))``, ``cap.world.rese
 ``cap.world.seed.v1`` ``{seed}``.  The device is simulated (R0): there is no hardware backend, no e-stop path to a
 machine and no operator-required limit.
 
-The gate cannot import the upstream package (it needs the legacy ``gym`` package and numpy, ``setup.py:5``), so the
-``fake`` backend is the package's own pure Python implementation of the rotational dynamics (fake.py).  A backend
-name that ``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id)`` or, when only the legacy ``gym``
-package is installed, by that package's ``make`` after the upstream package registered the id (``__init__.py:19-23``);
-that path needs both packages installed and was not run here.
+The fake check does not import the upstream package (it needs the legacy ``gym`` package and numpy, ``setup.py:5``),
+so the ``fake`` backend is the package's own pure Python implementation of the rotational dynamics (fake.py) and
+ignores ``env_module``.  A backend name that ``backends`` does not list (``sim``) is served by ``make(env_id)`` after
+the bridge imports ``env_module``.  Importing ``gym_quadrotor`` runs ``register(...)`` for this id
+(``gym_quadrotor/__init__.py:5``, ``:19-23``) in the legacy ``gym`` registry, and the bridge makes the id in whichever
+registry holds it.  That path needs the upstream package and was not run here.
 
 The ``fidelity`` attribute is the complete contract of the model as deployed (spec 05-fidelity FID-002).  Every
 constant and rule below cites a line of the clone at the pinned commit (f7eb2fecaad5fcfbf2b8a5b9ef3062b809b64b99).
@@ -30,6 +31,8 @@ REGISTER = "gym_quadrotor/__init__.py"
 class QuadrotorAttitude(GymnasiumDriver):
     device_id = "quadrotor-attitude"
     env_id = "QuadrotorStabilizeAttitude-MotorCommands-v0"
+    #: Importing gym_quadrotor runs register(...) at gym_quadrotor/__init__.py:5 and :19-23.
+    env_module = "gym_quadrotor"
     native = "gym_quadrotor.envs:CopterStabilizeAttitudeEnv"
     backends = {"fake": ".fake:FakeCopterStabilizeAttitudeEnv"}
     action_space_ref = f"{BASE}:18"
@@ -70,6 +73,9 @@ class QuadrotorAttitude(GymnasiumDriver):
              ref=f"{ATTITUDE}:29"),
         Fact("The environment id is registered with max_episode_steps=500, so gym.make wraps it in a 500-step "
              "TimeLimit", source="upstream_code", ref=f"{REGISTER}:19-23"),
+        Fact("Importing gym_quadrotor runs that registration: line 5 imports register from gym.envs.registration "
+             "and lines 19-23 register QuadrotorStabilizeAttitude-MotorCommands-v0, so gym.make finds the id only "
+             "after the package is imported", source="upstream_code", ref=f"{REGISTER}:5-23"),
         Fact("The legacy seed() calls gym.utils.seeding.np_random and returns [seed]", source="upstream_code",
              ref=f"{BASE}:39-41"),
         Fact("Body angular velocity is mapped to Euler-angle rates through the 3x3 matrix of the roll and pitch "

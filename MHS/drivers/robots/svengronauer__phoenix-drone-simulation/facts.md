@@ -10,6 +10,7 @@ clone such as README.md or docs/*.md) or `upstream_code` (`path/in/clone.py:LINE
 |---|---|---|
 | DroneHoverSimpleEnv-v0 is the hover task with PWM control at 100 Hz, simple physics, 100 Hz observations, 10% domain randomization, no aerodynamic effects and instant motor force | vendor_doc | README.md:30 |
 | DroneHoverSimpleEnv-v0 is registered with max_episode_steps=500 | upstream_code | phoenix_drone_simulation/__init__.py:9-11 |
+| Importing phoenix_drone_simulation runs the module-level register call that adds DroneHoverSimpleEnv-v0 to the gymnasium registry | upstream_code | phoenix_drone_simulation/__init__.py:1-12 |
 | The CrazyFlie agent has four control channels (act_dim=4) | upstream_code | phoenix_drone_simulation/envs/agents.py:134 |
 | The action space bounds each of the four control channels to [-1, 1] | upstream_code | phoenix_drone_simulation/envs/base.py:148-150 |
 | The observation history keeps two (observation, action) pairs | upstream_code | phoenix_drone_simulation/envs/base.py:44 |
@@ -44,3 +45,10 @@ Tags: drone, quadrotor, crazyflie, reinforcement-learning, simulation, gymnasium
 The card also lists DroneHoverBulletEnv, DroneTakeOffSimpleEnv, DroneTakeOffBulletEnv, DroneCircleSimpleEnv and
 DroneCircleBulletEnv. This package serves only DroneHoverSimpleEnv-v0, the first confirmed entry symbol; serve another
 by changing `env_id`, `native`, the facts and the fake.
+
+Sim path: `env_module = "phoenix_drone_simulation"`. The registrations are not entry points of the distribution; they
+run when that module is imported (`phoenix_drone_simulation/__init__.py:1` imports `register`, and the call at
+`:8-12` registers `DroneHoverSimpleEnv-v0`). The README does the same import before `gym.make`
+(`README.md:78-79`). No `env_kwargs`: the constructor defaults are the registered environment
+(`hover.py:253-266`), and `render_mode` stays unset so `use_graphics` is false and PyBullet connects in `DIRECT`
+mode (`base.py:82`, `base.py:175-178`). A `render_mode="human"` make would open a GUI.

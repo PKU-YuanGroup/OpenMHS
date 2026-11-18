@@ -11,11 +11,19 @@ three attitudes and by ``4*thrust_min`` .. ``4*thrust_max`` for the collective t
 truncates at ``max_episode_time`` (10 s by default) (``crazyflow/envs/drone_env.py:66,190-196``).
 
 The device is simulated (R0): there is no hardware backend, no e-stop path to a machine and no operator-required
-limit.  The gate does not install JAX, MuJoCo or the clone, and package code never imports the clone, so the ``fake``
-backend is this package's own pure Python stand-in for one world (``fake.py``).  The ``sim`` backend that
-``GymnasiumDriver.open_native`` would serve with ``gymnasium.make(env_id)`` is not available here: the environment is
-registered as a vector entry point, and the upstream dependencies were not installed or run.  This package is
-model-authored and unreviewed; it is checked on the fake backend only.
+limit.  The gate does not install JAX, MuJoCo or the clone for the fake backend, and this module does not import the
+clone at import time, so the ``fake`` backend is this package's own pure Python stand-in for one world (``fake.py``).
+The ``sim`` backend is ``_build_sim_reach_pos``: it imports ``crazyflow`` (as ``tests/integration/test_envs.py:6`` does)
+and constructs ``ReachPosEnv`` with that class's constructor defaults (``crazyflow/envs/reach_pos_env.py:20-31``).
+That class is the ``vector_entry_point`` of ``DroneReachPos-v0`` (``crazyflow/envs/__init__.py:11``); the registration
+names no ``entry_point``, so ``gymnasium.make`` cannot build it, and the user guide builds the environment with
+``gymnasium.make_vec`` (``docs/user-guide/gymnasium-envs.md:21-23``).  ``crazyflow/__init__.py:10-19`` sets
+``SCIPY_ARRAY_API`` and imports ``scipy`` before the rest of the package; this module does not assign that variable.
+The wrapper returns the one world's reward, terminated and truncated as Python scalars
+(``crazyflow/envs/drone_env.py:129`` and ``crazyflow/envs/drone_env.py:191``) and forwards the observation unchanged.
+``env_module = "crazyflow.envs"`` is the module whose import runs that ``register`` call.  The real upstream was not
+installed, imported or run here.  This package is model-authored and unreviewed; it is checked on the fake backend
+here.
 
 The ``fidelity`` attribute is the contract of the model as deployed.  It is F0 because the fake is a single-world
 kinematic stand-in, not the batched JAX/MuJoCo simulator, and its ``gaps`` say what it does not reproduce.  Every
@@ -25,11 +33,67 @@ fact cites a line of the clone at the pinned commit 70d09e455859580c45b0e4a06ee4
 from mhs.driver import Fact, GymnasiumDriver
 
 
+def _one_element(value):
+    """The Python scalar a length-1 array holds, or ``value`` when it has no ``item`` method."""
+    item = getattr(value, "item", None)
+    if callable(item):
+        return item()
+    return value
+
+
+class _OneWorldStep:
+    """``ReachPosEnv`` with the one world's reward and done flags as Python scalars.
+
+    ``DroneEnv.step`` returns ``observation, reward, terminated, truncated, {}``
+    (``crazyflow/envs/drone_env.py:129``).  ``reward``, ``terminated`` and ``truncated`` are per-world arrays
+    (``crazyflow/envs/drone_env.py:127``; the reward is ``ReachPosEnv.reward``, ``crazyflow/envs/reach_pos_env.py:78-87``;
+    ``terminated`` is ``pos[:, 0, 2] < 0``, ``crazyflow/envs/drone_env.py:191``).  The constructor default is one world
+    (``crazyflow/envs/reach_pos_env.py:26``), so each of those arrays has one element.  ``.item()`` yields that element
+    and does not change its value.  The observation and the empty info dict are forwarded as the environment returned
+    them.
+    """
+
+    def __init__(self, env):
+        self._env = env
+
+    def __getattr__(self, name):
+        return getattr(self._env, name)
+
+    def reset(self, **kwargs):
+        return self._env.reset(**kwargs)
+
+    def step(self, action):
+        observation, reward, terminated, truncated, info = self._env.step(action)
+        return observation, _one_element(reward), _one_element(terminated), _one_element(truncated), info
+
+    def close(self):
+        return self._env.close()
+
+
+def _build_sim_reach_pos(**_options):
+    """Build ``ReachPosEnv()`` for the ``sim`` backend.
+
+    ``register(id="DroneReachPos-v0", vector_entry_point=ReachPosEnv)`` (``crazyflow/envs/__init__.py:11``) names no
+    ``entry_point``, so ``gymnasium.make`` cannot build the id.  The integration test imports ``crazyflow`` before
+    ``gymnasium.make_vec`` (``tests/integration/test_envs.py:6-13``).  That import runs ``crazyflow/__init__.py``,
+    which sets ``SCIPY_ARRAY_API`` to ``"1"`` and imports ``scipy`` before the rest of the package
+    (``crazyflow/__init__.py:10-19``), then imports ``crazyflow.envs``, which registers the id.  This function does
+    not assign the variable.  ``ReachPosEnv()`` uses the constructor defaults: ``num_envs`` 1, ``max_episode_time``
+    10.0, ``Dynamics.so_rpy``, ``freq`` 500 and ``device`` ``"cpu"`` (``crazyflow/envs/reach_pos_env.py:20-31``).
+    The import is inside this function: the fake backend runs where JAX and MuJoCo are not installed.
+    """
+    import crazyflow  # noqa: F401 - tests/integration/test_envs.py:6; package init sets SCIPY_ARRAY_API
+    from crazyflow.envs.reach_pos_env import ReachPosEnv
+
+    return _OneWorldStep(ReachPosEnv())
+
+
 class DroneReachPos(GymnasiumDriver):
     device_id = "crazyflow-drone-reach-pos"
     env_id = "DroneReachPos-v0"
+    env_module = "crazyflow.envs"  # importing it runs register(...) (crazyflow/envs/__init__.py:11)
     native = "crazyflow.envs.reach_pos_env:ReachPosEnv"
-    backends = {"fake": ".fake:FakeReachPosEnv"}
+    backends = {"fake": ".fake:FakeReachPosEnv", "sim": _build_sim_reach_pos}
     display_name = "Crazyflow DroneReachPos-v0 (JAX drone simulation)"
     vendor, model = "LearnSysLab", "Crazyflow DroneReachPos-v0"
     tags = ["crazyflow", "drone", "quadrotor", "reach-position", "reinforcement-learning", "simulation",
@@ -37,6 +101,15 @@ class DroneReachPos(GymnasiumDriver):
     facts = [
         Fact("DroneReachPos-v0 is registered with vector_entry_point=ReachPosEnv",
              source="upstream_code", ref="crazyflow/envs/__init__.py:11"),
+        Fact("The DroneReachPos-v0 registration names vector_entry_point and does not name an entry_point",
+             source="upstream_code", ref="crazyflow/envs/__init__.py:11"),
+        Fact("The user guide builds a registered Crazyflow environment with gymnasium.make_vec",
+             source="vendor_doc", ref="docs/user-guide/gymnasium-envs.md:21-23"),
+        Fact("ReachPosEnv defaults to one world, max_episode_time 10.0, Dynamics.so_rpy, frequency 500 and device cpu",
+             source="upstream_code", ref="crazyflow/envs/reach_pos_env.py:20-31"),
+        Fact("Importing crazyflow raises when scipy is already imported and SCIPY_ARRAY_API is not \"1\", then sets "
+             "SCIPY_ARRAY_API to \"1\" before importing scipy",
+             source="upstream_code", ref="crazyflow/__init__.py:10-17"),
         Fact("DroneEnv is a gymnasium.vector.VectorEnv and declares autoreset_mode NEXT_STEP",
              source="upstream_code", ref="crazyflow/envs/drone_env.py:48-60"),
         Fact("The number of worlds defaults to 1",
@@ -128,6 +201,7 @@ class DroneReachPos(GymnasiumDriver):
             "fake was never compared with a JAX/MuJoCo run and no physical device is modelled",
             "no wall-clock pacing: realtime_factor 0, ticks advance simulated time by timestep_ms (2 ms) only",
             "snapshot and restore are not offered: the environment exposes no get_state or set_state",
-            "the sim backend (gymnasium.make on the vector_entry_point) was not run",
+            "the sim backend serves the real ReachPosEnv with its constructor defaults (one world, device cpu); "
+            "these gaps describe the fake stand-in, which was not compared with that environment",
         ],
     }

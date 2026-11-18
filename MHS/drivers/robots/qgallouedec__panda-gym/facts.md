@@ -9,6 +9,7 @@ clone such as README.md or docs/*.rst) or `upstream_code` (`path/in/clone.py:LIN
 | panda-gym is a set of robotic environments based on the PyBullet physics engine and gymnasium | vendor_doc | README.md:3 |
 | The documented use is gym.make('PandaReach-v3', render_mode='human') followed by reset() and step(action) | vendor_doc | docs/guide/quick_start.rst:6-19 |
 | PandaReach-v3 is registered with entry point panda_gym.envs:PandaReachEnv, kwargs reward_type='sparse' and control_type='ee', and max_episode_steps=50 (100 only for Stack) | upstream_code | panda_gym/__init__.py:10-21 |
+| The register calls sit at module level in panda_gym, so PandaReach-v3 is in the gymnasium registry only after that module is imported | upstream_code | panda_gym/__init__.py:10-22 |
 | PandaReachEnv builds the Panda robot with block_gripper=True, so the gripper is not part of the action | upstream_code | panda_gym/envs/panda_tasks.py:202 |
 | Panda's action space is Box(-1.0, 1.0, shape=(n_action,)) in float32, with n_action 3 for end-effector control and 7 for joint control, plus one for the gripper when it is not blocked | upstream_code | panda_gym/envs/robots/panda.py:31-33 |
 | An end-effector action moves the target by at most 0.05 per step and the target height is clipped to 0 or above | upstream_code | panda_gym/envs/robots/panda.py:81-86 |
@@ -29,6 +30,13 @@ clone such as README.md or docs/*.rst) or `upstream_code` (`path/in/clone.py:LIN
 | n_substeps defaults to 20 | upstream_code | panda_gym/pybullet.py:28 |
 | PyBullet.step advances n_substeps physics steps per call | upstream_code | panda_gym/pybullet.py:66-70 |
 | The runtime dependencies are gymnasium>=0.26, pybullet, numpy<2 and scipy | upstream_code | setup.py:23 |
+
+Sim path (`driver.py`): `env_module = "panda_gym"`. Importing that package runs the module-level `register(...)` calls
+at `panda_gym/__init__.py:10-22` (the `register` import is `:3`), which puts `PandaReach-v3` in the gymnasium registry
+before `gymnasium.make`. The `fake` backend does not import it. The registration kwargs are `reward_type='sparse'` and
+`control_type='ee'` (`panda_gym/__init__.py:20`). The constructor default `render_mode='rgb_array'` with
+`renderer='Tiny'` connects PyBullet in `DIRECT` mode (`panda_gym/envs/panda_tasks.py:189-201`,
+`panda_gym/pybullet.py:40-44`), so the make path does not open a GUI.
 
 Limits: the driver declares none. The only bound is the action space, which the bridge derives from the environment
 (`Box(-1.0, 1.0, shape=(3,))`: `action.values` from -1.0 to 1.0 per element, with the source `upstream_code` and the

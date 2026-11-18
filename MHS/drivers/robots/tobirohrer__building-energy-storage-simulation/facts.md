@@ -28,6 +28,11 @@ reference file is generated from the driver, not from this page.
 | The README documents the observation table: the state of charge in kWh, then n load, n solar and n price forecasts | vendor_doc | README.md:78-83 |
 | The README states that the episode ends when max_timesteps is reached | vendor_doc | README.md:94-96 |
 
+The clone never registers an environment id. The sim backend builds the upstream class the way README.md:29-33
+does: `BuildingSimulation()` (its defaults load the packaged CSVs, `building_simulation.py:27-30`, through
+`pkg_resources` at `utils.py:2` and `utils.py:6`) passed to `Environment`, whose constructor requires
+`building_simulation` (`environment.py:27-28`). The returned object is that upstream instance.
+
 Limits: the driver declares none. The only bound is the action space, which the bridge derives from the
 environment (`Box(-1, 1, (1,))`: `action.values` from -1 to 1 per element, source `upstream_code`, ref
 `building_energy_storage_simulation/environment.py:45`, the line where the clone states the bound), and `ticks` (1 to
