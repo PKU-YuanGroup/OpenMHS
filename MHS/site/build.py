@@ -2303,7 +2303,7 @@ def spec_index_page(ctx) -> str:
     for label, stems in reading_paths:
         links = []
         for stem in stems:
-            doc = by_stem.get(stem)
+            doc = by_stem.get(stem.removesuffix(".html"))  # the lists name pages, the index is keyed by stem
             if not doc:
                 continue
             state = " (in preparation)" if doc.placeholder else ""
@@ -2624,9 +2624,9 @@ def registry_explorer_page(ctx) -> str:
         if reg.tier_counts.get(t)
     )
     ring_opts = "".join(
-        f'<option value="{attr(r)}">Ring {esc(r)} ({fmt_int(reg.ring_counts.get(r, 0))})</option>'
+        f'<option value="{attr(r)}">Ring {esc(r)} ({fmt_int(reg.ring_counts.get(str(r), 0))})</option>'
         for r in RINGS
-        if reg.ring_counts.get(r)
+        if reg.ring_counts.get(str(r))  # prepare_registry counts rings under string keys
     )
     track_opts = "".join(
         f'<option value="{attr(value)}">{esc(label)} ({fmt_int(reg.track_counts.get(value, 0))})</option>'
@@ -4635,7 +4635,7 @@ def host_page(ctx) -> str:
     one_call = """from mhs import connect
 
 with connect("mhs://localhost:7400") as lab:              # one transport
-    dev = lab.devices[0]                                   # one discovery
+    dev = lab.devices()[0]                                 # one discovery
     receipt = lab.invoke(                                  # one command
         "cap.world.step.v1", {"ticks": 120}, device_id=dev["device_id"])
     state = lab.read("workcell")                           # one read
