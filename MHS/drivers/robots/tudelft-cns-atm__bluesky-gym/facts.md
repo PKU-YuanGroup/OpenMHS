@@ -6,6 +6,12 @@ Every fact cites its source at commit `8d7d79c63a3dab5de0e7bd8c2afb74737377f2e5`
 | fact | source | ref |
 |---|---|---|
 | DescentEnv-v0 is registered with entry point bluesky_gym.envs.descent_env:DescentEnv and max_episode_steps=300 | upstream_code | bluesky_gym/__init__.py:6-10 |
+| register_envs is defined in the module body and the DescentEnv-v0 register call is inside that function; importing bluesky_gym does not call register_envs | upstream_code | bluesky_gym/__init__.py:1-10 |
+| The documented setup calls bluesky_gym.register_envs() and then gym.make | vendor_doc | README.md:22-26 |
+| The training example passes render_mode=None to gym.make | vendor_doc | README.md:43 |
+| DescentEnv.__init__ defaults render_mode to None | upstream_code | bluesky_gym/envs/descent_env.py:47 |
+| When bs.sim is None the constructor calls bs.init(mode='sim', detached=True) | upstream_code | bluesky_gym/envs/descent_env.py:67-68 |
+| pygame.display.set_mode runs only when render_mode is human | upstream_code | bluesky_gym/envs/descent_env.py:211-214 |
 | DescentEnv is a gymnasium.Env subclass | upstream_code | bluesky_gym/envs/descent_env.py:31 |
 | The action space is a Box from -1 to 1 with shape (1,) | upstream_code | bluesky_gym/envs/descent_env.py:61 |
 | The observation space is a Dict of altitude, vz, target_altitude and runway_distance, each a Box from -inf to +inf | upstream_code | bluesky_gym/envs/descent_env.py:52-59 |

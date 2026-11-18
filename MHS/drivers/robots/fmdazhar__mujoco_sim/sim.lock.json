@@ -1,0 +1,99 @@
+{
+ "$schema": "https://mhs.openai4s.org/schema/0.9/sim-lock.schema.json",
+ "openmhs": "0.9",
+ "backend": "sim",
+ "environment": {
+  "platform": "linux/arm64",
+  "base_image": "python:3.10-slim-bookworm",
+  "system_packages": [
+   "git",
+   "build-essential",
+   "cmake",
+   "swig",
+   "pkg-config",
+   "patchelf",
+   "libgl1",
+   "libegl1",
+   "libgles2",
+   "libosmesa6",
+   "libglfw3",
+   "libglew2.2",
+   "libglib2.0-0",
+   "libsm6",
+   "libxext6",
+   "libxrender1",
+   "ffmpeg",
+   "xvfb",
+   "xauth",
+   "libgl1-mesa-dri",
+   "libglu1-mesa",
+   "libxrandr2",
+   "libxinerama1",
+   "libxcursor1",
+   "libxi6",
+   "libglut3.12",
+   "libtk8.6"
+  ],
+  "python": "3.10",
+  "install": [
+   "pip install ."
+  ],
+  "constraints": [
+   "gymnasium==1.0.0",
+   "mujoco==3.2.5",
+   "hidapi==0.14.0.post4",
+   "scipy==1.15.1",
+   "matplotlib==3.9.4",
+   "pygame==2.6.1",
+   "imageio==2.37.0"
+  ],
+  "resolved": [
+   "absl-py==2.5.1",
+   "cloudpickle==3.1.3",
+   "contourpy==1.3.2",
+   "cycler==0.12.1",
+   "etils==1.13.0",
+   "farama-notifications==0.0.6",
+   "fonttools==4.65.0",
+   "fsspec==2026.9.0",
+   "glfw==2.11.0",
+   "gymnasium==1.0.0",
+   "hidapi==0.14.0.post4",
+   "imageio==2.37.0",
+   "importlib-resources==7.1.0",
+   "kiwisolver==1.5.1",
+   "matplotlib==3.9.4",
+   "mujoco==3.2.5",
+   "numpy==2.2.6",
+   "packaging==26.3",
+   "pillow==12.3.0",
+   "pygame==2.6.1",
+   "pyopengl==3.1.10",
+   "pyparsing==3.3.3",
+   "python-dateutil==3.0.0",
+   "scipy==1.15.1",
+   "setuptools==84.2.1",
+   "six==1.17.0",
+   "typing-extensions==4.16.0",
+   "tzdata==2026.6",
+   "zipp==4.1.2"
+  ]
+ },
+ "upstream": {
+  "commit": "9c204da4f307c7a711ca4e5cddb1d46a86cab0b1"
+ },
+ "gate": {
+  "sdk_version": "0.9.0.dev0",
+  "digest": "sha256:ad57df30eb92de0154abf0934428513740440f73f2ff06f7102d161416d1dd2f",
+  "evidence_state": "contract_checked",
+  "warnings": [
+   "G5.BACKEND_SURFACE",
+   "G6.NOT_RECORDED",
+   "G7.UPSTREAM_BACKEND",
+   "G8.NO_UNIT"
+  ]
+ },
+ "fake_gate_digest": "sha256:b3dcbe7cc541efdc758c6a847ee17ed1b6bb7153e677b41a065957ec4603df5b",
+ "checked_at": "2026-11-18",
+ "notes": "the gate ran under Xvfb, a virtual X display with Mesa software OpenGL (the upstream opens a window); nothing was shown on a screen"
+}

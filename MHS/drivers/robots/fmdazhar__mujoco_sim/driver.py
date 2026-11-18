@@ -11,11 +11,15 @@ in [-1, 1]; mujoco_sim/envs/wrappers.py:134-138), ``cap.world.reset.v1`` takes `
 ``cap.world.seed.v1`` takes ``{seed}``.  The device is simulated (R0): there is no hardware backend, no e-stop
 path to a machine and no operator-required limit.
 
-The gate cannot import the upstream package: it needs MuJoCo 3.2.5, gymnasium 1.0.0, glfw and PyOpenGL, and
-package code never imports the clone.  The ``fake`` backend is therefore the package's own pure-Python
-stand-in (fake.py).  A backend name that ``backends`` does not list (``sim``) is served by
-``gymnasium.make("ur5ePegInHoleGymEnv_easy-v0")`` (GymnasiumDriver.open_native) after ``import mujoco_sim``;
-that path was not run here.
+The ``fake`` backend is the package's own pure-Python stand-in (fake.py) and does not import the clone.
+The ``sim`` backend is ``_build_sim_env``.  ``setup()`` declares no dependencies and no package data
+(setup.py:3-8), so ``pip install .`` installs the Python modules and omits ``mujoco_sim/envs/xmls``.
+``ur5ePegInHoleGymEnv`` loads ``xmls/ur5e_demos.xml`` from the directory of its own file
+(ur5e_pick_gym_connector.py:17-18).  ``_build_sim_env`` therefore loads that file from the pinned checkout,
+so ``__file__`` is the checkout path, then builds the easy variant the way ``register(...)`` does
+(mujoco_sim/__init__.py:10-54): the same config and the same four wrappers.  The constructor always calls
+``glfw.init`` (ur5e_pick_gym_connector.py:241-242) and the easy wrapper then opens a keyboard window
+(wrappers.py:213-215, keyboard.py:21-22), so the sim run needs a display.  That sim path was not run here.
 
 The ``fidelity`` attribute is the contract of the model as deployed (spec 05-fidelity): MuJoCo rigid-body
 dynamics at a 20 ms control step with a seeded reset, and ``gaps`` naming what this package's fake does not
@@ -23,7 +27,30 @@ model.  This package is model-authored and unreviewed: it is checked on the fake
 evidence is ``contract_checked``, never an MHS-Device level.
 """
 
+import importlib.util
+from pathlib import Path
+
 from mhs.driver import Fact, GymnasiumDriver
+
+#: The gate mounts this worktree (``robots`` is the corpus clone) and mounts ``/src`` only when the install
+#: put an unpackaged tree on ``PYTHONPATH``.  Either root is the pinned commit.
+_CLONE = Path("robots/fmdazhar/mujoco_sim")
+_ENV_REL = Path("mujoco_sim/envs/ur5e_pick_gym_connector.py")
+_XML_REL = Path("mujoco_sim/envs/xmls/ur5e_demos.xml")
+#: kwargs of the easy registration (mujoco_sim/__init__.py:44-54).
+_EASY_CONFIG = {
+    "ENV_CONFIG": {"version": 0},
+    "UR5E_CONFIG": {"tcp_xyz_randomize": True, "mocap_orient": True},
+}
+#: keys_to_keep of the easy CustomObsWrapper (mujoco_sim/__init__.py:27-36).
+_EASY_KEYS = (
+    "connector_pose",
+    "controller_pose",
+    "ur5e/tcp_pose",
+    "ur5e/tcp_vel",
+    "ur5e/wrist_force",
+    "ur5e/wrist_torque",
+)
 
 REGISTRATION = "mujoco_sim/__init__.py"
 ENV = "mujoco_sim/envs/ur5e_pick_gym_connector.py"
@@ -32,11 +59,76 @@ CONFIG = "mujoco_sim/config/config.py"
 BASE = "mujoco_sim/mujoco_gym_env.py"
 
 
+def _pinned_checkout() -> Path:
+    """The pinned checkout that holds the env module and ``xmls/ur5e_demos.xml`` beside it.
+
+    ``setup.py:6`` is ``find_packages()`` with no ``package_data`` (setup.py:3-8), so the wheel omits
+    ``mujoco_sim/envs/xmls``.  ``ur5e_pick_gym_connector.py:17-18`` loads that XML from ``Path(__file__).parent``.
+    """
+    here = Path(__file__).resolve()
+    roots = [Path("/src")]
+    roots.extend(parent / _CLONE for parent in here.parents)
+    seen: set[str] = set()
+    for root in roots:
+        key = str(root)
+        if key in seen:
+            continue
+        seen.add(key)
+        try:
+            if (root / _ENV_REL).is_file() and (root / _XML_REL).is_file():
+                return root
+        except OSError:
+            continue
+    raise FileNotFoundError(
+        f"{_XML_REL.as_posix()} is not under /src or the pinned clone {_CLONE.as_posix()}")
+
+
+def _easy_env_class():
+    """Load ``ur5ePegInHoleGymEnv`` from the checkout file so ``__file__`` resolves the XML.
+
+    The file is loaded by its path and is not inserted into the import table.  Its ``mujoco_sim.*`` imports
+    still come from the installed package (the same Python modules ``pip install .`` ships).  ``_XML_PATH``
+    is computed in this module (ur5e_pick_gym_connector.py:17-18), so the class defined here opens the
+    checkout's ``xmls/ur5e_demos.xml`` and the meshes that file includes (ur5e1.xml:68-93).
+    """
+    path = (_pinned_checkout() / _ENV_REL).resolve()
+    spec = importlib.util.spec_from_file_location("ur5e_pick_gym_connector", path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"cannot load the pinned {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    loaded = getattr(module, "__file__", None)
+    if loaded is None or Path(loaded).resolve() != path:
+        raise ImportError(f"loaded {loaded}, not the pinned {path}")
+    return module.ur5ePegInHoleGymEnv
+
+
+def _build_sim_env(**_options):
+    """Build the real easy variant the way ``register`` does (mujoco_sim/__init__.py:10-54).
+
+    The constructor is called with the registration's ``config`` (mujoco_sim/__init__.py:44-54) and the
+    default ``render_mode`` ``"rgb_array"`` (ur5e_pick_gym_connector.py:38).  The four wrappers are applied
+    in the registration's order (mujoco_sim/__init__.py:13-42).  The returned object is that wrapped
+    upstream environment.
+    """
+    env = _easy_env_class()(config=_EASY_CONFIG)
+    from gymnasium.wrappers import FlattenObservation
+    from mujoco_sim.envs.wrappers import CustomObsWrapper, SpacemouseIntervention, XYZGripperCloseEnv
+
+    env = XYZGripperCloseEnv(env)
+    env = SpacemouseIntervention(env)
+    env = CustomObsWrapper(env, keys_to_keep=list(_EASY_KEYS))
+    return FlattenObservation(env)
+
+
 class UR5ePegInHole(GymnasiumDriver):
     device_id = "ur5e-peg-in-hole"
     env_id = "ur5ePegInHoleGymEnv_easy-v0"
+    env_module = "mujoco_sim"  # importing it runs register(...) at mujoco_sim/__init__.py:10-12
     native = "mujoco_sim.envs:ur5ePegInHoleGymEnv"
-    backends = {"fake": ".fake:FakeUR5ePegInHoleEnv"}
+    #: ``fake`` is this package's stand-in.  ``sim`` is a callable, so the lock's string backends stay the
+    #: fake entry only (check.py compares string entries when every entry is a string).
+    backends = {"fake": ".fake:FakeUR5ePegInHoleEnv", "sim": _build_sim_env}
     display_name = "mujoco_sim UR5e peg-in-hole (ur5ePegInHoleGymEnv_easy-v0)"
     vendor, model = "fmdazhar", "mujoco_sim"
     tags = ["ur5e", "peg-in-hole", "mujoco", "manipulation", "reinforcement-learning", "simulation", "gymnasium"]
@@ -44,10 +136,37 @@ class UR5ePegInHole(GymnasiumDriver):
         Fact("The clone is a UR5e arm and Robotiq Hand-e gripper simulator with a state-based peg-in-hole "
              "Gymnasium environment and custom Gymnasium wrappers",
              source="vendor_doc", ref="README.md:3-4"),
-        Fact("ur5ePegInHoleGymEnv_easy-v0 is registered with entry point mujoco_sim.envs:ur5ePegInHoleGymEnv",
+        Fact("Importing mujoco_sim registers ur5ePegInHoleGymEnv_easy-v0 with entry point "
+             "mujoco_sim.envs:ur5ePegInHoleGymEnv",
              source="upstream_code", ref=f"{REGISTRATION}:10-12"),
+        Fact("setup() names the package and find_packages() and declares no install_requires and no package_data",
+             source="upstream_code", ref="setup.py:3-8"),
+        Fact("The environment loads the MuJoCo model from xmls/ur5e_demos.xml beside the env module",
+             source="upstream_code", ref=f"{ENV}:17-18"),
+        Fact("The constructor calls glfw.init and reads the primary monitor size for every render mode",
+             source="upstream_code", ref=f"{ENV}:240-242"),
+        Fact("The env module imports SliderController and ForceFeedback while the class module loads",
+             source="upstream_code", ref=f"{ENV}:11-12"),
+        Fact("ForceFeedback's module imports tkinter and matplotlib at import time",
+             source="upstream_code", ref="mujoco_sim/utils/force_feedback.py:1-5"),
+        Fact("SliderController's module imports tkinter at import time",
+             source="upstream_code", ref="mujoco_sim/utils/slider_controller.py:1"),
+        Fact("The renderer module imports imageio at module scope",
+             source="upstream_code", ref="mujoco_sim/mujoco_rendering.py:6"),
+        Fact("The wrapper module imports Keyboard and SpaceMouse at load time",
+             source="upstream_code", ref=f"{WRAPPERS}:6-8"),
+        Fact("SpacemouseIntervention tries SpaceMouse and on OSError constructs Keyboard",
+             source="upstream_code", ref=f"{WRAPPERS}:209-215"),
+        Fact("Keyboard opens a pygame display window in its constructor",
+             source="upstream_code", ref="mujoco_sim/devices/keyboard.py:21-22"),
+        Fact("SpaceMouse opens the HID device with hid.device().open",
+             source="upstream_code", ref="mujoco_sim/devices/spacemouse.py:183-184"),
+        Fact("The env module imports scipy.spatial.transform.Rotation, glfw and OpenGL at load time",
+             source="upstream_code", ref=f"{ENV}:13-15"),
         Fact("The easy variant applies XYZGripperCloseEnv, SpacemouseIntervention, CustomObsWrapper and "
              "FlattenObservation", source="upstream_code", ref=f"{REGISTRATION}:13-42"),
+        Fact("The easy registration passes config ENV_CONFIG version 0 and UR5E_CONFIG tcp_xyz_randomize True "
+             "and mocap_orient True", source="upstream_code", ref=f"{REGISTRATION}:44-54"),
         Fact("The easy variant ends with gymnasium's FlattenObservation wrapper",
              source="upstream_code", ref=f"{REGISTRATION}:38-41"),
         Fact("The base action space is a seven-element Box from -1.0 to 1.0",

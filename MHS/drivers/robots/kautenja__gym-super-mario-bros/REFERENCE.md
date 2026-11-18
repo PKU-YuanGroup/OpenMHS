@@ -111,6 +111,7 @@ Outputs:
 - The documented 1-1 opening info has 0 coins, 2 lives, world 1, score 0, stage 1, time 400 and x_pos 40 (upstream_code: gym_super_mario_bros/tests/test_smv_env.py:81-90)
 - The registered time limit is 9999999 steps (upstream_code: gym_super_mario_bros/_registration.py:7)
 - SuperMarioBros-v0 is registered as a Super Mario Bros. environment (upstream_code: gym_super_mario_bros/_registration.py:92-93)
+- You must import gym_super_mario_bros before trying to make an environment, because Gymnasium environments are registered at runtime (vendor_doc: README.md:50-51)
 - The registered entry point is gym_super_mario_bros:SuperMarioBrosEnv and the environment is marked nondeterministic (upstream_code: gym_super_mario_bros/_registration.py:33-42)
 - A target world is 1 to 8 (1 to 13 for Lost Levels) and a target stage is 1 to 4 (upstream_code: gym_super_mario_bros/_roms/decode_target.py:31-41)
 

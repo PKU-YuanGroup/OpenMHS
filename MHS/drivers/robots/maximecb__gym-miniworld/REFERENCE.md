@@ -98,7 +98,7 @@ Outputs:
 
 ## Facts
 
-- MiniWorld-Maze-v0 is registered to the miniworld.envs.maze:Maze class (upstream_code: miniworld/envs/__init__.py:59-62)
+- Importing miniworld.envs runs gym.register, which registers MiniWorld-Maze-v0 to miniworld.envs.maze:Maze (upstream_code: miniworld/envs/__init__.py:59-62)
 - Maze restricts the action space to Discrete(move_forward + 1), the three movement actions (upstream_code: miniworld/envs/maze.py:70-71)
 - MiniWorldEnv numbers turn_left 0, turn_right 1 and move_forward 2 in its Actions enumeration (upstream_code: miniworld/miniworld.py:452-457)
 - The default observation is a 60 by 80 RGB image with 3 channels (upstream_code: miniworld/miniworld.py:473-491)
@@ -117,6 +117,8 @@ Outputs:
 - The agent has a bounding radius of 0.4 (upstream_code: miniworld/entity.py:469-470)
 - near() compares the distance with both radii plus 1.1 * max_forward_step (upstream_code: miniworld/miniworld.py:965-975)
 - The constructor opens a 1 by 1 hidden pyglet window and allocates frame buffers, so the real environment needs an OpenGL context (upstream_code: miniworld/miniworld.py:507-518)
+- The README documents PYOPENGL_PLATFORM=egl for offscreen rendering (vendor_doc: README.md:101-108)
+- miniworld.opengl sets pyglet.options['headless'] to True when PYOPENGL_PLATFORM is egl (upstream_code: miniworld/opengl.py:85-86)
 - MiniWorld is a minimalistic 3D interior environment simulator for reinforcement learning and robotics research (vendor_doc: README.md:19-21)
 - The upstream lists its physics as very basic, not sufficient for robot arms or manipulation (vendor_doc: README.md:43-45)
 - The package requirements are Python >=3.8, numpy>=1.22.0, pyglet>=1.5.27,<2.0 and gymnasium>=0.29.1 (upstream_code: setup.py:48-62)

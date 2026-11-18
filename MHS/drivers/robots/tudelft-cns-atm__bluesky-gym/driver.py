@@ -9,11 +9,14 @@ aircraft approaches a runway (``bluesky_gym/envs/descent_env.py:31``).  A ``Gymn
 The device is simulated (R0): there is no hardware backend, no e-stop path to a machine and no operator-required
 limit.
 
-The gate cannot import the upstream package (it needs ``bluesky-simulator``, gymnasium, numpy, pygame, torch and
-stable-baselines3, ``pyproject.toml:4-11``, and package code never imports the clone), so the ``fake`` backend is the
-package's own pure-Python stand-in (fake.py).  A backend name that ``backends`` does not list (``sim``) is served by
-``gymnasium.make("DescentEnv-v0")`` after the upstream registration (``GymnasiumDriver.open_native`` and
-``bluesky_gym/__init__.py:4-10``); that path was not run here.
+The gate cannot import the upstream package at import time (it needs ``bluesky-simulator``, gymnasium, numpy, pygame,
+torch and stable-baselines3, ``pyproject.toml:4-11``, and package code never imports the clone), so the ``fake``
+backend is the package's own pure-Python stand-in (fake.py).  Importing ``bluesky_gym`` does not register
+``DescentEnv-v0``: ``register_envs`` is defined at ``bluesky_gym/__init__.py:4`` and the ``register`` call is inside
+it (``:6-10``), and the module never calls the function.  The ``sim`` backend is ``_build_sim_env``, which follows
+the documented sequence ``bluesky_gym.register_envs()`` then ``gym.make`` (``README.md:22-26``) with
+``render_mode=None`` (``README.md:43``, the constructor default at ``descent_env.py:47``).  That path was not run
+here.
 
 The ``fidelity`` attribute is the contract of the model as deployed (spec 05-fidelity FID-002).  The clone shows an
 aircraft advanced by BlueSky at a fixed ``DT`` and a vertical-speed command (``descent_env.py:71`` and ``:145-159``);
@@ -27,13 +30,41 @@ from mhs.driver import Fact, GymnasiumDriver
 
 ENV = "bluesky_gym/envs/descent_env.py"
 INIT = "bluesky_gym/__init__.py"
+README = "README.md"
+
+
+def _build_sim_env(**_options):
+    """Build the real ``DescentEnv-v0`` for the ``sim`` backend.
+
+    Importing ``bluesky_gym`` only defines ``register_envs`` (``bluesky_gym/__init__.py:1-4``).  The
+    ``register(id="DescentEnv-v0", ...)`` call is inside that function (``:6-10``), and the module body does not
+    call it, so an ``env_module`` import cannot put the id in the registry.  ``README.md:22-26`` is the documented
+    sequence: ``bluesky_gym.register_envs()`` then ``gym.make``.  ``render_mode=None`` is the constructor default
+    (``descent_env.py:47``) and the training example (``README.md:43``); ``pygame.display.set_mode`` runs only when
+    ``render_mode == "human"`` (``descent_env.py:211-214``).  The constructor starts BlueSky with
+    ``bs.init(mode='sim', detached=True)`` (``descent_env.py:67-68``).  ``register_envs`` has no
+    already-registered guard, and the gate builds more than one driver in one process, so a second call is skipped
+    once ``gym.spec`` finds the id.  The return value is ``gym.make``'s object, including the
+    ``max_episode_steps=300`` TimeLimit from the registration.  Nothing here wraps that object or changes its step.
+    The fake backend never imports it.
+    """
+    import gymnasium as gym
+    import bluesky_gym
+
+    try:
+        gym.spec("DescentEnv-v0")
+    except gym.error.NameNotFound:
+        bluesky_gym.register_envs()
+    return gym.make("DescentEnv-v0", render_mode=None)
 
 
 class Descent(GymnasiumDriver):
     device_id = "bluesky-descent"
     env_id = "DescentEnv-v0"
     native = "bluesky_gym.envs.descent_env:DescentEnv"
-    backends = {"fake": ".fake:FakeDescentEnv"}
+    #: ``fake`` is the package stand-in.  ``sim`` calls register_envs (the register calls are not at import) and
+    #: returns gym.make("DescentEnv-v0", render_mode=None), the documented headless environment.
+    backends = {"fake": ".fake:FakeDescentEnv", "sim": _build_sim_env}
     display_name = "BlueSky-Gym DescentEnv-v0 (vertical control)"
     vendor, model = "TU Delft CNS/ATM", "DescentEnv-v0"
     tags = ["air-traffic-management", "bluesky", "descent", "vertical-control", "reinforcement-learning",
@@ -41,6 +72,18 @@ class Descent(GymnasiumDriver):
     facts = [
         Fact("DescentEnv-v0 is registered with entry point bluesky_gym.envs.descent_env:DescentEnv and "
              "max_episode_steps=300", source="upstream_code", ref=f"{INIT}:6-10"),
+        Fact("register_envs is defined in the module body and the DescentEnv-v0 register call is inside that "
+             "function; importing bluesky_gym does not call register_envs", source="upstream_code",
+             ref=f"{INIT}:1-10"),
+        Fact("The documented setup calls bluesky_gym.register_envs() and then gym.make", source="vendor_doc",
+             ref=f"{README}:22-26"),
+        Fact("The training example passes render_mode=None to gym.make", source="vendor_doc",
+             ref=f"{README}:43"),
+        Fact("DescentEnv.__init__ defaults render_mode to None", source="upstream_code", ref=f"{ENV}:47"),
+        Fact("When bs.sim is None the constructor calls bs.init(mode='sim', detached=True)",
+             source="upstream_code", ref=f"{ENV}:67-68"),
+        Fact("pygame.display.set_mode runs only when render_mode is human", source="upstream_code",
+             ref=f"{ENV}:211-214"),
         Fact("DescentEnv is a gymnasium.Env subclass", source="upstream_code", ref=f"{ENV}:31"),
         Fact("The action space is a Box from -1 to 1 with shape (1,)", source="upstream_code", ref=f"{ENV}:61"),
         Fact("The observation space is a Dict of altitude, vz, target_altitude and runway_distance, each a Box "

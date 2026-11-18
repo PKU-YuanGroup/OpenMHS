@@ -6,26 +6,63 @@ A GymnasiumDriver is configuration only: the bridge derives the contract from th
 ``{seed}``.  The environment is simulated (R0): there is no hardware backend, no path to a machine and no
 operator-required limit.
 
-The upstream ``NESEnv`` needs its native C++ extension and a legally obtained ROM, and package code never imports
-the clone.  The ``fake`` backend is therefore the package's own pure Python stand-in (see fake.py).  A backend name
-that ``backends`` does not list (``sim``) would be served by ``gymnasium.make(env_id)`` (GymnasiumDriver
-.open_native), but this class is not registered with Gymnasium and that path was not run.
+The upstream ``NESEnv`` is not registered with Gymnasium: callers construct ``NESEnv(rom_path, render_mode=None)``
+(``nes_py/nes_env.py:71``).  The ``sim`` backend does that with the clone's SMB1 test ROM.  The ``fake`` backend is
+the package's own pure Python stand-in (see fake.py) and does not import the clone.  This workspace checks the fake
+backend; the sim factory runs only when that backend is opened.
 
 The ``fidelity`` attribute is the fidelity contract of the model as deployed (spec 05-fidelity FID-002).  Every
 fact cites a line of the clone at the pinned commit (8d27b099f24a57afaac7339fab7ec0f1f96a59c8).  This package is
-model-authored and unreviewed: it is checked on the fake backend only.
+model-authored and unreviewed.
 """
+
+from pathlib import Path
 
 from mhs.driver import Fact, GymnasiumDriver
 
 NES_ENV = "nes_py/nes_env.py"
 OBS_DOC = "docs/ml-observation-fast-paths.md"
+#: ``create_smb1_instance`` loads this file (nes_py/tests/test_nes_env.py:42-45, rom_file_abs_path.py:16-20).
+_ROM_REL = Path("nes_py") / "tests" / "games" / "super-mario-bros-1.nes"
+#: The pinned checkout's workspace location; an exported pinned tree may instead be mounted at ``/src``.
+_CLONE_REL = Path("robots") / "kautenja" / "nes-py"
+
+
+def _test_rom() -> str:
+    """Absolute path of the SMB1 ROM the upstream tests pass to ``NESEnv``.
+
+    ``create_smb1_instance`` calls ``NESEnv(rom_file_abs_path('super-mario-bros-1.nes'))``
+    (``nes_py/tests/test_nes_env.py:42-45``).  That helper joins the tests directory with
+    ``games/<name>`` (``nes_py/tests/rom_file_abs_path.py:16-20``).  A non-editable wheel excludes
+    ``nes_py/tests`` (``pyproject.toml:64``), so the file is read from the pinned checkout: ``/src``
+    when the run exports the commit there, otherwise ``robots/kautenja/nes-py`` beside this package.
+    """
+    workspace = Path(__file__).resolve().parents[4]
+    for clone in (Path("/src"), workspace / _CLONE_REL):
+        candidate = clone / _ROM_REL
+        if candidate.is_file():
+            return str(candidate.resolve())
+    raise FileNotFoundError(
+        f"{_ROM_REL.as_posix()} is not under /src or {_CLONE_REL.as_posix()}; the installed wheel excludes "
+        "nes_py/tests (pyproject.toml:64)")
+
+
+def make_sim_env(**_options):
+    """Build the real ``NESEnv`` the way the clone's application tests do.
+
+    ``render_mode=None`` is the constructor default (``nes_py/nes_env.py:71``).  ``render`` then returns
+    without creating an ``ImageViewer`` (``nes_py/nes_env.py:395-396``).  The import stays inside this
+    function so the fake backend does not import the clone.
+    """
+    from nes_py.nes_env import NESEnv
+
+    return NESEnv(_test_rom(), render_mode=None)
 
 
 class NESPy(GymnasiumDriver):
     device_id = "nes-py"
     native = "nes_py.nes_env:NESEnv"
-    backends = {"fake": ".fake:FakeNESEnv"}
+    backends = {"fake": ".fake:FakeNESEnv", "sim": make_sim_env}
     display_name = "nes-py NES environment"
     vendor, model = "Kautenja", "nes-py"
     tags = ["nes", "emulator", "reinforcement-learning", "simulation", "gymnasium"]
@@ -54,6 +91,16 @@ class NESPy(GymnasiumDriver):
              ref=f"{NES_ENV}:214-225"),
         Fact("get_action_meanings returns ['NOOP'] for the base class", source="upstream_code",
              ref=f"{NES_ENV}:452-454"),
+        Fact("NESEnv(rom_path, render_mode=None) is the constructor; render_mode defaults to None",
+             source="upstream_code", ref=f"{NES_ENV}:71"),
+        Fact("render returns None when render_mode is None; human mode is what creates the ImageViewer",
+             source="upstream_code", ref=f"{NES_ENV}:395-412"),
+        Fact("create_smb1_instance builds NESEnv from rom_file_abs_path('super-mario-bros-1.nes')",
+             source="upstream_code", ref="nes_py/tests/test_nes_env.py:42-45"),
+        Fact("rom_file_abs_path joins the tests directory with games/<filename>",
+             source="upstream_code", ref="nes_py/tests/rom_file_abs_path.py:16-20"),
+        Fact("The installed wheel excludes nes_py/tests, so the test ROMs are not in the installed package",
+             source="upstream_code", ref="pyproject.toml:64"),
     ]
     safe_state = ("the simulation stops advancing: no step or reset is accepted after an e-stop until "
                   "mhs.safety.reset clears the latch; the frame state is kept and stays readable")
@@ -85,8 +132,10 @@ class NESPy(GymnasiumDriver):
             "is 1000/60; no wall-clock pacing is applied (realtime_factor 0)",
             "snapshot and restore are not offered: NESEnv has dump_state/load_state (nes_env.py:214-225), but the "
             "gymnasium bridge publishes a snapshot only for get_state/set_state, which NESEnv does not have",
-            "a .nes ROM is required by the upstream constructor and is not supplied; the fake accepts an optional "
-            "ROM path and does not read it",
+            "the upstream constructor requires a .nes ROM (nes_env.py:71); the fake accepts an optional path and "
+            "does not read it, while the sim backend passes the absolute path of the clone's test ROM "
+            "super-mario-bros-1.nes (nes_py/tests/test_nes_env.py:42-45), which the installed wheel omits "
+            "(pyproject.toml:64)",
             "no physical device is modelled and nothing was validated against one",
         ],
     }

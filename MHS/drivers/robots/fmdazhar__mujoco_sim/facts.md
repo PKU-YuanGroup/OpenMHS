@@ -7,8 +7,21 @@ of the clone, here README.md) or `upstream_code` (`path/in/clone:LINE`). The sam
 | fact | source | ref |
 |---|---|---|
 | The clone is a UR5e arm and Robotiq Hand-e gripper simulator with a state-based peg-in-hole Gymnasium environment and custom Gymnasium wrappers | vendor_doc | README.md:3-4 |
-| ur5ePegInHoleGymEnv_easy-v0 is registered with entry point mujoco_sim.envs:ur5ePegInHoleGymEnv | upstream_code | mujoco_sim/__init__.py:10-12 |
+| Importing mujoco_sim registers ur5ePegInHoleGymEnv_easy-v0 with entry point mujoco_sim.envs:ur5ePegInHoleGymEnv | upstream_code | mujoco_sim/__init__.py:10-12 |
+| setup() names the package and find_packages() and declares no install_requires and no package_data | upstream_code | setup.py:3-8 |
+| The environment loads the MuJoCo model from xmls/ur5e_demos.xml beside the env module | upstream_code | mujoco_sim/envs/ur5e_pick_gym_connector.py:17-18 |
+| The constructor calls glfw.init and reads the primary monitor size for every render mode | upstream_code | mujoco_sim/envs/ur5e_pick_gym_connector.py:240-242 |
+| The env module imports SliderController and ForceFeedback while the class module loads | upstream_code | mujoco_sim/envs/ur5e_pick_gym_connector.py:11-12 |
+| ForceFeedback's module imports tkinter and matplotlib at import time | upstream_code | mujoco_sim/utils/force_feedback.py:1-5 |
+| SliderController's module imports tkinter at import time | upstream_code | mujoco_sim/utils/slider_controller.py:1 |
+| The renderer module imports imageio at module scope | upstream_code | mujoco_sim/mujoco_rendering.py:6 |
+| The wrapper module imports Keyboard and SpaceMouse at load time | upstream_code | mujoco_sim/envs/wrappers.py:6-8 |
+| SpacemouseIntervention tries SpaceMouse and on OSError constructs Keyboard | upstream_code | mujoco_sim/envs/wrappers.py:209-215 |
+| Keyboard opens a pygame display window in its constructor | upstream_code | mujoco_sim/devices/keyboard.py:21-22 |
+| SpaceMouse opens the HID device with hid.device().open | upstream_code | mujoco_sim/devices/spacemouse.py:183-184 |
+| The env module imports scipy.spatial.transform.Rotation, glfw and OpenGL at load time | upstream_code | mujoco_sim/envs/ur5e_pick_gym_connector.py:13-15 |
 | The easy variant applies XYZGripperCloseEnv, SpacemouseIntervention, CustomObsWrapper and FlattenObservation | upstream_code | mujoco_sim/__init__.py:13-42 |
+| The easy registration passes config ENV_CONFIG version 0 and UR5E_CONFIG tcp_xyz_randomize True and mocap_orient True | upstream_code | mujoco_sim/__init__.py:44-54 |
 | The easy variant ends with gymnasium's FlattenObservation wrapper | upstream_code | mujoco_sim/__init__.py:38-41 |
 | The base action space is a seven-element Box from -1.0 to 1.0 | upstream_code | mujoco_sim/envs/ur5e_pick_gym_connector.py:234-236 |
 | XYZGripperCloseEnv narrows the action space to the first three elements (x, y, z) of the base Box | upstream_code | mujoco_sim/envs/wrappers.py:134-138 |
@@ -51,5 +64,22 @@ environment.
 Safety: simulated R0 device. The e-stop is the runtime's software latch (no native stop exists); after it no
 step or reset is accepted until `mhs.safety.reset` clears the latch (a simulator needs no operator for that),
 and the last world state stays readable.
+
+Sim path (`driver.py`): `backends["sim"]` is `_build_sim_env`. `setup.py:3-8` installs the `find_packages()`
+modules and no `package_data`, so the wheel omits `mujoco_sim/envs/xmls`. `source-path.txt` is not used: the
+clone has `setup.py`. `_build_sim_env` loads `mujoco_sim/envs/ur5e_pick_gym_connector.py` from the pinned
+checkout by path, without inserting it into the import table, so `_XML_PATH` at
+`ur5e_pick_gym_connector.py:17-18` is the checkout's `xmls/ur5e_demos.xml` (the meshes are the includes at
+`ur5e1.xml:68-93`). It then calls that class with the easy registration's `config` (`mujoco_sim/__init__.py:44-54`)
+and applies `XYZGripperCloseEnv`, `SpacemouseIntervention`, `CustomObsWrapper` and `FlattenObservation` in that
+order (`mujoco_sim/__init__.py:13-42`). The fake backend is still `.fake:FakeUR5ePegInHoleEnv` and does not
+import the clone. `ur5e_pick_gym_connector.py:241-242` calls `glfw.init()` and `glfw.get_video_mode` for every
+`render_mode`, `keyboard.py:21-22` opens a pygame window when the SpaceMouse is absent (`wrappers.py:209-215`),
+and `force_feedback.py:1` plus `slider_controller.py:1` import tkinter while the env module loads
+(`ur5e_pick_gym_connector.py:11-12`). There is no constructor flag that skips those calls. `display.txt` asks
+for Xvfb, which is also what `docker/Dockerfile:36-41`, `docker/entrypoint.sh:63` and
+`docker/docker-compose.yml:26` use. `constraints.txt` pins `gymnasium==1.0.0` and `mujoco==3.2.5` from
+`requirements.txt:2-3`, and `requirements.txt` installs the modules the env import loads because `setup.py:3-8`
+declares no `install_requires`.
 
 Tags: ur5e, peg-in-hole, mujoco, manipulation, reinforcement-learning, simulation, gymnasium
