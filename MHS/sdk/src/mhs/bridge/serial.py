@@ -29,7 +29,10 @@ command on the wire.  A boolean ``closed_when`` (``true`` by default, or
 ``parse: {"kind": "bool"}`` and a ``bool`` parse needs a boolean
 ``closed_when``; any other parse must declare the closed value.  The ``bool``
 parse is strict, so an error, empty or garbage reply reads ``unknown``
-(never closed) and blocks a reset.  An interlock's ``int``, ``float`` or
+(never closed) and blocks a reset.  An interlock reply counts only when a
+nonempty configured terminator has arrived: a deadline or read limit that leaves a
+partial buffer (``DOOR?`` answering ``ON`` with no newline) is an unknown
+outcome, never closed.  An interlock's ``int``, ``float`` or
 ``regex`` parse must match the *whole* reply (``DOOR?`` answering ``1`` reads
 1; ``E1 bad`` or ``ERR 1: syntax`` reads ``unknown``, never the closed value).
 String arguments may not contain line breaks or control characters, so an
@@ -538,12 +541,16 @@ class SerialBridge(Bridge):
         return {"applied": jsonable(dict(patch))}
 
     def _transact(self, command: str, context: BridgeContext, *, expect_response: bool = True,
-                  budget_s: float | None = None, epoch: int | None = None) -> str:
+                  budget_s: float | None = None, epoch: int | None = None,
+                  require_terminator: bool = False) -> str:
         """One write (+ response) under the transaction lock.
 
         ``epoch`` is :attr:`estop_epoch` taken when the operation started: an
         e-stop since then refuses the command before it is written (checked
         when the transaction lock is taken and again under the write lock).
+        ``require_terminator`` (interlock reads) refuses a buffer the deadline
+        or the read limit cut off before the configured terminator: that partial
+        text is an unknown outcome, not a reply.
         """
         payload = (command + self._terminator).encode(self._encoding, "replace")
         budget = min(self._timeout_s, max(0.001, context.remaining_ms() / 1000.0))
@@ -611,9 +618,17 @@ class SerialBridge(Bridge):
                     f"reading the response to {command!r} failed ({type(exc).__name__}); the command was sent",
                     details={"command": command},
                 ) from exc
-        if interrupted or not buffer:
+        # An interlock reading is one terminated line. A deadline or read limit
+        # that stops before the terminator is an unknown outcome, not a state.
+        # An empty terminator cannot establish a line boundary either.
+        incomplete = bool(buffer) and (not terminator or terminator not in buffer)
+        if interrupted or not buffer or (require_terminator and incomplete):
+            if not interrupted and incomplete:
+                reason = f"unterminated response within {budget:.3g} s"
+            else:
+                reason = interrupted or f"none within {budget:.3g} s"
             raise outcome_unknown(
-                f"no response to {command!r} ({interrupted or f'none within {budget:.3g} s'}); "
+                f"no response to {command!r} ({reason}); "
                 "the command was sent, its effect is unknown",
                 details={"command": command, "timeout_s": round(budget, 6)},
             )
@@ -682,7 +697,8 @@ class SerialBridge(Bridge):
             if self._txn_lock.acquire(timeout=item["timeout_s"]):
                 try:
                     context = BridgeContext(deadline_ms=max(1, int(item["timeout_s"] * 1000)))
-                    response = self._transact(item["command"], context, budget_s=item["timeout_s"])
+                    response = self._transact(item["command"], context, budget_s=item["timeout_s"],
+                                              require_terminator=True)
                     state = _interlock_state(parse_text(response, item["parse"], whole=True),
                                              item["closed_when"])
                 except Exception:  # noqa: BLE001 - fail closed: unreadable means unknown
