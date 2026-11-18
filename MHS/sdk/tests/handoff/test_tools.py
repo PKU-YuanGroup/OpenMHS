@@ -48,6 +48,7 @@ run_wave = load("handoff_run_wave", KIT / "tools/run_wave.py") if HAS_KIT else N
 check_recon = load("handoff_check_recon", KIT / "tools/check_recon.py") if HAS_KIT else None
 fetch_clone = load("tools_fetch_clone", REPO / "tools/fetch_clone.py")
 build_changelog = load("tools_build_changelog", REPO / "tools/build_changelog.py")
+changed_packages = load("tools_changed_packages", REPO / "tools/changed_packages.py")
 export_check = load("tools_oss_export_check", REPO / "tools/oss_export_check.py")
 
 
@@ -271,10 +272,15 @@ class PrepareTests(unittest.TestCase):
         code, out, _ = run_main(prepare, ["--sync", "--dry-run", "--root", str(root.dir)])
         self.assertIn("would refresh MHS/drivers/labs/acme__widgetron/task.json", out)
         self.assertNotEqual((driver_dir / "task.json").read_bytes(), card_path.read_bytes(), "a dry run writes nothing")
+        code, out, _ = run_main(prepare, ["--sync", "--check", "--root", str(root.dir)])
+        self.assertEqual(code, 1, "a copy that is not its card fails the check")
+        self.assertIn("would refresh MHS/drivers/labs/acme__widgetron/task.json", out)
+        self.assertNotEqual((driver_dir / "task.json").read_bytes(), card_path.read_bytes(), "a check writes nothing")
         code, out, _ = run_main(prepare, ["--sync", "gh.acme/widgetron", "--root", str(root.dir)])
         self.assertEqual(code, 0, out)
         self.assertEqual((driver_dir / "task.json").read_bytes(), card_path.read_bytes())
         self.assertEqual((driver_dir / "driver.py").read_text(), "# the author's file\n")
+        self.assertEqual(run_main(prepare, ["--sync", "--check", "--root", str(root.dir)])[0], 0)
         # a package without a registry card is an error
         orphan = root.dir / "MHS/drivers/labs/nobody__here"
         orphan.mkdir(parents=True)
@@ -1197,6 +1203,61 @@ class FetchCloneTests(unittest.TestCase):
         code, out, err = run_main(fetch_clone, ["gh.acme/widgetron", "--root", str(root), "--source", str(bare)])
         self.assertEqual(code, 1)
         self.assertIn("no checkout of submodule models", err)
+
+
+class ChangedPackagesTests(unittest.TestCase):
+    """Which packages a branch changes in a way a gate can see (CI runs the gate on exactly these)."""
+
+    def setUp(self):
+        scratch = Path(tempfile.mkdtemp(prefix="changed-packages-"))
+        self.addCleanup(shutil.rmtree, scratch, True)
+        self.root = scratch / "repo"
+        files = {}
+        for name in ("alpha", "beta", "gamma"):
+            files[f"MHS/drivers/labs/acme__{name}/task.json"] = json.dumps(
+                {"package_id": f"gh.acme/{name}", "rank": 5, "wave": 2}, indent=2) + "\n"
+            files[f"MHS/drivers/labs/acme__{name}/driver.py"] = "class D: ...\n"
+        make_clone(self.root, files)
+        git("branch", "base", cwd=self.root)
+
+    def commit(self, changes: dict[str, str | None]):
+        for name, text in changes.items():
+            path = self.root / name
+            if text is None:
+                path.unlink()
+            else:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(text, encoding="utf-8")
+        git("add", "-A", cwd=self.root)
+        git("commit", "-q", "-m", "change", cwd=self.root)
+
+    def card(self, name, **fields):
+        return json.dumps({"package_id": f"gh.acme/{name}", "rank": 5, "wave": 2, **fields}, indent=2) + "\n"
+
+    def test_a_card_whose_only_change_is_its_rank_is_not_gated(self):
+        self.commit({"MHS/drivers/labs/acme__alpha/task.json": self.card("alpha", rank=9),
+                     "MHS/drivers/labs/acme__beta/task.json": self.card("beta", rank=9, wave=3),
+                     "MHS/drivers/labs/acme__delta/task.json": self.card("delta"),
+                     "MHS/drivers/labs/acme__delta/driver.py": "class D: ...\n"})
+        self.assertEqual(changed_packages.changed_packages(self.root, "base"),
+                         ["MHS/drivers/labs/acme__beta", "MHS/drivers/labs/acme__delta"],
+                         "alpha moved only in rank; beta also changed its wave; delta is new")
+
+    def test_a_rank_change_beside_another_file_is_gated(self):
+        self.commit({"MHS/drivers/labs/acme__alpha/task.json": self.card("alpha", rank=9),
+                     "MHS/drivers/labs/acme__alpha/driver.py": "class D: pass\n",
+                     "MHS/drivers/labs/acme__gamma/task.json": None})
+        self.assertEqual(changed_packages.changed_packages(self.root, "base"),
+                         ["MHS/drivers/labs/acme__alpha", "MHS/drivers/labs/acme__gamma"],
+                         "a deleted task.json is reported, so that CI can refuse it")
+
+    def test_the_command_prints_one_directory_per_line(self):
+        self.commit({"MHS/drivers/labs/acme__beta/driver.py": "class D: pass\n"})
+        code, out, _ = run_main(changed_packages, ["base", "--root", str(self.root)])
+        self.assertEqual((code, out), (0, "MHS/drivers/labs/acme__beta\n"))
+        code, _, err = run_main(changed_packages, ["no-such-branch", "--root", str(self.root)])
+        self.assertEqual(code, 2)
+        self.assertIn("cannot compare", err)
 
 
 class ChangelogTests(unittest.TestCase):

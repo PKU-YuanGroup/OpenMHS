@@ -103,7 +103,10 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           base="origin/${{ github.base_ref }}"
-          changed=$(git diff --name-only "$base"...HEAD -- MHS/drivers | awk -F/ 'NF >= 5 {print $1"/"$2"/"$3"/"$4}' | sort -u)
+          # Every task.json is its registry card (no clone needed); then the gate, on the packages whose change a gate
+          # can see: a registry rebuild moves the rank of hundreds of cards, and that alone is not gated.
+          python3 MHS/handoff/tools/prepare.py --sync --check
+          changed=$(python3 tools/changed_packages.py "$base")
           if [ -z "$changed" ]; then echo "no driver package changed"; exit 0; fi
           # A package recorded as pass must pass; a blocked or skip-proposed record must fail the gate as it says
           # (MHS/handoff/BLOCKED.md). collect.py --recorded checks both; it runs the gate itself.
