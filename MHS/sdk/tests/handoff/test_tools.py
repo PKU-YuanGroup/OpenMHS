@@ -1197,6 +1197,26 @@ class FetchCloneTests(unittest.TestCase):
         self.assertEqual(code, 0, err)
         self.assertTrue((dest / "models/scene.xml").is_file())
 
+    def test_a_submodule_of_a_submodule_the_package_names_is_fetched(self):
+        source = Path(tempfile.mkdtemp(prefix="fetch-nested-"))
+        self.addCleanup(shutil.rmtree, source, True)
+        make_clone(source / "assets", {"scene.xml": "<mujoco/>\n"})
+        make_clone(source / "sim", {"sim.py": "x = 1\n"})
+        git("-c", "protocol.file.allow=always", "submodule", "add", "-q", str(source / "assets"), "pkg/assets",
+            cwd=source / "sim")
+        git("commit", "-q", "-m", "assets", cwd=source / "sim")
+        make_clone(source / "up", {"a.txt": "hello\n"})
+        git("-c", "protocol.file.allow=always", "submodule", "add", "-q", str(source / "sim"), "sim", cwd=source / "up")
+        git("commit", "-q", "-m", "sim", cwd=source / "up")
+        git("-c", "protocol.file.allow=always", "submodule", "update", "--init", "--recursive", "-q", cwd=source / "up")
+        commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=source / "up", capture_output=True, text=True,
+                                check=True).stdout.strip()
+        root = self.package_root(commit, 'MODEL = "sim/pkg/assets/scene.xml"\n')
+        code, out, err = run_main(fetch_clone, ["gh.acme/widgetron", "--root", str(root), "--source", str(source / "up")])
+        self.assertEqual(code, 0, err)
+        self.assertIn("submodule sim/pkg/assets at", out)
+        self.assertTrue((root / "labs/acme/widgetron/sim/pkg/assets/scene.xml").is_file())
+
     def test_a_submodule_the_source_never_checked_out_is_an_error(self):
         up, commit = self.source_with_submodule()
         bare = up.parent / "plain"
