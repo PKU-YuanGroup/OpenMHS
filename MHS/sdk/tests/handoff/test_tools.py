@@ -533,6 +533,41 @@ class CollectVerdictTests(unittest.TestCase):
         row = self.package(result=self.passing(), helper="PythonObjectDriver", decision="direct-driver")
         self.assertEqual(row["notes"], [], "a direct-driver card may use Driver or its family helper")
 
+    def test_recorded_asks_whether_the_record_is_true(self):
+        cases = {"a pass that passes": ("pass", True, True), "a pass that fails": ("pass", False, False),
+                 "a blocked record that fails": ("blocked", False, True),
+                 "a blocked record that passes": ("blocked", True, False),
+                 "a skip proposal that fails": ("skip-proposed", False, True),
+                 "no RESULT.json": (None, False, False), "an unreadable RESULT.json": ("unreadable", False, False)}
+        for label, (claimed, passed, expected) in cases.items():
+            with self.subTest(label):
+                self.assertIs(collect.recorded_outcome({"result_json_status": claimed, "gate_passed": passed}), expected)
+
+    def test_the_recorded_exit_code_accepts_a_blocked_record_and_nothing_untrue(self):
+        root = Path(tempfile.mkdtemp(prefix="collect-recorded-"))
+        self.addCleanup(shutil.rmtree, root, True)
+        directory = root / "MHS/drivers/labs/acme__widgetron"
+        directory.mkdir(parents=True)
+        (directory / "task.json").write_text(json.dumps(card()))
+
+        def run(claimed, passed, *flags, warnings=()):
+            row = {"package_id": "gh.acme/widgetron", "driver_dir": "MHS/drivers/labs/acme__widgetron",
+                   "gate_passed": passed, "failed": [] if passed else ["G6"], "result_json_status": claimed,
+                   "reviewer": None, "warnings": list(warnings), "accepted_by_reviewer": [], "notes": []}
+            with mock.patch.object(collect, "summarise", lambda *a, **k: row), \
+                    contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()) as err:
+                return collect.main(["--root", str(root), str(directory), *flags]), err.getvalue()
+
+        self.assertEqual(run("blocked", False)[0], 1, "without --recorded every package must pass")
+        self.assertEqual(run("blocked", False, "--recorded")[0], 0)
+        self.assertEqual(run("pass", True, "--recorded")[0], 0)
+        code, err = run("blocked", True, "--recorded")
+        self.assertEqual(code, 1)
+        self.assertIn("RESULT.json says 'blocked', the gate passes", err)
+        self.assertEqual(run("pass", False, "--recorded")[0], 1)
+        self.assertEqual(run(None, False, "--recorded")[0], 1)
+        self.assertEqual(run("blocked", False, "--recorded", "--strict", warnings=["RESULT_SCHEMA: x"])[0], 1)
+
 
 class CollectResidueTests(unittest.TestCase):
     def setUp(self):
