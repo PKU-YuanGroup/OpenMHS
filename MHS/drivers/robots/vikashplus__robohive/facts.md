@@ -7,6 +7,7 @@ generated from the driver, not from this page.
 
 | fact | source | ref |
 |---|---|---|
+| Importing robohive.envs.arms runs register(id='FrankaReachFixed-v0', entry_point='robohive.envs.arms.reach_base_v0:ReachBaseV0') at module scope | upstream_code | robohive/envs/arms/__init__.py:21-23 |
 | FrankaReachFixed-v0 is registered with entry point robohive.envs.arms.reach_base_v0:ReachBaseV0 and max_episode_steps=50 | upstream_code | robohive/envs/arms/__init__.py:21-24 |
 | ReachBaseV0 declares the observation keys qp_robot, qv_robot and reach_err | upstream_code | robohive/envs/arms/reach_base_v0.py:17-19 |
 | The observation is the full qpos and qvel as qp_robot and qv_robot plus reach_err, the target site position minus the robot site position | upstream_code | robohive/envs/arms/reach_base_v0.py:74-81 |

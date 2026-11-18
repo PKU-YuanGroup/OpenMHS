@@ -7,10 +7,13 @@ the action is a ``Box`` over the normalized joint commands (``{"values": [...]}`
 ``{seed, options}`` and ``cap.world.seed.v1`` with ``{seed}``.  The device is simulated (R0): there is no hardware
 backend, no e-stop path to a machine and no operator-required limit.
 
-The gate does not install robohive or MuJoCo and package code never imports the clone, so the ``fake`` backend is the
-package's own pure Python kinematic stand-in for the registered environment (see fake.py).  ``backends`` names only
-that fake; the upstream simulator path (a backend name the class does not list) would need robohive, mujoco and the
-scene assets on the machine and was not run here.
+The ``fake`` backend is the package's own pure Python kinematic stand-in for the registered environment (see fake.py).
+``backends`` names only that fake.  A backend name the class does not list (``sim``) is served by
+``gymnasium.make("FrankaReachFixed-v0")`` (GymnasiumDriver.open_native) after the bridge imports ``env_module``.
+Importing ``robohive.envs.arms`` runs the module-level ``register(id='FrankaReachFixed-v0', ...)``
+(robohive/envs/arms/__init__.py:21-31).  Importing any ``robohive`` submodule first runs ``robohive/__init__.py``,
+which imports that same module again (robohive/__init__.py:41).  That path needs the upstream package, MuJoCo and the
+scene assets and was not run here.
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002):
 engine, level, determinism, timestep, clock, reset and the gaps.  Every rule and number cites a line of the clone at
@@ -28,6 +31,8 @@ ARMS_INIT = "robohive/envs/arms/__init__.py"
 class FrankaReachFixed(GymnasiumDriver):
     device_id = "robohive-franka-reach"
     env_id = "FrankaReachFixed-v0"
+    #: Importing this module runs register(id='FrankaReachFixed-v0', ...) at module scope (arms/__init__.py:21).
+    env_module = "robohive.envs.arms"
     native = "robohive.envs.arms.reach_base_v0:ReachBaseV0"
     backends = {"fake": ".fake:FakeReachBaseV0"}
     display_name = "RoboHive FrankaReachFixed-v0 (MuJoCo manipulation environment)"
@@ -35,6 +40,9 @@ class FrankaReachFixed(GymnasiumDriver):
     tags = ["robohive", "franka", "reach", "manipulation", "reinforcement-learning", "mujoco", "simulation",
             "gymnasium"]
     facts = [
+        Fact("Importing robohive.envs.arms runs register(id='FrankaReachFixed-v0', "
+             "entry_point='robohive.envs.arms.reach_base_v0:ReachBaseV0') at module scope",
+             source="upstream_code", ref=f"{ARMS_INIT}:21-23"),
         Fact("FrankaReachFixed-v0 is registered with entry point robohive.envs.arms.reach_base_v0:ReachBaseV0 and "
              "max_episode_steps=50", source="upstream_code", ref=f"{ARMS_INIT}:21-24"),
         Fact("ReachBaseV0 declares the observation keys qp_robot, qv_robot and reach_err", source="upstream_code",
