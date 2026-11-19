@@ -113,7 +113,7 @@ signs `reviewed_by`. The guide for authors is
 [`MHS/sdk/docs/driver-authoring.md`](MHS/sdk/docs/driver-authoring.md); the process for running a model over the registry's task
 cards is [`MHS/handoff/README.md`](MHS/handoff/README.md). The gate reads the upstream clone of the package it checks; the
 corpus itself is not part of this repository, and `python3 tools/fetch_clone.py <driver dir>` fetches just the one repository at
-its pinned commit.
+its pinned commit, with the git submodules the package names.
 
 ## Tests
 

@@ -18,9 +18,10 @@ is built; one method has exactly one role.
   :class:`~mhs.driver.Field` in ``input``).
 * ``@estop`` -- the native emergency stop (``def stop(self)`` or
   ``def stop(self, reason)``); the runtime latches first and calls it after.
-* ``@interlock(id, blocks=[...])`` -- returns ``True`` when the interlock is
-  closed (safe), ``False`` when open; anything else (or an exception) is
-  ``unknown``, which blocks like open.
+* ``@interlock(id, blocks=[...])`` -- returns boolean ``True`` when the
+  interlock is closed (safe), boolean ``False`` when open; anything else
+  (also the strings ``"closed"``, ``"open"`` and ``"unknown"``) or an
+  exception is ``unknown``, which blocks like open.
 * ``@reset`` -- optional native recovery run by an accepted
   ``mhs.safety.reset`` (for example clearing a controller's error latch).
 

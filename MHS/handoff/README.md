@@ -4,7 +4,7 @@
   sources, evidence).
 - [PLAYBOOK.md](PLAYBOOK.md): what a registry card holds, the package states and the blocked codes.
 - [BLOCKED.md](BLOCKED.md): why each blocked record is blocked and what would change it.
-- `tools/`: `collect.py` re-runs the gate over finished packages and summarises them (`--strict` in CI),
+- `tools/`: `collect.py` re-runs the gate over finished packages and summarises them (`--recorded` in CI),
   `dispatch.py` lists cards by state, `prepare.py` copies a card into a package directory and keeps `task.json` in
   step with the registry, `show_refs.py` prints the source lines a package cites, `facts_limits.py` checks sourced
   limits.

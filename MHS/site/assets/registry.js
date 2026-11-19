@@ -101,7 +101,8 @@
       filtered.sort(function (a, b) { return String(a.record.title).localeCompare(String(b.record.title)); });
     } else if (state.sort === "tier") {
       var order = { A: 0, B: 1, C: 2, D: 3, X: 4 };
-      filtered.sort(function (a, b) { return (order[a.record.tier] || 9) - (order[b.record.tier] || 9) || String(a.record.title).localeCompare(String(b.record.title)); });
+      var rank = function (tier) { return Object.prototype.hasOwnProperty.call(order, tier) ? order[tier] : 9; };  // A is 0, so no "|| 9"
+      filtered.sort(function (a, b) { return rank(a.record.tier) - rank(b.record.tier) || String(a.record.title).localeCompare(String(b.record.title)); });
     } else if (state.sort === "ring") {
       filtered.sort(function (a, b) { return (a.record.ring || 9) - (b.record.ring || 9) || String(a.record.title).localeCompare(String(b.record.title)); });
     } else {

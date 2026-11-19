@@ -15,10 +15,12 @@ method.  Every probe:
   but non-existent id for negative probes; and
 * never changes device state, revision or evidence.
 
-A probe reaches dispatch when the endpoint returns a result or a *method-specific
-semantic* error.  A generic pre-dispatch rejection (deadline, JSON-RPC envelope)
-is explicitly **not** evidence of presence, and ``METHOD_NOT_FOUND`` always means
-the method is missing.
+A probe reaches dispatch when the endpoint returns a result or one of that
+probe's recognized method-specific semantic errors (``expected_codes``).  A
+generic pre-dispatch rejection (deadline, JSON-RPC envelope), a transport
+failure (``MHS.TRANSPORT.*``, a connection or OS error) and any other exception
+are **not** evidence of presence.  ``METHOD_NOT_FOUND`` always means the method
+is missing.
 """
 
 from __future__ import annotations
@@ -27,6 +29,7 @@ from dataclasses import dataclass
 from typing import Any, Mapping
 
 from mhs import canonical
+from mhs.errors import normalize_code
 
 __all__ = [
     "GENERIC_PRE_DISPATCH_CODES",
@@ -263,6 +266,28 @@ def _close_probe_session(client: Any, result: Any) -> None:
         pass
 
 
+def _response_code(exc: BaseException) -> str | None:
+    """Normative ``MHS.*`` code carried by ``exc``, or None if it has none."""
+
+    code = getattr(exc, "code", None)
+    if not isinstance(code, str) or not code:
+        return None
+    return normalize_code(code)
+
+
+def _semantic_unverified_detail(exc: BaseException, code: str | None, probe: PresenceProbe) -> str:
+    """Why a semantic-probe exception does not prove the method exists."""
+
+    if isinstance(exc, OSError) or (code is not None and code.startswith("MHS.TRANSPORT.")):
+        return "transport failure is not evidence of presence"
+    if code is None:
+        return "unstructured exception is not evidence of presence"
+    return (
+        f"response {code!r} is not a recognized method-specific rejection "
+        f"(expected one of {list(probe.expected_codes)})"
+    )
+
+
 def probe_method(ctx: Any, method: str) -> ProbeResult:
     """Run one presence probe and classify the response."""
 
@@ -276,7 +301,7 @@ def probe_method(ctx: Any, method: str) -> ProbeResult:
     try:
         result = ctx.client.request(method, params)
     except BaseException as exc:  # noqa: BLE001 - a response is a verdict
-        code = getattr(exc, "code", None)
+        code = _response_code(exc)
         if code == "MHS.PROTOCOL.METHOD_NOT_FOUND":
             return ProbeResult(method, "missing", code=code, detail="METHOD_NOT_FOUND")
         if code in GENERIC_PRE_DISPATCH_CODES:
@@ -287,12 +312,13 @@ def probe_method(ctx: Any, method: str) -> ProbeResult:
                 detail="generic pre-dispatch rejection is not evidence of presence",
             )
         if probe.kind == "semantic":
-            # Any other structured rejection is a method-specific response: the
-            # handler was dispatched.  Record unexpected codes for the reviewer.
-            detail = "dispatch-level semantic response"
-            if probe.expected_codes and code not in probe.expected_codes:
-                detail = f"dispatch-level response {code!r} (expected one of {list(probe.expected_codes)})"
-            return ProbeResult(method, "present", code=code, detail=detail)
+            # CON-018: only a recognized method-specific rejection proves the
+            # handler ran.  Transport failures and other exceptions do not.
+            if code is not None and code in probe.expected_codes:
+                return ProbeResult(method, "present", code=code, detail="dispatch-level semantic response")
+            return ProbeResult(
+                method, "unverified", code=code, detail=_semantic_unverified_detail(exc, code, probe),
+            )
         return ProbeResult(method, "unverified", code=code, detail="valid request was rejected")
     if method == "mhs.session.open":
         _close_probe_session(ctx.client, result)

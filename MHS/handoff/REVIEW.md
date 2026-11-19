@@ -30,7 +30,7 @@ what changes when a project has another model review instead.
    `UNVERIFIABLE_CITATION` lines are your reading list for steps 2 and 3: open every cited line (`show_refs.py`) and every
    cited PDF page. Read the `note:` lines too: `DECISION_DEVIATION` means the card's shape was wrong, and the notes of
    `RESULT.json` must say why. When you have signed `reviewed_by` (section 3) those two kinds print as `accepted by <you>`
-   and `collect.py <dir> --strict`, which CI runs, passes.
+   and `collect.py <dir> --strict` passes (CI runs `collect.py <dir> --recorded`, where these warnings do not fail).
 2. **Read every `Limit` (and a `GymnasiumDriver`'s `action_space_ref`) against the line it cites.** Gate G4 checks only that the line exists; when the line does not show
    the number it merely warns, so an invented bound cited to a real line passes. `python3 MHS/handoff/tools/show_refs.py <dir>`
    prints every citation of `driver.py` next to the cited lines of the clone at the pinned commit. Confirm the number, the

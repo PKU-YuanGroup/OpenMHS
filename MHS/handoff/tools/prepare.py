@@ -5,10 +5,12 @@
     python3 MHS/handoff/tools/prepare.py gh.owner/repo --dry-run     # print the plan, write nothing
     python3 MHS/handoff/tools/prepare.py gh.owner/repo --sandbox     # also a private git clone + venv for running upstream code
     python3 MHS/handoff/tools/prepare.py --sync [gh.owner/repo]      # after build_registry.py: refresh task.json copies
+    python3 MHS/handoff/tools/prepare.py --sync --check              # CI: exit 1 when a copy is not its card
 
 ``--sync``: ``task.json`` of a package is a byte copy of its registry card (gate G1 CARD_EDITED), so every registry
 rebuild that moves a card (a new ``package_status``) leaves the packages' copies behind. ``--sync`` copies the rebuilt
-card over ``task.json`` of every existing package (or the one named) and touches nothing else; ``--dry-run`` lists them.
+card over ``task.json`` of every existing package (or the one named) and touches nothing else; ``--dry-run`` lists them,
+and ``--check`` lists them and exits 1 when there is one.
 
 What it does (and nothing else):
 
@@ -70,8 +72,12 @@ def plan_for(root: Path, card: dict, sandbox: bool) -> dict:
     return plan
 
 
-def sync_cards(root: Path, package_id: str | None, dry_run: bool) -> int:
-    """Copy the registry card over ``task.json`` of every existing driver package (or of ``package_id``)."""
+def sync_cards(root: Path, package_id: str | None, dry_run: bool, check: bool = False) -> int:
+    """Copy the registry card over ``task.json`` of every existing driver package (or of ``package_id``).
+
+    ``check`` writes nothing and makes a copy that differs from its card an error (exit code 1): CI's proof that
+    every ``task.json`` is its registry card, which needs no upstream clone."""
+    dry_run = dry_run or check
     slug = package_id[3:].replace("/", "__") if package_id else None
     changed: list[str] = []
     missing: list[str] = []
@@ -92,7 +98,7 @@ def sync_cards(root: Path, package_id: str | None, dry_run: bool) -> int:
     for name in missing:
         print(f"error: {name} has no registry card", file=sys.stderr)
     print(f"{len(changed)} task.json {'would be refreshed' if dry_run else 'refreshed'}; {len(missing)} package(s) without a card")
-    return 1 if missing else 0
+    return 1 if missing or (check and changed) else 0
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -102,13 +108,17 @@ def main(argv: list[str] | None = None) -> int:
                         help="refresh task.json of existing packages from the rebuilt registry cards; nothing else")
     parser.add_argument("--root", type=Path, default=DEFAULT_ROOT, help="repository root (default: found from this file)")
     parser.add_argument("--dry-run", action="store_true", help="print the plan and write nothing")
+    parser.add_argument("--check", action="store_true",
+                        help="with --sync: write nothing, exit 1 when a task.json is not its registry card")
     parser.add_argument("--sandbox", action="store_true", help="also create work/sandbox/<id>/{src,venv}")
     parser.add_argument("--force", action="store_true", help="prepare a card that dispatch.py would not give out")
     args = parser.parse_args(argv)
 
     root = args.root.resolve()
+    if args.check and not args.sync:
+        parser.error("--check works with --sync")
     if args.sync:
-        return sync_cards(root, args.package_id, args.dry_run)
+        return sync_cards(root, args.package_id, args.dry_run, args.check)
     if not args.package_id:
         parser.error("a package id is required (or --sync)")
     cards = dispatch.load_cards(root)

@@ -923,6 +923,15 @@ class GymnasiumBridge(Bridge):
                 "MHS.DEVICE.NOT_READY", "gymnasium bridge needs env_id, env_spec or a pre-built env",
                 {"retryable": False},
             )
+        registering = self._env_spec.get("env_module")
+        if registering:
+            try:   # the driver's env_module registers env_id when it is imported (gymnasium.register at import time)
+                importlib.import_module(str(registering))
+            except Exception as exc:  # noqa: BLE001
+                raise make_mhs_error(
+                    "MHS.DEVICE.NOT_READY", f"import of env_module {str(registering)!r} failed ({type(exc).__name__})",
+                    {"retryable": False},
+                ) from exc
         kwargs = dict(self._env_spec.get("kwargs") or {})
         if self._render_mode is not None:
             kwargs.setdefault("render_mode", self._render_mode)

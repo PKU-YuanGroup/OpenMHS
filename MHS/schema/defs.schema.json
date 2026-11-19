@@ -110,7 +110,7 @@
       "enum": ["accepted", "running", "completed", "failed", "rejected", "cancelled", "unknown"]
     },
     "revision": { "type": "integer", "minimum": 0, "description": "Monotone uint64 revision; JSON numbers may lose precision above 2^53, so endpoints above that MUST emit strings. Validators accept both." },
-    "revisionValue": { "type": ["integer", "string"], "pattern": "^[0-9]+$" },
+    "revisionValue": { "type": ["integer", "string"], "minimum": 0, "pattern": "^[0-9]+$" },
     "specVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$", "description": "OpenMHS specification line, e.g. 0.9 (distinct from the wire mhsVersion)." },
     "verb": { "type": "string", "enum": ["read", "write", "invoke"], "description": "Binding verb. read never changes device state or the revision; write sets named parameters; invoke performs an action. The capability class fixes the verb; a binding that declares one must repeat the class verb." },
     "limitPath": {

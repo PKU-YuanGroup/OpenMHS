@@ -25,6 +25,7 @@ import builtins
 import errno
 import importlib.util
 import io
+import ipaddress
 import json
 import os
 import socket
@@ -46,7 +47,12 @@ def _loopback(host: Any) -> bool:
     if not isinstance(host, str):
         return False
     host = host.strip("[]").lower()
-    return host in _LOOPBACK_NAMES or host.startswith("127.") or host in ("::1", "0:0:0:0:0:0:0:1")
+    if host in _LOOPBACK_NAMES:
+        return True
+    try:  # a numeric address only: "127.example.org" is a host name that resolves anywhere
+        return ipaddress.ip_address(host.split("%", 1)[0]).is_loopback
+    except ValueError:
+        return False
 
 
 def _check(address: Any) -> None:
