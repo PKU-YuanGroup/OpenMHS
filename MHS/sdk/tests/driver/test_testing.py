@@ -290,6 +290,18 @@ class CheckDriverTests(unittest.TestCase):
                               capture_output=True, text=True, timeout=120, env=env)
         self.assertEqual(done.returncode, 0, done.stderr)
 
+    def test_only_a_numeric_loopback_address_or_a_loopback_name_passes_the_guard(self) -> None:
+        from mhs.driver import _repotests
+        for host in ("127.0.0.1", "127.8.9.10", "::1", "[::1]", "0:0:0:0:0:0:0:1", "localhost", "LOCALHOST", b"127.0.0.1"):
+            with self.subTest(host=host):
+                self.assertTrue(_repotests._loopback(host))
+        # "127.<anything>" used to pass as a prefix: a host name like this resolves wherever its owner points it
+        for host in ("127.attacker.example", "127.0.0.1.example.org", "127.", "192.0.2.1", "example.com", "", None, 7):
+            with self.subTest(host=host):
+                self.assertFalse(_repotests._loopback(host))
+        with self.assertRaises(OSError):
+            _repotests._check(("127.attacker.example", 443))
+
     @unittest.skipIf(os.name == "nt", "device files are a POSIX notion")
     def test_the_package_test_cannot_open_device_files(self) -> None:
         directory = gs.temp_root(self)

@@ -4,7 +4,8 @@
     python3 MHS/handoff/tools/collect.py                               # every package under MHS/drivers/
     python3 MHS/handoff/tools/collect.py MHS/drivers/labs/a__b ...     # chosen packages
     python3 MHS/handoff/tools/collect.py --out summary.json            # also write the summary as JSON
-    python3 MHS/handoff/tools/collect.py MHS/drivers/labs/a__b --strict    # CI: a warning fails too
+    python3 MHS/handoff/tools/collect.py MHS/drivers/labs/a__b --strict    # a warning fails too
+    python3 MHS/handoff/tools/collect.py MHS/drivers/labs/a__b --recorded  # CI: a blocked record is in order
 
 Never trust a package's own RESULT.json: this tool runs ``python3 -m mhs.driver check <dir> --backend fake --json
 --no-report`` itself and compares the outcome with what RESULT.json claims.  It prints these as ``warning:`` lines
@@ -42,6 +43,10 @@ A package whose ``driver.lock.json`` carries ``reviewed_by`` has its last two ki
 instead of warnings: signing is the act of reading them (MHS/handoff/REVIEW.md).
 
 Exit code: 0 when every package passes the gate (and, with --strict, has no warnings), 1 otherwise, 2 on a usage error.
+With ``--recorded`` the question is whether each record holds, not whether each package passes: a ``pass`` must pass
+the gate; a ``blocked`` or ``skip-proposed`` record is in order whether its gate fails or passes (the repository keeps
+such records, see ``BLOCKED.md``; a review can block a package the gate accepts, which stays the ``RESULT_UNTRUSTED``
+warning above); a package without a readable RESULT.json is never in order.
 """
 
 from __future__ import annotations
@@ -367,12 +372,24 @@ def summarise(root: Path, directory: Path, companions_root: Path | None = None) 
     }
 
 
+def recorded_outcome(row: dict) -> bool:
+    """Whether the record of a summarised package holds (``--recorded``): a pass must pass the gate; a blocked or
+    skip-proposed record does not claim a pass, so it is in order whatever its gate says."""
+    claimed = row["result_json_status"]
+    if claimed == "pass":
+        return bool(row["gate_passed"])
+    return claimed in ("blocked", "skip-proposed")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("directories", nargs="*", type=Path, help="driver package directories (default: all under MHS/drivers)")
     parser.add_argument("--root", type=Path, default=DEFAULT_ROOT, help="repository root (default: found from this file)")
     parser.add_argument("--out", type=Path, help="write the summary as JSON here")
-    parser.add_argument("--strict", action="store_true", help="exit 1 on warnings too (CI uses it)")
+    parser.add_argument("--strict", action="store_true", help="exit 1 on warnings too")
+    parser.add_argument("--recorded", action="store_true",
+                        help="exit 0 when every record holds: a pass passes the gate, and a blocked or skip-proposed "
+                             "record is in order as it is (CI uses it for the packages a pull request changes)")
     parser.add_argument("--companions-root", type=Path,
                         help="the directory of fetched companion clones and their LOCK.json, passed to the gate "
                              "(default: work/companions under the root)")
@@ -404,7 +421,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.out:
         args.out.write_text(json.dumps({"summary": {"packages": len(rows), "passed": passed}, "packages": rows}, indent=1) + "\n",
                             encoding="utf-8")
-    bad = passed != len(rows) or (args.strict and any(row["warnings"] for row in rows))
+    if args.recorded:
+        untrue = [row for row in rows if not recorded_outcome(row)]
+        for row in untrue:
+            print(f"error: {row['driver_dir']}: RESULT.json says {row['result_json_status']!r}, the gate "
+                  f"{'passes' if row['gate_passed'] else 'fails'}", file=sys.stderr)
+        bad = bool(untrue) or (args.strict and any(row["warnings"] for row in rows))
+    else:
+        bad = passed != len(rows) or (args.strict and any(row["warnings"] for row in rows))
     return 1 if bad else 0
 
 

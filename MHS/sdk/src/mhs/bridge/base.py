@@ -902,8 +902,11 @@ class _Rule:
         if self.unsupported:
             return _MISSING
         if self.const is not _MISSING:
-            return self.const
-        if self.source is None:
+            # An injected constant is still the value passed to the native call.
+            # It takes the same finite, enum, unit, type and clamp path as a
+            # value read from a field (ADPT-024, CORE-048, SAFE-015).
+            value = self.const
+        elif self.source is None:
             value = self.default
         else:
             try:
@@ -947,6 +950,9 @@ class _Rule:
             value = _coerce_type(value, self.type_name, self.target)
         if self.limits is not None:
             value = check_clamp(self.target, value, self.limits)
+        if self.direction == "input" and _non_finite(value):
+            # Conversions may overflow even when the original value was finite.
+            raise MappingError(f"value for {self.target!r} is not a finite number")
         return value
 
 

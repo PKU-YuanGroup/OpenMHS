@@ -58,10 +58,22 @@ def summary(text: str) -> tuple[str, str]:
     return title, body
 
 
+def rebase_links(body: str, directory: Path) -> str:
+    """A fragment links its neighbours by file name; in CHANGELOG.md, at the repository root, such a link needs the
+    fragment directory in front (only for a target that exists there)."""
+    def fix(match: re.Match) -> str:
+        target = match.group(1)
+        if "/" not in target and (directory / target.split("#", 1)[0]).is_file():
+            return f"](MHS/changes/{target})"
+        return match.group(0)
+    return re.sub(r"\]\(([^()\s]+)\)", fix, body)
+
+
 def block(root: Path) -> str:
     out = [BEGIN, ""]
     for path in sorted((root / "MHS" / "changes").glob("*.md"), key=fragment_key):
         title, body = summary(path.read_text(encoding="utf-8"))
+        body = rebase_links(body, path.parent)
         out += [f"### {title or path.stem}", "", f"[`MHS/changes/{path.name}`](MHS/changes/{path.name})" + (f": {body}" if body else ""), ""]
     out.append(END)
     return "\n".join(out)
