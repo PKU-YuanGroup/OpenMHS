@@ -9,8 +9,12 @@ and no operator-required limit.
 
 The gate environment does not have gymnasium or pygame installed, and package code never imports the clone, so the
 ``fake`` backend is the package's own pure Python simulation (fake.py).  A backend name that ``backends`` does not
-list (``sim``) is served by ``gymnasium.make(env_id)`` (GymnasiumDriver.open_native); that path needs the upstream
-environment and was not run here; the fidelity gaps and RESULT.json notes say so.
+list (``sim``) is served by ``gymnasium.make(env_id)`` (GymnasiumDriver.open_native) after the bridge imports
+``env_module``.  Importing ``planning_multi_robot_gym`` runs the module-level ``register`` call
+(``planning_multi_robot_gym/__init__.py:5-8``); the upstream usage example imports the package before ``make``
+(``README.md:24-27``).  The registration passes no kwargs, so the constructor defaults apply
+(``planning_multi_robot_env.py:26-41``), including ``render_mode`` None.  That path needs the upstream environment
+and was not run here; the fidelity gaps and RESULT.json notes say so.
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002).
 Every Fact cites a line of the clone at the pinned commit dbb4eb5ab82e4143d1d567095eacae7bdb390b0b.  This package is
@@ -26,6 +30,9 @@ REGISTRATION = "planning_multi_robot_gym/__init__.py"
 class PlanningMultiRobotGym(GymnasiumDriver):
     device_id = "planning-multi-robot"
     env_id = "PlanningMultiRobot-v0"
+    #: Importing the package runs register(...) at planning_multi_robot_gym/__init__.py:5-8.  The upstream usage
+    #: example imports it before make (README.md:24-27).
+    env_module = "planning_multi_robot_gym"
     native = "planning_multi_robot_gym:PlanningMultiRobotEnv"
     backends = {"fake": ".fake:FakePlanningMultiRobotEnv"}
     display_name = "Planning Multi-Robot Gym"
@@ -69,6 +76,8 @@ class PlanningMultiRobotGym(GymnasiumDriver):
              "dt and tau", source="upstream_code", ref=f"{ENV}:115-124"),
         Fact("The environment is registered as PlanningMultiRobot-v0 with entry point "
              "planning_multi_robot_gym:PlanningMultiRobotEnv", source="upstream_code", ref=f"{REGISTRATION}:5-8"),
+        Fact("Importing planning_multi_robot_gym runs the module-level register call that registers "
+             "PlanningMultiRobot-v0", source="upstream_code", ref=f"{REGISTRATION}:5"),
         Fact("The environment metadata declares the render modes rgb_array and human with render_fps 30",
              source="upstream_code", ref=f"{ENV}:24"),
     ]

@@ -121,6 +121,9 @@ Outputs:
 - The environment exposes get_state and set_state for pybullet_state and control_index (upstream_code: causal_world/envs/causalworld.py:492-521)
 - close saves an attached data recorder and closes the robot (upstream_code: causal_world/envs/causalworld.py:401-410)
 - The reaching task's default goals are [0, 0, 0.10], [0, 0, 0.13] and [0, 0, 0.16] (upstream_code: causal_world/task_generators/reaching.py:10-12)
+- When task and max_episode_length are both None, the constructor calls task.get_default_max_episode_length on None (upstream_code: causal_world/envs/causalworld.py:161-169)
+- generate_task defaults to the reaching generator (upstream_code: causal_world/task_generators/task.py:15-30)
+- The reaching test builds CausalWorld with that task and enable_visualization=False (upstream_code: tests/causal_world/task_generators/test_reaching.py:10-12)
 
 Tags: causalworld, trifinger, robotic-manipulation, pybullet, reinforcement-learning, simulation, gym.
 

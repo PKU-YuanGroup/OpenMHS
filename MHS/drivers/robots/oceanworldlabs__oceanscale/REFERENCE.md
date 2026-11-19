@@ -117,6 +117,10 @@ Outputs:
 - OceanScale is an alpha GPU-native underwater-robotics simulator built on Newton and Warp (vendor_doc: README.md:7-8)
 - An NVIDIA GPU with CUDA 12.8+ is required and Linux x86_64 is the supported platform (vendor_doc: README.md:14-20)
 - The install pulls CUDA-enabled wheels of warp-lang, newton and torch (upstream_code: pyproject.toml:27-30)
+- default_warp_device returns cuda only when Warp reports a CUDA device; otherwise it aliases the names cuda and cuda:0 to the cpu device and returns cpu (upstream_code: oceanscale/devices.py:8-43)
+- resolve_warp_device with no requested device returns default_warp_device (upstream_code: oceanscale/devices.py:59-60)
+- ROVEnv passes its device argument through resolve_warp_device (upstream_code: oceanscale/rov_env.py:108)
+- The bluerov2-hover demo constructs one ROVEnv world with n_envs=1 (upstream_code: oceanscale/cli.py:706)
 
 Tags: oceanworldlabs, oceanscale, underwater-robotics, rov, station-keeping, reinforcement-learning, simulation, gymnasium.
 

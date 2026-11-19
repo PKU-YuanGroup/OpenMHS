@@ -6,6 +6,7 @@ written into `driver.py` (`facts = [...]`); the reference file is generated from
 | fact | source | ref |
 |---|---|---|
 | OctoMuscleCrawl-v0 registers the environment gym_softrobot.envs.octopus:OctoMuscleCrawlEnv | upstream_code | gym_softrobot/__init__.py:27-30 |
+| Importing gym_softrobot runs that module-level register call; the crawling example imports the package before gym.make('OctoMuscleCrawl-v0') | upstream_code | examples/octopus_crawling/replay_policy.py:18 |
 | The default configuration has 8 arms | upstream_code | gym_softrobot/envs/octopus/crawling_simulation/config.py:23 |
 | OctopusMuscleConfig sets n_channels to 9 | upstream_code | gym_softrobot/envs/octopus/crawling_simulation/config.py:163-164 |
 | The action space is a Box from -1.0 to 1.0 with shape (n_arms, n_channels) | upstream_code | gym_softrobot/envs/octopus/muscle_crawl_env.py:52-57 |
@@ -27,6 +28,11 @@ written into `driver.py` (`facts = [...]`); the reference file is generated from
 | Gravity acts in the negative y direction with -9.80665 m/s^2 | upstream_code | gym_softrobot/envs/octopus/crawling_simulation/config.py:53 |
 | Rod-rod contact is disabled by default | upstream_code | gym_softrobot/envs/octopus/crawling_simulation/config.py:87 |
 | The environment supports an rgb_array render mode | upstream_code | gym_softrobot/envs/octopus/muscle_crawl_env.py:33 |
+
+`env_module` is `gym_softrobot`. Importing that module runs `register(...)` at `gym_softrobot/__init__.py:1` and
+`:27-30`, which is what puts `OctoMuscleCrawl-v0` in the gymnasium registry. The registration passes no `kwargs`, so
+the sim backend calls `gymnasium.make("OctoMuscleCrawl-v0")` with the constructor defaults (`muscle_crawl_env.py:35-46`).
+The `fake` backend is still the package factory `.fake:FakeOctoMuscleCrawlEnv` and does not import `env_module`.
 
 Limits: the driver declares none. The action bound comes from the environment's `Box(-1, 1, shape=(8, 9))` and is
 derived by the Gymnasium bridge; `ticks` is bounded by the bridge's `max_ticks` (10000). The device is simulated (R0),

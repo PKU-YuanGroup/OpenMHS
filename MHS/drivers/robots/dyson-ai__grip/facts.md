@@ -20,6 +20,9 @@ file is generated from the driver, not from this page.
 | reset restores the world state, resets the panda and returns obs() | upstream_code | grip/environments/template_env.py:148-155 |
 | step applies joint_position_cmd with set_angles and gripper_cmd with control_fingers or apply_gripper_delta_action, advances sim_steps world steps and returns (obs, reward, done, info) | upstream_code | grip/environments/template_env.py:160-185 |
 | obs returns each entity's state and, unless camera_mode is none, each camera's rgb, depth, seg and pose | upstream_code | grip/environments/template_env.py:190-204 |
+| The RGBD camera defaults to a 512x512 image | upstream_code | grip/sensors/camera.py:18-19 |
+| RGBDCamera.obs returns rgb, depth and seg arrays from getCameraImage with the hardware-OpenGL renderer | upstream_code | grip/sensors/camera.py:153-218 |
+| step calls obs after every sim_steps physics steps, so each native step returns the camera arrays | upstream_code | grip/environments/template_env.py:176-179 |
 | sample returns seven joint-position values and one gripper value drawn with np.random.randn | upstream_code | grip/environments/template_env.py:206-210 |
 | PickAndPlaceEnvironment adds a fixed tray and a free duck object loaded from pybullet_data URDFs | upstream_code | grip/environments/pick_and_place_env.py:38-72 |
 | The panda arm controls panda_joint1 through panda_joint7 and defaults gripper_max_force to 12 | upstream_code | grip/robot/panda_robot.py:57-61 |
@@ -39,6 +42,14 @@ distance; line 58 contains stale phase4 angle text. `panda_robot.py:36-40` falls
 to default Panda. The sim factory selects default explicitly and uses DIRECT rendering with non-realtime stepping,
 as `template_env.py:59-61` configures. Numeric gripper open/close strings remain outside this published scope because
 `panda_gripper.py:84-88` performs additional physics steps for them. No numeric safety bound was invented.
+
+The sim observation's camera arrays are the upstream 512x512 rgb, depth and seg arrays (`camera.py:18-19,153-218`;
+`template_env.py:176-179,190-204`). The JSON projection carries each large camera array as a lossless base64
+envelope with its dtype, shape and raw bytes, so the pixel values are unchanged but the receipt is not a
+1,310,720-number JSON list. The `cap.world.step.v1` class bound remains 5000 ms
+(`MHS/spec/capabilities.json:422`). The cached observation is updated after each completed tick, so an interruption
+keeps the last completed observation readable. The fake still omits cameras; no physics, rendering or reward value
+is changed.
 
 A software safe-state action fences new calls and fails while a native call is active. It only acknowledges idle once
 that call returns; safety reset cannot clear the fence while active. This is not a physical native emergency stop.

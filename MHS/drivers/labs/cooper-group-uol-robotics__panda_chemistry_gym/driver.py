@@ -6,11 +6,14 @@ whole contract from the environment's spaces.  ``cap.world.step.v1`` takes ``{ti
 ``cap.world.reset.v1`` takes ``{seed, options}`` and ``cap.world.seed.v1`` ``{seed}``.  The device is simulated
 (R0): there is no hardware backend, no e-stop path to a machine and no operator-required limit.
 
-The gate never imports PyBullet, gym, gym_robotics or numpy (the upstream needs Python 3.8 and those packages,
+The fake gate never imports PyBullet, gym, gym_robotics or numpy (the upstream needs Python 3.8 and those packages,
 README.md "Installation Requirements"), so the ``fake`` backend is the package's own pure Python kinematic stand-in.
-A backend name that ``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id)``
-(GymnasiumDriver.open_native); that path needs the upstream package, the ``custom_envs`` registration, PyBullet and
-the mesh files, and was not run here (README.md).
+The ``sim`` backend is ``_build_sim_capping`` below: it imports ``custom_envs`` (whose module body registers
+``Capping-v1``, ``custom_envs/__init__.py:6-19``), enters the clone root while the upstream constructor resolves its
+``Objects/`` meshes (``custom_envs/envs/Insertion_Tasks/Capping/Capping_Task.py:50-51,73-74,98-99,129-130``), and
+returns the environment the registration's own ``gym.make`` builds (the real ``Capping_Env`` with the sparse/ee
+kwargs and the 100-step limit).  That path needs the real legacy ``gym``, ``gym_robotics``, PyBullet and the mesh
+files. The package's tests exercise only the fake backend.
 
 The upstream class is the old Gym API: ``RobotTaskEnv.reset(seed)`` returns an observation, not a
 ``(observation, info)`` pair, and ``step`` returns a four-tuple ``(observation, reward, done, info)`` with ``done``
@@ -31,11 +34,42 @@ PYBULLET = "panda_chemistry_gym/pybullet.py"
 REGISTRY = "custom_envs/__init__.py"
 
 
+def _build_sim_capping(**_options):
+    """Build the real registered ``Capping_Env`` for the ``sim`` backend.
+
+    ``custom_envs/__init__.py:6-19`` is a module-level registration: importing ``custom_envs`` runs
+    ``register(id="Capping{}{}-v1", entry_point="custom_envs.envs:Capping_Env", kwargs=..., ...)`` in the legacy
+    ``gym`` registry, and the ee/sparse instance is ``Capping-v1`` with ``reward_type="sparse"`` and
+    ``control_type="ee"`` (``custom_envs/__init__.py:8-19``).  The upstream constructor builds every object mesh path
+    from ``os.getcwd() + "/Objects/..."`` (``custom_envs/envs/Insertion_Tasks/Capping/Capping_Task.py:50-51`` and the
+    same pattern at :73-74, :98-99 and :129-130), while the gate runs in a temporary working directory; this factory
+    therefore computes the clone root from ``custom_envs.__file__``, enters it only for construction and restores
+    the previous directory afterwards. It returns the object the registration's own ``gym.make("Capping-v1")``
+    builds (the upstream ``Capping_Env`` of ``Capping_PandaTask.py:15-19`` with the registration's kwargs and
+    100-step limit); no
+    upstream class, module, method or object is patched or replaced.
+    """
+    import os
+    from pathlib import Path
+
+    import custom_envs  # its module body registers Capping-v1
+    import gym
+
+    clone = Path(custom_envs.__file__).resolve().parent.parent
+    previous = os.getcwd()
+    os.chdir(clone)
+    try:
+        return gym.make("Capping-v1")
+    finally:
+        os.chdir(previous)
+
+
 class Capping(GymnasiumDriver):
     device_id = "panda-chemistry-capping"
     env_id = "Capping-v1"
+    env_module = "custom_envs"                  # importing it runs register(...) at custom_envs/__init__.py:6-19
     native = "custom_envs.envs:Capping_Env"
-    backends = {"fake": ".fake:FakeCappingEnv"}
+    backends = {"fake": ".fake:FakeCappingEnv", "sim": _build_sim_capping}
     display_name = "panda_chemistry_gym Capping-v1 (PyBullet Franka Panda)"
     vendor, model = "Cooper Group UoL Robotics", "Capping-v1"
     tags = ["panda", "pybullet", "capping", "insertion", "reinforcement-learning", "simulation", "gymnasium"]
@@ -45,6 +79,12 @@ class Capping(GymnasiumDriver):
         Fact("Capping_Env is registered as Capping{}{}-v1 in both control and reward variants, with "
              "max_episode_steps=100; the ee/sparse instance is Capping-v1", source="upstream_code",
              ref=f"{REGISTRY}:8-19"),
+        Fact("Importing custom_envs runs its module-level registration: line 6 imports register from "
+             "gym.envs.registration and lines 14-19 register Capping-v1 in the legacy gym registry",
+             source="upstream_code", ref=f"{REGISTRY}:6-19"),
+        Fact("Capping._create_scene builds the cap mesh paths as os.getcwd()+'/Objects/...', "
+             "so the upstream constructor resolves those meshes relative to the "
+             "process working directory", source="upstream_code", ref=f"{TASK}:50-51"),
         Fact("In ee control the Panda action space is Box(-1.0, 1.0) with four values: three displacement values "
              "and one gripper value (3 + 1 because the gripper is not blocked)", source="upstream_code",
              ref=f"{PANDA}:22-24"),

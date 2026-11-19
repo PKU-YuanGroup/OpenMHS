@@ -16,8 +16,11 @@ hardware backend, no e-stop path to a machine and no operator-required limit.
 The gate cannot import the upstream package (it needs MuJoCo, dm_control, Gymnasium and numpy,
 ``pyproject.toml:9-14``), and package code never imports the clone, so the ``fake`` backend is the
 package's own pure Python stand-in (``fake.py``).  A backend name that ``backends`` does not list (``sim``)
-is served by ``gymnasium.make(env_id, **env_kwargs)`` through ``GymnasiumDriver.open_native``; that path
-needs the upstream package and was not run here.
+is served by ``gymnasium.make(env_id, **env_kwargs)`` through ``GymnasiumDriver.open_native``.  ``pyproject.toml``
+declares no gymnasium entry point (``pyproject.toml:5-46``), so installing the package does not register the id.
+``env_module = "ocbench"`` makes the bridge import that module first; its body runs ``register(...)`` for
+``block-cpu-single-task1-v0`` (``ocbench/__init__.py:74-79``).  The fake backend is built from ``backends`` and
+does not use ``env_module``.
 
 The ``fidelity`` attribute is the contract of the model as deployed (spec 05-fidelity FID-002): MuJoCo
 rigid-body dynamics with contacts (F1), a 20 ms control step, seeded resets, lockstep time and a full reset.
@@ -39,6 +42,7 @@ ENV = "ocbench/envs/env.py"
 class BlockSingleTask1(GymnasiumDriver):
     device_id = "ocbench-block-single-task1"
     env_id = "block-cpu-single-task1-v0"
+    env_module = "ocbench"  # importing it runs register(...) at ocbench/__init__.py:74-79
     env_kwargs = {"env_type": "single", "task_id": 1}
     native = "ocbench.envs.block_env:BlockEnv"
     backends = {"fake": ".fake:FakeBlockEnv"}
@@ -51,6 +55,8 @@ class BlockSingleTask1(GymnasiumDriver):
         Fact("block-cpu-single-task1-v0 is registered with entry point ocbench.envs.block_env:BlockEnv, "
              "max_episode_steps=1250 and kwargs env_type='single', task_id=1", source="upstream_code",
              ref=f"{INIT}:74-79"),
+        Fact("Importing ocbench runs the module-level register call that registers block-cpu-single-task1-v0",
+             source="upstream_code", ref=f"{INIT}:74-79"),
         Fact("ocbench.make returns gymnasium.make(env_name, **kwargs) for CPU environments", source="upstream_code",
              ref=f"{INIT}:35-44"),
         Fact("BlockEnv subclasses ManipulationEnv and the single env_type installs one cube", source="upstream_code",

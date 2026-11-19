@@ -1,38 +1,78 @@
 """OpenMHS driver for gh.apirrone/open_duck_playground: the Open Duck Mini V2 MuJoCo model.
 
-A ``MujocoDriver`` is configuration only: ``model_path`` names an MJCF scene of the read-only clone and the
-MuJoCo bridge derives the contract from the loaded model.  ``cap.world.step.v1`` takes ``{ticks, action}`` with
-``action.ctrl`` bounded per actuator by the model's ``actuator_ctrlrange``; ``cap.world.reset.v1`` restores the
-model defaults.  The device is simulated (R0): there is no hardware backend and no operator-required limit.
+A ``MujocoDriver`` is configuration only: ``model_path`` or ``model_xml`` names an MJCF scene of the read-only
+clone and the MuJoCo bridge derives the contract from the loaded model.  ``cap.world.step.v1`` takes
+``{ticks, action}`` with ``action.ctrl`` bounded per actuator by the model's ``actuator_ctrlrange``;
+``cap.world.reset.v1`` restores the model defaults.  The device is simulated (R0): there is no hardware backend and no operator-required limit.
 
 The card's first model is ``playground/open_duck_mini_v2/xmls/scene_rough_terrain_backlash.xml``, a scene that
 includes the backlash variant of the Open Duck Mini V2 robot (14 position actuators).  MuJoCo is not installed
-where the acceptance gate runs and package code never imports the clone, so the ``fake`` backend is this package's
-own stand-in ``mujoco`` module (fake.py).  It reads the model file for the joint and actuator layout and the
-inherited control ranges, but its integration is a placeholder and not MuJoCo's physics; the fidelity ``gaps``
+where the fake acceptance gate runs and package code never imports the clone, so the ``fake`` backend is this
+package's own stand-in ``mujoco`` module (fake.py).  It reads the model file for the joint and actuator layout and
+the inherited control ranges, but its integration is a placeholder and not MuJoCo's physics; the fidelity ``gaps``
 say so.  A backend name that ``backends`` does not name (``sim``) is served by the real ``mujoco`` module through
-``MujocoDriver.open_native``; that path was not run here.
+``MujocoDriver.open_native``.
+
+The upstream never loads this scene by path: it passes the scene text to ``MjModel.from_xml_string`` with an asset
+map (``mujoco_infer_base.py:10-11``, ``base.py:31-38``).  A path load prefixes the included robot's
+``meshdir="assets"`` to the scene's ``assets/hfield.png`` and looks for ``assets/assets/hfield.png``.  The sim path
+therefore hands the same scene to the bridge as ``model_xml``, with the include, mesh directory and height field
+made absolute; the physics, observations and rewards are the upstream scene's, only the file lookups differ.
 
 Every Fact cites a line of the clone at commit b9be205ac64488c23504ca42e5ec790337adeec3.  This package is
-model-authored and unreviewed: it is checked on the fake backend only.
+model-authored and unreviewed.
 """
+
+from pathlib import Path
 
 from mhs.driver import Fact, MujocoDriver
 
 from .fake import FakeMujoco
 
-#: The card's models[0], as the clone names it (the model path below is relative to this package directory).
+#: The card's models[0] and its included robot, as the clone names them.
 MODEL = "playground/open_duck_mini_v2/xmls/scene_rough_terrain_backlash.xml"
-MODEL_PATH = "../../../../robots/apirrone/open_duck_playground/" + MODEL
 SCENE = "playground/open_duck_mini_v2/xmls/scene_rough_terrain_backlash.xml"
 ROBOT = "playground/open_duck_mini_v2/xmls/open_duck_mini_v2_backlash.xml"
 README = "README.md"
 INFER = "playground/open_duck_mini_v2/mujoco_infer.py"
 
+#: The read-only clone's scene, robot and asset directory, resolved as the other MuJoCo drivers resolve their models.
+CLONE = (Path(__file__).resolve().parent / "../../../../robots/apirrone/open_duck_playground").resolve()
+SCENE_PATH = CLONE / MODEL
+ROBOT_PATH = CLONE / ROBOT
+ASSET_DIR = SCENE_PATH.parent / "assets"
+HFIELD_PATH = ASSET_DIR / "hfield.png"
+
+
+def _model_xml() -> str:
+    """The upstream scene with its include, mesh directory and height field made absolute.
+
+    MuJoCo applies the included robot's ``meshdir="assets"`` to the scene's ``assets/hfield.png`` when the scene is
+    loaded by path, so it looks for ``assets/assets/hfield.png``.  The upstream loads the scene text with an asset
+    map instead (``mujoco_infer_base.py:10-11``); the bridge's ``from_xml_string`` has no asset map, so this keeps
+    the same scene text and only makes the files it names absolute.  The physics and all values are unchanged.
+    """
+
+    text = SCENE_PATH.read_text()
+    include = f'<include file="{Path(ROBOT).name}"/>'
+    if include not in text:
+        raise ValueError(f"{MODEL} no longer includes {Path(ROBOT).name}")
+    text = text.replace(include, f'<include file="{ROBOT_PATH}"/>\n'
+                                 f'  <compiler angle="radian" meshdir="{ASSET_DIR}"/>')
+    hfield = 'file="assets/hfield.png"'
+    if hfield not in text:
+        raise ValueError(f"{MODEL} no longer names assets/hfield.png")
+    return text.replace(hfield, f'file="{HFIELD_PATH}"')
+
+
+MODEL_XML = _model_xml()
+
 
 class OpenDuckMiniV2(MujocoDriver):
     device_id = "open-duck-mini-v2"
-    model_path = MODEL_PATH
+    #: The upstream scene text with absolute asset paths; the included ``meshdir="assets"`` is why the sim path does
+    #: not use ``model_path`` (a path load would look for ``assets/assets/hfield.png``).
+    model_xml = MODEL_XML
     backends = {"fake": FakeMujoco}
     display_name = "Open Duck Mini V2 (MuJoCo rough terrain, backlash)"
     vendor, model = "apirrone (Open Duck Playground)", "Open Duck Mini V2"
@@ -98,7 +138,17 @@ class OpenDuckMiniV2(MujocoDriver):
              ref=f"{README}:31-38"),
         Fact("The inference script's default model path is playground/open_duck_mini_v2/xmls/scene_flat_terrain.xml",
              source="upstream_code", ref=f"{INFER}:254-257"),
+        Fact("The upstream loads the scene from its text with mujoco.MjModel.from_xml_string and an asset map, not "
+             "from a filesystem path", source="upstream_code",
+             ref="playground/open_duck_mini_v2/mujoco_infer_base.py:10-11"),
+        Fact("base.get_assets collects the xmls directory and its assets subdirectory into that asset map",
+             source="upstream_code", ref="playground/open_duck_mini_v2/base.py:31-38"),
     ]
+
+    def _model_name(self) -> str | None:
+        """The served scene as the clone names it, for the derived actuator_ctrlrange citation."""
+        return MODEL
+
     safe_state = ("the simulation stops advancing: no step or reset is accepted after an e-stop until "
                   "mhs.safety.reset clears the latch; the integration state is kept and stays readable")
     #: The fidelity contract of the model as deployed.  The bridge derives the engine, the determinism kind and

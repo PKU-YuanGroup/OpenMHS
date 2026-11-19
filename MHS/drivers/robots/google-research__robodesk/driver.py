@@ -1,7 +1,8 @@
 """OpenMHS driver for gh.google-research/robodesk: the RoboDesk manipulation environment (a Gymnasium family driver).
 
-RoboDesk is a Gymnasium environment (``robodesk.robodesk:RoboDesk`` subclasses ``gym.Env``, robodesk/robodesk.py:16)
-with a five-value end-effector action space and a dictionary observation that carries an image.  The card says
+RoboDesk is a legacy Gym environment (``robodesk.robodesk:RoboDesk`` subclasses ``gym.Env``,
+robodesk/robodesk.py:16) with a five-value end-effector action space and a dictionary observation that carries an
+image.  The card says
 ``family: mujoco`` and ``helper: MujocoDriver``, but the upstream class is not a bare MuJoCo model/data pair: it
 wraps the MuJoCo physics, inverse kinematics, nine task reward functions and the rendering inside ``reset()`` and
 ``step()``.  A ``MujocoDriver`` would expose ``actuator_ctrlrange`` and the raw ``qpos``/``qvel`` instead of the
@@ -13,10 +14,18 @@ derives the action schema from ``RoboDesk.action_space`` (DEVIATION FROM THE CAR
 randomized initial state from numpy's global generator (robodesk/robodesk.py:207-229), so the fidelity contract
 declares statistical determinism with no seed control.
 
-The package is checked on the fake backend only: the upstream package needs ``dm_control``, ``gym``, ``numpy`` and
-``PIL`` (setup.py:31-34) and package code never imports the clone.  The fake in fake.py is a small kinematic
-stand-in for the environment interface; it does not integrate the MuJoCo model.  This package is model-authored
-and unreviewed.
+The ``sim`` backend is the real upstream environment: ``_build_sim_env`` lazily imports the installed
+``robodesk.robodesk:RoboDesk`` and constructs it with the constructor defaults (robodesk/robodesk.py:19-20).  The
+package does not register a gym id (robodesk/__init__.py:1), so there is no ``env_id``/``env_module`` to make and
+the ``backends`` entry is the factory.  The upstream module imports ``dm_control.mujoco``,
+``dm_control.utils.inverse_kinematics``, ``gym``, ``numpy`` and ``PIL.Image`` (robodesk/robodesk.py:9-13);
+setup.py:29 declares all but Pillow, so serving the sim backend also requires Pillow with the
+``Image.ANTIALIAS`` API (robodesk/robodesk.py:129-131) and a legacy Gym release.  The setup script packages
+the assets directory (setup.py:13-26), so the installed wheel carries ``desk.xml`` and its meshes.
+
+The ``fake`` backend in fake.py is a small kinematic stand-in for the environment interface; it does not integrate
+the MuJoCo model, and the fake is the backend checked in this authoring workspace.  The orchestrator's container
+runs the sim backend against the real upstream.  This package is model-authored and unreviewed.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -26,16 +35,42 @@ DESK = "robodesk/assets/desk.xml"
 README = "README.md"
 
 
+def _build_sim_env(**_options):
+    """Build the real upstream ``robodesk.robodesk:RoboDesk`` environment for the ``sim`` backend.
+
+    The package does not register a gym id: ``robodesk/__init__.py:1`` only re-exports the class, so
+    ``gym.make`` cannot build it.  The factory imports the installed upstream lazily and calls the class with its
+    constructor defaults (robodesk/robodesk.py:19-20); the bridge reads the environment's own action and
+    observation spaces (robodesk/robodesk.py:97-112) and drives its ``reset()``/``step()``
+    (robodesk/robodesk.py:168-197, 207).  The fake backend and the fake gate never import it.
+    """
+    from robodesk.robodesk import RoboDesk as RoboDeskEnv
+
+    return RoboDeskEnv()
+
+
 class RoboDesk(GymnasiumDriver):
     device_id = "robodesk"
     native = "robodesk.robodesk:RoboDesk"
-    backends = {"fake": ".fake:FakeRoboDesk"}
+    backends = {"fake": ".fake:FakeRoboDesk", "sim": _build_sim_env}
     display_name = "RoboDesk multi-task manipulation benchmark"
     vendor, model = "Google Research", "RoboDesk"
     tags = ["robodesk", "mujoco", "manipulation", "robot-arm", "reinforcement-learning", "simulation", "gymnasium"]
     facts = [
-        Fact("RoboDesk is a Gymnasium environment: the class subclasses gym.Env", source="upstream_code",
+        Fact("RoboDesk is a legacy Gym environment: the class subclasses gym.Env", source="upstream_code",
              ref=f"{ROBODESK}:16"),
+        Fact("The environment module imports dm_control.mujoco, dm_control.utils.inverse_kinematics, gym, numpy and "
+             "PIL.Image", source="upstream_code", ref=f"{ROBODESK}:9-13"),
+        Fact("The package exports RoboDesk from robodesk/__init__.py and does not register a gym environment id",
+             source="upstream_code", ref="robodesk/__init__.py:1"),
+        Fact("The setup script declares numpy, dm_control and gym as install requirements; Pillow, which the module "
+             "imports, is not declared", source="upstream_code", ref="setup.py:29"),
+        Fact("The setup script packages the robodesk/assets directory, including desk.xml and the meshes, as package "
+             "data", source="upstream_code", ref="setup.py:13-26"),
+        Fact("The image resize uses Image.ANTIALIAS", source="upstream_code",
+             ref=f"{ROBODESK}:129-131"),
+        Fact("The renderer builds a dm_control.mujoco.Camera over the physics and frees its scene after rendering",
+             source="upstream_code", ref=f"{ROBODESK}:114-126"),
         Fact("The environment loads the MuJoCo scene model robodesk/assets/desk.xml", source="upstream_code",
              ref=f"{ROBODESK}:23-24"),
         Fact("The MuJoCo model integrates with a 2 ms timestep (0.002 s)", source="upstream_code",
@@ -73,9 +108,9 @@ class RoboDesk(GymnasiumDriver):
     ]
     safe_state = ("the simulation stops advancing: after an e-stop no step or reset is accepted until "
                   "mhs.safety.reset clears the latch; the simulated state is kept and stays readable")
-    #: The fidelity contract of the model this package actually serves: a kinematic fake of the environment
-    #: interface.  The upstream MuJoCo model is contact dynamics (F1), but the fake does not integrate it, so the
-    #: deployed model is declared F0 and the omissions are listed in the gaps.
+    #: The fidelity contract of the default (fake) backend: a kinematic fake of the environment interface.  The
+    #: upstream MuJoCo model is contact dynamics (F1), but the fake does not integrate it, so the fake is declared
+    #: F0 and the omissions are listed in the gaps.  The sim backend's contract is ``fidelity_by_backend`` below.
     fidelity = {
         "engine": "custom:RoboDesk kinematic fake (upstream mujoco robodesk/assets/desk.xml not integrated)",
         "fidelity_level": "F0",
@@ -106,4 +141,34 @@ class RoboDesk(GymnasiumDriver):
             "the fake was never compared with the upstream environment, which is not importable where the gate "
             "runs; trajectories and arrays are not validated against MuJoCo",
         ],
+    }
+    #: The sim backend serves the real MuJoCo environment (dm_control Physics over desk.xml), not the fake; its
+    #: contract is selected by ``fidelity_by_backend``.  The class-level contract above stays the default fake's.
+    fidelity_by_backend = {
+        "sim": {
+            "engine": f"mujoco:{DESK}",
+            "fidelity_level": "F1",
+            "determinism": {
+                "kind": "statistical",
+                "seed_control": "none",
+                "notes": "upstream reset() takes no seed or options and draws the drawer, slide, blocks, ball and "
+                         "robot start pose from numpy's global generator (robodesk/robodesk.py:207-229); the seed "
+                         "the bridge accepts for the class contract does not steer the environment, so no seed "
+                         "reproduces a trajectory",
+            },
+            "gaps": [
+                "the sim backend is the upstream environment; the default fake backend is F0 and does not model "
+                "MuJoCo",
+                "no seed control: reset() uses numpy's global generator (robodesk/robodesk.py:207-229)",
+                "no get_state/set_state or checkpoint: snapshot and exact replay are not offered",
+                "no wall-clock pacing: simulated time advances only when a step command arrives (realtime_factor 0)",
+                "the renderer creates a dm_control.mujoco.Camera and uses Pillow's Image.ANTIALIAS "
+                "(robodesk/robodesk.py:114-133); rendering is exercised only by the gate's OSMesa run",
+                "the sim backend builds the constructor defaults (robodesk/robodesk.py:19-20): task open_slide, "
+                "reward dense, action_repeat 1, episode_length 500 and image_size 64; other constructor options are "
+                "not served",
+                "the upstream observation qpos_objects is filled from qvel (robodesk/robodesk.py:385) and is "
+                "published unchanged",
+            ],
+        },
     }

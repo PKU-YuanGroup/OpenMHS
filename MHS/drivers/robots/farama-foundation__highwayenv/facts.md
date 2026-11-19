@@ -7,6 +7,8 @@ driver, not from this page.
 | fact | source | ref |
 |---|---|---|
 | highway-v0 registers highway_env.envs.highway_env:HighwayEnv | upstream_code | highway_env/__init__.py:46-49 |
+| Importing highway_env runs _register_highway_envs() at module scope, so the ids exist in gymnasium's registry only after that import | upstream_code | highway_env/__init__.py:193 |
+| The package FAQ says a gymnasium NameNotFound means HighwayEnv was not imported yet, and that importing it registers the environments | vendor_doc | docs/faq.md:8-17 |
 | The action space is DiscreteMetaAction with five meta-actions: 0 LANE_LEFT, 1 IDLE, 2 LANE_RIGHT, 3 FASTER and 4 SLOWER | upstream_code | highway_env/envs/common/action.py:204 |
 | The action space is Discrete(len(actions)), five when both lateral and longitudinal actions are enabled | upstream_code | highway_env/envs/common/action.py:252-253 |
 | The Kinematics observation has the features presence, x, y, vx and vy and observes five vehicles by default | upstream_code | highway_env/envs/common/observation.py:166-172 |
@@ -38,8 +40,15 @@ The fidelity is declared in `driver.py` (`fidelity = {...}`): engine `highway_en
 (kinematic), determinism `seeded` with seed control by parameter, 1000 ms per tick (one policy step of
 1 / policy_frequency = 1 s), realtime_factor 0, clock lockstep, full reset and no snapshot/restore. The `gaps` list
 says what the fake does not model: the road network, the kinematic/IDM vehicle dynamics, the (5, 5) observation
-array (the fake returns 25 flat numbers), rendering and the reward values of a particular episode. The `sim` backend
-(`gymnasium.make("highway-v0")`) was not run: the upstream environment needs gymnasium, numpy, pandas, pygame-ce and
-noise, which are not installed where the gate runs.
+array (the fake returns 25 flat numbers), rendering and the reward values of a particular episode. The `sim` path
+imports `env_module = "highway_env"` before `gymnasium.make("highway-v0")`: importing the package runs
+`_register_highway_envs()` (`highway_env/__init__.py:193`), which registers the id at `:46-49`, and the package
+FAQ says exactly this import is what avoids the `NameNotFound` error (`docs/faq.md:8-17`). The sim backend itself
+was not run where this package was authored; the orchestrator's install and `--backend sim` run is its evidence.
+
+Installation: `pip install .` installs the
+dependencies declared at `pyproject.toml:29-37` (gymnasium, farama-notifications, numpy, pygame-ce, matplotlib,
+pandas and noise). The sim environment uses `gymnasium==1.3.0` and `pygame-ce==2.5.7`, matching the versions in
+the clone's `uv.lock:881-883` and `:2440-2446` at the pinned commit.
 
 Tags: highway, autonomous-driving, traffic-simulation, reinforcement-learning, simulation, gymnasium

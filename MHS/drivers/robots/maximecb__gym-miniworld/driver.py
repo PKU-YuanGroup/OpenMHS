@@ -9,7 +9,12 @@ whole contract from the environment's spaces.  ``cap.world.step.v1`` takes ``{ti
 The real environment needs numpy, pyglet and an OpenGL context (``miniworld/miniworld.py:507-518``), and package
 code never imports the clone, so the ``fake`` backend is the package's own pure Python kinematic stand-in (fake.py).
 A backend name that ``backends`` does not list (``sim``) is served by ``gymnasium.make("MiniWorld-Maze-v0")``
-(GymnasiumDriver.open_native); that path was not run here and is not claimed (see the fidelity gaps and RESULT.json).
+after the bridge imports ``env_module`` (GymnasiumDriver.open_native).  Importing ``miniworld.envs`` runs
+``gym.register`` for that id (``miniworld/envs/__init__.py:59-62``).  The constructor creates a hidden pyglet
+window (``miniworld/miniworld.py:507-508``).  Upstream documents ``PYOPENGL_PLATFORM=egl`` for offscreen
+rendering (``README.md:101-108``); that setting selects pyglet's headless mode
+(``miniworld/opengl.py:85-86``).  Xvfb is documented as a fallback (``README.md:110-114``).  That sim path
+was not run here and is not claimed (see the fidelity gaps and RESULT.json).
 
 The ``fidelity`` attribute is the fidelity contract of the model as deployed (MHS-005 FID-002).  Everything the
 driver claims cites the clone at the pinned commit c660156dd73994e55ad81a4e2925582399446aba.  This package is
@@ -30,14 +35,17 @@ SETUP = "setup.py"
 class MiniWorldMaze(GymnasiumDriver):
     device_id = "miniworld-maze"
     env_id = "MiniWorld-Maze-v0"
+    #: Importing this module runs gym.register(id="MiniWorld-Maze-v0", ...) at miniworld/envs/__init__.py:59-62.
+    #: miniworld/__init__.py:1 reaches the same module.  setup.py declares no entry point, so nothing else registers it.
+    env_module = "miniworld.envs"
     native = "miniworld.envs.maze:Maze"
     backends = {"fake": ".fake:FakeMazeEnv"}
     display_name = "MiniWorld Maze (gymnasium simulation)"
     vendor, model = "Farama Foundation", "MiniWorld-Maze-v0"
     tags = ["miniworld", "maze", "navigation", "reinforcement-learning", "simulation", "gymnasium"]
     facts = [
-        Fact("MiniWorld-Maze-v0 is registered to the miniworld.envs.maze:Maze class", source="upstream_code",
-             ref=f"{ENVS}:59-62"),
+        Fact("Importing miniworld.envs runs gym.register, which registers MiniWorld-Maze-v0 to "
+             "miniworld.envs.maze:Maze", source="upstream_code", ref=f"{ENVS}:59-62"),
         Fact("Maze restricts the action space to Discrete(move_forward + 1), the three movement actions",
              source="upstream_code", ref=f"{MAZE}:70-71"),
         Fact("MiniWorldEnv numbers turn_left 0, turn_right 1 and move_forward 2 in its Actions enumeration",
@@ -75,6 +83,10 @@ class MiniWorldMaze(GymnasiumDriver):
              ref=f"{ENV}:965-975"),
         Fact("The constructor opens a 1 by 1 hidden pyglet window and allocates frame buffers, so the real "
              "environment needs an OpenGL context", source="upstream_code", ref=f"{ENV}:507-518"),
+        Fact("The README documents PYOPENGL_PLATFORM=egl for offscreen rendering", source="vendor_doc",
+             ref=f"{README}:101-108"),
+        Fact("miniworld.opengl sets pyglet.options['headless'] to True when PYOPENGL_PLATFORM is egl",
+             source="upstream_code", ref="miniworld/opengl.py:85-86"),
         Fact("MiniWorld is a minimalistic 3D interior environment simulator for reinforcement learning and "
              "robotics research", source="vendor_doc", ref=f"{README}:19-21"),
         Fact("The upstream lists its physics as very basic, not sufficient for robot arms or manipulation",

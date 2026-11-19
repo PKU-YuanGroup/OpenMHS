@@ -1,9 +1,11 @@
 """OpenMHS driver for gh.tobirohrer/building-energy-storage-simulation: a Gymnasium building-battery world.
 
 A GymnasiumDriver is configuration only: the bridge derives the contract from the environment's spaces.  Upstream
-the environment is not registered with ``gymnasium.make``: it is constructed with a ``BuildingSimulation``
-(README.md:29-37), so ``env_id`` is left unset and the ``fake`` backend is the package's own pure Python
-re-implementation (fake.py).  A backend name that ``backends`` does not list is not served.
+the environment is not registered with ``gymnasium.make``: README.md:29-33 constructs ``BuildingSimulation()`` and
+passes it to ``Environment`` (the constructor requires ``building_simulation``, environment.py:27-28).  ``env_id``
+stays unset.  The ``fake`` backend is the package's own pure Python re-implementation (fake.py).  The ``sim``
+backend is ``_build_sim_env``, which builds that same upstream instance.  A backend name that ``backends`` does
+not list is not served.
 
 The device is simulated (R0): there is no hardware backend, no e-stop path to a machine and no operator-required
 limit.  ``cap.world.step.v1`` takes ``{ticks, action}`` with the action ``{values}`` bounded by the environment's
@@ -12,8 +14,8 @@ limit.  ``cap.world.step.v1`` takes ``{ticks, action}`` with the action ``{value
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002).
 Every fact and rule cites a line of the clone at the pinned commit (05b9197c8d6f600bed2a5b092db6de6f07bf3c65).
-This package is model-authored and unreviewed: it is checked on the fake backend only, and the fake was never
-compared with the upstream environment.
+This package is model-authored and unreviewed: the acceptance check in this tree is the fake backend, and the
+fake was never compared with the upstream environment.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -23,10 +25,27 @@ SIMULATION = "building_energy_storage_simulation/building_simulation.py"
 BATTERY = "building_energy_storage_simulation/battery.py"
 
 
+def _build_sim_env(**_options):
+    """Build the real upstream ``Environment`` for the ``sim`` backend.
+
+    The clone has no ``gymnasium.register`` call.  README.md:29-33 constructs ``BuildingSimulation()`` and passes
+    it to ``Environment``; the constructor requires that argument (environment.py:27-28).  The simulation defaults
+    load the packaged CSV profiles (building_simulation.py:27-30) through ``pkg_resources`` (utils.py:2 and
+    utils.py:6).  The import stays inside the factory so the fake backend does not load gymnasium.  The returned
+    object is the upstream instance; nothing on it is wrapped, patched or replaced.
+    """
+    from building_energy_storage_simulation import BuildingSimulation, Environment
+
+    return Environment(building_simulation=BuildingSimulation())
+
+
 class BuildingEnergyStorageSimulation(GymnasiumDriver):
     device_id = "building-energy-storage-simulation"
     native = "building_energy_storage_simulation.environment:Environment"
-    backends = {"fake": ".fake:FakeEnvironment"}
+    # `fake` is this package's stand-in.  `sim` constructs Environment (environment.py:10) through
+    # `_build_sim_env`.  The sim entry is a callable, so the lock's string entry (`fake` only) still describes
+    # the package's declared string backend and G2 compares a lock only when every entry is a string.
+    backends = {"fake": ".fake:FakeEnvironment", "sim": _build_sim_env}
     action_space_ref = f"{ENVIRONMENT}:45"
     display_name = "Building Energy Storage Simulation (battery, solar and price-varying grid)"
     vendor, model = "Tobias Rohrer", "building-energy-storage-simulation"
@@ -109,9 +128,12 @@ class BuildingEnergyStorageSimulation(GymnasiumDriver):
             "claim about elapsed time)",
             "no wall-clock pacing: realtime_factor 0 and only commands advance the world",
             "the fake backend synthesizes placeholder profile rows and re-implements Environment, BuildingSimulation "
-            "and Battery in pure Python; it was not compared with the upstream environment (gymnasium is not "
-            "importable where the gate runs), so observations, rewards and prices are not the bundled CSV data and "
-            "the fake returns Python float lists where upstream returns a numpy array",
+            "and Battery in pure Python; it was not compared with the upstream environment, so observations, rewards "
+            "and prices are not the bundled CSV data and the fake returns Python float lists where upstream returns "
+            "a numpy array",
+            "the sim backend constructs building_energy_storage_simulation.environment:Environment with a default "
+            "BuildingSimulation(), the construction README.md:29-33 documents; the returned object is the upstream "
+            "instance and the fake was not compared with it",
             "the fake's optional forecast randomisation changes only the returned copy, while upstream adds the noise "
             "in place to a numpy slice of the stored profile",
             "no rendering (upstream render is a no-op), no snapshot or restore (the environment has no "

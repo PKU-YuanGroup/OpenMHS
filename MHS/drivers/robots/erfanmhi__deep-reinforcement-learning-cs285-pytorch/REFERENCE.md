@@ -99,6 +99,13 @@ Outputs:
 ## Facts
 
 - The environment is registered as obstacles-cs285-v0 with max_episode_steps=500 (upstream_code: hw4/cs285/envs/obstacles/__init__.py:3-7)
+- The registration module then imports Obstacles through the package path (upstream_code: hw4/cs285/envs/obstacles/__init__.py:8)
+- Importing cs285.envs imports ant, cheetah, obstacles and reacher (upstream_code: hw4/cs285/envs/__init__.py:1-4)
+- The ant environment module imports mujoco_py at module scope (upstream_code: hw4/cs285/envs/ant/ant.py:16)
+- The cheetah environment module imports mujoco_py at module scope (upstream_code: hw4/cs285/envs/cheetah/cheetah.py:2)
+- The reacher environment module imports mujoco_env and mujoco_py.MjViewer at module scope (upstream_code: hw4/cs285/envs/reacher/reacher_env.py:3-4)
+- The obstacles module imports gym, numpy and gym.spaces and does not import mujoco_py (upstream_code: hw4/cs285/envs/obstacles/obstacles_env.py:1-3)
+- hw4/setup.py installs only the top-level cs285 package and declares no dependencies (upstream_code: hw4/setup.py:4-8)
 - The action dimension is 2 and the observation dimension is 4 (upstream_code: hw4/cs285/envs/obstacles/obstacles_env.py:11-12)
 - The action space is a Box of 2 elements bounded by boundary_min -0.99 and boundary_max 0.99 (upstream_code: hw4/cs285/envs/obstacles/obstacles_env.py:13-18)
 - The observation space is a Box of 4 elements bounded by -inf and inf (upstream_code: hw4/cs285/envs/obstacles/obstacles_env.py:20-22)

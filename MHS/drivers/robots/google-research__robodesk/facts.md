@@ -5,7 +5,13 @@ Every fact cites its source at commit `a8edde34f879242730c026dfe7c6e3beb4318023`
 
 | fact | source | ref |
 |---|---|---|
-| RoboDesk is a Gymnasium environment: the class subclasses gym.Env | upstream_code | robodesk/robodesk.py:16 |
+| RoboDesk is a legacy Gym environment: the class subclasses gym.Env | upstream_code | robodesk/robodesk.py:16 |
+| The environment module imports dm_control.mujoco, dm_control.utils.inverse_kinematics, gym, numpy and PIL.Image | upstream_code | robodesk/robodesk.py:9-13 |
+| The package exports RoboDesk from robodesk/__init__.py and does not register a gym environment id | upstream_code | robodesk/__init__.py:1 |
+| The setup script declares numpy, dm_control and gym as install requirements; Pillow, which the module imports, is not declared | upstream_code | setup.py:29 |
+| The setup script packages the robodesk/assets directory, including desk.xml and the meshes, as package data | upstream_code | setup.py:13-26 |
+| The image resize uses Image.ANTIALIAS | upstream_code | robodesk/robodesk.py:129-131 |
+| The renderer builds a dm_control.mujoco.Camera over the physics and frees its scene after rendering | upstream_code | robodesk/robodesk.py:114-126 |
 | The environment loads the MuJoCo scene model robodesk/assets/desk.xml | upstream_code | robodesk/robodesk.py:23-24 |
 | The MuJoCo model integrates with a 2 ms timestep (0.002 s) | upstream_code | robodesk/assets/desk.xml:5 |
 | Each environment step applies the action action_repeat times and runs the physics 10 times per application | upstream_code | robodesk/robodesk.py:170-176 |
@@ -31,13 +37,22 @@ step input `ticks` is the bridge's 1 to 10000 bound. The device is simulated (R0
 The declared `timestep_ms` of 20 ms is one nominal control step at the constructor default `action_repeat=1`: ten
 MuJoCo 2 ms integrations per environment step (robodesk/robodesk.py:170-176, robodesk/assets/desk.xml:5).
 
-Fidelity contract (`driver.py`, `fidelity = {...}`): the deployed model is the package's kinematic fake, so it is
+Fidelity contract (`driver.py`): the default fake backend publishes the class-level `fidelity = {...}`. The fake is
 declared F0 `custom:RoboDesk kinematic fake (upstream mujoco robodesk/assets/desk.xml not integrated)`, determinism
 `statistical` with `seed_control` `none` because upstream reset() has no seed argument and draws from numpy's global
 generator (robodesk/robodesk.py:207-229), timestep 20 ms, `realtime_factor` 0, clock `lockstep`, reset `full`, no
-snapshot and restore. The gaps say that the MuJoCo contacts, actuators, IK and rendering are not modelled, that the
+snapshot and restore. Its gaps say that the MuJoCo contacts, actuators, IK and rendering are not modelled, that the
 fake image is 4 x 4 x 3 instead of the upstream 64 x 64 x 3 default, that the observations and reward are
 placeholders, and that the fake was never compared with upstream.
+
+The `sim` backend publishes its own contract through `fidelity_by_backend = {"sim": {...}}`: F1
+`mujoco:robodesk/assets/desk.xml`, the real upstream `RoboDesk` built by the lazy factory with the constructor
+defaults (robodesk/robodesk.py:19-20), the same statistical determinism and no seed control (the bridge's seed does
+not steer the environment, robodesk/robodesk.py:207-229), and gaps for the missing seed control, checkpoint and
+wall-clock pacing, the defaults-only construction, the dm_control Camera/Pillow rendering path
+(robodesk/robodesk.py:114-133) and the unchanged qpos_objects-from-qvel observation (robodesk/robodesk.py:385).
+The real backend also requires Pillow for the undeclared `PIL.Image` import (robodesk/robodesk.py:13,
+setup.py:29), with the `Image.ANTIALIAS` API used by the upstream resize (robodesk/robodesk.py:129-131).
 
 Safety: simulated R0 device. The e-stop is the runtime's software latch (the environment has no native stop); after
 it no step or reset is accepted until `mhs.safety.reset` clears the latch, and the state stays readable. No

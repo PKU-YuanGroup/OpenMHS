@@ -6,6 +6,7 @@ reference file is generated from the driver, not from this page.
 
 | fact | source | ref |
 |---|---|---|
+| Importing nsmr.envs runs the module-level register call: line 1 imports register from gym.envs.registration and lines 7-11 call register(id='Nsmr-v1', entry_point='nsmr.envs.NsmrGymEnv:NsmrGymEnv', max_episode_steps=500), so importing the module makes the id available to gym.make | upstream_code | nsmr/envs/__init__.py:1-11 |
 | Nsmr-v1 is registered with entry_point nsmr.envs.NsmrGymEnv:NsmrGymEnv and max_episode_steps=500 | upstream_code | nsmr/envs/__init__.py:7-11 |
 | The observation space is a Dict of a lidar Box with num_range elements from min_range to max_range and a target Box with bounds [0.0, -1.0, -1.0] to [100.0, 1.0, 1.0] | upstream_code | nsmr/envs/NsmrGymEnv.py:119-127 |
 | The action space is a Box of two values, linear velocity between min_linear_velocity and max_linear_velocity and angular velocity between min_angular_velocity and max_angular_velocity, both read from the robot configuration | upstream_code | nsmr/envs/NsmrGymEnv.py:128-134 |
@@ -42,9 +43,14 @@ Safety: simulated R0 device. The e-stop is the runtime's software latch (no nati
 reset is accepted until `mhs.safety.reset` clears the latch (a simulator needs no operator for that), and the state
 stays readable.
 
-Honest limits of this package: the upstream environment was never installed or run (it needs legacy gym, numpy and the
-Cython raycasting extension), so the fake was not compared with it; the fake's lidar is a constant placeholder array,
-not a raycast; the fake never reports a collision and its reward is therefore simpler than the upstream's; the fake's
-reset positions differ from numpy's stream even for the same seed. The gate checks the package on the fake backend only.
+Sim path (`driver.py`): `env_module = "nsmr.envs"` names the module whose import runs the module-level registration
+at `nsmr/envs/__init__.py:1-11`. The bridge imports it only when it builds the environment itself with `gym.make`;
+the fake backend is still `.fake:FakeNsmrGymEnv` and ignores `env_module`.
+
+Honest limits of this package: this workspace never installed or ran the upstream environment (it needs legacy gym,
+numpy and the Cython raycasting extension), so the fake was not compared with it; the fake's lidar is a constant
+placeholder array, not a raycast; the fake never reports a collision and its reward is therefore simpler than the
+upstream's; the fake's reset positions differ from numpy's stream even for the same seed. The checks run here use
+the fake backend only.
 
 Tags: navigation, mobile-robot, lidar, reinforcement-learning, simulation, gym

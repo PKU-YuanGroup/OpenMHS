@@ -112,6 +112,7 @@ Outputs:
 - SawyerXYZEnv.reset(seed, options) ignores both arguments and resets curr_path_length to 0 (upstream_code: metaworld/sawyer_xyz_env.py:664-682)
 - seed(seed) seeds np_random and the action, observation and goal spaces (upstream_code: metaworld/sawyer_xyz_env.py:275-290)
 - Meta-World/goal_observable is registered with an entry_point that selects the observable-goal class for env_name and passes seed=seed (upstream_code: metaworld/__init__.py:696-706)
+- Importing metaworld calls register_mw_envs() at module level, so the id is registered only after that import (upstream_code: metaworld/__init__.py:823)
 - assembly-v3 maps to SawyerNutAssemblyEnvV3 (upstream_code: metaworld/env_dict.py:26-27)
 - The goal_observable constructor seeds numpy before construction and calls env.seed(seed) after the first reset when a seed is given (upstream_code: metaworld/env_dict.py:184-199)
 - reward_function_version is v2 by default (upstream_code: metaworld/envs/sawyer_assembly_peg_v3.py:19-24)

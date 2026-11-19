@@ -2,31 +2,41 @@
 
 A MujocoDriver (configuration only) over the scene the pick-and-place environment loads,
 ``panda_mujoco_gym/assets/pick_and_place.xml`` (panda_mujoco_gym/envs/pick_and_place.py:4), which includes the Panda
-robot model ``panda_mocap.xml`` (model.xml:8).  The package carries both files: ``model.xml`` is a copy of the scene
-and ``panda_mocap.xml`` the robot file its include names, so a MuJoCo load of ``model.xml`` finds it beside it.
+robot model ``panda_mocap.xml`` (panda_mujoco_gym/assets/pick_and_place.xml:8).  The driver loads the scene from the
+read-only clone in place, as the environment does (panda_mujoco_gym/envs/panda_env.py:89): its
+``<compiler meshdir="./meshes/">`` (panda_mujoco_gym/assets/pick_and_place.xml:2) then resolves to the
+``assets/meshes/`` files the robot include declares (panda_mujoco_gym/assets/panda_mocap.xml:43-112).  The package
+also carries copies (``model.xml`` and ``panda_mocap.xml``) for reference, but they have no ``meshes/`` directory
+beside them, so the driver does not load them.
 
 The bridge serves ``cap.world.step.v1`` and ``cap.world.reset.v1`` on the model.  A step takes ``ticks`` and
 ``action.ctrl``, one value per actuator, bounded per actuator by the model's ``actuator_ctrlrange`` -- the control range
 the environment itself reads (panda_mujoco_gym/envs/panda_env.py:83-84).  The model has 9 actuators, 16 generalized
 coordinates and 15 degrees of freedom (panda_mujoco_gym/envs/panda_env.py:75-81).
 
-The card names the upstream simulator as the mock path.  The MuJoCo engine is not installed where the gate runs, so the
-fake backend is a stand-in ``mujoco`` module (``fake.py``): it reads the integration step, the dimension counts and the
-actuator ctrlranges of the carried model and advances a minimal state.  It does not reproduce the engine's dynamics,
-and the fidelity ``gaps`` below state every difference, including that the meshes the model references are not carried.
+The card's acceptance backend is the fake, which does not need the MuJoCo engine: ``backends["fake"]`` is a stand-in
+``mujoco`` module (``fake.py``).  It reads the integration step, the dimension counts and the actuator ctrlranges of
+the same upstream scene and advances a minimal state.  It does not reproduce the engine's dynamics, and the fidelity
+``gaps`` below state every difference.  ``--backend sim`` names no ``backends`` entry, so the bridge imports the real
+``mujoco`` the upstream requirements pin (requirements.txt:1) and loads the scene with it.
 
 Every Fact cites a line of the clone at the pinned commit (e9881d993234875ee1d55d717176bf7999bdb583).  This package is
-model-authored and unreviewed: it is checked on the fake backend only, and nothing here ran the MuJoCo engine.
+model-authored and unreviewed: it is checked on the fake backend here, and nothing here ran the MuJoCo engine.
 """
 
 from mhs.driver import Fact, MujocoDriver
 
 from .fake import fake_mujoco
 
+#: The card's models[0], relative to this package directory: the read-only clone under robots/ at the pinned commit.
+#: The scene is loaded there so its relative ``meshdir`` and include resolve as they do for the environment.
+MODEL = "panda_mujoco_gym/assets/pick_and_place.xml"
+MODEL_PATH = "../../../../robots/zichunxx/panda_mujoco_gym/" + MODEL
+
 
 class FrankaPanda(MujocoDriver):
     device_id = "franka-panda"
-    model_path = "model.xml"
+    model_path = MODEL_PATH
     backends = {"fake": fake_mujoco}
     display_name = "Franka Panda pick-and-place scene (panda_mujoco_gym)"
     vendor, model = "zichunxx", "Franka Panda pick-and-place MuJoCo scene (pick_and_place.xml)"
@@ -37,6 +47,11 @@ class FrankaPanda(MujocoDriver):
         Fact("The pick-and-place environment loads its scene from assets/pick_and_place.xml", source="upstream_code",
              ref="panda_mujoco_gym/envs/pick_and_place.py:4"),
         Fact("The scene includes the robot model panda_mocap.xml from the same directory", source="upstream_code", ref="panda_mujoco_gym/assets/pick_and_place.xml:8"),
+        Fact("The environment builds the MuJoCo model with MjModel.from_xml_path, from the scene path in the assets "
+             "directory beside the meshes", source="upstream_code", ref="panda_mujoco_gym/envs/panda_env.py:89"),
+        Fact("The robot model's asset block declares the collision and visual mesh files (link0.stl, link0_0.obj and "
+             "so on) that the scene's ./meshes/ mesh directory resolves to", source="upstream_code",
+             ref="panda_mujoco_gym/assets/panda_mocap.xml:43-112"),
         Fact("The scene sets the integrator to Euler, noslip_iterations to 3, the timestep to 0.002 s and the cone "
              "to pyramidal", source="upstream_code", ref="panda_mujoco_gym/assets/pick_and_place.xml:4"),
         Fact("The scene compiles with the radian angle unit, the ./meshes/ mesh directory and automatic limits",
@@ -62,14 +77,16 @@ class FrankaPanda(MujocoDriver):
         Fact("The environment takes its control range from the model's actuator_ctrlrange", source="upstream_code",
              ref="panda_mujoco_gym/envs/panda_env.py:83-84"),
         Fact("The environment action is three Cartesian displacements plus a gripper command unless the gripper is "
-             "blocked", source="upstream_code", ref="panda_mujoco_gym/envs/panda_env.py:35-37"),
-        Fact("The pick-and-place environment runs 25 physics substeps per step, uses the distance threshold 0.05 and "
+             "blocked", source="upstream_code", ref="panda_mujoco_gym/envs/panda_env.py:152-173"),
+        Fact("The pick-and-place environment sets n_substeps to 25, uses the distance threshold 0.05 and "
              "samples the object and the goal in a 0.3 m range with a 0.2 m height range", source="upstream_code",
              ref="panda_mujoco_gym/envs/pick_and_place.py:13-23"),
         Fact("The package registers the three tasks, each with a sparse and a dense reward, with 50 steps per "
              "episode", source="upstream_code", ref="panda_mujoco_gym/__init__.py:6-16"),
-        Fact("A step clips the action to the action-space bounds and runs ten physics steps of n_substeps each",
-             source="upstream_code", ref="panda_mujoco_gym/envs/panda_env.py:121-133"),
+        Fact("A step clips the action to the action-space bounds before applying it and advancing physics",
+             source="upstream_code", ref="panda_mujoco_gym/envs/panda_env.py:121-128"),
+        Fact("The physics-step helper runs ten calls to mj_step with nstep=n_substeps",
+             source="upstream_code", ref="panda_mujoco_gym/envs/panda_env.py:256-258"),
     ]
     safe_state = ("the simulation stops advancing: after an e-stop no step or reset is accepted until "
                   "mhs.safety.reset clears the latch, and the world state stays readable")
@@ -81,7 +98,7 @@ class FrankaPanda(MujocoDriver):
         "determinism": {
             "kind": "seeded",
             "seed_control": "none",
-            "notes": "the carried model and a fixed control sequence are deterministic in the MuJoCo engine, but a "
+            "notes": "the upstream model and a fixed control sequence are deterministic in the MuJoCo engine, but a "
                      "real engine run was never made here and the bridge's seed is only recorded; the stand-in state "
                      "is deterministic",
         },
@@ -92,12 +109,12 @@ class FrankaPanda(MujocoDriver):
         "snapshot_restore": True,
         "gaps": [
             "the fake backend is a stand-in mujoco module, not the MuJoCo engine: it parses the integration step, "
-            "the joint counts and the actuator ctrlranges of model.xml and panda_mocap.xml and advances time (every "
-            "qpos follows its qvel, which stays zero); it computes no equations of motion, contacts, mocap welds or "
+            "the joint counts and the actuator ctrlranges of the upstream scene and advances time (every qpos "
+            "follows its qvel, which stays zero); it computes no equations of motion, contacts, mocap welds or "
             "actuator dynamics, so a ctrl vector changes nothing but data.ctrl",
-            "the package carries the two XML files only (model.xml and panda_mocap.xml); the 33 MB of meshes the "
-            "scene references through meshdir ./meshes/ are not carried, so a real MuJoCo load needs that assets "
-            "directory beside model.xml",
+            "the package carries copies of the two XML files only (model.xml and panda_mocap.xml); the scene's 33 MB "
+            "of meshes are not copied into the package, so the driver loads the upstream scene in place and needs "
+            "the clone's panda_mujoco_gym/assets/meshes/ beside it",
             "the clone's environments are MuJoCoRobotEnv subclasses of a reinforcement-learning library with "
             "observations, rewards, a mocap-driven end effector and goal sampling (panda_mujoco_gym/envs/panda_env.py); "
             "this package serves the raw model, not those environments, and that library is not carried",

@@ -6,6 +6,7 @@ Every fact cites its source at commit `96fbc64e3eae5fee915e0d390f864fa06ddccd47`
 | fact | source | ref |
 |---|---|---|
 | The normal registration loop registers rware-{size}-{agents}ag{diff}-v2 with entry_point rware.warehouse:Warehouse for the tiny, small, medium and large layouts, the default, easy and hard difficulties and 1 to 19 agents; for tiny, 1 agent and the default difficulty the id is rware-tiny-1ag-v2 | upstream_code | rware/__init__.py:7-39 |
+| Importing rware runs the module-level registration: rware/__init__.py imports register from gymnasium (line 3) and its top-level loop calls register(id=f"rware-{size}-{agents}ag{diff}-v2", entry_point="rware.warehouse:Warehouse", ...) at line 24, so importing rware makes rware-tiny-1ag-v2 available to gymnasium.make | upstream_code | rware/__init__.py:3-24 |
 | The registered tiny layout uses column_height 8, shelf_rows 1, shelf_columns 3, n_agents 1, msg_bits 0, sensor_range 1, request_queue_size 1, max_inactivity_steps None, max_steps 500 and individual rewards | upstream_code | rware/__init__.py:27-38 |
 | The Action enum has five actions: NOOP=0, FORWARD=1, LEFT=2, RIGHT=3 and TOGGLE_LOAD=4 | upstream_code | rware/warehouse.py:31-36 |
 | The action space is a Tuple with one Discrete(len(Action)) per agent, which is a Tuple of one Discrete(5) for the registered one-agent layout | upstream_code | rware/warehouse.py:255-260 |
@@ -15,10 +16,22 @@ Every fact cites its source at commit `96fbc64e3eae5fee915e0d390f864fa06ddccd47`
 | The grid height is (column_height + 1) * shelf_rows + 2 and its width is (2 + 1) * shelf_columns + 1; the goals are the two cells in the middle of the last row | upstream_code | rware/warehouse.py:294-306 |
 | A reset recreates the shelves, spawns the agents at random grid locations with random directions and samples the request queue from the shelves using np_random | upstream_code | rware/warehouse.py:757-799 |
 | step maps each tuple element to an Action and a forward move of an agent carrying a shelf into a standing shelf is cancelled to NOOP | upstream_code | rware/warehouse.py:804-844 |
+| The registration names entry_point rware.warehouse:Warehouse (line 26) and gives the constructor arguments it uses (lines 27-38); the sim backend builds that class with those arguments | upstream_code | rware/__init__.py:24-38 |
+| Warehouse.__init__ takes shelf_columns, column_height, shelf_rows, n_agents, msg_bits, sensor_range, request_queue_size, max_inactivity_steps, max_steps and reward_type as required arguments | upstream_code | rware/warehouse.py:146-157 |
+| Warehouse.step returns a five-tuple whose reward element is list(rewards), one reward per agent; the registered layout has one agent, so the sim backend returns element 0 as the bridge's scalar reward | upstream_code | rware/warehouse.py:944-946 |
 | A requested shelf delivered to a goal is replaced in the request queue by a uniformly sampled shelf that is not currently requested | upstream_code | rware/warehouse.py:905-918 |
 | With RewardType.INDIVIDUAL the agent that delivers a requested shelf to a goal receives +1 | upstream_code | rware/warehouse.py:919-924 |
 | The episode reports done when max_inactivity_steps or max_steps is reached; truncated is always False | upstream_code | rware/warehouse.py:936-942 |
 | The environment metadata declares the render modes human and rgb_array at 10 frames per second | upstream_code | rware/warehouse.py:141-143 |
+
+Configuration: `env_id = "rware-tiny-1ag-v2"`, `env_module = "rware"` (importing the module registers the id,
+`rware/__init__.py:3-24`), and no `env_kwargs` (the registration itself supplies the tiny layout's constructor
+arguments, `rware/__init__.py:27-38`). The `fake` backend is the package's own `.fake:FakeWarehouse`; the `sim`
+backend is the callable factory `_build_sim_warehouse`, which imports `rware.warehouse:Warehouse` (the registration
+entry point, `rware/__init__.py:24-26`), builds it with those registration arguments, and returns
+`_SingleAgentReward`, which converts the per-agent `list(rewards)` returned by `Warehouse.step`
+(`rware/warehouse.py:946`) to the one scalar the Gymnasium bridge carries. The registration layout has one agent
+(`rware/__init__.py:31`), so element 0 is the whole reward.
 
 Limits: the driver declares none. This is a simulated R0 device. The action space is a Tuple of one
 `Discrete(5)` per agent; the Gymnasium bridge publishes a Tuple's structure but no per-element bounds (the bridge
@@ -29,8 +42,9 @@ schema bound 1..10000. No bound is `operator_required`.
 Fidelity contract (`driver.py`, `fidelity = {...}`): engine `gymnasium:rware-tiny-1ag-v2`, level F0 (a discrete grid
 world with no continuous dynamics), determinism `seeded` with `seed_control` `parameter`, timestep 0 (the
 environment has no physical timestep; one tick is one discrete transition), `realtime_factor` 0, clock `lockstep`,
-reset `full`, no snapshot and restore. The gaps say what is not modelled, that the fake returns the one-agent scalar
-reward where upstream returns a per-agent list, and that the fake was not compared with the upstream environment.
+reset `full`, no snapshot and restore. The gaps say what is not modelled, that the fake and the sim adapter return
+the one-agent scalar reward where upstream returns a per-agent list, and that the fake was not compared with the
+upstream environment.
 
 Safety: simulated R0 device. The e-stop is the runtime's software latch (the environment has no native stop); after
 it no step or reset is accepted until `mhs.safety.reset` clears the latch, and the state stays readable.

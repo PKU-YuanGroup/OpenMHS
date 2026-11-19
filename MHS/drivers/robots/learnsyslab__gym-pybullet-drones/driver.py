@@ -4,7 +4,10 @@ A GymnasiumDriver is configuration only: ``env_id`` names the registered environ
 whole contract from the environment's spaces.  ``ctrl-aviary-v0`` is registered with entry point
 ``gym_pybullet_drones.envs:CtrlAviary`` and no keyword arguments (gym_pybullet_drones/__init__.py:3-6), so
 ``env_kwargs`` is empty and the environment runs with the class defaults: one CF2X drone, PyBullet and control
-frequencies of 240 Hz, no GUI and no recording (CtrlAviary.py:12-26).
+frequencies of 240 Hz, no GUI and no recording (CtrlAviary.py:12-26).  The id is registered only when the package
+is imported: ``gym_pybullet_drones/__init__.py:1`` imports ``register`` and ``:3-6`` calls it at module level, and
+``pyproject.toml`` declares no entry point, so ``env_module = "gym_pybullet_drones"`` makes the bridge import that
+module before ``gymnasium.make``.
 
 * ``cap.world.step.v1`` takes ``{ticks, action}`` with ``action`` ``{values: [..]}``: the four commanded propeller
   speeds of the drone, flattened from the ``(NUM_DRONES, 4)`` action ``Box`` whose bounds are 0 to ``MAX_RPM``
@@ -19,7 +22,9 @@ The device is simulated (R0): there is no hardware backend, no e-stop path to a 
 limit.  The gate cannot import gym_pybullet_drones (it needs pybullet, numpy, Pillow and a PyBullet client), and
 package code never imports the clone, so the ``fake`` backend is the package's own pure Python aviary (fake.py).
 A backend name that ``backends`` does not list (``sim``) is served by ``gymnasium.make("ctrl-aviary-v0")``
-(GymnasiumDriver.open_native); that path needs pybullet and the upstream package and was not run here.
+(GymnasiumDriver.open_native) after the bridge imports ``env_module``.  The upstream requires Python 3.12
+(pyproject.toml:14; the install note at README.md:26 and the CI image at .github/workflows/test.yml:21) and, past
+Python 3.10, builds pybullet from source (README.md:29-31).  That path was not run here.
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002).
 Every constant and rule cites a line of the clone at the pinned commit 7ebad1ecabd28a7000add2d05f888aa2e837c2cc.
@@ -38,12 +43,17 @@ ENUMS = "gym_pybullet_drones/utils/enums.py"
 class CtrlAviary(GymnasiumDriver):
     device_id = "ctrl-aviary"
     env_id = "ctrl-aviary-v0"
+    env_module = "gym_pybullet_drones"    # importing it runs register(...) at gym_pybullet_drones/__init__.py:1-6
     native = "gym_pybullet_drones.envs:CtrlAviary"
     backends = {"fake": ".fake:FakeCtrlAviary"}
     display_name = "gym-pybullet-drones CtrlAviary (ctrl-aviary-v0)"
     vendor, model = "LearnSysLab", "gym-pybullet-drones (PyBullet drone simulation)"
     tags = ["quadrotor", "drone", "ctrl-aviary", "pybullet", "reinforcement-learning", "simulation", "gymnasium"]
     facts = [
+        Fact("Importing gym_pybullet_drones runs the module-level register call: line 1 imports register from "
+             "gymnasium.envs.registration and lines 3-6 call register(id='ctrl-aviary-v0', "
+             "entry_point='gym_pybullet_drones.envs:CtrlAviary'), so the id exists only after that import",
+             source="upstream_code", ref=f"{REGISTRATION}:1-6"),
         Fact("ctrl-aviary-v0 is registered with entry point gym_pybullet_drones.envs:CtrlAviary and no keyword "
              "arguments", source="upstream_code", ref=f"{REGISTRATION}:3-6"),
         Fact("CtrlAviary defaults to drone model CF2X, one drone, physics PYB (PyBullet), pyb_freq 240 Hz, "

@@ -7,16 +7,25 @@ returns the four-value ``(observation, reward, done, info)`` and ``seed(seed)`` 
 bridge has explicit fallbacks for both shapes (``mhs/bridge/gymnasium.py``), so the family shape expresses the real
 interface.  The device is simulated (R0): there is no hardware backend and no stop path to a machine.
 
-CausalWorld registers no ``gym.make`` id; the documented construction is ``CausalWorld(task=generate_task(...))``
-(README.md:215).  ``env_id`` is therefore unset, and a backend name that ``backends`` does not list (``sim``) would
-make the bridge call ``gymnasium.make(None)`` and fail with ``MHS.DEVICE.NOT_READY``.  The clone also needs pybullet,
-gym and numpy, and package code never imports or runs the clone, so the only served backend is the package's own pure
-Python fake.  This package covers the default reaching task with structured observations.
+CausalWorld registers no ``gym.make`` id.  The documented construction is ``CausalWorld(task=generate_task(...))``
+(README.md:215).  With ``max_episode_length`` left at its None default (causal_world/envs/causalworld.py:33),
+omitting ``task`` still evaluates ``task.get_default_max_episode_length`` (causalworld.py:167-169), so this
+factory passes a task object.  ``env_id`` stays unset.  The package
+already builds the fake through a factory, and the upstream class is ``causal_world.envs.causalworld:CausalWorld``,
+so the ``sim`` backend is ``make_sim_env``.  It calls ``generate_task(task_generator_id="reaching")``
+(causal_world/task_generators/task.py:15, :29-30), the task the constructor's ``task is None`` branch would store
+(causalworld.py:161-162), and ``CausalWorld(task=task, enable_visualization=False)``.  Visualization off is the
+constructor default (causalworld.py:27) and the reaching test's choice
+(tests/causal_world/task_generators/test_reaching.py:11-12); that branch connects with ``pybullet.DIRECT``
+(causalworld.py:962-967) and needs no display.  Action mode, observation mode and both normalization flags stay at
+the constructor defaults (causalworld.py:29-32), the normalized structured joint-position reaching task the fake
+stands in for.  The factory does not wrap the environment or replace any of its values.
 
 The ``fidelity`` block describes the model as deployed on the checked fake backend (spec 05-fidelity FID-002): the
 fake is an analytic kinematic stand-in, level F0, seeded, 40 ms control step, lockstep clock, full reset, no
 snapshot.  The upstream PyBullet model, its contacts and its 4 ms physics substeps are not modelled and are named in
-the gaps.  This package is model-authored and unreviewed: it is checked on the fake backend only.
+the gaps.  This package is model-authored and unreviewed.  The fake is the checked stand-in; the sim backend is the
+upstream environment and was not run in this workspace.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -28,14 +37,35 @@ REACHING = "causal_world/task_generators/reaching.py"
 BASE = "causal_world/task_generators/base_task.py"
 SILHOUETTE = "causal_world/envs/scene/silhouette.py"
 SPACES = "causal_world/utils/env_utils.py"
+TASK = "causal_world/task_generators/task.py"
+REACHING_TEST = "tests/causal_world/task_generators/test_reaching.py"
+
+
+def make_sim_env(**_options):
+    """Build the real reaching ``CausalWorld`` (``causal_world/envs/causalworld.py:18``).
+
+    The class registers no gym id.  With ``max_episode_length`` left at its None default (``causalworld.py:33``),
+    omitting ``task`` still evaluates ``task.get_default_max_episode_length`` (``causalworld.py:167-169``), so the
+    factory passes the reaching task ``generate_task`` returns by default
+    (``task.py:15``, ``:29-30``), the task the constructor's ``task is None`` branch would store
+    (``causalworld.py:161-162``).  ``enable_visualization`` is false, the constructor default (``causalworld.py:27``)
+    and the reaching test's choice (``test_reaching.py:11-12``), which connects with ``pybullet.DIRECT``
+    (``causalworld.py:962-967``).  Action mode, observation mode and both normalization flags stay at the constructor
+    defaults (``causalworld.py:29-32``).  Nothing on the returned object is wrapped or replaced.
+    """
+    from causal_world.envs.causalworld import CausalWorld as UpstreamCausalWorld
+    from causal_world.task_generators.task import generate_task
+
+    return UpstreamCausalWorld(task=generate_task(task_generator_id="reaching"), enable_visualization=False)
 
 
 class CausalWorld(GymnasiumDriver):
     device_id = "causalworld"
-    #: CausalWorld registers no gym.make id; the documented factory is CausalWorld(task=generate_task(...)).
+    #: CausalWorld registers no gym.make id.  sim builds the class; see make_sim_env.
     env_id = None
     native = "causal_world.envs.causalworld:CausalWorld"
-    backends = {"fake": ".fake:FakeCausalWorld"}
+    #: ``sim`` is a callable, so the lock's string backends stay ``fake`` only (G2 compares an all-string mapping).
+    backends = {"fake": ".fake:FakeCausalWorld", "sim": make_sim_env}
     display_name = "rr-learning CausalWorld TriFinger benchmark (PyBullet)"
     vendor, model = "rr-learning", "CausalWorld"
     tags = ["causalworld", "trifinger", "robotic-manipulation", "pybullet", "reinforcement-learning", "simulation",
@@ -86,6 +116,11 @@ class CausalWorld(GymnasiumDriver):
              ref=f"{ENV}:401-410"),
         Fact("The reaching task's default goals are [0, 0, 0.10], [0, 0, 0.13] and [0, 0, 0.16]",
              source="upstream_code", ref=f"{REACHING}:10-12"),
+        Fact("When task and max_episode_length are both None, the constructor calls "
+             "task.get_default_max_episode_length on None", source="upstream_code", ref=f"{ENV}:161-169"),
+        Fact("generate_task defaults to the reaching generator", source="upstream_code", ref=f"{TASK}:15-30"),
+        Fact("The reaching test builds CausalWorld with that task and enable_visualization=False",
+             source="upstream_code", ref=f"{REACHING_TEST}:10-12"),
     ]
     safe_state = ("the simulation stops advancing: the runtime latch refuses step and reset after an e-stop until "
                   "mhs.safety.reset clears it, and the fake keeps its state readable")

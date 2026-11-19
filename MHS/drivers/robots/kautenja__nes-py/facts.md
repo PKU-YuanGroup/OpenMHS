@@ -20,6 +20,11 @@ clone such as README.md or docs/*.md) or `upstream_code` (`path/in/clone.py:LINE
 | render returns the screen in rgb_array mode | upstream_code | nes_py/nes_env.py:415-416 |
 | dump_state and load_state carry an opaque native snapshot and restore it | upstream_code | nes_py/nes_env.py:214-225 |
 | get_action_meanings returns ['NOOP'] for the base class | upstream_code | nes_py/nes_env.py:452-454 |
+| NESEnv(rom_path, render_mode=None) is the constructor; render_mode defaults to None | upstream_code | nes_py/nes_env.py:71 |
+| render returns None when render_mode is None; human mode is what creates the ImageViewer | upstream_code | nes_py/nes_env.py:395-412 |
+| create_smb1_instance builds NESEnv from rom_file_abs_path('super-mario-bros-1.nes') | upstream_code | nes_py/tests/test_nes_env.py:42-45 |
+| rom_file_abs_path joins the tests directory with games/<filename> | upstream_code | nes_py/tests/rom_file_abs_path.py:16-20 |
+| The installed wheel excludes nes_py/tests, so the test ROMs are not in the installed package | upstream_code | pyproject.toml:64 |
 
 Limits: the driver declares none. The only bounds are derived by the bridge from the environment itself:
 `cap.world.step.v1` takes `ticks` from 1 to `max_ticks` (10000 by default) and the action field `action.index` from
@@ -31,7 +36,9 @@ stand-in with no emulated CPU, PPU, mapper, memory or audio dynamics), determini
 `parameter`, timestep 16.67 ms (one frame at the declared `render_fps` 60, `nes_py/nes_env.py:54`),
 `realtime_factor` 0, clock `lockstep`, reset `full`, no snapshot and restore. The gaps say what is not modelled,
 that the fake returns a 24 x 32 x 3 downscale of the real 240 x 256 x 3 frame, and that no run was compared with the
-upstream environment.
+upstream environment. The sim backend passes the absolute path of `nes_py/tests/games/super-mario-bros-1.nes`
+(`nes_py/tests/test_nes_env.py:42-45`); the installed wheel omits that file (`pyproject.toml:64`). The fake still
+accepts an optional path and does not read it.
 
 Safety: simulated R0 device. The e-stop is the runtime's software latch (no native stop exists); after it no step or
 reset is accepted until `mhs.safety.reset` clears the latch (a simulator needs no operator for that), and the frame

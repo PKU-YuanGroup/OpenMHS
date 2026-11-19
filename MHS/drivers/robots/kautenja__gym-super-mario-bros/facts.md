@@ -19,8 +19,16 @@ of the clone and `upstream_code` is code or a test of the clone. The same facts 
 | The documented 1-1 opening info has 0 coins, 2 lives, world 1, score 0, stage 1, time 400 and x_pos 40 | upstream_code | gym_super_mario_bros/tests/test_smv_env.py:81-90 |
 | The registered time limit is 9999999 steps | upstream_code | gym_super_mario_bros/_registration.py:7 |
 | SuperMarioBros-v0 is registered as a Super Mario Bros. environment | upstream_code | gym_super_mario_bros/_registration.py:92-93 |
+| You must import gym_super_mario_bros before trying to make an environment, because Gymnasium environments are registered at runtime | vendor_doc | README.md:50-51 |
 | The registered entry point is gym_super_mario_bros:SuperMarioBrosEnv and the environment is marked nondeterministic | upstream_code | gym_super_mario_bros/_registration.py:33-42 |
 | A target world is 1 to 8 (1 to 13 for Lost Levels) and a target stage is 1 to 4 | upstream_code | gym_super_mario_bros/_roms/decode_target.py:31-41 |
+
+Configuration: `env_id = "SuperMarioBros-v0"` and `env_module = "gym_super_mario_bros"`. Importing that package loads
+`_registration` (`gym_super_mario_bros/__init__.py:11`), whose module body registers the id
+(`gym_super_mario_bros/_registration.py:92-93`) through `gym.envs.registration.register`
+(`gym_super_mario_bros/_registration.py:33-35`). The README says that import has to happen before `gym.make`
+(`README.md:50-51`). The registration passes no kwargs (`_registration.py:93`) and the constructor's `render_mode`
+defaults to None (`gym_super_mario_bros/smb_env.py:39`), so the sim path does not open a window.
 
 Limits: the driver declares none of its own. The only bound is the action space, which the bridge derives from the
 environment (`Discrete(256)`: `action.index` from 0 to 255, with no source and the ref

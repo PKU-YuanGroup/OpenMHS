@@ -6,6 +6,8 @@ Every fact cites its source at commit `f6536cbc30f06c8d326107a68725f46bb53cff15`
 | fact | source | ref |
 |---|---|---|
 | ExtractWorld_0-v1 is registered with max_episode_steps=100 | upstream_code | chemistrylab/__init__.py:8 |
+| Importing chemistrylab runs the module-level register(...) call that registers ExtractWorld_0-v1; chemistrylab/__init__.py:1 imports register from gym.envs.registration | upstream_code | chemistrylab/__init__.py:1-9 |
+| The upstream ExtractWorld demo imports chemistrylab before gym.make('ExtractWorld_0-v1') | upstream_code | tests/demo_ExtractWorld.py:1-7 |
 | ExtractWorld_v1 is constructed with extraction='water_oil_2' and target_material='Na' | upstream_code | chemistrylab/extractworldgym/extractworld_v1.py:44-49 |
 | ExtractWorldEnv takes dt=0.01 s and stores it as the environment timestep; the ExtractWorld_v1 subclass does not override it | upstream_code | chemistrylab/extractworldgym/extractworld_v1_engine.py:18 |
 | reset() takes no seed argument, rebuilds the extraction vessels and returns the state | upstream_code | chemistrylab/extractworldgym/extractworld_v1_engine.py:50-55 |
@@ -22,3 +24,9 @@ Tags (short lowercase keywords): chemistry, extractworld, reinforcement-learning
 The fake backend is not the upstream environment: it implements the action interface and a simple mass transfer only.
 Its compact three-vessel state is test data (`# placeholder` in `fake.py`), and the driver's fidelity `gaps` name what
 is not modelled. No fact or limit is copied from the fake.
+
+`env_module = "chemistrylab"` names the module whose import runs the registration at
+`chemistrylab/__init__.py:1-9`; the upstream demo imports it before `gym.make` (`tests/demo_ExtractWorld.py:1-7`).
+The environment implements the legacy gym API (`chemistrylab/extractworldgym/extractworld_v1_engine.py:50-67`), so
+use `gym==0.23.1` for that legacy API. The upstream also leaves its observation-space assignment commented out
+(`chemistrylab/extractworldgym/extractworld_v1_engine.py:40`). The package's tests exercise only the fake backend.

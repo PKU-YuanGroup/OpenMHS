@@ -10,8 +10,9 @@ The device is simulated (R0): it has no hardware backend and no operator-require
 gymnasium, pybullet or panda-gym (the clone declares pybullet and panda-gym as external prerequisites,
 README.md:11-12, and its scripts add a sibling panda-gym checkout to sys.path, test_xarm6_reach.py:3), so the
 ``fake`` backend is the package's own pure Python kinematic stand-in (fake.py).  A backend name that ``backends``
-does not list (``sim``) is served by ``gymnasium.make(env_id)`` (GymnasiumDriver.open_native); that path needs the
-upstream packages and was not run here.
+does not list (``sim``) is served by ``gymnasium.make(env_id)`` (GymnasiumDriver.open_native) after the bridge
+imports ``env_module``.  Importing ``uf_gym`` runs the module-level ``register(...)`` calls
+(uf_gym/__init__.py:3, :15-20).  The upstream package was not run here.
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002).
 The checked deployment is the kinematic fake, so the level is F0; the gaps state what the upstream PyBullet
@@ -30,6 +31,7 @@ REGISTRATION = "uf_gym/__init__.py"
 class XArm6Reach(GymnasiumDriver):
     device_id = "xarm6-reach"
     env_id = "XArm6Reach-v3"
+    env_module = "uf_gym"  # importing it runs register(...) at uf_gym/__init__.py:15
     env_kwargs = {"reward_type": "sparse", "control_type": "ee"}
     native = "uf_gym.envs.uf_tasks.xarm6_tasks:XArm6ReachEnv"
     backends = {"fake": ".fake:FakeXArm6ReachEnv"}
@@ -56,6 +58,9 @@ class XArm6Reach(GymnasiumDriver):
         Fact("XArm6Reach-v3 is registered on the sparse/ee iteration: the loop visits sparse before dense and ee "
              "before joints, and those two choices add no suffix to the id", source="upstream_code",
              ref=f"{REGISTRATION}:8-13"),
+        Fact("Importing uf_gym runs register(...) for XArm6Reach-v3: the call is at module level, so the id is in "
+             "the gymnasium registry only after that module is imported", source="upstream_code",
+             ref=f"{REGISTRATION}:3-20"),
         Fact("XArm6ReachEnv is the entry class of XArm6Reach-v3", source="upstream_code", ref=f"{TASKS6}:167"),
         Fact("XArm6ReachEnv builds a PyBullet simulation, creates an XArm6 with block_gripper=True at base "
              "position [-0.5, 0.0, 0.0], and attaches a Reach task that uses the robot's end-effector position",

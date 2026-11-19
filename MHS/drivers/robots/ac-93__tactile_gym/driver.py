@@ -10,12 +10,17 @@ seed/options and returns the observation, and ``step`` returns the four-tuple
 
 The device is simulated (``mode = "simulated"``, R1: the capability advances a simulated robot arm, which the safety
 spec classifies as simulation stepping, MHS-004 section 2.1).  There is no hardware backend, no serial port and no
-robot API in the clone path used here, so the package has one backend, the package fake in ``fake.py``.  The fake is
-a pure Python kinematic stand-in because the upstream environment needs PyBullet, OpenCV, numpy and
-``tactile_gym.rl_envs`` to be imported for the registration, none of which the gate installs or imports; the package
-never imports the clone.  A backend name outside ``backends`` (``sim``) would be served by ``gym.make(env_id)``
-(``GymnasiumDriver.open_native``); in addition to the upstream dependencies that path needs ``tactile_gym.rl_envs``
-imported so ``edge_follow-v0`` is registered, and it was not run here.
+robot API in the clone path used here, so the package fake in ``fake.py`` is the only declared backend.  The fake is
+a pure Python kinematic stand-in because the acceptance gate does not install the upstream stack; the package never
+imports the clone.  A backend name outside ``backends`` (``sim``) is served by ``gym.make(env_id)``
+(``GymnasiumDriver.open_native``).  ``env_module = "tactile_gym.rl_envs"`` makes the bridge import that module before
+the lookup, and its module body runs the legacy-gym ``register`` call at ``tactile_gym/rl_envs/__init__.py:1-6``;
+the bridge then makes the id in the registry that holds it, which is legacy ``gym`` here.  The environment uses the
+legacy gym API (``tactile_gym/rl_envs/base_tactile_env.py:2,61-64,166-185``).  The dependency constraints pin
+``gym==0.23.1``, a legacy-API release whose sdist builds under the gate's setuptools (the 0.21.0 sdist's invalid
+``extras_require`` is refused), and ``stable-baselines3==1.2.0`` (``requirements.txt:7`` allows any ``>=1.0``;
+its metadata requires ``gym>=0.17`` with no upper bound, so the gym pin applies, while 1.8.0 pins ``gym==0.21.0``
+exactly).  That path needs the upstream package and its simulator dependencies; it was not run here.
 
 ``env_kwargs`` supplies the deployment configuration: the class's own ``env_modes_default`` (``edge_follow_env.py:13-20``)
 plus the ``tactile_sensor_name`` key the class reads at ``edge_follow_env.py:59`` but its default dict does not contain
@@ -35,6 +40,7 @@ INIT = "tactile_gym/rl_envs/__init__.py"
 class TactileEdgeFollow(GymnasiumDriver):
     device_id = "tactile_edge_follow"
     env_id = "edge_follow-v0"
+    env_module = "tactile_gym.rl_envs"    # importing it runs register(...) at tactile_gym/rl_envs/__init__.py:3-6
     native = "tactile_gym.rl_envs.exploration.edge_follow.edge_follow_env:EdgeFollowEnv"
     backends = {"fake": ".fake:FakeEdgeFollowEnv"}
     action_space_ref = f"{ENV}:140"
@@ -55,6 +61,9 @@ class TactileEdgeFollow(GymnasiumDriver):
         },
     }
     facts = [
+        Fact("Importing tactile_gym.rl_envs runs the module-level register call: line 1 imports register from "
+             "gym.envs.registration and lines 3-6 call register(id='edge_follow-v0', entry_point=...), so importing "
+             "the module makes the id available to gym.make", source="upstream_code", ref=f"{INIT}:1-6"),
         Fact("edge_follow-v0 is registered with entry point "
              "tactile_gym.rl_envs.exploration.edge_follow.edge_follow_env:EdgeFollowEnv",
              source="upstream_code", ref=f"{INIT}:3-6"),
@@ -118,7 +127,8 @@ class TactileEdgeFollow(GymnasiumDriver):
             "fake integrates no dynamics and was never compared with the upstream environment",
             "no wall-clock pacing: realtime_factor 0, one bridge tick advances one control interval of 0.1 s, which "
             "upstream splits into 24 physics steps of 1/240 s",
-            "the sim backend (gym.make('edge_follow-v0')) needs PyBullet, OpenCV, numpy and an import of "
+            "the sim backend (gym.make('edge_follow-v0')) needs the upstream package and its PyBullet, OpenCV, "
+            "numpy and legacy gym dependencies; the driver's env_module imports "
             "tactile_gym.rl_envs so the id is registered; it was not run here",
             "snapshot and restore are not offered: the environment exposes no get_state/set_state pair",
             "no physical robot arm or tactile sensor is modelled and nothing was validated against hardware",

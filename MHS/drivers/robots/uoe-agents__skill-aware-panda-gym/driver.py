@@ -9,8 +9,9 @@ PandaSkillAware-v3 is a PyBullet simulation of a Franka Panda that pushes, rolls
 ``info["state"]`` labels which skill the last step used (``README.md:27``).  The gate cannot import the upstream
 stack (panda-gym, gymnasium, pybullet, numpy and scipy, ``setup.py:23``), so the ``fake`` backend is the package's
 own pure Python stand-in (``fake.py``).  A backend name that ``backends`` does not list (``sim``) is served by
-``gymnasium.make("PandaSkillAware-v3")`` (``GymnasiumDriver.open_native``); that path needs the upstream package and
-was not run here.
+``gymnasium.make("PandaSkillAware-v3")`` (``GymnasiumDriver.open_native``) after the bridge imports ``env_module``.
+Importing ``skill_aware_panda_gym`` runs the module-level ``register(...)`` (``skill_aware_panda_gym/__init__.py:7``).
+The upstream package was not run here.
 
 The action space and the observation layout are built by panda-gym's ``Panda`` and ``RobotTaskEnv`` classes in the
 external dependency; the clone imports them and does not state their dimensions or bounds, so the driver declares
@@ -30,6 +31,7 @@ INIT = "skill_aware_panda_gym/__init__.py"
 class PandaSkillAware(GymnasiumDriver):
     device_id = "panda-skill-aware"
     env_id = "PandaSkillAware-v3"
+    env_module = "skill_aware_panda_gym"  # importing it runs register(...) at skill_aware_panda_gym/__init__.py:7
     native = "skill_aware_panda_gym.envs:PandaPushEnv"
     backends = {"fake": ".fake:FakePandaPushEnv"}
     device_kind = "world.sim"
@@ -48,6 +50,8 @@ class PandaSkillAware(GymnasiumDriver):
         Fact("info['state'] is one of push, roll, pick and down", source="vendor_doc", ref="README.md:27"),
         Fact("PandaSkillAware-v3 is registered with entry point skill_aware_panda_gym.envs:PandaPushEnv and "
              "max_episode_steps=50", source="upstream_code", ref=f"{INIT}:7-11"),
+        Fact("The register call for PandaSkillAware-v3 is at module level, so the id is in the gymnasium registry "
+             "only after skill_aware_panda_gym is imported", source="upstream_code", ref=f"{INIT}:6-11"),
         Fact("PandaPushEnv is a RobotTaskEnv task environment", source="upstream_code", ref=f"{ENVS}:70"),
         Fact("PandaPushEnv builds PyBullet with the requested render mode and renderer and a Panda robot in that "
              "simulation, with block_gripper=False and base_position [-0.6, 0.0, 0.0]",

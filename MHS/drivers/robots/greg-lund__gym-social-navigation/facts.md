@@ -7,6 +7,10 @@ clone such as README.md) or `upstream_code` (`path/in/clone.py:LINE`). The same 
 | fact | source | ref |
 |---|---|---|
 | The package registers social-nav-train-env-v0 with kwargs test=False and social-nav-test-env-v0 with kwargs test=True; both use the entry point gym_social_navigation.envs:SocialNavEnv | upstream_code | gym_social_navigation/__init__.py:3-12 |
+| Importing gym_social_navigation runs gym.envs.registration.register for both environment ids | upstream_code | gym_social_navigation/__init__.py:1-12 |
+| setup includes package data for csv and npy files only | upstream_code | setup.py:5-8 |
+| The constructor joins each pedestrian file onto the directory of this module | upstream_code | gym_social_navigation/envs/social_nav_env.py:40-41 |
+| parse_data loads each pedestrian file with np.loadtxt | upstream_code | gym_social_navigation/envs/social_nav_env.py:74-75 |
 | The environment uses data from the ETH Pedestrian dataset | vendor_doc | README.md:3 |
 | The test flag selects the data/val files; otherwise the data/train files are used | upstream_code | gym_social_navigation/envs/social_nav_env.py:31-38 |
 | The robot keeps 3 previous states per agent, tracks at most 4 agents within a 10-unit proximity radius, uses 4 path points and requires a normalised start-goal distance of at least 0.45 | upstream_code | gym_social_navigation/envs/social_nav_env.py:11-18 |
@@ -42,5 +46,20 @@ wall-clock pacing is provided.
 Safety: simulated R0 device. The e-stop is the runtime's software latch (no native stop exists); after it no step or
 reset is accepted until `mhs.safety.reset` clears the latch, and the state stays readable. There is no hardware
 backend and no hardware claim.
+
+Sim path (`driver.py`): `env_module = "gym_social_navigation"` because importing that module runs
+`register(...)` at `gym_social_navigation/__init__.py:1-12`. `backends["sim"]` is `make_sim_env`. The fake
+backend is still `.fake:FakeSocialNavEnv` and does not import the clone. `setup.py:5-8` lists package data
+for `*.csv` and `*.npy` only, so the installed wheel omits the `.txt` traces. `social_nav_env.py:8` accepts
+only `test`, `social_nav_env.py:40-41` joins each file onto the directory of that module, and
+`social_nav_env.py:75` loads it with `np.loadtxt`. `make_sim_env` executes the pinned
+`gym_social_navigation/envs/social_nav_env.py` by path (the clone at `robots/greg-lund/gym-social-navigation`,
+or `/src` when the install left the export there) and calls `SocialNavEnv(test=False)`. Those are the entry
+point and kwargs at `gym_social_navigation/__init__.py:3-7`, so the constructor reads `data/train`
+(`social_nav_env.py:35-38`). The loaded module is not inserted into the import table, and the import path is left unchanged. The
+registration sets no `max_episode_steps` (`__init__.py:3-7`). `reset(self)` takes no seed
+(`social_nav_env.py:186`) and `step` returns `(observation, reward, done, info)` (`social_nav_env.py:219-294`).
+The class subclasses `gym.Env` (`social_nav_env.py:1-6`). `setup.py:10` declares unpinned `gym`, `numpy` and
+`matplotlib`. `render` draws with pyplot (`social_nav_env.py:296-317`) and is not called by the factory.
 
 Tags: social-navigation, pedestrian, dubins-car, reinforcement-learning, simulation, gym

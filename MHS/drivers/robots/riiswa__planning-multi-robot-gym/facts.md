@@ -21,7 +21,14 @@ Every fact cites its source at commit `dbb4eb5ab82e4143d1d567095eacae7bdb390b0b`
 | An episode is terminated only when reset_when_target_reached is true and a robot reached the target; truncated is always false | upstream_code | planning_multi_robot_gym/planning_multi_robot_env.py:269 |
 | The info dictionary reports n_robots, max_acceleration, max_velocity, barrier_radius, robot_radius, dt and tau | upstream_code | planning_multi_robot_gym/planning_multi_robot_env.py:115-124 |
 | The environment is registered as PlanningMultiRobot-v0 with entry point planning_multi_robot_gym:PlanningMultiRobotEnv | upstream_code | planning_multi_robot_gym/__init__.py:5-8 |
+| Importing planning_multi_robot_gym runs the module-level register call that registers PlanningMultiRobot-v0 | upstream_code | planning_multi_robot_gym/__init__.py:5 |
 | The environment metadata declares the render modes rgb_array and human with render_fps 30 | upstream_code | planning_multi_robot_gym/planning_multi_robot_env.py:24 |
+
+Sim path (`driver.py`): `env_module = "planning_multi_robot_gym"` because importing that module runs `register(...)`
+at `planning_multi_robot_gym/__init__.py:5-8`. The upstream usage example imports the package before `make`
+(`README.md:24-27`). The registration passes no kwargs, so `gymnasium.make("PlanningMultiRobot-v0")` uses the
+constructor defaults (`planning_multi_robot_env.py:26-41`), including `render_mode` None. The human display path
+(`planning_multi_robot_env.py:282-285`) runs only when `render_mode` is `"human"`.
 
 Limits: the driver declares none. The only action bounds are the two Box spaces of the environment, which the bridge
 derives from the environment instance (`vR` and `vL`: one bound per robot, no source, ref

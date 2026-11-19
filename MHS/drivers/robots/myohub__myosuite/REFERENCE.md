@@ -98,6 +98,8 @@ Outputs:
 
 ## Facts
 
+- Importing myosuite.envs.myo.tasks.challenge runs the module-level _reg call that registers myoChallengeBaodingP1-v1; register_env then calls gymnasium.register (upstream_code: myosuite/envs/myo/tasks/challenge/__init__.py:500)
+- register_env passes the id, entry point and step limit to gymnasium.register (upstream_code: myosuite/core/registry.py:146)
 - myoChallengeBaodingP1-v1 is registered with entry point BaodingEnv, model hand/myohand_baoding.xml and max_episode_steps=200 (upstream_code: myosuite/envs/myo/tasks/challenge/__init__.py:501-505)
 - The normalized action space is a symmetric Box from -ones to +ones with one value per actuator (upstream_code: myosuite/envs/myo/tasks/challenge/baoding.py:202-209)
 - The default observation keys are hand_pos, object1_pos, object1_velp, object2_pos, object2_velp, target1_pos, target2_pos, target1_err and target2_err (upstream_code: myosuite/envs/myo/tasks/challenge/baoding.py:66-75)

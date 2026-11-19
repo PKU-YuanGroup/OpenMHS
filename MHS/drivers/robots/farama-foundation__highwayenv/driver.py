@@ -11,8 +11,11 @@ The gate cannot import highway_env (the environment needs gymnasium, numpy, pand
 ``fake`` backend is the package's own pure Python kinematic stand-in (fake.py): it reproduces the interface of
 ``HighwayEnv``, the spaces of the default configuration, the five meta-actions, the reward structure and the 40 s
 truncation, but it is kinematic (fidelity F0) and does not model the road network or the other vehicles' dynamics;
-the fidelity ``gaps`` say so.  A backend name that ``backends`` does not list (``sim``) is served by
-``gymnasium.make(env_id)`` (GymnasiumDriver.open_native); that path needs the upstream package and was not run.
+the fidelity ``gaps`` say so.  A backend name that ``backends`` does not list (``sim``) is served by importing
+``env_module = "highway_env"``, whose module body runs ``_register_highway_envs()`` (highway_env/__init__.py:193)
+and so registers ``highway-v0`` (:46-49), and then ``gymnasium.make(env_id)`` (GymnasiumDriver.open_native).  The
+package's FAQ explains that a ``NameNotFound`` means HighwayEnv was not imported, and that importing it registers
+the environments (docs/faq.md:8-17); the sim path was not run here.
 
 The card lists five entry symbols: this package implements ``HighwayEnv`` (``highway-v0``), the base environment of
 the repository; ``ExitEnv``/``ConnectedLaneExitEnv`` (``exit-v0``/``exit-v1``), ``HighwayEnvFast``
@@ -36,6 +39,10 @@ OBSERVATION = "highway_env/envs/common/observation.py"
 class HighwayEnv(GymnasiumDriver):
     device_id = "highway"
     env_id = "highway-v0"
+    #: Importing the package runs _register_highway_envs() at highway_env/__init__.py:193, which registers highway-v0
+    #: in gymnasium's registry at :46-49; the package FAQ says that is why an unimported package makes gym.make fail
+    #: with NameNotFound (docs/faq.md:8-17).
+    env_module = "highway_env"
     native = "highway_env.envs.highway_env:HighwayEnv"
     backends = {"fake": ".fake:FakeHighwayEnv"}
     display_name = "HighwayEnv highway-v0 (farama-foundation/highwayenv)"
@@ -45,6 +52,10 @@ class HighwayEnv(GymnasiumDriver):
     facts = [
         Fact("highway-v0 registers highway_env.envs.highway_env:HighwayEnv", source="upstream_code",
              ref=f"{INIT}:46-49"),
+        Fact("Importing highway_env runs _register_highway_envs() at module scope, so the ids exist in "
+             "gymnasium's registry only after that import", source="upstream_code", ref=f"{INIT}:193"),
+        Fact("The package FAQ says a gymnasium NameNotFound means HighwayEnv was not imported yet, and that "
+             "importing it registers the environments", source="vendor_doc", ref="docs/faq.md:8-17"),
         Fact("The action space is DiscreteMetaAction with five meta-actions: 0 LANE_LEFT, 1 IDLE, 2 LANE_RIGHT, "
              "3 FASTER and 4 SLOWER", source="upstream_code", ref=f"{ACTION}:204"),
         Fact("The action space is Discrete(len(actions)), five when both lateral and longitudinal actions are "
@@ -113,7 +124,7 @@ class HighwayEnv(GymnasiumDriver):
             "no rendering, no pygame viewer, no record-video wrapper and no manual control",
             "one tick is one policy step: it advances the simulated time by 1 s (policy_frequency 1 Hz), not by "
             "the 1/15 s simulation substep",
-            "the sim backend (gymnasium.make('highway-v0')) was not run: gymnasium, numpy, pandas, pygame-ce and "
-            "noise are not installed where the gate runs",
+            "the sim backend (gymnasium.make('highway-v0')) was not run where this package was authored: it needs "
+            "the upstream package and its declared dependencies installed",
         ],
     }

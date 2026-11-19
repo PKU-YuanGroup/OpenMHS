@@ -21,6 +21,12 @@ relative to the clone root, which keeps the `slimebot-volleyball/` repository su
 | A ball at the floor scores for the opposite side: checkEdges returns -1 when x <= 0 and 1 otherwise, and the game negates that for the right agent's reward | upstream_code | slimebot-volleyball/1_vs_1/environments/volleybot.py:225-235 |
 | The README lists the observation shape as 18 for 1 vs 1 and 30 for 2 vs 2 | vendor_doc | README.md:39-40 |
 | TeamVolleyBot uses the same MultiBinary(5) action space and a Box observation with 30 values | upstream_code | slimebot-volleyball/2_vs_2/environments/team_volleybot.py:967-977 |
+| volleybot.py imports register from gym.envs.registration | upstream_code | slimebot-volleyball/1_vs_1/environments/volleybot.py:18 |
+| volleybot.py imports logging, math, gym, numpy, cv2, deque and sleep, and no module from this repository | upstream_code | slimebot-volleyball/1_vs_1/environments/volleybot.py:13-22 |
+| The evaluation controller appends the 1_vs_1 directory to sys.path and imports environments.volleybot | upstream_code | slimebot-volleyball/1_vs_1/controllers/evaluation/evaluation.py:4-23 |
+| The evaluation controller constructs VolleyBotEnv with no arguments | upstream_code | slimebot-volleyball/1_vs_1/controllers/evaluation/evaluation.py:73 |
+| VolleyBotEnv subclasses gym.Env and its constructor takes training and update, both defaulting to False | upstream_code | slimebot-volleyball/1_vs_1/environments/volleybot.py:679-728 |
+| SETTING UP installs an unpinned gym and opencv-python into a Python 3.7 virtualenv | vendor_doc | SETTING UP.md:10-20 |
 
 ## Limits
 

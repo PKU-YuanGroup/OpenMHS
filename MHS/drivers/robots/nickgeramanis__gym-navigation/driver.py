@@ -8,8 +8,12 @@ limit.
 
 The upstream package imports gymnasium, numpy and pygame (requirements.txt:1-3) and package code never imports the
 clone, so the ``fake`` backend is the package's own pure Python NavigationTrack (fake.py).  A backend name that
-``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id)`` (GymnasiumDriver.open_native); that path
-needs the upstream package installed and was not run here.
+``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id)`` (GymnasiumDriver.open_native) after the
+bridge imports ``env_module``.  Importing ``gym_navigation`` runs the module-level ``register`` call
+(gym_navigation/__init__.py:4-6).  setup.py lists packages and install_requires and declares no entry point
+(setup.py:3-14), so the id stays unregistered until that import.  The upstream examples pass
+``gym_navigation:NavigationTrack-v0`` to ``gym.make`` (README.md:82-84, tests/test_navigation_track.py:107).  The
+real upstream was not run here.
 
 The sibling environment registered as NavigationGoal-v0 (gym_navigation/__init__.py:7-9) extends NavigationTrack
 with a goal and is not served by this package.  The ``fidelity`` attribute is the complete contract of the model as
@@ -30,6 +34,7 @@ POSE = "gym_navigation/geometry/pose.py"
 class NavigationTrack(GymnasiumDriver):
     device_id = "navigation-track"
     env_id = "NavigationTrack-v0"
+    env_module = "gym_navigation"  # importing it runs register(...) at gym_navigation/__init__.py:4-6
     native = "gym_navigation.envs.navigation_track:NavigationTrack"
     backends = {"fake": ".fake:FakeNavigationTrack"}
     display_name = "gym-navigation NavigationTrack-v0 (2-D navigation simulation)"
@@ -39,6 +44,8 @@ class NavigationTrack(GymnasiumDriver):
         Fact("NavigationTrack-v0 is registered with entry point "
              "gym_navigation.envs.navigation_track:NavigationTrack", source="upstream_code",
              ref="gym_navigation/__init__.py:4-6"),
+        Fact("Importing gym_navigation runs the module-level register call that registers NavigationTrack-v0",
+             source="upstream_code", ref="gym_navigation/__init__.py:4-6"),
         Fact("The action space is Discrete(3): one integer per Action enum member", source="upstream_code",
              ref=f"{TRACK}:46"),
         Fact("The three actions are FORWARD (0, linear shift 0.2 m, angular 0), ROTATE_RIGHT (1, 0.04 m, 0.2 rad) "

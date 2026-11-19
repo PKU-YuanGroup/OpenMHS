@@ -9,15 +9,19 @@ is ``{"values": [linear_acceleration, angular_acceleration]}``; ``cap.world.rese
 ``cap.world.seed.v1`` ``{seed}``.
 
 The device is simulated (R0): there is no hardware backend, no physical stop path and no operator-required limit.
-The gate does not install Robot SF (the clone declares numpy, gymnasium, numba, svgelements, loguru, shapely and other
-dependencies at ``pyproject.toml:34-53``), so the ``fake`` backend is the package's own kinematic stand-in.  A backend
-name that ``backends`` does not list (``sim``) would be served by ``gymnasium.make(env_id)``, but Robot SF registers
-its environments only in its own registry (``robot_sf/gym_env/env_registry.py:162-174``), not with gymnasium, so this
-package serves only the fake backend.
+The ``fake`` backend is the package's own kinematic stand-in.  A backend name that ``backends`` does not list would
+be served by ``gymnasium.make(env_id)``, but the id ``robot`` is only an entry of Robot SF's own catalog
+(``robot_sf/gym_env/env_registry.py:165-174``).  ``register_env`` writes that catalog's ``_REGISTRY``
+(``env_registry.py:94-116``) and the module never calls ``gymnasium.register``, so ``gymnasium.make('robot')`` raises
+``NameNotFound``.  The ``sim`` backend is ``_build_sim_env``, which calls the catalog's factory
+``make_robot_env`` (``env_registry.py:169``) and returns the ``RobotEnv`` that factory builds
+(``environment_factory.py:262-268``, ``:672-688``).  The import stays inside the factory, so the fake backend never
+loads the clone.  The sim entry is a callable, so the lock's string entry (``fake`` only) is still what G2 compares.
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002).
 Every fact cites a line of the clone at commit 53721be3248600e08641a9816d094b605e3c93e4.  This package is
-model-authored and unreviewed: it is checked on the fake backend only.
+model-authored and unreviewed: this workspace checks the fake backend, and the orchestrator's ``--backend sim``
+run is the evidence for the real ``RobotEnv``.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -30,13 +34,35 @@ RANGE_SENSOR = "robot_sf/sensor/range_sensor.py"
 DRIVE = "robot_sf/robot/differential_drive.py"
 ROBOT_STATE = "robot_sf/robot/robot_state.py"
 SIM_CONFIG = "robot_sf/sim/sim_config.py"
+FACTORY = "robot_sf/gym_env/environment_factory.py"
+
+
+def _build_sim_env(**_options):
+    """Build the real upstream ``RobotEnv`` for the ``sim`` backend.
+
+    The import is inside the factory so the fake backend never imports Robot SF.  The id ``robot`` is a catalog
+    entry (``env_registry.py:165-174``), and ``register_env`` stores it on the module ``_REGISTRY``
+    (``env_registry.py:94-116``).  That module does not call ``gymnasium.register``, so ``gymnasium.make('robot')``
+    raises ``NameNotFound``.  The catalog names ``make_robot_env`` as the factory (``env_registry.py:169``).  Called
+    with no arguments it keeps ``debug`` false (``environment_factory.py:529``), so ``BaseEnv`` does not construct a
+    ``SimulationView`` (``base_env.py:249-250``).  ``create_robot_env`` selects ``RobotEnv`` when image observations
+    are off (``environment_factory.py:262-268``) and ``make_robot_env`` returns that instance
+    (``environment_factory.py:672-688``).  The returned object is not wrapped, patched or replaced.
+    """
+    from robot_sf.gym_env.environment_factory import make_robot_env
+
+    return make_robot_env()
 
 
 class RobotSF(GymnasiumDriver):
     device_id = "robot_sf"
     env_id = "robot"
     native = "robot_sf.gym_env.robot_env:RobotEnv"
-    backends = {"fake": ".fake:FakeRobotEnv"}
+    #: ``fake`` is this package's stand-in.  ``sim`` calls ``make_robot_env`` (environment_factory.py:672-688),
+    #: which returns the real ``RobotEnv``.  The sim entry is a callable, so the lock's string entry (``fake``
+    #: only) still describes the package's declared string backend and G2 compares a lock only when every entry
+    #: is a string.
+    backends = {"fake": ".fake:FakeRobotEnv", "sim": _build_sim_env}
     display_name = "Robot SF social navigation simulation (RobotEnv)"
     vendor, model = "ll7", "Robot SF"
     tags = ["social-navigation", "robot", "pedestrian", "gymnasium", "simulation"]
@@ -46,6 +72,17 @@ class RobotSF(GymnasiumDriver):
         Fact("Robot SF registers the single-robot environment under the env id \"robot\" with RobotEnv as its "
              "class, and calls it the primary supported training/evaluation environment", source="upstream_code",
              ref=f"{REGISTRY}:165-174"),
+        Fact("register_env stores the catalog entry on the module-level _REGISTRY and does not call "
+             "gymnasium.register", source="upstream_code", ref=f"{REGISTRY}:94-116"),
+        Fact("The catalog names make_robot_env as the factory for the env id robot", source="upstream_code",
+             ref=f"{REGISTRY}:169"),
+        Fact("make_robot_env defaults debug to false", source="upstream_code", ref=f"{FACTORY}:529"),
+        Fact("create_robot_env selects RobotEnv when image observations are off and returns that instance",
+             source="upstream_code", ref=f"{FACTORY}:262-268"),
+        Fact("make_robot_env builds the environment with EnvironmentFactory.create_robot_env and returns that "
+             "instance", source="upstream_code", ref=f"{FACTORY}:672-688"),
+        Fact("BaseEnv constructs a SimulationView only when debug or record_video is set", source="upstream_code",
+             ref="robot_sf/gym_env/base_env.py:249-250"),
         Fact("RobotEnv is the Gymnasium environment facade and the public environment API for simulation episodes",
              source="upstream_code", ref=f"{ROBOT_ENV}:526-531"),
         Fact("The default DifferentialDriveSettings sets max_linear_speed 2.0, max_angular_speed 1.0, "

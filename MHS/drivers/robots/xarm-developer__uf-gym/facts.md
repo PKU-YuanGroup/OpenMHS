@@ -13,6 +13,7 @@ clone, here README.md) or `upstream_code` (`path/in/clone.py:LINE`). The same fa
 | uf_gym registers each XArm6*-v3 id on import, with entry_point uf_gym.envs:XArm6{task}Env and max_episode_steps 50, or 100 for the Stack task | upstream_code | uf_gym/__init__.py:13-20 |
 | The same registration loop also creates the XArm7*-v3 ids, with entry_point uf_gym.envs:XArm7{task}Env and the same 50/100-step limit | upstream_code | uf_gym/__init__.py:24-31 |
 | XArm6Reach-v3 is registered on the sparse/ee iteration: the loop visits sparse before dense and ee before joints, and those two choices add no suffix to the id | upstream_code | uf_gym/__init__.py:8-13 |
+| Importing uf_gym runs register(...) for XArm6Reach-v3: the call is at module level, so the id is in the gymnasium registry only after that module is imported | upstream_code | uf_gym/__init__.py:3-20 |
 | XArm6ReachEnv is the entry class of XArm6Reach-v3 | upstream_code | uf_gym/envs/uf_tasks/xarm6_tasks.py:167 |
 | XArm6ReachEnv builds a PyBullet simulation, creates an XArm6 with block_gripper=True at base position [-0.5, 0.0, 0.0], and attaches a Reach task that uses the robot's end-effector position | upstream_code | uf_gym/envs/uf_tasks/xarm6_tasks.py:201-203 |
 | With control_type 'ee' the XArm6 action has three arm dimensions, and the gripper adds one unless block_gripper is true; the action space is Box(-1.0, 1.0, shape=(n_action,), dtype=np.float32) | upstream_code | uf_gym/envs/uf_robots/xarm6.py:32-34 |
@@ -24,6 +25,15 @@ clone, here README.md) or `upstream_code` (`path/in/clone.py:LINE`). The same fa
 | get_obs returns the end-effector position and velocity, plus the finger width when the gripper is not blocked | upstream_code | uf_gym/envs/uf_robots/xarm6.py:113-123 |
 | get_ee_position and get_ee_velocity return the link position and velocity of ee_link | upstream_code | uf_gym/envs/uf_robots/xarm6.py:138-143 |
 | The test script creates XArm6Reach-v3 with gymnasium.make and drives it through reset, step, render and close | upstream_code | test_xarm6_reach.py:24-40 |
+
+Sim path (`driver.py`): `env_module = "uf_gym"`. Importing that module runs the module-level `register(...)` call at
+`uf_gym/__init__.py:15-20` (the `register` import is `:3`), which puts `XArm6Reach-v3` in the gymnasium registry
+before `gymnasium.make`. The `fake` backend does not import it. The registration kwargs, also passed as `env_kwargs`,
+are `reward_type='sparse'` and `control_type='ee'` (`uf_gym/__init__.py:18`). The constructor default
+`render_mode='rgb_array'` with `renderer='Tiny'` is what `gymnasium.make` uses (`uf_gym/envs/uf_tasks/xarm6_tasks.py:189-201`);
+the test script's `render_mode='human'` (`test_xarm6_reach.py:14`) is not what the gate calls. The clone has no
+`setup.py` or `pyproject.toml`, so put the pinned checkout root on `PYTHONPATH`. `uf_gym/envs/uf_robots/xarm6.py:9`
+resolves the URDF three directories above that file, under the checkout's `urdf/`.
 
 Limits: the driver declares none. The only bound is the environment's action space, which the bridge derives from the
 fake's `Box(-1, 1, shape=(3,))` (`action.values` per element, with the source `upstream_code` and the ref

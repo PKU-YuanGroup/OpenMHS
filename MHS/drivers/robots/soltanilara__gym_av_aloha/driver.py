@@ -9,9 +9,10 @@ and the ``agent_pos`` observation are 21-value vectors; ``CubeTransferEnv`` adds
 
 The package configures ``env_kwargs = {"cameras": {}}``: the registered default renders six 480x640 cameras, and
 that pixel array is NOT COVERED by this package (fake.py returns no pixels).  The driver therefore publishes the
-scalar observation only.  The gate cannot import the upstream package (it needs mujoco, dm-control and numpy), so
-the ``fake`` backend is a pure-Python kinematic stand-in for ``CubeTransferEnv``; the ``sim`` backend would be
-``gymnasium.make("gym_av_aloha/cube-transfer-v1", cameras={})`` and was not run here.
+scalar observation only.  The ``fake`` backend is a pure-Python kinematic stand-in for ``CubeTransferEnv``.  The
+``sim`` backend imports ``env_module`` (``gym_av_aloha``), which runs the module-level ``register(...)`` for
+``gym_av_aloha/cube-transfer-v1``, then calls ``gymnasium.make("gym_av_aloha/cube-transfer-v1", cameras={})``.
+That upstream package was not run here.
 
 Every Fact cites a line of the clone at the pinned commit 3e8edfdf5e2ff9cfc6e330ab9f970417e0e2a77d.  The package is
 model-authored and unreviewed: it is checked on the fake backend only, and its evidence is ``contract_checked``.
@@ -30,6 +31,7 @@ PYPROJECT = "pyproject.toml"
 class AVAlohaCubeTransfer(GymnasiumDriver):
     device_id = "av-aloha-cube-transfer"
     env_id = "gym_av_aloha/cube-transfer-v1"
+    env_module = "gym_av_aloha"  # importing it runs register(...) at gym_av_aloha/__init__.py:19
     env_kwargs = {"cameras": {}}
     native = "gym_av_aloha.env.tasks.cube_transfer_env:CubeTransferEnv"
     backends = {"fake": ".fake:FakeCubeTransferEnv"}
@@ -40,6 +42,9 @@ class AVAlohaCubeTransfer(GymnasiumDriver):
         Fact("cube-transfer-v1 is registered with entry point "
              "gym_av_aloha.env.tasks.cube_transfer_env:CubeTransferEnv", source="upstream_code",
              ref=f"{INIT}:19-21"),
+        Fact("The cube-transfer-v1 register(...) call is at module level in gym_av_aloha, so the id is in the "
+             "gymnasium registry only after that module is imported", source="upstream_code",
+             ref=f"{INIT}:1-25"),
         Fact("The registration marks cube-transfer-v1 nondeterministic=True because rendered observations differ "
              "even after seeding", source="upstream_code", ref=f"{INIT}:22-24"),
         Fact("The default camera set has six cameras, each rendered at 480x640 pixels", source="upstream_code",

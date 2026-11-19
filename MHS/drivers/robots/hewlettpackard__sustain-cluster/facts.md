@@ -22,6 +22,13 @@ clone such as README.md) or `upstream_code` (`path/in/clone.py:LINE`). The same 
 | The shipped simulation config enables single_action_mode and disable_defer_action | upstream_code | configs/env/sim_config.yaml:16-17 |
 | The README documents a Gymnasium-compatible environment interface for RL agents | vendor_doc | README.md:124 |
 | The README documents the simulation timestep as 15 minutes | vendor_doc | README.md:194 |
+| The constructor takes a cluster manager, a start and end time, a reward function and an optional sim_config | upstream_code | envs/task_scheduling_env.py:28-30 |
+| train_SAC_agent.make_env is the upstream factory: it loads the shipped YAML, builds the cluster manager and the composite reward, and passes the simulation section as sim_config | upstream_code | train_SAC_agent.py:63-95 |
+| The shipped workload path is the pickle named in the simulation config | upstream_code | configs/env/sim_config.yaml:9 |
+| When that path already exists, the cluster manager loads it with pandas.read_pickle and does not extract the zip | upstream_code | simulation/cluster_manager.py:358-362 |
+| The README says the pickle is distributed inside the sibling zip in the same directory, and the loader extracts that zip only when the pickle path is absent | vendor_doc | README.md:846-848 |
+| The transmission-cost matrix is opened from data/network_cost relative to the working directory | upstream_code | utils/transmission_cost_loader.py:16-20 |
+| DC_Config stores dc_config_file as an absolute path, so a relative config is resolved from the working directory at construction | upstream_code | utils/dc_config_reader.py:20 |
 
 Limits: the driver declares none. The only bound is the action space, which the bridge derives from the environment
 (`Discrete(num_dcs)`: `action.index` from 0 to `num_dcs - 1`, with no source and the ref
@@ -34,7 +41,10 @@ and analytic: the environment advances a scheduler clock and state transitions, 
 actuators or sensors), determinism `seeded` with `seed_control` `parameter`, timestep 900000 ms (15 minutes,
 `envs/task_scheduling_env.py:37`), `realtime_factor` 0, clock `lockstep`, reset `full`, no snapshot and restore. The
 gaps say that the fake does not run the cluster manager, SustainDC, the workload trace, the reward engine or the
-energy, carbon and thermal models, and that it was never compared with the upstream environment.
+energy, carbon and thermal models. The sim backend builds that stack through the same constructors as
+`train_SAC_agent.make_env` (`train_SAC_agent.py:63-95`) and reads the workload zip in place
+(`simulation/cluster_manager.py:358-362`, `README.md:846-848`). The workspace that wrote the driver did not install
+or run the upstream, so the fake was not compared with it.
 
 Safety: simulated R0 device. The e-stop is the runtime's software latch (no native stop exists); after it no step or
 reset is accepted until `mhs.safety.reset` clears the latch (a simulator needs no operator for that), and the state

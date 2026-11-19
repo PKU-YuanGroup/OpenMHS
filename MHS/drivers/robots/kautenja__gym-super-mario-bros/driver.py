@@ -6,11 +6,15 @@ whole contract from the environment's spaces.  ``cap.world.step.v1`` takes ``{ti
 ``cap.world.seed.v1`` ``{seed}``.  The device is simulated (R0): there is no hardware backend, no e-stop path to a
 machine and no operator-required limit.
 
-The gate cannot import the environment: nes-py is a native extension and the package requires CPython 3.13 or newer
-(pyproject.toml:10 and :38-41), while package code never imports the clone.  The ``fake`` backend is therefore this
-package's pure Python stand-in (fake.py).  A backend name that ``backends`` does not list (``sim``) is served by
-``gymnasium.make(env_id, **env_kwargs)`` (GymnasiumDriver.open_native); that path needs the upstream package, its
-native emulator and the bundled ROM, and was not run here.
+The ``fake`` backend is this package's pure Python stand-in (fake.py): this module never imports the clone.  A
+backend name that ``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id, **env_kwargs)``
+(GymnasiumDriver.open_native).  ``SuperMarioBros-v0`` is registered only when ``gym_super_mario_bros`` is imported
+(README.md:50-51): ``gym_super_mario_bros/__init__.py:11`` loads ``_registration``, and that module's body calls
+``_register_mario_env('SuperMarioBros-v0')`` (``_registration.py:93``), which calls
+``gym.envs.registration.register`` (``_registration.py:33-35``).  ``env_module`` names that package so the bridge
+imports it before ``gymnasium.make``.  The registration passes no kwargs (``_registration.py:93``) and the
+constructor's ``render_mode`` defaults to None (``smb_env.py:39``), so the sim path does not open a window.  That
+path needs the upstream package, its native emulator and the bundled ROM, and was not run here.
 
 Every Fact cites a line of the clone at commit 7ba17c778e1df8240fd1cf99dbe5238d0e9b93aa.  This package is
 model-authored and unreviewed: it is checked on the fake backend only.
@@ -27,6 +31,8 @@ DECODE_TARGET = "gym_super_mario_bros/_roms/decode_target.py"
 class SuperMarioBros(GymnasiumDriver):
     device_id = "super-mario-bros"
     env_id = "SuperMarioBros-v0"
+    #: Importing the package runs ``_register_mario_env('SuperMarioBros-v0')`` (_registration.py:93).
+    env_module = "gym_super_mario_bros"
     native = "gym_super_mario_bros.smb_env:SuperMarioBrosEnv"
     backends = {"fake": ".fake:FakeSuperMarioBrosEnv"}
     display_name = "Gymnasium Super Mario Bros. (NES emulator)"
@@ -61,6 +67,9 @@ class SuperMarioBros(GymnasiumDriver):
         Fact("The registered time limit is 9999999 steps", source="upstream_code", ref=f"{REGISTRATION}:7"),
         Fact("SuperMarioBros-v0 is registered as a Super Mario Bros. environment",
              source="upstream_code", ref=f"{REGISTRATION}:92-93"),
+        Fact("You must import gym_super_mario_bros before trying to make an environment, because Gymnasium "
+             "environments are registered at runtime",
+             source="vendor_doc", ref="README.md:50-51"),
         Fact("The registered entry point is gym_super_mario_bros:SuperMarioBrosEnv and the environment is marked "
              "nondeterministic", source="upstream_code", ref=f"{REGISTRATION}:33-42"),
         Fact("A target world is 1 to 8 (1 to 13 for Lost Levels) and a target stage is 1 to 4",

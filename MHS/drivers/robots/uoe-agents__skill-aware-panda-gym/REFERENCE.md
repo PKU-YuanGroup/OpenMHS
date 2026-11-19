@@ -102,6 +102,7 @@ Outputs:
 - The documented use is gym.make('PandaSkillAware-v3', render_mode='rgb_array', friction=1.0, mass=1.0) followed by reset() and step(action), which returns observation, reward, terminated, truncated and info (vendor_doc: README.md:20-26)
 - info['state'] is one of push, roll, pick and down (vendor_doc: README.md:27)
 - PandaSkillAware-v3 is registered with entry point skill_aware_panda_gym.envs:PandaPushEnv and max_episode_steps=50 (upstream_code: skill_aware_panda_gym/__init__.py:7-11)
+- The register call for PandaSkillAware-v3 is at module level, so the id is in the gymnasium registry only after skill_aware_panda_gym is imported (upstream_code: skill_aware_panda_gym/__init__.py:6-11)
 - PandaPushEnv is a RobotTaskEnv task environment (upstream_code: skill_aware_panda_gym/envs/__init__.py:70)
 - PandaPushEnv builds PyBullet with the requested render mode and renderer and a Panda robot in that simulation, with block_gripper=False and base_position [-0.6, 0.0, 0.0] (upstream_code: skill_aware_panda_gym/envs/__init__.py:107-108)
 - control_type selects end-effector control ('ee', the default) or joint control ('joints') (upstream_code: skill_aware_panda_gym/envs/__init__.py:76-77)

@@ -7,16 +7,19 @@ the one-dimensional ``Box(-10, 10)``, ``cap.world.reset.v1`` takes ``{seed, opti
 ``{seed}``.  The device is simulated (R0): there is no hardware backend, no e-stop path to a machine and no
 operator-required limit.
 
-The gate cannot import the upstream package: the wrapper imports the compiled extension ``pytinydiffsim``, the legacy
-``gym`` package and ``numpy`` (python/tds_environments/cartpole_tds_env.py:2-6).  Package code never imports the clone,
-so the ``fake`` backend is this package's own pure Python cart-pole (fake.py).  A backend name that ``backends`` does
-not list (``sim``) is served by ``gymnasium.make(env_id)`` through GymnasiumDriver.open_native (the bridge falls back to
-the legacy ``gym`` package); that path needs the compiled extension and the registration side effect of
-``tds_environments`` and was not run here.
+The fake backend never imports the upstream package: the wrapper imports the compiled extension ``pytinydiffsim``, the
+legacy ``gym`` package and ``numpy`` (python/tds_environments/cartpole_tds_env.py:2-6).  Package code never imports the
+clone, so the ``fake`` backend is this package's own pure Python cart-pole (fake.py).  A backend name that ``backends``
+does not list (``sim``) is served by ``gym.make(env_id)`` through GymnasiumDriver.open_native: ``env_module`` names
+``tds_environments``, whose import runs the registration at python/tds_environments/__init__.py:1-17, and the bridge
+then makes the id in the registry that holds it (the legacy ``gym`` registry here).  That path needs the compiled
+extension and the legacy ``gym`` distribution the clone imports but does not declare (setup.py:291-293).
+``gym==0.23.1`` supplies the legacy registry's ``env_specs`` attribute that the registration helper reads
+(python/tds_environments/__init__.py:6).  It was not run here.
 
 The ``fidelity`` attribute is the fidelity contract of the model as deployed (spec 05-fidelity FID-002).  Every
 constant and rule cites a line of the clone at the pinned commit (8381b8c9ad7f0a959548e4982eb8a63431a842d2).  This
-package is model-authored and unreviewed: it is checked on the fake backend only.
+package is model-authored and unreviewed; the local check is on the fake backend only.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -30,6 +33,7 @@ URDF = "examples/environments/cartpole_urdf.h"
 class CartpoleTinyDiffSim(GymnasiumDriver):
     device_id = "cartpole-tds"
     env_id = "CartpolePyTinyDiffSim-v0"
+    env_module = "tds_environments"    # importing it runs register(...) at python/tds_environments/__init__.py:1-17
     native = "tds_environments.cartpole_tds_env:CartpolePyTinyDiffSim"
     backends = {"fake": ".fake:FakeCartpolePyTinyDiffSim"}
     display_name = "Tiny Differentiable Simulator CartPole (CartpolePyTinyDiffSim-v0)"
@@ -39,15 +43,20 @@ class CartpoleTinyDiffSim(GymnasiumDriver):
         Fact("CartpolePyTinyDiffSim is registered as CartpolePyTinyDiffSim-v0 with entry point "
              "tds_environments.cartpole_tds_env:CartpolePyTinyDiffSim and max_episode_steps 200",
              source="upstream_code", ref=f"{REGISTRY}:12-17"),
+        Fact("Importing tds_environments runs its module-level register(...) call, so CartpolePyTinyDiffSim-v0 is "
+             "in the legacy gym registry after the import", source="upstream_code", ref=f"{REGISTRY}:1-17"),
+        Fact("The wrapper imports the legacy gym package, its spaces and gym.utils.seeding, and subclasses gym.Env",
+             source="upstream_code", ref=f"{ENVFILE}:2-9"),
         Fact("The wrapper creates pytinydiffsim.CartpoleEnv", source="upstream_code", ref=f"{ENVFILE}:14"),
         Fact("The action space is a one-dimensional Box bounded by +-force_mag, and force_mag is 10",
              source="upstream_code", ref=f"{ENVFILE}:30-35"),
         Fact("x_threshold is 0.4 and theta_threshold_radians is 12 degrees; the observation space is a four-element "
              "Box with high [x_threshold*2, float32 max, theta_threshold*2, float32 max]",
              source="upstream_code", ref=f"{ENVFILE}:19-28"),
-        Fact("step passes action[0] to the wrapped environment and returns its observation with reward 1.0 and the "
-             "done flag", source="upstream_code", ref=f"{ENVFILE}:65-73"),
-        Fact("reset returns the wrapped environment's reset state as the observation",
+        Fact("step passes action[0] to the wrapped environment and returns the legacy four-value (observation, "
+             "reward, done, info) tuple with reward 1.0 and the done flag", source="upstream_code",
+             ref=f"{ENVFILE}:65-73"),
+        Fact("reset takes no seed argument and returns the wrapped environment's reset state as the observation",
              source="upstream_code", ref=f"{ENVFILE}:75-79"),
         Fact("seed masks the seed to 32 bits, seeds the wrapped environment and returns [seed]",
              source="upstream_code", ref=f"{ENVFILE}:49-55"),

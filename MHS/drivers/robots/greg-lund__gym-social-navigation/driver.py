@@ -7,28 +7,107 @@ the whole contract from ``SocialNavEnv``'s spaces: ``cap.world.step.v1`` takes `
 operator-required limit.
 
 The upstream package imports ``gym``, ``numpy`` and ``matplotlib`` and reads the ETH pedestrian data files under
-``gym_social_navigation/envs/data``.  The gate does not install or import the clone, so the ``fake`` backend is the
-package's own pure Python model of the class in ``fake.py``.  A backend name that ``backends`` does not list (``sim``)
-would be served by ``gymnasium.make(env_id)`` (``GymnasiumDriver.open_native``); that path needs the upstream package
-and its data files and was not run here (fidelity ``gaps``).
+``gym_social_navigation/envs/data``.  The ``fake`` backend is this package's pure Python model of the class
+(``fake.py``) and does not import the clone.  The ``sim`` backend is ``make_sim_env``.  Importing
+``gym_social_navigation`` registers ``social-nav-train-env-v0`` with ``kwargs`` ``test=False``
+(``gym_social_navigation/__init__.py:1-7``).  ``setup.py:5-8`` ships only ``*.csv`` and ``*.npy``, so a
+non-editable install omits the ``.txt`` traces.  ``SocialNavEnv`` joins those traces onto the directory of its
+own file (``social_nav_env.py:40-41``) and loads them with ``np.loadtxt`` (``social_nav_env.py:75``).
+``make_sim_env`` therefore executes the pinned ``social_nav_env.py`` and calls ``SocialNavEnv(test=False)``,
+the class and kwargs the registration names.  The loaded module is not inserted into the import table, and
+the import path is left unchanged.  That sim path was not run here.
 
 This package is model-authored and unreviewed (``driver.lock.json``).  Every fact cites a line of the clone at the
 pinned commit bdc8e72c0f7f738ebe99b6966b1c37af26a342af.
 """
 
+import importlib.util
+from pathlib import Path
+
 from mhs.driver import Fact, GymnasiumDriver
 
 ENV = "gym_social_navigation/envs/social_nav_env.py"
 REGISTRATION = "gym_social_navigation/__init__.py"
+_CLONE = Path("robots") / "greg-lund" / "gym-social-navigation"
+_ENV_REL = Path("gym_social_navigation") / "envs" / "social_nav_env.py"
+_TRAIN_REL = Path("gym_social_navigation") / "envs" / "data" / "train" / "biwi_eth_train.txt"
+
+
+def _checkout() -> Path:
+    """The pinned tree whose env module sits beside the ETH ``.txt`` traces.
+
+    ``setup.py:5-8`` enables ``include_package_data`` and lists only ``*.csv`` and ``*.npy``, so the wheel
+    omits the traces.  ``social_nav_env.py:40-41`` joins each file onto the directory of this module, and
+    ``social_nav_env.py:75`` loads it with ``np.loadtxt``.  The worktree keeps the clone at
+    ``robots/greg-lund/gym-social-navigation``; ``/src`` is the same commit when the install left the export
+    there.
+    """
+    here = Path(__file__).resolve()
+    candidates = [Path("/src")]
+    candidates.extend(parent / _CLONE for parent in here.parents)
+    candidates.append(Path.cwd() / _CLONE)
+    seen: set[Path] = set()
+    for root in candidates:
+        try:
+            key = root.resolve()
+        except OSError:
+            continue
+        if key in seen:
+            continue
+        seen.add(key)
+        try:
+            if (root / _ENV_REL).is_file() and (root / _TRAIN_REL).is_file():
+                return key
+        except OSError:
+            continue
+    raise FileNotFoundError(
+        f"{_TRAIN_REL.as_posix()} is not under /src or {_CLONE.as_posix()} (social_nav_env.py:40-44)")
+
+
+def _load_social_nav():
+    """Execute the pinned ``social_nav_env.py`` and return that module.
+
+    ``gym_social_navigation/__init__.py:3-7`` registers ``social-nav-train-env-v0`` with entry point
+    ``gym_social_navigation.envs:SocialNavEnv``.  Importing the installed package runs that registration, but
+    ``setup.py:5-8`` does not ship ``data/train/*.txt``, and ``SocialNavEnv.__init__`` accepts only ``test``
+    (``social_nav_env.py:8``) and joins each trace onto ``dirname(__file__)`` (``:40-41``).  Loading this
+    file by its path makes ``__file__`` the checkout file, where those traces are.  The module object is
+    that file.  It is not inserted into the import table, it is not an alias of ``gym_social_navigation``,
+    and the import path is left unchanged.  The file imports ``gym``, ``matplotlib.pyplot`` and ``numpy``
+    (``social_nav_env.py:1-4``) and defines ``SocialNavEnv`` (``:6``).
+    """
+    path = (_checkout() / _ENV_REL).resolve()
+    spec = importlib.util.spec_from_file_location("social_nav_env", path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"cannot load the pinned {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    loaded = getattr(module, "__file__", None)
+    if loaded is None or Path(loaded).resolve() != path:
+        raise ImportError(f"loaded {loaded}, not the pinned {path}")
+    return module
+
+
+def make_sim_env(**_options):
+    """Build the training environment the registration names (``__init__.py:3-7``).
+
+    The entry point is ``gym_social_navigation.envs:SocialNavEnv`` with ``kwargs`` ``test=False``.  The
+    registration sets no ``max_episode_steps``.  This calls that class with that flag.  The constructor
+    reads ``data/train/*.txt`` (``social_nav_env.py:35-44``, ``:75``) and calls ``reset`` (``:65``).
+    ``render`` is not called; it is the method that draws with pyplot (``social_nav_env.py:296-317``).
+    The returned object is the upstream instance.
+    """
+    return _load_social_nav().SocialNavEnv(test=False)
 
 
 class SocialNav(GymnasiumDriver):
     device_id = "social-nav"
     env_id = "social-nav-train-env-v0"
+    env_module = "gym_social_navigation"         # importing it runs register(...) at __init__.py:1-12
     env_kwargs = {"test": False}                 # registration kwargs at gym_social_navigation/__init__.py:3-7
     autoreset = True                             # a step after a terminal state starts a new episode
     native = "gym_social_navigation.envs:SocialNavEnv"
-    backends = {"fake": ".fake:FakeSocialNavEnv"}
+    backends = {"fake": ".fake:FakeSocialNavEnv", "sim": make_sim_env}
     display_name = "Social Navigation Gym environment (social-nav-train-env-v0)"
     vendor, model = "greg-lund", "gym_social_navigation 0.0.1"
     tags = ["social-navigation", "pedestrian", "dubins-car", "reinforcement-learning", "simulation", "gym"]
@@ -36,6 +115,14 @@ class SocialNav(GymnasiumDriver):
         Fact("The package registers social-nav-train-env-v0 with kwargs test=False and social-nav-test-env-v0 with "
              "kwargs test=True; both use the entry point gym_social_navigation.envs:SocialNavEnv",
              source="upstream_code", ref=f"{REGISTRATION}:3-12"),
+        Fact("Importing gym_social_navigation runs gym.envs.registration.register for both environment ids",
+             source="upstream_code", ref=f"{REGISTRATION}:1-12"),
+        Fact("setup includes package data for csv and npy files only",
+             source="upstream_code", ref="setup.py:5-8"),
+        Fact("The constructor joins each pedestrian file onto the directory of this module",
+             source="upstream_code", ref=f"{ENV}:40-41"),
+        Fact("parse_data loads each pedestrian file with np.loadtxt",
+             source="upstream_code", ref=f"{ENV}:74-75"),
         Fact("The environment uses data from the ETH Pedestrian dataset", source="vendor_doc", ref="README.md:3"),
         Fact("The test flag selects the data/val files; otherwise the data/train files are used",
              source="upstream_code", ref=f"{ENV}:31-38"),

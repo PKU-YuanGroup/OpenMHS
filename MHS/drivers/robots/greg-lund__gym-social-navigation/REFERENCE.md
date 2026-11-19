@@ -99,6 +99,10 @@ Outputs:
 ## Facts
 
 - The package registers social-nav-train-env-v0 with kwargs test=False and social-nav-test-env-v0 with kwargs test=True; both use the entry point gym_social_navigation.envs:SocialNavEnv (upstream_code: gym_social_navigation/__init__.py:3-12)
+- Importing gym_social_navigation runs gym.envs.registration.register for both environment ids (upstream_code: gym_social_navigation/__init__.py:1-12)
+- setup includes package data for csv and npy files only (upstream_code: setup.py:5-8)
+- The constructor joins each pedestrian file onto the directory of this module (upstream_code: gym_social_navigation/envs/social_nav_env.py:40-41)
+- parse_data loads each pedestrian file with np.loadtxt (upstream_code: gym_social_navigation/envs/social_nav_env.py:74-75)
 - The environment uses data from the ETH Pedestrian dataset (vendor_doc: README.md:3)
 - The test flag selects the data/val files; otherwise the data/train files are used (upstream_code: gym_social_navigation/envs/social_nav_env.py:31-38)
 - The robot keeps 3 previous states per agent, tracks at most 4 agents within a 10-unit proximity radius, uses 4 path points and requires a normalised start-goal distance of at least 0.45 (upstream_code: gym_social_navigation/envs/social_nav_env.py:11-18)

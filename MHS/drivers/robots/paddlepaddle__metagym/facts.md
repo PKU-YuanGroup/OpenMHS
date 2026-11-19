@@ -19,6 +19,9 @@ line or comment of the clone, or a path relative to the clone root).  The same f
 | step draws its Bernoulli reward from numpy's global random generator | upstream_code | metagym/bandits/bandits_env.py:73 |
 | The class body defines __init__, reset, step, sample_task, set_task and expected_upperbound, and defines no seed method | upstream_code | metagym/bandits/bandits_env.py:12-83 |
 | The registered bandits-v0 environment passes arms=50 and max_steps=1000 | upstream_code | metagym/bandits/__init__.py:18-23 |
+| Importing metagym.bandits imports register from gym.envs.registration and registers bandits-v0 with entry point metagym.bandits:Bandits | upstream_code | metagym/bandits/__init__.py:15-24 |
+| bandits_env.py imports pygame at module scope, on the import that registers bandits-v0 | upstream_code | metagym/bandits/bandits_env.py:6 |
+| The quick start imports metagym.bandits, makes bandits-v0, samples a task, calls set_task and then reset | vendor_doc | metagym/bandits/README.md:30-44 |
 
 Limits: the driver declares none of its own.  The only bound is the action space, which the bridge derives
 from the environment at runtime (`Discrete(50)` gives `action.index` 0 through 49, from the registered
@@ -39,6 +42,18 @@ Safety: simulated R0 device.  The e-stop is the runtime's software latch; there 
 and no hardware backend.  After an e-stop no step, reset or seed is accepted until `mhs.safety.reset`
 clears the latch (a simulator needs no operator for that), and the gain table and step counter stay
 readable.
+
+Sim path (`driver.py`): `env_module = "metagym.bandits"` names the module whose import runs the registration
+at `metagym/bandits/__init__.py:15-24`. The package `__init__` does not import that module
+(`metagym/__init__.py:16-17` tells the caller to `import metagym.xxxenv` and then use `gym.make`). The `sim`
+backend is `open_sim`. It imports `metagym.bandits` and constructs `Bandits(arms=50, max_steps=1000)`, the
+entry point and kwargs at `metagym/bandits/__init__.py:18-23` (the constructor defaults are `arms=10` and
+`max_steps=5000` at `metagym/bandits/bandits_env.py:14-15`). It then calls `sample_task()` and `set_task` as
+the quick start does (`metagym/bandits/README.md:37-44`). `reset` raises until that call
+(`metagym/bandits/bandits_env.py:62-64`). `gym.make` is not used: `observation_space` is `None`
+(`metagym/bandits/bandits_env.py:24`), and the pinned `gym==0.25.2` wraps `make`'s result in a checker that
+rejects a space that is not a `gym.spaces.Space`. The fake backend stays `.fake:FakeBandits` and does not
+import `env_module`.
 
 Coverage: this package covers the card's `metagym.bandits:Bandits` entry symbol through `bandits-v0`.  The
 other four entry symbols of the card (`LiftSim`, `MetaLM`, `MetaAntEnv`, `MetaHumanoidEnv`) are not covered

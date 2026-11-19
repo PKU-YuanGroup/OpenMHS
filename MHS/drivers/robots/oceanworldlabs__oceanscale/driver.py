@@ -7,12 +7,17 @@ bounded element-wise by the action space ``Box(-1.0, 1.0, (6,))``; ``cap.world.r
 and ``cap.world.seed.v1`` ``{seed}``.  The device is simulated (R0): there is no hardware backend, no e-stop path to
 a machine and no operator-required limit.
 
-OceanScale registers no ``gymnasium.make`` id for this class (the clone has no ``register(`` call), so ``env_id``
-stays ``None`` and the package configures only the ``fake`` backend.  The gate cannot import the upstream stack (the
-clone needs an NVIDIA GPU with CUDA 12.8+ and CUDA-enabled wheels, README.md:10-11 and :20), so ``fake`` is the
-package's own pure Python stand-in for ``ROVEnv`` (fake.py).  A backend name that ``backends`` does not list is
-served by ``gymnasium.make(env_id)`` (GymnasiumDriver.open_native), which cannot work without an id and needs the
-upstream install; that path was not run here.
+OceanScale registers no ``gymnasium.make`` id (the clone has no ``register(`` call).  The documented usage constructs
+``ROVEnv`` directly (``oceanscale/rov_env.py:10``), so ``env_id`` stays ``None``.  ``fake`` is this package's pure
+Python stand-in (``fake.py``): the fake gate does not install the clone.  ``sim`` is ``_build_sim_env``.  It imports
+``oceanscale.rov_env`` and constructs ``ROVEnv(n_envs=1)``.  ``n_envs`` defaults to 64 (``oceanscale/rov_env.py:86``);
+the class documents one world as ``n_envs=1`` (``oceanscale/rov_env.py:78-79``), and the hover demo builds that one
+world (``oceanscale/cli.py:706``).  ``step`` still returns length-1 arrays for that one world
+(``oceanscale/rov_env.py:440``).  The wrapper's ``.item()`` returns each of those scalars and does not change its
+value; the observation is forwarded as ``step`` returned it.  ``device`` stays at its default ``None``, so
+``resolve_warp_device`` selects cuda when Warp reports a CUDA device and cpu otherwise
+(``oceanscale/devices.py:37-43`` and ``:59-60``).  The import sits inside the factory, so the fake backend does not
+import the clone.  The upstream simulator was not run here.
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec 05-fidelity FID-002).
 Every Fact and every constant of the declared contract cites a line of the clone at the pinned commit
@@ -25,13 +30,66 @@ from mhs.driver import Fact, GymnasiumDriver
 ROV_ENV = "oceanscale/rov_env.py"
 TIER1 = "oceanscale/hydro/tier1.py"
 README = "README.md"
+DEVICES = "oceanscale/devices.py"
+
+
+def _one_element(value):
+    """The Python scalar a length-1 array holds, or ``value`` when it has no ``item`` method."""
+    item = getattr(value, "item", None)
+    if callable(item):
+        return item()
+    return value
+
+
+class _OneEnvStep:
+    """``ROVEnv`` with the one world's reward and done flags as Python scalars.
+
+    ``ROVEnv.step`` returns ``observation, reward, terminated, truncated, info`` (``oceanscale/rov_env.py:440``).
+    With ``n_envs=1`` each of ``reward``, ``terminated`` and ``truncated`` is a length-1 array
+    (``oceanscale/rov_env.py:346-347`` and ``:414-421``).  ``.item()`` yields that element and does not change its
+    value.  The observation stays the ``(n_envs, 26)`` array ``_get_flat_obs`` returned
+    (``oceanscale/rov_env.py:672-674``), and ``info`` is forwarded as the environment returned it.
+    """
+
+    def __init__(self, env):
+        self._env = env
+
+    def __getattr__(self, name):
+        return getattr(self._env, name)
+
+    def reset(self, **kwargs):
+        return self._env.reset(**kwargs)
+
+    def step(self, action):
+        observation, reward, terminated, truncated, info = self._env.step(action)
+        return observation, _one_element(reward), _one_element(terminated), _one_element(truncated), info
+
+    def close(self):
+        return self._env.close()
+
+
+def _build_sim_env(**_options):
+    """Build ``ROVEnv(n_envs=1)`` for the ``sim`` backend.
+
+    The clone has no ``register(`` call, and the usage example constructs the class directly
+    (``oceanscale/rov_env.py:10``), so ``gymnasium.make`` has no id to build.  ``n_envs`` defaults to 64
+    (``oceanscale/rov_env.py:86``).  One world is the shape the class documents (``oceanscale/rov_env.py:78-79``)
+    and the shape the hover demo builds (``oceanscale/cli.py:706``).  ``device`` is omitted, so the constructor's
+    ``None`` goes through ``resolve_warp_device`` (``oceanscale/rov_env.py:108``, ``oceanscale/devices.py:59-60``):
+    cuda when Warp reports a CUDA device, otherwise cpu (``oceanscale/devices.py:37-43``).  Every other constructor
+    argument keeps its default, including ``sensor_noise_std`` 0.02 (``oceanscale/rov_env.py:93``).  The import is
+    inside this function: the fake backend runs where OceanScale is not installed.
+    """
+    from oceanscale.rov_env import ROVEnv
+
+    return _OneEnvStep(ROVEnv(n_envs=1))
 
 
 class OceanScaleROV(GymnasiumDriver):
     device_id = "oceanscale-rov"
     env_id = None
     native = "oceanscale.rov_env:ROVEnv"
-    backends = {"fake": ".fake:FakeROVEnv"}
+    backends = {"fake": ".fake:FakeROVEnv", "sim": _build_sim_env}
     action_space_ref = f"{ROV_ENV}:164"
     display_name = "OceanScale ROVEnv (GPU-batched station keeping)"
     vendor, model = "OceanWorld Labs", "OceanScale ROVEnv"
@@ -77,6 +135,14 @@ class OceanScaleROV(GymnasiumDriver):
              source="vendor_doc", ref=f"{README}:14-20"),
         Fact("The install pulls CUDA-enabled wheels of warp-lang, newton and torch", source="upstream_code",
              ref="pyproject.toml:27-30"),
+        Fact("default_warp_device returns cuda only when Warp reports a CUDA device; otherwise it aliases the names "
+             "cuda and cuda:0 to the cpu device and returns cpu", source="upstream_code", ref=f"{DEVICES}:8-43"),
+        Fact("resolve_warp_device with no requested device returns default_warp_device", source="upstream_code",
+             ref=f"{DEVICES}:59-60"),
+        Fact("ROVEnv passes its device argument through resolve_warp_device", source="upstream_code",
+             ref=f"{ROV_ENV}:108"),
+        Fact("The bluerov2-hover demo constructs one ROVEnv world with n_envs=1", source="upstream_code",
+             ref="oceanscale/cli.py:706"),
     ]
     safe_state = ("the simulation stops advancing: no step or reset is accepted after an e-stop until "
                   "mhs.safety.reset clears the latch; the environment state is kept and stays readable")

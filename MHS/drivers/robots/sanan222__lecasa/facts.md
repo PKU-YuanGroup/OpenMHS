@@ -7,15 +7,24 @@ clone) or `upstream_code` (an MJCF or Python file of the clone). The same facts 
 ## Model served
 
 The package serves the card's robot model, `src/robot/so101_simplified.xml` (`models[1]`), the MJCF file that
-`src/main.py:231` resolves and passes to the task controller as `robot_xml_path`. It is a self-contained model: its
-`<compiler meshdir="assets">` resolves the meshes under `src/robot/assets`, which are in the clone.
+`src/main.py:231` resolves and passes to the task controller as `robot_xml_path`. The STL files it names are in the
+clone, under `src/robot/assets`.
 
 The card's scene model `configs/kitchen_configs/kitchen_robot_scene.xml` (`models[0]`) is a RoboCasa kitchen export.
 Its `<asset>` block names mesh and texture files by absolute Windows paths such as
 `C:\Users\sanan\...\robocasa\models\assets\...` (line 7), and those files are not part of the clone, so the scene is
-not self-contained. It is therefore not served; changing `model_path` serves it only with the RoboCasa asset tree
-present. The scene embeds the same six SO101 position actuators (scene line 344), so the control contract of the two
-models agrees.
+not self-contained. It is therefore not served. The scene embeds the same six SO101 position actuators (scene line 344),
+so the control contract of the two models agrees.
+
+The sim backend does not call `MjModel.from_xml_path` on the robot file. The compiler sets `meshdir="assets"`
+(`src/robot/so101_simplified.xml:3`) and each mesh `file` is already `assets/<name>.stl` (`:127-139`). A path load
+prefixes `meshdir`, so it looks for `src/robot/assets/assets/<name>.stl`, and those paths are not in the clone. The
+STLs are `src/robot/assets/<name>.stl`. The teleoperator loads the robot through `MujocoXML(robot_xml_path)`
+(`src/tasks/teleoperator.py:111`). That constructor calls `resolve_asset_dependency` (`src/mujoco_utils/mujoco_xml.py:90`),
+which joins a relative mesh file with the XML file's directory and stores the absolute path (`:116-120`). An absolute
+mesh file is not prefixed by `meshdir`. `model_xml` is that same file with those thirteen paths made absolute. Joints,
+actuators and the other attributes are unchanged. `_model_name` still returns `src/robot/so101_simplified.xml`, so the
+derived ctrl limit stays `src/robot/so101_simplified.xml:actuator_ctrlrange`.
 
 ## Facts
 
@@ -25,7 +34,11 @@ models agrees.
 | The README says the work focuses on single- and multi-stage tasks in RoboCasa kitchen environments using the SO101 arm, with policies trained through the LeRobot framework | vendor_doc | README.md:4 |
 | main.py resolves the robot model from src/robot/so101_simplified.xml and passes it to the task controller as robot_xml_path | upstream_code | src/main.py:231-247 |
 | The model file declares '<mujoco model="so101_simplified">' | upstream_code | src/robot/so101_simplified.xml:2 |
-| The model compiler declares angle='radian' and meshdir='assets' with autolimits='true', so its joint ranges are radians, its meshes resolve under src/robot/assets and a range implies the limit | upstream_code | src/robot/so101_simplified.xml:3 |
+| The model compiler declares angle='radian', meshdir='assets' and autolimits='true', so its joint ranges are radians and a range implies the limit | upstream_code | src/robot/so101_simplified.xml:3 |
+| Each mesh asset names its file as assets/<name>.stl, from assets/waveshare_mounting_plate_so101_v2.stl through assets/base_so101_v2.stl | upstream_code | src/robot/so101_simplified.xml:127-139 |
+| MujocoXML.__init__ calls resolve_asset_dependency after parsing the MJCF file | upstream_code | src/mujoco_utils/mujoco_xml.py:90 |
+| MujocoXML.resolve_asset_dependency joins a relative mesh file with the directory of the XML file and stores that absolute path | upstream_code | src/mujoco_utils/mujoco_xml.py:116-120 |
+| The teleoperator loads the robot MJCF with MujocoXML(self.robot_xml_path) | upstream_code | src/tasks/teleoperator.py:111 |
 | The default joint class sets damping 0.60, frictionloss 0.052 and armature 0.028 | upstream_code | src/robot/so101_simplified.xml:6 |
 | The default geom class sets contype 0, conaffinity 0 and friction '2.0 0.8 0.3' | upstream_code | src/robot/so101_simplified.xml:7 |
 | The base body is at the origin with quat '1 0 0 0' | upstream_code | src/robot/so101_simplified.xml:13 |
@@ -64,6 +77,6 @@ resolves no mesh, contact, equality or tendon constraint. The model sets no `<op
 MuJoCo's 2 ms library default; that number is test data in `fake.py` (marked `placeholder`), not a device bound.
 MuJoCo was not importable where the gate ran, so no trajectory was compared with the real engine. The gaps are listed
 in the `fidelity` attribute of `driver.py`; a site that needs MuJoCo's physics runs the driver with a backend that
-imports MuJoCo (`sim`), which would load this self-contained model and its `src/robot/assets` meshes.
+imports MuJoCo (`sim`), which loads `model_xml` and the absolute `src/robot/assets` mesh paths.
 
 Tags: arm, lecasa, manipulator, mujoco, robot, robocasa, simulation, so101

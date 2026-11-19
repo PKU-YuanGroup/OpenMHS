@@ -98,6 +98,7 @@ Outputs:
 
 ## Facts
 
+- Importing gymnasium_robotics runs register_robotics_envs() at module scope, which registers FetchSlide-v4 with gymnasium.register (upstream_code: gymnasium_robotics/__init__.py:1264)
 - FetchSlide-v4 is registered with entry point gymnasium_robotics.envs.fetch.slide:MujocoFetchSlideEnv and max_episode_steps=50 (upstream_code: gymnasium_robotics/__init__.py:33-38)
 - The action space is Box(-1.0, 1.0, (4,), float32): the Cartesian displacement dx, dy, dz of the end effector and a gripper command (upstream_code: gymnasium_robotics/envs/fetch/slide.py:53)
 - The action vector has four entries, created with n_actions=4 (upstream_code: gymnasium_robotics/envs/fetch/fetch_env.py:69)

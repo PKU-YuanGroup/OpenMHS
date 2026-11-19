@@ -105,6 +105,7 @@ Outputs:
 - uf_gym registers each XArm6*-v3 id on import, with entry_point uf_gym.envs:XArm6{task}Env and max_episode_steps 50, or 100 for the Stack task (upstream_code: uf_gym/__init__.py:13-20)
 - The same registration loop also creates the XArm7*-v3 ids, with entry_point uf_gym.envs:XArm7{task}Env and the same 50/100-step limit (upstream_code: uf_gym/__init__.py:24-31)
 - XArm6Reach-v3 is registered on the sparse/ee iteration: the loop visits sparse before dense and ee before joints, and those two choices add no suffix to the id (upstream_code: uf_gym/__init__.py:8-13)
+- Importing uf_gym runs register(...) for XArm6Reach-v3: the call is at module level, so the id is in the gymnasium registry only after that module is imported (upstream_code: uf_gym/__init__.py:3-20)
 - XArm6ReachEnv is the entry class of XArm6Reach-v3 (upstream_code: uf_gym/envs/uf_tasks/xarm6_tasks.py:167)
 - XArm6ReachEnv builds a PyBullet simulation, creates an XArm6 with block_gripper=True at base position [-0.5, 0.0, 0.0], and attaches a Reach task that uses the robot's end-effector position (upstream_code: uf_gym/envs/uf_tasks/xarm6_tasks.py:201-203)
 - With control_type 'ee' the XArm6 action has three arm dimensions, and the gripper adds one unless block_gripper is true; the action space is Box(-1.0, 1.0, shape=(n_action,), dtype=np.float32) (upstream_code: uf_gym/envs/uf_robots/xarm6.py:32-34)

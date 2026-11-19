@@ -5,6 +5,8 @@ Every fact cites its source at commit `2d08f42dfec85278566c95b1d09f5bd67662b3d6`
 
 | fact | source | ref |
 |---|---|---|
+| Importing myosuite.envs.myo.tasks.challenge runs the module-level _reg call that registers myoChallengeBaodingP1-v1; register_env then calls gymnasium.register | upstream_code | myosuite/envs/myo/tasks/challenge/__init__.py:500 |
+| register_env passes the id, entry point and step limit to gymnasium.register | upstream_code | myosuite/core/registry.py:146 |
 | myoChallengeBaodingP1-v1 is registered with entry point BaodingEnv, model hand/myohand_baoding.xml and max_episode_steps=200 | upstream_code | myosuite/envs/myo/tasks/challenge/__init__.py:501-505 |
 | The normalized action space is a symmetric Box from -ones to +ones with one value per actuator | upstream_code | myosuite/envs/myo/tasks/challenge/baoding.py:202-209 |
 | The default observation keys are hand_pos, object1_pos, object1_velp, object2_pos, object2_velp, target1_pos, target2_pos, target1_err and target2_err | upstream_code | myosuite/envs/myo/tasks/challenge/baoding.py:66-75 |
@@ -36,7 +38,14 @@ free joints.
 `seed_control` `parameter`, timestep 25 ms (the model timestep 0.0025 s times the `frame_skip` default 10), lockstep
 clock, full reset, no snapshot or restore. The gaps state that no MuJoCo integration, contacts, tendons, muscles or
 actuator forces are modelled, that the observation values are placeholders with the real shape, that the fake was
-never compared with upstream, and that the `sim` backend was not run.
+never compared with upstream, and that the `sim` backend was not run in the workspace that authored the fake.
+
+The `sim` backend does not list a factory. The bridge imports `env_module`
+(`myosuite.envs.myo.tasks.challenge`) and then calls `gymnasium.make("myoChallengeBaodingP1-v1")`. That import runs
+`_reg` at `myosuite/envs/myo/tasks/challenge/__init__.py:500-511`, and `register_env` calls `gymnasium.register` at
+`myosuite/core/registry.py:146`. `import myosuite` does the same registration: `register_all_envs` imports the
+challenge package (`myosuite/__init__.py:83`) and is called at module scope (`myosuite/__init__.py:123`). The
+registration already supplies `model_path`, `normalize_act` and the goal ranges, so the driver adds no `env_kwargs`.
 
 ## Safety
 

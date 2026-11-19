@@ -9,33 +9,126 @@ a machine and no operator-required limit.
 Only ``obstacles-cs285-v0`` is served; the card's other entry symbols (AntEnv, HalfCheetahEnv, Reacher7DOFEnv) are
 MuJoCo environments that need MuJoCo 2.1 and mujoco-py (README.md:102-119) and are left for their own packages.
 
-The gate never imports the clone, and this package's fake needs neither gym nor numpy, so the ``fake`` backend is a
-pure Python obstacle environment (fake.py).  A backend name that ``backends`` does not list (``sim``) is served by
-``gym.make(env_id)`` (GymnasiumDriver.open_native); that path needs the upstream package (gym 0.17.2 and numpy,
-plus matplotlib for rendering) and was not run here.
+The ``fake`` backend is a pure Python obstacle environment (fake.py).  The fake gate does not import the clone.
+The ``sim`` backend is ``_build_sim_env``.  It executes the pinned ``obstacles_env.py`` and wraps ``Obstacles()``
+from that file in the registration's 500-step ``TimeLimit`` (``obstacles/__init__.py:6``).
+``gym.make('obstacles-cs285-v0')`` cannot be used: importing the module that registers the id
+runs ``cs285/envs/__init__.py``, which imports the MuJoCo environments first (``ant.py``, ``cheetah.py``,
+``reacher_env.py``).  ``hw4/setup.py`` lists only the top-level ``cs285`` package, and that directory has no
+``__init__.py``, so installing the homework does not put ``cs285.envs`` on the import path either.  This workspace
+did not run the sim backend.
 
 The ``fidelity`` attribute is the complete contract of the model as deployed (spec 05-fidelity FID-002).  Every
 constant and rule cites a line of the clone at commit 6da04f367e52a451c202ae7e5477994c1d149baf.  This package is
 model-authored and unreviewed: it is checked on the fake backend only.
 """
 
+import importlib.util
+import os
+from pathlib import Path
+
 from mhs.driver import Fact, GymnasiumDriver
 
 OBSTACLES = "hw4/cs285/envs/obstacles/obstacles_env.py"
 REGISTRATION = "hw4/cs285/envs/obstacles/__init__.py"
+ENVS_INIT = "hw4/cs285/envs/__init__.py"
+_CLONE = Path("robots/erfanmhi/deep-reinforcement-learning-cs285-pytorch")
+_ENV_REL = Path(OBSTACLES)
+_REG_REL = Path(REGISTRATION)
+
+
+def _obstacles_file() -> Path:
+    """The pinned ``obstacles_env.py`` (``Obstacles`` at obstacles_env.py:5).
+
+    The gate mounts this worktree, whose ``robots`` entry is the clone at the pinned commit, and mounts ``/src``
+    only when an install put the exported tree there.  Either root is that commit's files.  The search is those
+    two roots only.
+    """
+    roots = [Path("/src")]
+    here = Path(__file__).resolve()
+    roots.extend(parent / _CLONE for parent in here.parents)
+    seen: set[str] = set()
+    for root in roots:
+        key = os.path.normcase(str(root))
+        if key in seen:
+            continue
+        seen.add(key)
+        script = root / _ENV_REL
+        registered = root / _REG_REL
+        try:
+            if script.is_file() and registered.is_file():
+                return script.resolve()
+        except OSError:
+            continue
+    raise FileNotFoundError(
+        f"{_ENV_REL.as_posix()} is not under /src or the pinned clone {_CLONE.as_posix()}")
+
+
+def _load_obstacles():
+    """Execute the real ``obstacles_env.py`` and return that module.
+
+    ``hw4/cs285/envs/__init__.py:1-4`` imports ant, then cheetah, then obstacles, then reacher.  ant, cheetah
+    and reacher import ``mujoco_py`` at module scope (``ant.py:16``, ``cheetah.py:2``, ``reacher_env.py:3-4``),
+    so the ant import fails before obstacles is reached.  That binding needs the licensed MuJoCo 1.50 install
+    (``README.md:103-121``).  The obstacles file itself
+    imports only ``gym``, ``numpy`` and ``gym.spaces`` (``obstacles_env.py:1-3``).  Loading it by its path does
+    not run the sibling imports.  The module object is that file.  It is not inserted into the import table, it
+    is not an alias of ``cs285``, and the import path is left unchanged.
+    """
+    path = _obstacles_file()
+    spec = importlib.util.spec_from_file_location("obstacles_env", path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"cannot load the pinned {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    loaded = getattr(module, "__file__", None)
+    if loaded is None or Path(loaded).resolve() != path:
+        raise ImportError(f"loaded {loaded}, not the pinned {path}")
+    return module
+
+
+def _build_sim_env(**_options):
+    """Build the real ``Obstacles`` the constructor at ``obstacles_env.py:6`` builds.
+
+    The registration's entry point is ``cs285.envs.obstacles:Obstacles`` (``obstacles/__init__.py:3-7``), and the
+    next line of that file imports the class through the package (``obstacles/__init__.py:8``), which runs
+    ``envs/__init__.py`` first.  ``hw4/setup.py:4-8`` declares ``packages=['cs285']`` only, and ``hw4/cs285`` has
+    no ``__init__.py``, so an install of that homework does not expose ``cs285.envs``.  This factory therefore
+    calls the class in the loaded file and preserves its rendering configuration.  ``__init__`` imports
+    ``matplotlib.pyplot`` and creates a figure (``obstacles_env.py:8`` and ``:41``).  The upstream instance is
+    wrapped in the registration's 500-step ``TimeLimit`` (``obstacles/__init__.py:6``), as ``gym.make`` would do.
+    """
+    from gym.wrappers import TimeLimit
+
+    return TimeLimit(_load_obstacles().Obstacles(), max_episode_steps=500)
 
 
 class CS285Obstacles(GymnasiumDriver):
     device_id = "obstacles"
     env_id = "obstacles-cs285-v0"
     native = "cs285.envs.obstacles:Obstacles"
-    backends = {"fake": ".fake:FakeObstacles"}
+    #: ``sim`` is a callable, so the locked string backends stay ``{"fake": ".fake:FakeObstacles"}``.
+    backends = {"fake": ".fake:FakeObstacles", "sim": _build_sim_env}
     display_name = "CS285 obstacles-cs285-v0 (2D navigation)"
     vendor, model = "erfanmhi", "obstacles-cs285-v0"
     tags = ["obstacles", "navigation", "reinforcement-learning", "simulation", "gymnasium"]
     facts = [
         Fact("The environment is registered as obstacles-cs285-v0 with max_episode_steps=500",
              source="upstream_code", ref=f"{REGISTRATION}:3-7"),
+        Fact("The registration module then imports Obstacles through the package path",
+             source="upstream_code", ref=f"{REGISTRATION}:8"),
+        Fact("Importing cs285.envs imports ant, cheetah, obstacles and reacher",
+             source="upstream_code", ref=f"{ENVS_INIT}:1-4"),
+        Fact("The ant environment module imports mujoco_py at module scope",
+             source="upstream_code", ref="hw4/cs285/envs/ant/ant.py:16"),
+        Fact("The cheetah environment module imports mujoco_py at module scope",
+             source="upstream_code", ref="hw4/cs285/envs/cheetah/cheetah.py:2"),
+        Fact("The reacher environment module imports mujoco_env and mujoco_py.MjViewer at module scope",
+             source="upstream_code", ref="hw4/cs285/envs/reacher/reacher_env.py:3-4"),
+        Fact("The obstacles module imports gym, numpy and gym.spaces and does not import mujoco_py",
+             source="upstream_code", ref=f"{OBSTACLES}:1-3"),
+        Fact("hw4/setup.py installs only the top-level cs285 package and declares no dependencies",
+             source="upstream_code", ref="hw4/setup.py:4-8"),
         Fact("The action dimension is 2 and the observation dimension is 4",
              source="upstream_code", ref=f"{OBSTACLES}:11-12"),
         Fact("The action space is a Box of 2 elements bounded by boundary_min -0.99 and boundary_max 0.99",

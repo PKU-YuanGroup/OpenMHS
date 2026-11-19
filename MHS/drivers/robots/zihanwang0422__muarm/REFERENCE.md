@@ -95,6 +95,8 @@ Outputs:
 - actuator8 has ctrlrange 0 to 255 on the split tendon and forcerange -100 to 100 (upstream_code: models/franka_emika_panda/panda.xml:275-277)
 - The two finger joints are coupled by an equality constraint (upstream_code: models/franka_emika_panda/panda.xml:260-261)
 - The model has a home keyframe with qpos '0 0 0 -1.57079 0 1.57079 -0.7853 0.04 0.04' and ctrl '0 0 0 -1.57079 0 1.57079 -0.7853 255' (upstream_code: models/franka_emika_panda/panda.xml:280-281)
+- The upstream environment says it builds the model from an XML string, avoiding relative-path include issues when the XML is not co-located with the robot assets (upstream_code: learning/robots/panda.py:3-5)
+- That loader includes scene.xml in its XML string and passes an assets dictionary of the mesh files to mujoco.MjModel.from_xml_string (upstream_code: learning/robots/panda.py:64-79)
 
 Tags: arm, franka, manipulation, mujoco, panda, robot, simulation.
 

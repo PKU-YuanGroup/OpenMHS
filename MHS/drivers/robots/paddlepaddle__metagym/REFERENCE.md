@@ -111,6 +111,9 @@ Outputs:
 - step draws its Bernoulli reward from numpy's global random generator (upstream_code: metagym/bandits/bandits_env.py:73)
 - The class body defines __init__, reset, step, sample_task, set_task and expected_upperbound, and defines no seed method (upstream_code: metagym/bandits/bandits_env.py:12-83)
 - The registered bandits-v0 environment passes arms=50 and max_steps=1000 (upstream_code: metagym/bandits/__init__.py:18-23)
+- Importing metagym.bandits imports register from gym.envs.registration and registers bandits-v0 with entry point metagym.bandits:Bandits (upstream_code: metagym/bandits/__init__.py:15-24)
+- bandits_env.py imports pygame at module scope, on the import that registers bandits-v0 (upstream_code: metagym/bandits/bandits_env.py:6)
+- The quick start imports metagym.bandits, makes bandits-v0, samples a task, calls set_task and then reset (vendor_doc: metagym/bandits/README.md:30-44)
 
 Tags: bandits, meta-reinforcement-learning, reinforcement-learning, simulation, gymnasium.
 

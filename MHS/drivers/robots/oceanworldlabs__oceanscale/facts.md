@@ -33,6 +33,10 @@ and the number after the colon is the line (a range covers every claim of the fa
 | OceanScale is an alpha GPU-native underwater-robotics simulator built on Newton and Warp. | `vendor_doc` | `README.md:7-8` |
 | An NVIDIA GPU with CUDA 12.8+ is required and Linux x86_64 is the supported platform. | `vendor_doc` | `README.md:14-20` |
 | The install pulls CUDA-enabled wheels of warp-lang, newton and torch. | `upstream_code` | `pyproject.toml:27-30` |
+| `default_warp_device` returns cuda only when Warp reports a CUDA device; otherwise it aliases the names cuda and cuda:0 to the cpu device and returns cpu. | `upstream_code` | `oceanscale/devices.py:8-43` |
+| `resolve_warp_device` with no requested device returns `default_warp_device`. | `upstream_code` | `oceanscale/devices.py:59-60` |
+| `ROVEnv` passes its device argument through `resolve_warp_device`. | `upstream_code` | `oceanscale/rov_env.py:108` |
+| The bluerov2-hover demo constructs one `ROVEnv` world with `n_envs=1`. | `upstream_code` | `oceanscale/cli.py:706` |
 
 ## Limits
 
@@ -50,6 +54,17 @@ pure Python and cites the upstream lines for the observation layout, the action 
 the out-of-bounds termination and the truncation. Its kinematic acceleration and drag are placeholders and are not
 upstream facts; it models one environment and returns flat 26-element observations where upstream returns batched
 arrays, and it omits the upstream sensor noise. The fidelity `gaps` in `driver.py` state all of this.
+
+## The sim backend
+
+The clone has no `register(` call. The usage example constructs `ROVEnv` directly (`oceanscale/rov_env.py:10`), so
+there is no `gymnasium.make` id. The `sim` backend calls `ROVEnv(n_envs=1)`. `n_envs` defaults to 64
+(`oceanscale/rov_env.py:86`); one world is what the class documents (`oceanscale/rov_env.py:78-79`) and what the
+hover demo builds (`oceanscale/cli.py:706`). `step` still returns length-1 arrays for that world
+(`oceanscale/rov_env.py:440`). A wrapper returns each of those scalars with `.item()` and forwards the observation
+unchanged (`oceanscale/rov_env.py:672-674`). `device` is left as `None`, so `resolve_warp_device` selects cuda when
+a CUDA device is present and cpu otherwise (`oceanscale/devices.py:8-43`, `oceanscale/devices.py:59-60`,
+`oceanscale/rov_env.py:108`).
 
 ## What was not run
 

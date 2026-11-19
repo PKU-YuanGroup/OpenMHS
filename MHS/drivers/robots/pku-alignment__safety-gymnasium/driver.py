@@ -13,9 +13,12 @@ Point Goal1 is a two-dimensional navigation task: the Point robot has two contin
 (goal_level1.py:33-34), and the episode ends at the goal or after 1000 environment steps (base_task.py:181).
 
 A backend name that ``backends`` does not list (``sim``) is served by ``gymnasium.make(env_id)``
-(GymnasiumDriver.open_native); that path needs the upstream packages and was not run here.  The gate cannot import
-them, so the ``fake`` backend is this package's pure Python Point Goal1 (fake.py).  The fake is a kinematic point
-model, not MuJoCo; the fidelity ``gaps`` say exactly what is not modelled.
+(GymnasiumDriver.open_native) after the bridge imports ``env_module``.  Importing ``safety_gymnasium`` runs
+``gymnasium_register`` for ``SafetyPointGoal1Gymnasium-v0`` (safety_gymnasium/__init__.py:61-66, invoked for the Goal
+family at :136-137; README.md:550-554 and tests/test_gymnasium_env.py:17-31 import the package before
+``gymnasium.make``).  That path needs the upstream packages and was not run here.  The ``fake`` backend is this
+package's pure Python Point Goal1 (fake.py) and ignores ``env_module``.  The fake is a kinematic point model, not
+MuJoCo; the fidelity ``gaps`` say exactly what is not modelled.
 
 The device is simulated (R0): there is no hardware backend, no e-stop path to a machine and no operator-required
 limit.  Every fact and rule cites a line of the read-only clone at commit ae966e511b9927f06b39c727ca5c650136a4e696.
@@ -43,6 +46,8 @@ class SafetyPointGoal1(GymnasiumDriver):
 
     device_id = "safety-point-goal1-gymnasium"
     env_id = "SafetyPointGoal1Gymnasium-v0"
+    # Importing it runs gymnasium_register at safety_gymnasium/__init__.py:61-66 (Goal family at :136-137).
+    env_module = "safety_gymnasium"
     native = "safety_gymnasium.builder:Builder"
     backends = {"fake": ".fake:FakeSafetyPointGoal1"}
     display_name = "Safety-Gymnasium Point Goal1 (Gymnasium view)"
@@ -56,6 +61,8 @@ class SafetyPointGoal1(GymnasiumDriver):
              "five items without the separate cost", source="vendor_doc", ref=f"{README}:547-554"),
         Fact("Each task is also registered in the Gymnasium registry under a Gymnasium suffix, served by the "
              "conversion wrapper make_gymnasium_environment", source="upstream_code", ref=f"{INIT}:61-66"),
+        Fact("Importing safety_gymnasium runs the module-level Goal registration, which calls gymnasium_register "
+             "for SafetyPointGoal1Gymnasium-v0", source="upstream_code", ref=f"{INIT}:136-137"),
         Fact("The conversion wrapper calls the Safety-Gymnasium environment and returns (observation, reward, "
              "terminated, truncated, info), putting cost into info", source="upstream_code",
              ref=f"{CONVERSION}:26-34"),
@@ -134,8 +141,8 @@ class SafetyPointGoal1(GymnasiumDriver):
             "sensor readings",
             "one fake tick is one 20 ms environment step; upstream advances a binomial frameskip of 10 physics "
             "steps of 2 ms each (point.xml:19, underlying.py:95-96), so the fake does not reproduce the physics "
-            "substeps, and the sim path (gymnasium.make of the registered id) was not run here and additionally "
-            "needs safety_gymnasium imported so that the Gymnasium id is registered",
+            "substeps; the sim path imports safety_gymnasium before gymnasium.make so the Gymnasium id is "
+            "registered (safety_gymnasium/__init__.py:61-66) and was not run in this workspace",
             "the layout is drawn with Python's random.Random instead of the upstream numpy generator, so a seed "
             "does not give the same layout or trajectory on the two",
             "no rendering, no vision observation, no vase contact or displacement cost and no validation against "

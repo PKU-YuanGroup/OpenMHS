@@ -6,15 +6,21 @@ the URDF effort limits, ``cap.world.reset.v1`` takes ``{seed, options}`` and ``c
 device is simulated (R0): there is no hardware backend, no e-stop path to a machine and no operator-required limit.
 
 The upstream ``B1Sim`` is a ``gymnasium.Env`` subclass but not a standard Gymnasium environment: ``reset`` and
-``step`` return only the info dict ``{"q", "dq"}`` (B1Env/b1_env.py:118-121 and :132-138), and the class is not
-registered with gymnasium (the clone calls no ``register``).  There is therefore no ``env_id`` and no implicit
-``gymnasium.make`` backend: ``backends`` names the package's own fake, which is the only backend checked here.
+``step`` return only the info dict ``{"q", "dq"}`` (B1Env/b1_env.py:118-121 and :132-138).  ``B1Env/b1_env.py:19``
+defines that class and the module never calls ``register``, so ``env_id`` stays None and ``gymnasium.make`` cannot
+build it.  ``backends["fake"]`` is the package's pure Python stand-in.  ``backends["sim"]`` is ``_build_sim_b1``,
+which constructs ``B1Sim()`` with the constructor defaults (B1Env/b1_env.py:20-21).  ``render_mode`` None opens a
+PyBullet DIRECT client (B1Env/b1_env.py:35-36).  ``_GymStep`` forwards that object.  Its ``reset`` and ``step``
+place the returned ``q`` and ``dq`` into the observation Box the constructor builds, joint positions followed by
+joint velocities (B1Env/b1_env.py:89-95), and pass the info dict through unchanged.  Those methods return no reward
+and no termination flags (B1Env/b1_env.py:123-138); the wrapper passes reward None, which the bridge reads as 0,
+and terminated and truncated false.
 
-The gate cannot import the upstream module: it imports numpy, pybullet and gymnasium and builds a pinocchio
-``RobotWrapper`` (B1Env/b1_env.py:3-16 and :54-55), while the README installs pinocchio and bullet_utils separately
-(README.md:12-24) and setup.cfg does not list them (setup.cfg:18-22).  The ``fake`` backend is a pure Python
-per-joint kinematic stand-in (see fake.py).  The upstream PyBullet environment was not run and the fake was never
-compared with it.
+The fake backend does not import the clone.  ``B1Sim`` imports numpy, pybullet and gymnasium and builds a pinocchio
+``RobotWrapper`` (B1Env/b1_env.py:3-16 and :54-55).  setup.cfg does not list pinocchio (setup.cfg:18-22); the README
+installs it with conda before the package (README.md:12-16).  ``b1_env.py`` does not import bullet_utils; the README
+installs that package for the other examples (README.md:18-24).  The upstream PyBullet environment was not run in
+this workspace and the fake was never compared with it.
 
 The ``fidelity`` attribute is the fidelity contract of the model as deployed (spec 05-fidelity FID-002): the tested
 backend is the kinematic fake, so it is F0.  The bridge's derived contract calls the environment "seeded"; the
@@ -29,11 +35,57 @@ B1_ENV = "B1Env/b1_env.py"
 B1_URDF = "B1Env/robots/b1_raw.urdf"
 
 
+def _observation(info):
+    """``q`` followed by ``dq``, the observation Box ``B1Sim`` builds (B1Env/b1_env.py:89-95).
+
+    ``reset`` and ``step`` return those arrays only inside ``{"q", "dq"}`` (B1Env/b1_env.py:118-121, :132-138
+    and :150-156).  ``float`` keeps each value and drops the numpy scalar type.
+    """
+    return [float(value) for value in list(info["q"]) + list(info["dq"])]
+
+
+class _GymStep:
+    """``B1Sim`` with ``reset`` and ``step`` in the tuple shape the Gymnasium bridge unpacks.
+
+    The wrapped object is the upstream instance.  ``step`` passes the action through and returns the info dict
+    ``B1Sim.step`` returned (B1Env/b1_env.py:132-138).  That method names no reward, terminated, or truncated;
+    reward None is what the bridge reads as 0, and the two flags stay false.  Every other attribute, including
+    the spaces and ``close``, is the upstream object's.
+    """
+
+    def __init__(self, env):
+        self._env = env
+
+    def __getattr__(self, name):
+        return getattr(self._env, name)
+
+    def reset(self, *, seed=None, options=None):
+        info = self._env.reset(seed=seed, options=options)
+        return _observation(info), info
+
+    def step(self, action):
+        info = self._env.step(action)
+        return _observation(info), None, False, False, info
+
+
+def _build_sim_b1(**_options):
+    """Build ``B1Sim()`` for the ``sim`` backend.
+
+    The class is ``B1Env.b1_env:B1Sim`` (B1Env/b1_env.py:19).  The constructor defaults are ``render_mode`` None,
+    ``record_path`` None and ``useFixedBase`` False (B1Env/b1_env.py:20-21); None selects the DIRECT client
+    (B1Env/b1_env.py:35-36).  The import is inside this function, so the fake backend does not import pybullet
+    or pinocchio.
+    """
+    from B1Env.b1_env import B1Sim
+
+    return _GymStep(B1Sim())
+
+
 class UnitreeB1(GymnasiumDriver):
     device_id = "unitree-b1"
     env_id = None
     native = "B1Env.b1_env:B1Sim"
-    backends = {"fake": ".fake:FakeB1Sim"}
+    backends = {"fake": ".fake:FakeB1Sim", "sim": _build_sim_b1}
     display_name = "Unitree B1 Simulation Environment (B1Sim)"
     vendor, model = "RobotCasters", "Unitree B1"
     tags = ["unitree", "b1", "quadruped", "pybullet", "reinforcement-learning", "simulation", "gymnasium"]
@@ -42,6 +94,8 @@ class UnitreeB1(GymnasiumDriver):
              "Unitree B1 robot", source="vendor_doc", ref="README.md:1-2"),
         Fact("B1Sim subclasses gymnasium.Env and imports Env and spaces from gymnasium", source="upstream_code",
              ref=f"{B1_ENV}:6-19"),
+        Fact("B1Sim's constructor defaults are render_mode None, record_path None and useFixedBase False",
+             source="upstream_code", ref=f"{B1_ENV}:19-21"),
         Fact("The constructor opens an in-process PyBullet client: GUI when render_mode is 'human' and DIRECT "
              "otherwise", source="upstream_code", ref=f"{B1_ENV}:31-36"),
         Fact("PyBullet gravity is (0, 0, -9.81) and the PyBullet time step is 1/240 s", source="upstream_code",

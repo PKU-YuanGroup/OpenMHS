@@ -8,6 +8,7 @@ generated from the driver, not from this page.
 | fact | source | ref |
 |---|---|---|
 | cube-transfer-v1 is registered with entry point gym_av_aloha.env.tasks.cube_transfer_env:CubeTransferEnv | upstream_code | gym_av_aloha/__init__.py:19-21 |
+| The cube-transfer-v1 register(...) call is at module level in gym_av_aloha, so the id is in the gymnasium registry only after that module is imported | upstream_code | gym_av_aloha/__init__.py:1-25 |
 | The registration marks cube-transfer-v1 nondeterministic=True because rendered observations differ even after seeding | upstream_code | gym_av_aloha/__init__.py:22-24 |
 | The default camera set has six cameras, each rendered at 480x640 pixels | upstream_code | gym_av_aloha/env/sim_config.py:7-14 |
 | AVAlohaEnv adds a pixels observation only when len(cameras) > 0 | upstream_code | gym_av_aloha/env/sim_env.py:151-163 |
@@ -30,6 +31,11 @@ generated from the driver, not from this page.
 | SimRobotArm.set_joint_ctrl clips joint control to the actuator ctrlrange | upstream_code | gym_av_aloha/env/robot.py:91-94 |
 | The environment's render_fps is 1/SIM_DT and its only render mode is rgb_array | upstream_code | gym_av_aloha/env/sim_env.py:27 |
 | The upstream package requires Python ^3.10 and mujoco 3.3.3, dm-control ^1.0.31 and datasets 3.3.2 | upstream_code | pyproject.toml:9-12 |
+
+Sim path (`driver.py`): `env_module = "gym_av_aloha"`. Importing that package runs the module-level `register(...)`
+at `gym_av_aloha/__init__.py:19-25` (the `register` import is `:1`), which puts `gym_av_aloha/cube-transfer-v1` in
+the gymnasium registry before `gymnasium.make`. The `fake` backend does not import it. `env_kwargs` passes
+`cameras={}` so `get_obs` skips pixels (`gym_av_aloha/env/sim_env.py:39`, `:151-163`, `:199-207`).
 
 Limits: the driver declares none. The only action bound is the environment's own `action_space`, an unbounded
 `Box(-inf, inf, (21,))` (`sim_env.py:167-172`), so the bridge derives no finite action limits. The class bound on

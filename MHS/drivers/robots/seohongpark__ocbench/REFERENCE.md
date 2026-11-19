@@ -100,6 +100,7 @@ Outputs:
 
 - The README's quick-start example makes block-cpu-single-task1-v0 and steps it with an action sampled from its action space (vendor_doc: README.md:62-70)
 - block-cpu-single-task1-v0 is registered with entry point ocbench.envs.block_env:BlockEnv, max_episode_steps=1250 and kwargs env_type='single', task_id=1 (upstream_code: ocbench/__init__.py:74-79)
+- Importing ocbench runs the module-level register call that registers block-cpu-single-task1-v0 (upstream_code: ocbench/__init__.py:74-79)
 - ocbench.make returns gymnasium.make(env_name, **kwargs) for CPU environments (upstream_code: ocbench/__init__.py:35-44)
 - BlockEnv subclasses ManipulationEnv and the single env_type installs one cube (upstream_code: ocbench/envs/block_env.py:9-21)
 - The single task is named move and its goal position is [0.425, 0.0, 0.03] (upstream_code: ocbench/envs/block_env.py:58-65)

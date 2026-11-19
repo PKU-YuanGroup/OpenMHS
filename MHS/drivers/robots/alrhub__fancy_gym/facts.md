@@ -9,6 +9,7 @@ reference file is generated from the driver, not from this page.
 | fact | source | ref |
 |---|---|---|
 | fancy/SimpleReacher-v0 is registered with entry point SimpleReacherEnv and n_links=2 | upstream_code | fancy_gym/envs/__init__.py:38-45 |
+| Importing fancy_gym.envs runs the module-level register call at fancy_gym/envs/__init__.py:38-46, which registers fancy/SimpleReacher-v0 | upstream_code | fancy_gym/envs/__init__.py:38-46 |
 | fancy/SimpleReacher-v0 is registered with max_episode_steps=200 | upstream_code | fancy_gym/envs/__init__.py:42 |
 | The action space is a Box with one torque per link, low=-1000 and high=+1000 (max_torque 1000) | upstream_code | fancy_gym/envs/classic_control/base_reacher/base_reacher_torque.py:16-18 |
 | The simulation timestep is 0.01 s | upstream_code | fancy_gym/envs/classic_control/base_reacher/base_reacher.py:21 |
@@ -24,6 +25,9 @@ reference file is generated from the driver, not from this page.
 | The goal is drawn uniformly from a square of side 2*total_length until its norm is below total_length | upstream_code | fancy_gym/envs/classic_control/simple_reacher/simple_reacher.py:89-92 |
 | The joint limits are -pi and +pi | upstream_code | fancy_gym/envs/classic_control/base_reacher/base_reacher.py:38-39 |
 | A joint angle outside the joint limits is reported as a self collision | upstream_code | fancy_gym/envs/classic_control/base_reacher/base_reacher.py:105-112 |
+
+The `sim` backend makes the registered `fancy/SimpleReacher-v0` after importing `env_module = "fancy_gym.envs"`, whose
+module body runs the registration at `fancy_gym/envs/__init__.py:38-46`; the `fake` backend entry is unchanged.
 
 Limits: The checked fake keeps two default-link torque action values in -1000..1000. The Gymnasium bridge derives these unchanged action bounds with source `upstream_code` and ref `fancy_gym/envs/classic_control/base_reacher/base_reacher_torque.py:16-18`, where the same-span ones assignment and Box construction state the bounds. The selected environment and width were source-reviewed separately; symbolic shapes alone do not prove a width. `ticks` remains the SDK bridge budget (1 to max_ticks, 10000 by default), not a device limit. This simulated R0 package declares no operator-required hardware limit.
 

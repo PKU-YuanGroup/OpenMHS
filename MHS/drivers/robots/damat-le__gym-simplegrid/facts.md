@@ -20,6 +20,7 @@ Every fact cites its source at commit `6ded2fcf684727b27b5569688cad6f92bc3bc52b`
 | A reset without a start_loc or goal_loc option samples a free cell with GridModel.sample_valid_xy | upstream_code | gym_simplegrid/envs/simple_grid.py:167-168 |
 | The start_loc and goal_loc options accept a flat integer index or a (row, col) pair, and an invalid start or goal raises ValueError | upstream_code | gym_simplegrid/envs/simple_grid.py:158-174 |
 | SimpleGrid-4x4-v0 is registered with entry point gym_simplegrid.envs:SimpleGridEnv, kwargs obstacle_map=MAP_4x4 and max_episode_steps=200 | upstream_code | gym_simplegrid/__init__.py:28-33 |
+| The upstream integration test imports gym_simplegrid (which runs the register calls at gym_simplegrid/__init__.py:21-41) before gym.make('SimpleGrid-4x4-v0') | upstream_code | tests/test_integration.py:3-7 |
 | MAP_4x4 has four rows of four cells: 0000, 0101, 0001 and 1000 | upstream_code | gym_simplegrid/__init__.py:5 |
 | The environment declares the render modes human, rgb_array and ansi with render_fps 8 | upstream_code | gym_simplegrid/envs/simple_grid.py:20 |
 
@@ -30,6 +31,10 @@ device is simulated (R0), so no limit is `operator_required`.
 
 Configuration: `env_id = "SimpleGrid-4x4-v0"` is the pre-registered environment whose registration supplies the
 `obstacle_map` that the generic `SimpleGrid-v0` requires (`gym_simplegrid/__init__.py:20-33`). `env_kwargs` is empty.
+`env_module = "gym_simplegrid"` is imported by the bridge before `gymnasium.make` on the sim backend, because the
+package body runs the `register(...)` calls at `gym_simplegrid/__init__.py:21-41` (and the upstream integration test
+imports the package for the same reason before `gym.make`, `tests/test_integration.py:3-7`). The fake backend is built
+directly from `.fake:FakeSimpleGridEnv` and ignores `env_module`.
 
 Fidelity contract (`driver.py`, `fidelity = {...}`): engine `gymnasium:SimpleGrid-4x4-v0`, level F0 (a discrete grid
 state machine with no dynamics, contact, actuator, sensor or noise model), determinism `seeded` with `seed_control`

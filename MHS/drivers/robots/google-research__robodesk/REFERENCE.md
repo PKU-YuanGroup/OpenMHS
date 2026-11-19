@@ -98,7 +98,13 @@ Outputs:
 
 ## Facts
 
-- RoboDesk is a Gymnasium environment: the class subclasses gym.Env (upstream_code: robodesk/robodesk.py:16)
+- RoboDesk is a legacy Gym environment: the class subclasses gym.Env (upstream_code: robodesk/robodesk.py:16)
+- The environment module imports dm_control.mujoco, dm_control.utils.inverse_kinematics, gym, numpy and PIL.Image (upstream_code: robodesk/robodesk.py:9-13)
+- The package exports RoboDesk from robodesk/__init__.py and does not register a gym environment id (upstream_code: robodesk/__init__.py:1)
+- The setup script declares numpy, dm_control and gym as install requirements; Pillow, which the module imports, is not declared (upstream_code: setup.py:29)
+- The setup script packages the robodesk/assets directory, including desk.xml and the meshes, as package data (upstream_code: setup.py:13-26)
+- The image resize uses Image.ANTIALIAS (upstream_code: robodesk/robodesk.py:129-131)
+- The renderer builds a dm_control.mujoco.Camera over the physics and frees its scene after rendering (upstream_code: robodesk/robodesk.py:114-126)
 - The environment loads the MuJoCo scene model robodesk/assets/desk.xml (upstream_code: robodesk/robodesk.py:23-24)
 - The MuJoCo model integrates with a 2 ms timestep (0.002 s) (upstream_code: robodesk/assets/desk.xml:5)
 - Each environment step applies the action action_repeat times and runs the physics 10 times per application (upstream_code: robodesk/robodesk.py:170-176)

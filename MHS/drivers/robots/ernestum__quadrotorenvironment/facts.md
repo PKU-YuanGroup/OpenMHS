@@ -7,6 +7,7 @@ clone such as README.md or docs/*.md) or `upstream_code` (`path/in/clone.py:LINE
 | fact | source | ref |
 |---|---|---|
 | QuadrotorEnvironment is a Gym environment that simulates a quadrotor; it is not a hardware interface | upstream_code | quadrotor_environment/quadrotor_environment.py:26-28 |
+| The clone's unit test builds QuadrotorEnvironment() with the default constructor | upstream_code | quadrotor_environment/tests/test_quadrotorEnvironment.py:98 |
 | The action space is Box(-1, 1, (4,), dtype float32): four continuous command values in [-1, 1] | upstream_code | quadrotor_environment/quadrotor_environment.py:132 |
 | step() returns (observation, reward, done, {}) and done is delayed_model.time >= max_time | upstream_code | quadrotor_environment/quadrotor_environment.py:178 |
 | The max_time constructor default is 10 seconds and the controller_period default is 0.01 seconds | upstream_code | quadrotor_environment/quadrotor_environment.py:58 |
@@ -40,10 +41,16 @@ The device is simulated (R0), so no limit is `operator_required`.
 
 Fidelity contract (`driver.py`, `fidelity = {...}`): engine `custom:quadrotor_environment`, level F1 (explicit
 rigid-body dynamics, no contacts, no actuator/sensor noise in the default configuration), determinism `seeded` with
-`seed_control` `parameter` (the package fake reseeds from `reset(seed)`; the upstream `reset` has no seed argument and
-draws from numpy's global generator), timestep 10 ms (the default `controller_period` of 0.01 s,
+`seed_control` `parameter` on the fake (the package fake reseeds from `reset(seed)`). The sim backend's contract
+(`fidelity_by_backend`) is `statistical` with `seed_control` `none`: upstream `reset` has no seed argument
+(`quadrotor_environment.py:196-197`) and `random_state` draws from numpy's global generator
+(`quadrotor_environment.py:190-193`). Timestep 10 ms (the default `controller_period` of 0.01 s,
 `quadrotor_environment.py:58`), `realtime_factor` 0, clock `lockstep`, reset `full`, no snapshot and restore. The gaps
 say what is not modelled and that the fake was not compared with the upstream environment.
+
+Sim path: the clone registers no id. `make_sim_env` returns `QuadrotorEnvironment()` the way
+`quadrotor_environment/tests/test_quadrotorEnvironment.py:98` does, with the defaults at
+`quadrotor_environment.py:49-58` (`enable_rendering` false, so `render` at `:175` and `:221` is not called).
 
 Safety: simulated R0 device. The e-stop is the runtime's software latch (no native stop exists); after it no step or
 reset is accepted until `mhs.safety.reset` clears the latch (a simulator needs no operator for that), and the state

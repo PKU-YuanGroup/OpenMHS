@@ -6,11 +6,14 @@ read-only and was not imported or installed.
 
 | fact | source | ref |
 |---|---|---|
+| The upstream environment class is gym_quadruped.quadruped_env:QuadrupedEnv, a gymnasium.Env | upstream_code | gym_quadruped/quadruped_env.py:71 |
 | QuadrupedEnv is constructed from a robot name and defaults to the flat scene, the default observation names, sim_dt 0.002 s, the forward velocity command of 0.5 m/s and 0.0 rad/s, ground friction 1.0 and the leg order FL, FR, RL, RR | upstream_code | gym_quadruped/quadruped_env.py:85-99 |
 | The default observations are qpos, qvel, tau_ctrl_setpoint, feet_pos:base and feet_vel:base | upstream_code | gym_quadruped/quadruped_env.py:80 |
 | The observation space is a gymnasium Dict of Box bounds built from the model's joint ranges and actuator control ranges | upstream_code | gym_quadruped/utils/quadruped_utils.py:250-326 |
 | The action space is a gymnasium Box of shape (mjModel.nu,): one torque per actuator, with low and high taken from actuator_forcerange | upstream_code | gym_quadruped/quadruped_env.py:224-235 |
-| The scene model is loaded from robot_model/scene_<scene>.xml and its terrain is generated for the robot's hip height | upstream_code | gym_quadruped/quadruped_env.py:150-155 |
+| The constructor resolves robot_model/scene_<scene>.xml and the procedural utils/mujoco/assets from its own package directory | upstream_code | gym_quadruped/quadruped_env.py:150-155 |
+| The constructor writes the composed scene to utils/mujoco/assets/<robot>-<scene>.xml beside the package and loads that file with MjModel.from_xml_path | upstream_code | gym_quadruped/quadruped_env.py:167-170 |
+| When robot_model/scene_<scene>.xml is absent (flat), generate_terrain parses the procedural utils/mujoco/assets/scene_flat.xml | upstream_code | gym_quadruped/utils/mujoco/terrain.py:318-358 |
 | The go2 robot configuration uses robot_model/go2/go2.xml and a hip height of 0.28 m | upstream_code | gym_quadruped/robot_cfgs.py:43-44 |
 | The simulation timestep is the sim_dt constructor argument and is assigned to mjModel.opt.timestep | upstream_code | gym_quadruped/quadruped_env.py:182-183 |
 | A step writes the action to mjData.ctrl, advances MuJoCo with one mj_step and then steps every configured sensor | upstream_code | gym_quadruped/quadruped_env.py:279-284 |
@@ -22,6 +25,17 @@ read-only and was not imported or installed.
 | reset returns the observation dictionary from _get_obs() | upstream_code | gym_quadruped/quadruped_env.py:416 |
 | A reset randomizes the ground tangential friction coefficient from the configured ground_friction_coeff range | upstream_code | gym_quadruped/quadruped_env.py:412-414 |
 | close() closes the viewer if one was opened and clears it | upstream_code | gym_quadruped/quadruped_env.py:880-885 |
+
+Backends: the upstream registers no Gymnasium id (the clone has no `register(...)` call) and its README constructs
+`QuadrupedEnv` directly (README.md:15-27), so `env_id` and `env_module` are unset. The `fake` backend is the package's
+own pure Python stand-in (`.fake:FakeQuadrupedEnv`); the `sim` backend is the callable `_build_sim_env`, which imports
+`gym_quadruped.quadruped_env:QuadrupedEnv` (quadruped_env.py:71) and constructs it with `robot='go2'` and
+`scene='flat'` (quadruped_env.py:85-99). The import is inside the factory, so the fake backend does not need the
+upstream stack. The constructor resolves its scene and model files from its own package directory and writes the
+composed scene to `utils/mujoco/assets/<robot>-<scene>.xml` there (quadruped_env.py:150-170). The factory does not
+redirect that write. The flat scene is the procedural `utils/mujoco/assets/scene_flat.xml` because
+`robot_model/scene_flat.xml` does not exist (terrain.py:318-358). The `sim` entry is a callable, so the lock's
+string entry (`fake` only) is unchanged and G2 compares a lock only when every declared entry is a string.
 
 Limits: the driver declares none of its own. The only bounds come from the catalogue classes and the bridge:
 `cap.world.step.v1.ticks` is 1 to 10000 (the family's `max_ticks`), and the action is one torque per actuator, shaped

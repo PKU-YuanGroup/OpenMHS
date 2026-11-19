@@ -7,11 +7,13 @@ driver, not from this page.
 | fact | source | ref |
 |---|---|---|
 | CartpolePyTinyDiffSim is registered as CartpolePyTinyDiffSim-v0 with entry point tds_environments.cartpole_tds_env:CartpolePyTinyDiffSim and max_episode_steps 200 | upstream_code | python/tds_environments/__init__.py:12-17 |
+| Importing tds_environments runs its module-level register(...) call, so CartpolePyTinyDiffSim-v0 is in the legacy gym registry after the import | upstream_code | python/tds_environments/__init__.py:1-17 |
+| The wrapper imports the legacy gym package, its spaces and gym.utils.seeding, and subclasses gym.Env | upstream_code | python/tds_environments/cartpole_tds_env.py:2-9 |
 | The wrapper creates pytinydiffsim.CartpoleEnv | upstream_code | python/tds_environments/cartpole_tds_env.py:14 |
 | The action space is a one-dimensional Box bounded by +-force_mag, and force_mag is 10 | upstream_code | python/tds_environments/cartpole_tds_env.py:30-35 |
 | x_threshold is 0.4 and theta_threshold_radians is 12 degrees; the observation space is a four-element Box with high [x_threshold*2, float32 max, theta_threshold*2, float32 max] | upstream_code | python/tds_environments/cartpole_tds_env.py:19-28 |
-| step passes action[0] to the wrapped environment and returns its observation with reward 1.0 and the done flag | upstream_code | python/tds_environments/cartpole_tds_env.py:65-73 |
-| reset returns the wrapped environment's reset state as the observation | upstream_code | python/tds_environments/cartpole_tds_env.py:75-79 |
+| step passes action[0] to the wrapped environment and returns the legacy four-value (observation, reward, done, info) tuple with reward 1.0 and the done flag | upstream_code | python/tds_environments/cartpole_tds_env.py:65-73 |
+| reset takes no seed argument and returns the wrapped environment's reset state as the observation | upstream_code | python/tds_environments/cartpole_tds_env.py:75-79 |
 | seed masks the seed to 32 bits, seeds the wrapped environment and returns [seed] | upstream_code | python/tds_environments/cartpole_tds_env.py:49-55 |
 | The compiled step2 returns the observation in [q0, q1, qd0, qd1] order when COMPATIBILITY is not defined | upstream_code | examples/environments/cartpole_environment2.h:221-242 |
 | A reset draws every state value uniformly from -0.05 to 0.05 with std::rand | upstream_code | examples/environments/cartpole_environment2.h:182-192 |
@@ -41,10 +43,14 @@ Fidelity contract (`driver.py`, `fidelity = {...}`): engine `tds:pytinydiffsim.C
 clock `lockstep`, reset `full`, no snapshot and restore.  The gaps say that the fake is an analytic cart-pole, not the
 TDS engine, that its random stream differs from upstream, and that the 200-step TimeLimit wrapper is not reproduced.
 
-Mock path: the card prefers `upstream-sim`; the upstream simulator is the `sim` backend that GymnasiumDriver would open
-with `gymnasium.make("CartpolePyTinyDiffSim-v0")` (the bridge falls back to the legacy `gym` package).  That path needs
-the compiled `pytinydiffsim` extension and `tds_environments` imported for its registration side effect, and it was
-not run.  The gate runs the package's own fake backend (`fake.py`), a pure Python cart-pole.
+Mock path: the card prefers `upstream-sim`; the upstream simulator is the `sim` backend that GymnasiumDriver opens
+with `gym.make("CartpolePyTinyDiffSim-v0")` after the driver's `env_module` imports `tds_environments`
+(`python/tds_environments/__init__.py:1-17`) and the bridge selects the legacy gym registry that holds the id.  That
+path needs the compiled `pytinydiffsim` extension and the legacy `gym` distribution the clone imports but does not
+declare (`setup.py:291-293` names only numpy).  This backend requires `gym==0.23.1`, the legacy-API release whose
+registry still exposes `EnvRegistry.env_specs` read at
+`__init__.py:6`.  It was not run here.  The gate runs the package's own fake backend (`fake.py`), a pure Python
+cart-pole.
 
 Coverage: one device class, the first confirmed entry symbol, `CartpolePyTinyDiffSim-v0`.  The second entry symbol
 `tds_environments.reacher_tds_env:ReacherPyTinyDiffSim` (registered as ReacherPyTinyDiffSim-v0 at

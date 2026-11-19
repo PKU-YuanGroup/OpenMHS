@@ -12,12 +12,15 @@ observation only and ``step(action)`` returns ``(observation, reward, done, info
 (``gym_maze/envs/maze_env.py:88-97``).  The Gymnasium bridge accepts both shapes, which is why the
 card's ``GymnasiumDriver`` fits this environment without a direct Driver.
 
-The gate does not import the clone, and the upstream constructor imports gym, pygame and numpy
-(``setup.py:12``); package code therefore never imports the clone, and the ``fake`` backend is the
-package's own pure Python re-implementation of the upstream grid rules (see ``fake.py``).  A backend
-name that ``backends`` does not list (``sim``) is left to the bridge, which imports ``gymnasium``
-(falling back to legacy ``gym``) and calls ``make(env_id)``; that path needs the upstream package,
-pygame and a display, and was not run here.
+The fake gate does not import the clone or its gym, pygame and numpy dependencies (``setup.py:12``).
+The ``fake`` backend is the package's own pure Python re-implementation of the upstream grid rules
+(see ``fake.py``).  A backend name that ``backends`` does not list (``sim``) is left to the bridge.
+It imports ``env_module`` (``gym_maze``), whose module body runs ``register(...)`` for ``maze-v0``
+(``gym_maze/__init__.py:1-8``), then calls ``make(env_id)`` in whichever registry holds the id.
+No constructor kwargs are supplied, so ``MazeEnvSample5x5`` keeps its default ``enable_render=True``
+(``gym_maze/envs/maze_env.py:111-112``) and ``MazeView2D`` creates the pygame display
+(``gym_maze/envs/maze_view_2d.py:34-36``).  That path needs the upstream package and display support;
+it is not exercised by the fake gate.
 
 The ``fidelity`` attribute is the complete fidelity contract of the model as deployed (spec
 05-fidelity FID-002): every member of ``device.schema.json`` that applies to a simulator without a
@@ -36,6 +39,8 @@ REG = "gym_maze/__init__.py"
 class MazeSample5x5(GymnasiumDriver):
     device_id = "gym-maze-5x5"
     env_id = "maze-v0"
+    #: Importing gym_maze runs register(...) at gym_maze/__init__.py:1-8 in the legacy gym registry.
+    env_module = "gym_maze"
     native = "gym_maze.envs:MazeEnvSample5x5"
     backends = {"fake": ".fake:FakeMazeEnvSample5x5"}
     display_name = "gym-maze maze-v0 (5x5 sample maze)"
@@ -73,6 +78,14 @@ class MazeSample5x5(GymnasiumDriver):
              source="upstream_code", ref=f"{ENV}:73-90"),
         Fact("maze-v0 is registered to MazeEnvSample5x5 with max_episode_steps=2000",
              source="upstream_code", ref=f"{REG}:4-8"),
+        Fact("Importing gym_maze runs that registration: line 1 imports register from gym.envs.registration "
+             "and lines 4-8 register maze-v0 in the legacy gym registry",
+             source="upstream_code", ref=f"{REG}:1-8"),
+        Fact("MazeEnvSample5x5 defaults enable_render to True and passes it through to MazeEnv",
+             source="upstream_code", ref=f"{ENV}:111-112"),
+        Fact("MazeView2D always calls pygame.init and pygame.display.set_caption, and calls "
+             "pygame.display.set_mode only when enable_render is true",
+             source="upstream_code", ref=f"{VIEW}:14-36"),
         Fact("The upstream package declares gym, pygame and numpy as install requirements",
              source="upstream_code", ref="setup.py:12"),
     ]

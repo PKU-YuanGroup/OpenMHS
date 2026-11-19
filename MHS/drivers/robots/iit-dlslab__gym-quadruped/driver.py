@@ -11,11 +11,20 @@ The bridge derives ``cap.world.step.v1`` (``{ticks, action}``) from the environm
 environment's ``spaces.Dict``.  ``cap.world.reset.v1`` passes ``seed`` and ``options`` to ``QuadrupedEnv.reset``
 (quadruped_env.py:319-326) and ``cap.world.seed.v1`` sets the seed of the next reset.
 
-The device is simulated (R0): there is no hardware backend and no physical stop.  The ``fake`` backend is the
-package's own pure Python stand-in (fake.py) because the gate cannot import ``mujoco``, ``numpy``, ``scipy`` or
-``gymnasium``; it was not compared with the upstream simulator.  Every fact cites a line of the clone at the pinned
-commit (097a8d649ae2232d3c0ed5eb83dc0e4f77483019).  This package is model-authored and unreviewed: it is checked on
-the fake backend only.
+The upstream registers no Gymnasium id: the clone contains no ``register(...)`` call, and its README constructs
+``QuadrupedEnv`` directly (README.md:15-27).  ``env_id`` and ``env_module`` therefore stay unset.  The ``fake``
+backend is the package's own pure Python stand-in (fake.py), built through the ``.fake:FakeQuadrupedEnv`` factory;
+the ``sim`` backend is ``_build_sim_env``, which imports the real class and constructs it with the deployed
+constructor arguments (``robot='go2'``, ``scene='flat'``; quadruped_env.py:85-99).  The import is inside the
+factory, so the fake backend does not need ``mujoco``, ``numpy``, ``scipy`` or ``gymnasium``.  The real class is
+``gym_quadruped.quadruped_env:QuadrupedEnv`` (quadruped_env.py:71).  The constructor resolves its scene and model
+files from its own package directory and writes the composed scene to
+``utils/mujoco/assets/{robot}-{scene}.xml`` there (quadruped_env.py:150-170).  The returned object is that
+upstream instance; nothing on it is wrapped, patched or replaced.
+
+The device is simulated (R0): there is no hardware backend and no physical stop.  The fake was not compared with
+the upstream simulator.  Every fact cites a line of the clone at the pinned commit
+(097a8d649ae2232d3c0ed5eb83dc0e4f77483019).  This package is model-authored and unreviewed.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
@@ -23,6 +32,26 @@ from mhs.driver import Fact, GymnasiumDriver
 ENV = "gym_quadruped/quadruped_env.py"
 UTILS = "gym_quadruped/utils/quadruped_utils.py"
 CONFIG = "gym_quadruped/robot_cfgs.py"
+TERRAIN = "gym_quadruped/utils/mujoco/terrain.py"
+
+#: The constructor arguments the ``sim`` backend passes.  ``robot`` is required (quadruped_env.py:85-99) and
+#: ``scene`` defaults to ``'flat'``, the scene this package deploys (quadruped_env.py:89).
+_SIM_ENV_KWARGS = {"robot": "go2", "scene": "flat"}
+
+
+def _build_sim_env(**_options):
+    """Build the real upstream ``QuadrupedEnv`` for the ``sim`` backend.
+
+    The import is inside the factory so the fake backend, and the gate that loads it, never needs the upstream
+    stack.  ``QuadrupedEnv`` requires ``robot`` and defaults ``scene`` to ``'flat'`` (quadruped_env.py:85-99).
+    The returned object is that upstream instance; nothing on it is wrapped, patched or replaced, and no
+    attribute of the imported package is assigned.  The constructor arguments are the same ``env_kwargs`` the
+    driver declares.  The constructor writes ``utils/mujoco/assets/{robot}-{scene}.xml`` beside its own module
+    before loading it (quadruped_env.py:167-170); this factory does not redirect that write.
+    """
+    from gym_quadruped.quadruped_env import QuadrupedEnv
+
+    return QuadrupedEnv(**_SIM_ENV_KWARGS)
 
 
 class GymQuadruped(GymnasiumDriver):
@@ -31,12 +60,17 @@ class GymQuadruped(GymnasiumDriver):
     mode = "simulated"
     risk = "R0"
     native = "gym_quadruped.quadruped_env:QuadrupedEnv"
-    backends = {"fake": ".fake:FakeQuadrupedEnv"}
-    env_kwargs = {"robot": "go2", "scene": "flat"}
+    # `fake` is this package's stand-in; `sim` constructs the upstream environment class (quadruped_env.py:71)
+    # through `_build_sim_env`.  The sim entry is a callable, so the lock's string entry (`fake` only) still
+    # describes the package's declared string backend and G2 compares a lock only when every entry is a string.
+    backends = {"fake": ".fake:FakeQuadrupedEnv", "sim": _build_sim_env}
+    env_kwargs = dict(_SIM_ENV_KWARGS)
     display_name = "gym-quadruped MuJoCo quadruped locomotion environment"
     vendor, model = "IIT-DLSLab", "gym-quadruped"
     tags = ["quadruped", "legged-locomotion", "mujoco", "reinforcement-learning", "simulation", "gymnasium"]
     facts = [
+        Fact("The upstream environment class is gym_quadruped.quadruped_env:QuadrupedEnv, a gymnasium.Env",
+             source="upstream_code", ref=f"{ENV}:71"),
         Fact("QuadrupedEnv is constructed from a robot name and defaults to the flat scene, the default observation "
              "names, sim_dt 0.002 s, the forward velocity command of 0.5 m/s and 0.0 rad/s, ground friction 1.0 and "
              "the leg order FL, FR, RL, RR", source="upstream_code", ref=f"{ENV}:85-99"),
@@ -46,8 +80,12 @@ class GymQuadruped(GymnasiumDriver):
              "actuator control ranges", source="upstream_code", ref=f"{UTILS}:250-326"),
         Fact("The action space is a gymnasium Box of shape (mjModel.nu,): one torque per actuator, with low and high "
              "taken from actuator_forcerange", source="upstream_code", ref=f"{ENV}:224-235"),
-        Fact("The scene model is loaded from robot_model/scene_<scene>.xml and its terrain is generated for the "
-             "robot's hip height", source="upstream_code", ref=f"{ENV}:150-155"),
+        Fact("The constructor resolves robot_model/scene_<scene>.xml and the procedural utils/mujoco/assets from "
+             "its own package directory", source="upstream_code", ref=f"{ENV}:150-155"),
+        Fact("The constructor writes the composed scene to utils/mujoco/assets/<robot>-<scene>.xml beside the "
+             "package and loads that file with MjModel.from_xml_path", source="upstream_code", ref=f"{ENV}:167-170"),
+        Fact("When robot_model/scene_<scene>.xml is absent (flat), generate_terrain parses the procedural "
+             "utils/mujoco/assets/scene_flat.xml", source="upstream_code", ref=f"{TERRAIN}:318-358"),
         Fact("The go2 robot configuration uses robot_model/go2/go2.xml and a hip height of 0.28 m",
              source="upstream_code", ref=f"{CONFIG}:43-44"),
         Fact("The simulation timestep is the sim_dt constructor argument and is assigned to mjModel.opt.timestep",
@@ -98,8 +136,8 @@ class GymQuadruped(GymnasiumDriver):
             "generator, so the same seed does not replay the same trajectory on both",
             "no physical quadruped is modelled and the environment was never validated against one: F3 is not "
             "claimed",
-            "the upstream environment was not imported where the gate ran (mujoco, numpy, scipy and gymnasium are "
-            "not installed for the gate), so the fake was not compared with the upstream simulator and the sim "
-            "backend was not run",
+            "the fake is a separate pure Python implementation of the upstream interface and was not compared with "
+            "the upstream simulator where this package was authored; the sim backend builds the real environment, "
+            "but its contract is derived from the environment's spaces rather than from a recorded trajectory",
         ],
     }

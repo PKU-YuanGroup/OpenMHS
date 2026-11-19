@@ -8,24 +8,90 @@ simulated (R0), so there is no hardware backend, no e-stop path to a machine and
 A GymnasiumDriver is configuration only.  The bridge derives the contract from the environment's spaces:
 ``cap.world.step.v1`` takes ``{ticks, action}`` with ``action.values`` a five-element binary array from
 ``spaces.MultiBinary(5)`` (volleybot.py:744), ``cap.world.reset.v1`` takes ``{seed, options}`` and
-``cap.world.seed.v1`` ``{seed}``.  ``VolleyBotEnv`` is not registered with ``gym.envs.registration`` and the clone
-cannot be imported by this package, so only the package's ``fake`` backend is declared; there is no ``sim`` backend
-that would call ``gym.make``.
+``cap.world.seed.v1`` ``{seed}``.  ``volleybot.py:18`` imports ``register`` and never calls it, so there is no
+``env_id`` for ``gym.make``.  The ``sim`` backend is ``make_sim_env``: it executes the real ``volleybot.py``
+(volleybot.py:13-22 imports no module from this repository) and returns ``VolleyBotEnv()``
+(``evaluation.py:73``).  The factory does not wrap the instance and does not change the import path.
 
-The ``fake`` backend is a pure Python stand-in (fake.py): the gate environment has no gym, opencv or Webots
-Supervisor module (numpy is present, but the upstream module also needs gym), and package code never imports the
-clone.  The fake is a reduced model, not the upstream game; the ``fidelity`` gaps below name every reduction.  The
-package is model-authored and unreviewed and
-is checked on the fake backend only.
+The ``fake`` backend is a pure Python stand-in (fake.py).  The fake gate does not import the clone.  The fake is
+a reduced model, not the upstream game; the ``fidelity`` gaps below name every reduction.  The package is
+model-authored and unreviewed.  The fake backend is checked here; the orchestrator's ``--backend sim`` run is
+the real-upstream check.
 
 Every Fact cites a line of the clone at the pinned commit
 0733b0ad1f9d1f62ba8b5717f69edf6b0cb1544a.  The fake's numbers are test data and never appear in these Facts.
 """
 
+import importlib.util
+import os
+from pathlib import Path
+
 from mhs.driver import Fact, GymnasiumDriver
 
 VOLLEYBOT = "slimebot-volleyball/1_vs_1/environments/volleybot.py"
 TEAM_VOLLEYBOT = "slimebot-volleyball/2_vs_2/environments/team_volleybot.py"
+EVALUATION = "slimebot-volleyball/1_vs_1/controllers/evaluation/evaluation.py"
+#: Relative to the clone root.  ``1_vs_1`` is not an identifier, so the file is not a dotted package path from
+#: the clone root.  evaluation.py:23 imports it as ``environments.volleybot`` after evaluation.py:4-6 appends that
+#: directory; this driver does not.
+_VOLLEYBOT_REL = Path(VOLLEYBOT)
+_CLONE = Path("robots/jbakams/slimebot-volleyball")
+_MODULE_NAME = "environments.volleybot"
+
+
+def _volleybot_file() -> Path:
+    """The pinned ``volleybot.py`` (the file ``evaluation.py:23`` imports as ``environments.volleybot``)."""
+    roots: list[Path] = [Path("/src"), Path.cwd()]
+    for entry in os.environ.get("PYTHONPATH", "").split(os.pathsep):
+        if entry:
+            roots.append(Path(entry))
+    here = Path(__file__).resolve()
+    roots.extend(parent / _CLONE for parent in here.parents)
+    seen: set[str] = set()
+    for root in roots:
+        key = os.path.normcase(str(root))
+        if key in seen:
+            continue
+        seen.add(key)
+        candidate = root / _VOLLEYBOT_REL
+        try:
+            if candidate.is_file():
+                return candidate
+        except OSError:
+            continue
+    raise FileNotFoundError(
+        f"{_VOLLEYBOT_REL.as_posix()} is not under /src, PYTHONPATH, or the pinned clone {_CLONE.as_posix()}")
+
+
+def _load_volleybot():
+    """Execute the real ``volleybot.py`` and return that module object.
+
+    ``volleybot.py:13-22`` imports the standard library, ``gym``, ``numpy`` and ``cv2`` only, so the file does not
+    need its directory imported as a package.  The module object is that file (the name ``evaluation.py:23`` uses,
+    ``environments.volleybot``).  It is not inserted into the import table, it is not an alias or a stand-in, and
+    the import path is left unchanged.  ``register`` is imported at ``volleybot.py:18`` and never called.
+    """
+    path = _volleybot_file().resolve()
+    spec = importlib.util.spec_from_file_location(_MODULE_NAME, path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"cannot load the pinned {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    loaded = getattr(module, "__file__", None)
+    if loaded is None or Path(loaded).resolve() != path:
+        raise ImportError(f"loaded {loaded}, not the pinned {path}")
+    return module
+
+
+def make_sim_env(**_options):
+    """Build the real ``VolleyBotEnv()`` the evaluation controller constructs (evaluation.py:73).
+
+    There is no ``env_id``: ``register`` is imported at ``volleybot.py:18`` and never called.  The constructor
+    defaults are ``training=False`` and ``update=False`` (``volleybot.py:728``).  The returned instance is the
+    upstream object: no wrapper, and no change to its spaces, physics, observations or rewards.  Webots stays off
+    when ``controller`` cannot be imported (``volleybot.py:24-29``).
+    """
+    return _load_volleybot().VolleyBotEnv()
 
 
 class SlimebotVolleyball(GymnasiumDriver):
@@ -34,7 +100,8 @@ class SlimebotVolleyball(GymnasiumDriver):
     mode = "simulated"
     risk = "R0"
     native = "environments.volleybot:VolleyBotEnv"
-    backends = {"fake": ".fake:FakeVolleyBotEnv"}
+    #: ``sim`` is a callable, so the locked string backends stay ``{"fake": ".fake:FakeVolleyBotEnv"}``.
+    backends = {"fake": ".fake:FakeVolleyBotEnv", "sim": make_sim_env}
     display_name = "Slimebot Volleyball 1-vs-1 (Gym simulation)"
     vendor, model = "jbakams", "Slimebot Volleyball 1-vs-1"
     tags = ["slimebot", "volleyball", "3d", "multiagent", "reinforcement-learning", "simulation", "gymnasium"]
@@ -70,6 +137,18 @@ class SlimebotVolleyball(GymnasiumDriver):
              ref="README.md:39-40"),
         Fact("TeamVolleyBot uses the same MultiBinary(5) action space and a Box observation with 30 values",
              source="upstream_code", ref=f"{TEAM_VOLLEYBOT}:967-977"),
+        Fact("volleybot.py imports register from gym.envs.registration", source="upstream_code",
+             ref=f"{VOLLEYBOT}:18"),
+        Fact("volleybot.py imports logging, math, gym, numpy, cv2, deque and sleep, and no module from this "
+             "repository", source="upstream_code", ref=f"{VOLLEYBOT}:13-22"),
+        Fact("The evaluation controller appends the 1_vs_1 directory to sys.path and imports environments.volleybot",
+             source="upstream_code", ref=f"{EVALUATION}:4-23"),
+        Fact("The evaluation controller constructs VolleyBotEnv with no arguments", source="upstream_code",
+             ref=f"{EVALUATION}:73"),
+        Fact("VolleyBotEnv subclasses gym.Env and its constructor takes training and update, both defaulting to "
+             "False", source="upstream_code", ref=f"{VOLLEYBOT}:679-728"),
+        Fact("SETTING UP installs an unpinned gym and opencv-python into a Python 3.7 virtualenv",
+             source="vendor_doc", ref="SETTING UP.md:10-20"),
     ]
     safe_state = ("the simulation stops advancing: no step or reset is accepted after an e-stop until "
                   "mhs.safety.reset clears the latch; the environment state is kept and stays readable")

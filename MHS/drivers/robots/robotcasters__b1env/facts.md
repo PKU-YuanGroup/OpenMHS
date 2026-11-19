@@ -7,6 +7,7 @@ Every fact cites its source at commit `cdf57676193c1bbe15960157aac059a291c0e89c`
 |---|---|---|
 | The project titles itself the Unitree B1 Simulation Environment, a simulation environment for the Unitree B1 robot | vendor_doc | README.md:1-2 |
 | B1Sim subclasses gymnasium.Env and imports Env and spaces from gymnasium | upstream_code | B1Env/b1_env.py:6-19 |
+| B1Sim's constructor defaults are render_mode None, record_path None and useFixedBase False | upstream_code | B1Env/b1_env.py:19-21 |
 | The constructor opens an in-process PyBullet client: GUI when render_mode is 'human' and DIRECT otherwise | upstream_code | B1Env/b1_env.py:31-36 |
 | PyBullet gravity is (0, 0, -9.81) and the PyBullet time step is 1/240 s | upstream_code | B1Env/b1_env.py:38-39 |
 | The bundled b1_raw.urdf is loaded at base position [0.0, 0.0, 1.0], with useFixedBase passed through | upstream_code | B1Env/b1_env.py:46-52 |

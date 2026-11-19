@@ -100,6 +100,7 @@ Outputs:
 
 - DroneHoverSimpleEnv-v0 is the hover task with PWM control at 100 Hz, simple physics, 100 Hz observations, 10% domain randomization, no aerodynamic effects and instant motor force (vendor_doc: README.md:30)
 - DroneHoverSimpleEnv-v0 is registered with max_episode_steps=500 (upstream_code: phoenix_drone_simulation/__init__.py:9-11)
+- Importing phoenix_drone_simulation runs the module-level register call that adds DroneHoverSimpleEnv-v0 to the gymnasium registry (upstream_code: phoenix_drone_simulation/__init__.py:1-12)
 - The CrazyFlie agent has four control channels (act_dim=4) (upstream_code: phoenix_drone_simulation/envs/agents.py:134)
 - The action space bounds each of the four control channels to [-1, 1] (upstream_code: phoenix_drone_simulation/envs/base.py:148-150)
 - The observation history keeps two (observation, action) pairs (upstream_code: phoenix_drone_simulation/envs/base.py:44)

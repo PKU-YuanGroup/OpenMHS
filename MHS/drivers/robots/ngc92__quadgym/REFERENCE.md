@@ -113,6 +113,7 @@ Outputs:
 - A reset randomises roll and pitch within 20 degrees and the angular velocity within 2.0, sets yaw uniformly in [-0.3, 0.3], places the copter at altitude 1 and halves the yaw rate (upstream_code: gym_quadrotor/envs/attitude_env.py:49-55)
 - The environment step never signals done: _step_copter always returns False (upstream_code: gym_quadrotor/envs/attitude_env.py:29)
 - The environment id is registered with max_episode_steps=500, so gym.make wraps it in a 500-step TimeLimit (upstream_code: gym_quadrotor/__init__.py:19-23)
+- Importing gym_quadrotor runs that registration: line 5 imports register from gym.envs.registration and lines 19-23 register QuadrotorStabilizeAttitude-MotorCommands-v0, so gym.make finds the id only after the package is imported (upstream_code: gym_quadrotor/__init__.py:5-23)
 - The legacy seed() calls gym.utils.seeding.np_random and returns [seed] (upstream_code: gym_quadrotor/envs/base.py:39-41)
 - Body angular velocity is mapped to Euler-angle rates through the 3x3 matrix of the roll and pitch angles (upstream_code: gym_quadrotor/dynamics/coordinates.py:176-180)
 

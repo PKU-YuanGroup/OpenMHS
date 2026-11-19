@@ -8,10 +8,15 @@ derives ``cap.world.reset.v1``, ``cap.world.seed.v1`` and ``cap.world.step.v1`` 
 ``GymnasiumDriver`` is configuration only; it has no hardware backend and no operator-required limit.
 
 The package is checked on its own fake backend (``fake.py``), which implements one unbatched quadrotor with the
-default ``cmd_vel`` action space.  The upstream environment is vectorized (``num_envs``) and its registered
-constructor needs arguments that ``gymnasium.make("Quadrotor-v0")`` does not supply, so the upstream simulator was
-not run here.  The fidelity contract is F0 because the fake is a kinematic stand-in, and its gaps state that.  This
-package is model-authored and unreviewed; no hardware was attached.
+default ``cmd_vel`` action space.  ``gymnasium.make("Quadrotor-v0")`` cannot build the upstream environment:
+the id is registered only when ``rotorpy.learning`` is imported (``rotorpy/learning/__init__.py:1-6``), and
+``QuadrotorEnv.__init__`` requires ``num_envs`` and ``initial_states`` (``quadrotor_environments.py:73-75``), which
+that registration does not supply.  The ``sim`` backend is ``_build_sim_env``.  It constructs one drone the way
+``tests/test_gymenv.py:16-25`` does, with the default ``cmd_vel`` mode, and ``_OneQuadrotor`` gives that one
+environment's action the leading batch axis of the test's action (``tests/test_gymenv.py:37``) and returns that
+environment's observation, reward and done flag.  The values are the upstream's.  The fidelity contract is F0
+because the fake is a kinematic stand-in, and its gaps state that.  This package is model-authored and unreviewed;
+no hardware was attached.  This workspace checks the fake backend.  The orchestrator runs ``--backend sim``.
 
 Every Fact below cites a line of the clone at the pinned commit 40b09697a6a1596d404a67f459941d46a39eedd3.
 """
@@ -20,21 +25,127 @@ from mhs.driver import Fact, GymnasiumDriver
 
 ENV = "rotorpy/learning/quadrotor_environments.py"
 REWARDS = "rotorpy/learning/quadrotor_reward_functions.py"
+GYM_TEST = "tests/test_gymenv.py"
+MULTIROTOR = "rotorpy/vehicles/multirotor.py"
+
+
+def _leading(value):
+    """The single environment's value when the leading axis has length 1.
+
+    ``QuadrotorEnv`` returns observation, reward and done arrays whose first axis is ``num_envs``
+    (``quadrotor_environments.py:168``, ``:372``, ``:481-487``).  With one environment that axis has length 1,
+    and index 0 is that environment's value.  Any other shape is returned unchanged.
+    """
+
+    shape = getattr(value, "shape", None)
+    if isinstance(shape, tuple) and shape[:1] == (1,):
+        return value[0]
+    return value
+
+
+def _as_batch(action):
+    """A flat action as a one-row batch. The action's values are unchanged.
+
+    The bridge sends the ``cmd_vel`` space, shape ``(3,)`` (``quadrotor_environments.py:141``).  The gym test
+    steps with shape ``(num_drones, n_u)`` (``tests/test_gymenv.py:37``), and ``get_cmd_motor_speeds`` indexes
+    ``cmd_v`` with the environment index (``rotorpy/vehicles/multirotor.py:1027``).
+    """
+
+    shape = getattr(action, "shape", None)
+    if isinstance(shape, tuple) and len(shape) == 1:
+        return action.reshape((1, shape[0]))
+    return action
+
+
+class _OneQuadrotor:
+    """One drone of ``QuadrotorEnv`` on the bridge's unbatched step contract.
+
+    The wrapper calls the upstream ``reset`` and ``step``.  It adds the leading batch axis of one environment
+    on the action and returns that environment's observation, reward, done flag and info dict.  It does not
+    change those values, the control mode or the dynamics.
+    """
+
+    def __init__(self, env):
+        self._env = env
+        self.action_space = env.action_space
+        self.observation_space = env.observation_space
+
+    def reset(self, seed=None, options=None):
+        kwargs = {}
+        if seed is not None:
+            kwargs["seed"] = seed
+        if options is not None:
+            kwargs["options"] = options
+        return _leading(self._env.reset(**kwargs))
+
+    def step(self, action):
+        observation, reward, dones, infos = self._env.step(_as_batch(action))
+        info = infos[0] if isinstance(infos, list) and len(infos) == 1 else infos
+        return _leading(observation), _leading(reward), _leading(dones), info
+
+    def seed(self, seed=None):
+        return self._env.seed(seed)
+
+    def close(self):
+        self._env.close()
+
+
+def _build_sim_env(**_options):
+    """Build one real ``QuadrotorEnv`` the way ``tests/test_gymenv.py:16-25`` builds ``num_drones`` of 1.
+
+    ``control_mode`` stays the constructor default ``cmd_vel`` (``quadrotor_environments.py:76``), so the action
+    space stays ``Box(-1, 1, shape=(3,))`` (``:141``).  ``render_mode`` stays ``"None"`` (``:85``).  A figure is
+    created only when ``render_mode`` is ``3D`` (``:185-188``).  The returned view is the one-environment adapter above.
+    """
+
+    import torch
+
+    from rotorpy.learning.quadrotor_environments import QuadrotorEnv
+    from rotorpy.vehicles.crazyflie_params import quad_params
+
+    num_drones = 1
+    init_rotor_speed = 1788.53  # tests/test_gymenv.py:16
+    initial_states = {
+        "x": torch.zeros(num_drones, 3).double(),
+        "v": torch.zeros(num_drones, 3).double(),
+        "q": torch.tensor([0, 0, 0, 1]).repeat(num_drones, 1).double(),
+        "w": torch.zeros(num_drones, 3).double(),
+        "wind": torch.zeros(num_drones, 3).double(),
+        "rotor_speeds": torch.tensor(
+            [init_rotor_speed, init_rotor_speed, init_rotor_speed, init_rotor_speed]
+        ).repeat(num_drones, 1).double(),
+    }
+    env = QuadrotorEnv(num_drones, initial_states=initial_states, quad_params=quad_params, control_mode="cmd_vel")
+    return _OneQuadrotor(env)
 
 
 class QuadrotorV0(GymnasiumDriver):
-    """The RotorPy ``Quadrotor-v0`` environment, served through the Gymnasium bridge on its fake backend."""
+    """The RotorPy ``Quadrotor-v0`` environment, served through the Gymnasium bridge."""
 
     device_id = "rotorpy-quadrotor"
     env_id = "Quadrotor-v0"
     native = "rotorpy.learning.quadrotor_environments:QuadrotorEnv"
-    backends = {"fake": ".fake:FakeQuadrotorEnv"}
+    #: ``fake`` is this package's stand-in.  ``sim`` builds the real ``QuadrotorEnv`` (one drone, ``cmd_vel``).
+    #: The sim entry is a callable, so G2 compares the lock only against the string entries.
+    backends = {"fake": ".fake:FakeQuadrotorEnv", "sim": _build_sim_env}
     display_name = "RotorPy Quadrotor-v0 (multirotor reinforcement-learning environment)"
     vendor, model = "spencerfolk", "RotorPy 3.0.0"
     tags = ["quadrotor", "uav", "multirotor", "reinforcement-learning", "simulation", "gymnasium", "rotorpy"]
     facts = [
         Fact("Quadrotor-v0 is registered to rotorpy.learning.quadrotor_environments:QuadrotorEnv",
              source="upstream_code", ref="rotorpy/learning/__init__.py:3-6"),
+        Fact("Importing rotorpy.learning runs that registration; the register call passes no constructor arguments",
+             source="upstream_code", ref="rotorpy/learning/__init__.py:1-6"),
+        Fact("QuadrotorEnv.__init__ requires num_envs and initial_states, and neither parameter has a default",
+             source="upstream_code", ref=f"{ENV}:73-75"),
+        Fact("The gym test builds the initial state with zero position, velocity, body rate and wind, the identity "
+             "quaternion and rotor speed 1788.53, and passes that state to QuadrotorEnv",
+             source="upstream_code", ref=f"{GYM_TEST}:16-25"),
+        Fact("The gym test includes a one-drone run", source="upstream_code", ref=f"{GYM_TEST}:55"),
+        Fact("The gym test steps with an action of shape (num_drones, n_u), and n_u is 3 for cmd_vel",
+             source="upstream_code", ref=f"{GYM_TEST}:33-37"),
+        Fact("get_cmd_motor_speeds indexes the cmd_vel command cmd_v with the environment index",
+             source="upstream_code", ref=f"{MULTIROTOR}:1024-1027"),
         Fact("QuadrotorEnv inherits stable-baselines3's VecEnv, so it is a vectorized environment rather than a "
              "gymnasium.Env", source="upstream_code", ref=f"{ENV}:37"),
         Fact("The default control abstraction is cmd_vel", source="upstream_code", ref=f"{ENV}:76"),
@@ -64,6 +175,13 @@ class QuadrotorV0(GymnasiumDriver):
         Fact("reset returns only the observation", source="upstream_code", ref=f"{ENV}:317"),
         Fact("step returns the 4-tuple (observation, reward, dones, infos)", source="upstream_code",
              ref=f"{ENV}:398"),
+        Fact("The reward array has one entry per environment", source="upstream_code", ref=f"{ENV}:168"),
+        Fact("dones is the logical or of the out-of-bounds flag and the time limit",
+             source="upstream_code", ref=f"{ENV}:371-372"),
+        Fact("The observation concatenates the batched position, velocity, quaternion and body-rate tensors",
+             source="upstream_code", ref=f"{ENV}:481-487"),
+        Fact("The default render_mode is None", source="upstream_code", ref=f"{ENV}:85"),
+        Fact("A matplotlib figure is created when render_mode is 3D", source="upstream_code", ref=f"{ENV}:185-188"),
         Fact("reset replaces its options argument with self.reset_options", source="upstream_code",
              ref=f"{ENV}:285"),
         Fact("The default reward function is vec_hover_reward", source="upstream_code", ref=f"{ENV}:77"),

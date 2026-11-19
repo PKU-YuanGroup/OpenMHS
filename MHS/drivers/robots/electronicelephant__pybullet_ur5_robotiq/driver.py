@@ -19,9 +19,16 @@ declares an exact deterministic scene and publishes no integer seed.  A ``seed``
 only, and the required ``seed`` field of the reset output defaults to 0, because there is no random generator.
 
 The device is simulated (R0): there is no hardware backend and no operator-required limit.  The fake backend
-(``fake.py``) is the package's own pure Python stand-in; it was not compared with the upstream PyBullet environment
-(pybullet, numpy and the YCB assets were not run where the gate ran).  This package is model-authored and
-unreviewed, and is checked on the fake backend only.
+(``fake.py``) is the package's own pure Python stand-in; it was not compared with the upstream PyBullet environment.
+The package builds its environment through that factory, and the upstream has a real environment class, so the
+``sim`` backend is ``_build_sim_env`` below: it imports the upstream's own top-level modules (``main.py:7-9``) and
+constructs ``env:ClutteredPushGrasp`` with the robot of ``main.py:24`` and the constructor defaults ``camera=None``
+and ``vis=False`` (``env.py:23``), which opens a DIRECT PyBullet connection and needs no display (``env.py:26-31``).
+The upstream resolves its URDFs relative to the process working directory (``env.py:48-53``, ``robot.py:174-175``),
+so the factory runs the constructor from the directory of the imported upstream module and restores the directory
+afterwards.  The pinned flat source tree must be on PYTHONPATH.  The sim backend requires the dependencies the clone
+imports (pybullet, numpy, attrdict and tqdm at ``env.py:5-12``, plus torch, cv2 and scipy at ``utilities.py:1-9``).
+This package is model-authored and unreviewed.
 """
 
 from collections.abc import Mapping
@@ -45,6 +52,34 @@ def _observation_dict(value) -> dict:
     return {"value": value}
 
 
+def _build_sim_env(**_options):
+    """Build the real ``env:ClutteredPushGrasp`` for the ``sim`` backend.
+
+    The upstream is a flat source tree imported by its own top-level names (``main.py:7-9`` imports ``env``,
+    ``robot`` and ``utilities``), so the pinned clone must be on PYTHONPATH.  The documented demo
+    builds ``UR5Robotiq85((0, 0.5, 0), (0, 0, 0))`` (``main.py:23-25``); the environment keeps the constructor
+    defaults ``camera=None`` and ``vis=False`` so PyBullet
+    uses a DIRECT connection (``env.py:23`` and ``:26-31``).  The constructor loads two URDFs through relative paths
+    (``env.py:48-53`` and ``robot.py:174-175``), so it runs from the directory of the upstream module just imported;
+    the process directory is restored afterwards.  Nothing on the returned object is wrapped or replaced: its
+    ``step`` (``env.py:81-97``), ``reset`` (``env.py:131-134``), ``get_observation`` (``env.py:116-125``) and
+    ``close`` (``env.py:136-137``) are the upstream ones the driver already calls.
+    """
+    import os
+
+    import env as upstream_env
+    from robot import UR5Robotiq85
+    from utilities import Models
+
+    previous = os.getcwd()
+    os.chdir(os.path.dirname(os.path.abspath(upstream_env.__file__)))
+    try:
+        return upstream_env.ClutteredPushGrasp(
+            UR5Robotiq85((0, 0.5, 0), (0, 0, 0)), Models(), camera=None, vis=False)
+    finally:
+        os.chdir(previous)
+
+
 class ClutteredPushGraspDriver(Driver):
     device_id = "ur5-robotiq"
     device_kind = "world.sim"
@@ -52,7 +87,10 @@ class ClutteredPushGraspDriver(Driver):
     mode = "simulated"
     risk = "R0"
     native = "env:ClutteredPushGrasp"
-    backends = {"fake": ".fake:FakeClutteredPushGrasp"}
+    #: ``fake`` is this package's stand-in; ``sim`` builds the real environment class (``env.py:19``) through
+    #: ``_build_sim_env``.  The sim entry is a callable, so the lock's string entries (``fake`` only, unchanged)
+    #: stay the declared package backends.
+    backends = {"fake": ".fake:FakeClutteredPushGrasp", "sim": _build_sim_env}
     display_name = "UR5 arm with Robotiq-85/140 gripper in a PyBullet push-and-grasp scene"
     vendor, model = "electronicelephant", "pybullet_ur5_robotiq"
     tags = ["ur5", "robotiq", "gripper", "pybullet", "simulation", "reinforcement-learning"]
@@ -61,6 +99,22 @@ class ClutteredPushGraspDriver(Driver):
         Fact("The constructor opens an in-process PyBullet connection, GUI or DIRECT, and loads the plane, the "
              "robot and a fixed box; it opens no serial, VISA, USB or network transport",
              source="upstream_code", ref=f"{ENV}:23-58"),
+        Fact("The constructor takes the robot, a Models instance, camera=None and vis=False, and connects to "
+             "PyBullet with p.DIRECT when vis is false", source="upstream_code", ref=f"{ENV}:23-31"),
+        Fact("The documented demo builds UR5Robotiq85((0, 0.5, 0), (0, 0, 0)) and passes it to "
+             "ClutteredPushGrasp", source="upstream_code", ref=f"{MAIN}:23-25"),
+        Fact("main.py imports env, robot and utilities as top-level modules", source="upstream_code",
+             ref=f"{MAIN}:7-9"),
+        Fact("The environment loads the box URDF from ./urdf/skew-box-button.urdf, a path relative to the "
+             "process working directory", source="upstream_code", ref=f"{ENV}:48-53"),
+        Fact("UR5Robotiq85 loads ./urdf/ur5_robotiq_85.urdf, a path relative to the process working directory",
+             source="upstream_code", ref=f"{ROBOT}:174-175"),
+        Fact("env imports Models and Camera from utilities", source="upstream_code", ref=f"{ENV}:9"),
+        Fact("utilities imports pybullet, attrdict, torch, cv2, scipy and numpy at module scope, so importing "
+             "env needs all of them even though the sim path uses only Models", source="upstream_code",
+             ref="utilities.py:1-9"),
+        Fact("The README lists Python 3 and PyBullet as the only prerequisites", source="vendor_doc",
+             ref=f"{README}:18-20"),
         Fact("SIMULATION_STEP_DELAY is 1/240 s", source="upstream_code", ref=f"{ENV}:21"),
         Fact("step_simulation calls p.stepSimulation and sleeps the delay only when the GUI is shown",
              source="upstream_code", ref=f"{ENV}:60-67"),

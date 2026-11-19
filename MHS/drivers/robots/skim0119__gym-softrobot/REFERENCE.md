@@ -99,6 +99,7 @@ Outputs:
 ## Facts
 
 - OctoMuscleCrawl-v0 registers the environment gym_softrobot.envs.octopus:OctoMuscleCrawlEnv (upstream_code: gym_softrobot/__init__.py:27-30)
+- Importing gym_softrobot runs that module-level register call; the crawling example imports the package before gym.make('OctoMuscleCrawl-v0') (upstream_code: examples/octopus_crawling/replay_policy.py:18)
 - The default configuration has 8 arms (upstream_code: gym_softrobot/envs/octopus/crawling_simulation/config.py:23)
 - OctopusMuscleConfig sets n_channels to 9 (upstream_code: gym_softrobot/envs/octopus/crawling_simulation/config.py:163-164)
 - The action space is a Box from -1.0 to 1.0 with shape (n_arms, n_channels) (upstream_code: gym_softrobot/envs/octopus/muscle_crawl_env.py:52-57)

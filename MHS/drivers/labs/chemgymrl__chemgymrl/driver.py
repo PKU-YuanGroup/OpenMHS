@@ -8,8 +8,9 @@ backend, no e-stop path to a machine and no operator-required limit.
 
 The gate never imports the upstream package or the clone, so the ``fake`` backend is the package's own stand-in for
 ``chemistrylab.benches.extract_bench:GeneralWurtzExtract_v2`` (see fake.py).  A backend name that ``backends`` does
-not list (``sim``) is served by ``gymnasium.make("GenWurtzExtract-v2")`` (GymnasiumDriver.open_native); that path
-needs the upstream package installed and was not run here.
+not list (``sim``) is served by importing ``env_module = "chemistrylab"``, whose module body runs the ``register``
+call at chemistrylab/__init__.py:15-18, and then ``gymnasium.make("GenWurtzExtract-v2")``
+(GymnasiumDriver.open_native); that path needs the upstream package installed and was not run here.
 
 The ``fidelity`` attribute describes the model as deployed (spec 05-fidelity FID-002).  Every constant and rule
 below cites a line of the clone at the pinned commit (ab8227b6b33f13617b7e551bdf6b894df7eec68d).  This package is
@@ -28,12 +29,17 @@ REACTION = "chemistrylab/reactions/available_reactions/chloro_wurtz.json"
 class GenWurtzExtract(GymnasiumDriver):
     device_id = "genwurtz-extract"
     env_id = "GenWurtzExtract-v2"
+    env_module = "chemistrylab"                    # importing it runs register(...) at chemistrylab/__init__.py:15-18
     native = "chemistrylab.benches.extract_bench:GeneralWurtzExtract_v2"
     backends = {"fake": ".fake:FakeGeneralWurtzExtract"}
     display_name = "ChemGymRL GenWurtzExtract-v2 extraction bench"
     vendor, model = "ChemGymRL", "GenWurtzExtract-v2"
     tags = ["chemistry", "extraction", "reinforcement-learning", "simulation", "gymnasium"]
     facts = [
+        Fact("Importing chemistrylab runs a module-level registration: chemistrylab/__init__.py imports register "
+             "from gymnasium (line 11) and calls register(id='GenWurtzExtract-v2', "
+             "entry_point='chemistrylab.benches.extract_bench:GeneralWurtzExtract_v2') at lines 15-18, so importing "
+             "chemistrylab makes the id available to gymnasium.make", source="upstream_code", ref=f"{INIT}:11-18"),
         Fact("GenWurtzExtract-v2 is registered with entry point "
              "chemistrylab.benches.extract_bench:GeneralWurtzExtract_v2", source="upstream_code",
              ref=f"{INIT}:15-18"),

@@ -30,6 +30,13 @@ Every fact cites its source at commit `14beb30318ad14c5d6723175c2ee2281129792af`
 | MAX_DISTANCE_FROM_ORIGIN is 10 | upstream_code | bigym/bigym_env.py:30 |
 | The cupboards reset robot position is [-0.2, 0, 0] | upstream_code | bigym/envs/cupboards.py:17 |
 | The README says tasks are instantiated directly | vendor_doc | README.md:82 |
+| bigym/__init__.py reads the installed distribution version and does not register a Gymnasium id | upstream_code | bigym/__init__.py:3-5 |
+| The envs package init is a docstring and does not register a Gymnasium id | upstream_code | bigym/envs/__init__.py:1 |
+| BiGymEnv requires an ActionMode; observation config, render mode, start seed, control frequency and robot class have defaults | upstream_code | bigym/bigym_env.py:53-61 |
+| JointPositionActionMode defaults to delta positions, does not block until the target is reached, and enables the floating base | upstream_code | bigym/action_modes.py:188-194 |
+| The environment tests construct a task with action_mode_class(floating_base=True) and pass that action mode to the task class | upstream_code | tests/test_envs.py:47-48 |
+| bigym_env imports BiGymRenderer | upstream_code | bigym/bigym_env.py:20 |
+| BiGymRenderer imports MujocoRenderer, WindowViewer, OffScreenViewer and BaseRender from gymnasium.envs.mujoco.mujoco_rendering | upstream_code | bigym/bigym_renderer.py:6-10 |
 
 Limits: the driver declares none. The action-space bounds are derived by the Gymnasium bridge from the fake
 backend's Box; because the fake is a stand-in and no single upstream line states all of its bounds, the driver does
@@ -43,8 +50,19 @@ Fidelity contract (`driver.py`, `fidelity = {...}`): engine `analytic:bigym-Draw
 model; no dynamics), determinism `seeded` with `seed_control` `parameter`, timestep 2 ms (the default 500 Hz control
 period and PHYSICS_DT 0.002 s at `bigym/bigym_env.py:25-28`), `realtime_factor` 0, clock `lockstep`, reset `full`,
 no snapshot and restore. The gaps say that the fake has no rigid-body dynamics, that its observation arrays are
-shorter than upstream's, that the action space is a stand-in, that no upstream environment was run, and that
-truncation and camera observations are not modelled.
+shorter than upstream's, that the action space is a stand-in, that the fake does not import the upstream stack, and
+that truncation and camera observations are not modelled.
+
+Sim backend: the clone does not register `bigym:DrawerTopOpen`. `bigym/__init__.py:3-5` only reads the installed
+version, `bigym/envs/__init__.py:1` is a docstring, and `README.md:82` says to instantiate the task. `driver.py`
+therefore names `backends["sim"] = _build_sim_env`, which constructs `bigym.envs.cupboards:DrawerTopOpen`
+(`bigym/envs/cupboards.py:34`) with `JointPositionActionMode(floating_base=True, absolute=False)`. `action_mode` is
+required (`bigym/bigym_env.py:53-55`); those two flags are the constructor defaults (`bigym/action_modes.py:188-194`),
+and `tests/test_envs.py:47-48` builds a floating-base task the same way. The import is inside the factory. The
+renderer module that construction imports (`bigym/bigym_renderer.py:6-10`) pulls in Gymnasium's MuJoCo renderer, and
+`pyproject.toml:34-50` does not declare `packaging`, which that renderer imports in the Gymnasium 1.4.0 the last
+install resolved. Install the PyPI distribution `packaging>=23.0` for that renderer import. The real simulator was
+not run where this package was authored.
 
 Safety: simulated R0 device. The e-stop is the runtime's software latch (no native stop exists); after it no step,
 reset or seed is accepted until `mhs.safety.reset` clears the latch (a simulator needs no operator for that), and

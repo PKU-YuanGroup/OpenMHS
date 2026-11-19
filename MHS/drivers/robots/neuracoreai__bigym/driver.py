@@ -11,21 +11,50 @@ H1 configuration with ``JointPositionActionMode(floating_base=True, absolute=Fal
 the fake's 15-element Box is a stand-in for that configuration.  The bridge derives the served limits from that Box;
 they are the fake's, not a citation of the upstream space, because no single upstream line states all the bounds.
 Other action modes, floating-DOF sets, robots, control frequencies or gripper configurations change the shape and
-bounds.  The ``sim`` backend is not declared; the upstream environment was not run and is never imported.
+bounds.  Nothing in the package calls ``gymnasium.register`` (``bigym/__init__.py:3-5`` only reads the installed
+version; ``bigym/envs/__init__.py:1`` is a docstring), so ``gymnasium.make('bigym:DrawerTopOpen')`` cannot build the
+task.  The ``sim`` backend is ``_build_sim_env``: it imports the installed ``bigym.envs.cupboards:DrawerTopOpen``
+and constructs it with ``JointPositionActionMode(floating_base=True, absolute=False)``.  ``action_mode`` is
+required (``bigym/bigym_env.py:53-55``); ``absolute`` defaults to False and ``floating_base`` to True
+(``bigym/action_modes.py:188-194``).  The environment tests construct with ``action_mode_class(floating_base=True)``
+(``tests/test_envs.py:47-48``).  The import stays inside the factory, so the fake backend does not load MuJoCo.
+The returned object is that upstream instance.  The real simulator was not run where this package was authored.
 
 The fake backend is an analytic task-level stand-in (fidelity F0), not a recording and not the upstream MuJoCo
 model.  It uses the upstream success, failure, reward, termination and truncation predicates on a small fake state.
-This package is model-authored and unreviewed: it is checked on the fake backend only.
+This package is model-authored and unreviewed: the fake backend is what this workspace checks.
 """
 
 from mhs.driver import Fact, GymnasiumDriver
+
+
+def _build_sim_env(**_options):
+    """Build the installed upstream ``DrawerTopOpen`` for the ``sim`` backend.
+
+    The package never registers an id, so ``gym.make('bigym:DrawerTopOpen')`` raises ``NameNotFound``.
+    ``BiGymEnv`` requires ``action_mode`` and otherwise takes its defaults (``bigym/bigym_env.py:53-61``): no
+    cameras (``bigym/utils/observation_config.py:49-55``), ``render_mode=None``, and the H1 robot.  The deployed
+    action mode is ``JointPositionActionMode(floating_base=True, absolute=False)``
+    (``bigym/action_modes.py:188-194``).  The import is inside the factory so loading this module for the fake
+    backend does not import MuJoCo.  The returned object is the upstream instance; nothing on it is wrapped,
+    patched or replaced, and no attribute of the imported package is assigned.
+    """
+    from bigym.action_modes import JointPositionActionMode
+    from bigym.envs.cupboards import DrawerTopOpen as UpstreamDrawerTopOpen
+
+    return UpstreamDrawerTopOpen(
+        action_mode=JointPositionActionMode(floating_base=True, absolute=False),
+    )
 
 
 class DrawerTopOpen(GymnasiumDriver):
     device_id = "bigym-drawer-top-open"
     env_id = "bigym:DrawerTopOpen"
     native = "bigym.envs.cupboards:DrawerTopOpen"
-    backends = {"fake": ".fake:FakeDrawerTopOpen"}
+    # `fake` is this package's stand-in.  `sim` constructs bigym.envs.cupboards:DrawerTopOpen
+    # (bigym/envs/cupboards.py:34) through `_build_sim_env`.  The sim entry is a callable, so the lock's
+    # string entry (`fake` only) still describes the package's declared string backend.
+    backends = {"fake": ".fake:FakeDrawerTopOpen", "sim": _build_sim_env}
     display_name = "BiGym DrawerTopOpen (H1 analytic fake)"
     vendor, model = "NeuracoreAI", "BiGym v4.1.0 DrawerTopOpen"
     tags = ["bigym", "cupboards", "drawer", "manipulation", "mobile-manipulation", "h1", "mujoco", "gymnasium",
@@ -79,6 +108,20 @@ class DrawerTopOpen(GymnasiumDriver):
         Fact("The cupboards reset robot position is [-0.2, 0, 0]", source="upstream_code",
              ref="bigym/envs/cupboards.py:17"),
         Fact("The README says tasks are instantiated directly", source="vendor_doc", ref="README.md:82"),
+        Fact("bigym/__init__.py reads the installed distribution version and does not register a Gymnasium id",
+             source="upstream_code", ref="bigym/__init__.py:3-5"),
+        Fact("The envs package init is a docstring and does not register a Gymnasium id",
+             source="upstream_code", ref="bigym/envs/__init__.py:1"),
+        Fact("BiGymEnv requires an ActionMode; observation config, render mode, start seed, control frequency and "
+             "robot class have defaults", source="upstream_code", ref="bigym/bigym_env.py:53-61"),
+        Fact("JointPositionActionMode defaults to delta positions, does not block until the target is reached, and "
+             "enables the floating base", source="upstream_code", ref="bigym/action_modes.py:188-194"),
+        Fact("The environment tests construct a task with action_mode_class(floating_base=True) and pass that "
+             "action mode to the task class", source="upstream_code", ref="tests/test_envs.py:47-48"),
+        Fact("bigym_env imports BiGymRenderer", source="upstream_code", ref="bigym/bigym_env.py:20"),
+        Fact("BiGymRenderer imports MujocoRenderer, WindowViewer, OffScreenViewer and BaseRender from "
+             "gymnasium.envs.mujoco.mujoco_rendering", source="upstream_code",
+             ref="bigym/bigym_renderer.py:6-10"),
     ]
     safe_state = ("the simulation stops advancing: no step or reset is accepted after an e-stop until "
                   "mhs.safety.reset clears the latch; the environment state is kept and stays readable")
@@ -116,8 +159,9 @@ class DrawerTopOpen(GymnasiumDriver):
             "construction time, so other action modes, robots, floating-DOF sets, control frequencies or gripper "
             "configurations change the shape and bounds, and this fake was not compared with the upstream "
             "environment",
-            "gymnasium, MuJoCo, dm_control and mojo are not imported by this package; no upstream environment was "
-            "run and no recorded traffic is replayed",
+            "the fake backend does not import gymnasium, MuJoCo, dm_control or mojo and replays no recorded traffic; "
+            "the sim backend imports the installed upstream inside its factory and was not run where this package "
+            "was authored",
             "the fake has no simulation health monitor: truncation stays false unless a test sets its health flag; "
             "camera, depth and privileged observations and rendering are not modelled because the default "
             "ObservationConfig has no cameras",

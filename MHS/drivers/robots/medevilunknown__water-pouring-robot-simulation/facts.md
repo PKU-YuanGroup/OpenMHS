@@ -9,6 +9,11 @@ generated from the driver, not from this page.
 |---|---|---|
 | The entry class So101PourEnv is a subclass of gym.Env | upstream_code | workshop/dev/docker/workspace/src/so101_mujoco/mujoco/pour_env.py:7 |
 | So101PourEnv loads a MuJoCo model from the xml_path argument, whose default is scene.xml, and creates MjData from that model | upstream_code | workshop/dev/docker/workspace/src/so101_mujoco/mujoco/pour_env.py:13-16 |
+| The module's own script constructs So101PourEnv() with that default path | upstream_code | workshop/dev/docker/workspace/src/so101_mujoco/mujoco/pour_env.py:97 |
+| The root README changes into the mujoco directory before running the scripts that import pour_env | vendor_doc | README.md:112 |
+| The root README imports So101PourEnv from pour_env and constructs it with no arguments | vendor_doc | README.md:125-126 |
+| The root README's install line is pip install mujoco ultralytics groq opencv-python gymnasium numpy | vendor_doc | README.md:102 |
+| The root README requires MuJoCo >= 3.3 and says this simulation was tested with 3.3.7 | vendor_doc | README.md:105 |
 | The action space is a continuous Box of six values from -1 to 1: five arm joint targets and one absolute gripper command | upstream_code | workshop/dev/docker/workspace/src/so101_mujoco/mujoco/pour_env.py:18-19 |
 | The observation space is a Box of eighteen unbounded values: five arm joint positions, five arm joint velocities, one gripper width, three bottle coordinates, three beaker coordinates and one beaker volume | upstream_code | workshop/dev/docker/workspace/src/so101_mujoco/mujoco/pour_env.py:21-23 |
 | The constructor initializes beaker_ml to 0.0, target_ml to 100.0, max_steps to 500 and current_step to 0 | upstream_code | workshop/dev/docker/workspace/src/so101_mujoco/mujoco/pour_env.py:29-32 |
@@ -20,6 +25,7 @@ generated from the driver, not from this page.
 | The reward is minus the distance between the gripperframe and bottle_grasp sites, plus 10*(1-|beaker_ml-target_ml|/target_ml) while beaker_ml is positive, minus 50 while beaker_ml exceeds 110 | upstream_code | workshop/dev/docker/workspace/src/so101_mujoco/mujoco/pour_env.py:73-86 |
 | The bottle tilt is the angle between the water_bottle body's z axis and the world z axis, in degrees, computed from the body quaternion | upstream_code | workshop/dev/docker/workspace/src/so101_mujoco/mujoco/pour_env.py:88-94 |
 | The scene model includes so101_new_calib.xml | upstream_code | workshop/dev/docker/workspace/src/so101_mujoco/mujoco/scene.xml:2 |
+| The included robot model sets meshdir to ../meshes | upstream_code | workshop/dev/docker/workspace/src/so101_mujoco/mujoco/so101_new_calib.xml:6 |
 | The scene model sets the MuJoCo timestep to 0.002 s with the implicitfast integrator | upstream_code | workshop/dev/docker/workspace/src/so101_mujoco/mujoco/scene.xml:5 |
 | The imported model defines six position actuators (shoulder_pan, shoulder_lift, elbow_flex, wrist_flex, wrist_roll and gripper) with per-actuator ctrlrange bounds | upstream_code | workshop/dev/docker/workspace/src/so101_mujoco/mujoco/so101_new_calib.xml:179-186 |
 | The README calls So101PourEnv a standard Gymnasium environment for training low-level control policies | vendor_doc | workshop/dev/docker/workspace/src/so101_mujoco/mujoco/README.md:10 |
@@ -43,5 +49,15 @@ Deviation from the card: the card says `family: mujoco`, `helper: MujocoDriver`,
 environment (`pour_env.py:7`) whose `reset()`/`step()` own the MuJoCo model; a `MujocoDriver` would expose raw
 `data.ctrl` and `qpos`/`qvel` instead of the environment action space. This package uses `GymnasiumDriver` (decision
 `family-config` unchanged).
+
+Sim backend: `So101PourEnv` is not passed to `gymnasium.register`. `pour_env.py:97` and `README.md:125-126` construct
+the class, and `pour_env.py:13-15` loads `xml_path` (default `scene.xml`). The clone has no setup.py. The sim run
+puts the archive root on `PYTHONPATH`, and the class file `pour_env.py:7` is
+`workshop/dev/docker/workspace/src/so101_mujoco/mujoco/pour_env.py` (`README.md:112` changes into that directory
+before `README.md:125` imports `pour_env`). `backends["sim"]` is `_build_sim_env`, which imports
+`workshop.dev.docker.workspace.src.so101_mujoco.mujoco.pour_env` and passes the absolute path of the `scene.xml`
+beside that module. The included model sets `meshdir="../meshes"` (`so101_new_calib.xml:6`). The class-level
+fidelity stays the fake's F0 contract; `fidelity_by_backend["sim"]` is the MuJoCo contract. The fake backend does
+not call the factory.
 
 Tags: so101, robot-arm, pouring, manipulation, mujoco, gymnasium, reinforcement-learning, simulation

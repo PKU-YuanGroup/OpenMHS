@@ -115,6 +115,7 @@ Outputs:
 - An episode is terminated only when reset_when_target_reached is true and a robot reached the target; truncated is always false (upstream_code: planning_multi_robot_gym/planning_multi_robot_env.py:269)
 - The info dictionary reports n_robots, max_acceleration, max_velocity, barrier_radius, robot_radius, dt and tau (upstream_code: planning_multi_robot_gym/planning_multi_robot_env.py:115-124)
 - The environment is registered as PlanningMultiRobot-v0 with entry point planning_multi_robot_gym:PlanningMultiRobotEnv (upstream_code: planning_multi_robot_gym/__init__.py:5-8)
+- Importing planning_multi_robot_gym runs the module-level register call that registers PlanningMultiRobot-v0 (upstream_code: planning_multi_robot_gym/__init__.py:5)
 - The environment metadata declares the render modes rgb_array and human with render_fps 30 (upstream_code: planning_multi_robot_gym/planning_multi_robot_env.py:24)
 
 Tags: multi-robot, planning, obstacle-avoidance, reinforcement-learning, simulation, gymnasium.

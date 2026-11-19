@@ -6,6 +6,7 @@ written into `driver.py` (`facts = [...]`); `reference.json` is generated from t
 | fact | source | ref |
 |---|---|---|
 | PyFlyt/QuadX-Hover-v4 is registered with entry point PyFlyt.gym_envs.quadx_envs.quadx_hover_env:QuadXHoverEnv | upstream_code | PyFlyt/gym_envs/__init__.py:8-11 |
+| The PyFlyt.gym_envs module body calls register for PyFlyt/QuadX-Hover-v4 when the module is imported, so the id exists only after that import | upstream_code | PyFlyt/gym_envs/__init__.py:3-11 |
 | The hover action is [vp, vq, vr, T]: angular velocity setpoints and thrust | upstream_code | PyFlyt/gym_envs/quadx_envs/quadx_hover_env.py:15 |
 | The flight-mode-0 action space is a four-element Box with low [-pi, -pi, -pi, 0.0] and high [pi, pi, pi, 0.8] | upstream_code | PyFlyt/gym_envs/quadx_envs/quadx_base_env.py:80-103 |
 | The quaternion attitude space has 13 elements and the combined observation space has 13 + 4 + 4 = 21 elements | upstream_code | PyFlyt/gym_envs/quadx_envs/quadx_base_env.py:62-115 |

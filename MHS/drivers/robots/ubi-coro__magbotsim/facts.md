@@ -7,6 +7,12 @@ written into `driver.py` (`facts = [...]`); the reference file is generated from
 | fact | source | ref |
 |---|---|---|
 | StateBasedPushBoxEnv-v0 is registered with max_episode_steps=25 | upstream_code | magbotsim/__init__.py:58-62 |
+| Importing magbotsim calls register_gymnasium_envs(), which performs that registration | upstream_code | magbotsim/__init__.py:91 |
+| The constructor defaults render_mode to human | upstream_code | magbotsim/rl_envs/object_manipulation/pushing/state_based_push_box_env.py:94 |
+| render_mode None initializes no viewer | upstream_code | magbotsim/rl_envs/object_manipulation/pushing/state_based_push_box_env.py:36-37 |
+| A viewer collection is created only when render_mode is not None | upstream_code | magbotsim/basic_magbot_env.py:313-314 |
+| reset calls render() after the forward step | upstream_code | magbotsim/rl_envs/basic_single_agent_env.py:156 |
+| step calls render() after the control cycles | upstream_code | magbotsim/rl_envs/basic_single_agent_env.py:256 |
 | The observation space is a Dict with the keys observation, achieved_goal and desired_goal | upstream_code | magbotsim/rl_envs/object_manipulation/pushing/state_based_global_pushing_env.py:272-286 |
 | With learn_jerk and learn_mover_c_rotation false, the observation array is num_movers*4 values: the (x,y) position and (x,y) velocity of each mover | upstream_code | magbotsim/rl_envs/object_manipulation/pushing/state_based_global_pushing_env.py:1157-1158 |
 | When learn_pose is false, achieved_goal is the object's (x,y) position (2 values) and desired_goal the desired (x,y) position (2 values) | upstream_code | magbotsim/rl_envs/object_manipulation/pushing/state_based_global_pushing_env.py:1162-1175 |
@@ -38,5 +44,13 @@ compared with the upstream environment.
 Safety: simulated R0 device. The e-stop is the runtime's software latch (no native stop exists); after it no step or
 reset is accepted until `mhs.safety.reset` clears the latch (a simulator needs no operator for that), and the state
 stays readable.
+
+Sim path: `env_module = "magbotsim"` so the bridge imports the package before `gymnasium.make`. That import runs
+`register_gymnasium_envs()` (`magbotsim/__init__.py:91`), which registers `StateBasedPushBoxEnv-v0`
+(`magbotsim/__init__.py:58-62`). `env_kwargs` is `{"render_mode": None}` because the constructor default is `'human'`
+(`state_based_push_box_env.py:94`) and `reset`/`step` call `render()` (`basic_single_agent_env.py:156` and `:256`).
+`None` skips the viewer (`basic_magbot_env.py:313-314`). The environment's own page sets `render_mode = None`
+(`docs/environments/state_based_push_box_env.rst:39-44`), and the pushing tests do the same
+(`tests/test_rl_pushing_envs_without_obstacles.py:90`). The fake backend does not import `magbotsim`.
 
 Tags: magbotsim, magnetic-robotics, reinforcement-learning, simulation, gymnasium, push-box

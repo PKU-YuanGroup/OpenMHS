@@ -1,7 +1,8 @@
 """Acceptance run of the gym-quadruped package: the gate, plus cases for what is specific to this driver.
 
-Add cases, never remove the check_driver call.  The cases run on the fake backend (fake.py): mujoco, numpy, scipy and
-gymnasium are not installed where the gate runs, so nothing here compares the fake with the upstream environment.
+Add cases, never remove the check_driver call.  The cases run on the fake backend (fake.py), which needs no mujoco,
+numpy, scipy or gymnasium; the sim backend builds the real upstream class instead (driver.py `_build_sim_env`), so
+nothing here compares the fake with the upstream environment.
 """
 
 import unittest
