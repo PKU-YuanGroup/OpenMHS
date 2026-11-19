@@ -607,12 +607,13 @@ class Driver(Bridge):
                                             timeout_ms=self.interlock_timeout_ms)
                 except BaseException:  # noqa: BLE001 - an unreadable interlock is unknown (blocks)
                     value = None
+                # Only boolean True reads closed and only boolean False reads open
+                # (driver-profile.md, decorators.py); a string such as "closed",
+                # or any other return, stays unknown, which blocks like open.
                 if value is True:
                     state = "closed"
                 elif value is False:
                     state = "open"
-                elif value in ("closed", "open", "unknown"):
-                    state = str(value)
             out.append({"id": interlock.id, "state": state, "description": interlock.description or ""})
         return out
 

@@ -24,9 +24,12 @@ created:
   fidelity contract and ``models: [<hardware id>]``;
 * the device contract of a decorated or declarative driver is resolved in
   strict mode before its backend is opened, so a driver strict mode refuses
-  (e.g. SAFE-045) never connects.  Simulator families (Gymnasium, MuJoCo)
-  derive their contract from the opened backend and are checked after it
-  opens; ``site_limits`` are checked when the server starts.
+  (e.g. SAFE-045) never connects.  An instance-derived hardware contract is
+  resolved before its hardware factory runs, and the review gate uses that
+  effective risk.  Hardware admission is refused when the contract cannot be
+  resolved without opening the backend.  Simulator families (Gymnasium,
+  MuJoCo) derive a simulated contract from the opened backend and are checked
+  after it opens; ``site_limits`` are checked when the server starts.
 
 An ``mhs-adapter.json`` (the declarative interchange format,
 ``adapter.schema.json``) is served with the bridge family each of its
@@ -94,6 +97,39 @@ def _known_backend(backend: Any) -> None:
                         "'fake' and 'sim' are served as mode simulated", reason="backend_unknown")
 
 
+def _unresolved_hardware(name: str) -> LoadError:
+    """Hardware admission when the effective contract cannot be known yet (fail closed)."""
+    return LoadError(
+        f"{name}: the device contract cannot be resolved before the hardware backend opens, so its risk and "
+        "review requirements cannot be enforced",
+        reason="review_required")
+
+
+def _instance_hardware_contract(cls: type, options: Mapping[str, Any] | None) -> tuple[str, str]:
+    """``(mode, risk)`` of a ``_needs_instance`` class without calling its hardware factory.
+
+    The class attribute ``risk`` is not the served risk: a binding may raise it
+    (SAFE-007, SAFE-008).  ``driver_model()`` cannot say so for these classes.
+    Ophyd's declared model resolves deployment options without a backend.
+    Other instance-specific model paths are not admitted; a class model is
+    authoritative only when the instance uses it unchanged.
+    """
+    from .driver.families import OphydDriver
+
+    if issubclass(cls, OphydDriver) and cls._driver_model is OphydDriver._driver_model:
+        model = OphydDriver._declared_model.__func__(cls, dict(options or {}), "hardware")
+        return str(model.mode), str(model.risk)
+    # A decorated class model is authoritative only when the instance uses that
+    # same model. An instance hook may open hardware before returning its risk.
+    if cls._driver_model is not Driver._driver_model:
+        raise _unresolved_hardware(cls.__qualname__)
+    try:
+        model = cls.driver_model()
+    except DriverDefinitionError as exc:
+        raise _unresolved_hardware(cls.__qualname__) from exc
+    return str(model.mode), str(model.risk)
+
+
 def _check_backend(*, name: str, mode: str, risk: str, backend: str, allow_hardware: bool, state_dir: Any,
                    lock: Mapping[str, Any] | None, lock_problems: list[str], require_human: bool = False,
                    companion_stop: bool = False) -> None:
@@ -159,16 +195,29 @@ def load_driver(path: str | os.PathLike[str], backend: str = "fake", *, allow_ha
     from .driver.hardware_stop import declares_companion_stop
 
     lock, lock_problems = read_lock(directory)
-    if getattr(cls, "_needs_instance", False):
+    needs_instance = bool(getattr(cls, "_needs_instance", False))
+    require_human = issubclass(cls, (RosDriver, TagDriver))
+    companion_stop = declares_companion_stop(cls)
+
+    def admit(mode: str, risk: str) -> None:
+        _check_backend(name=cls.__qualname__, mode=mode, risk=risk, backend=backend, allow_hardware=allow_hardware,
+                       state_dir=state_dir, lock=lock, lock_problems=lock_problems, require_human=require_human,
+                       companion_stop=companion_stop)
+
+    if needs_instance:
         mode, risk = str(getattr(cls, "mode", "simulated")), str(getattr(cls, "risk", "R0"))
+        # Class risk is a floor, not the served risk (SAFE-007). Resolve the effective contract before the
+        # hardware factory. A contract that cannot be known without that factory is not admitted.
+        if backend == "hardware" and mode in _HARDWARE_MODES:
+            if not allow_hardware or state_dir is None:
+                admit(mode, risk)
+            mode, risk = _instance_hardware_contract(cls, options)
     else:
         model = cls.driver_model()
         mode, risk = model.mode, model.risk
-    _check_backend(name=cls.__qualname__, mode=mode, risk=risk, backend=backend, allow_hardware=allow_hardware,
-                   state_dir=state_dir, lock=lock, lock_problems=lock_problems,
-                   require_human=issubclass(cls, (RosDriver, TagDriver)),
-                   companion_stop=declares_companion_stop(cls))
-    if not getattr(cls, "_needs_instance", False):
+
+    admit(mode, risk)
+    if not needs_instance:
         # Resolve the device contract before the backend opens: a refused driver never connects (or runs setup()).
         refused = [item for item in strict_findings(cls, backend=backend) if getattr(item, "refuse", True)]
         if refused:
@@ -182,6 +231,15 @@ def load_driver(path: str | os.PathLike[str], backend: str = "fake", *, allow_ha
         kwargs["simulation_deployment"] = simulation_deployment
     driver = cls(**kwargs)
     try:
+        if needs_instance and backend == "hardware":
+            # The served model is the authority. Construction must not have opened the factory to build it.
+            if native is _UNSET and getattr(driver, "_native_ready", False):
+                raise _unresolved_hardware(cls.__qualname__)
+            admit(str(driver._model.mode), str(driver._model.risk))
+            refused = [item for item in strict_findings(driver, backend=backend) if getattr(item, "refuse", True)]
+            if refused:
+                raise DriverDefinitionError([item.text() for item in refused], driver=cls.__qualname__,
+                                            findings=refused)
         driver.open()
     except BaseException:
         driver.close()

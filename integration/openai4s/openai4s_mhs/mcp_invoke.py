@@ -248,17 +248,26 @@ class _JournalFileLock:
 class CommandJournal:
     """Append-only JSONL journal of command ids written before dispatch.
 
-    The journal *is* the recoverable state machine for one governed command::
+    The journal *is* the recoverable state machine for one governed command.
+    A ``command_id`` may be retried; each attempt is reduced on its own::
 
         allocated -> prepared -> dispatching -> <terminal>
                                               \\-> unknown
+                                              \\-> in_flight
 
-    ``terminal`` is ``completed``/``receipt``/``tool_error``/``pre_send_error``.
-    A ``dispatching`` record with no terminal record means the process may have
-    died between the endpoint effect and the host's receipt append; on reload it
-    is reconstructed as UNKNOWN (``reconcile_required=true``).  ``allocated``
-    and ``prepared`` alone are pre-send: nothing left the host, so they do not
-    block a retry.
+    ``completed`` and ``receipt`` with a final ``completed``/``failed``/
+    ``cancelled`` status settle that attempt and every earlier one. A rejected
+    ``receipt``, ``tool_error`` and ``pre_send_error`` settle only the attempt
+    that recorded them (a safe retry: nothing of that attempt was applied)
+    and do not close an ``unknown``, ``in_flight`` or
+    unanswered ``dispatching`` of another attempt. A later ambiguous attempt
+    keeps the device gate shut until its own definitive receipt or a
+    reconciliation (HOST-091). ``allocated`` and ``prepared`` alone are
+    pre-send.
+
+    A ``dispatching`` record with no outcome for its attempt means the process
+    may have died between the endpoint effect and the host's receipt append;
+    on reload it is reconstructed as UNKNOWN (``reconcile_required=true``).
 
     A torn or unparsable tail fails closed: the journal raises
     ``MHS.HOST.JOURNAL_CORRUPT`` rather than skipping the dangerous record.
@@ -389,6 +398,151 @@ class CommandJournal:
 
     # -- state machine ------------------------------------------------------
     @staticmethod
+    def _split_attempts(
+        items: Sequence[Mapping[str, Any]],
+    ) -> list[list[dict[str, Any]]]:
+        """Group one command id's records into retry attempts, in journal order.
+
+        An attempt is open from ``allocated``/``prepared``/``dispatching`` until
+        an outcome phase; the next record starts the next attempt. ``allocated``
+        always starts a retry. A ``pre_send_error`` after ``dispatching`` starts
+        one too: a connect failure is not the outcome of a dispatch already
+        marked. ``tool_error`` stays in the open attempt, because it is the
+        answer for that call.
+        """
+        attempts: list[list[dict[str, Any]]] = []
+        current: list[dict[str, Any]] = []
+        open_attempt = False
+        dispatched = False
+        for item in items:
+            phase = item.get("phase")
+            if current and (
+                not open_attempt
+                or phase == "allocated"
+                or (phase == "pre_send_error" and dispatched)
+            ):
+                attempts.append(current)
+                current = []
+                open_attempt = False
+                dispatched = False
+            current.append(dict(item))
+            if phase == "dispatching":
+                open_attempt = True
+                dispatched = True
+            elif phase in ("allocated", "prepared"):
+                open_attempt = True
+            else:
+                # Outcome, or a phase that cannot be proven to extend pre-send.
+                open_attempt = False
+        if current:
+            attempts.append(current)
+        return attempts
+
+    @staticmethod
+    def _reduce_attempt(
+        items: Sequence[Mapping[str, Any]],
+    ) -> tuple[str, dict[str, Any]]:
+        """State of a single attempt.
+
+        Inside one attempt a ``tool_error`` or ``pre_send_error`` is the
+        answer to that attempt's own ``dispatching`` marker (the call did not
+        run). It does not outrank an ``unknown`` or ``in_flight`` record in
+        the same attempt. ``completed``/``receipt`` are endpoint answers;
+        ``_fold_attempts`` distinguishes a rejected attempt from a final outcome.
+        """
+        receipts = [
+            item for item in items if item.get("phase") in ("completed", "receipt")
+        ]
+        nonresolving = [
+            item
+            for item in items
+            if item.get("phase") in CommandJournal.TERMINAL_PHASES
+            and item.get("phase") not in ("completed", "receipt")
+        ]
+        unknown = [item for item in items if item.get("phase") == "unknown"]
+        in_flight = [item for item in items if item.get("phase") == "in_flight"]
+        dispatching = [item for item in items if item.get("phase") == "dispatching"]
+        if receipts:
+            return "terminal", dict(receipts[-1])
+        if unknown:
+            return "unknown", dict(unknown[-1])
+        if in_flight:
+            # The endpoint answered ``running``/``accepted``: sent, not final.
+            return "in_flight", dict(in_flight[-1])
+        if dispatching and not nonresolving:
+            return "dispatching", dict(dispatching[-1])
+        if nonresolving:
+            return "terminal", dict(nonresolving[-1])
+        if any(item.get("phase") in ("allocated", "prepared") for item in items):
+            # Pre-send: no endpoint call was made, so this attempt is a safe retry.
+            return "presend", dict(items[-1])
+        # An unrecognised phase cannot be proven pre-send.
+        return "unknown", dict(items[-1])
+
+    @staticmethod
+    def _fold_attempts(
+        attempts: Sequence[Sequence[Mapping[str, Any]]],
+    ) -> tuple[str, dict[str, Any]]:
+        """Fold attempts oldest-first.
+
+        A pre-send or tool error must not resolve an ambiguous dispatch.
+        Only a later final receipt (``completed``/``failed``/``cancelled``)
+        settles an earlier ``unknown``, ``in_flight`` or unanswered ``dispatching``;
+        a rejected retry is not the retained outcome (CORE-090/091).
+        Reconciliation does the same from ``unreconciled``. A later ambiguous
+        attempt re-opens the gate. ``unknown`` stays ahead of a later
+        ``in_flight`` or live ``dispatching``, as it did when every record of
+        the command was one list.
+        """
+        carried: tuple[str, dict[str, Any]] | None = None
+        state = "unknown"
+        record: dict[str, Any] = {}
+        for attempt in attempts:
+            attempt_state, attempt_record = CommandJournal._reduce_attempt(attempt)
+            phase = attempt_record.get("phase")
+            if attempt_state == "unknown":
+                carried = ("unknown", attempt_record)
+                state, record = "unknown", attempt_record
+            elif attempt_state == "in_flight":
+                if carried is not None and carried[0] == "unknown":
+                    state, record = carried
+                else:
+                    carried = ("in_flight", attempt_record)
+                    state, record = "in_flight", attempt_record
+            elif attempt_state == "dispatching":
+                if carried is not None and carried[0] in ("unknown", "in_flight"):
+                    state, record = carried
+                else:
+                    carried = ("dispatching", attempt_record)
+                    state, record = "dispatching", attempt_record
+            elif attempt_state == "terminal" and (
+                phase == "completed"
+                or (
+                    phase == "receipt"
+                    and attempt_record.get("status") in _RECONCILE_TERMINAL_STATUSES
+                )
+            ):
+                carried = None
+                state, record = "terminal", attempt_record
+            elif attempt_state == "terminal" and (
+                phase in ("pre_send_error", "tool_error")
+                or (phase == "receipt" and attempt_record.get("status") == "rejected")
+            ):
+                if carried is None:
+                    state, record = "terminal", attempt_record
+                else:
+                    state, record = carried
+            elif attempt_state == "presend":
+                if carried is None:
+                    state, record = "presend", attempt_record
+                else:
+                    state, record = carried
+            else:
+                carried = ("unknown", attempt_record)
+                state, record = "unknown", attempt_record
+        return state, record
+
+    @staticmethod
     def _command_states(
         records: Sequence[Mapping[str, Any]], endpoint_id: str, device_id: str
     ) -> list[tuple[str, str, dict[str, Any], list[dict[str, Any]]]]:
@@ -411,27 +565,9 @@ class CommandJournal:
         states: list[tuple[str, str, dict[str, Any], list[dict[str, Any]]]] = []
         for command_id in ordered:
             items = grouped[command_id]
-            terminal = [
-                item for item in items if item.get("phase") in CommandJournal.TERMINAL_PHASES
-            ]
-            unknown = [item for item in items if item.get("phase") == "unknown"]
-            in_flight = [item for item in items if item.get("phase") == "in_flight"]
-            dispatching = [item for item in items if item.get("phase") == "dispatching"]
-            if terminal:
-                state, record = "terminal", terminal[-1]
-            elif unknown:
-                state, record = "unknown", unknown[-1]
-            elif in_flight:
-                # The endpoint answered ``running``/``accepted``: sent, not final.
-                state, record = "in_flight", in_flight[-1]
-            elif dispatching:
-                state, record = "dispatching", dispatching[-1]
-            elif any(item.get("phase") in ("allocated", "prepared") for item in items):
-                # Pre-send: no endpoint call was made, so this is a safe retry.
-                state, record = "presend", items[-1]
-            else:
-                # An unrecognised phase cannot be proven pre-send.
-                state, record = "unknown", items[-1]
+            state, record = CommandJournal._fold_attempts(
+                CommandJournal._split_attempts(items)
+            )
             states.append((command_id, state, record, items))
         return states
 
@@ -464,10 +600,16 @@ class CommandJournal:
     def unreconciled(self, endpoint_id: str, device_id: str) -> list[dict[str, Any]]:
         """Unresolved post-send states on this endpoint/device.
 
-        A durable ``dispatching`` record with no terminal record is returned as
-        a synthetic ``unknown`` unless this process is still inside that exact
-        dispatch.  An ``in_flight`` record (a ``running``/``accepted`` receipt)
-        is pending with its ``operation_id`` until the operation is settled.
+        Attempts of one command id are reduced separately. A ``pre_send_error``
+        or ``tool_error`` settles only the attempt that recorded it. An
+        ``unknown`` attempt, an ``in_flight`` attempt, or a ``dispatching``
+        attempt with no later final receipt (``completed``/``failed``/``cancelled``)
+        stays pending until that receipt or a reconciliation. A rejected retry
+        cannot settle it, and an unclassified receipt fails closed. A durable
+        ``dispatching`` record is returned as a synthetic ``unknown`` unless
+        this process is still inside that exact dispatch. An ``in_flight``
+        record (a ``running``/``accepted`` receipt) is pending with its
+        ``operation_id`` until the operation is settled.
         ``allocated``/``prepared`` records are pre-send and are not pending.  A
         reconciled command stays closed until a *new* ambiguous record appears
         for a new command id.
@@ -1725,7 +1867,7 @@ def invoke_via(
 
 
 _RECONCILE_TERMINAL_STATUSES = frozenset(
-    {"completed", "failed", "cancelled", "rejected"}
+    {"completed", "failed", "cancelled"}
 )
 
 
@@ -1738,7 +1880,7 @@ def _settle_in_flight(
     the caller's connection.  A final receipt for the operation is definitive
     (exactly one final receipt per command, plan 3.7), so it is journaled as a
     ``command_reconcile`` with ``source: operations.get``.  Anything else --
-    still running, an error, another connection that does not own the
+    still running, a rejected attempt, an error, another connection that does not own the
     operation -- leaves the record pending.
     """
     try:
@@ -1950,8 +2092,9 @@ def reconcile(
     A single read is not proof: the endpoint may be mid-command, and "no
     operation item" does not mean "no effect".  A pending command is closed
     only when **both** observations contain the *same* operation id in a
-    definitive terminal state (``completed``/``failed``/``cancelled``/
-    ``rejected``).  Everything else is journaled as inconclusive evidence and
+    definitive terminal state (``completed``/``failed``/``cancelled``).
+    A rejected retry does not settle the command (CORE-090/091).
+    Everything else is journaled as inconclusive evidence and
     the gate stays shut.
     """
     effective = config or MHSConfig.load()
