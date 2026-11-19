@@ -22,11 +22,8 @@ The environment exposes no state snapshot either, so the fidelity contract claim
 
 The device is simulated (R0): there is no hardware backend, no e-stop path to a machine and no operator-required
 limit.  The fake backend (``fake.py``) is the package's own pure Python stand-in; it was not compared with the
-upstream environment.  The ``sim`` backend builds the upstream ``MoleculeEnvironment`` class itself (the class at
-``gym_molecule/envs/molecule_env.py:14`` named by the registration at ``gym_molecule/__init__.py:3-6``), so it needs
-the legacy ``gym`` distribution and RDKit that the module imports (``molecule_env.py:1-9``); ``setup.py:5`` declares
-only ``gym``, so install the real RDKit distribution as an additional dependency. This package is
-model-authored and unreviewed.
+upstream environment (RDKit and gym were not run where the gate ran).  This package is model-authored and
+unreviewed, and is checked on the fake backend only.
 """
 
 from collections.abc import Mapping
@@ -37,19 +34,6 @@ from mhs.driver import Driver, DriverFailed, Fact, Field, action, read
 
 MOLECULE_ENV = "gym_molecule/envs/molecule_env.py"
 INIT = "gym_molecule/__init__.py"
-
-
-def _open_sim(**_options):
-    """Build the real upstream ``MoleculeEnvironment`` for ``--backend sim``.
-
-    The registered entry point is ``gym_molecule.envs:MoleculeEnvironment`` (``gym_molecule/__init__.py:5``) and the
-    class is defined at ``gym_molecule/envs/molecule_env.py:14``; the constructor takes no arguments
-    (``molecule_env.py:38-43``).  The import happens only when this backend opens, so the fake gate needs neither
-    ``gym`` nor RDKit.
-    """
-    from gym_molecule.envs import MoleculeEnvironment
-
-    return MoleculeEnvironment()
 
 
 @dataclass
@@ -68,7 +52,7 @@ class MoleculeEnvironmentDriver(Driver):
     mode = "simulated"
     risk = "R0"
     native = "gym_molecule.envs:MoleculeEnvironment"
-    backends = {"fake": ".fake:FakeMoleculeEnvironment", "sim": _open_sim}
+    backends = {"fake": ".fake:FakeMoleculeEnvironment"}
     display_name = "molecule-v0 molecular editing environment"
     vendor, model = "kagisokgwahla", "capstone-molecule-environment"
     tags = ["molecule", "drug-design", "reinforcement-learning", "simulation", "smiles"]
@@ -76,11 +60,6 @@ class MoleculeEnvironmentDriver(Driver):
         Fact("The environment is registered under the id molecule-v0 with entry point "
              "gym_molecule.envs:MoleculeEnvironment", source="upstream_code", ref=f"{INIT}:3-6"),
         Fact("MoleculeEnvironment is a gym.Env subclass", source="upstream_code", ref=f"{MOLECULE_ENV}:14"),
-        Fact("gym_molecule.envs re-exports MoleculeEnvironment from gym_molecule.envs.molecule_env",
-             source="upstream_code", ref="gym_molecule/envs/__init__.py:1"),
-        Fact("The pip metadata declares gym as its only install requirement", source="upstream_code", ref="setup.py:5"),
-        Fact("The environment module imports RDKit and builds its chemical feature factory at module scope",
-             source="upstream_code", ref=f"{MOLECULE_ENV}:4-12"),
         Fact("The constructor starts the current molecule as carbon, Chem.MolFromSmiles('C')",
              source="upstream_code", ref=f"{MOLECULE_ENV}:39"),
         Fact("The constructor starts molecule_list as ['C']", source="upstream_code", ref=f"{MOLECULE_ENV}:41"),

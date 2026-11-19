@@ -8,9 +8,6 @@ clone such as README.md or docs/*.md) or `upstream_code` (`path/in/clone.py:LINE
 |---|---|---|
 | The environment is registered under the id molecule-v0 with entry point gym_molecule.envs:MoleculeEnvironment | upstream_code | gym_molecule/__init__.py:3-6 |
 | MoleculeEnvironment is a gym.Env subclass | upstream_code | gym_molecule/envs/molecule_env.py:14 |
-| gym_molecule.envs re-exports MoleculeEnvironment from gym_molecule.envs.molecule_env | upstream_code | gym_molecule/envs/__init__.py:1 |
-| The pip metadata declares gym as its only install requirement | upstream_code | setup.py:5 |
-| The environment module imports RDKit and builds its chemical feature factory at module scope | upstream_code | gym_molecule/envs/molecule_env.py:4-12 |
 | The constructor starts the current molecule as carbon, Chem.MolFromSmiles('C') | upstream_code | gym_molecule/envs/molecule_env.py:39 |
 | The constructor starts molecule_list as ['C'] | upstream_code | gym_molecule/envs/molecule_env.py:41 |
 | step adds action_ob.mol at the front or the back of molecule_list when action_c is Add | upstream_code | gym_molecule/envs/molecule_env.py:46-50 |
@@ -39,13 +36,6 @@ The step contract's `action` object is documented as `{action_c, pos, mol}` beca
 changing its type. The reset contract takes the class's `options` object with an optional `smiles` member that is
 passed to `MoleculeEnvironment.seed` (`molecule_env.py:77-79`), so a reset can start from a chosen SMILES; without it
 the start is carbon.
-
-Backends: `fake` is the package's `FakeMoleculeEnvironment` (`fake.py`). `sim` is the callable `_open_sim`, which
-imports and constructs the real upstream class whose definition is cited above; the class is the molecule-v0 entry
-point (`gym_molecule/__init__.py:5`) and its constructor takes no arguments (`molecule_env.py:38-43`). The upstream
-module needs the legacy `gym` distribution (`gym_molecule/__init__.py:1`, `molecule_env.py:1-3`) and RDKit
-(`molecule_env.py:4-9`); `setup.py:5` declares only `gym`, so install RDKit separately. The sim dependency
-configuration uses `rdkit==2022.9.5`, `gym==0.26.2` and `numpy<2`.
 
 Fidelity contract (`driver.py`, `fidelity = {...}`): engine `custom:gym_molecule-molecule-v0`, level F0 (a discrete
 molecule-list editor with no dynamics or time step), determinism `none` with `seed_control` `none` (the environment
