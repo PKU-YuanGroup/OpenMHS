@@ -103,13 +103,26 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           base="origin/${{ github.base_ref }}"
-          changed=$(git diff --name-only "$base"...HEAD -- MHS/drivers | awk -F/ 'NF >= 5 {print $1"/"$2"/"$3"/"$4}' | sort -u)
+          # Every task.json is its registry card (no clone needed); then the gate, on the packages whose change a gate
+          # can see: a registry rebuild moves the rank of hundreds of cards, and that alone is not gated.
+          python3 MHS/handoff/tools/prepare.py --sync --check
+          changed=$(python3 tools/changed_packages.py "$base")
           if [ -z "$changed" ]; then echo "no driver package changed"; exit 0; fi
+          # A package recorded as pass must pass; a blocked or skip-proposed record (MHS/handoff/BLOCKED.md) is in
+          # order as it is. collect.py --recorded checks that.
           for d in $changed; do
             test -f "$d/task.json" || { echo "$d was deleted or has no task.json"; exit 1; }
-            python3 tools/fetch_clone.py "$d"
-            python3 -m mhs.driver check "$d" --backend fake --no-report
-            python3 MHS/handoff/tools/collect.py "$d"
+            status=$(python3 -c 'import json, sys; print(json.load(open(sys.argv[1])).get("status"))' "$d/RESULT.json" 2>/dev/null || true)
+            if [ "$status" = "pass" ]; then
+              python3 tools/fetch_clone.py "$d"
+            else
+              python3 tools/fetch_clone.py "$d" || echo "no clone for $d (a record that is not a pass may have none)"
+            fi
+            # collect.py runs the gate once; the gate's own output is printed only when the record does not hold
+            python3 MHS/handoff/tools/collect.py "$d" --recorded || {
+              python3 -m mhs.driver check "$d" --backend fake --no-report || true
+              exit 1
+            }
           done
 
   site:

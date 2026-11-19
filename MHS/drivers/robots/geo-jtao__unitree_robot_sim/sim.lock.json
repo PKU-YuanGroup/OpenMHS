@@ -1,0 +1,63 @@
+{
+ "$schema": "https://mhs.openai4s.org/schema/0.9/sim-lock.schema.json",
+ "openmhs": "0.9",
+ "backend": "sim",
+ "environment": {
+  "platform": "linux/arm64",
+  "base_image": "python:3.10-slim-bookworm",
+  "system_packages": [
+   "git",
+   "build-essential",
+   "cmake",
+   "swig",
+   "pkg-config",
+   "patchelf",
+   "libgl1",
+   "libegl1",
+   "libgles2",
+   "libosmesa6",
+   "libglfw3",
+   "libglew2.2",
+   "libglib2.0-0",
+   "libsm6",
+   "libxext6",
+   "libxrender1",
+   "ffmpeg"
+  ],
+  "python": "3.10",
+  "install": [
+   "pip install mujoco"
+  ],
+  "constraints": [],
+  "resolved": [
+   "absl-py==2.5.1",
+   "etils==1.13.0",
+   "fsspec==2026.9.0",
+   "glfw==2.11.0",
+   "importlib-resources==7.1.0",
+   "mujoco==3.17.0",
+   "numpy==2.2.6",
+   "pyopengl==3.1.10",
+   "typing-extensions==4.16.0",
+   "websockets==16.1.1",
+   "zipp==4.1.2"
+  ]
+ },
+ "upstream": {
+  "commit": "49fb7fa50e0c3b65dd2a07ac4df370ba781858b8"
+ },
+ "gate": {
+  "sdk_version": "0.9.0.dev0",
+  "digest": "sha256:3bf7e047788b4a843312b84d3cf7a741bb157c1228c3c978bf9297d9aa5b3359",
+  "evidence_state": "contract_checked",
+  "warnings": [
+   "G5.BACKEND_SURFACE",
+   "G6.NOT_RECORDED",
+   "G7.UPSTREAM_BACKEND",
+   "G8.NO_UNIT"
+  ]
+ },
+ "fake_gate_digest": "sha256:30092831a8de909dc964616e54f6581c5969db80825942d5ab49cc689302967d",
+ "checked_at": "2026-11-17",
+ "notes": "mujoco added as the mujoco family runtime (the upstream does not declare it)"
+}

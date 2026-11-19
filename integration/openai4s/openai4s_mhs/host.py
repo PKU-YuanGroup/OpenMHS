@@ -8,6 +8,7 @@ device manifest the endpoint publishes.
 The invariants this class enforces (MHS host profile, spec 09):
 
 * a ``hardware`` device is never driven unless ``allow_hardware`` is on;
+  an emergency stop is not actuation and does not open a session;
 * a session is opened per (endpoint, device, capability) with only the
   capability being invoked granted (least privilege);
 * a capability that declares ``requires_permit`` is only invoked after an
@@ -362,8 +363,14 @@ class MHSHost:
         }
 
     def estop(self, device_id: str, reason: str = "host requested", endpoint_id: str | None = None) -> dict:
+        """Engage the endpoint e-stop. No session and no actuation permission.
+
+        ``mhs.safety.estop`` needs no session (CORE-076; ``Client.estop``).
+        ``allow_hardware`` false refuses hardware reads and commands (HOST-090,
+        CORE-130) and must not refuse this stop. The device still has to be one
+        ``_resolve_device`` found on a configured endpoint.
+        """
         spec, client, manifest = self._resolve_device(device_id, endpoint_id)
-        session_id = self._session(spec, client, manifest, _estop_capability(manifest))
         receipt = client.estop(reason, device_id=str(manifest.get("device_id")))
         self._record(spec, manifest, "cap.device.estop.v1", receipt)
         return {"endpoint_id": spec.id, **receipt}
@@ -478,14 +485,6 @@ def _read_capability(manifest: dict, resource_id: str) -> str:
         "device exposes no readable state capability",
         details={"device_id": manifest.get("device_id")},
     )
-
-
-def _estop_capability(manifest: dict) -> str:
-    for cap in _capabilities(manifest):
-        cid = str(cap.get("capability_id") or "")
-        if "estop" in cid or "stop" in cid:
-            return cid
-    return _read_capability(manifest, _first_resource(manifest))
 
 
 def _describe_action(manifest: dict, capability_id: str, payload: dict) -> str:

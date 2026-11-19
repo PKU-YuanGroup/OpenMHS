@@ -48,6 +48,7 @@ run_wave = load("handoff_run_wave", KIT / "tools/run_wave.py") if HAS_KIT else N
 check_recon = load("handoff_check_recon", KIT / "tools/check_recon.py") if HAS_KIT else None
 fetch_clone = load("tools_fetch_clone", REPO / "tools/fetch_clone.py")
 build_changelog = load("tools_build_changelog", REPO / "tools/build_changelog.py")
+changed_packages = load("tools_changed_packages", REPO / "tools/changed_packages.py")
 export_check = load("tools_oss_export_check", REPO / "tools/oss_export_check.py")
 
 
@@ -271,10 +272,15 @@ class PrepareTests(unittest.TestCase):
         code, out, _ = run_main(prepare, ["--sync", "--dry-run", "--root", str(root.dir)])
         self.assertIn("would refresh MHS/drivers/labs/acme__widgetron/task.json", out)
         self.assertNotEqual((driver_dir / "task.json").read_bytes(), card_path.read_bytes(), "a dry run writes nothing")
+        code, out, _ = run_main(prepare, ["--sync", "--check", "--root", str(root.dir)])
+        self.assertEqual(code, 1, "a copy that is not its card fails the check")
+        self.assertIn("would refresh MHS/drivers/labs/acme__widgetron/task.json", out)
+        self.assertNotEqual((driver_dir / "task.json").read_bytes(), card_path.read_bytes(), "a check writes nothing")
         code, out, _ = run_main(prepare, ["--sync", "gh.acme/widgetron", "--root", str(root.dir)])
         self.assertEqual(code, 0, out)
         self.assertEqual((driver_dir / "task.json").read_bytes(), card_path.read_bytes())
         self.assertEqual((driver_dir / "driver.py").read_text(), "# the author's file\n")
+        self.assertEqual(run_main(prepare, ["--sync", "--check", "--root", str(root.dir)])[0], 0)
         # a package without a registry card is an error
         orphan = root.dir / "MHS/drivers/labs/nobody__here"
         orphan.mkdir(parents=True)
@@ -532,6 +538,43 @@ class CollectVerdictTests(unittest.TestCase):
         self.assertEqual(row["notes"], [])
         row = self.package(result=self.passing(), helper="PythonObjectDriver", decision="direct-driver")
         self.assertEqual(row["notes"], [], "a direct-driver card may use Driver or its family helper")
+
+    def test_recorded_asks_whether_the_record_holds(self):
+        cases = {"a pass that passes": ("pass", True, True), "a pass that fails": ("pass", False, False),
+                 "a blocked record that fails": ("blocked", False, True),
+                 "a record a review blocked although the gate passes": ("blocked", True, True),
+                 "a skip proposal that fails": ("skip-proposed", False, True),
+                 "no RESULT.json": (None, False, False), "an unreadable RESULT.json": ("unreadable", False, False)}
+        for label, (claimed, passed, expected) in cases.items():
+            with self.subTest(label):
+                self.assertIs(collect.recorded_outcome({"result_json_status": claimed, "gate_passed": passed}), expected)
+
+    def test_the_recorded_exit_code_accepts_a_blocked_record_and_no_failing_pass(self):
+        root = Path(tempfile.mkdtemp(prefix="collect-recorded-"))
+        self.addCleanup(shutil.rmtree, root, True)
+        directory = root / "MHS/drivers/labs/acme__widgetron"
+        directory.mkdir(parents=True)
+        (directory / "task.json").write_text(json.dumps(card()))
+
+        def run(claimed, passed, *flags, warnings=()):
+            row = {"package_id": "gh.acme/widgetron", "driver_dir": "MHS/drivers/labs/acme__widgetron",
+                   "gate_passed": passed, "failed": [] if passed else ["G6"], "result_json_status": claimed,
+                   "reviewer": None, "warnings": list(warnings), "accepted_by_reviewer": [], "notes": []}
+            with mock.patch.object(collect, "summarise", lambda *a, **k: row), \
+                    contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()) as err:
+                return collect.main(["--root", str(root), str(directory), *flags]), err.getvalue()
+
+        self.assertEqual(run("blocked", False)[0], 1, "without --recorded every package must pass")
+        self.assertEqual(run("blocked", False, "--recorded")[0], 0)
+        self.assertEqual(run("pass", True, "--recorded")[0], 0)
+        self.assertEqual(run("blocked", True, "--recorded")[0], 0, "a review may block what the gate accepts")
+        untrusted = ["RESULT_UNTRUSTED: the gate passes but RESULT.json says 'blocked'"]
+        self.assertEqual(run("blocked", True, "--recorded", "--strict", warnings=untrusted)[0], 1)
+        code, err = run("pass", False, "--recorded")
+        self.assertEqual(code, 1)
+        self.assertIn("RESULT.json says 'pass', the gate fails", err)
+        self.assertEqual(run(None, False, "--recorded")[0], 1)
+        self.assertEqual(run("blocked", False, "--recorded", "--strict", warnings=["RESULT_SCHEMA: x"])[0], 1)
 
 
 class CollectResidueTests(unittest.TestCase):
@@ -1103,6 +1146,141 @@ class FetchCloneTests(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertIn("already at", out)
 
+    def source_with_submodule(self):
+        source = Path(tempfile.mkdtemp(prefix="fetch-sub-"))
+        self.addCleanup(shutil.rmtree, source, True)
+        make_clone(source / "sub", {"scene.xml": "<mujoco/>\n"})
+        make_clone(source / "up", {"a.txt": "hello\n"})
+        git("-c", "protocol.file.allow=always", "submodule", "add", "-q", str(source / "sub"), "models", cwd=source / "up")
+        git("commit", "-q", "-m", "add the models submodule", cwd=source / "up")
+        commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=source / "up", capture_output=True, text=True,
+                                check=True).stdout.strip()
+        return source / "up", commit
+
+    def package_root(self, commit, driver_text):
+        root = SyntheticRoot([card(commit=commit)])
+        self.addCleanup(root.close)
+        package = root.dir / "MHS/drivers/labs/acme__widgetron"
+        package.mkdir(parents=True)
+        (package / "driver.py").write_text(driver_text, encoding="utf-8")
+        return root.dir
+
+    def test_a_submodule_the_package_names_is_fetched_at_its_gitlink(self):
+        up, commit = self.source_with_submodule()
+        root = self.package_root(commit, 'MODEL = "models/scene.xml"\n')
+        args = ["gh.acme/widgetron", "--root", str(root), "--source", str(up)]
+        dest = root / "labs/acme/widgetron"
+        code, out, err = run_main(fetch_clone, args + ["--submodules", "none"])
+        self.assertEqual(code, 0, err)
+        self.assertFalse((dest / "models/scene.xml").exists(), "none fetches no submodule")
+        code, out, err = run_main(fetch_clone, args)
+        self.assertEqual(code, 0, err)
+        self.assertIn("submodule models at", out)
+        self.assertTrue((dest / "models/scene.xml").is_file())
+        gitlink = subprocess.run(["git", "ls-files", "--stage", "--", "models"], cwd=dest, capture_output=True,
+                                 text=True).stdout.split()[1]
+        head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=dest / "models", capture_output=True, text=True).stdout.strip()
+        self.assertEqual(head, gitlink)
+        code, out, err = run_main(fetch_clone, args)
+        self.assertEqual(code, 0, err)
+        self.assertIn("submodule models is already at", out)
+
+    def test_a_submodule_the_package_does_not_name_is_fetched_only_with_all(self):
+        up, commit = self.source_with_submodule()
+        root = self.package_root(commit, 'MODEL = "assets/scene.xml"  # not in the models submodule\n')
+        args = ["gh.acme/widgetron", "--root", str(root), "--source", str(up)]
+        dest = root / "labs/acme/widgetron"
+        code, out, err = run_main(fetch_clone, args)
+        self.assertEqual(code, 0, err)
+        self.assertFalse((dest / "models/scene.xml").exists())
+        code, out, err = run_main(fetch_clone, args + ["--submodules", "all"])
+        self.assertEqual(code, 0, err)
+        self.assertTrue((dest / "models/scene.xml").is_file())
+
+    def test_a_submodule_of_a_submodule_the_package_names_is_fetched(self):
+        source = Path(tempfile.mkdtemp(prefix="fetch-nested-"))
+        self.addCleanup(shutil.rmtree, source, True)
+        make_clone(source / "assets", {"scene.xml": "<mujoco/>\n"})
+        make_clone(source / "sim", {"sim.py": "x = 1\n"})
+        git("-c", "protocol.file.allow=always", "submodule", "add", "-q", str(source / "assets"), "pkg/assets",
+            cwd=source / "sim")
+        git("commit", "-q", "-m", "assets", cwd=source / "sim")
+        make_clone(source / "up", {"a.txt": "hello\n"})
+        git("-c", "protocol.file.allow=always", "submodule", "add", "-q", str(source / "sim"), "sim", cwd=source / "up")
+        git("commit", "-q", "-m", "sim", cwd=source / "up")
+        git("-c", "protocol.file.allow=always", "submodule", "update", "--init", "--recursive", "-q", cwd=source / "up")
+        commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=source / "up", capture_output=True, text=True,
+                                check=True).stdout.strip()
+        root = self.package_root(commit, 'MODEL = "sim/pkg/assets/scene.xml"\n')
+        code, out, err = run_main(fetch_clone, ["gh.acme/widgetron", "--root", str(root), "--source", str(source / "up")])
+        self.assertEqual(code, 0, err)
+        self.assertIn("submodule sim/pkg/assets at", out)
+        self.assertTrue((root / "labs/acme/widgetron/sim/pkg/assets/scene.xml").is_file())
+
+    def test_a_submodule_the_source_never_checked_out_is_an_error(self):
+        up, commit = self.source_with_submodule()
+        bare = up.parent / "plain"
+        git("clone", "-q", str(up), str(bare), cwd=up.parent)  # a clone of the source without its submodule
+        root = self.package_root(commit, 'MODEL = "models/scene.xml"\n')
+        code, out, err = run_main(fetch_clone, ["gh.acme/widgetron", "--root", str(root), "--source", str(bare)])
+        self.assertEqual(code, 1)
+        self.assertIn("no checkout of submodule models", err)
+
+
+class ChangedPackagesTests(unittest.TestCase):
+    """Which packages a branch changes in a way a gate can see (CI runs the gate on exactly these)."""
+
+    def setUp(self):
+        scratch = Path(tempfile.mkdtemp(prefix="changed-packages-"))
+        self.addCleanup(shutil.rmtree, scratch, True)
+        self.root = scratch / "repo"
+        files = {}
+        for name in ("alpha", "beta", "gamma"):
+            files[f"MHS/drivers/labs/acme__{name}/task.json"] = json.dumps(
+                {"package_id": f"gh.acme/{name}", "rank": 5, "wave": 2}, indent=2) + "\n"
+            files[f"MHS/drivers/labs/acme__{name}/driver.py"] = "class D: ...\n"
+        make_clone(self.root, files)
+        git("branch", "base", cwd=self.root)
+
+    def commit(self, changes: dict[str, str | None]):
+        for name, text in changes.items():
+            path = self.root / name
+            if text is None:
+                path.unlink()
+            else:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(text, encoding="utf-8")
+        git("add", "-A", cwd=self.root)
+        git("commit", "-q", "-m", "change", cwd=self.root)
+
+    def card(self, name, **fields):
+        return json.dumps({"package_id": f"gh.acme/{name}", "rank": 5, "wave": 2, **fields}, indent=2) + "\n"
+
+    def test_a_card_whose_only_change_is_its_rank_is_not_gated(self):
+        self.commit({"MHS/drivers/labs/acme__alpha/task.json": self.card("alpha", rank=9),
+                     "MHS/drivers/labs/acme__beta/task.json": self.card("beta", rank=9, wave=3),
+                     "MHS/drivers/labs/acme__delta/task.json": self.card("delta"),
+                     "MHS/drivers/labs/acme__delta/driver.py": "class D: ...\n"})
+        self.assertEqual(changed_packages.changed_packages(self.root, "base"),
+                         ["MHS/drivers/labs/acme__beta", "MHS/drivers/labs/acme__delta"],
+                         "alpha moved only in rank; beta also changed its wave; delta is new")
+
+    def test_a_rank_change_beside_another_file_is_gated(self):
+        self.commit({"MHS/drivers/labs/acme__alpha/task.json": self.card("alpha", rank=9),
+                     "MHS/drivers/labs/acme__alpha/driver.py": "class D: pass\n",
+                     "MHS/drivers/labs/acme__gamma/task.json": None})
+        self.assertEqual(changed_packages.changed_packages(self.root, "base"),
+                         ["MHS/drivers/labs/acme__alpha", "MHS/drivers/labs/acme__gamma"],
+                         "a deleted task.json is reported, so that CI can refuse it")
+
+    def test_the_command_prints_one_directory_per_line(self):
+        self.commit({"MHS/drivers/labs/acme__beta/driver.py": "class D: pass\n"})
+        code, out, _ = run_main(changed_packages, ["base", "--root", str(self.root)])
+        self.assertEqual((code, out), (0, "MHS/drivers/labs/acme__beta\n"))
+        code, _, err = run_main(changed_packages, ["no-such-branch", "--root", str(self.root)])
+        self.assertEqual(code, 2)
+        self.assertIn("cannot compare", err)
+
 
 class ChangelogTests(unittest.TestCase):
     def test_a_new_fragment_makes_check_fail_until_rebuilt(self):
@@ -1119,6 +1297,20 @@ class ChangelogTests(unittest.TestCase):
         self.assertIn("The first paragraph.", text)
         (root / "MHS/changes/WP-02.md").write_text("# WP-02 — Second\n\nMore.\n")
         self.assertEqual(run_main(build_changelog, ["--check", "--root", str(root)])[0], 1)
+
+    def test_a_link_between_fragments_points_into_the_fragment_directory(self):
+        root = Path(tempfile.mkdtemp(prefix="changelog-links-"))
+        self.addCleanup(shutil.rmtree, root, True)
+        (root / "MHS/changes").mkdir(parents=True)
+        (root / "MHS/changes/WP-01.md").write_text("# WP-01 — First\n\nSee [the second](WP-02.md#part), "
+                                                   "[the spec](../spec/core.md) and [a missing note](NOPE.md).\n")
+        (root / "MHS/changes/WP-02.md").write_text("# WP-02 — Second\n\nMore.\n")
+        (root / "CHANGELOG.md").write_text(f"# Changelog\n\n{build_changelog.BEGIN}\n{build_changelog.END}\n")
+        self.assertEqual(run_main(build_changelog, ["--root", str(root)])[0], 0)
+        text = (root / "CHANGELOG.md").read_text()
+        self.assertIn("[the second](MHS/changes/WP-02.md#part)", text)
+        self.assertIn("[the spec](../spec/core.md)", text, "a path is left as written")
+        self.assertIn("[a missing note](NOPE.md)", text, "a name that is not a fragment is left as written")
 
     def test_the_shipped_changelog_lists_every_fragment(self):
         self.assertEqual(run_main(build_changelog, ["--check", "--root", str(REPO)])[0], 0)

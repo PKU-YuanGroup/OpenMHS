@@ -89,6 +89,7 @@ from __future__ import annotations
 
 import ast
 import contextlib
+import builtins
 import hashlib
 import importlib
 import inspect
@@ -113,6 +114,7 @@ from . import upstream as _upstream
 from .loader import LOCK_FILE, driver_class, read_lock
 from .ref_numeric import ones_box_bounds
 from .package import REFERENCE_JSON, REFERENCE_MD, TASK_FILE, find_root, read_json, reference_documents, relative_to_root
+from ..sim_lock import SIM_LOCK_FILE, SIM_LOCK_SCHEMA
 from .spec import DriverDefinitionError
 
 __all__ = [
@@ -652,9 +654,18 @@ def _integrity_snapshot() -> dict[tuple[str, str], Any]:
         for key, value in items:
             if key == "__warningregistry__":
                 continue
+            if key == "__builtins__":
+                # Every module shares the interpreter's builtins, and extensions add private names to them on import
+                # (pybind11 internals, MuJoCo 3's __MUJOCO_* lookups). Only a rebinding of the module's reference is
+                # compared here; the builtins themselves are compared once, below.
+                out[(name, key)] = ("bi", id(value))
+                continue
             print_ = _fingerprint(key, value, core and (name, key) not in _RUNTIME_CONTAINERS)
             if print_ is not None:
                 out[(name, key)] = print_
+    # A replaced or removed builtin is tampering; a name added after the snapshot is not (it changes no SDK lookup).
+    for key, value in list(vars(builtins).items()):
+        out[("builtins", key)] = ("b", id(value))
     return out
 
 
@@ -1393,7 +1404,8 @@ def _g1(ctx: _Context, gate: Gate) -> None:
         if path.name == "__pycache__" and path.is_dir():
             gate.warning("BYTECODE", f"{relative.as_posix()}/ holds bytecode; delete it (never commit __pycache__)",
                          relative.as_posix())
-    for name, schema in (("RESULT.json", "driver-result.schema.json"), (EXAMPLE_OVERLAY, "site-limits.schema.json")):
+    for name, schema in (("RESULT.json", "driver-result.schema.json"), (EXAMPLE_OVERLAY, "site-limits.schema.json"),
+                         (SIM_LOCK_FILE, SIM_LOCK_SCHEMA)):
         if not (ctx.dir / name).is_file():
             continue
         document, problem = read_json(ctx.dir / name)
@@ -2240,12 +2252,36 @@ def _g4_resolve(gate: Gate, tree: Any, ref: Any, kind: str, where: str, text: An
 # ---------------------------------------------------------------------------
 
 
+def _reference_paths_that_differ(a: Any, b: Any, path: str = "$", out: list[str] | None = None) -> list[str]:
+    """The first JSON paths at which two parsed reference documents differ (at most 8)."""
+    out = [] if out is None else out
+    if len(out) >= 8:
+        return out
+    if isinstance(a, dict) and isinstance(b, dict):
+        for key in sorted(set(a) | set(b), key=str):
+            if a.get(key, _MISSING_KEY) != b.get(key, _MISSING_KEY):
+                _reference_paths_that_differ(a.get(key), b.get(key), f"{path}.{key}", out)
+    elif isinstance(a, list) and isinstance(b, list) and len(a) == len(b):
+        for index, (x, y) in enumerate(zip(a, b)):
+            if x != y:
+                _reference_paths_that_differ(x, y, f"{path}[{index}]", out)
+    elif a != b:
+        out.append(path)
+    return out
+
+
+_MISSING_KEY = object()
+
+
 def _g5(ctx: _Context, gate: Gate) -> None:
     if not ctx.g3_ok:
         gate.skip("not run: the driver did not resolve (G3)")
         return
+    # The committed reference is what `python3 -m mhs.driver reference <dir>` writes: the declared view over the default
+    # (fake) backend. A gate on another backend compares against that same document, never against its own view.
+    own = ctx.instance if ctx.backend == "fake" else None
     try:
-        data, markdown = reference_documents(ctx.dir, cls=ctx.cls, instance=ctx.instance)
+        data, markdown = reference_documents(ctx.dir, cls=ctx.cls, instance=own)
     except KeyboardInterrupt:
         raise
     except BaseException as exc:  # noqa: BLE001
@@ -2258,6 +2294,20 @@ def _g5(ctx: _Context, gate: Gate) -> None:
             gate.error("MISSING", f"{name} is missing; {hint}", name)
         elif path.read_bytes() != expected:
             gate.error("STALE", f"{name} is stale (it differs from the generated file); {hint}", name)
+    if own is None and ctx.instance is not None and getattr(ctx.cls, "_needs_instance", False):
+        # Parity signal: the live backend derives the surface (spaces, limits) from the real simulator.
+        try:
+            live, _ = reference_documents(ctx.dir, cls=ctx.cls, instance=ctx.instance)
+        except KeyboardInterrupt:
+            raise
+        except BaseException as exc:  # noqa: BLE001
+            gate.warning("BACKEND_SURFACE", f"the {ctx.backend} backend's reference cannot be generated: "
+                         f"{_crash_text(exc)}", REFERENCE_JSON)
+            return
+        if live != data:
+            paths = _reference_paths_that_differ(json.loads(data), json.loads(live))
+            gate.warning("BACKEND_SURFACE", f"the {ctx.backend} backend derives a different surface than the default "
+                         f"backend at {', '.join(paths) or '$'}", REFERENCE_JSON)
 
 
 # ---------------------------------------------------------------------------

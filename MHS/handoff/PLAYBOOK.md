@@ -50,7 +50,9 @@ package still say `package_status: none` and `static_scan` when it is merged. CI
 `card package_status 'none' != overlay 'pass'`, and until `--sync` has run the gate reports `G1.CARD_EDITED` for the packages
 whose card moved (`task.json` must be a byte copy of the registry card).
 
-`tools/collect.py` exits 1 when a package fails the gate. It prints `warning:` lines (and fails with `--strict`, which CI uses)
+`tools/collect.py` exits 1 when a package fails the gate; with `--recorded` (CI, for the packages a pull request changes) it
+exits 1 only for a `pass` that fails or a package without a readable RESULT.json: a `blocked` or `skip-proposed` record
+is in order as it is. It prints `warning:` lines (and fails with `--strict`)
 for `RESULT_UNTRUSTED` (RESULT.json disagrees with the gate), `RESULT_DIGEST_STALE` (RESULT.json is a pass whose `gate.digest` is
 not the digest of this gate run: the package was edited after the author's last gate run), `EXEMPLAR_RESIDUE` (any text file of
 the package still names another exemplar's repository, class or model: `mhs.driver new --like` copies the exemplar's files and a

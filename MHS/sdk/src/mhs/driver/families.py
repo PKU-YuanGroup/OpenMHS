@@ -1775,6 +1775,9 @@ class GymnasiumDriver(_SimDriver):
         "options": {"type": "object", "description": "Environment-specific options of gymnasium reset()"},
     }
     env_id: str | None = None
+    #: The upstream module whose import registers ``env_id`` (``"gym_pusht"`` for ``gym_pusht/PushT-v0``): the bridge
+    #: imports it before ``gymnasium.make(env_id)``, as a user of the environment would. None: nothing to import.
+    env_module: str | None = None
     env_kwargs: Mapping[str, Any] = {}
     autoreset: bool = False
     seed: int | None = None
@@ -1800,6 +1803,11 @@ class GymnasiumDriver(_SimDriver):
 
     @classmethod
     def _fill_model(cls, model: _model.DriverModel, instance: Any, problems: list[str]) -> None:
+        module = cls.env_module
+        if module is not None and not (isinstance(module, str)
+                                       and re.fullmatch(r"[A-Za-z_]\w*(\.[A-Za-z_]\w*)*", module)):
+            problems.append(f"{cls.__qualname__}: env_module must be a dotted module name such as 'gym_pusht', "
+                            f"got {module!r}")
         ref = cls.action_space_ref
         parsed = parse_ref(ref) if isinstance(ref, str) else None
         if ref is not None and (parsed is None or safe_relpath(parsed.path) is None):
@@ -2008,6 +2016,8 @@ class GymnasiumDriver(_SimDriver):
 
         cls = type(self)
         spec = {"kwargs": dict(cls.env_kwargs)} if cls.env_kwargs else None
+        if isinstance(cls.env_module, str) and native is None:   # only gymnasium.make(env_id) needs the registration
+            spec = {**(spec or {}), "env_module": cls.env_module}
         origin = None
         if native is not None:   # built by a backends entry, not by gymnasium.make(env_id)
             target = dict(cls.backends or {}).get(self.backend)
