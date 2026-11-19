@@ -1,0 +1,34 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.zzzjie-robot/go2arm_lab",
+  "upstream": {
+    "repo_url": "https://github.com/zzzjie-robot/go2arm_lab",
+    "commit": "5791648e28c1878f4fa5b97ccf111d97f8843f0e",
+    "license_spdx": "NOASSERTION"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install -e source/Go2Arm_Lab"
+    ],
+    "system_deps": [
+      "Isaac Sim and Isaac Lab v2.2.0 (README.md:27-30, :42-52)"
+    ],
+    "gpu": true,
+    "platform": "any",
+    "notes": "README.md:42-52 installs the package with the Isaac Lab Python interpreter after Isaac Lab itself; setup.py:18-22 lists only psutil in install_requires. The gate and the fake need neither and never install or import the upstream package. The sim factory needs Isaac Lab v2.2.0, Isaac Sim and a GPU and was not run."
+  },
+  "backends": {
+    "fake": ".fake:FakeGo2ArmEnv",
+    "sim": ".driver:make_env"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "retriage-drivers-1-068",
+    "date": "2026-11-17"
+  },
+  "reviewed_by": null
+}

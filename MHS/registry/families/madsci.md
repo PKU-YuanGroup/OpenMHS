@@ -50,10 +50,10 @@ A full workcell needs running services.
 
 ## First task cards
 
-- `gh.ad-sdl/madsci`: bridge-runtime, wave 9, rank 397, `MHS/registry/tasks/labs/ad-sdl__madsci.json`
-- `gh.ad-sdl/madsci_examples`: skip, wave 9, rank 1347, `MHS/registry/tasks/labs/ad-sdl__madsci_examples.json`
-- `gh.ad-sdl/rapid350_applications`: reference, wave 9, rank 1385, `MHS/registry/tasks/labs/ad-sdl__rapid350_applications.json`
-- `gh.rorymb/simlab`: bridge-runtime, wave 9, rank 1611, `MHS/registry/tasks/labs/rorymb__simlab.json`
+- `gh.ad-sdl/madsci`: bridge-runtime, wave 9, rank 387, `MHS/registry/tasks/labs/ad-sdl__madsci.json`
+- `gh.ad-sdl/madsci_examples`: skip, wave 9, rank 1308, `MHS/registry/tasks/labs/ad-sdl__madsci_examples.json`
+- `gh.ad-sdl/rapid350_applications`: reference, wave 9, rank 1345, `MHS/registry/tasks/labs/ad-sdl__rapid350_applications.json`
+- `gh.rorymb/simlab`: bridge-runtime, wave 9, rank 1562, `MHS/registry/tasks/labs/rorymb__simlab.json`
 
 ## Sources
 

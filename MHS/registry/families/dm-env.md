@@ -56,11 +56,11 @@ TimeStep semantics differ from Gymnasium; converting with shimmy is a recon deci
 
 ## First task cards
 
-- `gh.google-deepmind/dm_robotics`: skip, wave 9, rank 240, `MHS/registry/tasks/robots/google-deepmind__dm_robotics.json`
-- `gh.denisyarats/proto`: skip, wave 9, rank 806, `MHS/registry/tasks/robots/denisyarats__proto.json`
-- `gh.kevinzakka/dm_env_wrappers`: skip, wave 9, rank 1191, `MHS/registry/tasks/robots/kevinzakka__dm_env_wrappers.json`
-- `gh.rui-li023/openpi_labutopia`: skip, wave 9, rank 1310, `MHS/registry/tasks/robots/rui-li023__openpi_labutopia.json`
-- `gh.google/putting-dune`: skip, wave 9, rank 1573, `MHS/registry/tasks/labs/google__putting-dune.json`
+- `gh.google-deepmind/dm_robotics`: skip, wave 9, rank 234, `MHS/registry/tasks/robots/google-deepmind__dm_robotics.json`
+- `gh.denisyarats/proto`: skip, wave 9, rank 786, `MHS/registry/tasks/robots/denisyarats__proto.json`
+- `gh.kevinzakka/dm_env_wrappers`: skip, wave 9, rank 1160, `MHS/registry/tasks/robots/kevinzakka__dm_env_wrappers.json`
+- `gh.rui-li023/openpi_labutopia`: skip, wave 9, rank 1272, `MHS/registry/tasks/robots/rui-li023__openpi_labutopia.json`
+- `gh.google/putting-dune`: skip, wave 9, rank 1527, `MHS/registry/tasks/labs/google__putting-dune.json`
 
 ## Sources
 

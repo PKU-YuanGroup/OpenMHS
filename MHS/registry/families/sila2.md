@@ -63,10 +63,10 @@ Servers of one repository often start in simulation mode (`SimulationController`
 ## First task cards
 
 - `gh.anguyen-23/sila-testing`: family-config, wave 6, rank 36, `MHS/registry/tasks/labs/anguyen-23__sila-testing.json`
-- `gh.malcolmsimgithub/chemos2.0`: reference, wave 9, rank 521, `MHS/registry/tasks/labs/malcolmsimgithub__chemos2.0.json`
-- `gh.florianbauer/sila-orchestrator`: reference, wave 9, rank 540, `MHS/registry/tasks/labs/florianbauer__sila-orchestrator.json`
-- `gh.qpillars/openapi-to-sila2`: skip, wave 9, rank 657, `MHS/registry/tasks/labs/qpillars__openapi-to-sila2.json`
-- `gh.elseviersoftwarex/softx-d-21-00051`: reference, wave 9, rank 763, `MHS/registry/tasks/labs/elseviersoftwarex__softx-d-21-00051.json`
+- `gh.malcolmsimgithub/chemos2.0`: reference, wave 9, rank 510, `MHS/registry/tasks/labs/malcolmsimgithub__chemos2.0.json`
+- `gh.florianbauer/sila-orchestrator`: reference, wave 9, rank 527, `MHS/registry/tasks/labs/florianbauer__sila-orchestrator.json`
+- `gh.qpillars/openapi-to-sila2`: skip, wave 9, rank 639, `MHS/registry/tasks/labs/qpillars__openapi-to-sila2.json`
+- `gh.elseviersoftwarex/softx-d-21-00051`: reference, wave 9, rank 744, `MHS/registry/tasks/labs/elseviersoftwarex__softx-d-21-00051.json`
 
 ## Sources
 

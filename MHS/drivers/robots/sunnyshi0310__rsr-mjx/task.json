@@ -1,0 +1,117 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.sunnyshi0310/rsr-mjx",
+  "track": "robots",
+  "local_path": "robots/sunnyshi0310/rsr-mjx",
+  "driver_dir": "MHS/drivers/robots/sunnyshi0310__rsr-mjx",
+  "upstream": {
+    "repo_url": "https://github.com/sunnyshi0310/rsr-mjx",
+    "commit": "b2fd0b84865f3c5fa784bc1f0cac410c9d10d67c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 109,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "mujoco_playground._src.locomotion.go2.joystick:Joystick",
+      "file": "ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/joystick.py",
+      "line": 83,
+      "confidence": "override"
+    },
+    {
+      "symbol": "mujoco_playground._src.registry:load",
+      "file": "ppo_train/go2_training/mujoco_playground/_src/registry.py",
+      "line": 24,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_feetonly_bowl.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_feetonly_flat_terrain.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_feetonly_rough_terrain.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_feetonly_stairs.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_flat_terrain.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_feetonly_bowl.xml:1 MJCF scene model",
+      "ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_feetonly_flat_terrain.xml:1 MJCF scene model",
+      "ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_feetonly_rough_terrain.xml:1 MJCF scene model",
+      "ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_feetonly_stairs.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "test"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_feetonly_bowl.xml:1",
+      "MJCF scene model ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_feetonly_flat_terrain.xml:1",
+      "MJCF scene model ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_feetonly_rough_terrain.xml:1",
+      "MJCF scene model ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_feetonly_stairs.xml:1",
+      "MJCF scene model ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_flat_terrain.xml:1",
+      "MJCF scene model ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/scene_mjx_fullcollisions_flat_terrain.xml:1",
+      "MJCF robot model ppo_train/airbot_training/T_shape.xml:1",
+      "MJCF robot model ppo_train/airbot_training/cube.xml:1",
+      "MJCF robot model ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/go2_mjx.xml:1",
+      "MJCF robot model ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/xmls/go2_mjx_feetonly.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/sunnyshi0310__rsr-mjx --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

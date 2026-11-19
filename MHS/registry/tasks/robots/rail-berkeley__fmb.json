@@ -11,20 +11,29 @@
     "license_spdx": "NOASSERTION",
     "license_class": "unknown"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "tooling",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
-  "blocked_on": [],
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 2074,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 71,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "robot_infra.envs.franka_fmb_env:FrankaFMB",
+      "file": "robot_infra/envs/franka_fmb_env.py",
+      "line": 36,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": null,
@@ -41,19 +50,39 @@
     "upstream_tests": null
   },
   "hints": {
-    "reads": [],
+    "reads": [
+      "FMBTransformerPolicy.get_action_index_for_token",
+      "FMBTransformerPolicy.get_token_padding_mask",
+      "FMBTransformerPolicy.get_tokens",
+      "TransformerPolicy.get_action_index_for_token",
+      "TransformerPolicy.get_tokens",
+      "TanhGaussianResNetPolicy.get_default_config",
+      "TanhGaussianResNetPolicy.get_weight_decay_exclusions"
+    ],
     "writes": [],
     "actions": [],
-    "candidate_classes": []
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.measure.mass.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "hardware",
     "risk_floor": "R0",
-    "limit_hints": []
+    "limit_hints": [
+      "fmb_dataset_builder/fmb_dataset/fmb_dataset_dataset_builder.py:31 MAX_PATHS_IN_MEMORY = 200",
+      "fmb_dataset_builder/fmb_multi_object_dataset/fmb_multi_object_dataset_dataset_builder.py:31 MAX_PATHS_IN_MEMORY = 200",
+      "fmb_dataset_builder/fmb_single_object_dataset/fmb_single_object_dataset_dataset_builder.py:31 MAX_PATHS_IN_MEMORY = 200",
+      "fmb_dataset_builder/fmb_single_object_insert_dataset/fmb_single_object_insert_dataset_dataset_builder.py:31 MAX_PATHS_IN_MEMORY = 200"
+    ]
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "install",
+    "license",
+    "motion"
+  ],
+  "timebox_min": 90,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rail-berkeley__fmb --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "required"
 }

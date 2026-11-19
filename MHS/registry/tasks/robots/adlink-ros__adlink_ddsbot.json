@@ -11,20 +11,29 @@
     "license_spdx": "Apache-2.0",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "tooling",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
-  "blocked_on": [],
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 472,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 11,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "base_control:BaseControl",
+      "file": "script/base_control.py",
+      "line": 26,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": null,
@@ -45,17 +54,23 @@
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "Motor.spin"
+    ],
+    "candidate_classes": [
+      "cap.motion.mobile_base.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
-    "risk_floor": "R0",
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/adlink-ros__adlink_ddsbot --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

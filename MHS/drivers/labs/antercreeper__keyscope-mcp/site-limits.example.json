@@ -1,0 +1,20 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (keyscope-mcp)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/keyscope": {
+      "channel1_scale_v_per_div": {"min": 0.01, "max": 5, "unit": "V", "source": "operator",
+                                   "reason": "example only: the probes on this bench stay within 0.01 V/div to 5 V/div"},
+      "channel1_offset_v": {"min": -5, "max": 5, "unit": "V", "source": "operator",
+                            "reason": "example only: the probe and the vertical window keep the offset within +/-5 V"},
+      "timebase_scale_s_per_div": {"min": 0.000001, "max": 1, "unit": "s", "source": "operator",
+                                   "reason": "example only: this bench observes events from 1 us/div to 1 s/div"},
+      "timebase_position_s": {"min": -1, "max": 1, "unit": "s", "source": "operator",
+                              "reason": "example only: the observed window is within +/-1 s of the trigger"},
+      "trigger_level_v": {"min": -5, "max": 5, "unit": "V", "source": "operator",
+                          "reason": "example only: trigger levels stay within the +/-5 V probe window"}
+    }
+  }
+}

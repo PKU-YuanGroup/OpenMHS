@@ -1,0 +1,88 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.leggedrobotics/sru-navigation-sim",
+  "track": "robots",
+  "local_path": "robots/leggedrobotics/sru-navigation-sim",
+  "driver_dir": "MHS/drivers/robots/leggedrobotics__sru-navigation-sim",
+  "upstream": {
+    "repo_url": "https://github.com/leggedrobotics/sru-navigation-sim",
+    "commit": "80f6c01c2d9f171374c9f9dba289abd38bcf0c6c",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 95,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "isaaclab_nav_task.navigation.navigation_env:NavigationEnv",
+      "file": "isaaclab_nav_task/navigation/navigation_env.py",
+      "line": 19,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "isaaclab_nav_task/navigation/config/aow_d/__init__.py:17 gym env Isaac-Nav-MDPO-AoW-D-v0",
+      "isaaclab_nav_task/navigation/config/aow_d/__init__.py:27 gym env Isaac-Nav-MDPO-AoW-D-Play-v0",
+      "isaaclab_nav_task/navigation/config/aow_d/__init__.py:37 gym env Isaac-Nav-MDPO-AoW-D-Dev-v0",
+      "isaaclab_nav_task/navigation/config/aow_d/__init__.py:50 gym env Isaac-Nav-PPO-AoW-D-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Isaac-Nav-MDPO-AoW-D-v0 registered at isaaclab_nav_task/navigation/config/aow_d/__init__.py:17",
+      "gym env Isaac-Nav-MDPO-AoW-D-Play-v0 registered at isaaclab_nav_task/navigation/config/aow_d/__init__.py:27",
+      "gym env Isaac-Nav-MDPO-AoW-D-Dev-v0 registered at isaaclab_nav_task/navigation/config/aow_d/__init__.py:37",
+      "gym env Isaac-Nav-PPO-AoW-D-v0 registered at isaaclab_nav_task/navigation/config/aow_d/__init__.py:50",
+      "gym env Isaac-Nav-PPO-AoW-D-Play-v0 registered at isaaclab_nav_task/navigation/config/aow_d/__init__.py:60",
+      "gym env Isaac-Nav-PPO-AoW-D-Dev-v0 registered at isaaclab_nav_task/navigation/config/aow_d/__init__.py:70",
+      "gym env Isaac-Nav-MDPO-B2W-v0 registered at isaaclab_nav_task/navigation/config/b2w/__init__.py:17",
+      "gym env Isaac-Nav-MDPO-B2W-Play-v0 registered at isaaclab_nav_task/navigation/config/b2w/__init__.py:27",
+      "gym env Isaac-Nav-MDPO-B2W-Dev-v0 registered at isaaclab_nav_task/navigation/config/b2w/__init__.py:37",
+      "gym env Isaac-Nav-PPO-B2W-v0 registered at isaaclab_nav_task/navigation/config/b2w/__init__.py:50",
+      "gym env Isaac-Nav-PPO-B2W-Play-v0 registered at isaaclab_nav_task/navigation/config/b2w/__init__.py:60",
+      "gym env Isaac-Nav-PPO-B2W-Dev-v0 registered at isaaclab_nav_task/navigation/config/b2w/__init__.py:70"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/leggedrobotics__sru-navigation-sim --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

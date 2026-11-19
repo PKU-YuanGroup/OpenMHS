@@ -1,0 +1,20 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (lucasgerads__lecroy-mcp)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/lecroy-scope": {
+      "vdiv": {"min": 0.01, "max": 5, "unit": "V", "source": "operator",
+               "reason": "example only: the probes and signals on this bench stay between 10 mV/div and 5 V/div"},
+      "offset": {"min": -5, "max": 5, "unit": "V", "source": "operator",
+                 "reason": "example only: the fitted probes keep the offset within +/-5 V"},
+      "tdiv": {"min": 0.000001, "max": 1, "unit": "s", "source": "operator",
+               "reason": "example only: this bench observes events from 1 us/div to 1 s/div"},
+      "trigger_level": {"min": -5, "max": 5, "unit": "V", "source": "operator",
+                        "reason": "example only: trigger levels stay within the +/-5 V window of the probes"},
+      "trigger_source": {"allowed": ["C1", "C2", "C3", "C4", "EX", "LINE"], "source": "operator",
+                         "reason": "example only: this bench uses analog channels C1-C4 or the external/line triggers"}
+    }
+  }
+}

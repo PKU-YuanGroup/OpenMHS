@@ -11,20 +11,27 @@
     "license_spdx": "Apache-2.0",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "sim-env",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 261,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 124,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "musclemimic.environments.humanoids.myofullbody:MyoFullBody",
+      "file": "musclemimic/environments/humanoids/myofullbody.py",
+      "line": 17,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": ">=3.11",
@@ -36,24 +43,48 @@
     "platform": "any"
   },
   "mock_strategy": {
-    "preferred": "fake",
+    "preferred": "upstream-sim",
     "hints": [],
     "upstream_tests": "tests"
   },
   "hints": {
-    "reads": [],
-    "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "reads": [
+      "MjxMyoBimanualArm.get_action_indices",
+      "MjxMyoBimanualArm.get_data",
+      "MjxMyoBimanualArm.get_default_xml_file_path",
+      "MjxMyoBimanualArm.get_model",
+      "MjxMyoBimanualArm.registered_envs (attribute)",
+      "TrajectoryData.get_attribute_names",
+      "TrajectoryData.get_cvel",
+      "TrajectoryData.get_cvel_slice",
+      "TrajectoryData.get_qpos",
+      "TrajectoryData.get_qpos_slice",
+      "TrajectoryData.get_qvel",
+      "TrajectoryData.get_qvel_slice"
+    ],
+    "writes": [
+      "MjxMyoBimanualArm.set_actuation_spec",
+      "MjxMyoBimanualArm.set_observation_spec",
+      "MjxMyoBimanualArm.set_sim_state_from_traj_data"
+    ],
+    "actions": [
+      "MjxMyoBimanualArm.mjx_reset",
+      "MjxMyoBimanualArm.reset",
+      "MjxMyoBimanualArm.stop"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
   "needs_recon": [],
-  "timebox_min": 15,
+  "timebox_min": 90,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/amathislab__musclemimic --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

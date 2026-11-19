@@ -11,20 +11,27 @@
     "license_spdx": "NOASSERTION",
     "license_class": "unknown"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 2133,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 129,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "DRL_Isaac_lib.env:Isaac_envs",
+      "file": "DRL_Isaac_lib/env.py",
+      "line": 15,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": null,
@@ -34,24 +41,33 @@
     "platform": "any"
   },
   "mock_strategy": {
-    "preferred": "fake",
-    "hints": [],
+    "preferred": "upstream-sim",
+    "hints": [
+      "DRL_Isaac_lib/env.py:15 Isaac_envs environment class"
+    ],
     "upstream_tests": null
   },
   "hints": {
     "reads": [],
     "writes": [],
     "actions": [],
-    "candidate_classes": []
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/makijanus__easy_drl_isaac_sim --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "required"
 }

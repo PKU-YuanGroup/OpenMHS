@@ -11,21 +11,34 @@
     "license_spdx": "NOASSERTION",
     "license_class": "unknown"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "tooling",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 2076,
-  "exemplar": null,
-  "entry_symbols": [],
-  "models": [],
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 454,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_mimic_envs.mujoco.mimic_walker3d:MimicWalker3dEnv",
+      "file": "mujoco/gym_mimic_envs/mujoco/mimic_walker3d.py",
+      "line": 31,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "mujoco/gym_mimic_envs/mujoco/assets/walker3d_flat_feet.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
   "install": {
     "python": null,
     "commands": [],
@@ -36,24 +49,37 @@
     "platform": "any"
   },
   "mock_strategy": {
-    "preferred": "fake",
-    "hints": [],
+    "preferred": "upstream-sim",
+    "hints": [
+      "mujoco/gym_mimic_envs/__init__.py:3 gym env MimicWalker2d-v0",
+      "mujoco/gym_mimic_envs/__init__.py:8 gym env MimicWalker3d-v0"
+    ],
     "upstream_tests": null
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "gym env MimicWalker2d-v0 registered at mujoco/gym_mimic_envs/__init__.py:3",
+      "gym env MimicWalker3d-v0 registered at mujoco/gym_mimic_envs/__init__.py:8"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rgalljamov__learn2walk --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "required"
 }

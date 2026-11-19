@@ -1,0 +1,83 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.chirikjianlab/ravens_visual_foresight",
+  "track": "robots",
+  "local_path": "robots/chirikjianlab/ravens_visual_foresight",
+  "driver_dir": "MHS/drivers/robots/chirikjianlab__ravens_visual_foresight",
+  "upstream": {
+    "repo_url": "https://github.com/chirikjianlab/ravens_visual_foresight",
+    "commit": "9d3c95555d420c086f465dc11bcb2758cf05247a",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 205,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "ravens.environments.environment:Environment",
+      "file": "ravens/environments/environment.py",
+      "line": 42,
+      "confidence": "override"
+    },
+    {
+      "symbol": "ravens.environments.environment_mcts:EnvironmentMCTS",
+      "file": "ravens/environments/environment_mcts.py",
+      "line": 26,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ravens/environments/environment.py:409 EnvironmentNoRotationsWithHeightmap environment class",
+      "ravens/environments/environment.py:463 ContinuousEnvironment environment class",
+      "ravens/environments/environment_mcts.py:26 EnvironmentMCTS environment class",
+      "ravens/environments/environment.py:42 Environment environment class"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "artifacts"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/chirikjianlab__ravens_visual_foresight --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

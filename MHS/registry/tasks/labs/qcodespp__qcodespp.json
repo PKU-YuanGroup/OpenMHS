@@ -11,20 +11,47 @@
     "license_spdx": "MIT",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
-  "blocked_on": [],
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "QUARANTINE"
+  ],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1401,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 38,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "qcodespp.instrument_drivers.Lakeshore.Model_340:Model_340",
+      "file": "qcodespp/instrument_drivers/Lakeshore/Model_340.py",
+      "line": 416,
+      "confidence": "override"
+    },
+    {
+      "symbol": "qcodespp.instrument_drivers.tektronix.Keithley_2450:Keithley_2450",
+      "file": "qcodespp/instrument_drivers/tektronix/Keithley_2450.py",
+      "line": 5,
+      "confidence": "override"
+    },
+    {
+      "symbol": "qcodespp.instrument_drivers.oxford.mercuryiPS_serial:MercuryiPS_120",
+      "file": "qcodespp/instrument_drivers/oxford/mercuryiPS_serial.py",
+      "line": 42,
+      "confidence": "override"
+    },
+    {
+      "symbol": "qcodespp.instrument_drivers.attocube.AMC100:AttocubeAMC100",
+      "file": "qcodespp/instrument_drivers/attocube/AMC100.py",
+      "line": 250,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": ">=3.10",
@@ -48,19 +75,52 @@
     "upstream_tests": null
   },
   "hints": {
-    "reads": [],
-    "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "reads": [
+      "MercuryiPS_120.get_idn",
+      "QDac2.get_multiple_channels",
+      "QDac2.get_recorded_scpi_commands",
+      "QSwitch.get_recorded_scpi_commands"
+    ],
+    "writes": [
+      "MercuryiPS_120.set_address",
+      "MercuryiPS_120.set_terminator",
+      "MercuryiPS_120.set_timeout",
+      "QDac2.set_multiple_channels",
+      "QDac2.set_multiple_voltages",
+      "QDac2.write_floats"
+    ],
+    "actions": [
+      "QDac2.allocate_trigger",
+      "QDac2.calibrate_currents",
+      "QDac2.connect_external_trigger",
+      "QDac2.free_trigger",
+      "QDac2.reset",
+      "QDac2.start_all",
+      "QDac2.start_recording_scpi",
+      "QSwitch.reset",
+      "QSwitch.soft_reset",
+      "QSwitch.start_recording_scpi"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.device.calibrate.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
-    "risk_floor": "R0",
-    "limit_hints": []
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "qcodespp/instrument_drivers/Keysight/Keysight_E5063A.py:11 MIN_FREQ = 100000.0",
+      "qcodespp/instrument_drivers/Keysight/Keysight_E5063A.py:12 MAX_FREQ = 18000000000.0",
+      "qcodespp/instrument_drivers/cryogenic/CryogenicSMS120C.py:34 default_current_ramp_limit = 0.0506",
+      "qcodespp/instrument_drivers/cryogenic/CryogenicSMS120C.py:35 default_max_current_ramp_limit = 0.12",
+      "qcodespp/instrument_drivers/wir/Kepco.py:7 MAX_AMP = 20"
+    ]
   },
   "needs_recon": [],
-  "timebox_min": 15,
+  "timebox_min": 120,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/qcodespp__qcodespp --backend fake",
-  "skip_reason": "catalogue 'control framework'/'controller' describes software and the scan finds no device or simulation evidence",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

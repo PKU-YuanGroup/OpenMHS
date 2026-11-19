@@ -1,0 +1,86 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.btownshend/pytecan",
+  "track": "labs",
+  "local_path": "labs/btownshend/pytecan",
+  "driver_dir": "MHS/drivers/labs/btownshend__pytecan",
+  "upstream": {
+    "repo_url": "https://github.com/btownshend/pytecan",
+    "commit": "b80ab8d5549856998269f4bd60edab75986a17d6",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 1,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "gemini:Gemini",
+      "file": "Gemini/gemini.py",
+      "line": 8,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "elitech_datareader/tests"
+  },
+  "hints": {
+    "reads": [
+      "Device.get_data",
+      "Device.get_data_header",
+      "Device.get_devinfo",
+      "Device.get_latest",
+      "PTC.stat (attribute)",
+      "RIC.status"
+    ],
+    "writes": [
+      "Device.set_clock",
+      "Device.set_device_number",
+      "Device.set_user_info"
+    ],
+    "actions": [
+      "PTC.run"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/btownshend__pytecan --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

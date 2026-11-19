@@ -1,0 +1,120 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ursa-laboratories/cubos",
+  "track": "labs",
+  "local_path": "labs/ursa-laboratories/cubos",
+  "driver_dir": "MHS/drivers/labs/ursa-laboratories__cubos",
+  "upstream": {
+    "repo_url": "https://github.com/ursa-laboratories/cubos",
+    "commit": "38ccd0e7109926ac54cc90b018ff674161f87031",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 26,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "cubos.gantry.gantry:Gantry",
+      "file": "packages/core/src/cubos/gantry/gantry.py",
+      "line": 37,
+      "confidence": "override"
+    },
+    {
+      "symbol": "cubos.instruments.pipette.vendors.sartorius:SartoriusPicus2Pipette",
+      "file": "packages/core/src/cubos/instruments/pipette/vendors/sartorius.py",
+      "line": 106,
+      "confidence": "override"
+    },
+    {
+      "symbol": "cubos.instruments.uv_curing.vendors.excelitas:ExcelitasUVCuring",
+      "file": "packages/core/src/cubos/instruments/uv_curing/vendors/excelitas.py",
+      "line": 32,
+      "confidence": "override"
+    },
+    {
+      "symbol": "cubos.instruments.uvvis_ccs.vendors.thorlabs:ThorlabsUVVisCCS",
+      "file": "packages/core/src/cubos/instruments/uvvis_ccs/vendors/thorlabs.py",
+      "line": 32,
+      "confidence": "override"
+    },
+    {
+      "symbol": "cubos.instruments.pipette.vendors.opentrons:OpentronsPipette",
+      "file": "packages/core/src/cubos/instruments/pipette/vendors/opentrons.py",
+      "line": 45,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "apps/operator-desktop/test"
+  },
+  "hints": {
+    "reads": [
+      "SartoriusPicus2Pipette.get_model",
+      "SartoriusPicus2Pipette.get_nominal_volume",
+      "SartoriusPicus2Pipette.get_serial_number",
+      "SartoriusPicus2Pipette.get_status",
+      "ThorlabsUVVisCCS.get_device_info",
+      "ThorlabsUVVisCCS.get_integration_time",
+      "ExcelitasUVCuring.get_status"
+    ],
+    "writes": [
+      "SartoriusPicus2Pipette.set_attached_tip_extension",
+      "ThorlabsUVVisCCS.set_integration_time"
+    ],
+    "actions": [
+      "SartoriusPicus2Pipette.aspirate",
+      "SartoriusPicus2Pipette.calibrate",
+      "SartoriusPicus2Pipette.dispense",
+      "SartoriusPicus2Pipette.home",
+      "SartoriusPicus2Pipette.mix",
+      "ThorlabsUVVisCCS.calibrate",
+      "ThorlabsUVVisCCS.measure",
+      "ExcelitasUVCuring.calibrate",
+      "ExcelitasUVCuring.measure"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.calibrate.v1",
+      "cap.device.configure.v1",
+      "cap.fluid.aspirate.v1",
+      "cap.fluid.dispense.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": [
+      "packages/core/src/cubos/instruments/pipette/vendors/sartorius.py:90 _SPEED_MIN = 1",
+      "packages/core/src/cubos/instruments/pipette/vendors/sartorius.py:91 _SPEED_MAX = 9"
+    ]
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ursa-laboratories__cubos --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

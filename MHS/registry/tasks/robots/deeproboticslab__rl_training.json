@@ -11,21 +11,66 @@
     "license_spdx": "BSD-3-Clause",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1590,
-  "exemplar": null,
-  "entry_symbols": [],
-  "models": [],
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 85,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "rl_training.envs.amp_locomotion_env:AmpLocomotionEnv",
+      "file": "source/rl_training/rl_training/envs/amp_locomotion_env.py",
+      "line": 63,
+      "confidence": "override"
+    },
+    {
+      "symbol": "rl_training.tasks.manager_based.locomotion.amp.config.humanoid.dr02.flat_env_cfg:DR02AmpFlatEnvCfg",
+      "file": "source/rl_training/rl_training/tasks/manager_based/locomotion/amp/config/humanoid/dr02/flat_env_cfg.py",
+      "line": 55,
+      "confidence": "override"
+    },
+    {
+      "symbol": "rl_training.tasks.manager_based.locomotion.velocity.config.quadruped.deeprobotics_lite3.rough_env_cfg:DeeproboticsLite3RoughEnvCfg",
+      "file": "source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/quadruped/deeprobotics_lite3/rough_env_cfg.py",
+      "line": 18,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "deep_robotics_model/Lite3/mjcf/Lite3.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "deep_robotics_model/M20/mjcf/M20.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "deep_robotics_model/M20S/mjcf/M20S.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "deep_robotics_model/M20_Piper/mjcf/M20_Piper.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "deep_robotics_model/DR02/mjcf/pro/DR02_pro.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
   "install": {
     "python": null,
     "commands": [
@@ -36,24 +81,42 @@
     "platform": "any"
   },
   "mock_strategy": {
-    "preferred": "fake",
-    "hints": [],
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/rl_training/rl_training/tasks/manager_based/locomotion/amp/config/humanoid/dr02/__init__.py:8 gym env Amp-Flat-Deeprobotics-DR02-v0",
+      "source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/quadruped/deeprobotics_lite3/__init__.py:15 gym env Flat-Deeprobotics-Lite3-v0",
+      "source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/quadruped/deeprobotics_lite3/__init__.py:26 gym env Rough-Deeprobotics-Lite3-v0",
+      "source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/__init__.py:15 gym env Flat-Deeprobotics-M20-v0"
+    ],
     "upstream_tests": null
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "gym env Amp-Flat-Deeprobotics-DR02-v0 registered at source/rl_training/rl_training/tasks/manager_based/locomotion/amp/config/humanoid/dr02/__init__.py:8",
+      "gym env Flat-Deeprobotics-Lite3-v0 registered at source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/quadruped/deeprobotics_lite3/__init__.py:15",
+      "gym env Rough-Deeprobotics-Lite3-v0 registered at source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/quadruped/deeprobotics_lite3/__init__.py:26",
+      "gym env Flat-Deeprobotics-M20-v0 registered at source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/__init__.py:15",
+      "gym env Rough-Deeprobotics-M20-v0 registered at source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20/__init__.py:26",
+      "gym env Flat-Deeprobotics-M20S-v0 registered at source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20s/__init__.py:15",
+      "gym env Rough-Deeprobotics-M20S-v0 registered at source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_m20s/__init__.py:26",
+      "gym env Rough-Deeprobotics-S10-v0 registered at source/rl_training/rl_training/tasks/manager_based/locomotion/velocity/config/wheeled/deeprobotics_s10/__init__.py:9"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
   "needs_recon": [],
-  "timebox_min": 15,
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/deeproboticslab__rl_training --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

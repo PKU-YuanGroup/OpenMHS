@@ -1,0 +1,106 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.lucasgerads/lecroy-mcp",
+  "track": "labs",
+  "local_path": "labs/lucasgerads/lecroy-mcp",
+  "driver_dir": "MHS/drivers/labs/lucasgerads__lecroy-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/lucasgerads/lecroy-mcp",
+    "commit": "3c866b341605ca689069d729c7b918f1c725d2e6",
+    "license_spdx": "AGPL-3.0",
+    "license_class": "network-copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 68,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "oscilloscope:LeCroyScope",
+      "file": "oscilloscope.py",
+      "line": 198,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "LeCroyScope.get_acquisition_status",
+      "LeCroyScope.get_capabilities",
+      "LeCroyScope.get_channel_info",
+      "LeCroyScope.get_cursor_info",
+      "LeCroyScope.get_date",
+      "LeCroyScope.get_math_info",
+      "LeCroyScope.get_math_zoom",
+      "LeCroyScope.get_screenshot",
+      "LeCroyScope.get_timebase_info",
+      "LeCroyScope.get_trigger_info",
+      "LeCroyScope.get_waveform",
+      "LeCroyScope.get_waveforms"
+    ],
+    "writes": [
+      "LeCroyScope.set_attenuation",
+      "LeCroyScope.set_bwlimit",
+      "LeCroyScope.set_coupling",
+      "LeCroyScope.set_cursor_type",
+      "LeCroyScope.set_invert",
+      "LeCroyScope.set_math",
+      "LeCroyScope.set_math_trace",
+      "LeCroyScope.set_math_zoom",
+      "LeCroyScope.set_memory_size",
+      "LeCroyScope.set_offset",
+      "LeCroyScope.set_panel_lock",
+      "LeCroyScope.set_tdiv"
+    ],
+    "actions": [
+      "LeCroyScope.arm",
+      "LeCroyScope.arm_and_wait",
+      "LeCroyScope.calibrate",
+      "LeCroyScope.force_trigger",
+      "LeCroyScope.measure",
+      "LeCroyScope.reset",
+      "LeCroyScope.stop"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.device.calibrate.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/lucasgerads__lecroy-mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

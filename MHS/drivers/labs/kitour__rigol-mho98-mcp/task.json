@@ -1,0 +1,89 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.kitour/rigol-mho98-mcp",
+  "track": "labs",
+  "local_path": "labs/kitour/rigol-mho98-mcp",
+  "driver_dir": "MHS/drivers/labs/kitour__rigol-mho98-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/kitour/rigol-mho98-mcp",
+    "commit": "22fc52291dee96b01e75c0e6549c3175d1d5ec35",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 51,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "rigol_mcp.mho98.session:Session",
+      "file": "src/rigol_mcp/mho98/session.py",
+      "line": 75,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Session.idn",
+      "Session.is_healthy",
+      "Session.query_error",
+      "DS1000ZDriver.read_cursor_axes_s",
+      "DS1000ZDriver.read_waveform_data",
+      "DS1000ZDriver.two_source_items (attribute)",
+      "DHODriver.read_cursor_axes_s",
+      "DHODriver.read_waveform_data",
+      "DHODriver.two_source_items (attribute)"
+    ],
+    "writes": [
+      "Session.write_binary",
+      "DS1000ZDriver.write_cursor_axis",
+      "DHODriver.write_cursor_axis"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/rigol_mcp/mho98/acquire.py:28 _AVERAGE_MIN = 2",
+      "src/rigol_mcp/mho98/acquire.py:29 _AVERAGE_MAX = 65536",
+      "src/rigol_mcp/mho98/reference.py:18 _SLOT_MIN = 1",
+      "src/rigol_mcp/mho98/reference.py:19 _SLOT_MAX = 10",
+      "src/rigol_mcp/mho98/search.py:19 _MAX_EVENT_LIMIT = 1000"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/kitour__rigol-mho98-mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

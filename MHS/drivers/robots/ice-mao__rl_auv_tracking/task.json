@@ -1,0 +1,78 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ice-mao/rl_auv_tracking",
+  "track": "robots",
+  "local_path": "robots/ice-mao/rl_auv_tracking",
+  "driver_dir": "MHS/drivers/robots/ice-mao__rl_auv_tracking",
+  "upstream": {
+    "repo_url": "https://github.com/ice-mao/rl_auv_tracking",
+    "commit": "8ff39512f796801aa461fa074f7972e3a4e3a81f",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 148,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "auv_env:make",
+      "file": "auv_env/__init__.py",
+      "line": 11,
+      "confidence": "override"
+    },
+    {
+      "symbol": "auv_env.envs.base:TargetTrackingBase",
+      "file": "auv_env/envs/base.py",
+      "line": 27,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "auv_env/envs/base.py:27 TargetTrackingBase environment class"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ice-mao__rl_auv_tracking --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

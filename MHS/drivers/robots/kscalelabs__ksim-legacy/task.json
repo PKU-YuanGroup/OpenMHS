@@ -1,0 +1,108 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.kscalelabs/ksim-legacy",
+  "track": "robots",
+  "local_path": "robots/kscalelabs/ksim-legacy",
+  "driver_dir": "MHS/drivers/robots/kscalelabs__ksim-legacy",
+  "upstream": {
+    "repo_url": "https://github.com/kscalelabs/ksim-legacy",
+    "commit": "c1b92feabeab90ad1ecd2c7ff8b6beb4b7a30652",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 71,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "ksim.mjx_gym.envs.stompy_env.stompy:StompyEnv",
+      "file": "ksim/mjx_gym/envs/stompy_env/stompy.py",
+      "line": 21,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "ksim/assets/unitree_h1/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "ksim/assets/stompy/legs.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "ksim/assets/stompy/stompy.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "ksim/assets/stompy/stompy_armless.xml",
+      "line": 2,
+      "kind": "robot"
+    },
+    {
+      "file": "ksim/assets/stompyold/stompy.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": ">=3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "ksim/assets/unitree_h1/scene.xml:1 MJCF scene model",
+      "ksim/assets/stompy/legs.xml:2 MJCF robot model",
+      "ksim/assets/stompy/stompy.xml:2 MJCF robot model",
+      "ksim/assets/stompy/stompy_armless.xml:2 MJCF robot model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model ksim/assets/unitree_h1/scene.xml:1",
+      "MJCF robot model ksim/assets/stompy/legs.xml:2",
+      "MJCF robot model ksim/assets/stompy/stompy.xml:2",
+      "MJCF robot model ksim/assets/stompy/stompy_armless.xml:2",
+      "MJCF robot model ksim/assets/stompyold/stompy.xml:1",
+      "MJCF robot model ksim/assets/stompyold/stompy_armless.xml:1",
+      "MJCF robot model ksim/assets/unitree_h1/h1.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/kscalelabs__ksim-legacy --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

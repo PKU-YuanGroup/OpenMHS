@@ -1,0 +1,82 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.jdmax/pt-atarg",
+  "track": "labs",
+  "local_path": "labs/jdmax/pt-atarg",
+  "driver_dir": "MHS/drivers/labs/jdmax__pt-atarg",
+  "upstream": {
+    "repo_url": "https://github.com/jdmax/pt-atarg",
+    "commit": "476a6a21a7a31d0a457fcb5519a18214cc2b19e0",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "override:family-config",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 368,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "devices.ls218:DeviceConnection",
+      "file": "devices/ls218.py",
+      "line": 22,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Device.read_outs",
+      "DeviceConnection.read_all",
+      "DeviceConnection.read_coils",
+      "DeviceConnection.read_inputs",
+      "DeviceConnection.read_registers"
+    ],
+    "writes": [
+      "Device.set_alarm",
+      "DeviceConnection.set_coil",
+      "DeviceConnection.set_register"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/jdmax__pt-atarg --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

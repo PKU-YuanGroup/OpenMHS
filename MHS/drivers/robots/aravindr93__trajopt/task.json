@@ -1,0 +1,89 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.aravindr93/trajopt",
+  "track": "robots",
+  "local_path": "robots/aravindr93/trajopt",
+  "driver_dir": "MHS/drivers/robots/aravindr93__trajopt",
+  "upstream": {
+    "repo_url": "https://github.com/aravindr93/trajopt",
+    "commit": "23fbc453af2e980788348e5bde18136ad52378f0",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 234,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "trajopt.envs.reacher_env:Reacher7DOFEnv",
+      "file": "trajopt/envs/reacher_env.py",
+      "line": 8,
+      "confidence": "override"
+    },
+    {
+      "symbol": "trajopt.envs.reacher_env:ContinualReacher7DOFEnv",
+      "file": "trajopt/envs/reacher_env.py",
+      "line": 116,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "trajopt/envs/assets/sawyer.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "trajopt/envs/__init__.py:9 gym env trajopt_reacher-v0",
+      "trajopt/envs/__init__.py:15 gym env trajopt_continual_reacher-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env trajopt_reacher-v0 registered at trajopt/envs/__init__.py:9",
+      "gym env trajopt_continual_reacher-v0 registered at trajopt/envs/__init__.py:15"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/aravindr93__trajopt --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

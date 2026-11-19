@@ -1,0 +1,24 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (rigol-oscilloscope-mcp)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/rigol-oscilloscope": {
+      "channel1_scale_v_per_div": {"min": 0.01, "max": 5, "unit": "V", "source": "operator",
+                                   "reason": "example only: signals on this bench stay within a 0.01 to 5 V/div window"},
+      "channel1_offset_v": {"min": -5, "max": 5, "unit": "V", "source": "operator",
+                            "reason": "example only: the probe and vertical scale keep the offset within +/-5 V"},
+      "timebase_scale_s_per_div": {"min": 0.000001, "max": 1, "unit": "s", "source": "operator",
+                                   "reason": "example only: the bench observes events from 1 us/div to 1 s/div"},
+      "timebase_position_s": {"min": -0.1, "max": 0.1, "unit": "s", "source": "operator",
+                              "reason": "example only: the horizontal position stays within +/-0.1 s"},
+      "x-cap.zinntikumugai.configure_trigger.v1": {
+        "level_v": {"min": -5, "max": 5, "unit": "V", "source": "operator",
+                    "reason": "example only: trigger levels stay within the +/-5 V probe window"},
+        "holdoff_s": {"min": 0, "max": 1, "unit": "s", "source": "operator",
+                      "reason": "example only: holdoff stays below one second on this bench"}
+      }
+    }
+  }
+}

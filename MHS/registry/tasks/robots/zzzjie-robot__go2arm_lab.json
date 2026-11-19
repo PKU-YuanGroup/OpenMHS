@@ -11,20 +11,29 @@
     "license_spdx": "NOASSERTION",
     "license_class": "unknown"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
-  "blocked_on": [],
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 2125,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 92,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "Go2Arm_Lab.env.manager_env:ManagerRLEnv",
+      "file": "source/Go2Arm_Lab/Go2Arm_Lab/env/manager_env.py",
+      "line": 4,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": null,
@@ -34,24 +43,41 @@
     "platform": "any"
   },
   "mock_strategy": {
-    "preferred": "fake",
-    "hints": [],
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/Go2Arm_Lab/Go2Arm_Lab/tasks/manager_based/go2arm_lab/config/__init__.py:14 gym env Isaac-Go2Arm-Flat",
+      "source/Go2Arm_Lab/Go2Arm_Lab/tasks/manager_based/go2arm_lab/config/__init__.py:24 gym env Isaac-Go2Arm-Flat-Play",
+      "source/Go2Arm_Lab/Go2Arm_Lab/tasks/manager_based/go2arm_lab/config/__init__.py:34 gym env Isaac-Go2Arm-Rough",
+      "source/Go2Arm_Lab/Go2Arm_Lab/tasks/manager_based/go2arm_lab/config/__init__.py:45 gym env Isaac-Go2Arm-Rough-Play"
+    ],
     "upstream_tests": null
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "gym env Isaac-Go2Arm-Flat registered at source/Go2Arm_Lab/Go2Arm_Lab/tasks/manager_based/go2arm_lab/config/__init__.py:14",
+      "gym env Isaac-Go2Arm-Flat-Play registered at source/Go2Arm_Lab/Go2Arm_Lab/tasks/manager_based/go2arm_lab/config/__init__.py:24",
+      "gym env Isaac-Go2Arm-Rough registered at source/Go2Arm_Lab/Go2Arm_Lab/tasks/manager_based/go2arm_lab/config/__init__.py:34",
+      "gym env Isaac-Go2Arm-Rough-Play registered at source/Go2Arm_Lab/Go2Arm_Lab/tasks/manager_based/go2arm_lab/config/__init__.py:45"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/zzzjie-robot__go2arm_lab --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "required"
 }

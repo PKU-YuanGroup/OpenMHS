@@ -56,11 +56,11 @@ Needs a GPU and a separate process; extension APIs change between releases.
 
 ## First task cards
 
-- `gh.j3soon/ros2-essentials`: reference, wave 9, rank 470, `MHS/registry/tasks/robots/j3soon__ros2-essentials.json`
-- `gh.gradebuildersl/partenit`: reference, wave 9, rank 581, `MHS/registry/tasks/robots/gradebuildersl__partenit.json`
-- `gh.isaac-sim/isaacsim`: bridge-runtime, wave 9, rank 709, `MHS/registry/tasks/robots/isaac-sim__isaacsim.json`
-- `gh.agibottech/genie_sim`: bridge-runtime, wave 9, rank 890, `MHS/registry/tasks/robots/agibottech__genie_sim.json`
-- `gh.internrobotics/internnav`: skip, wave 9, rank 909, `MHS/registry/tasks/robots/internrobotics__internnav.json`
+- `gh.j3soon/ros2-essentials`: reference, wave 9, rank 460, `MHS/registry/tasks/robots/j3soon__ros2-essentials.json`
+- `gh.gradebuildersl/partenit`: reference, wave 9, rank 566, `MHS/registry/tasks/robots/gradebuildersl__partenit.json`
+- `gh.isaac-sim/isaacsim`: bridge-runtime, wave 9, rank 691, `MHS/registry/tasks/robots/isaac-sim__isaacsim.json`
+- `gh.agibottech/genie_sim`: bridge-runtime, wave 9, rank 869, `MHS/registry/tasks/robots/agibottech__genie_sim.json`
+- `gh.internrobotics/internnav`: skip, wave 9, rank 887, `MHS/registry/tasks/robots/internrobotics__internnav.json`
 
 ## Sources
 

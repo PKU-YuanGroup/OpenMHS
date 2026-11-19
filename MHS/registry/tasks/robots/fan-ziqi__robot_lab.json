@@ -11,20 +11,27 @@
     "license_spdx": "Apache-2.0",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1412,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 74,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robot_lab.tasks.direct.g1_amp.g1_amp_env:G1AmpEnv",
+      "file": "source/robot_lab/robot_lab/tasks/direct/g1_amp/g1_amp_env.py",
+      "line": 28,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": null,
@@ -34,24 +41,48 @@
     "platform": "any"
   },
   "mock_strategy": {
-    "preferred": "fake",
-    "hints": [],
+    "preferred": "upstream-sim",
+    "hints": [
+      "source/robot_lab/robot_lab/tasks/direct/g1_amp/__init__.py:21 gym env RobotLab-Isaac-G1-AMP-Dance-Direct-v0",
+      "source/robot_lab/robot_lab/tasks/manager_based/beyondmimic/config/g1/__init__.py:12 gym env RobotLab-Isaac-BeyondMimic-Flat-Unitree-G1-v0",
+      "source/robot_lab/robot_lab/tasks/manager_based/locomotion/velocity/config/humanoid/booster_t1/__init__.py:8 gym env RobotLab-Isaac-Velocity-Flat-Booster-T1-v0",
+      "source/robot_lab/robot_lab/tasks/manager_based/locomotion/velocity/config/humanoid/booster_t1/__init__.py:19 gym env RobotLab-Isaac-Velocity-Rough-Booster-T1-v0"
+    ],
     "upstream_tests": null
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "gym env RobotLab-Isaac-G1-AMP-Dance-Direct-v0 registered at source/robot_lab/robot_lab/tasks/direct/g1_amp/__init__.py:21",
+      "gym env RobotLab-Isaac-BeyondMimic-Flat-Unitree-G1-v0 registered at source/robot_lab/robot_lab/tasks/manager_based/beyondmimic/config/g1/__init__.py:12",
+      "gym env RobotLab-Isaac-Velocity-Flat-Booster-T1-v0 registered at source/robot_lab/robot_lab/tasks/manager_based/locomotion/velocity/config/humanoid/booster_t1/__init__.py:8",
+      "gym env RobotLab-Isaac-Velocity-Rough-Booster-T1-v0 registered at source/robot_lab/robot_lab/tasks/manager_based/locomotion/velocity/config/humanoid/booster_t1/__init__.py:19",
+      "gym env RobotLab-Isaac-Velocity-Rough-FFTAI-GR1T1-v0 registered at source/robot_lab/robot_lab/tasks/manager_based/locomotion/velocity/config/humanoid/fftai_gr1t1/__init__.py:12",
+      "gym env RobotLab-Isaac-Velocity-Flat-FFTAI-GR1T1-v0 registered at source/robot_lab/robot_lab/tasks/manager_based/locomotion/velocity/config/humanoid/fftai_gr1t1/__init__.py:23",
+      "gym env RobotLab-Isaac-Velocity-Rough-FFTAI-GR1T2-v0 registered at source/robot_lab/robot_lab/tasks/manager_based/locomotion/velocity/config/humanoid/fftai_gr1t2/__init__.py:12",
+      "gym env RobotLab-Isaac-Velocity-Flat-FFTAI-GR1T2-v0 registered at source/robot_lab/robot_lab/tasks/manager_based/locomotion/velocity/config/humanoid/fftai_gr1t2/__init__.py:23",
+      "gym env RobotLab-Isaac-Velocity-Rough-MagicLab-Bot-Gen1-v0 registered at source/robot_lab/robot_lab/tasks/manager_based/locomotion/velocity/config/humanoid/magiclab_magicbot_gen1/__init__.py:12",
+      "gym env RobotLab-Isaac-Velocity-Flat-MagicLab-Bot-Gen1-v0 registered at source/robot_lab/robot_lab/tasks/manager_based/locomotion/velocity/config/humanoid/magiclab_magicbot_gen1/__init__.py:24",
+      "gym env RobotLab-Isaac-Velocity-Rough-MagicLab-Bot-Z1-v0 registered at source/robot_lab/robot_lab/tasks/manager_based/locomotion/velocity/config/humanoid/magiclab_magicbot_z1/__init__.py:12",
+      "gym env RobotLab-Isaac-Velocity-Flat-MagicLab-Bot-Z1-v0 registered at source/robot_lab/robot_lab/tasks/manager_based/locomotion/velocity/config/humanoid/magiclab_magicbot_z1/__init__.py:24"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/fan-ziqi__robot_lab --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

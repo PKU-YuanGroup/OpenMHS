@@ -11,20 +11,29 @@
     "license_spdx": "NOASSERTION",
     "license_class": "unknown"
   },
-  "decision": "skip",
-  "reason_code": "skip:tooling",
-  "role": "tooling",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
-  "blocked_on": [],
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1829,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 62,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pna:NaClient",
+      "file": "pna.py",
+      "line": 236,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": null,
@@ -44,19 +53,39 @@
     "upstream_tests": "tests"
   },
   "hints": {
-    "reads": [],
-    "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "reads": [
+      "NaClient.identify"
+    ],
+    "writes": [
+      "NaClient.configure_measurements"
+    ],
+    "actions": [
+      "CalibrationWorkflow.abort",
+      "CalibrationWorkflow.run",
+      "NaClient.abort_active_session",
+      "NaClient.capture"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.image.v1",
+      "cap.sensing.read.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
-    "risk_floor": "R0",
-    "limit_hints": []
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "pna.py:107 MAX_SCAN_HOSTS = 512",
+      "pna.py:108 MAX_SCAN_CONCURRENCY = 64",
+      "pna.py:109 MIN_AUTO_SCAN_PREFIX = 8",
+      "pna.py:110 MAX_AUTO_SCAN_PREFIX = 30"
+    ]
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 90,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ch30245__mktrace-rf-analyzer --backend fake",
-  "skip_reason": "catalogue category auxiliary tool, role peripheral tool",
+  "skip_reason": null,
   "publish_review": "required"
 }

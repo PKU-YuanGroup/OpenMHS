@@ -1,0 +1,91 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.ch30245/mktrace-rf-analyzer",
+  "track": "labs",
+  "local_path": "labs/ch30245/mktrace-rf-analyzer",
+  "driver_dir": "MHS/drivers/labs/ch30245__mktrace-rf-analyzer",
+  "upstream": {
+    "repo_url": "https://github.com/ch30245/mktrace-rf-analyzer",
+    "commit": "44169387a49c06994455e6c502ddae4edab8cabc",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 62,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pna:NaClient",
+      "file": "pna.py",
+      "line": 236,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "mkcal/adapter.py:105 FakeECalProtocol",
+      "mkcal/adapter.py:112 FakeNetworkAnalyzerAdapter"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "NaClient.identify"
+    ],
+    "writes": [
+      "NaClient.configure_measurements"
+    ],
+    "actions": [
+      "CalibrationWorkflow.abort",
+      "CalibrationWorkflow.run",
+      "NaClient.abort_active_session",
+      "NaClient.capture"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.image.v1",
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "pna.py:107 MAX_SCAN_HOSTS = 512",
+      "pna.py:108 MAX_SCAN_CONCURRENCY = 64",
+      "pna.py:109 MIN_AUTO_SCAN_PREFIX = 8",
+      "pna.py:110 MAX_AUTO_SCAN_PREFIX = 30"
+    ]
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/ch30245__mktrace-rf-analyzer --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,21 +1,27 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "gym_mimic_envs.mujoco.mimic_walker3d:MimicWalker3dEnv (mujoco/gym_mimic_envs/mujoco/mimic_walker3d.py:31)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_666e5e8635d48250",
     "https://github.com/rgalljamov/learn2walk"
   ],
-  "description": "rgalljamov/learn2walk: policy/algorithm for humanoid robots; legged robots (robotics track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: MuJoCo. Language: Python. Catalog keywords: RL, MuJoCo.",
+  "description": "rgalljamov/learn2walk: policy/algorithm for humanoid robots; legged robots (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 3. Catalog role: peripheral tooling. Declared backend: MuJoCo. Language: Python. Catalog keywords: RL, MuJoCo.",
   "domains": [
     "humanoid robots",
     "legged robots"
@@ -23,27 +29,30 @@
   "evidence": {
     "files_read": 2,
     "notes": "bounded static scan: 33 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/rgalljamov__learn2walk/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "mujoco"
+    "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.rgalljamov/learn2walk",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
-      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata"
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "tooling",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/rgalljamov__learn2walk: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/rgalljamov__learn2walk --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "family:gymnasium",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Python SDK",
@@ -61,36 +70,38 @@
     "repo": "https://github.com/rgalljamov/learn2walk"
   },
   "local_path": "robots/rgalljamov/learn2walk",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "rgalljamov",
   "package_id": "gh.rgalljamov/learn2walk",
   "quarantine": false,
-  "rank": 2076,
+  "rank": 454,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "learn2walk",
   "repo_url": "https://github.com/rgalljamov/learn2walk",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "09d3bbd64a6b2fdd538b1d4465001bb1914243de",
     "repo_url": "https://github.com/rgalljamov/learn2walk"
   },
   "stars": 0,
   "tags": [
-    "mujoco",
+    "gymnasium",
     "robotics",
     "policy algorithm",
     "peripheral tooling",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "rgalljamov/learn2walk",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -130,11 +141,30 @@
       "family_matches": [
         "\\bmujoco"
       ],
+      "family_note": "triage family gymnasium (catalogue family mujoco)",
       "family_rule": "scored",
       "family_score": 10,
+      "tier_note": "tier D -> B: triage family-config (family:gymnasium)",
       "tier_rule": "D1-peripheral-role"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/rgalljamov__learn2walk/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -148,6 +178,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "09d3bbd64a6b2fdd538b1d4465001bb1914243de",
+      "driver_dir": "MHS/drivers/robots/rgalljamov__learn2walk",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:086415478065ac63e5ccfeb7453a55c14b69e0acb66f73012747e566d06ffe54",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -163,12 +208,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Model review of re-triage wave 1 (gpt-6.1-sol): MimicWalker3dEnv is a legacy Gym environment; GymnasiumDriver retains its observation, reward and termination contract. Only the disclosed analytic fake is declared.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): MimicWalker3dEnv is a legacy Gym environment; GymnasiumDriver retains its observation, reward and termination contract. Only the disclosed analytic fake is declared.",
+      "reason_code": "family:gymnasium",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

@@ -1,0 +1,80 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.antercreeper/keyscope-mcp",
+  "track": "labs",
+  "local_path": "labs/antercreeper/keyscope-mcp",
+  "driver_dir": "MHS/drivers/labs/antercreeper__keyscope-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/antercreeper/keyscope-mcp",
+    "commit": "344dc93cf9f151672d0b07dc4b29f780ae38bd08",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 34,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "keyscope_mcp.scope:Oscilloscope",
+      "file": "keyscope_mcp/scope.py",
+      "line": 25,
+      "confidence": "ast"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "Oscilloscope.get_error",
+      "Oscilloscope.get_setup",
+      "Oscilloscope.get_waveform",
+      "Oscilloscope.idn",
+      "Oscilloscope.query_binary",
+      "Oscilloscope.query_binary_values"
+    ],
+    "writes": [],
+    "actions": [
+      "Oscilloscope.measure",
+      "Oscilloscope.reset",
+      "Oscilloscope.run",
+      "Oscilloscope.stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/antercreeper__keyscope-mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

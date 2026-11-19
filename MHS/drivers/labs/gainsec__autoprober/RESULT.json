@@ -1,0 +1,60 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "gate": {
+    "digest": "sha256:41e202ed0a3ab82bf822ca4eb3afad5f0a3f5bcf681265de5fac04cf6fd99523",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.gainsec.home.v1",
+      "reason": "cap.motion.home.v1 carries a numeric speed_scale with no equivalent in the native $H command and reports joint_positions in rad; this three-axis linear CNC homes all axes with one $H and reports positions in mm.",
+      "verb": "invoke",
+      "summary": "Home all three axes with the native GRBL $H and wait for Idle.",
+      "similar": [
+        "cap.motion.home.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.gainsec.move_absolute.v1",
+      "reason": "cap.motion.cartesian_pose.v1 binds robot.arm only, and cap.motion.joint_position.v1 is joint-space motion in rad; no catalogue class carries a linear three-axis absolute target in mm for a motion.axis resource.",
+      "verb": "invoke",
+      "summary": "Move X, Y and Z to absolute machine positions in millimetres with the native G90/G1 writer.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.gainsec.move_relative.v1",
+      "reason": "No catalogue class carries a linear three-axis relative delta in mm for a motion.axis resource; cap.motion.joint_position.v1 is absolute and specified in rad.",
+      "verb": "invoke",
+      "summary": "Move relative to the current machine position in millimetres with the native G91/G1 writer.",
+      "similar": [
+        "cap.motion.joint_position.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.gainsec.read_settings.v1",
+      "reason": "No catalogue class reads a controller's numeric settings map; cap.sensing.read.v1 binds sensor resource kinds and takes a fields selector, while this is the GRBL $$ settings document on a motion.axis.",
+      "verb": "read",
+      "summary": "Read the GRBL $$ settings as a map of $N to value strings, only while Idle.",
+      "similar": [
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.gainsec.unlock.v1",
+      "reason": "No catalogue class clears a controller alarm lock or re-enables a stopped controller; the SDK requires fault clearing in a declared input-free re-enable action, so this package uses an extension.",
+      "verb": "invoke",
+      "summary": "Send the upstream $X alarm clear and read one fresh status; the declared re-enable."
+    }
+  ],
+  "notes": "Passed the fake backend (evidence contract_checked, never an MHS-Device level). The package serves the CNC entry symbol autoprober.cnc:CNC only. DEVIATION FROM THE CARD: a direct decorated Driver, not the config-only PythonObjectDriver, because the card helper cannot express the wait loops, Idle/limit-pin preconditions, cancellation feed hold or the re-enable path; the card's other entry symbols (autoprober.scope:Scope and autoprober.microscope:Microscope) are NOT COVERED because one driver binds one native object. The scope Channel 4 endstop monitor is the clone's independent stop path and is not read by this driver, so a deployment must keep the upstream EndstopMonitor running alongside this binding; the microscope snapshot path is also not covered. Safety: risk R2 (above the card floor R1) for a moving three-axis machine; the @estop and the input-free safe-state cap.motion.stop.v1 action both write the native GRBL feed hold '!' (autoprober/cnc.py:84-88). The write returns without waiting; no text of the clone documents a hardware e-stop, so estop_physical_ref is not set. The cap.motion.stop.v1 output stopped=true means the feed-hold byte was written; it is not sensed quiescence, and the driver does not wait for deceleration. Feed hold does not remove power. The clone exposes no cycle start/resume and the driver sends none, so after a feed hold the operator must restart outside this binding. x-cap.gainsec.unlock.v1 is the declared re-enable and sends $X, the upstream alarm clear; it does not resume a feed hold. The fake treats $X as returning to Idle, so the fake does not prove a hardware recovery from Hold. Travel and feed are Limit.operator_required: the clone states no travel envelope (AGENTS.md:117-118) and only recommended feed-rate ranges by operation (AGENTS.md:123-128); site-limits.example.json is an example, not a statement about any machine. Every move input is required and operator_required (x/y/z or dx/dy/dz and feed_mm_min), so a caller cannot omit a bound field and fall back to an upstream default; the move outputs repeat the feed actually sent, which is also the TCAP-003 effect evidence. The fake is an in-memory stand-in, not a recording and not the upstream simulator (the clone has none); its positions, settings and motion ticks are placeholders. No hardware was attached, the native factory was never run, and no human reviewed or tested the package (reviewed_by null; the loader refuses the R2 hardware backend until signed). The fake backend was served in-process by the stock server and the repository tests exercise it.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-17; reviewed_by stays null): Model source review confirmed CNC, Scope and Microscope entries, the operator-required motion limits and R2 CNC hazards, but CNC.feed_hold is only an unacknowledged serial write and the required Channel 4 EndstopMonitor is not enforced. driver.py removes safe_state=True from cap.motion.stop.v1, makes both stop paths report SAFE_STATE_UNREACHED after attempting feed hold, and narrows the disconnected-transport Fact to its cited _write implementation. fake.py no longer invents recovery from Hold on $X; test_driver.py checks unconfirmed stops, the held latch and alarm-clear behaviour, while facts.md documents the stop, monitor, travel and completion blockers. reference.json and REFERENCE.md were regenerated and check-report.json refreshed; all eight package-specific cases pass, while the unchanged stock gate assertion fails G3/SAFE-045 after removal of the unsupported safe-state action. The strict collector reports RESULT_UNTRUSTED pending orchestration of this block, and the noncommercial licence still requires the owner publication decision. The card needs the owner's publication decision (publish_review required; licence PolyForm-Noncommercial-1.0.0); the package may not be published or merged into a published tree before it. For the human reviewer: No upstream code, serial device, scope, microscope or network was run. docs/operations.md:13 and AGENTS.md:47-51 require a live EndstopMonitor for every motion; a deployment suggestion is not fail-closed enforcement and the scope measurement is not an independent physical emergency stop. The upstream serial writers ignore byte counts and motion acknowledgements; an initial/stale Idle can falsely complete a move, _wait_idle checks Idle before limit pins, and a read exception can leave motion running without a hold attempt. Relative-delta overlays do not constrain accumulated absolute travel, and $X does not establish recovery from Hold. Integrating the upstream monitor also needs a finite-value check because classify_endstop_voltage lacks one. These blockers need adapter work before acceptance. PolyForm-Noncommercial-1.0.0 publication is an owner decision; reviewed_by stays null."
+}

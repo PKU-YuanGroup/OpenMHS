@@ -1,49 +1,58 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "mujoco",
+    "entry_points": [
+      "mujoco_playground._src.locomotion.go2.joystick:Joystick (ppo_train/go2_training/mujoco_playground/_src/locomotion/go2/joystick.py:83)",
+      "mujoco_playground._src.registry:load (ppo_train/go2_training/mujoco_playground/_src/registry.py:24)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "cmake",
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1"
+  ],
   "catalog_refs": [
     "repo_cb45cf14ab7b524e",
     "https://github.com/sunnyshi0310/rsr-mjx"
   ],
-  "description": "sunnyshi0310/rsr-mjx: policy/algorithm for robot arm manipulation (robotics track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: MuJoCo. Language: Python. Catalog keywords: MuJoCo, MJX, Brax, RL, Airbot, Play.",
+  "description": "sunnyshi0310/rsr-mjx: policy/algorithm for robot arm manipulation (robotics track). OpenMHS plan: family-config with MujocoDriver, wave 6. Catalog role: controller. Declared backend: MuJoCo. Language: Python. Catalog keywords: MuJoCo, MJX, Brax, RL, Airbot, Play.",
   "domains": [
     "robot arm manipulation"
   ],
   "evidence": {
     "files_read": 2,
     "notes": "bounded static scan: 40 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/sunnyshi0310__rsr-mjx/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
     "mujoco"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.sunnyshi0310/rsr-mjx",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: catalogue category 'policy/algorithm' with no env registration or device evidence",
-      "NEEDS_GPU: an import or the catalogue requires a GPU"
+      "NEEDS_GPU: an import or the catalogue requires a GPU",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: catalogue category 'policy/algorithm' with no env registration or device evidence",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/sunnyshi0310__rsr-mjx: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/sunnyshi0310__rsr-mjx --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/mujoco.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Python SDK",
@@ -62,17 +71,19 @@
     "repo": "https://github.com/sunnyshi0310/rsr-mjx"
   },
   "local_path": "robots/sunnyshi0310/rsr-mjx",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "sunnyshi0310",
   "package_id": "gh.sunnyshi0310/rsr-mjx",
   "quarantine": false,
-  "rank": 1681,
+  "rank": 109,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "rsr-mjx",
   "repo_url": "https://github.com/sunnyshi0310/rsr-mjx",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "b2fd0b84865f3c5fa784bc1f0cac410c9d10d67c",
     "repo_url": "https://github.com/sunnyshi0310/rsr-mjx"
@@ -84,15 +95,15 @@
     "policy algorithm",
     "controller",
     "simulated",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "sunnyshi0310/rsr-mjx",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 6,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -132,10 +143,25 @@
       ],
       "family_rule": "scored",
       "family_score": 10,
-      "tier_note": "tier B -> D: triage skip (skip:peripheral)",
       "tier_rule": "B4-controller"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/sunnyshi0310__rsr-mjx/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -149,6 +175,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "b2fd0b84865f3c5fa784bc1f0cac410c9d10d67c",
+      "driver_dir": "MHS/drivers/robots/sunnyshi0310__rsr-mjx",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:87395b7ab6d9e54db61bbab0c28c62ecc5bd44653e72bca240756d45278bc878",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -168,12 +209,14 @@
     },
     "triage": {
       "evidence": [
-        "catalogue category 'policy/algorithm' with no env registration or device evidence"
+        "override (retriage-wave1.json): Family-config/mujoco sim-env: the repo bundles registered Go2 MJCF/MJX environments (Go2JoystickFlatTerrain) alongside its RSR algorithm, so the simulator contract is in-tree.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "mujoco",
+      "helper": "MujocoDriver",
+      "justification": "Family-config/mujoco sim-env: the repo bundles registered Go2 MJCF/MJX environments (Go2JoystickFlatTerrain) alongside its RSR algorithm, so the simulator contract is in-tree.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

@@ -1,47 +1,53 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "mujoco",
+    "entry_points": [
+      "mjrl.envs.swimmer:SwimmerEnv (mjrl/envs/swimmer.py:6)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1"
+  ],
   "catalog_refs": [
     "repo_abdcada86ffc0e96",
     "https://github.com/aravindr93/mjrl"
   ],
-  "description": "aravindr93/mjrl: policy/algorithm for general (robotics track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: MuJoCo. Language: Python. Catalog keywords: MuJoCo.",
+  "description": "aravindr93/mjrl: policy/algorithm for general (robotics track). OpenMHS plan: family-config with MujocoDriver, wave 3. Catalog role: peripheral tooling. Declared backend: MuJoCo. Language: Python. Catalog keywords: MuJoCo.",
   "domains": [
     "general"
   ],
   "evidence": {
     "files_read": 3,
     "notes": "bounded static scan: 65 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/aravindr93__mjrl/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
     "mujoco"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.aravindr93/mjrl",
   "integration": {
-    "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)"
-    ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "tooling",
+    "blockers": [],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/aravindr93__mjrl: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/aravindr93__mjrl --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/mujoco.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "MuJoCo",
@@ -60,17 +66,19 @@
     "repo": "https://github.com/aravindr93/mjrl"
   },
   "local_path": "robots/aravindr93/mjrl",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "aravindr93",
   "package_id": "gh.aravindr93/mjrl",
   "quarantine": false,
-  "rank": 233,
+  "rank": 117,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "mjrl",
   "repo_url": "https://github.com/aravindr93/mjrl",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "3871d93763d3b49c4741e6daeaebbc605fe140dc",
     "repo_url": "https://github.com/aravindr93/mjrl"
@@ -81,15 +89,15 @@
     "robotics",
     "policy algorithm",
     "peripheral tooling",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "aravindr93/mjrl",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -129,9 +137,26 @@
       ],
       "family_rule": "scored",
       "family_score": 10,
+      "tier_note": "tier D -> B: triage family-config (override:recon)",
       "tier_rule": "D1-peripheral-role"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/aravindr93__mjrl/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "Apache-2.0",
@@ -146,6 +171,21 @@
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
     },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "3871d93763d3b49c4741e6daeaebbc605fe140dc",
+      "driver_dir": "MHS/drivers/robots/aravindr93__mjrl",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:1b7c009e28ad47a11f6d34c21d5503c3352f73172604f1a895051ca4402747f9",
+      "reviewed": false,
+      "status": "pass"
+    },
     "scan": {
       "build_systems": [
         "python"
@@ -158,12 +198,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): MJRL ships and registers four MuJoCo environments (mjrl_swimmer-v0 and others) with bundled MJCF models, so family-config/mujoco sim-env fits despite its RL algorithm content.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "mujoco",
+      "helper": "MujocoDriver",
+      "justification": "MJRL ships and registers four MuJoCo environments (mjrl_swimmer-v0 and others) with bundled MJCF models, so family-config/mujoco sim-env fits despite its RL algorithm content.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

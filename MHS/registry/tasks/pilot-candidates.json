@@ -1974,7 +1974,7 @@
       "exemplar": false,
       "strict_ready": false,
       "wave": 1,
-      "rank": 50,
+      "rank": 51,
       "rank_score": 30.0,
       "components": {
         "partner": 0,
@@ -2010,7 +2010,7 @@
         "variant_of": null,
         "package_status": "pass",
         "wave": 1,
-        "rank": 50,
+        "rank": 51,
         "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
         "entry_symbols": [
           {
@@ -3143,7 +3143,7 @@
       "exemplar": false,
       "strict_ready": true,
       "wave": 1,
-      "rank": 43,
+      "rank": 44,
       "rank_score": 32.3856,
       "components": {
         "partner": 0,
@@ -3179,7 +3179,7 @@
         "variant_of": null,
         "package_status": "pass",
         "wave": 1,
-        "rank": 43,
+        "rank": 44,
         "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
         "entry_symbols": [
           {
@@ -3561,37 +3561,37 @@
     },
     {
       "bucket": "gymnasium-mujoco",
-      "package_id": "gh.turagalab/flybody",
+      "package_id": "gh.rohanpsingh/learninghumanoidwalking",
       "exemplar": false,
       "strict_ready": true,
       "wave": 1,
       "rank": 40,
-      "rank_score": 32.9136,
+      "rank_score": 33.4442,
       "components": {
         "partner": 0,
         "hardware_mode": 0,
         "helper_available": 1,
         "has_tests": 1,
-        "stars": 960,
+        "stars": 1226,
         "gpu": 0,
         "license_unknown": 0
       },
-      "card": "MHS/registry/tasks/robots/turagalab__flybody.json",
+      "card": "MHS/registry/tasks/robots/rohanpsingh__learninghumanoidwalking.json",
       "task": {
         "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
         "card_version": "0.9",
-        "package_id": "gh.turagalab/flybody",
+        "package_id": "gh.rohanpsingh/learninghumanoidwalking",
         "track": "robots",
-        "local_path": "robots/turagalab/flybody",
-        "driver_dir": "MHS/drivers/robots/turagalab__flybody",
+        "local_path": "robots/rohanpsingh/learninghumanoidwalking",
+        "driver_dir": "MHS/drivers/robots/rohanpsingh__learninghumanoidwalking",
         "upstream": {
-          "repo_url": "https://github.com/turagalab/flybody",
-          "commit": "d015e9bfe441bd90ae431bac24c55cb74bdbce26",
-          "license_spdx": "Apache-2.0",
+          "repo_url": "https://github.com/rohanpsingh/learninghumanoidwalking",
+          "commit": "cd8c6557beadb9d25045624fb50eeb487b0e8fdd",
+          "license_spdx": "BSD-2-Clause",
           "license_class": "permissive"
         },
         "decision": "family-config",
-        "reason_code": "family:mujoco",
+        "reason_code": "override:recon",
         "role": "sim-env",
         "family": "mujoco",
         "helper": "MujocoDriver",
@@ -3603,27 +3603,45 @@
         "wave": 1,
         "rank": 40,
         "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
-        "entry_symbols": [],
+        "entry_symbols": [
+          {
+            "symbol": "envs.h1.h1_env:H1Env",
+            "file": "envs/h1/h1_env.py",
+            "line": 11,
+            "confidence": "override"
+          },
+          {
+            "symbol": "envs.jvrc.jvrc_walk:JvrcWalkEnv",
+            "file": "envs/jvrc/jvrc_walk.py",
+            "line": 13,
+            "confidence": "override"
+          }
+        ],
         "models": [
           {
-            "file": "flybody/fruitfly/assets/floor.xml",
+            "file": "models/jvrc_mj_description/xml/scene.xml",
             "line": 1,
             "kind": "scene"
           },
           {
-            "file": "flybody/fruitfly/build_fruitfly/floor.xml",
+            "file": "models/mujoco_menagerie/agility_cassie/scene.xml",
             "line": 1,
             "kind": "scene"
           },
           {
-            "file": "flybody/fruitfly/assets/fruitfly.xml",
+            "file": "models/mujoco_menagerie/aloha/aloha.xml",
             "line": 1,
-            "kind": "robot"
+            "kind": "scene"
           },
           {
-            "file": "flybody/fruitfly/build_fruitfly/fruitfly.xml",
+            "file": "models/mujoco_menagerie/aloha/scene.xml",
             "line": 1,
-            "kind": "robot"
+            "kind": "scene"
+          },
+          {
+            "file": "models/mujoco_menagerie/anybotics_anymal_b/scene.xml",
+            "line": 1,
+            "kind": "scene"
           }
         ],
         "install": {
@@ -3638,10 +3656,10 @@
         "mock_strategy": {
           "preferred": "upstream-sim",
           "hints": [
-            "flybody/fruitfly/assets/floor.xml:1 MJCF scene model",
-            "flybody/fruitfly/build_fruitfly/floor.xml:1 MJCF scene model",
-            "flybody/fruitfly/assets/fruitfly.xml:1 MJCF robot model",
-            "flybody/fruitfly/build_fruitfly/fruitfly.xml:1 MJCF robot model"
+            "models/jvrc_mj_description/xml/scene.xml:1 MJCF scene model",
+            "models/mujoco_menagerie/agility_cassie/scene.xml:1 MJCF scene model",
+            "models/mujoco_menagerie/aloha/aloha.xml:1 MJCF scene model",
+            "models/mujoco_menagerie/aloha/scene.xml:1 MJCF scene model"
           ],
           "upstream_tests": "tests"
         },
@@ -3649,10 +3667,16 @@
           "reads": [],
           "writes": [],
           "actions": [
-            "MJCF scene model flybody/fruitfly/assets/floor.xml:1",
-            "MJCF scene model flybody/fruitfly/build_fruitfly/floor.xml:1",
-            "MJCF robot model flybody/fruitfly/assets/fruitfly.xml:1",
-            "MJCF robot model flybody/fruitfly/build_fruitfly/fruitfly.xml:1"
+            "MJCF scene model models/jvrc_mj_description/xml/scene.xml:1",
+            "MJCF scene model models/mujoco_menagerie/agility_cassie/scene.xml:1",
+            "MJCF scene model models/mujoco_menagerie/aloha/aloha.xml:1",
+            "MJCF scene model models/mujoco_menagerie/aloha/scene.xml:1",
+            "MJCF scene model models/mujoco_menagerie/anybotics_anymal_b/scene.xml:1",
+            "MJCF scene model models/mujoco_menagerie/anybotics_anymal_c/scene.xml:1",
+            "MJCF scene model models/mujoco_menagerie/anybotics_anymal_c/scene_mjx.xml:1",
+            "MJCF scene model models/mujoco_menagerie/apptronik_apollo/scene.xml:1",
+            "MJCF scene model models/mujoco_menagerie/berkeley_humanoid/scene.xml:1",
+            "MJCF scene model models/mujoco_menagerie/bitcraze_crazyflie_2/scene.xml:1"
           ],
           "candidate_classes": [
             "cap.world.reset.v1",
@@ -3666,7 +3690,7 @@
         },
         "needs_recon": [],
         "timebox_min": 60,
-        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/turagalab__flybody --backend fake",
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rohanpsingh__learninghumanoidwalking --backend fake",
         "skip_reason": null,
         "publish_review": "not_required"
       }
@@ -3766,32 +3790,32 @@
     },
     {
       "bucket": "gymnasium-mujoco",
-      "package_id": "gh.google-deepmind/aloha_sim",
+      "package_id": "gh.turagalab/flybody",
       "exemplar": false,
       "strict_ready": true,
       "wave": 1,
-      "rank": 47,
-      "rank_score": 30.519,
+      "rank": 41,
+      "rank_score": 32.9136,
       "components": {
         "partner": 0,
         "hardware_mode": 0,
         "helper_available": 1,
         "has_tests": 1,
-        "stars": 318,
+        "stars": 960,
         "gpu": 0,
         "license_unknown": 0
       },
-      "card": "MHS/registry/tasks/robots/google-deepmind__aloha_sim.json",
+      "card": "MHS/registry/tasks/robots/turagalab__flybody.json",
       "task": {
         "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
         "card_version": "0.9",
-        "package_id": "gh.google-deepmind/aloha_sim",
+        "package_id": "gh.turagalab/flybody",
         "track": "robots",
-        "local_path": "robots/google-deepmind/aloha_sim",
-        "driver_dir": "MHS/drivers/robots/google-deepmind__aloha_sim",
+        "local_path": "robots/turagalab/flybody",
+        "driver_dir": "MHS/drivers/robots/turagalab__flybody",
         "upstream": {
-          "repo_url": "https://github.com/google-deepmind/aloha_sim",
-          "commit": "d02904607cca1bf6dfb72f30b522506ac7ca0f91",
+          "repo_url": "https://github.com/turagalab/flybody",
+          "commit": "d015e9bfe441bd90ae431bac24c55cb74bdbce26",
           "license_spdx": "Apache-2.0",
           "license_class": "permissive"
         },
@@ -3806,19 +3830,29 @@
         "variant_of": null,
         "package_status": "pass",
         "wave": 1,
-        "rank": 47,
+        "rank": 41,
         "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
         "entry_symbols": [],
         "models": [
           {
-            "file": "aloha_sim/assets/aloha/aloha_pbr.xml",
-            "line": 17,
+            "file": "flybody/fruitfly/assets/floor.xml",
+            "line": 1,
             "kind": "scene"
           },
           {
-            "file": "aloha_sim/assets/aloha/scene_pbr.xml",
-            "line": 17,
+            "file": "flybody/fruitfly/build_fruitfly/floor.xml",
+            "line": 1,
             "kind": "scene"
+          },
+          {
+            "file": "flybody/fruitfly/assets/fruitfly.xml",
+            "line": 1,
+            "kind": "robot"
+          },
+          {
+            "file": "flybody/fruitfly/build_fruitfly/fruitfly.xml",
+            "line": 1,
+            "kind": "robot"
           }
         ],
         "install": {
@@ -3833,17 +3867,21 @@
         "mock_strategy": {
           "preferred": "upstream-sim",
           "hints": [
-            "aloha_sim/assets/aloha/aloha_pbr.xml:17 MJCF scene model",
-            "aloha_sim/assets/aloha/scene_pbr.xml:17 MJCF scene model"
+            "flybody/fruitfly/assets/floor.xml:1 MJCF scene model",
+            "flybody/fruitfly/build_fruitfly/floor.xml:1 MJCF scene model",
+            "flybody/fruitfly/assets/fruitfly.xml:1 MJCF robot model",
+            "flybody/fruitfly/build_fruitfly/fruitfly.xml:1 MJCF robot model"
           ],
-          "upstream_tests": "aloha_sim/tasks/test"
+          "upstream_tests": "tests"
         },
         "hints": {
           "reads": [],
           "writes": [],
           "actions": [
-            "MJCF scene model aloha_sim/assets/aloha/aloha_pbr.xml:17",
-            "MJCF scene model aloha_sim/assets/aloha/scene_pbr.xml:17"
+            "MJCF scene model flybody/fruitfly/assets/floor.xml:1",
+            "MJCF scene model flybody/fruitfly/build_fruitfly/floor.xml:1",
+            "MJCF robot model flybody/fruitfly/assets/fruitfly.xml:1",
+            "MJCF robot model flybody/fruitfly/build_fruitfly/fruitfly.xml:1"
           ],
           "candidate_classes": [
             "cap.world.reset.v1",
@@ -3857,7 +3895,7 @@
         },
         "needs_recon": [],
         "timebox_min": 60,
-        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/google-deepmind__aloha_sim --backend fake",
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/turagalab__flybody --backend fake",
         "skip_reason": null,
         "publish_review": "not_required"
       }
@@ -3995,32 +4033,32 @@
     },
     {
       "bucket": "gymnasium-mujoco",
-      "package_id": "gh.nonejou072/robopal",
+      "package_id": "gh.google-deepmind/aloha_sim",
       "exemplar": false,
       "strict_ready": true,
       "wave": 1,
       "rank": 48,
-      "rank_score": 30.4428,
+      "rank_score": 30.519,
       "components": {
         "partner": 0,
         "hardware_mode": 0,
         "helper_available": 1,
         "has_tests": 1,
-        "stars": 307,
+        "stars": 318,
         "gpu": 0,
         "license_unknown": 0
       },
-      "card": "MHS/registry/tasks/robots/nonejou072__robopal.json",
+      "card": "MHS/registry/tasks/robots/google-deepmind__aloha_sim.json",
       "task": {
         "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
         "card_version": "0.9",
-        "package_id": "gh.nonejou072/robopal",
+        "package_id": "gh.google-deepmind/aloha_sim",
         "track": "robots",
-        "local_path": "robots/nonejou072/robopal",
-        "driver_dir": "MHS/drivers/robots/nonejou072__robopal",
+        "local_path": "robots/google-deepmind/aloha_sim",
+        "driver_dir": "MHS/drivers/robots/google-deepmind__aloha_sim",
         "upstream": {
-          "repo_url": "https://github.com/nonejou072/robopal",
-          "commit": "df5a503657cb4772f5ec7e09d694c584b0d8e172",
+          "repo_url": "https://github.com/google-deepmind/aloha_sim",
+          "commit": "d02904607cca1bf6dfb72f30b522506ac7ca0f91",
           "license_spdx": "Apache-2.0",
           "license_class": "permissive"
         },
@@ -4037,62 +4075,21 @@
         "wave": 1,
         "rank": 48,
         "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
-        "entry_symbols": [
-          {
-            "symbol": "robopal.envs.bimanual_tasks.bimanual_pick_place:BimanualPickAndPlace",
-            "file": "robopal/envs/bimanual_tasks/bimanual_pick_place.py",
-            "line": 9,
-            "confidence": "ast"
-          },
-          {
-            "symbol": "robopal.envs.bimanual_tasks.bimanual_reach:BimanualReach",
-            "file": "robopal/envs/bimanual_tasks/bimanual_reach.py",
-            "line": 8,
-            "confidence": "ast"
-          },
-          {
-            "symbol": "robopal.envs.bimanual_tasks.bimanual_transport:BimanualTransport",
-            "file": "robopal/envs/bimanual_tasks/bimanual_transport.py",
-            "line": 7,
-            "confidence": "ast"
-          },
-          {
-            "symbol": "robopal.envs.manipulation_tasks.demo_cabinet:LockedCabinetEnv",
-            "file": "robopal/envs/manipulation_tasks/demo_cabinet.py",
-            "line": 9,
-            "confidence": "ast"
-          },
-          {
-            "symbol": "robopal.envs.manipulation_tasks.demo_cube_drawer:DrawerCubeEnv",
-            "file": "robopal/envs/manipulation_tasks/demo_cube_drawer.py",
-            "line": 9,
-            "confidence": "ast"
-          }
-        ],
+        "entry_symbols": [],
         "models": [
           {
-            "file": "robopal/assets/models/manipulators/DianaMed/DianaMed.xml",
-            "line": 1,
-            "kind": "robot"
+            "file": "aloha_sim/assets/aloha/aloha_pbr.xml",
+            "line": 17,
+            "kind": "scene"
           },
           {
-            "file": "robopal/assets/models/manipulators/Panda/Panda.xml",
-            "line": 1,
-            "kind": "robot"
-          },
-          {
-            "file": "robopal/assets/models/manipulators/Panda/Panda_hand.xml",
-            "line": 1,
-            "kind": "robot"
-          },
-          {
-            "file": "robopal/assets/models/manipulators/UR5e/UR5e.xml",
-            "line": 1,
-            "kind": "robot"
+            "file": "aloha_sim/assets/aloha/scene_pbr.xml",
+            "line": 17,
+            "kind": "scene"
           }
         ],
         "install": {
-          "python": ">=3.8",
+          "python": ">=3.10",
           "commands": [
             "pip install ."
           ],
@@ -4103,21 +4100,17 @@
         "mock_strategy": {
           "preferred": "upstream-sim",
           "hints": [
-            "robopal/assets/models/manipulators/DianaMed/DianaMed.xml:1 MJCF robot model",
-            "robopal/assets/models/manipulators/Panda/Panda.xml:1 MJCF robot model",
-            "robopal/assets/models/manipulators/Panda/Panda_hand.xml:1 MJCF robot model",
-            "robopal/assets/models/manipulators/UR5e/UR5e.xml:1 MJCF robot model"
+            "aloha_sim/assets/aloha/aloha_pbr.xml:17 MJCF scene model",
+            "aloha_sim/assets/aloha/scene_pbr.xml:17 MJCF scene model"
           ],
-          "upstream_tests": "tests"
+          "upstream_tests": "aloha_sim/tasks/test"
         },
         "hints": {
           "reads": [],
           "writes": [],
           "actions": [
-            "MJCF robot model robopal/assets/models/manipulators/DianaMed/DianaMed.xml:1",
-            "MJCF robot model robopal/assets/models/manipulators/Panda/Panda.xml:1",
-            "MJCF robot model robopal/assets/models/manipulators/Panda/Panda_hand.xml:1",
-            "MJCF robot model robopal/assets/models/manipulators/UR5e/UR5e.xml:1"
+            "MJCF scene model aloha_sim/assets/aloha/aloha_pbr.xml:17",
+            "MJCF scene model aloha_sim/assets/aloha/scene_pbr.xml:17"
           ],
           "candidate_classes": [
             "cap.world.reset.v1",
@@ -4131,7 +4124,7 @@
         },
         "needs_recon": [],
         "timebox_min": 60,
-        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nonejou072__robopal --backend fake",
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/google-deepmind__aloha_sim --backend fake",
         "skip_reason": null,
         "publish_review": "not_required"
       }
@@ -4269,33 +4262,33 @@
     },
     {
       "bucket": "gymnasium-mujoco",
-      "package_id": "gh.zichunxx/panda_mujoco_gym",
+      "package_id": "gh.nonejou072/robopal",
       "exemplar": false,
       "strict_ready": true,
       "wave": 1,
-      "rank": 52,
-      "rank_score": 29.165,
+      "rank": 49,
+      "rank_score": 30.4428,
       "components": {
         "partner": 0,
         "hardware_mode": 0,
         "helper_available": 1,
         "has_tests": 1,
-        "stars": 170,
+        "stars": 307,
         "gpu": 0,
         "license_unknown": 0
       },
-      "card": "MHS/registry/tasks/robots/zichunxx__panda_mujoco_gym.json",
+      "card": "MHS/registry/tasks/robots/nonejou072__robopal.json",
       "task": {
         "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
         "card_version": "0.9",
-        "package_id": "gh.zichunxx/panda_mujoco_gym",
+        "package_id": "gh.nonejou072/robopal",
         "track": "robots",
-        "local_path": "robots/zichunxx/panda_mujoco_gym",
-        "driver_dir": "MHS/drivers/robots/zichunxx__panda_mujoco_gym",
+        "local_path": "robots/nonejou072/robopal",
+        "driver_dir": "MHS/drivers/robots/nonejou072__robopal",
         "upstream": {
-          "repo_url": "https://github.com/zichunxx/panda_mujoco_gym",
-          "commit": "e9881d993234875ee1d55d717176bf7999bdb583",
-          "license_spdx": "MIT",
+          "repo_url": "https://github.com/nonejou072/robopal",
+          "commit": "df5a503657cb4772f5ec7e09d694c584b0d8e172",
+          "license_spdx": "Apache-2.0",
           "license_class": "permissive"
         },
         "decision": "family-config",
@@ -4309,60 +4302,66 @@
         "variant_of": null,
         "package_status": "pass",
         "wave": 1,
-        "rank": 52,
+        "rank": 49,
         "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
         "entry_symbols": [
           {
-            "symbol": "panda_mujoco_gym.envs.pick_and_place:FrankaPickAndPlaceEnv",
-            "file": "panda_mujoco_gym/envs/pick_and_place.py",
+            "symbol": "robopal.envs.bimanual_tasks.bimanual_pick_place:BimanualPickAndPlace",
+            "file": "robopal/envs/bimanual_tasks/bimanual_pick_place.py",
+            "line": 9,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "robopal.envs.bimanual_tasks.bimanual_reach:BimanualReach",
+            "file": "robopal/envs/bimanual_tasks/bimanual_reach.py",
+            "line": 8,
+            "confidence": "ast"
+          },
+          {
+            "symbol": "robopal.envs.bimanual_tasks.bimanual_transport:BimanualTransport",
+            "file": "robopal/envs/bimanual_tasks/bimanual_transport.py",
             "line": 7,
             "confidence": "ast"
           },
           {
-            "symbol": "panda_mujoco_gym.envs.push:FrankaPushEnv",
-            "file": "panda_mujoco_gym/envs/push.py",
-            "line": 7,
+            "symbol": "robopal.envs.manipulation_tasks.demo_cabinet:LockedCabinetEnv",
+            "file": "robopal/envs/manipulation_tasks/demo_cabinet.py",
+            "line": 9,
             "confidence": "ast"
           },
           {
-            "symbol": "panda_mujoco_gym.envs.slide:FrankaSlideEnv",
-            "file": "panda_mujoco_gym/envs/slide.py",
-            "line": 7,
-            "confidence": "ast"
-          },
-          {
-            "symbol": "panda_mujoco_gym.envs.panda_env:FrankaEnv",
-            "file": "panda_mujoco_gym/envs/panda_env.py",
-            "line": 16,
+            "symbol": "robopal.envs.manipulation_tasks.demo_cube_drawer:DrawerCubeEnv",
+            "file": "robopal/envs/manipulation_tasks/demo_cube_drawer.py",
+            "line": 9,
             "confidence": "ast"
           }
         ],
         "models": [
           {
-            "file": "panda_mujoco_gym/assets/pick_and_place.xml",
+            "file": "robopal/assets/models/manipulators/DianaMed/DianaMed.xml",
             "line": 1,
-            "kind": "scene"
+            "kind": "robot"
           },
           {
-            "file": "panda_mujoco_gym/assets/push.xml",
+            "file": "robopal/assets/models/manipulators/Panda/Panda.xml",
             "line": 1,
-            "kind": "scene"
+            "kind": "robot"
           },
           {
-            "file": "panda_mujoco_gym/assets/slide.xml",
+            "file": "robopal/assets/models/manipulators/Panda/Panda_hand.xml",
             "line": 1,
-            "kind": "scene"
+            "kind": "robot"
           },
           {
-            "file": "panda_mujoco_gym/assets/panda_mocap.xml",
+            "file": "robopal/assets/models/manipulators/UR5e/UR5e.xml",
             "line": 1,
             "kind": "robot"
           }
         ],
         "install": {
-          "python": null,
+          "python": ">=3.8",
           "commands": [
-            "pip install -r requirements.txt"
+            "pip install ."
           ],
           "system_deps": [],
           "gpu": false,
@@ -4371,21 +4370,21 @@
         "mock_strategy": {
           "preferred": "upstream-sim",
           "hints": [
-            "panda_mujoco_gym/assets/pick_and_place.xml:1 MJCF scene model",
-            "panda_mujoco_gym/assets/push.xml:1 MJCF scene model",
-            "panda_mujoco_gym/assets/slide.xml:1 MJCF scene model",
-            "panda_mujoco_gym/assets/panda_mocap.xml:1 MJCF robot model"
+            "robopal/assets/models/manipulators/DianaMed/DianaMed.xml:1 MJCF robot model",
+            "robopal/assets/models/manipulators/Panda/Panda.xml:1 MJCF robot model",
+            "robopal/assets/models/manipulators/Panda/Panda_hand.xml:1 MJCF robot model",
+            "robopal/assets/models/manipulators/UR5e/UR5e.xml:1 MJCF robot model"
           ],
-          "upstream_tests": "test"
+          "upstream_tests": "tests"
         },
         "hints": {
           "reads": [],
           "writes": [],
           "actions": [
-            "MJCF scene model panda_mujoco_gym/assets/pick_and_place.xml:1",
-            "MJCF scene model panda_mujoco_gym/assets/push.xml:1",
-            "MJCF scene model panda_mujoco_gym/assets/slide.xml:1",
-            "MJCF robot model panda_mujoco_gym/assets/panda_mocap.xml:1"
+            "MJCF robot model robopal/assets/models/manipulators/DianaMed/DianaMed.xml:1",
+            "MJCF robot model robopal/assets/models/manipulators/Panda/Panda.xml:1",
+            "MJCF robot model robopal/assets/models/manipulators/Panda/Panda_hand.xml:1",
+            "MJCF robot model robopal/assets/models/manipulators/UR5e/UR5e.xml:1"
           ],
           "candidate_classes": [
             "cap.world.reset.v1",
@@ -4399,7 +4398,7 @@
         },
         "needs_recon": [],
         "timebox_min": 60,
-        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/zichunxx__panda_mujoco_gym --backend fake",
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nonejou072__robopal --backend fake",
         "skip_reason": null,
         "publish_review": "not_required"
       }
@@ -4523,32 +4522,32 @@
     },
     {
       "bucket": "gymnasium-mujoco",
-      "package_id": "gh.princeton-robot-planning-and-learning/kindergarden",
+      "package_id": "gh.zichunxx/panda_mujoco_gym",
       "exemplar": false,
       "strict_ready": true,
       "wave": 1,
-      "rank": 54,
-      "rank_score": 26.662,
+      "rank": 53,
+      "rank_score": 29.165,
       "components": {
         "partner": 0,
         "hardware_mode": 0,
         "helper_available": 1,
         "has_tests": 1,
-        "stars": 53,
+        "stars": 170,
         "gpu": 0,
         "license_unknown": 0
       },
-      "card": "MHS/registry/tasks/robots/princeton-robot-planning-and-learning__kindergarden.json",
+      "card": "MHS/registry/tasks/robots/zichunxx__panda_mujoco_gym.json",
       "task": {
         "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
         "card_version": "0.9",
-        "package_id": "gh.princeton-robot-planning-and-learning/kindergarden",
+        "package_id": "gh.zichunxx/panda_mujoco_gym",
         "track": "robots",
-        "local_path": "robots/princeton-robot-planning-and-learning/kindergarden",
-        "driver_dir": "MHS/drivers/robots/princeton-robot-planning-and-learning__kindergarden",
+        "local_path": "robots/zichunxx/panda_mujoco_gym",
+        "driver_dir": "MHS/drivers/robots/zichunxx__panda_mujoco_gym",
         "upstream": {
-          "repo_url": "https://github.com/princeton-robot-planning-and-learning/kindergarden",
-          "commit": "5b2dbac482142b879b48449b3fa2af63f641aed3",
+          "repo_url": "https://github.com/zichunxx/panda_mujoco_gym",
+          "commit": "e9881d993234875ee1d55d717176bf7999bdb583",
           "license_spdx": "MIT",
           "license_class": "permissive"
         },
@@ -4563,71 +4562,60 @@
         "variant_of": null,
         "package_status": "pass",
         "wave": 1,
-        "rank": 54,
+        "rank": 53,
         "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
         "entry_symbols": [
           {
-            "symbol": "kinder.envs.kinematic2d.obstruction2d:ObjectCentricObstruction2DEnv",
-            "file": "src/kinder/envs/kinematic2d/obstruction2d.py",
-            "line": 146,
+            "symbol": "panda_mujoco_gym.envs.pick_and_place:FrankaPickAndPlaceEnv",
+            "file": "panda_mujoco_gym/envs/pick_and_place.py",
+            "line": 7,
             "confidence": "ast"
           },
           {
-            "symbol": "kinder.envs.dynamic3d.task_families:ConstrainedCupboard3DEnv",
-            "file": "src/kinder/envs/dynamic3d/task_families.py",
-            "line": 118,
+            "symbol": "panda_mujoco_gym.envs.push:FrankaPushEnv",
+            "file": "panda_mujoco_gym/envs/push.py",
+            "line": 7,
             "confidence": "ast"
           },
           {
-            "symbol": "kinder.envs.dynamic3d.task_families:Dynamo3DEnv",
-            "file": "src/kinder/envs/dynamic3d/task_families.py",
-            "line": 125,
+            "symbol": "panda_mujoco_gym.envs.slide:FrankaSlideEnv",
+            "file": "panda_mujoco_gym/envs/slide.py",
+            "line": 7,
             "confidence": "ast"
           },
           {
-            "symbol": "kinder.envs.dynamic3d.task_families:Shelf3DEnv",
-            "file": "src/kinder/envs/dynamic3d/task_families.py",
-            "line": 136,
-            "confidence": "ast"
-          },
-          {
-            "symbol": "kinder.envs.dynamic3d.task_families:Tossing3DEnv",
-            "file": "src/kinder/envs/dynamic3d/task_families.py",
-            "line": 147,
+            "symbol": "panda_mujoco_gym.envs.panda_env:FrankaEnv",
+            "file": "panda_mujoco_gym/envs/panda_env.py",
+            "line": 16,
             "confidence": "ast"
           }
         ],
         "models": [
           {
-            "file": "src/kinder/envs/dynamic3d/models/kinova_gen3/scene.xml",
+            "file": "panda_mujoco_gym/assets/pick_and_place.xml",
             "line": 1,
             "kind": "scene"
           },
           {
-            "file": "src/kinder/envs/dynamic3d/models/kinova_gen3/scene_2f85.xml",
+            "file": "panda_mujoco_gym/assets/push.xml",
             "line": 1,
             "kind": "scene"
           },
           {
-            "file": "src/kinder/envs/dynamic3d/models/rby1a/rby1a_model_v1.2.xml",
+            "file": "panda_mujoco_gym/assets/slide.xml",
             "line": 1,
             "kind": "scene"
           },
           {
-            "file": "src/kinder/envs/dynamic3d/models/stanford_tidybot/base_motion.xml",
+            "file": "panda_mujoco_gym/assets/panda_mocap.xml",
             "line": 1,
-            "kind": "scene"
-          },
-          {
-            "file": "src/kinder/envs/dynamic3d/models/stanford_tidybot/cupboard_scene.xml",
-            "line": 1,
-            "kind": "scene"
+            "kind": "robot"
           }
         ],
         "install": {
-          "python": ">=3.10,<3.13",
+          "python": null,
           "commands": [
-            "pip install ."
+            "pip install -r requirements.txt"
           ],
           "system_deps": [],
           "gpu": false,
@@ -4636,27 +4624,21 @@
         "mock_strategy": {
           "preferred": "upstream-sim",
           "hints": [
-            "src/kinder/envs/dynamic3d/models/kinova_gen3/scene.xml:1 MJCF scene model",
-            "src/kinder/envs/dynamic3d/models/kinova_gen3/scene_2f85.xml:1 MJCF scene model",
-            "src/kinder/envs/dynamic3d/models/rby1a/rby1a_model_v1.2.xml:1 MJCF scene model",
-            "src/kinder/envs/dynamic3d/models/stanford_tidybot/base_motion.xml:1 MJCF scene model"
+            "panda_mujoco_gym/assets/pick_and_place.xml:1 MJCF scene model",
+            "panda_mujoco_gym/assets/push.xml:1 MJCF scene model",
+            "panda_mujoco_gym/assets/slide.xml:1 MJCF scene model",
+            "panda_mujoco_gym/assets/panda_mocap.xml:1 MJCF robot model"
           ],
-          "upstream_tests": "tests"
+          "upstream_tests": "test"
         },
         "hints": {
           "reads": [],
           "writes": [],
           "actions": [
-            "MJCF scene model src/kinder/envs/dynamic3d/models/kinova_gen3/scene.xml:1",
-            "MJCF scene model src/kinder/envs/dynamic3d/models/kinova_gen3/scene_2f85.xml:1",
-            "MJCF scene model src/kinder/envs/dynamic3d/models/rby1a/rby1a_model_v1.2.xml:1",
-            "MJCF scene model src/kinder/envs/dynamic3d/models/stanford_tidybot/base_motion.xml:1",
-            "MJCF scene model src/kinder/envs/dynamic3d/models/stanford_tidybot/cupboard_scene.xml:1",
-            "MJCF scene model src/kinder/envs/dynamic3d/models/stanford_tidybot/table_scene.xml:1",
-            "MJCF robot model src/kinder/envs/dynamic3d/models/franka_fr3/fr3.xml:1",
-            "MJCF robot model src/kinder/envs/dynamic3d/models/kinova_gen3/gen3.xml:1",
-            "MJCF robot model src/kinder/envs/dynamic3d/models/kinova_gen3/gen3_2f85.xml:1",
-            "MJCF robot model src/kinder/envs/dynamic3d/models/stanford_tidybot/base.xml:1"
+            "MJCF scene model panda_mujoco_gym/assets/pick_and_place.xml:1",
+            "MJCF scene model panda_mujoco_gym/assets/push.xml:1",
+            "MJCF scene model panda_mujoco_gym/assets/slide.xml:1",
+            "MJCF robot model panda_mujoco_gym/assets/panda_mocap.xml:1"
           ],
           "candidate_classes": [
             "cap.world.reset.v1",
@@ -4670,7 +4652,7 @@
         },
         "needs_recon": [],
         "timebox_min": 60,
-        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/princeton-robot-planning-and-learning__kindergarden --backend fake",
+        "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/zichunxx__panda_mujoco_gym --backend fake",
         "skip_reason": null,
         "publish_review": "not_required"
       }

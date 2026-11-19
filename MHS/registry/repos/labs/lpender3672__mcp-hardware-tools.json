@@ -1,48 +1,55 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "hwtools.drivers.joyit.jds6600:JDS6600 (src/hwtools/drivers/joyit/jds6600.py:119)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python",
     "cargo"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.sensing.read.v1",
+    "cap.sensing.image.v1"
+  ],
   "catalog_refs": [
     "repo_aba3cbab9ba98129",
     "https://github.com/lpender3672/mcp-hardware-tools"
   ],
-  "description": "lpender3672/mcp-hardware-tools: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: reference only (host). Declared backend: MCP. Language: Python. Catalog keywords: Claude, MCP.",
+  "description": "lpender3672/mcp-hardware-tools: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 3. Catalog role: device SDK. Declared backend: MCP. Language: Python. Catalog keywords: Claude, MCP.",
   "domains": [
     "electronic measurement"
   ],
   "evidence": {
     "files_read": 4,
     "notes": "bounded static scan: 130 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/labs/lpender3672__mcp-hardware-tools/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "mcp-proxy"
+    "python-object"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.lpender3672/mcp-hardware-tools",
   "integration": {
-    "blockers": [
-      "REFERENCE_ONLY: role host"
-    ],
-    "effort": "EX",
-    "next_action": "Reference only: a host, orchestrator or MCP wrapper of a covered backend; integrate the backend instead.",
-    "reason_code": "reference:host",
-    "role": "host",
+    "blockers": [],
+    "effort": "E3",
+    "next_action": "Maintain MHS/drivers/labs/lpender3672__mcp-hardware-tools: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/lpender3672__mcp-hardware-tools --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "driver-pack",
     "scenario_required": false,
-    "strategy": "reference"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "MCP",
@@ -62,36 +69,39 @@
     "repo": "https://github.com/lpender3672/mcp-hardware-tools"
   },
   "local_path": "labs/lpender3672/mcp-hardware-tools",
-  "modes": [],
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
   "owner": "lpender3672",
   "package_id": "gh.lpender3672/mcp-hardware-tools",
   "quarantine": false,
-  "rank": 1025,
+  "rank": 53,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "mcp-hardware-tools",
   "repo_url": "https://github.com/lpender3672/mcp-hardware-tools",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "e13d9cd83962cc1bb80b3f25f0daa2fce52eb0f5",
     "repo_url": "https://github.com/lpender3672/mcp-hardware-tools"
   },
   "stars": 0,
   "tags": [
-    "mcp-proxy",
+    "python-object",
     "lab instrumentation",
     "device sdk",
     "hardware interface",
-    "reference"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "lpender3672/mcp-hardware-tools",
   "track": "labs",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -129,12 +139,59 @@
       "family_matches": [
         "\\bmcp\\b"
       ],
+      "family_note": "triage family python-object (catalogue family mcp-proxy)",
       "family_rule": "scored",
       "family_score": 10,
-      "tier_note": "tier B -> D: triage reference (reference:host)",
       "tier_rule": "B1-device-sdk"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/lpender3672__mcp-hardware-tools/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.image.v1"
+            ],
+            "kind": "sensor.camera"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/lpender3672__mcp-hardware-tools/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/lpender3672__mcp-hardware-tools/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.image.v1"
+            ],
+            "kind": "sensor.camera"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "Apache-2.0",
@@ -148,6 +205,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "e13d9cd83962cc1bb80b3f25f0daa2fce52eb0f5",
+      "driver_dir": "MHS/drivers/labs/lpender3672__mcp-hardware-tools",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:e474bae5d358e807c90133bcf3cecce178313ff0a760d437aed095d5070172bc",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -166,13 +238,15 @@
     },
     "triage": {
       "evidence": [
-        "MCP server wrapping the covered backend pyvisa"
+        "override (retriage-wave1.json): Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 serves the JDS6600 only; narrow the entry symbols to that class and retain DS1054Z scope adaptation for a separate card.",
+        "rules alone: reference (reference:host, rule 7)"
       ],
-      "family": null,
+      "family": "python-object",
       "hardware_transport": "class hwtools.drivers.rp2350.serial_harness:SerialHarness uses the hardware transport serial",
-      "helper": null,
-      "reason_code": "reference:host",
-      "rule": 7,
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 serves the JDS6600 only; narrow the entry symbols to that class and retain DS1054Z scope adaptation for a separate card.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.amazon-far/abc",
+  "upstream": {
+    "repo_url": "https://github.com/amazon-far/abc",
+    "commit": "d0832d12651d1b260a652861a14648dc5f3660c7",
+    "license_spdx": "Apache-2.0",
+    "license_class": "permissive"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any",
+    "notes": "The fake backend needs neither the clone nor its dependencies and runs on the SDK's Python 3.10+. The declared sim backend is the upstream abc_sim.make_env, which needs mujoco~=3.8.0 and gymnasium>=1.1 (pyproject.toml:15, :21) and the simulator assets downloaded by prepare.py --sim (abc_sim/README.md:181-185). The gate never installs or imports the upstream package; the sim backend was not run."
+  },
+  "backends": {
+    "fake": ".fake:connect",
+    "sim": ".sim:connect"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "retriage-drivers-1-065",
+    "date": "2026-11-17"
+  },
+  "reviewed_by": null
+}

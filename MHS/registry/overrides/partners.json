@@ -42,11 +42,19 @@
     },
     {
       "package_id": "gh.btownshend/pytecan",
-      "strategy": "skip",
-      "role": "tooling",
-      "reason_code": "skip:tooling",
+      "strategy": "direct-driver",
+      "role": "device-driver",
+      "reason_code": "override:recon",
       "partner": "Tecan",
-      "justification": "Generates Tecan EVO Gemini (.gem) programs; it does not talk to the instrument."
+      "justification": "Gemini/gemini.py:23 talks to Tecan's Gemini control software over a live pipe, so it drives the instrument (Python 2; owner's decision 2026-11-17 after DeepSeek and Codex re-triage; it also generates .gem programs).",
+      "family": "python-object",
+      "entry_symbols": [
+        {
+          "symbol": "gemini:Gemini",
+          "file": "Gemini/gemini.py",
+          "line": 8
+        }
+      ]
     },
     {
       "package_id": "gh.christianrauch/raspicam2_node",

@@ -11,20 +11,27 @@
     "license_spdx": "Apache-2.0",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "tooling",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 905,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 261,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "robosynchallenge.tasks.click_bell.click_bell:ClickBellEnv",
+      "file": "robosynchallenge/tasks/click_bell/click_bell.py",
+      "line": 35,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": ">=3.10",
@@ -38,27 +45,37 @@
   "mock_strategy": {
     "preferred": "upstream-sim",
     "hints": [
-      "policy/pi0/src/openpi/training/config.py:204 FakeDataConfig",
-      "policy/pi0/src/openpi/training/data_loader.py:99 FakeDataset",
-      "policy/pi05/src/openpi/training/config.py:204 FakeDataConfig",
-      "policy/pi05/src/openpi/training/data_loader.py:99 FakeDataset"
+      "robosynchallenge/tasks/_other_tasks/open_pan/open_pan.py:39 gym env OpenPanPickAndPlaceEnv-v1",
+      "robosynchallenge/tasks/_other_tasks/open_pan/open_pan.py:271 gym env OpenPanPickAndPlaceTest-v1",
+      "robosynchallenge/tasks/_other_tasks/open_pan/open_pan.py:281 gym env OpenPanPickAndPlaceAgent-v1",
+      "robosynchallenge/tasks/_other_tasks/sample_loading/sample_loading.py:33 gym env SampleLoading-v1"
     ],
     "upstream_tests": null
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "gym env OpenPanPickAndPlaceEnv-v1 registered at robosynchallenge/tasks/_other_tasks/open_pan/open_pan.py:39",
+      "gym env OpenPanPickAndPlaceTest-v1 registered at robosynchallenge/tasks/_other_tasks/open_pan/open_pan.py:271",
+      "gym env OpenPanPickAndPlaceAgent-v1 registered at robosynchallenge/tasks/_other_tasks/open_pan/open_pan.py:281",
+      "gym env SampleLoading-v1 registered at robosynchallenge/tasks/_other_tasks/sample_loading/sample_loading.py:33",
+      "gym env SampleLoadingAgent-v1 registered at robosynchallenge/tasks/_other_tasks/sample_loading/sample_loading.py:133"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
   "needs_recon": [],
-  "timebox_min": 15,
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/edem-ai__robosynchallenge --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

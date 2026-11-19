@@ -57,10 +57,10 @@ Line endings and checksums vary; unbounded reads hang; USB re-enumeration rename
 ## First task cards
 
 - `gh.amsikking/thorlabs_mcm3000`: direct-driver, wave 1, rank 39, `MHS/registry/tasks/labs/amsikking__thorlabs_mcm3000.json`
-- `gh.amsikking/asi_ms_2000_500_cp`: direct-driver, wave 1, rank 41, `MHS/registry/tasks/labs/amsikking__asi_ms_2000_500_cp.json`
-- `gh.fretchen/synqs_devices`: direct-driver, wave 1, rank 45, `MHS/registry/tasks/labs/fretchen__synqs_devices.json`
-- `gh.mattgbiz/velmex-xyz-stagecontrol-python`: direct-driver, wave 1, rank 46, `MHS/registry/tasks/labs/mattgbiz__velmex-xyz-stagecontrol-python.json`
-- `gh.amsikking/zaber_x_adr130`: direct-driver, wave 1, rank 49, `MHS/registry/tasks/labs/amsikking__zaber_x_adr130.json`
+- `gh.amsikking/asi_ms_2000_500_cp`: direct-driver, wave 1, rank 42, `MHS/registry/tasks/labs/amsikking__asi_ms_2000_500_cp.json`
+- `gh.fretchen/synqs_devices`: direct-driver, wave 1, rank 46, `MHS/registry/tasks/labs/fretchen__synqs_devices.json`
+- `gh.mattgbiz/velmex-xyz-stagecontrol-python`: direct-driver, wave 1, rank 47, `MHS/registry/tasks/labs/mattgbiz__velmex-xyz-stagecontrol-python.json`
+- `gh.amsikking/zaber_x_adr130`: direct-driver, wave 1, rank 50, `MHS/registry/tasks/labs/amsikking__zaber_x_adr130.json`
 
 ## Sources
 

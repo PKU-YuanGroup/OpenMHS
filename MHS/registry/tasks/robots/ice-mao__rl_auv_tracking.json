@@ -11,20 +11,33 @@
     "license_spdx": "GPL-3.0",
     "license_class": "copyleft"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 344,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 148,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "auv_env:make",
+      "file": "auv_env/__init__.py",
+      "line": 11,
+      "confidence": "override"
+    },
+    {
+      "symbol": "auv_env.envs.base:TargetTrackingBase",
+      "file": "auv_env/envs/base.py",
+      "line": 27,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": null,
@@ -36,7 +49,7 @@
   "mock_strategy": {
     "preferred": "upstream-sim",
     "hints": [
-      "diffusion_policy/model/diffusion/mask_generator.py:32 DummyMaskGenerator"
+      "auv_env/envs/base.py:27 TargetTrackingBase environment class"
     ],
     "upstream_tests": "tests"
   },
@@ -44,16 +57,22 @@
     "reads": [],
     "writes": [],
     "actions": [],
-    "candidate_classes": []
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/ice-mao__rl_auv_tracking --backend fake",
-  "skip_reason": "catalogue category 'policy/algorithm' with no env registration or device evidence",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

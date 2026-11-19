@@ -56,11 +56,11 @@ Action modes must be declared; GUI mode fails headless.
 
 ## First task cards
 
-- `gh.bulletphysics/bullet3`: bridge-runtime, wave 9, rank 86, `MHS/registry/tasks/robots/bulletphysics__bullet3.json`
-- `gh.mees/calvin`: skip, wave 9, rank 187, `MHS/registry/tasks/robots/mees__calvin.json`
-- `gh.caelan/pddlstream`: skip, wave 9, rank 229, `MHS/registry/tasks/robots/caelan__pddlstream.json`
-- `gh.caelan/pybullet-planning`: skip, wave 9, rank 232, `MHS/registry/tasks/robots/caelan__pybullet-planning.json`
-- `gh.wenbowen123/catgrasp`: skip, wave 9, rank 259, `MHS/registry/tasks/robots/wenbowen123__catgrasp.json`
+- `gh.bulletphysics/bullet3`: bridge-runtime, wave 9, rank 85, `MHS/registry/tasks/robots/bulletphysics__bullet3.json`
+- `gh.mees/calvin`: skip, wave 9, rank 184, `MHS/registry/tasks/robots/mees__calvin.json`
+- `gh.caelan/pddlstream`: skip, wave 9, rank 224, `MHS/registry/tasks/robots/caelan__pddlstream.json`
+- `gh.caelan/pybullet-planning`: skip, wave 9, rank 227, `MHS/registry/tasks/robots/caelan__pybullet-planning.json`
+- `gh.wenbowen123/catgrasp`: skip, wave 9, rank 253, `MHS/registry/tasks/robots/wenbowen123__catgrasp.json`
 
 ## Sources
 

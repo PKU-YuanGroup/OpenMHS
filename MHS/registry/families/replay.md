@@ -51,10 +51,10 @@ Never replay into a live device automatically.
 ## First task cards
 
 - `gh.strakam/generals-bots`: bridge-runtime, wave 9, rank 40, `MHS/registry/tasks/robots/strakam__generals-bots.json`
-- `gh.rerun-io/rerun`: skip, wave 9, rank 89, `MHS/registry/tasks/robots/rerun-io__rerun.json`
-- `gh.foxglove/mcap`: skip, wave 9, rank 178, `MHS/registry/tasks/robots/foxglove__mcap.json`
-- `gh.gbionics/amp-rsl-rl`: skip, wave 9, rank 258, `MHS/registry/tasks/robots/gbionics__amp-rsl-rl.json`
-- `gh.foxglove/foxglove-sdk`: skip, wave 9, rank 265, `MHS/registry/tasks/robots/foxglove__foxglove-sdk.json`
+- `gh.rerun-io/rerun`: skip, wave 9, rank 88, `MHS/registry/tasks/robots/rerun-io__rerun.json`
+- `gh.foxglove/mcap`: skip, wave 9, rank 175, `MHS/registry/tasks/robots/foxglove__mcap.json`
+- `gh.gbionics/amp-rsl-rl`: skip, wave 9, rank 252, `MHS/registry/tasks/robots/gbionics__amp-rsl-rl.json`
+- `gh.foxglove/foxglove-sdk`: skip, wave 9, rank 258, `MHS/registry/tasks/robots/foxglove__foxglove-sdk.json`
 
 ## Sources
 

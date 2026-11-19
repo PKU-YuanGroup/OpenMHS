@@ -1,22 +1,28 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "base_control:BaseControl (script/base_control.py:26)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "packaged"
   },
-  "blocked_on": [],
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "build_systems": [
     "cmake",
     "ros"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.motion.mobile_base.v1"
+  ],
   "catalog_refs": [
     "repo_a778ac54bd7951e9",
     "https://github.com/adlink-ros/adlink_ddsbot"
   ],
-  "description": "adlink-ros/adlink_ddsbot: control framework for multi-robot systems (robotics track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: ROS 1; ROS 2. Language: C++. Catalog keywords: OpenSplice, DDS.",
+  "description": "adlink-ros/adlink_ddsbot: control framework for multi-robot systems (robotics track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 5. Catalog role: peripheral tooling. Declared backend: ROS 1; ROS 2. Language: C++. Catalog keywords: OpenSplice, DDS.",
   "domains": [
     "multi-robot systems"
   ],
@@ -29,20 +35,21 @@
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "ros2"
+    "python-object"
   ],
   "hardware_free": false,
   "id": "gh.adlink-ros/adlink_ddsbot",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)"
+      "NO_HARDWARE_FREE_PATH"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "tooling",
+    "effort": "E2",
+    "next_action": "Review MHS/drivers/robots/adlink-ros__adlink_ddsbot/RESULT.json: the package is blocked on NO_HARDWARE_FREE_PATH; clear the codes before MHS/registry/tasks/robots/adlink-ros__adlink_ddsbot.json is dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "ROS 1",
@@ -64,11 +71,13 @@
     "repo": "https://github.com/adlink-ros/adlink_ddsbot"
   },
   "local_path": "robots/adlink-ros/adlink_ddsbot",
-  "modes": [],
+  "modes": [
+    "hardware"
+  ],
   "owner": "adlink-ros",
   "package_id": "gh.adlink-ros/adlink_ddsbot",
   "quarantine": false,
-  "rank": 472,
+  "rank": 11,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "adlink_ddsbot",
@@ -81,19 +90,19 @@
   },
   "stars": 43,
   "tags": [
-    "ros2",
+    "python-object",
     "robotics",
     "control framework",
     "peripheral tooling",
-    "skip"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "adlink-ros/adlink_ddsbot",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 5,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -131,11 +140,29 @@
       "family_matches": [
         "\\bros ?2\\b"
       ],
+      "family_note": "triage family python-object (catalogue family ros2)",
       "family_rule": "scored",
       "family_score": 10,
+      "tier_note": "tier D -> B: triage direct-driver (override:direct-driver)",
       "tier_rule": "D1-peripheral-role"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/adlink-ros__adlink_ddsbot/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.motion.mobile_base.v1"
+            ],
+            "kind": "robot.mobile_base"
+          }
+        ],
+        "risk_floor": "R2",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "Apache-2.0",
@@ -149,6 +176,23 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "NO_HARDWARE_FREE_PATH"
+      ],
+      "commit": "6b077391af87b61f72b26f5046b04dd2b3576ab2",
+      "driver_dir": "MHS/drivers/robots/adlink-ros__adlink_ddsbot",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:b897c1298589da6d3646861e266db484b0f0d74995ce34e87faa16c31b788ed4",
+      "reviewed": false,
+      "status": "blocked"
     },
     "scan": {
       "build_systems": [
@@ -166,12 +210,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 uses a direct Driver with a Python 3 serial port of BaseControl; runtime wheel conversion and checksums do not fit a SerialDriver table.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 uses a direct Driver with a Python 3 serial port of BaseControl; runtime wheel conversion and checksums do not fit a SerialDriver table.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

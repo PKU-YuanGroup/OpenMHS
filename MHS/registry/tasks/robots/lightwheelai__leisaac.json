@@ -11,20 +11,27 @@
     "license_spdx": "Apache-2.0",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1149,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 39,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "leisaac.tasks.pick_orange.direct.pick_orange_env:PickOrangeEnv",
+      "file": "source/leisaac/leisaac/tasks/pick_orange/direct/pick_orange_env.py",
+      "line": 61,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": null,
@@ -36,27 +43,46 @@
   "mock_strategy": {
     "preferred": "upstream-sim",
     "hints": [
-      "dependencies/IsaacLab/source/isaaclab/isaaclab/sim/simulation_cfg.py:330 SimulationCfg",
-      "dependencies/IsaacLab/source/isaaclab/isaaclab/sim/simulation_context.py:42 SimulationContext",
-      "dependencies/IsaacLab/source/isaaclab/isaaclab/sim/simulation_cfg.py:1",
-      "dependencies/IsaacLab/source/isaaclab/isaaclab/sim/simulation_context.py:1"
+      "source/leisaac/leisaac/tasks/assemble_hamburger/__init__.py:3 gym env LeIsaac-SO101-AssembleHamburger-v0",
+      "source/leisaac/leisaac/tasks/assemble_hamburger/__init__.py:12 gym env LeIsaac-SO101-AssembleHamburger-BiArm-v0",
+      "source/leisaac/leisaac/tasks/clean_toy_table/__init__.py:3 gym env LeIsaac-SO101-CleanToyTable-v0",
+      "source/leisaac/leisaac/tasks/clean_toy_table/__init__.py:12 gym env LeIsaac-SO101-CleanToyTable-BiArm-v0"
     ],
     "upstream_tests": "dependencies/IsaacLab/docker/test"
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "gym env LeIsaac-SO101-AssembleHamburger-v0 registered at source/leisaac/leisaac/tasks/assemble_hamburger/__init__.py:3",
+      "gym env LeIsaac-SO101-AssembleHamburger-BiArm-v0 registered at source/leisaac/leisaac/tasks/assemble_hamburger/__init__.py:12",
+      "gym env LeIsaac-SO101-CleanToyTable-v0 registered at source/leisaac/leisaac/tasks/clean_toy_table/__init__.py:3",
+      "gym env LeIsaac-SO101-CleanToyTable-BiArm-v0 registered at source/leisaac/leisaac/tasks/clean_toy_table/__init__.py:12",
+      "gym env LeIsaac-SO101-CleanToyTable-BiArm-Direct-v0 registered at source/leisaac/leisaac/tasks/clean_toy_table/__init__.py:21",
+      "gym env LeIsaac-LeKiwi-CleanupTrash-v0 registered at source/leisaac/leisaac/tasks/cleanup_trash/__init__.py:3",
+      "gym env LeIsaac-SO101-FoldCloth-BiArm-v0 registered at source/leisaac/leisaac/tasks/fold_cloth/__init__.py:3",
+      "gym env LeIsaac-SO101-FoldCloth-BiArm-Direct-v0 registered at source/leisaac/leisaac/tasks/fold_cloth/__init__.py:12",
+      "gym env LeIsaac-SO101-LiftCube-v0 registered at source/leisaac/leisaac/tasks/lift_cube/__init__.py:3",
+      "gym env LeIsaac-SO101-LiftCube-DigitalTwin-v0 registered at source/leisaac/leisaac/tasks/lift_cube/__init__.py:12",
+      "gym env LeIsaac-SO101-LiftCube-Mimic-v0 registered at source/leisaac/leisaac/tasks/lift_cube/__init__.py:21",
+      "gym env LeIsaac-SO101-LiftCube-Direct-v0 registered at source/leisaac/leisaac/tasks/lift_cube/__init__.py:30"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/lightwheelai__leisaac --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

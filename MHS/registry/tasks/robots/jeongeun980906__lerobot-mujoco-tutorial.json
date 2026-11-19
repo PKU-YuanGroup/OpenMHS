@@ -11,21 +11,45 @@
     "license_spdx": "NOASSERTION",
     "license_class": "unknown"
   },
-  "decision": "skip",
-  "reason_code": "skip:not-device",
-  "role": "docs",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1653,
-  "exemplar": null,
-  "entry_symbols": [],
-  "models": [],
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 397,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "mujoco_env.y_env:SimpleEnv",
+      "file": "mujoco_env/y_env.py",
+      "line": 13,
+      "confidence": "override"
+    },
+    {
+      "symbol": "mujoco_env.y_env2:SimpleEnv2",
+      "file": "mujoco_env/y_env2.py",
+      "line": 13,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "asset/robotis_omy/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "asset/robotis_omy/omy.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
   "install": {
     "python": null,
     "commands": [
@@ -36,24 +60,36 @@
     "platform": "any"
   },
   "mock_strategy": {
-    "preferred": "fake",
-    "hints": [],
+    "preferred": "upstream-sim",
+    "hints": [
+      "asset/robotis_omy/scene.xml:1 MJCF scene model",
+      "asset/robotis_omy/omy.xml:1 MJCF robot model"
+    ],
     "upstream_tests": null
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "MJCF scene model asset/robotis_omy/scene.xml:1",
+      "MJCF robot model asset/robotis_omy/omy.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "license",
+    "artifacts"
+  ],
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/jeongeun980906__lerobot-mujoco-tutorial --backend fake",
-  "skip_reason": "repo name 'lerobot-mujoco-tutorial' names a course/tutorial",
+  "skip_reason": null,
   "publish_review": "required"
 }

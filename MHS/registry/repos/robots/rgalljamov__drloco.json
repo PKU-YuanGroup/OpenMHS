@@ -1,22 +1,28 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "mujoco",
+    "entry_points": [
+      "drloco.mujoco.mimic_walker3d:MimicWalker3dEnv (drloco/mujoco/mimic_walker3d.py:27)",
+      "drloco.mujoco.mimic_walker_165cm_65kg:MimicWalker165cm65kgEnv (drloco/mujoco/mimic_walker_165cm_65kg.py:20)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "make",
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1"
+  ],
   "catalog_refs": [
     "repo_7ffe0b55f7d831d1",
     "https://github.com/rgalljamov/drloco"
   ],
-  "description": "rgalljamov/drloco: policy/algorithm for humanoid robots; legged robots (robotics track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: MuJoCo. Language: Python. Catalog keywords: MuJoCo, SB3, DeepMimic.",
+  "description": "rgalljamov/drloco: policy/algorithm for humanoid robots; legged robots (robotics track). OpenMHS plan: family-config with MujocoDriver, wave 3. Catalog role: task environment. Declared backend: MuJoCo. Language: Python. Catalog keywords: MuJoCo, SB3, DeepMimic.",
   "domains": [
     "humanoid robots",
     "legged robots"
@@ -24,27 +30,30 @@
   "evidence": {
     "files_read": 3,
     "notes": "bounded static scan: 64 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/rgalljamov__drloco/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "gymnasium"
+    "mujoco"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.rgalljamov/drloco",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: catalogue category 'policy/algorithm' with no env registration or device evidence",
-      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata"
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: catalogue category 'policy/algorithm' with no env registration or device evidence",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/rgalljamov__drloco: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/rgalljamov__drloco --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/mujoco.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Python SDK",
@@ -63,37 +72,39 @@
     "repo": "https://github.com/rgalljamov/drloco"
   },
   "local_path": "robots/rgalljamov/drloco",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "rgalljamov",
   "package_id": "gh.rgalljamov/drloco",
   "quarantine": false,
-  "rank": 1815,
+  "rank": 425,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "drloco",
   "repo_url": "https://github.com/rgalljamov/drloco",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "3a1e4999b726be67dccc5d332b52edb76a7bde09",
     "repo_url": "https://github.com/rgalljamov/drloco"
   },
   "stars": 45,
   "tags": [
-    "gymnasium",
+    "mujoco",
     "robotics",
     "policy algorithm",
     "task environment",
     "simulated",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "A",
   "title": "rgalljamov/drloco",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -133,12 +144,28 @@
       "family_matches": [
         "\\bmujoco"
       ],
+      "family_note": "triage family mujoco (catalogue family gymnasium)",
       "family_rule": "scored",
       "family_score": 10,
-      "tier_note": "tier A -> D: triage skip (skip:peripheral)",
       "tier_rule": "A2-task-env-entry"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/rgalljamov__drloco/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -152,6 +179,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "3a1e4999b726be67dccc5d332b52edb76a7bde09",
+      "driver_dir": "MHS/drivers/robots/rgalljamov__drloco",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:44db464a54781d9df035a0147c52969a88a688f3d8b439f363f279df9e91b853",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -167,12 +209,14 @@
     },
     "triage": {
       "evidence": [
-        "catalogue category 'policy/algorithm' with no env registration or device evidence"
+        "override (retriage-wave1.json): MuJoCo sim-env, not hardware: MimicWalker3dEnv drives a bundled 8-motor MJCF via gym's MujocoEnv step/reset.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "mujoco",
+      "helper": "MujocoDriver",
+      "justification": "MuJoCo sim-env, not hardware: MimicWalker3dEnv drives a bundled 8-motor MJCF via gym's MujocoEnv step/reset.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

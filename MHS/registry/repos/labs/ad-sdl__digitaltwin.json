@@ -1,47 +1,56 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "rpl_centrifuge.openarm.mimic_env:CentrifugeBimanualOpenArmIKAbsMimicEnv (tasks/centrifuge/tasks/src/rpl_centrifuge/openarm/mimic_env.py:44)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_91b2c5ddacbd288c",
     "https://github.com/ad-sdl/digitaltwin"
   ],
-  "description": "ad-sdl/digitaltwin: repository for wet-lab automation and chemistry (lab instrumentation track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: IsaacLab deployment guide. Language: Python. Catalog keywords: IsaacLab, GR00T.",
+  "description": "ad-sdl/digitaltwin: repository for wet-lab automation and chemistry (lab instrumentation track). OpenMHS plan: family-config with GymnasiumDriver, wave 6. Catalog role: peripheral tooling. Declared backend: IsaacLab deployment guide. Language: Python. Catalog keywords: IsaacLab, GR00T.",
   "domains": [
     "wet-lab automation and chemistry"
   ],
   "evidence": {
     "files_read": 1,
     "notes": "bounded static scan: 14 files enumerated (max depth 3), 1 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/labs/ad-sdl__digitaltwin/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "isaac-lab"
+    "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.ad-sdl/digitaltwin",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
       "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
-      "NEEDS_GPU: an import or the catalogue requires a GPU"
+      "NEEDS_GPU: an import or the catalogue requires a GPU",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "tooling",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/labs/ad-sdl__digitaltwin: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/ad-sdl__digitaltwin --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Isaac Lab"
@@ -58,35 +67,37 @@
     "repo": "https://github.com/ad-sdl/digitaltwin"
   },
   "local_path": "labs/ad-sdl/digitaltwin",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "ad-sdl",
   "package_id": "gh.ad-sdl/digitaltwin",
   "quarantine": false,
-  "rank": 2143,
+  "rank": 133,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "digitaltwin",
   "repo_url": "https://github.com/ad-sdl/digitaltwin",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "c8dfbd5998462d6fd0c1afb197f66b5a52c2d126",
     "repo_url": "https://github.com/ad-sdl/digitaltwin"
   },
   "stars": 0,
   "tags": [
-    "isaac-lab",
+    "gymnasium",
     "lab instrumentation",
     "peripheral tooling",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "ad-sdl/digitaltwin",
   "track": "labs",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 6,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -128,11 +139,30 @@
       "family_matches": [
         "isaaclab"
       ],
+      "family_note": "triage family gymnasium (catalogue family isaac-lab)",
       "family_rule": "scored",
       "family_score": 10,
+      "tier_note": "tier D -> B: triage family-config (override:recon)",
       "tier_rule": "D1-peripheral-role"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/ad-sdl__digitaltwin/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -147,6 +177,21 @@
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
     },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "c8dfbd5998462d6fd0c1afb197f66b5a52c2d126",
+      "driver_dir": "MHS/drivers/labs/ad-sdl__digitaltwin",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:afc4852020c05828daaf3a53e1f4c04dfa9e059be5d6245d27d88f0da945edb7",
+      "reviewed": false,
+      "status": "pass"
+    },
     "scan": {
       "build_systems": [],
       "entry_evidence_count": 0,
@@ -157,12 +202,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Reviewed by gpt-6.1-sol (a model): Use the actual environment at tasks/centrifuge/tasks/src/rpl_centrifuge/openarm/mimic_env.py:44.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "Reviewed by gpt-6.1-sol (a model): Use the actual environment at tasks/centrifuge/tasks/src/rpl_centrifuge/openarm/mimic_env.py:44.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

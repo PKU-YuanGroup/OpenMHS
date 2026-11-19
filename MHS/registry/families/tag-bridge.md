@@ -63,10 +63,10 @@ Address maps, unit ids and PV prefixes are deployment-specific; keep them in the
 ## First task cards
 
 - `gh.josuablejeru/labmastro`: family-config, wave 2, rank 26, `MHS/registry/tasks/labs/josuablejeru__labmastro.json`
-- `gh.holtzmanjon/apoalpyca`: family-config, wave 2, rank 76, `MHS/registry/tasks/labs/holtzmanjon__apoalpyca.json`
-- `gh.danielballan/caproto-rpi`: family-config, wave 3, rank 320, `MHS/registry/tasks/labs/danielballan__caproto-rpi.json`
-- `gh.nsls-ii-sst/caproto_cryostat`: family-config, wave 3, rank 350, `MHS/registry/tasks/labs/nsls-ii-sst__caproto_cryostat.json`
-- `gh.festo-se/festo-pgva`: family-config, wave 5, rank 19, `MHS/registry/tasks/labs/festo-se__festo-pgva.json`
+- `gh.holtzmanjon/apoalpyca`: family-config, wave 2, rank 77, `MHS/registry/tasks/labs/holtzmanjon__apoalpyca.json`
+- `gh.danielballan/caproto-rpi`: family-config, wave 3, rank 343, `MHS/registry/tasks/labs/danielballan__caproto-rpi.json`
+- `gh.nsls-ii-sst/caproto_cryostat`: family-config, wave 3, rank 375, `MHS/registry/tasks/labs/nsls-ii-sst__caproto_cryostat.json`
+- `gh.festo-se/festo-pgva`: family-config, wave 5, rank 30, `MHS/registry/tasks/labs/festo-se__festo-pgva.json`
 
 ## Sources
 

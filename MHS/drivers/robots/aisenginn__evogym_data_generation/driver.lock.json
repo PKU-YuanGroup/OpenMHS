@@ -1,0 +1,31 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.aisenginn/evogym_data_generation",
+  "upstream": {
+    "repo_url": "https://github.com/aisenginn/evogym_data_generation",
+    "commit": "91c05ab7a793f86e099c21d377f183c95c9990cd",
+    "license_spdx": "MIT"
+  },
+  "install": {
+    "python": ">=3.7,<3.11",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "pyproject.toml:40-49 requires Python >=3.7,<3.11, gymnasium and numpy<2.0.0; setup.py:61-65 compiles the CMake extension evogym.simulator_cpp. The gate and the fake backend import neither: fake.py is pure Python. The upstream install is only needed to serve the real simulator, which requires a robot body argument and was not run and is not declared as a backend."
+  },
+  "backends": {
+    "fake": ".fake:FakeWalkerEnv"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "retriage-drivers-1-037",
+    "date": "2026-11-17"
+  },
+  "reviewed_by": null
+}

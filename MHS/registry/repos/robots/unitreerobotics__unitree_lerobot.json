@@ -1,21 +1,31 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "unitree_lerobot.eval_robot.robot_control.robot_arm:G1_29_ArmController (unitree_lerobot/eval_robot/robot_control/robot_arm.py:69)",
+      "unitree_lerobot.eval_robot.robot_control.robot_hand_unitree:Dex3_1_Controller (unitree_lerobot/eval_robot/robot_control/robot_hand_unitree.py:30)",
+      "unitree_lerobot.eval_robot.robot_control.uniarml1.uniarm_l1_bus:UnitreeMotorSDK (unitree_lerobot/eval_robot/robot_control/uniarml1/uniarm_l1_bus.py:47)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "packaged"
   },
-  "blocked_on": [],
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.device.calibrate.v1"
+  ],
   "catalog_refs": [
     "repo_2bae3a36d404e2de",
     "https://github.com/unitreerobotics/unitree_lerobot"
   ],
-  "description": "unitreerobotics/unitree_lerobot: policy/algorithm for humanoid robots (robotics track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: Isaac Sim. Language: Python. Catalog keywords: LeRobot, G1.",
+  "description": "unitreerobotics/unitree_lerobot: policy/algorithm for humanoid robots (robotics track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 5. Catalog role: peripheral tooling. Declared backend: Isaac Sim. Language: Python. Catalog keywords: LeRobot, G1.",
   "domains": [
     "humanoid robots"
   ],
@@ -28,20 +38,21 @@
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "mujoco"
+    "python-object"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.unitreerobotics/unitree_lerobot",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)"
+      "NO_HARDWARE_FREE_PATH"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "tooling",
+    "effort": "E3",
+    "next_action": "Review MHS/drivers/robots/unitreerobotics__unitree_lerobot/RESULT.json: the package is blocked on NO_HARDWARE_FREE_PATH; clear the codes before MHS/registry/tasks/robots/unitreerobotics__unitree_lerobot.json is dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/python-object.md",
+    "role": "driver-pack",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "Python SDK",
@@ -69,36 +80,39 @@
     "repo": "https://github.com/unitreerobotics/unitree_lerobot"
   },
   "local_path": "robots/unitreerobotics/unitree_lerobot",
-  "modes": [],
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
   "owner": "unitreerobotics",
   "package_id": "gh.unitreerobotics/unitree_lerobot",
   "quarantine": false,
-  "rank": 202,
+  "rank": 3,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "unitree_lerobot",
   "repo_url": "https://github.com/unitreerobotics/unitree_lerobot",
   "ring": 3,
-  "simulation": false,
+  "simulation": true,
   "source": {
     "commit": "41c2805742de879ddab2d8d6beaeaf215f876395",
     "repo_url": "https://github.com/unitreerobotics/unitree_lerobot"
   },
   "stars": 774,
   "tags": [
-    "mujoco",
+    "python-object",
     "robotics",
     "policy algorithm",
     "peripheral tooling",
-    "skip"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "unitreerobotics/unitree_lerobot",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 5,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -136,12 +150,60 @@
       "family_matches": [
         "isaac sim"
       ],
-      "family_note": "catalogue family isaac-sim has no structural marker; the code shows mujoco (MJCF model)",
+      "family_note": "triage family python-object (catalogue family isaac-sim)",
       "family_rule": "scored",
       "family_score": 10,
+      "tier_note": "tier D -> B: triage direct-driver (override:recon)",
       "tier_rule": "D1-peripheral-role"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/robots/unitreerobotics__unitree_lerobot/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.device.calibrate.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/unitreerobotics__unitree_lerobot/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/robots/unitreerobotics__unitree_lerobot/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.device.calibrate.v1"
+            ],
+            "kind": "robot.arm"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -155,6 +217,23 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "NO_HARDWARE_FREE_PATH"
+      ],
+      "commit": "41c2805742de879ddab2d8d6beaeaf215f876395",
+      "driver_dir": "MHS/drivers/robots/unitreerobotics__unitree_lerobot",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:7913e9da8b18a80a3cb68edaa2ec0eec9f27d98def0a9d0bc1ad8d382fb1a0fa",
+      "reviewed": false,
+      "status": "blocked"
     },
     "scan": {
       "build_systems": [
@@ -172,13 +251,15 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Direct-driver/driver-pack: eval_robot carries its own DDS controllers for G1 arms and Dex3 hands plus a serial motor bus for the UniArm L1, so the peripheral skip is wrong.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
+      "family": "python-object",
       "hardware_transport": "class lerobot.motors.dynamixel.dynamixel:DynamixelMotorsBus uses the hardware transport dynamixel_sdk",
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "helper": "PythonObjectDriver",
+      "justification": "Direct-driver/driver-pack: eval_robot carries its own DDS controllers for G1 arms and Dex3 hands plus a serial motor bus for the UniArm L1, so the peripheral skip is wrong.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

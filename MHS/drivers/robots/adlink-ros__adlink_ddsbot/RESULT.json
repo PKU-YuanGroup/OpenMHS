@@ -1,0 +1,21 @@
+{
+  "status": "blocked",
+  "gate": {
+    "digest": "sha256:b897c1298589da6d3646861e266db484b0f0d74995ce34e87faa16c31b788ed4",
+    "failed": [
+      "G3"
+    ],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.adlink-ros.stop_drive.v1",
+      "reason": "No catalogue class expresses an input-free stop of a mobile base: cap.motion.mobile_base.v1 is a bounded velocity invoke and the catalogue has no stop or disable class, so the R2 independent stop is an extension safe-state action.",
+      "verb": "invoke"
+    }
+  ],
+  "notes": "DEVIATION FROM THE CARD: the card proposed family-config/SerialDriver. The upstream BaseControl assembles every frame at run time (two float strings plus a checksum computed from their lengths, script/base_control.py:121-125), which a SerialDriver command table cannot reproduce, so this is a direct Driver over base_control:BaseControl with a native.py hardware port. The fake is an analytic peer, not a recording and not the upstream simulator: it echoes the last commanded wheel speeds and does not reproduce the firmware's 110-350 deg/sec clamp, its 20 Hz report timing, or its odom_pub=false branch (which prints 0,0). Distance and heading in the mobile-base action are integrated from the commanded twist and the command time, not from measured odometry. The stop and the safe-state action write a zero wheel-speed frame; the firmware zero branch sets the four PWM outputs to 0, but there is no serial acknowledgement and the pinned firmware's reply is 0,0, so no sensed quiescence is claimed. No text of the clone states a physical emergency-stop switch, so SAFE-045 is met by the input-free safe-state action rather than estop_physical_ref. The hardware backend (native.py) is a Python 3 port of the clone's Python 2 serial path; it starts no ROS timers and has never been run. It needs a human hardware review and a live ROS/serial deployment before use. The three action inputs are operator_required because the clone gives no body velocity bound (wheel radius and separation are launch parameters); the values in site-limits.example.json are illustrative operator values, not facts. The pinned firmware's odom_pub=false means a deployed device with that binary reports 0,0 for every read. No G4 warnings were emitted. The fake-only gate does not establish a real ROS or hardware run.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-17; reviewed_by stays null): Blocked the R2 mobile base with NO_HARDWARE_FREE_PATH: the serial zero-speed request is unacknowledged, the pinned odom_pub=false firmware prints placeholder zeros even during motion, and no independent physical stop is documented. In driver.py removed safe_state=True from the request action, made the e-stop request zero then raise SAFE_STATE_UNREACHED with the latch held, corrected fact/telemetry descriptions, and retained operator-required motion limits. Updated fake.py to preserve the pinned zero telemetry behavior, added refusal/latch tests in test_driver.py, synchronized facts.md, and regenerated reference.json, REFERENCE.md and check-report.json. All five targeted cases pass and the stock test_gate assertion is retained; the acceptance gate intentionally fails G3 SAFE-045 and strict collection reports RESULT_UNTRUSTED until the orchestrator replaces the author pass status. For the human reviewer: Unblocking requires a source-backed acknowledged stop and independent hardware-stop evidence, not a zero telemetry sample or a PWM-off request. Firmware bad checksums leave old references unchanged, absent input only delays the loop, and steering corrections invalidate the claimed simple 110..350 wheel-speed envelope. The unchanged native.py port has no write timeout, ignores partial write counts and can race concurrent commands; it was read line by line but never opened. Runtime stop behavior was probed only on the fake: failed SAFE_STATE_UNREACHED, followed by ESTOP_ENGAGED for motion. G3 prevents later gate stages from running in the final blocked package; no hardware, ROS graph or firmware was run.",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ]
+}

@@ -56,11 +56,11 @@ Vulkan GPU; asset licences differ from the code licence.
 
 ## First task cards
 
-- `gh.haosulab/maniskill2-learn`: skip, wave 9, rank 391, `MHS/registry/tasks/robots/haosulab__maniskill2-learn.json`
-- `gh.dingry/bunnyvisionpro`: skip, wave 9, rank 595, `MHS/registry/tasks/robots/dingry__bunnyvisionpro.json`
-- `gh.haosulab/maniskill-learn`: skip, wave 9, rank 861, `MHS/registry/tasks/robots/haosulab__maniskill-learn.json`
-- `gh.geyan21/maniflow_policy`: skip, wave 9, rank 988, `MHS/registry/tasks/robots/geyan21__maniflow_policy.json`
-- `gh.yolkarian/sapien`: skip, wave 9, rank 1116, `MHS/registry/tasks/robots/yolkarian__sapien.json`
+- `gh.haosulab/maniskill2-learn`: skip, wave 9, rank 381, `MHS/registry/tasks/robots/haosulab__maniskill2-learn.json`
+- `gh.dingry/bunnyvisionpro`: skip, wave 9, rank 580, `MHS/registry/tasks/robots/dingry__bunnyvisionpro.json`
+- `gh.haosulab/maniskill-learn`: skip, wave 9, rank 840, `MHS/registry/tasks/robots/haosulab__maniskill-learn.json`
+- `gh.geyan21/maniflow_policy`: skip, wave 9, rank 963, `MHS/registry/tasks/robots/geyan21__maniflow_policy.json`
+- `gh.yolkarian/sapien`: skip, wave 9, rank 1089, `MHS/registry/tasks/robots/yolkarian__sapien.json`
 
 ## Sources
 

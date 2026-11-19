@@ -1,21 +1,34 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "alim_seq.psu:HMP4030 (alim_seq/psu.py:403)",
+      "alim_seq.psu:HMP2030 (alim_seq/psu.py:409)",
+      "alim_seq.psu:HMP2020 (alim_seq/psu.py:417)",
+      "alim_seq.controller:Controller (alim_seq/controller.py:102)",
+      "alim_seq.daq:NIDaq (alim_seq/daq.py:36)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "packaged"
   },
-  "blocked_on": [],
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.sensing.read.v1",
+    "cap.measure.current.v1",
+    "cap.measure.voltage.v1"
+  ],
   "catalog_refs": [
     "repo_90c7628f86a895be",
     "https://github.com/anoryth/alim_seq"
   ],
-  "description": "anoryth/alim_seq: control framework for electronic measurement (lab instrumentation track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: PyVISA. Language: Python. Catalog keywords: Qt, SCPI, NI-DAQ.",
+  "description": "anoryth/alim_seq: control framework for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 5. Catalog role: controller. Declared backend: PyVISA. Language: Python. Catalog keywords: Qt, SCPI, NI-DAQ.",
   "domains": [
     "electronic measurement"
   ],
@@ -28,20 +41,21 @@
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "scpi-visa"
+    "python-object"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.anoryth/alim_seq",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: catalogue 'control framework'/'controller' describes software and the scan finds no device or simulation evidence"
+      "NO_HARDWARE_FREE_PATH"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: catalogue 'control framework'/'controller' describes software and the scan finds no device or simulation evidence",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E2",
+    "next_action": "Review MHS/drivers/labs/anoryth__alim_seq/RESULT.json: the package is blocked on NO_HARDWARE_FREE_PATH; clear the codes before MHS/registry/tasks/labs/anoryth__alim_seq.json is dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "SCPI/VISA",
@@ -62,38 +76,41 @@
     "repo": "https://github.com/anoryth/alim_seq"
   },
   "local_path": "labs/anoryth/alim_seq",
-  "modes": [],
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
   "owner": "anoryth",
   "package_id": "gh.anoryth/alim_seq",
   "quarantine": false,
-  "rank": 938,
+  "rank": 28,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "alim_seq",
   "repo_url": "https://github.com/anoryth/alim_seq",
   "ring": 3,
-  "simulation": false,
+  "simulation": true,
   "source": {
     "commit": "4264b54bdb8087636da640420735c0633fd1dcb9",
     "repo_url": "https://github.com/anoryth/alim_seq"
   },
   "stars": 0,
   "tags": [
-    "scpi-visa",
+    "python-object",
     "lab instrumentation",
     "control framework",
     "controller",
     "simulated",
     "hardware interface",
-    "skip"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "anoryth/alim_seq",
   "track": "labs",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 5,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -131,12 +148,61 @@
       "family_matches": [
         "\\bpyvisa\\b"
       ],
+      "family_note": "triage family python-object (catalogue family scpi-visa)",
       "family_rule": "scored",
       "family_score": 10,
-      "tier_note": "tier B -> D: triage skip (skip:peripheral)",
       "tier_rule": "B4-controller"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/anoryth__alim_seq/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.measure.current.v1",
+              "cap.measure.voltage.v1"
+            ],
+            "kind": "instrument.dmm"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/anoryth__alim_seq/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/anoryth__alim_seq/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.measure.current.v1",
+              "cap.measure.voltage.v1"
+            ],
+            "kind": "instrument.dmm"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "GPL-3.0",
@@ -151,6 +217,23 @@
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
     },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "NO_HARDWARE_FREE_PATH"
+      ],
+      "commit": "4264b54bdb8087636da640420735c0633fd1dcb9",
+      "driver_dir": "MHS/drivers/labs/anoryth__alim_seq",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:395b5a4fa3bebf30f7f87307bf2fc02f3a8181aadb4ee3e4e24f05d97605bd92",
+      "reviewed": false,
+      "status": "blocked"
+    },
     "scan": {
       "build_systems": [
         "python"
@@ -164,13 +247,15 @@
     },
     "triage": {
       "evidence": [
-        "catalogue 'control framework'/'controller' describes software and the scan finds no device or simulation evidence"
+        "override (retriage-wave1.json): Model review of re-triage wave 1 (gpt-6.1-sol): Retriage-drivers-1 binds alim_seq.psu:HMP4040 through a decorated Driver and native factory, rather than a ScpiDriver command table; retain the device-driver role.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
+      "family": "python-object",
       "hardware_transport": "class alim_seq.psu:HMP4030 uses the hardware transport pyvisa",
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): Retriage-drivers-1 binds alim_seq.psu:HMP4040 through a decorated Driver and native factory, rather than a ScpiDriver command table; retain the device-driver role.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

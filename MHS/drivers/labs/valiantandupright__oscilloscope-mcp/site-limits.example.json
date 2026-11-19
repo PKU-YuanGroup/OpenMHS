@@ -1,0 +1,144 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (oscilloscope, example only)",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "devices": {
+    "mhs://localhost/oscilloscope": {
+      "channel1_scale_v_per_div": {
+        "min": 0.001,
+        "max": 5,
+        "unit": "V",
+        "source": "operator",
+        "reason": "example only: the example DSOX1204A bench uses 1 mV/div to 5 V/div"
+      },
+      "channel1_offset_v": {
+        "min": -1000,
+        "max": 1000,
+        "unit": "V",
+        "source": "operator",
+        "reason": "example only: the operator bounds the vertical offset of this bench"
+      },
+      "timebase_scale_s_per_div": {
+        "min": 2e-09,
+        "max": 50,
+        "unit": "s",
+        "source": "operator",
+        "reason": "example only: the example bench uses 2 ns/div to 50 s/div"
+      },
+      "timebase_position_s": {
+        "min": -1000,
+        "max": 1000,
+        "unit": "s",
+        "source": "operator",
+        "reason": "example only: the operator bounds the horizontal position of this bench"
+      },
+      "x-cap.valiantandupright.configure_channel.v1": {
+        "scale_v_per_div": {
+          "min": 0.001,
+          "max": 5,
+          "unit": "V",
+          "source": "operator",
+          "reason": "example only: 1 mV/div to 5 V/div on this bench"
+        },
+        "offset_v": {
+          "min": -1000,
+          "max": 1000,
+          "unit": "V",
+          "source": "operator",
+          "reason": "example only: the operator bounds the vertical offset of this bench"
+        },
+        "channel": {
+          "allowed": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "source": "operator",
+          "reason": "Example only: the installed channel indices must be supplied for the actual instrument"
+        }
+      },
+      "x-cap.valiantandupright.configure_timebase.v1": {
+        "scale_s_per_div": {
+          "min": 2e-09,
+          "max": 50,
+          "unit": "s",
+          "source": "operator",
+          "reason": "example only: 2 ns/div to 50 s/div on this bench"
+        },
+        "position_s": {
+          "min": -1000,
+          "max": 1000,
+          "unit": "s",
+          "source": "operator",
+          "reason": "example only: the operator bounds the horizontal position of this bench"
+        }
+      },
+      "trigger_source": {
+        "allowed": [
+          "CHANNEL1",
+          "CHANNEL2",
+          "CHANNEL3",
+          "CHANNEL4",
+          "EXT"
+        ],
+        "source": "operator",
+        "reason": "Example only: the operator supplies sources present on the installed instrument"
+      },
+      "trigger_level_v": {
+        "min": -1000,
+        "max": 1000,
+        "unit": "V",
+        "source": "operator",
+        "reason": "Example only: a fake-scale trigger window, not an instrument rating"
+      },
+      "x-cap.valiantandupright.measure.v1": {
+        "channel": {
+          "allowed": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "source": "operator",
+          "reason": "Example only: the installed channel indices must be supplied for the actual instrument"
+        }
+      },
+      "x-cap.valiantandupright.capture.v1": {
+        "channel": {
+          "allowed": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "source": "operator",
+          "reason": "Example only: the installed channel indices must be supplied for the actual instrument"
+        }
+      },
+      "x-cap.valiantandupright.configure_trigger.v1": {
+        "source": {
+          "allowed": [
+            "CHANNEL1",
+            "CHANNEL2",
+            "CHANNEL3",
+            "CHANNEL4",
+            "EXT"
+          ],
+          "source": "operator",
+          "reason": "Example only: the operator supplies sources present on the installed instrument"
+        },
+        "level_v": {
+          "min": -1000,
+          "max": 1000,
+          "unit": "V",
+          "source": "operator",
+          "reason": "Example only: a fake-scale trigger window, not an instrument rating"
+        }
+      }
+    }
+  }
+}

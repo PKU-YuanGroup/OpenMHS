@@ -11,20 +11,27 @@
     "license_spdx": "Apache-2.0",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1629,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 94,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "rl_isaaclab.tasks.inhand_rotate.sharpa_wave_env:SharpaWaveInhandRotateEnv",
+      "file": "rl_isaaclab/tasks/inhand_rotate/sharpa_wave_env.py",
+      "line": 28,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": ">=3.10",
@@ -36,24 +43,36 @@
     "platform": "any"
   },
   "mock_strategy": {
-    "preferred": "fake",
-    "hints": [],
+    "preferred": "upstream-sim",
+    "hints": [
+      "rl_isaaclab/tasks/inhand_rotate/__init__.py:9 gym env Isaac-Inhand-Rotate-Sharpa-Wave-v0",
+      "rl_isaaclab/tasks/inhand_rotate/__init__.py:19 gym env Isaac-Inhand-Rotate-Grasp-Sharpa-Wave-v0",
+      "rl_isaaclab/tasks/inhand_rotate/__init__.py:29 gym env Isaac-Inhand-Rotate-Deploy-Sharpa-Wave-v0"
+    ],
     "upstream_tests": null
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "gym env Isaac-Inhand-Rotate-Sharpa-Wave-v0 registered at rl_isaaclab/tasks/inhand_rotate/__init__.py:9",
+      "gym env Isaac-Inhand-Rotate-Grasp-Sharpa-Wave-v0 registered at rl_isaaclab/tasks/inhand_rotate/__init__.py:19",
+      "gym env Isaac-Inhand-Rotate-Deploy-Sharpa-Wave-v0 registered at rl_isaaclab/tasks/inhand_rotate/__init__.py:29"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
   "needs_recon": [],
-  "timebox_min": 15,
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/sharpa-robotics__sharpa-rl-lab --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

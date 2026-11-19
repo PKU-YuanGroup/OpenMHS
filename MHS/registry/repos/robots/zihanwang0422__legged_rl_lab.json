@@ -1,47 +1,56 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "legged_rl_lab.tasks.locomotion.cross_emboided.config.g1go2_mixed.g1go2_flat_env_cfg:CrossEmbodiedG1Go2Env (source/legged_rl_lab/legged_rl_lab/tasks/locomotion/cross_emboided/config/g1go2_mixed/g1go2_flat_env_cfg.py:553)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_e6c936c1dc75b8e8",
     "https://github.com/zihanwang0422/legged_rl_lab"
   ],
-  "description": "zihanwang0422/legged_rl_lab: catalog/discovery tooling (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Python. Catalog keywords: Legged, Robot, Isaaclab, Extention.",
+  "description": "zihanwang0422/legged_rl_lab: catalog/discovery tooling (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 6. Catalog role: physics engines. Language: Python. Catalog keywords: Legged, Robot, Isaaclab, Extention.",
   "domains": [],
   "evidence": {
     "files_read": 3,
     "notes": "bounded static scan: 281 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/zihanwang0422__legged_rl_lab/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "mujoco"
+    "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.zihanwang0422/legged_rl_lab",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
       "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
-      "NEEDS_GPU: an import or the catalogue requires a GPU"
+      "NEEDS_GPU: an import or the catalogue requires a GPU",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/zihanwang0422__legged_rl_lab: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/zihanwang0422__legged_rl_lab --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Isaac Lab",
@@ -64,36 +73,38 @@
     "repo": "https://github.com/zihanwang0422/legged_rl_lab"
   },
   "local_path": "robots/zihanwang0422/legged_rl_lab",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "zihanwang0422",
   "package_id": "gh.zihanwang0422/legged_rl_lab",
   "quarantine": false,
-  "rank": 1973,
+  "rank": 122,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "legged_rl_lab",
   "repo_url": "https://github.com/zihanwang0422/legged_rl_lab",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "386ee24bc62c8033641d65b940dc2cf1dec56545",
     "repo_url": "https://github.com/zihanwang0422/legged_rl_lab"
   },
   "stars": 61,
   "tags": [
-    "mujoco",
+    "gymnasium",
     "robotics",
     "catalog discovery tooling",
     "physics engines",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "zihanwang0422/legged_rl_lab",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 6,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -131,11 +142,30 @@
       "family_matches": [
         "\\bmujoco"
       ],
+      "family_note": "triage family gymnasium (catalogue family mujoco)",
       "family_rule": "scored",
       "family_score": 4,
+      "tier_note": "tier D -> B: triage family-config (override:recon)",
       "tier_rule": "D2-peripheral-category"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/zihanwang0422__legged_rl_lab/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -149,6 +179,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "386ee24bc62c8033641d65b940dc2cf1dec56545",
+      "driver_dir": "MHS/drivers/robots/zihanwang0422__legged_rl_lab",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:022648f62b5efc5e7856d99ff17614771fce2425ed8dac854c5160d12bad94db",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -168,12 +213,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Reviewed by gpt-6.1-sol (a model): Proposed entries are configs.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "Reviewed by gpt-6.1-sol (a model): Proposed entries are configs.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

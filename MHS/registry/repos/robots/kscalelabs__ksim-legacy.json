@@ -1,47 +1,54 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "mujoco",
+    "entry_points": [
+      "ksim.mjx_gym.envs.stompy_env.stompy:StompyEnv (ksim/mjx_gym/envs/stompy_env/stompy.py:21)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "make",
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1"
+  ],
   "catalog_refs": [
     "repo_fe4695eccffa051b",
     "https://github.com/kscalelabs/ksim-legacy"
   ],
-  "description": "kscalelabs/ksim-legacy: catalog/discovery tooling (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Python. Catalog keywords: MuJoCo, simulation.",
+  "description": "kscalelabs/ksim-legacy: catalog/discovery tooling (robotics track). OpenMHS plan: family-config with MujocoDriver, wave 6. Catalog role: physics engines. Language: Python. Catalog keywords: MuJoCo, simulation.",
   "domains": [],
   "evidence": {
     "files_read": 8,
     "notes": "bounded static scan: 51 files enumerated (max depth 3), 8 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/kscalelabs__ksim-legacy/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
     "mujoco"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.kscalelabs/ksim-legacy",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
       "NEEDS_GPU: an import or the catalogue requires a GPU"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/kscalelabs__ksim-legacy: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/kscalelabs__ksim-legacy --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/mujoco.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Brax/MJX",
@@ -61,17 +68,19 @@
     "repo": "https://github.com/kscalelabs/ksim-legacy"
   },
   "local_path": "robots/kscalelabs/ksim-legacy",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "kscalelabs",
   "package_id": "gh.kscalelabs/ksim-legacy",
   "quarantine": false,
-  "rank": 1379,
+  "rank": 71,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "ksim-legacy",
   "repo_url": "https://github.com/kscalelabs/ksim-legacy",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "c1b92feabeab90ad1ecd2c7ff8b6beb4b7a30652",
     "repo_url": "https://github.com/kscalelabs/ksim-legacy"
@@ -82,15 +91,15 @@
     "robotics",
     "catalog discovery tooling",
     "physics engines",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "kscalelabs/ksim-legacy",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 6,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -132,9 +141,26 @@
       ],
       "family_rule": "scored",
       "family_score": 4,
+      "tier_note": "tier D -> B: triage family-config (override:recon)",
       "tier_rule": "D2-peripheral-category"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/kscalelabs__ksim-legacy/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "MIT",
@@ -148,6 +174,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "c1b92feabeab90ad1ecd2c7ff8b6beb4b7a30652",
+      "driver_dir": "MHS/drivers/robots/kscalelabs__ksim-legacy",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:618d291389ac9fb3b56c389a68029d70946ede72660baa20426e1b8fef41fb0a",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -165,12 +206,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Reviewed by gpt-6.1-sol (a model): Classification and entry are correct, but fix the evidence: ksim/mjx_gym/train.py:29 passes name=, not env_name=.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "mujoco",
+      "helper": "MujocoDriver",
+      "justification": "Reviewed by gpt-6.1-sol (a model): Classification and entry are correct, but fix the evidence: ksim/mjx_gym/train.py:29 passes name=, not env_name=.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

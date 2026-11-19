@@ -1,0 +1,112 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.zhenwei2972/model-hardware-standard-bambu-labs",
+  "track": "robots",
+  "local_path": "robots/zhenwei2972/model-hardware-standard-bambu-labs-",
+  "driver_dir": "MHS/drivers/robots/zhenwei2972__model-hardware-standard-bambu-labs-",
+  "upstream": {
+    "repo_url": "https://github.com/zhenwei2972/model-hardware-standard-bambu-labs-",
+    "commit": "e945c3ed88927760b082c3068b1233c276f17f96",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 34,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "mhs.drivers.bambu.printer:BambuPrinter",
+      "file": "src/mhs/drivers/bambu/printer.py",
+      "line": 61,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "src/mhs/drivers/mock.py:38 MockPrinter",
+      "src/mhs/drivers/mock_vacuum.py:54 MockVacuum",
+      "src/mhs/drivers/mock.py:1",
+      "src/mhs/drivers/mock_vacuum.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "BambuPrinter.status",
+      "BambuPrinter.state.is_stale",
+      "RoborockVacuum.status",
+      "Printer.status"
+    ],
+    "writes": [
+      "BambuPrinter.set_light",
+      "BambuPrinter.set_speed",
+      "BambuPrinter.set_temperature",
+      "RoborockVacuum.set_fan_power",
+      "RoborockVacuum.set_water_level",
+      "Printer.set_light",
+      "Printer.set_speed",
+      "Printer.set_temperature"
+    ],
+    "actions": [
+      "BambuPrinter.calibrate",
+      "BambuPrinter.pause_print",
+      "BambuPrinter.resume_print",
+      "BambuPrinter.start_print",
+      "BambuPrinter.stop_print",
+      "BambuPrinter._camera.capture",
+      "RoborockVacuum.pause",
+      "RoborockVacuum.resume",
+      "RoborockVacuum.start_clean",
+      "RoborockVacuum.stop",
+      "Printer.pause_print",
+      "Printer.resume_print"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.thermal.setpoint.v1",
+      "cap.device.calibrate.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": [
+      "src/mhs/specs.py:23 max_nozzle_temp_c = 300.0",
+      "src/mhs/specs.py:24 max_bed_temp_c = 100.0",
+      "src/mhs/specs.py:25 max_speed_mm_s = 500.0"
+    ]
+  },
+  "needs_recon": [
+    "motion"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/zhenwei2972__model-hardware-standard-bambu-labs- --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

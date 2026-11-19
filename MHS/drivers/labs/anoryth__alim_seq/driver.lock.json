@@ -1,0 +1,32 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.anoryth/alim_seq",
+  "upstream": {
+    "repo_url": "https://github.com/anoryth/alim_seq",
+    "commit": "4264b54bdb8087636da640420735c0633fd1dcb9",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "install": {
+    "commands": [
+      "pip install -r requirements.txt"
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any",
+    "notes": "The card and the clone state no Python requirement (task.json install.python is null). requirements.txt:7-11 installs pyvisa, pyvisa-py, psutil, pyserial and nidaqmx. The clone has no setup.py or pyproject.toml, so alim_seq is importable only when its clone root is on PYTHONPATH (or the process runs from that root); that is a deployment assumption. The upstream package is imported by native.py only on the hardware backend; the gate never installs or imports it."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeHMP4040"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "retriage-drivers-1-014",
+    "date": "2026-11-17"
+  },
+  "reviewed_by": null
+}

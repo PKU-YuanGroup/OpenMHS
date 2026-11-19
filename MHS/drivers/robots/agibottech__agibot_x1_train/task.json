@@ -1,0 +1,87 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.agibottech/agibot_x1_train",
+  "track": "robots",
+  "local_path": "robots/agibottech/agibot_x1_train",
+  "driver_dir": "MHS/drivers/robots/agibottech__agibot_x1_train",
+  "upstream": {
+    "repo_url": "https://github.com/agibottech/agibot_x1_train",
+    "commit": "e6651b9ab843fd1b1be70c087bfb7e8b28e44ccd",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 75,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "humanoid.envs.x1.x1_dh_stand_env:X1DHStandEnv",
+      "file": "humanoid/envs/x1/x1_dh_stand_env.py",
+      "line": 79,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "resources/robots/x1/mjcf/xyber_x1_flat.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "resources/robots/x1/mjcf/robot/xyber_x1/xyber_x1_serial.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "resources/robots/x1/mjcf/xyber_x1_flat.xml:1 MJCF scene model",
+      "resources/robots/x1/mjcf/robot/xyber_x1/xyber_x1_serial.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model resources/robots/x1/mjcf/xyber_x1_flat.xml:1",
+      "MJCF robot model resources/robots/x1/mjcf/robot/xyber_x1/xyber_x1_serial.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/agibottech__agibot_x1_train --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}
