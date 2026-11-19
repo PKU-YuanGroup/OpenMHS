@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mhs.openai4s.org/schema/0.9/sim-lock.schema.json",
+  "title": "OpenMHS simulator run record (sim.lock.json)",
+  "description": "How a simulator package passed its gate on the real upstream simulator (--backend sim): the environment it was installed in, the dependency versions that resolved, and the digest of that passing report. Written after the run; CI cannot repeat it and never trusts it. It is stale, and the market ignores it, once the package's fake gate digest (RESULT.json gate.digest) or its upstream commit no longer match.",
+  "type": "object",
+  "required": ["openmhs", "backend", "environment", "upstream", "gate", "fake_gate_digest", "checked_at"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "openmhs": { "$ref": "defs.schema.json#/$defs/specVersion" },
+    "backend": { "const": "sim" },
+    "environment": {
+      "type": "object",
+      "required": ["platform", "base_image", "python", "install", "constraints", "resolved"],
+      "additionalProperties": false,
+      "properties": {
+        "platform": { "type": "string", "enum": ["linux/arm64", "linux/amd64"], "description": "The container platform of the run." },
+        "base_image": { "type": "string", "minLength": 1, "description": "The base image the environment was built on, for example python:3.10-slim-bookworm." },
+        "system_packages": { "type": "array", "items": { "type": "string", "minLength": 1 }, "description": "Operating-system packages added to the base image." },
+        "python": { "type": "string", "pattern": "^3\\.[0-9]+(\\.[0-9]+)?$" },
+        "install": { "type": "array", "items": { "type": "string", "minLength": 1 }, "description": "The install commands run in the source tree of the pinned commit." },
+        "constraints": { "type": "array", "items": { "type": "string", "minLength": 1 }, "description": "Version pins chosen by the package author (requirement specifiers), applied to every install command." },
+        "resolved": { "type": "array", "items": { "type": "string", "minLength": 1 }, "description": "Every installed distribution as name==version, as the installer reported it after the install." }
+      }
+    },
+    "upstream": {
+      "type": "object",
+      "required": ["commit"],
+      "additionalProperties": false,
+      "properties": {
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+      }
+    },
+    "gate": {
+      "type": "object",
+      "required": ["sdk_version", "digest", "evidence_state", "warnings"],
+      "additionalProperties": false,
+      "properties": {
+        "sdk_version": { "type": "string", "minLength": 1 },
+        "digest": { "$ref": "defs.schema.json#/$defs/digest", "description": "mhs.driver.check.stable_digest of the passing sim report." },
+        "evidence_state": { "const": "contract_checked" },
+        "warnings": { "type": "array", "items": { "type": "string", "pattern": "^G[0-9]\\.[A-Z0-9_]+$" }, "description": "Codes of the warnings of the passing run." }
+      }
+    },
+    "fake_gate_digest": { "$ref": "defs.schema.json#/$defs/digest", "description": "RESULT.json gate.digest when this record was written." },
+    "checked_at": { "type": "string", "format": "date" },
+    "notes": { "type": "string" }
+  }
+}

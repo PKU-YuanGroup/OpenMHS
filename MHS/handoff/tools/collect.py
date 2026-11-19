@@ -21,6 +21,8 @@ Never trust a package's own RESULT.json: this tool runs ``python3 -m mhs.driver 
 * ``UNSOURCED_LIMIT_GATE_WARNING``: gate G4 warned that a cited line does not show the number: a reviewer must read it;
 * ``UNVERIFIABLE_CITATION``: a citation points into a binary file (a PDF manual); G4 cannot check the page, a reviewer
   must open it.
+* ``SIM_LOCK_STALE``: ``sim.lock.json`` (the record of a run on the real simulator) no longer matches RESULT.json's
+  digest or the card's pin: the package changed after that run; run it again or remove the record.
 
 and these as ``note:`` lines, which never fail anything: the gate's other warning codes, and ``DECISION_DEVIATION`` when
 a ``family-config`` card was written as a direct ``Driver`` or as another family (a legitimate result, for example a
@@ -115,6 +117,16 @@ def schema_problems(root: Path, document, schema: str) -> list[str]:
         sys.path.insert(0, source)
     from mhs.schema import default_store
     return [str(item) for item in default_store().validate(document, schema)]
+
+
+def sim_lock_staleness(root: Path, directory: Path) -> list[str]:
+    """Why the package's sim.lock.json is stale (empty when fresh or absent), from the SDK of this checkout."""
+    sys.dont_write_bytecode = True
+    source = str(root / "MHS" / "sdk" / "src")
+    if source not in sys.path:
+        sys.path.insert(0, source)
+    from mhs.sim_lock import staleness
+    return staleness(directory)
 
 
 def read_json(path: Path):
@@ -315,6 +327,8 @@ def summarise(root: Path, directory: Path, companions_root: Path | None = None) 
                             f"{expected_digest}; run the gate after your last edit and copy the digest line it prints")
     for note in residue(root, directory, card, companions_root):
         warnings.append("EXEMPLAR_RESIDUE: " + note)
+    for reason in sim_lock_staleness(root, directory):
+        warnings.append("SIM_LOCK_STALE: " + reason)
     other_warnings: dict[str, int] = {}
     for gate_result in report.get("gates", []):
         for finding in gate_result.get("findings", []):
