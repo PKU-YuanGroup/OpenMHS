@@ -1,46 +1,55 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "leisaac.tasks.pick_orange.direct.pick_orange_env:PickOrangeEnv (source/leisaac/leisaac/tasks/pick_orange/direct/pick_orange_env.py:61)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "node"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_112a912a3adce59f",
     "https://github.com/lightwheelai/leisaac"
   ],
-  "description": "lightwheelai/leisaac: catalog/discovery tooling (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Python. Catalog keywords: LeIsaac, teleoperation, functionality, IsaacLab, SO101Leader, LeRobot.",
+  "description": "lightwheelai/leisaac: catalog/discovery tooling (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 6. Catalog role: physics engines. Language: Python. Catalog keywords: LeIsaac, teleoperation, functionality, IsaacLab, SO101Leader, LeRobot.",
   "domains": [],
   "evidence": {
     "files_read": 3,
     "notes": "bounded static scan: 92 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/lightwheelai__leisaac/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "lerobot-real"
+    "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.lightwheelai/leisaac",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
-      "NEEDS_GPU: an import or the catalogue requires a GPU"
+      "NEEDS_GPU: an import or the catalogue requires a GPU",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/lightwheelai__leisaac: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/lightwheelai__leisaac --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Isaac Lab",
@@ -67,36 +76,38 @@
     "repo": "https://github.com/lightwheelai/leisaac"
   },
   "local_path": "robots/lightwheelai/leisaac",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "lightwheelai",
   "package_id": "gh.lightwheelai/leisaac",
   "quarantine": false,
-  "rank": 1149,
+  "rank": 39,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "leisaac",
   "repo_url": "https://github.com/lightwheelai/leisaac",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "24d3bcd3f1e4585740fc79921782c41617237812",
     "repo_url": "https://github.com/lightwheelai/leisaac"
   },
   "stars": 744,
   "tags": [
-    "lerobot-real",
+    "gymnasium",
     "robotics",
     "catalog discovery tooling",
     "physics engines",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "lightwheelai/leisaac",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 6,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -136,11 +147,30 @@
         "\\blerobot\\b",
         "\\blerobot\\b"
       ],
+      "family_note": "triage family gymnasium (catalogue family lerobot-real)",
       "family_rule": "scored",
       "family_score": 4,
+      "tier_note": "tier D -> B: triage family-config (override:recon)",
       "tier_rule": "D2-peripheral-category"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/lightwheelai__leisaac/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "Apache-2.0",
@@ -154,6 +184,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "24d3bcd3f1e4585740fc79921782c41617237812",
+      "driver_dir": "MHS/drivers/robots/lightwheelai__leisaac",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:71edf84f164db6b493403f83ae713fc19d54355909c547a56184f2ecd0bd0518",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -172,13 +217,15 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Reviewed by gpt-6.1-sol (a model): Use PickOrangeEnv at source/leisaac/leisaac/tasks/pick_orange/direct/pick_orange_env.py:61 as the environment entry.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
+      "family": "gymnasium",
       "hardware_transport": "class source.leisaac.leisaac.devices.lerobot.common.motors.feetech.feetech:FeetechMotorsBus uses the hardware transport serial",
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "helper": "GymnasiumDriver",
+      "justification": "Reviewed by gpt-6.1-sol (a model): Use PickOrangeEnv at source/leisaac/leisaac/tasks/pick_orange/direct/pick_orange_env.py:61 as the environment entry.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

@@ -54,12 +54,12 @@ A card is dispatched only when `decision` is direct-driver or family-config, `he
 |---|---|---|
 | 0 | exemplars, done before the handoff (curated overrides) | 4 |
 | 1 | pilot pool: the non-exemplar cards of tasks/pilot-candidates.json (MHS/handoff/pilot-20.json dispatches 20 of them) | 54 |
-| 2 | strict-ready: Python, pip install backed by a root file with no system dependency, no GPU, licence known, AST entry symbol (or, for MuJoCo, a main scene or robot model), candidate classes, no artifact download | 149 |
-| 3 | other dispatchable cards with an available helper | 425 |
+| 2 | strict-ready: Python, pip install backed by a root file with no system dependency, no GPU, licence known, AST entry symbol (or, for MuJoCo, a main scene or robot model), candidate classes, no artifact download | 153 |
+| 3 | other dispatchable cards with an available helper | 456 |
 | 4 | recon-only cards (decision untriaged, or a dispatchable card blocked on recon:entry_symbol): confirm an entry symbol and a decision | 0 |
-| 5 | family members waiting for a post-pilot helper (blocked_on helper:<name>) | 73 |
-| 6 | cards that need a GPU, Windows or an external engine without a helper (Isaac, Unity, Unreal, Habitat, AirSim, CARLA, Gazebo) | 116 |
-| 9 | never dispatched as a repo task: skip, reference and bridge-runtime cards | 2146 |
+| 5 | family members waiting for a post-pilot helper (blocked_on helper:<name>) | 92 |
+| 6 | cards that need a GPU, Windows or an external engine without a helper (Isaac, Unity, Unreal, Habitat, AirSim, CARLA, Gazebo) | 134 |
+| 9 | never dispatched as a repo task: skip, reference and bridge-runtime cards | 2074 |
 
 Rank within a wave (published and deterministic):
 
@@ -95,17 +95,17 @@ A full build needs the corpus (`labs/`, `robots/`, `work/`, the catalogue). `--c
 ## Counts
 
 - records: **2967** (labs 1045, robots 1922)
-- decisions: bridge-runtime 273, direct-driver 278, family-config 543, reference 320, skip 1553
-- dispatchable now: **0** (strict-ready 197); waiting for a helper: 3; quarantined: 4; forks and duplicates: 25
-- pinned commits: 2962; dual-mode records: 172
+- decisions: bridge-runtime 273, direct-driver 312, family-config 581, reference 305, skip 1496
+- dispatchable now: **0** (strict-ready 201); waiting for a helper: 3; quarantined: 4; forks and duplicates: 25
+- pinned commits: 2962; dual-mode records: 188
 - licence classes: copyleft 205, network-copyleft 28, permissive 1910, proprietary 17, source-available 43, unknown 708, weak-copyleft 56
 - cards needing a publication review: 816
-- evidence: agent_read 46, contract_checked 746, declared 6, static_scan 2169
+- evidence: agent_read 45, contract_checked 799, declared 6, static_scan 2117
 - catalogue rows without a clone: 3
 
 ## Provenance
 
 - catalogue: `openai4s_backend_catalog_all_sources/openai4s_backend_catalog.csv` (2975 rows, `sha256:89eee687e7a4...`)
 - capability catalogue: `MHS/spec/capabilities.json` (63 classes)
-- corpus lock: `MHS/registry/corpus.lock.jsonl`; overrides: `companion-sources-lock.json`, `companion-sources.json`, `exemplars.json`, `helper-wave-1-routing.json`, `labs.json`, `mode-corrections.json`, `p3-reauthor-routing.json`, `p5-reauthor-pf400-routing.json`, `partners.json`, `robots.json`, `ros-routing-20261102.json`, `ros-wave-b-routing.json`, `ros-wave-c-routing.json`, `waiting-routing.json`
+- corpus lock: `MHS/registry/corpus.lock.jsonl`; overrides: `companion-sources-lock.json`, `companion-sources.json`, `exemplars.json`, `helper-wave-1-routing.json`, `labs.json`, `mode-corrections.json`, `p3-reauthor-routing.json`, `p5-reauthor-pf400-routing.json`, `partners.json`, `retriage-wave1.json`, `robots.json`, `ros-routing-20261102.json`, `ros-wave-b-routing.json`, `ros-wave-c-routing.json`, `waiting-routing.json`
 - analyst profiles: 2967; recon notes: 54

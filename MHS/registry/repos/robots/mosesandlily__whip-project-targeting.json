@@ -1,47 +1,53 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "mujoco",
+    "entry_points": [
+      "modules.simulation:Simulation (modules/simulation.py:16)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1"
+  ],
   "catalog_refs": [
     "repo_b7d719e305af3c08",
     "https://github.com/mosesandlily/whip-project-targeting"
   ],
-  "description": "mosesandlily/whip-project-targeting: policy/algorithm for robot arm manipulation (robotics track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: MuJoCo. Language: Python. Catalog keywords: MuJoCo.",
+  "description": "mosesandlily/whip-project-targeting: policy/algorithm for robot arm manipulation (robotics track). OpenMHS plan: family-config with MujocoDriver, wave 3. Catalog role: controller. Declared backend: MuJoCo. Language: Python. Catalog keywords: MuJoCo.",
   "domains": [
     "robot arm manipulation"
   ],
   "evidence": {
     "files_read": 3,
     "notes": "bounded static scan: 88 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/mosesandlily__whip-project-targeting/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
     "mujoco"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.mosesandlily/whip-project-targeting",
   "integration": {
-    "blockers": [
-      "NOT_A_DEVICE: catalogue category 'policy/algorithm' with no env registration or device evidence"
-    ],
-    "effort": "EX",
-    "next_action": "Not integrated: catalogue category 'policy/algorithm' with no env registration or device evidence",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "blockers": [],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/mosesandlily__whip-project-targeting: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/mosesandlily__whip-project-targeting --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/mujoco.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Python SDK",
@@ -62,17 +68,19 @@
     "repo": "https://github.com/mosesandlily/whip-project-targeting"
   },
   "local_path": "robots/mosesandlily/whip-project-targeting",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "mosesandlily",
   "package_id": "gh.mosesandlily/whip-project-targeting",
   "quarantine": false,
-  "rank": 1258,
+  "rank": 317,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "whip-project-targeting",
   "repo_url": "https://github.com/mosesandlily/whip-project-targeting",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "8025f9f156bf3cf591afbedca18eaa03e3846d4a",
     "repo_url": "https://github.com/mosesandlily/whip-project-targeting"
@@ -84,15 +92,15 @@
     "policy algorithm",
     "controller",
     "simulated",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "mosesandlily/whip-project-targeting",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -132,10 +140,25 @@
       ],
       "family_rule": "scored",
       "family_score": 10,
-      "tier_note": "tier B -> D: triage skip (skip:peripheral)",
       "tier_rule": "B4-controller"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/mosesandlily__whip-project-targeting/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "BSD-3-Clause",
@@ -149,6 +172,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "8025f9f156bf3cf591afbedca18eaa03e3846d4a",
+      "driver_dir": "MHS/drivers/robots/mosesandlily__whip-project-targeting",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:bd3cb23c5b0f01a2a8155d5f0b839976b2c0a7b77f0f4192e29dc1fbdb2bd501",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -164,12 +202,14 @@
     },
     "triage": {
       "evidence": [
-        "catalogue category 'policy/algorithm' with no env registration or device evidence"
+        "override (retriage-wave1.json): Family-config/mujoco sim-env: the repository ships MuJoCo MJCF scenes plus a Simulation class that loads and torque-steps them, so a MujocoDriver can serve a scene directly.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "mujoco",
+      "helper": "MujocoDriver",
+      "justification": "Family-config/mujoco sim-env: the repository ships MuJoCo MJCF scenes plus a Simulation class that loads and torque-steps them, so a MujocoDriver can serve a scene directly.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

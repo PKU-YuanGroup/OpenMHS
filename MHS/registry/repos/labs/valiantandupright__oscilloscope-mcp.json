@@ -1,48 +1,56 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "osc.scope:Scope (osc/scope.py:112)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.device.configure.v1",
+    "cap.sensing.read.v1",
+    "cap.sensing.image.v1"
+  ],
   "catalog_refs": [
     "repo_80a3ed1f3812f84d",
     "https://github.com/valiantandupright/oscilloscope-mcp"
   ],
-  "description": "valiantandupright/oscilloscope-mcp: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: reference only (host). Declared backend: MCP; PyVISA. Language: Python. Catalog keywords: SCPI, MCP, Keysight, DSOX1204A.",
+  "description": "valiantandupright/oscilloscope-mcp: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 3. Catalog role: protocol bridge. Declared backend: MCP; PyVISA. Language: Python. Catalog keywords: SCPI, MCP,.",
   "domains": [
     "electronic measurement"
   ],
   "evidence": {
     "files_read": 2,
     "notes": "bounded static scan: 18 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/labs/valiantandupright__oscilloscope-mcp/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "scpi-visa"
+    "python-object"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.valiantandupright/oscilloscope-mcp",
   "integration": {
     "blockers": [
-      "REFERENCE_ONLY: role host",
       "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata"
     ],
-    "effort": "EX",
-    "next_action": "Reference only: a host, orchestrator or MCP wrapper of a covered backend; integrate the backend instead.",
-    "reason_code": "reference:host",
-    "role": "host",
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/valiantandupright__oscilloscope-mcp: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/valiantandupright__oscilloscope-mcp --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
     "scenario_required": false,
-    "strategy": "reference"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "MCP",
@@ -62,35 +70,38 @@
     "repo": "https://github.com/valiantandupright/oscilloscope-mcp"
   },
   "local_path": "labs/valiantandupright/oscilloscope-mcp",
-  "modes": [],
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
   "owner": "valiantandupright",
   "package_id": "gh.valiantandupright/oscilloscope-mcp",
   "quarantine": false,
-  "rank": 1992,
+  "rank": 358,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "oscilloscope-mcp",
   "repo_url": "https://github.com/valiantandupright/oscilloscope-mcp",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "20c25de5a2f01cdf037b10c7d68a170bc233f4c4",
     "repo_url": "https://github.com/valiantandupright/oscilloscope-mcp"
   },
   "stars": 1,
   "tags": [
-    "scpi-visa",
+    "python-object",
     "lab instrumentation",
     "hardware interface",
-    "reference"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "valiantandupright/oscilloscope-mcp",
   "track": "labs",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -130,12 +141,59 @@
       "family_matches": [
         "\\bpyvisa\\b"
       ],
+      "family_note": "triage family python-object (catalogue family scpi-visa)",
       "family_rule": "scored",
       "family_score": 10,
-      "tier_note": "tier B -> D: triage reference (reference:host)",
       "tier_rule": "B2-protocol-bridge"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/valiantandupright__oscilloscope-mcp/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.image.v1"
+            ],
+            "kind": "sensor.camera"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/valiantandupright__oscilloscope-mcp/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/valiantandupright__oscilloscope-mcp/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.image.v1"
+            ],
+            "kind": "sensor.camera"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -149,6 +207,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "20c25de5a2f01cdf037b10c7d68a170bc233f4c4",
+      "driver_dir": "MHS/drivers/labs/valiantandupright__oscilloscope-mcp",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:77a53197575e98bbc707df567d1ffccc0f7503915ca140f5e08449a60a43a32f",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -165,13 +238,15 @@
     },
     "triage": {
       "evidence": [
-        "MCP server wrapping the covered backend pyvisa"
+        "override (retriage-wave1.json): Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 uses a direct Driver over Scope; runtime channel commands and binary waveform conversion do not fit a fixed text SCPI table.",
+        "rules alone: reference (reference:host, rule 7)"
       ],
-      "family": null,
+      "family": "python-object",
       "hardware_transport": "class osc.scope:Scope uses the hardware transport pyvisa",
-      "helper": null,
-      "reason_code": "reference:host",
-      "rule": 7,
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 uses a direct Driver over Scope; runtime channel commands and binary waveform conversion do not fit a fixed text SCPI table.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

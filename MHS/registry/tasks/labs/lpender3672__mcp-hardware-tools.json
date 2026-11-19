@@ -11,20 +11,27 @@
     "license_spdx": "Apache-2.0",
     "license_class": "permissive"
   },
-  "decision": "reference",
-  "reason_code": "reference:host",
-  "role": "host",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1025,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 53,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "hwtools.drivers.joyit.jds6600:JDS6600",
+      "file": "src/hwtools/drivers/joyit/jds6600.py",
+      "line": 119,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": ">=3.12",
@@ -47,18 +54,50 @@
     "upstream_tests": "tests"
   },
   "hints": {
-    "reads": [],
-    "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "reads": [
+      "SerialHarness.idn",
+      "JDS6600.idn",
+      "JDS6600.read_arbitrary",
+      "JDS6600.read_channel",
+      "DS1054Z.idn"
+    ],
+    "writes": [
+      "JDS6600.configure_channel",
+      "JDS6600.set_phase_deg",
+      "DS1054Z.configure_acquire",
+      "DS1054Z.configure_channel",
+      "DS1054Z.configure_timebase",
+      "DS1054Z.configure_trigger"
+    ],
+    "actions": [
+      "SerialHarness.start_i2c",
+      "SerialHarness.start_spi",
+      "SerialHarness.start_square",
+      "SerialHarness.start_uart_stream",
+      "SerialHarness.stop",
+      "JDS6600.enable_output",
+      "DS1054Z.capture",
+      "DS1054Z.force_trigger",
+      "DS1054Z.run",
+      "DS1054Z.stop",
+      "DS1054Z.trigger_status"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.sensing.image.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
-    "risk_floor": "R0",
-    "limit_hints": []
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/hwtools/drivers/rigol/ds1054z.py:334 _TB_MIN = 5e-09",
+      "src/hwtools/drivers/rigol/ds1054z.py:335 _TB_MAX = 50.0"
+    ]
   },
   "needs_recon": [],
-  "timebox_min": 15,
+  "timebox_min": 120,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/lpender3672__mcp-hardware-tools --backend fake",
   "skip_reason": null,
   "publish_review": "not_required"

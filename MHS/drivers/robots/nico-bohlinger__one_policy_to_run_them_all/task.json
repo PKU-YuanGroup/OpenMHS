@@ -1,0 +1,117 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.nico-bohlinger/one_policy_to_run_them_all",
+  "track": "robots",
+  "local_path": "robots/nico-bohlinger/one_policy_to_run_them_all",
+  "driver_dir": "MHS/drivers/robots/nico-bohlinger__one_policy_to_run_them_all",
+  "upstream": {
+    "repo_url": "https://github.com/nico-bohlinger/one_policy_to_run_them_all",
+    "commit": "7c1819444028c529b0a964fe3f32878333b1310a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 2,
+  "rank": 152,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "one_policy_to_run_them_all.environments.multi_robot.create_env:create_env",
+      "file": "one_policy_to_run_them_all/environments/multi_robot/create_env.py",
+      "line": 15,
+      "confidence": "override"
+    },
+    {
+      "symbol": "one_policy_to_run_them_all.environments.anymal_b.environment:AnymalB",
+      "file": "one_policy_to_run_them_all/environments/anymal_b/environment.py",
+      "line": 27,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "one_policy_to_run_them_all/environments/anymal_b/data/anymal_b.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "one_policy_to_run_them_all/environments/anymal_c/data/anymal_c.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "one_policy_to_run_them_all/environments/atlas/data/atlas.xml",
+      "line": 21,
+      "kind": "robot"
+    },
+    {
+      "file": "one_policy_to_run_them_all/environments/badger/data/badger.xml",
+      "line": 1,
+      "kind": "robot"
+    },
+    {
+      "file": "one_policy_to_run_them_all/environments/badger_locked/data/badger_locked.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "one_policy_to_run_them_all/environments/anymal_b/data/anymal_b.xml:1 MJCF robot model",
+      "one_policy_to_run_them_all/environments/anymal_c/data/anymal_c.xml:1 MJCF robot model",
+      "one_policy_to_run_them_all/environments/atlas/data/atlas.xml:21 MJCF robot model",
+      "one_policy_to_run_them_all/environments/badger/data/badger.xml:1 MJCF robot model"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF robot model one_policy_to_run_them_all/environments/anymal_b/data/anymal_b.xml:1",
+      "MJCF robot model one_policy_to_run_them_all/environments/anymal_c/data/anymal_c.xml:1",
+      "MJCF robot model one_policy_to_run_them_all/environments/atlas/data/atlas.xml:21",
+      "MJCF robot model one_policy_to_run_them_all/environments/badger/data/badger.xml:1",
+      "MJCF robot model one_policy_to_run_them_all/environments/badger_locked/data/badger_locked.xml:1",
+      "MJCF robot model one_policy_to_run_them_all/environments/barkour_v0/data/barkour_v0.xml:1",
+      "MJCF robot model one_policy_to_run_them_all/environments/barkour_vb/data/barkour_vb.xml:1",
+      "MJCF robot model one_policy_to_run_them_all/environments/bittle/data/bittle.xml:1",
+      "MJCF robot model one_policy_to_run_them_all/environments/cassie/data/cassie.xml:1",
+      "MJCF robot model one_policy_to_run_them_all/environments/hexapod/data/hexapod.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/nico-bohlinger__one_policy_to_run_them_all --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

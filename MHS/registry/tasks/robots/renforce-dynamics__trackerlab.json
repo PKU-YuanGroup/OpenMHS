@@ -11,20 +11,27 @@
     "license_spdx": "MIT",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 1250,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 55,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "trackerLab.tracker_env:ManagerBasedTrackerEnv",
+      "file": "source/trackerLab/trackerLab/tracker_env/manager_based_tracker_env/manager_based_tracker_env.py",
+      "line": 9,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": null,
@@ -36,28 +43,46 @@
   "mock_strategy": {
     "preferred": "upstream-sim",
     "hints": [
-      "source/sim2simlib/sim2simlib/model/config.py:67 Sim2Sim_Config",
-      "source/sim2simlib/sim2simlib/model/sim2sim_base.py:17 Sim2Sim",
-      "source/sim2simlib/sim2simlib/model/sim2sim_base.py:174 Sim2SimBaseModel",
-      "source/sim2simlib/sim2simlib/model/sim2sim_motion.py:13 Sim2SimMotionModel",
-      "source/sim2simlib/sim2simlib/model/sim2sim_replay.py:14 Sim2SimReplayModel"
+      "source/trackerTask/trackerTask/beyondMimic/tracking/config/g1/__init__.py:9 gym env Tracking-Flat-G1-v0",
+      "source/trackerTask/trackerTask/beyondMimic/tracking/config/g1/__init__.py:19 gym env Tracking-Flat-G1-Wo-State-Estimation-v0",
+      "source/trackerTask/trackerTask/beyondMimic/tracking/config/g1/__init__.py:30 gym env Tracking-Flat-G1-Low-Freq-v0",
+      "source/trackerTask/trackerTask/beyondMimic/tracking/config/humanoid/__init__.py:9 gym env Tracking-Flat-Walk-Humanoid-v0"
     ],
     "upstream_tests": "source/deploylib/scripts/test"
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "gym env Tracking-Flat-G1-v0 registered at source/trackerTask/trackerTask/beyondMimic/tracking/config/g1/__init__.py:9",
+      "gym env Tracking-Flat-G1-Wo-State-Estimation-v0 registered at source/trackerTask/trackerTask/beyondMimic/tracking/config/g1/__init__.py:19",
+      "gym env Tracking-Flat-G1-Low-Freq-v0 registered at source/trackerTask/trackerTask/beyondMimic/tracking/config/g1/__init__.py:30",
+      "gym env Tracking-Flat-Walk-Humanoid-v0 registered at source/trackerTask/trackerTask/beyondMimic/tracking/config/humanoid/__init__.py:9",
+      "gym env Tracking-Flat-WalkBack-Humanoid-v0 registered at source/trackerTask/trackerTask/beyondMimic/tracking/config/humanoid/__init__.py:19",
+      "gym env Tracking-Flat-WalkBox-Humanoid-v0 registered at source/trackerTask/trackerTask/beyondMimic/tracking/config/humanoid/__init__.py:29",
+      "gym env Tracking-Flat-R2-v0 registered at source/trackerTask/trackerTask/beyondMimic/tracking/config/r2_wb/__init__.py:9",
+      "gym env Tracking-Flat-R2-Wo-State-Estimation-v0 registered at source/trackerTask/trackerTask/beyondMimic/tracking/config/r2_wb/__init__.py:19",
+      "gym env Tracking-Flat-R2-Low-Freq-v0 registered at source/trackerTask/trackerTask/beyondMimic/tracking/config/r2_wb/__init__.py:30",
+      "gym env Loco-H1-Velocity registered at source/trackerTask/trackerTask/locomotion_rl_lab/locomotion/robots/h1/__init__.py:3",
+      "gym env G123DAMPWalk registered at source/trackerTask/trackerTask/trackerLab/amp_velocity/robots/g1_23d/__init__.py:14",
+      "gym env PiPlus27DAMPWalk registered at source/trackerTask/trackerTask/trackerLab/amp_velocity/robots/pi/__init__.py:14"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/renforce-dynamics__trackerlab --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

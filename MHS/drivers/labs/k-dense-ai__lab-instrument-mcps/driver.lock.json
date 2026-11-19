@@ -1,0 +1,32 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-lock.schema.json",
+  "openmhs": "0.9",
+  "package_id": "gh.k-dense-ai/lab-instrument-mcps",
+  "upstream": {
+    "repo_url": "https://github.com/k-dense-ai/lab-instrument-mcps",
+    "commit": "46545ea7eb818249a524c3340dc80657f448430f",
+    "license_spdx": "Apache-2.0"
+  },
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "windows",
+    "notes": "The clone is an unpublished uv workspace (root pyproject.toml). The hardware backend imports labmcp and labmcp-julabo, which live in packages/labmcp and servers/chemistry/julabo-circulator; a hardware deployment must install those distributions (for example pip install -e packages/labmcp -e servers/chemistry/julabo-circulator) in addition to the card's root install. The gate never imports native.py or the upstream package."
+  },
+  "backends": {
+    "hardware": ".native:connect",
+    "fake": ".fake:FakeJulaboCirculator"
+  },
+  "sdk_version": "0.9.0.dev0",
+  "authored_by": {
+    "kind": "model",
+    "model_id": "deepseek-v4.1-flash:1017",
+    "run_id": "retriage-drivers-1-051",
+    "date": "2026-11-17"
+  },
+  "reviewed_by": null
+}

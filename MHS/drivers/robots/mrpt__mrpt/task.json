@@ -1,0 +1,70 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.mrpt/mrpt",
+  "track": "robots",
+  "local_path": "robots/mrpt/mrpt",
+  "driver_dir": "MHS/drivers/robots/mrpt__mrpt",
+  "upstream": {
+    "repo_url": "https://github.com/mrpt/mrpt",
+    "commit": "dfa5194b3f613a5cfdafb035915e06a8c63e7b77",
+    "license_spdx": "BSD-3-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "SDK_BUG"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 2,
+  "exemplar": "MHS/drivers/robots/xarm-developer__xarm-python-sdk",
+  "entry_symbols": [
+    {
+      "symbol": "mrpt.hwdrivers:CTaoboticsIMU",
+      "file": "modules/mrpt_hwdrivers/python_bindings/mrpt_hwdrivers_py.cpp",
+      "line": 121,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "modules/mrpt_bayes/tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": []
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "capabilities",
+    "motion"
+  ],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/mrpt__mrpt --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

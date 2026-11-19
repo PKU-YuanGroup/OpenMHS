@@ -1,47 +1,59 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "gym_guided_vision.env:GuidedVisionEnv (gym_guided_vision/gym_guided_vision/env.py:32)",
+      "gym_guided_vision.env:InsertPegEnv (gym_guided_vision/gym_guided_vision/env.py:412)",
+      "gym_guided_vision.env:SlotInsertionEnv (gym_guided_vision/gym_guided_vision/env.py:503)",
+      "gym_guided_vision.env:SewNeedleEnv (gym_guided_vision/gym_guided_vision/env.py:592)",
+      "gym_guided_vision.env:TubeTransferEnv (gym_guided_vision/gym_guided_vision/env.py:693)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python",
     "make"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_b8d679d05cccb4d4",
     "https://github.com/soltanilara/av-aloha"
   ],
-  "description": "soltanilara/av-aloha: catalog/discovery tooling (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Python. Catalog keywords: paper, Active, Vision, Might, You, Need.",
+  "description": "soltanilara/av-aloha: catalog/discovery tooling (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 3. Catalog role: physics engines. Language: Python. Catalog keywords: paper, Active, Vision, Might, You, Need.",
   "domains": [],
   "evidence": {
     "files_read": 5,
     "notes": "bounded static scan: 282 files enumerated (max depth 3), 5 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/soltanilara__av-aloha/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "ros1"
+    "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.soltanilara/av-aloha",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
       "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/soltanilara__av-aloha: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/soltanilara__av-aloha --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "CLI",
@@ -68,36 +80,38 @@
     "repo": "https://github.com/soltanilara/av-aloha"
   },
   "local_path": "robots/soltanilara/av-aloha",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "soltanilara",
   "package_id": "gh.soltanilara/av-aloha",
   "quarantine": false,
-  "rank": 1599,
+  "rank": 389,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "av-aloha",
   "repo_url": "https://github.com/soltanilara/av-aloha",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "65da5200dda9200ced58bc3dadb5345f4703d017",
     "repo_url": "https://github.com/soltanilara/av-aloha"
   },
   "stars": 62,
   "tags": [
-    "ros1",
+    "gymnasium",
     "robotics",
     "catalog discovery tooling",
     "physics engines",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "soltanilara/av-aloha",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -136,11 +150,30 @@
         "\\bros\\b",
         "\\bros ?1\\b"
       ],
+      "family_note": "triage family gymnasium (catalogue family ros1)",
       "family_rule": "scored",
       "family_score": 4,
+      "tier_note": "tier D -> B: triage family-config (override:recon)",
       "tier_rule": "D2-peripheral-category"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/soltanilara__av-aloha/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -154,6 +187,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "65da5200dda9200ced58bc3dadb5345f4703d017",
+      "driver_dir": "MHS/drivers/robots/soltanilara__av-aloha",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:77c8d34c081c2015ec3846e09f331d03e235ea7b7845ce3951ed4e29c0e12d58",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -179,13 +227,15 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): This repository ships a pip-installable Gymnasium/MuJoCo environment, so it is a family-config sim-env, not a peripheral.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
+      "family": "gymnasium",
       "hardware_transport": "class lerobot.lerobot.common.robot_devices.motors.dynamixel:DynamixelMotorsBus uses the hardware transport dynamixel_sdk",
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "helper": "GymnasiumDriver",
+      "justification": "This repository ships a pip-installable Gymnasium/MuJoCo environment, so it is a family-config sim-env, not a peripheral.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

@@ -51,7 +51,7 @@ Units differ per component; virtual components are not chemistry models.
 ## First task cards
 
 - `gh.automatedchemistry/flowchem`: bridge-runtime, wave 9, rank 62, `MHS/registry/tasks/labs/automatedchemistry__flowchem.json`
-- `gh.automatedchemistry/flowchem-virtual`: bridge-runtime, wave 9, rank 823, `MHS/registry/tasks/labs/automatedchemistry__flowchem-virtual.json`
+- `gh.automatedchemistry/flowchem-virtual`: bridge-runtime, wave 9, rank 803, `MHS/registry/tasks/labs/automatedchemistry__flowchem-virtual.json`
 
 ## Sources
 

@@ -56,11 +56,11 @@ Large scene datasets and GPU rendering.
 
 ## First task cards
 
-- `gh.facebookresearch/habitat-sim`: bridge-runtime, wave 9, rank 130, `MHS/registry/tasks/robots/facebookresearch__habitat-sim.json`
-- `gh.stanfordvl/igibson`: bridge-runtime, wave 9, rank 200, `MHS/registry/tasks/robots/stanfordvl__igibson.json`
-- `gh.gt-ripl/robo-vln`: skip, wave 9, rank 390, `MHS/registry/tasks/robots/gt-ripl__robo-vln.json`
-- `gh.ram81/habitat-imitation-baselines`: skip, wave 9, rank 473, `MHS/registry/tasks/robots/ram81__habitat-imitation-baselines.json`
-- `gh.silence143/emmoe`: skip, wave 9, rank 506, `MHS/registry/tasks/robots/silence143__emmoe.json`
+- `gh.facebookresearch/habitat-sim`: bridge-runtime, wave 9, rank 129, `MHS/registry/tasks/robots/facebookresearch__habitat-sim.json`
+- `gh.stanfordvl/igibson`: bridge-runtime, wave 9, rank 197, `MHS/registry/tasks/robots/stanfordvl__igibson.json`
+- `gh.gt-ripl/robo-vln`: skip, wave 9, rank 380, `MHS/registry/tasks/robots/gt-ripl__robo-vln.json`
+- `gh.ram81/habitat-imitation-baselines`: skip, wave 9, rank 462, `MHS/registry/tasks/robots/ram81__habitat-imitation-baselines.json`
+- `gh.silence143/emmoe`: skip, wave 9, rank 495, `MHS/registry/tasks/robots/silence143__emmoe.json`
 
 ## Sources
 

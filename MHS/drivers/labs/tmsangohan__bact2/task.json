@@ -1,0 +1,110 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.tmsangohan/bact2",
+  "track": "labs",
+  "local_path": "labs/tmsangohan/bact2",
+  "driver_dir": "MHS/drivers/labs/tmsangohan__bact2",
+  "upstream": {
+    "repo_url": "https://github.com/tmsangohan/bact2",
+    "commit": "1521bf0323aa1ad77c8a00d9664e4b6746157432",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "driver-pack",
+  "family": "ophyd",
+  "helper": "OphydDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 252,
+  "exemplar": "MHS/drivers/labs/bcda-aps__apstools",
+  "entry_symbols": [
+    {
+      "symbol": "bact2.ophyd.devices.raw.power_converter:PowerConverter",
+      "file": "bact2/ophyd/devices/raw/power_converter.py",
+      "line": 7,
+      "confidence": "override"
+    },
+    {
+      "symbol": "bact2.ophyd.devices.raw.steerers:Steerer",
+      "file": "bact2/ophyd/devices/raw/steerers.py",
+      "line": 96,
+      "confidence": "override"
+    },
+    {
+      "symbol": "bact2.ophyd.devices.pp.bpm.bpm:BPMStorageRing",
+      "file": "bact2/ophyd/devices/pp/bpm/bpm.py",
+      "line": 245,
+      "confidence": "override"
+    },
+    {
+      "symbol": "bact2.ophyd.devices.raw.vacuum:VacuumSensor",
+      "file": "bact2/ophyd/devices/raw/vacuum.py",
+      "line": 3,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "BPMWaveform.counter (attribute)",
+      "BPMWaveform.ds (attribute)",
+      "BPMWaveform.gain_raw (attribute)",
+      "BPMWaveform.indices (attribute)",
+      "BPMWaveform.intensity_s (attribute)",
+      "BPMWaveform.intensity_z (attribute)",
+      "BPMWaveform.names (attribute)",
+      "BPMWaveform.packed_data (attribute)",
+      "BPMWaveform.ready (attribute)",
+      "BPMWaveform.status (attribute)",
+      "BPMWaveform.x (attribute)",
+      "BPMWaveform.y (attribute)"
+    ],
+    "writes": [
+      "BPMWaveform.setConfigData"
+    ],
+    "actions": [
+      "BPMWaveform.trigger",
+      "BeamCurrentTriggered.trigger",
+      "BPMChannel.trigger"
+    ],
+    "candidate_classes": [
+      "cap.measure.intensity.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "bact2/ophyd/devices/raw/master_clock.py:81 _df_max = 4"
+    ]
+  },
+  "needs_recon": [
+    "license"
+  ],
+  "timebox_min": 120,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/tmsangohan__bact2 --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

@@ -1,47 +1,53 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "rigol_mcp.mho98.session:Session (src/rigol_mcp/mho98/session.py:75)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1"
+  ],
   "catalog_refs": [
     "repo_04a9e1c1eb6bc1b5",
     "https://github.com/kitour/rigol-mho98-mcp"
   ],
-  "description": "kitour/rigol-mho98-mcp: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: reference only (host). Declared backend: MCP. Language: Python. Catalog keywords: RIGOL, MHO98, USB, MCP, FFT.",
+  "description": "kitour/rigol-mho98-mcp: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 3. Catalog role: protocol bridge. Declared backend: MCP. Language: Python. Catalog keywords: RIGOL, MHO98, USB, MCP, FFT.",
   "domains": [
     "electronic measurement"
   ],
   "evidence": {
     "files_read": 3,
     "notes": "bounded static scan: 111 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/labs/kitour__rigol-mho98-mcp/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "mcp-proxy"
+    "python-object"
   ],
   "hardware_free": false,
   "id": "gh.kitour/rigol-mho98-mcp",
   "integration": {
-    "blockers": [
-      "REFERENCE_ONLY: role host"
-    ],
-    "effort": "EX",
-    "next_action": "Reference only: a host, orchestrator or MCP wrapper of a covered backend; integrate the backend instead.",
-    "reason_code": "reference:host",
-    "role": "host",
+    "blockers": [],
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/kitour__rigol-mho98-mcp: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/kitour__rigol-mho98-mcp --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
     "scenario_required": false,
-    "strategy": "reference"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "MCP",
@@ -61,16 +67,18 @@
     "repo": "https://github.com/kitour/rigol-mho98-mcp"
   },
   "local_path": "labs/kitour/rigol-mho98-mcp",
-  "modes": [],
+  "modes": [
+    "hardware"
+  ],
   "owner": "kitour",
   "package_id": "gh.kitour/rigol-mho98-mcp",
   "quarantine": false,
-  "rank": 1017,
+  "rank": 51,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "rigol-mho98-mcp",
   "repo_url": "https://github.com/kitour/rigol-mho98-mcp",
-  "ring": 3,
+  "ring": 1,
   "simulation": false,
   "source": {
     "commit": "22fc52291dee96b01e75c0e6549c3175d1d5ec35",
@@ -78,18 +86,18 @@
   },
   "stars": 0,
   "tags": [
-    "mcp-proxy",
+    "python-object",
     "lab instrumentation",
     "hardware interface",
-    "reference"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "kitour/rigol-mho98-mcp",
   "track": "labs",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -127,12 +135,29 @@
       "family_matches": [
         "\\bmcp\\b"
       ],
+      "family_note": "triage family python-object (catalogue family mcp-proxy)",
       "family_rule": "scored",
       "family_score": 10,
-      "tier_note": "tier B -> D: triage reference (reference:host)",
       "tier_rule": "B2-protocol-bridge"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/kitour__rigol-mho98-mcp/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "MIT",
@@ -146,6 +171,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "22fc52291dee96b01e75c0e6549c3175d1d5ec35",
+      "driver_dir": "MHS/drivers/labs/kitour__rigol-mho98-mcp",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:22f58433549d7a4704e468323799a28a7c7fdd31506158b85262d58bb0083855",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -162,13 +202,15 @@
     },
     "triage": {
       "evidence": [
-        "MCP server wrapping the covered backend pyvisa"
+        "override (retriage-wave1.json): Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 uses a decorated Driver over Session for binary waveform decoding, SCPI error handling and confirmed acquisition stop; the ScpiDriver card does not describe this package.",
+        "rules alone: reference (reference:host, rule 7)"
       ],
-      "family": null,
+      "family": "python-object",
       "hardware_transport": "class rigol_mcp.mho98.session:Session uses the hardware transport pyvisa",
-      "helper": null,
-      "reason_code": "reference:host",
-      "rule": 7,
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 uses a decorated Driver over Session for binary waveform decoding, SCPI error handling and confirmed acquisition stop; the ScpiDriver card does not describe this package.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

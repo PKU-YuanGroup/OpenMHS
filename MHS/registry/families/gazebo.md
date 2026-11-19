@@ -21,10 +21,10 @@ A package is done when `python3 -m mhs.driver check <driver-dir> --backend fake`
 ## Registry coverage
 
 - Repos: **134**
-- Decisions: bridge-runtime 11, family-config 54, reference 5, skip 64
-- Waves: 3: 44, 5: 10, 9: 80
+- Decisions: bridge-runtime 11, family-config 55, reference 5, skip 63
+- Waves: 3: 44, 5: 11, 9: 79
 - Dispatchable now: 0
-- Modes: hardware 6, simulated 61
+- Modes: hardware 7, simulated 62
 
 ## Applicability
 
@@ -69,8 +69,8 @@ Gazebo Sim and Gazebo Classic expose different interfaces and plugin contracts. 
 - `gh.frankarobotics/franka_ros`: family-config, wave 3, rank 9, `MHS/registry/tasks/robots/frankarobotics__franka_ros.json`
 - `gh.kinovarobotics/ros_kortex`: family-config, wave 3, rank 13, `MHS/registry/tasks/robots/kinovarobotics__ros_kortex.json`
 - `gh.robotis-git/turtlebot3`: family-config, wave 3, rank 18, `MHS/registry/tasks/robots/robotis-git__turtlebot3.json`
-- `gh.robin-shaun/xtdrone`: family-config, wave 3, rank 72, `MHS/registry/tasks/robots/robin-shaun__xtdrone.json`
-- `gh.nasa/astrobee`: family-config, wave 3, rank 79, `MHS/registry/tasks/robots/nasa__astrobee.json`
+- `gh.robin-shaun/xtdrone`: family-config, wave 3, rank 79, `MHS/registry/tasks/robots/robin-shaun__xtdrone.json`
+- `gh.nasa/astrobee`: family-config, wave 3, rank 87, `MHS/registry/tasks/robots/nasa__astrobee.json`
 
 ## Sources
 

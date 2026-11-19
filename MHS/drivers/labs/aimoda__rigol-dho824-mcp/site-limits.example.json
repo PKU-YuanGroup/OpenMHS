@@ -1,0 +1,23 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example DHO824 bench with a preconfigured 1X probe ratio",
+  "issued_by": {"id": "operator:example"},
+  "notes": "Example only, not automatically applied. Prepare channel 1 at a 1X probe ratio with a voltage axis before use. The 1X range is stated in manuals/DHO800900_ProgrammingGuide_EN.md:3856. This overlay permits only 1X writes, but cannot verify the initial instrument state or prevent front-panel or other-client changes. Choose bounds for the actual deployment; this is not a probe-voltage rating or electrical protection.",
+  "devices": {
+    "mhs://localhost/rigol-dho824": {
+      "channel1_scale": {
+        "min": 0.0005,
+        "max": 10.0,
+        "unit": "V",
+        "source": "operator",
+        "reason": "Example only: 500 uV/div to 10 V/div for the preconfigured 1X, voltage-axis channel."
+      },
+      "channel1_probe": {
+        "allowed": [1.0],
+        "source": "operator",
+        "reason": "Example only: keep probe-ratio writes at the 1X setting used for the example scale range."
+      }
+    }
+  }
+}

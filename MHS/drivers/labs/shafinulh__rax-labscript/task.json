@@ -1,0 +1,115 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.shafinulh/rax-labscript",
+  "track": "labs",
+  "local_path": "labs/shafinulh/rax-labscript",
+  "driver_dir": "MHS/drivers/labs/shafinulh__rax-labscript",
+  "upstream": {
+    "repo_url": "https://github.com/shafinulh/rax-labscript",
+    "commit": "c31964385d2e50f8a51b0a130cdb857bbf66779a",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 95,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "user_devices.NuvuCamera.Nuvu_sdk.Nuvu_cam_utils:NuvuCamUtils",
+      "file": "userlib/user_devices/NuvuCamera/Nuvu_sdk/Nuvu_cam_utils.py",
+      "line": 23,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "userlib/labscriptlib/main_experiment_control/dummy_connection_table.py:1",
+      "userlib/labscriptlib/main_experiment_control/sequences/dummy_benchmarking.py:1"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "NuvuCamera.get_attribute",
+      "NuvuCamera.get_attribute_names",
+      "NuvuCamera.get_cam_data",
+      "NuvuCamera.camera_utils.get_bias",
+      "NuvuCamera.camera_utils.get_bias64",
+      "NuvuCamera.camera_utils.get_image",
+      "NuvuCamera.camera_utils.get_image64",
+      "NuvuCamera.camera_utils.get_queued_image",
+      "NuvuCamUtils.getAllCamInfo",
+      "NuvuCamUtils.getCalibratedEmGain",
+      "NuvuCamUtils.getCalibratedEmGainRange",
+      "NuvuCamUtils.getCalibratedEmGainTempRange"
+    ],
+    "writes": [
+      "NuvuCamera.configure_acquisition",
+      "NuvuCamera.set_attribute",
+      "NuvuCamera.set_attributes",
+      "NuvuCamera.camera_utils.set_calibrated_em_gain",
+      "NuvuCamera.camera_utils.set_exposure_time",
+      "NuvuCamera.camera_utils.set_fps",
+      "NuvuCamera.camera_utils.set_readout_mode",
+      "NuvuCamera.camera_utils.set_shutter_mode",
+      "NuvuCamera.camera_utils.set_square_bin",
+      "NuvuCamera.camera_utils.set_target_detector_temp",
+      "NuvuCamera.camera_utils.set_timeout",
+      "NuvuCamera.camera_utils.set_trigger_mode"
+    ],
+    "actions": [
+      "NuvuCamera.abort_acquisition",
+      "NuvuCamera.grab",
+      "NuvuCamera.snap",
+      "NuvuCamera.start_continuous_acquisition",
+      "NuvuCamera.stop_acquisition",
+      "NuvuCamera.stop_continuous_acquisition",
+      "NuvuCamera.camera_utils.cam_start",
+      "NuvuCamera.camera_utils.cam_stop",
+      "NuvuCamUtils.camAbort",
+      "NuvuCamUtils.camStart",
+      "NuvuCamUtils.cam_start",
+      "NuvuCamUtils.cam_stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.measure.temperature.v1",
+      "cap.sensing.image.v1",
+      "cap.thermal.setpoint.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R2",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/shafinulh__rax-labscript --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

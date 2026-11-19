@@ -11,20 +11,51 @@
     "license_spdx": "LGPL-3.0",
     "license_class": "weak-copyleft"
   },
-  "decision": "skip",
-  "reason_code": "skip:tooling",
-  "role": "tooling",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "driver-pack",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 651,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 30,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "sophys.common.devices.motor:ControllableMotor",
+      "file": "src/sophys/common/devices/motor.py",
+      "line": 30,
+      "confidence": "override"
+    },
+    {
+      "symbol": "sophys.common.devices.compacteras:CompactERAS",
+      "file": "src/sophys/common/devices/compacteras.py",
+      "line": 49,
+      "confidence": "override"
+    },
+    {
+      "symbol": "sophys.common.devices.aravis:AravisDetector",
+      "file": "src/sophys/common/devices/aravis.py",
+      "line": 51,
+      "confidence": "override"
+    },
+    {
+      "symbol": "sophys.common.devices.pimega:Pimega",
+      "file": "src/sophys/common/devices/pimega.py",
+      "line": 222,
+      "confidence": "override"
+    },
+    {
+      "symbol": "sophys.common.devices.mobipix:Mobipix",
+      "file": "src/sophys/common/devices/mobipix.py",
+      "line": 85,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": ">=3.10",
@@ -45,19 +76,39 @@
     "upstream_tests": "tests"
   },
   "hints": {
-    "reads": [],
+    "reads": [
+      "PowerPmacScan.abort (attribute)",
+      "PowerPmacScan.csv_file_columns (attribute)",
+      "PowerPmacScan.csv_file_number (attribute)",
+      "PowerPmacScan.csv_file_rows (attribute)",
+      "PowerPmacScan.enable_ext_gather (attribute)",
+      "PowerPmacScan.enable_int_gather (attribute)",
+      "PowerPmacScan.error_status (attribute)",
+      "PowerPmacScan.fly_trigger_out (attribute)",
+      "PowerPmacScan.mode (attribute)",
+      "PowerPmacScan.servo_freq (attribute)",
+      "PowerPmacScan.start (attribute)",
+      "PowerPmacScan.status (attribute)"
+    ],
     "writes": [],
-    "actions": [],
+    "actions": [
+      "PowerPmacScan.stop",
+      "Tatu9401V2.pause",
+      "Tatu9401V2.resume",
+      "Tatu9401V2.stop"
+    ],
     "candidate_classes": []
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "hardware",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "capabilities"
+  ],
+  "timebox_min": 120,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/cnpem__sophys-common --backend fake",
-  "skip_reason": "catalogue category auxiliary tool, role peripheral tool",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (skippy-mcp MSO5000/DS5000 driver)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/skippy-scope": {
+      "channel1_scale_v_per_div": {"min": 0.001, "max": 5, "unit": "V", "source": "operator",
+                                   "reason": "example: this bench uses a 1X probe and vertical scales from 1 mV/div to 5 V/div"},
+      "channel1_offset_v": {"min": -1, "max": 1, "unit": "V", "source": "operator",
+                            "reason": "example: the signal of this bench stays inside the +/-1 V offset band"},
+      "channel1_probe_ratio": {"min": 1, "max": 100, "unit": "1", "source": "operator",
+                               "reason": "example: probes from 1X to 100X are used on this bench"},
+      "x-cap.krystalmonolith.scope_trigger.v1": {
+        "trigger_level_v": {"min": -5, "max": 5, "unit": "V", "source": "operator",
+                            "reason": "example: trigger levels stay within the +/-5 V window of the probe"}
+      }
+    }
+  }
+}

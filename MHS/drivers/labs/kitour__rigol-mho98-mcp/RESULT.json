@@ -1,0 +1,37 @@
+{
+  "status": "pass",
+  "gate": {
+    "digest": "sha256:22f58433549d7a4704e468323799a28a7c7fdd31506158b85262d58bb0083855",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "notes": "DEVIATION FROM THE CARD: the card proposes ScpiDriver, but the confirmed entry class is rigol_mcp.mho98.session:Session (session.py:75-80), whose waveform path reads IEEE-488.2 definite-length blocks through binary_query() (session.py:623-663) and whose cursor/timebase writes assemble commands from parts (cursor.py:344-359, timebase.py:212). This package is therefore a direct Driver over Session. The fake is an analytic SCPI emulator, not a recording and not the upstream simulator: every identity, sample and state value in fake.py is placeholder test data, and no upstream code was imported or run. The driver covers identity/health/error reads, the main timebase and CH1 scale/offset, the waveform transfer selector, waveform acquisition (ASC and BYTE; ASCII default, with the ten-field preamble and its format code checked) as x-cap.kitour.acquire_waveform.v1, manual cursor read/set, and run/stop. The acquire action reads the current transfer selector and does not change or restore it; the state writes are separate. Numeric timebase, channel and cursor bounds are Limit.operator_required because the clone states no instrument range; site-limits.example.json supplies narrow example bounds. The e-stop writes :STOP and requests an acquisition stop only; the upstream acquisition control returns verified=false (acquire.py:243-252), so the package claims a stop request, not a sensed stopped state, and this driver sets no instrument output. NOT COVERED: the screenshot PNG (:DISPlay:DATA?), FFT/decode/counter/measurement arrays, WORD waveform interpretation (it needs caller-declared byte order and signedness, waveform.py:115-185), channel 2-4 settings, reference/search/acquisition-average settings, the 654-entry catalog executor, and file transfer. The 100000-point inline limit and 500000000-point memory limit are noted in facts.md but not exposed as writes. No hardware run was performed and the package is unreviewed.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-17; reviewed_by stays null): Model review checked Session, every cited Fact and Limit, native.py and the waveform and stop paths. driver.py now checks SCPI errors, confirms STOP with the source-backed trigger-status query, bounds inline/BYTE transfers and corrects citations; native.py requires an explicit finite timeout instead of Session's infinite default. fake.py and test_driver.py cover ignored stops, instrument rejection, oversized data and nonfinite samples. Updated facts.md and regenerated reference.json, REFERENCE.md and check-report.json; the fake gate and strict collector pass. For the human reviewer: STOP is one acquisition-state readback; no instrument output or independent physical stop is claimed. The fake omits USB/LAN timing, framing and concurrent access. Deployment must supply timeout_ms, exclude other VISA clients and account for in-flight I/O and up to 16 error queries; a slow exchange can leave the e-stop failed and latched. RUN is explicit after reset. The waveform preamble is used internally, not returned.",
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.kitour.acquire_waveform.v1",
+      "reason": "No catalogue class binds an oscilloscope waveform array on the instrument resource kind; cap.sensing.read.v1 binds sensor, sensor.imu and sensor.force_torque only. The extension carries the upstream ten-field preamble, the time axis and the ASC/BYTE samples with an inline output schema.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.kitour.read_cursor.v1",
+      "reason": "No catalogue class binds a scope cursor read; the extension returns the cursor mode and the manual A/B X screen positions in seconds with an inline output schema.",
+      "verb": "read"
+    },
+    {
+      "capability_id": "x-cap.kitour.set_cursor.v1",
+      "reason": "No catalogue class binds a scope cursor write; the extension sends the manual TIME cursor commands and returns the positions it applied, with operator-required bounds.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.kitour.run_acquisition.v1",
+      "reason": "No catalogue class binds a scope acquisition start; the extension is the input-free :RUN re-enable after a safety reset.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.kitour.stop_acquisition.v1",
+      "reason": "No catalogue class binds a scope acquisition stop; the extension is the input-free :STOP safe-state action.",
+      "verb": "invoke"
+    }
+  ],
+  "blocked_on": []
+}

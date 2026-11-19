@@ -11,21 +11,40 @@
     "license_spdx": "MIT",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 756,
-  "exemplar": null,
-  "entry_symbols": [],
-  "models": [],
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 234,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "trajopt.envs.reacher_env:Reacher7DOFEnv",
+      "file": "trajopt/envs/reacher_env.py",
+      "line": 8,
+      "confidence": "override"
+    },
+    {
+      "symbol": "trajopt.envs.reacher_env:ContinualReacher7DOFEnv",
+      "file": "trajopt/envs/reacher_env.py",
+      "line": 116,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "trajopt/envs/assets/sawyer.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
   "install": {
     "python": null,
     "commands": [
@@ -38,24 +57,33 @@
     "platform": "any"
   },
   "mock_strategy": {
-    "preferred": "fake",
-    "hints": [],
+    "preferred": "upstream-sim",
+    "hints": [
+      "trajopt/envs/__init__.py:9 gym env trajopt_reacher-v0",
+      "trajopt/envs/__init__.py:15 gym env trajopt_continual_reacher-v0"
+    ],
     "upstream_tests": null
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "gym env trajopt_reacher-v0 registered at trajopt/envs/__init__.py:9",
+      "gym env trajopt_continual_reacher-v0 registered at trajopt/envs/__init__.py:15"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
   "needs_recon": [],
-  "timebox_min": 15,
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/aravindr93__trajopt --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

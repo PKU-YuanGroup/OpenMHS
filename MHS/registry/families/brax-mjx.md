@@ -56,7 +56,7 @@ Batched JAX simulation conflicts with an exclusive single-device session.
 
 ## First task cards
 
-- `gh.google/brax`: bridge-runtime, wave 9, rank 749, `MHS/registry/tasks/robots/google__brax.json`
+- `gh.google/brax`: bridge-runtime, wave 9, rank 731, `MHS/registry/tasks/robots/google__brax.json`
 
 ## Sources
 

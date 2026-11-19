@@ -1,45 +1,53 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "scope:Scope (scope.py:13)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1"
+  ],
   "catalog_refs": [
     "repo_24b6ca247cc8bade",
     "https://github.com/netlist-studio/scope-mcp"
   ],
-  "description": "netlist-studio/scope-mcp: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: reference only (host). Declared backend: MCP. Language: Python. Catalog keywords: Claude, Keysight, Agilent, MCP, PyVISA.",
+  "description": "netlist-studio/scope-mcp: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 3. Catalog role: protocol bridge. Declared backend: MCP. Language: Python. Catalog keywords: Claude, Keysight, Agilent, MCP,.",
   "domains": [
     "electronic measurement"
   ],
   "evidence": {
     "files_read": 2,
     "notes": "bounded static scan: 6 files enumerated (max depth 3), 2 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/labs/netlist-studio__scope-mcp/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "mcp-proxy"
+    "python-object"
   ],
   "hardware_free": false,
   "id": "gh.netlist-studio/scope-mcp",
   "integration": {
     "blockers": [
-      "REFERENCE_ONLY: role host"
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Reference only: a host, orchestrator or MCP wrapper of a covered backend; integrate the backend instead.",
-    "reason_code": "reference:host",
-    "role": "host",
+    "effort": "E2",
+    "next_action": "Maintain MHS/drivers/labs/netlist-studio__scope-mcp: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/netlist-studio__scope-mcp --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
     "scenario_required": false,
-    "strategy": "reference"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "MCP",
@@ -58,16 +66,18 @@
     "repo": "https://github.com/netlist-studio/scope-mcp"
   },
   "local_path": "labs/netlist-studio/scope-mcp",
-  "modes": [],
+  "modes": [
+    "hardware"
+  ],
   "owner": "netlist-studio",
   "package_id": "gh.netlist-studio/scope-mcp",
   "quarantine": false,
-  "rank": 1237,
+  "rank": 69,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "scope-mcp",
   "repo_url": "https://github.com/netlist-studio/scope-mcp",
-  "ring": 3,
+  "ring": 1,
   "simulation": false,
   "source": {
     "commit": "877a4f6324a581f3b7d4c8de57d719b258d9d9f0",
@@ -75,18 +85,18 @@
   },
   "stars": 11,
   "tags": [
-    "mcp-proxy",
+    "python-object",
     "lab instrumentation",
     "hardware interface",
-    "reference"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "netlist-studio/scope-mcp",
   "track": "labs",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -124,12 +134,29 @@
       "family_matches": [
         "\\bmcp\\b"
       ],
+      "family_note": "triage family python-object (catalogue family mcp-proxy)",
       "family_rule": "scored",
       "family_score": 10,
-      "tier_note": "tier B -> D: triage reference (reference:host)",
       "tier_rule": "B2-protocol-bridge"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/netlist-studio__scope-mcp/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "MIT",
@@ -144,6 +171,21 @@
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
     },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "877a4f6324a581f3b7d4c8de57d719b258d9d9f0",
+      "driver_dir": "MHS/drivers/labs/netlist-studio__scope-mcp",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:d1197dbf6b93955a8510ed63d4f68de23ed1225ac0ba7e3145511c98af0ea6fc",
+      "reviewed": false,
+      "status": "pass"
+    },
     "scan": {
       "build_systems": [],
       "entry_evidence_count": 1,
@@ -156,13 +198,15 @@
     },
     "triage": {
       "evidence": [
-        "MCP server wrapping the covered backend pyvisa"
+        "override (retriage-wave1.json): Model review of re-triage wave 1 (gpt-6.1-sol): the served source-backed object needs a direct Driver; the proposed family helper does not express this package contract.",
+        "rules alone: reference (reference:host, rule 7)"
       ],
-      "family": null,
+      "family": "python-object",
       "hardware_transport": "class scope:Scope uses the hardware transport pyvisa",
-      "helper": null,
-      "reason_code": "reference:host",
-      "rule": 7,
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): the served source-backed object needs a direct Driver; the proposed family helper does not express this package contract.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

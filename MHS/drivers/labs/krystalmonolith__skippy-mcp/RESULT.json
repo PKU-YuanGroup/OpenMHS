@@ -1,0 +1,42 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "blocked_on": [
+    "ENTRY_UNVERIFIED"
+  ],
+  "gate": {
+    "digest": "sha256:59cfd993b1cf67ee54874bf5c38d5677c915fdbb5e548a4023a1f1b8e68c92ed",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.krystalmonolith.scope_measure.v1",
+      "reason": "No catalogue class binds one scalar automatic measurement of an oscilloscope: cap.measure.voltage.v1 declares instrument.dmm, instrument.smu and sensor, and cap.sensing.read.v1 declares sensor, sensor.imu and sensor.force_torque, not the instrument kind this device uses. The action wraps Scope.measure (scope.py:160-175), which queries one MEASure:ITEM? scalar and returns its value and unit.",
+      "verb": "invoke",
+      "similar": [
+        "cap.measure.voltage.v1",
+        "cap.sensing.read.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.krystalmonolith.scope_capture.v1",
+      "reason": "No catalogue class starts, stops or arms an acquisition on an instrument: cap.process.run.v1 is a process recipe, and cap.device.configure.v1 is a named-parameter write rather than an actuation. The action wraps Scope.capture (scope.py:150-157), which writes RUN, STOP or SINGle and checks the instrument error queue.",
+      "verb": "invoke",
+      "similar": [
+        "cap.process.run.v1",
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.krystalmonolith.scope_trigger.v1",
+      "reason": "cap.device.configure.v1 binds named writable state fields; the upstream trigger API is one conditional Scope.configure_trigger(TriggerConfig) call that writes the mode and, only in EDGE mode, the source, slope and level (scope.py:138-147). Splitting the four fields into separate writable state would break that one upstream call and could write a mode without its edge fields. The extension preserves the upstream command shape.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    }
+  ],
+  "notes": "Passed on the fake backend by python3 -m mhs.driver check MHS/drivers/labs/krystalmonolith__skippy-mcp --backend fake; evidence is contract_checked, never an MHS-Device level. DEVIATION FROM THE CARD: the card proposes a ScpiDriver (family-config, family scpi), but the upstream interface is the object skippy_mcp.driver.scope:Scope with typed methods, not a table of fixed command lines: the channel, logic and trigger commands are assembled at run time from the channel number and typed arguments, and every effectful method checks :SYSTem:ERRor? (scope.py:102-157). A fixed command table cannot reproduce those lines, so this is a direct Driver over the upstream class with native.py, as driver-authoring.md 'Choosing the shape' requires. Covered: identity; analog channel 1 display, vertical scale, offset, coupling, probe ratio and bandwidth limit; the trigger mode, edge source, edge slope and edge level; one scalar automatic measurement; acquisition RUN/STOP/SINGle; and an e-stop that calls the native Scope.capture('stop'). NOT COVERED: the waveform array (Scope.read_waveform returns a time/voltage trace from :WAVeform:DATA?, scope.py:184-213; no catalogue class carries a trace array), the native BMP screenshot, logic channels, bus decode, the raw SCPI tool and the vertical settings of channels 2 to 4. The clone states the write forms of the channel and trigger commands and only one read-back query, :CHANnel<n>:SCALe? (dialect/base.py:78-79); the other read-back queries this driver sends follow the same command nodes with a trailing '?', and no hardware run was possible, so those query forms are not instrument-verified. The vertical scale is bounded by the clone's MSO5000 DeviceLimits (mso5000.py:24-25); the coupling and bandwidth sets come from the enum classes (enums.py:34-36, 42-43). The channel offset, probe ratio and trigger level are Limit.operator_required because the clone states no numeric range for them; site-limits.example.json shows one narrowing operator overlay, and without it those writes are refused MHS.SAFETY.LIMITS_UNSET. The fake is a package-local in-memory stand-in, not a recording: the card preferred the upstream simulator (upstream-sim), but this package may not import or install the read-only clone, so its SimulatedTransport cannot be the fake factory. Every number in fake.py is marked # placeholder. The hardware backend .native:connect exists and would open PyVisaTransport and call establish (session.py:18-35); it requires the upstream skippy-mcp package and pyvisa/pyvisa-py at deployment and was never exercised. The package is model-authored and unreviewed (driver.lock.json reviewed_by is null); it is R1, so the loader's unreviewed-hardware guard for R2 and R3 does not apply and is not claimed. No human review, hardware run or real-instrument evidence is claimed. gate.digest is the digest the last check printed; check-report.json is regenerated by every gate run and is not part of the package. G4 reported no REF_VALUE or REF_BINARY warnings.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-17; reviewed_by stays null): Read the typed Scope facade, fake, stop path, limits and cited sources, and reran the fake gate and strict collector; both pass mechanically. Blocked because driver.py explicitly infers channel and trigger query forms and reply spellings from write commands, while the pinned dialect only supplies the scale query and the simulator supplies a generic set/query echo, not evidence of those hardware replies. The package fake answers those same assumptions, so its passing resource and trigger tests cannot verify the production interface. No source files were edited; only check-report.json was regenerated. For the human reviewer: Unblocking needs pinned query/reply evidence or a deliberately reduced interface, especially for channel offset/coupling/probe/bandwidth and trigger mode/source/slope/level; dialect/base.py:73-121 shows the write forms and scale query, while transport/simulated.py:99-101 merely echoes stored state. Unknown display replies currently become False, and trigger parsers assume the command-side full mnemonic spellings. The facade defaults to a 10000 ms exchange timeout and reset-on-connect, which can exceed the stop budget and alter the scope setup; transport close is not wired into driver teardown. Ancillary corrections remain: the measurement Fact names 9.9e37 outside its cited span (constant at scope.py:48), screenshot returns a Screenshot object, and upstream requires Python >=3.11 despite the lock saying >=3.10. MIT files match the card; this is a real oscilloscope driver, not a host-only repository."
+}

@@ -1,0 +1,117 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.rohanpsingh/learninghumanoidwalking",
+  "track": "robots",
+  "local_path": "robots/rohanpsingh/learninghumanoidwalking",
+  "driver_dir": "MHS/drivers/robots/rohanpsingh__learninghumanoidwalking",
+  "upstream": {
+    "repo_url": "https://github.com/rohanpsingh/learninghumanoidwalking",
+    "commit": "cd8c6557beadb9d25045624fb50eeb487b0e8fdd",
+    "license_spdx": "BSD-2-Clause",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 40,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "envs.h1.h1_env:H1Env",
+      "file": "envs/h1/h1_env.py",
+      "line": 11,
+      "confidence": "override"
+    },
+    {
+      "symbol": "envs.jvrc.jvrc_walk:JvrcWalkEnv",
+      "file": "envs/jvrc/jvrc_walk.py",
+      "line": 13,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "models/jvrc_mj_description/xml/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/mujoco_menagerie/agility_cassie/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/mujoco_menagerie/aloha/aloha.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/mujoco_menagerie/aloha/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/mujoco_menagerie/anybotics_anymal_b/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "models/jvrc_mj_description/xml/scene.xml:1 MJCF scene model",
+      "models/mujoco_menagerie/agility_cassie/scene.xml:1 MJCF scene model",
+      "models/mujoco_menagerie/aloha/aloha.xml:1 MJCF scene model",
+      "models/mujoco_menagerie/aloha/scene.xml:1 MJCF scene model"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "MJCF scene model models/jvrc_mj_description/xml/scene.xml:1",
+      "MJCF scene model models/mujoco_menagerie/agility_cassie/scene.xml:1",
+      "MJCF scene model models/mujoco_menagerie/aloha/aloha.xml:1",
+      "MJCF scene model models/mujoco_menagerie/aloha/scene.xml:1",
+      "MJCF scene model models/mujoco_menagerie/anybotics_anymal_b/scene.xml:1",
+      "MJCF scene model models/mujoco_menagerie/anybotics_anymal_c/scene.xml:1",
+      "MJCF scene model models/mujoco_menagerie/anybotics_anymal_c/scene_mjx.xml:1",
+      "MJCF scene model models/mujoco_menagerie/apptronik_apollo/scene.xml:1",
+      "MJCF scene model models/mujoco_menagerie/berkeley_humanoid/scene.xml:1",
+      "MJCF scene model models/mujoco_menagerie/bitcraze_crazyflie_2/scene.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rohanpsingh__learninghumanoidwalking --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

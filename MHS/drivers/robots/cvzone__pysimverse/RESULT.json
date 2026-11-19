@@ -1,0 +1,59 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "blocked",
+  "gate": {
+    "digest": "sha256:fb3c40ab741895e8b1cd874afbac7b3d83056f52f30edd22bd14dc543b385b16",
+    "failed": [
+      "G6",
+      "G8"
+    ],
+    "report": "check-report.json"
+  },
+  "notes": "Passed on the fake backend with python3 -m mhs.driver check MHS/drivers/robots/cvzone__pysimverse --backend fake (exit 0; evidence contract_checked, never an MHS-Device level). No hardware, no ZMQ server, no upstream simulator and no live backend was run. Only the package fake backend exists: there is no native.py and no hardware or sim factory, because the clone ships only the ZeroMQ client (simulators/drone/drone.py) and no simulator server, and the task forbids importing, installing or running the clone. A live path would need pyzmq, OpenCV, NumPy and a simulator peer that subscribes to the PUB command port and publishes the state and video ports.\n\nDEVIATION FROM THE CARD: the card names PythonObjectDriver, but that family is a flat command table and cannot express the multi-part native motions (a nonzero RC command, a native sleep, a zero RC command), the direction dispatch among six move_* methods, or the e-stop plus safe-state pair; this package is a direct Driver. The card's candidate cap.motion.joint_position.v1 and cap.sensing.read.v1 do not fit a mobile base; cap.motion.mobile_base.v1 takes linear/angular velocity and a duration, not the native per-direction distance methods, takeoff, land, rotate or stream. The motion, rotate, camera and stream capabilities are x-cap.cvzone.* extensions; cap.device.configure.v1 serves the two writable state fields. The catalogue_requests list records every extension id.\n\nMOCK AND TIMING: the fake is an in-memory analytic command recorder (F0), not a recording and not the upstream simulator: it replays no captured traffic, opens no socket, models no flight dynamics, position, battery, video, wind or time, and records the native command pair immediately, while the upstream sleeps distance/speed, height/speed, abs(angle/60), abs(angle/40) or 3 s. The fake preserves the upstream public method names, signatures and defaults (send_rc_control, take_off, land, move_*, rotate, rotate_camera, streamon, streamoff, set_speed, set_rotation_speed, connect, shutdown, is_port_available) and the readable attributes is_flying, speed, rotation_speed and stream_on. The clone's get_battery never returns its parsed value (drone.py:152-164) and get_frame calls an undefined fpsReader (drone.py:126-130), so battery telemetry and video capture are NOT COVERED; no image array is carried. DroneManager's handshake and fleet takeoff (drone_manager.py:41-116) are not covered either.\n\nSAFETY: simulated R2 (a drone in flight is a mobile base). There is no physical e-stop because the device is simulated; the independent stop is the runtime latch plus the native zero RC command. @estop(native='send_rc_control') publishes zero on every axis, and the declared safe-state x-cap.cvzone.stop.v1 publishes the same idempotent zero command with no input, so the e-stop stays inside the runtime's default 1 s budget. The normal land() is a separate action, not the safe state, because the upstream land() sleeps a fixed 3 s. The e-stop does not land the drone and does not disable the native object; a reset only releases the latch and sends nothing, and no reenable action is declared because none is needed. The native motion methods sleep internally and cannot be interrupted; after their nonzero command they still send only zero, so a stop during the sleep is not followed by another nonzero motion command. The admission race between an action starting and its first native send is not closed by the upstream API. send_rc_control catches every exception and only prints it (drone.py:93-94), so a completed receipt means the publish call returned, not that the simulator received it; no acknowledgement exists.\n\nLIMITS: the README is only the title, and no source states a range or unit for takeoff height, takeoff speed, landing speed, distance, angle, camera angle, RC speed or rotation speed. Every numeric input is Limit.operator_required; the constructor defaults 300 and 15 are defaults, not bounds. site-limits.example.json supplies example-only bounds and is narrow-only.\n\nFACTS: 21 facts, each at the pinned commit ec3f362f50f24278c7f30e5fe09bc2a7ae98e72f, from simulators/drone/drone.py and simulators/drone/drone_manager.py, plus one vendor_doc fact citing README.md:1. The clone was not modified (G1 passed). No human review, hardware run or upstream simulator run is claimed; reviewed_by stays null.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-17; reviewed_by stays null): Model review found that the zero-RC PUB call has no acknowledgement or simulator-side consumer in the clone and suppresses publish errors (drone.py:72-94); a regression reproduced a completed e-stop when publication did nothing. Updated driver.py and test_driver.py so the e-stop attempts zero then reports SAFE_STATE_UNREACHED with the latch held, and the ordinary stop reports only a request without safe_state=True. Updated facts.md and site-limits.example.json to correct the get_frame/stream_on claims, disclose timing/lifecycle hazards and omit unstated physical units; regenerated reference.json, REFERENCE.md and check-report.json. All 13 package-specific cases pass; the unchanged stock gate correctly fails G6.ESTOP_FAILED and G8 SAFE-028, and strict collection reports RESULT_UNTRUSTED until the orchestrator replaces the author's pass status. For the human reviewer: A reviewed simulator peer and independent acknowledged stop/read-back path are required before unblocking. Neither successful PUB return nor zero command proves hovering, landing, delivery or stopped motion. Native sleeps are uninterruptible, exceptions can skip the final zero, and initial sends can race with an e-stop; an explicit reset releases only the latch and does not confirm or automatically resume motion. The fake is instant; there is no declared live factory, simulator execution or hardware evidence. Native stdout and socket/context cleanup also require attention. DroneManager fleet control is outside the served class.",
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.cvzone.takeoff.v1",
+      "reason": "No catalogue class expresses the native take_off(takeoff_height, takeoff_speed): it publishes an up RC command, sleeps height / speed and then publishes zero. cap.motion.mobile_base.v1 takes a velocity and a duration, not a height and a native sleep.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.cvzone.land.v1",
+      "reason": "No catalogue class expresses the native land(landing_speed): it publishes a down RC command, sleeps its fixed 3 s and then publishes zero. cap.motion.mobile_base.v1 takes a velocity and a duration and cannot carry the fixed native sleep.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.cvzone.move.v1",
+      "reason": "The native control is six named distance methods (move_forward, move_backward, move_right, move_left, move_up, move_down) at the current speed, not the linear/angular velocity and duration of cap.motion.mobile_base.v1; a single extension carries the direction enum and the distance.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.cvzone.rotate.v1",
+      "reason": "The native rotate(angle) publishes a yaw value derived from rotation_speed / 70, sleeps abs(angle / 60) and publishes zero; no catalogue motion class has this input and native sequence.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.cvzone.rotate_camera.v1",
+      "reason": "The native rotate_camera(angle) publishes the camera angle, sleeps abs(angle / 40) and publishes zero; no catalogue class covers a camera-angle RC command.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.cvzone.stream_on.v1",
+      "reason": "The native streamon() publishes the stream_on flag in the RC JSON object; no catalogue class covers a simulator video-stream toggle.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.cvzone.stream_off.v1",
+      "reason": "The native streamoff() publishes the stream_on flag in the RC JSON object; no catalogue class covers a simulator video-stream toggle.",
+      "verb": "invoke"
+    },
+    {
+      "capability_id": "x-cap.cvzone.stop.v1",
+      "reason": "cap.motion.stop.v1 was considered but its optional deceleration profile has no native support: the upstream stop is an immediate zero RC command with no deceleration input, so the safe-state action is a no-input extension.",
+      "verb": "invoke"
+    }
+  ],
+  "blocked_on": [
+    "HELPER_MISSING"
+  ]
+}

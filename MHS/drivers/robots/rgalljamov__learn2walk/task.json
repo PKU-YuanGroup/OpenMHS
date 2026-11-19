@@ -1,0 +1,85 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.rgalljamov/learn2walk",
+  "track": "robots",
+  "local_path": "robots/rgalljamov/learn2walk",
+  "driver_dir": "MHS/drivers/robots/rgalljamov__learn2walk",
+  "upstream": {
+    "repo_url": "https://github.com/rgalljamov/learn2walk",
+    "commit": "09d3bbd64a6b2fdd538b1d4465001bb1914243de",
+    "license_spdx": "NOASSERTION",
+    "license_class": "unknown"
+  },
+  "decision": "family-config",
+  "reason_code": "family:gymnasium",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 454,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "gym_mimic_envs.mujoco.mimic_walker3d:MimicWalker3dEnv",
+      "file": "mujoco/gym_mimic_envs/mujoco/mimic_walker3d.py",
+      "line": 31,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "mujoco/gym_mimic_envs/mujoco/assets/walker3d_flat_feet.xml",
+      "line": 1,
+      "kind": "robot"
+    }
+  ],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [
+      "MuJoCo 2.1 binaries and a C compiler for mujoco-py"
+    ],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "mujoco/gym_mimic_envs/__init__.py:3 gym env MimicWalker2d-v0",
+      "mujoco/gym_mimic_envs/__init__.py:8 gym env MimicWalker3d-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env MimicWalker2d-v0 registered at mujoco/gym_mimic_envs/__init__.py:3",
+      "gym env MimicWalker3d-v0 registered at mujoco/gym_mimic_envs/__init__.py:8"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "license"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rgalljamov__learn2walk --backend fake",
+  "skip_reason": null,
+  "publish_review": "required"
+}

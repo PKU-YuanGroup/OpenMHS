@@ -1,0 +1,93 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.daylily-informatics/zebra_day",
+  "track": "labs",
+  "local_path": "labs/daylily-informatics/zebra_day",
+  "driver_dir": "MHS/drivers/labs/daylily-informatics__zebra_day",
+  "upstream": {
+    "repo_url": "https://github.com/daylily-informatics/zebra_day",
+    "commit": "d46df53ff3d9b7fbe78aef837a5299656573ba14",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 12,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "zebra_day.cmd_mgr:ZebraPrinter",
+      "file": "zebra_day/cmd_mgr.py",
+      "line": 21,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "zebra_day/simulator.py:162 SimulatedPrinter",
+      "zebra_day/simulator.py:255 SimulatorManager",
+      "zebra_day/simulator.py:1",
+      "zebra_day/cli/simulator.py:1"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "ZebraPrinter.get_configuration",
+      "ZebraPrinter.get_error_status",
+      "ZebraPrinter.get_full_status",
+      "ZebraPrinter.get_host_identification",
+      "ZebraPrinter.get_host_status",
+      "ZebraPrinter.get_odometer",
+      "ZebraPrinter.get_serial_number",
+      "ZebraDayApiClient.get_label_profile",
+      "ZebraDayApiClient.get_printer",
+      "ZebraDayApiClient.get_template",
+      "ZebraDayClient.get_label_profile",
+      "ZebraDayClient.get_printer"
+    ],
+    "writes": [
+      "ZebraPrinter.set_configuration"
+    ],
+    "actions": [],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/daylily-informatics__zebra_day --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

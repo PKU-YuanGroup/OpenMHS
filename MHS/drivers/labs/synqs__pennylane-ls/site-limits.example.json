@@ -1,0 +1,26 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (SYNQS single-qudit fake)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/pennylane-ls": {
+      "x-cap.synqs.run_experiment.v1": {
+        "shots": {
+          "min": 1,
+          "max": 100,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example only: the gate's conformance run needs a shot range; the operator supplies the range of the real deployment"
+        },
+        "operations[*].parameters": {
+          "min": -6.283185307179586,
+          "max": 6.283185307179586,
+          "unit": "1",
+          "source": "operator",
+          "reason": "example only: the gate's conformance run needs a parameter range; the operator supplies the range of the real deployment"
+        }
+      }
+    }
+  }
+}

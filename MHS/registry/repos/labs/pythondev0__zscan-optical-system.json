@@ -1,10 +1,13 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "camera:ThorlabsCamera (camera.py:9)",
+      "stage:AerotechStage (stage.py:9)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
@@ -15,16 +18,18 @@
     "repo_f2e22cc43f1b04da",
     "https://github.com/pythondev0/zscan-optical-system"
   ],
-  "description": "pythondev0/zscan-optical-system: control framework for optics (lab instrumentation track). OpenMHS plan: not integrated (skip:peripheral). Language: Python. Catalog keywords: Thorlabs, DCC1545M, Aerotech, ANT130LZ.",
+  "description": "pythondev0/zscan-optical-system: control framework for optics (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 3. Catalog role: controller. Language: Python. Catalog keywords: Thorlabs, DCC1545M, Aerotech, ANT130LZ.",
   "domains": [
     "optics"
   ],
   "evidence": {
     "files_read": 3,
     "notes": "bounded static scan: 8 files enumerated (max depth 3), 3 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/labs/pythondev0__zscan-optical-system/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
@@ -33,15 +38,14 @@
   "hardware_free": false,
   "id": "gh.pythondev0/zscan-optical-system",
   "integration": {
-    "blockers": [
-      "NOT_A_DEVICE: catalogue 'control framework'/'controller' describes software and the scan finds no device or simulation evidence"
-    ],
-    "effort": "EX",
-    "next_action": "Not integrated: catalogue 'control framework'/'controller' describes software and the scan finds no device or simulation evidence",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "blockers": [],
+    "effort": "E3",
+    "next_action": "Maintain MHS/drivers/labs/pythondev0__zscan-optical-system: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/labs/pythondev0__zscan-optical-system --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/python-object.md",
+    "role": "driver-pack",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "Python SDK"
@@ -57,16 +61,18 @@
     "repo": "https://github.com/pythondev0/zscan-optical-system"
   },
   "local_path": "labs/pythondev0/zscan-optical-system",
-  "modes": [],
+  "modes": [
+    "hardware"
+  ],
   "owner": "pythondev0",
   "package_id": "gh.pythondev0/zscan-optical-system",
   "quarantine": false,
-  "rank": 1511,
+  "rank": 131,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "zscan-optical-system",
   "repo_url": "https://github.com/pythondev0/zscan-optical-system",
-  "ring": 3,
+  "ring": 1,
   "simulation": false,
   "source": {
     "commit": "114c2838f5c3cc7a5a211ed34b38f0745c386f74",
@@ -79,15 +85,15 @@
     "control framework",
     "controller",
     "hardware interface",
-    "skip"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "pythondev0/zscan-optical-system",
   "track": "labs",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -127,10 +133,18 @@
       ],
       "family_rule": "scored",
       "family_score": 7,
-      "tier_note": "tier B -> D: triage skip (skip:peripheral)",
       "tier_rule": "B6-role-without-entry"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/pythondev0__zscan-optical-system/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "MIT",
@@ -145,6 +159,21 @@
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
     },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "114c2838f5c3cc7a5a211ed34b38f0745c386f74",
+      "driver_dir": "MHS/drivers/labs/pythondev0__zscan-optical-system",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:7f55692481e2904378de07c718b1d222b4742c762b0646f3e805b2b4d456c21a",
+      "reviewed": false,
+      "status": "pass"
+    },
     "scan": {
       "build_systems": [
         "python"
@@ -158,12 +187,14 @@
     },
     "triage": {
       "evidence": [
-        "catalogue 'control framework'/'controller' describes software and the scan finds no device or simulation evidence"
+        "override (retriage-wave1.json): Reviewed by gpt-6.1-sol (a model): camera.py:9 and stage.py:9 define separate, independently instantiated camera and nanopositioner drivers.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "justification": "Reviewed by gpt-6.1-sol (a model): camera.py:9 and stage.py:9 define separate, independently instantiated camera and nanopositioner drivers.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

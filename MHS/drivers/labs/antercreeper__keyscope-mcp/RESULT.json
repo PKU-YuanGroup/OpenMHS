@@ -1,0 +1,63 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/driver-result.schema.json",
+  "openmhs": "0.9",
+  "status": "pass",
+  "blocked_on": [],
+  "gate": {
+    "digest": "sha256:b1e98498ba201771f76ede747ece2b44ccaa816d434fb8d05066020ac2f5da32",
+    "failed": [],
+    "report": "check-report.json"
+  },
+  "catalogue_requests": [
+    {
+      "capability_id": "x-cap.antercreeper.measure.v1",
+      "reason": "No catalogue class binds one scalar automatic measurement of an oscilloscope. cap.measure.voltage.v1 binds instrument.dmm, instrument.smu and sensor with a single voltage input, and cap.sensing.read.v1 binds sensor, sensor.imu and sensor.force_torque, not instrument. The action reads one of the 17 :MEASure:<item>? scalars the clone maps (keyscope_mcp/dsl.py:436-439) from channel 1 or 2.",
+      "verb": "invoke",
+      "similar": [
+        "cap.sensing.read.v1",
+        "cap.measure.voltage.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.antercreeper.run.v1",
+      "reason": "No catalogue class starts continuous acquisition on an instrument: cap.process.run.v1 is a process recipe. The action sends the native :RUN and reads *OPC?.",
+      "verb": "invoke",
+      "similar": [
+        "cap.process.run.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.antercreeper.single.v1",
+      "reason": "No catalogue class arms one acquisition on an oscilloscope: cap.measure.spectrum.v1 is a spectrum sweep. The action sends the native :SINGle and reads *OPC?.",
+      "verb": "invoke",
+      "similar": [
+        "cap.measure.spectrum.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.antercreeper.autoscale.v1",
+      "reason": "No catalogue class auto-configures an oscilloscope's vertical, timebase and trigger settings; cap.device.configure.v1 is a named-parameter patch of resource state. The action sends :AUToscale and reads back the channel-1 scale and offset.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.antercreeper.reset_to_defaults.v1",
+      "reason": "No catalogue class resets an instrument's settings to defaults; cap.device.configure.v1 writes named parameters. The action sends the native *RST and reads *OPC?.",
+      "verb": "invoke",
+      "similar": [
+        "cap.device.configure.v1"
+      ]
+    },
+    {
+      "capability_id": "x-cap.antercreeper.stop_acquisition.v1",
+      "reason": "No catalogue class stops an oscilloscope acquisition: cap.motion.stop.v1 is motion-specific. The safe-state action sends the native :STOP and reads *OPC?.",
+      "verb": "invoke",
+      "similar": [
+        "cap.motion.stop.v1"
+      ]
+    }
+  ],
+  "notes": "PASS on the fake backend: python3 -m mhs.driver check MHS/drivers/labs/antercreeper__keyscope-mcp --backend fake exited 0 and printed the digest above; evidence is contract_checked, never an MHS-Device level. The upstream clone stayed read-only at 344dc93cf9f151672d0b07dc4b29f780ae38bd08; no upstream code was copied, imported or run, and the fake is an in-memory stand-in for the upstream class, not a recording or transcript.\n\nDEVIATION FROM THE CARD: the card proposes ScpiDriver (family scpi, decision family-config), but the upstream interface is the high-level Oscilloscope class, not a fixed command table. measure() assembles :MEASure:<item>? from a name-to-SCPI map and the channel number (keyscope_mcp/scope.py:339-355), get_waveform() reads an IEEE 488.2 binary block with query_binary_values (keyscope_mcp/scope.py:268-290), and the DSL channel command embeds the channel number. This package is therefore a direct Driver over keyscope_mcp.scope:Oscilloscope with the native.py factory .native:connect; the fake is an in-memory stand-in, and every fake value is marked # placeholder, with no fake number used as a Fact, Limit or reference.\n\nCovered: identity (*IDN?); channel-1 display, coupling, scale, offset and invert; timebase scale and position; edge-trigger source, level and slope; acquisition type and count; one scalar automatic measurement on channel 1 or 2; run, single, autoscale, reset to defaults (*RST) and a safe-state stop (:STOP); the e-stop calls the native stop. The numeric writes for vertical scale, offset, timebase scale and position and trigger level are operator_required because the clone states no range; site-limits.example.json is only an example overlay, and the operator must supply the real envelope. Risk is R1 because the package exposes writable settings under cap.device.configure.v1 (class floor R1); the card floor is R0, and no independent hardware e-stop is claimed.\n\nNOT COVERED: the waveform array. get_waveform() returns time and voltage arrays from :WAVeform:DATA? (keyscope_mcp/scope.py:268-311); no catalogue class carries an oscilloscope trace, so the package serves the device's scalar measurements and settings. The screenshot bytes (:DISPlay:DATA?), the setup block (:SYSTem:SETup?), *LRN? and the arbitrary raw-command path are also not exposed. The catalogue has no class for a scalar automatic measurement, run, single, autoscale, reset or stop of an oscilloscope, so the package uses the x-cap ids listed in catalogue_requests; cap.sensing.read.v1 binds sensor/sensor.imu/sensor.force_torque, not instrument, and cap.measure.voltage.v1 binds instrument.dmm/instrument.smu/sensor with a single voltage input.\n\nDeployment: the hardware factory is native.py:connect(**_options), which imports keyscope_mcp.scope and forwards address and timeout to Oscilloscope, then connects a scope constructed without an address. A live backend needs the upstream package and its pyvisa/pyvisa-py/pyusb/numpy/lmdb/mcp dependencies installed, the VISA resource address, and the operator's site-limits.json for the five operator_required settings; no hardware was attached, no hardware backend was passed, and the hardware path was never started. The package is model-authored (driver.lock.json authored_by kind model, deepseek-v4.1-flash:1017, run retriage-drivers-1-015) and unreviewed (reviewed_by null); no human reviewed or tested it, no hardware run is claimed, and no vendor simulator ran. check-report.json is regenerated by every gate run and is not part of the package.\n\nMODEL REVIEW (gpt-6.1-sol, a model and not a human, 2026-11-17; reviewed_by stays null): Model review traced the pinned acquisition methods, replies and lifecycle and reproduced false-success receipts for false OPC and device errors. driver.py now requires true completion and a zero error-FIFO code, including on e-stop; native.py closes the VISA handle without upstream close()'s :RUN. fake.py and test_driver.py cover the acknowledgement surface, failed/latching receipts, reset without restart and the actual local close override using a stub handle. facts.md corrects citation scope and describes command acknowledgement; reference.json, REFERENCE.md and check-report.json were regenerated. The fake gate and strict collector pass. For the human reviewer: This R1 surface serves acquisition/settings, not WaveGen output. Completion/error replies are command acknowledgement, not an independent sensed acquisition state. Real concurrent VISA traffic and the upstream 15000 ms timeout can exceed the endpoint stop budget and need deployment validation; external clients/front-panel controls remain outside its latch. The hardware factory was not started."
+}

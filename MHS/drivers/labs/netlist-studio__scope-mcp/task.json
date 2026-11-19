@@ -1,0 +1,91 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.netlist-studio/scope-mcp",
+  "track": "labs",
+  "local_path": "labs/netlist-studio/scope-mcp",
+  "driver_dir": "MHS/drivers/labs/netlist-studio__scope-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/netlist-studio/scope-mcp",
+    "commit": "877a4f6324a581f3b7d4c8de57d719b258d9d9f0",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 69,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "scope:Scope",
+      "file": "scope.py",
+      "line": 13,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "Scope.get_bus_state",
+      "Scope.get_channel",
+      "Scope.get_serial_data",
+      "Scope.get_state",
+      "Scope.get_timebase",
+      "Scope.get_trigger",
+      "Scope.get_waveform",
+      "Scope.idn",
+      "Scope.measure_all"
+    ],
+    "writes": [
+      "Scope.set_channel",
+      "Scope.set_timebase",
+      "Scope.set_timebase_delay",
+      "Scope.set_trigger"
+    ],
+    "actions": [
+      "Scope.measure",
+      "Scope.reset",
+      "Scope.run",
+      "Scope.setup_uart_trigger",
+      "Scope.stop"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install",
+    "limit_sources"
+  ],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/netlist-studio__scope-mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

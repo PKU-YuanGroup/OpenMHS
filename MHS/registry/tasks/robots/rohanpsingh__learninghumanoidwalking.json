@@ -11,21 +11,60 @@
     "license_spdx": "BSD-2-Clause",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "not-device",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "mujoco",
+  "helper": "MujocoDriver",
+  "helper_status": "available",
   "blocked_on": [],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 174,
-  "exemplar": null,
-  "entry_symbols": [],
-  "models": [],
+  "package_status": "pass",
+  "wave": 1,
+  "rank": 40,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "envs.h1.h1_env:H1Env",
+      "file": "envs/h1/h1_env.py",
+      "line": 11,
+      "confidence": "override"
+    },
+    {
+      "symbol": "envs.jvrc.jvrc_walk:JvrcWalkEnv",
+      "file": "envs/jvrc/jvrc_walk.py",
+      "line": 13,
+      "confidence": "override"
+    }
+  ],
+  "models": [
+    {
+      "file": "models/jvrc_mj_description/xml/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/mujoco_menagerie/agility_cassie/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/mujoco_menagerie/aloha/aloha.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/mujoco_menagerie/aloha/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    },
+    {
+      "file": "models/mujoco_menagerie/anybotics_anymal_b/scene.xml",
+      "line": 1,
+      "kind": "scene"
+    }
+  ],
   "install": {
     "python": ">=3.10",
     "commands": [
@@ -36,24 +75,43 @@
     "platform": "any"
   },
   "mock_strategy": {
-    "preferred": "fake",
-    "hints": [],
+    "preferred": "upstream-sim",
+    "hints": [
+      "models/jvrc_mj_description/xml/scene.xml:1 MJCF scene model",
+      "models/mujoco_menagerie/agility_cassie/scene.xml:1 MJCF scene model",
+      "models/mujoco_menagerie/aloha/aloha.xml:1 MJCF scene model",
+      "models/mujoco_menagerie/aloha/scene.xml:1 MJCF scene model"
+    ],
     "upstream_tests": "tests"
   },
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "actions": [
+      "MJCF scene model models/jvrc_mj_description/xml/scene.xml:1",
+      "MJCF scene model models/mujoco_menagerie/agility_cassie/scene.xml:1",
+      "MJCF scene model models/mujoco_menagerie/aloha/aloha.xml:1",
+      "MJCF scene model models/mujoco_menagerie/aloha/scene.xml:1",
+      "MJCF scene model models/mujoco_menagerie/anybotics_anymal_b/scene.xml:1",
+      "MJCF scene model models/mujoco_menagerie/anybotics_anymal_c/scene.xml:1",
+      "MJCF scene model models/mujoco_menagerie/anybotics_anymal_c/scene_mjx.xml:1",
+      "MJCF scene model models/mujoco_menagerie/apptronik_apollo/scene.xml:1",
+      "MJCF scene model models/mujoco_menagerie/berkeley_humanoid/scene.xml:1",
+      "MJCF scene model models/mujoco_menagerie/bitcraze_crazyflie_2/scene.xml:1"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "simulated",
     "risk_floor": "R0",
     "limit_hints": []
   },
   "needs_recon": [],
-  "timebox_min": 15,
+  "timebox_min": 60,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/rohanpsingh__learninghumanoidwalking --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

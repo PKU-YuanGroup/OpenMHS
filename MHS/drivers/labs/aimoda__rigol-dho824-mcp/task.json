@@ -1,0 +1,72 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.aimoda/rigol-dho824-mcp",
+  "track": "labs",
+  "local_path": "labs/aimoda/rigol-dho824-mcp",
+  "driver_dir": "MHS/drivers/labs/aimoda__rigol-dho824-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/aimoda/rigol-dho824-mcp",
+    "commit": "2b177ae161463c911dce3608ab37e8cadcefc4f6",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "scpi",
+  "helper": "ScpiDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 80,
+  "exemplar": "MHS/drivers/labs/thinksrs__srsinst.sr860",
+  "entry_symbols": [
+    {
+      "symbol": "rigol_dho824_mcp.server:RigolDHO824",
+      "file": "src/rigol_dho824_mcp/server.py",
+      "line": 1297,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.10",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "transcript",
+    "hints": [],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [
+      "RigolDHO824.get_identity"
+    ],
+    "writes": [],
+    "actions": [
+      "RigolDHO824.dvm_enable"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/aimoda__rigol-dho824-mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

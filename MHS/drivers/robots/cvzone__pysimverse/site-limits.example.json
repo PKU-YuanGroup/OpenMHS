@@ -1,0 +1,70 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example simulated flight cell (pysimverse drone)",
+  "issued_by": {
+    "id": "operator:example"
+  },
+  "devices": {
+    "mhs://localhost/pysimverse-drone": {
+      "speed": {
+        "min": 10,
+        "max": 500,
+        "source": "operator",
+        "reason": "example only: the clone states no RC speed range; a site sets the native speed its scene expects"
+      },
+      "rotation_speed": {
+        "min": 5,
+        "max": 100,
+        "source": "operator",
+        "reason": "example only: the clone states no rotation-speed range; a site sets the native yaw speed"
+      },
+      "x-cap.cvzone.takeoff.v1": {
+        "takeoff_height": {
+          "min": 10,
+          "max": 200,
+          "source": "operator",
+          "reason": "example only: the clone states no takeoff-height range; a site sets its ceiling"
+        },
+        "takeoff_speed": {
+          "min": 10,
+          "max": 200,
+          "source": "operator",
+          "reason": "example only: the clone states no takeoff-speed range; a site sets its climb rate"
+        }
+      },
+      "x-cap.cvzone.land.v1": {
+        "landing_speed": {
+          "min": 10,
+          "max": 200,
+          "source": "operator",
+          "reason": "example only: the clone states no landing-speed range; a site sets its descent rate"
+        }
+      },
+      "x-cap.cvzone.move.v1": {
+        "distance": {
+          "min": 1,
+          "max": 100,
+          "source": "operator",
+          "reason": "example only: the clone states no distance range; a site sets its flight-cell extent"
+        }
+      },
+      "x-cap.cvzone.rotate.v1": {
+        "angle": {
+          "min": -180,
+          "max": 180,
+          "source": "operator",
+          "reason": "example only: the clone states no angle range; a site sets its allowed yaw change"
+        }
+      },
+      "x-cap.cvzone.rotate_camera.v1": {
+        "angle": {
+          "min": -90,
+          "max": 90,
+          "source": "operator",
+          "reason": "example only: the clone states no camera-angle range; a site sets its camera travel"
+        }
+      }
+    }
+  }
+}

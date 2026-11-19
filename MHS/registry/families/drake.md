@@ -56,11 +56,11 @@ Contact solver parameters change results; AdvanceTo is duration-based.
 
 ## First task cards
 
-- `gh.robotlocomotion/drake`: bridge-runtime, wave 9, rank 127, `MHS/registry/tasks/robots/robotlocomotion__drake.json`
-- `gh.robotlocomotion/director`: skip, wave 9, rank 319, `MHS/registry/tasks/robots/robotlocomotion__director.json`
-- `gh.robotlocomotion/drake-external-examples`: skip, wave 9, rank 356, `MHS/registry/tasks/robots/robotlocomotion__drake-external-examples.json`
-- `gh.vincekurtz/quadruped_drake`: skip, wave 9, rank 486, `MHS/registry/tasks/robots/vincekurtz__quadruped_drake.json`
-- `gh.robotlocomotion/spartan`: skip, wave 9, rank 491, `MHS/registry/tasks/robots/robotlocomotion__spartan.json`
+- `gh.robotlocomotion/drake`: bridge-runtime, wave 9, rank 126, `MHS/registry/tasks/robots/robotlocomotion__drake.json`
+- `gh.robotlocomotion/director`: skip, wave 9, rank 312, `MHS/registry/tasks/robots/robotlocomotion__director.json`
+- `gh.robotlocomotion/drake-external-examples`: skip, wave 9, rank 348, `MHS/registry/tasks/robots/robotlocomotion__drake-external-examples.json`
+- `gh.vincekurtz/quadruped_drake`: skip, wave 9, rank 475, `MHS/registry/tasks/robots/vincekurtz__quadruped_drake.json`
+- `gh.robotlocomotion/spartan`: skip, wave 9, rank 480, `MHS/registry/tasks/robots/robotlocomotion__spartan.json`
 
 ## Sources
 

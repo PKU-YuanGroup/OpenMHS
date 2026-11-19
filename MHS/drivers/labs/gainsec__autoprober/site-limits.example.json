@@ -1,0 +1,30 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/site-limits.schema.json",
+  "openmhs": "0.9",
+  "site": "Example bench (AutoProber CNC)",
+  "issued_by": {"id": "operator:example"},
+  "devices": {
+    "mhs://localhost/autoprober-cnc": {
+      "x-cap.gainsec.move_absolute.v1": {
+        "x_mm": {"min": -25, "max": 25, "unit": "mm", "source": "operator",
+                 "reason": "example only: this bench keeps the probe inside a 25 mm X window; the real machine envelope is not in the clone"},
+        "y_mm": {"min": -25, "max": 25, "unit": "mm", "source": "operator",
+                 "reason": "example only: this bench keeps the probe inside a 25 mm Y window; the real machine envelope is not in the clone"},
+        "z_mm": {"min": -25, "max": 25, "unit": "mm", "source": "operator",
+                 "reason": "example only: this bench keeps the probe inside a 25 mm Z window; the real machine envelope is not in the clone"},
+        "feed_mm_min": {"min": 100, "max": 800, "unit": "mm/min", "source": "operator",
+                        "reason": "example only: the clone recommends 100 to 1500 mm/min by context (AGENTS.md:123-128) but states no single installed-machine bound"}
+      },
+      "x-cap.gainsec.move_relative.v1": {
+        "dx_mm": {"min": -10, "max": 10, "unit": "mm", "source": "operator",
+                  "reason": "example only: a single relative X step of this bench is at most 10 mm; the machine envelope is not in the clone"},
+        "dy_mm": {"min": -10, "max": 10, "unit": "mm", "source": "operator",
+                  "reason": "example only: a single relative Y step of this bench is at most 10 mm; the machine envelope is not in the clone"},
+        "dz_mm": {"min": -5, "max": 5, "unit": "mm", "source": "operator",
+                  "reason": "example only: a single relative Z step of this bench is at most 5 mm; the machine envelope is not in the clone"},
+        "feed_mm_min": {"min": 100, "max": 800, "unit": "mm/min", "source": "operator",
+                        "reason": "example only: the clone recommends 100 to 1500 mm/min by context (AGENTS.md:123-128) but states no single installed-machine bound"}
+      }
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.cai23sbp/isaaclab_parkour",
+  "track": "robots",
+  "local_path": "robots/cai23sbp/isaaclab_parkour",
+  "driver_dir": "MHS/drivers/robots/cai23sbp__isaaclab_parkour",
+  "upstream": {
+    "repo_url": "https://github.com/cai23sbp/isaaclab_parkour",
+    "commit": "d6766d8883cffe427f2d4c087717d4eca1f23d8c",
+    "license_spdx": "GPL-3.0",
+    "license_class": "copyleft"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 6,
+  "rank": 50,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "parkour_isaaclab.envs:ParkourManagerBasedRLEnv",
+      "file": "parkour_isaaclab/envs/parkour_manager_based_rl_env.py",
+      "line": 22,
+      "confidence": "override"
+    },
+    {
+      "symbol": "parkour_tasks.parkour_tasks.extreme_parkour_task.config.go2.parkour_teacher_cfg:UnitreeGo2TeacherParkourEnvCfg",
+      "file": "parkour_tasks/parkour_tasks/extreme_parkour_task/config/go2/parkour_teacher_cfg.py",
+      "line": 33,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": true,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "parkour_tasks/parkour_tasks/extreme_parkour_task/config/go2/__init__.py:18 gym env Isaac-Extreme-Parkour-Teacher-Unitree-Go2-v0",
+      "parkour_tasks/parkour_tasks/extreme_parkour_task/config/go2/__init__.py:29 gym env Isaac-Extreme-Parkour-Teacher-Unitree-Go2-Play-v0",
+      "parkour_tasks/parkour_tasks/extreme_parkour_task/config/go2/__init__.py:40 gym env Isaac-Extreme-Parkour-Teacher-Unitree-Go2-Eval-v0",
+      "parkour_tasks/parkour_tasks/extreme_parkour_task/config/go2/__init__.py:51 gym env Isaac-Extreme-Parkour-Student-Unitree-Go2-v0"
+    ],
+    "upstream_tests": null
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [
+      "gym env Isaac-Extreme-Parkour-Teacher-Unitree-Go2-v0 registered at parkour_tasks/parkour_tasks/extreme_parkour_task/config/go2/__init__.py:18",
+      "gym env Isaac-Extreme-Parkour-Teacher-Unitree-Go2-Play-v0 registered at parkour_tasks/parkour_tasks/extreme_parkour_task/config/go2/__init__.py:29",
+      "gym env Isaac-Extreme-Parkour-Teacher-Unitree-Go2-Eval-v0 registered at parkour_tasks/parkour_tasks/extreme_parkour_task/config/go2/__init__.py:40",
+      "gym env Isaac-Extreme-Parkour-Student-Unitree-Go2-v0 registered at parkour_tasks/parkour_tasks/extreme_parkour_task/config/go2/__init__.py:51",
+      "gym env Isaac-Extreme-Parkour-Student-Unitree-Go2-Play-v0 registered at parkour_tasks/parkour_tasks/extreme_parkour_task/config/go2/__init__.py:62",
+      "gym env Isaac-Extreme-Parkour-Student-Unitree-Go2-Eval-v0 registered at parkour_tasks/parkour_tasks/extreme_parkour_task/config/go2/__init__.py:73"
+    ],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/cai23sbp__isaaclab_parkour --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

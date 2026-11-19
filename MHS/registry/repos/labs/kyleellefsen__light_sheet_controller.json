@@ -1,19 +1,23 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "light_sheet_controller:LightSheetDriver (light_sheet_controller.py:118)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "packaged"
   },
-  "blocked_on": [],
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "build_systems": [],
   "capabilities_offered": [],
   "catalog_refs": [
     "repo_e977326ca926a2f2",
     "https://github.com/kyleellefsen/light_sheet_controller"
   ],
-  "description": "kyleellefsen/light_sheet_controller: control framework for microscopy imaging (lab instrumentation track). OpenMHS plan: not integrated (skip:peripheral). Language: Python.",
+  "description": "kyleellefsen/light_sheet_controller: control framework for microscopy imaging (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 5. Catalog role: controller. Language: Python.",
   "domains": [
     "microscopy imaging"
   ],
@@ -32,15 +36,17 @@
   "id": "gh.kyleellefsen/light_sheet_controller",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: catalogue 'control framework'/'controller' describes software and the scan finds no device or simulation evidence",
-      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata"
+      "NO_HARDWARE_FREE_PATH",
+      "LICENSE_UNKNOWN: no SPDX id in the catalogue, the LICENSE file or the package metadata",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: catalogue 'control framework'/'controller' describes software and the scan finds no device or simulation evidence",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E2",
+    "next_action": "Review MHS/drivers/labs/kyleellefsen__light_sheet_controller/RESULT.json: the package is blocked on NO_HARDWARE_FREE_PATH; clear the codes before MHS/registry/tasks/labs/kyleellefsen__light_sheet_controller.json is dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "direct-driver"
   },
   "interfaces": [],
   "languages": [
@@ -54,11 +60,13 @@
     "repo": "https://github.com/kyleellefsen/light_sheet_controller"
   },
   "local_path": "labs/kyleellefsen/light_sheet_controller",
-  "modes": [],
+  "modes": [
+    "hardware"
+  ],
   "owner": "kyleellefsen",
   "package_id": "gh.kyleellefsen/light_sheet_controller",
   "quarantine": false,
-  "rank": 1963,
+  "rank": 67,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "light_sheet_controller",
@@ -76,15 +84,15 @@
     "control framework",
     "controller",
     "hardware interface",
-    "skip"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "kyleellefsen/light_sheet_controller",
   "track": "labs",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 5,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -128,10 +136,18 @@
       ],
       "family_rule": "language-fallback",
       "family_score": 0,
-      "tier_note": "tier B -> D: triage skip (skip:peripheral)",
       "tier_rule": "B6-role-without-entry"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/kyleellefsen__light_sheet_controller/hardware",
+        "estop_required": false,
+        "mode": "hardware",
+        "resources": [],
+        "risk_floor": "R0",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -146,6 +162,23 @@
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
     },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "NO_HARDWARE_FREE_PATH"
+      ],
+      "commit": "69ce700174c9498f7ad27925b751ed47e45ce3b3",
+      "driver_dir": "MHS/drivers/labs/kyleellefsen__light_sheet_controller",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:f9a47a21c2f1964a420d5951d93db23fb47e02b1d6e8068957a400b551b21d86",
+      "reviewed": false,
+      "status": "blocked"
+    },
     "scan": {
       "build_systems": [],
       "entry_evidence_count": 0,
@@ -154,12 +187,14 @@
     },
     "triage": {
       "evidence": [
-        "catalogue 'control framework'/'controller' describes software and the scan finds no device or simulation evidence"
+        "override (retriage-wave1.json): LightSheetDriver drives two NI USB-6001 boards for piezo scan, camera and laser TTL, so it is a device driver; a port needs PyDAQmx, Qt, a fake DAQ layer and configurable Dev1/Dev2 channels.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "python-object",
+      "helper": "PythonObjectDriver",
+      "justification": "LightSheetDriver drives two NI USB-6001 boards for piezo scan, camera and laser TTL, so it is a device driver; a port needs PyDAQmx, Qt, a fake DAQ layer and configurable Dev1/Dev2 channels.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

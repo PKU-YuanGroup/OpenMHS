@@ -1,0 +1,109 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.zinntikumugai/rigol-oscilloscope-mcp",
+  "track": "labs",
+  "local_path": "labs/zinntikumugai/rigol-oscilloscope-mcp",
+  "driver_dir": "MHS/drivers/labs/zinntikumugai__rigol-oscilloscope-mcp",
+  "upstream": {
+    "repo_url": "https://github.com/zinntikumugai/rigol-oscilloscope-mcp",
+    "commit": "54a1061e23910d31cb30335fa76600409d92b951",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 57,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "rigol_oscilloscope_mcp.driver.scope:ScopeDriver",
+      "file": "src/rigol_oscilloscope_mcp/driver/scope.py",
+      "line": 836,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": ">=3.12",
+    "commands": [
+      "pip install ."
+    ],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "any"
+  },
+  "mock_strategy": {
+    "preferred": "fake",
+    "hints": [],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [
+      "ScopeDriver.get_afg_config",
+      "ScopeDriver.get_channel",
+      "ScopeDriver.get_cursor_config",
+      "ScopeDriver.get_cursor_measurement",
+      "ScopeDriver.get_decode_config",
+      "ScopeDriver.get_decode_events",
+      "ScopeDriver.get_histogram_config",
+      "ScopeDriver.get_histogram_result",
+      "ScopeDriver.get_math_config",
+      "ScopeDriver.get_math_fft_start_hz",
+      "ScopeDriver.get_math_operator",
+      "ScopeDriver.get_measurement_config"
+    ],
+    "writes": [
+      "ScopeDriver.configure_afg",
+      "ScopeDriver.configure_cursor",
+      "ScopeDriver.configure_decode",
+      "ScopeDriver.configure_histogram",
+      "ScopeDriver.configure_math",
+      "ScopeDriver.configure_measurement",
+      "ScopeDriver.configure_meter",
+      "ScopeDriver.configure_reference",
+      "ScopeDriver.configure_trigger",
+      "ScopeDriver.set_afg_output",
+      "ScopeDriver.set_channel_bwlimit",
+      "ScopeDriver.set_channel_coupling"
+    ],
+    "actions": [
+      "ScopeDriver.capture_screenshot_bytes",
+      "ScopeDriver.measure",
+      "ScopeDriver.run",
+      "ScopeDriver.stop",
+      "ControlService.disable_afg",
+      "ControlService.enable_afg",
+      "ControlService.run",
+      "ControlService.stop"
+    ],
+    "candidate_classes": [
+      "cap.device.configure.v1",
+      "cap.sensing.read.v1",
+      "cap.motion.joint_position.v1",
+      "cap.motion.stop.v1",
+      "cap.sensing.image.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "src/rigol_oscilloscope_mcp/service/waveform.py:29 INLINE_POINTS_LIMIT = 10000"
+    ]
+  },
+  "needs_recon": [],
+  "timebox_min": 90,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/zinntikumugai__rigol-oscilloscope-mcp --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

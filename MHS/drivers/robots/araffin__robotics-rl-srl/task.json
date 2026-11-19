@@ -1,0 +1,75 @@
+{
+  "$schema": "https://mhs.openai4s.org/schema/0.9/taskcard.schema.json",
+  "card_version": "0.9",
+  "package_id": "gh.araffin/robotics-rl-srl",
+  "track": "robots",
+  "local_path": "robots/araffin/robotics-rl-srl",
+  "driver_dir": "MHS/drivers/robots/araffin__robotics-rl-srl",
+  "upstream": {
+    "repo_url": "https://github.com/araffin/robotics-rl-srl",
+    "commit": "eae7c1ab310c79662f6e68c0d255e08641037ffa",
+    "license_spdx": "MIT",
+    "license_class": "permissive"
+  },
+  "decision": "family-config",
+  "reason_code": "override:recon",
+  "role": "sim-env",
+  "family": "gymnasium",
+  "helper": "GymnasiumDriver",
+  "helper_status": "available",
+  "blocked_on": [],
+  "quarantine": false,
+  "variant_of": null,
+  "package_status": "pass",
+  "wave": 3,
+  "rank": 105,
+  "exemplar": "MHS/drivers/robots/farama-foundation__gymnasium",
+  "entry_symbols": [
+    {
+      "symbol": "environments.omnirobot_gym.omnirobot_env:OmniRobotEnv",
+      "file": "environments/omnirobot_gym/omnirobot_env.py",
+      "line": 57,
+      "confidence": "override"
+    }
+  ],
+  "models": [],
+  "install": {
+    "python": null,
+    "commands": [],
+    "system_deps": [],
+    "gpu": false,
+    "platform": "linux"
+  },
+  "mock_strategy": {
+    "preferred": "upstream-sim",
+    "hints": [
+      "environments/car_racing/car_env.py:31 CarRacingEnv environment class",
+      "environments/gym_baxter/baxter_env.py:58 BaxterEnv environment class",
+      "environments/kuka_gym/kuka_2button_gym_env.py:6 Kuka2ButtonGymEnv environment class",
+      "environments/kuka_gym/kuka_moving_button_gym_env.py:9 KukaMovingButtonGymEnv environment class"
+    ],
+    "upstream_tests": "tests"
+  },
+  "hints": {
+    "reads": [],
+    "writes": [],
+    "actions": [],
+    "candidate_classes": [
+      "cap.world.reset.v1",
+      "cap.world.step.v1",
+      "cap.world.seed.v1"
+    ]
+  },
+  "safety": {
+    "expected_mode": "simulated",
+    "risk_floor": "R0",
+    "limit_hints": []
+  },
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 60,
+  "acceptance": "python3 -m mhs.driver check MHS/drivers/robots/araffin__robotics-rl-srl --backend fake",
+  "skip_reason": null,
+  "publish_review": "not_required"
+}

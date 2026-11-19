@@ -50,10 +50,10 @@ PX4 and ArduPilot differ; frame conventions must be declared.
 
 ## First task cards
 
-- `gh.ardupilot/ardupilot`: family-config, wave 5, rank 2, `MHS/registry/tasks/robots/ardupilot__ardupilot.json`
-- `gh.px4/px4-autopilot`: family-config, wave 5, rank 3, `MHS/registry/tasks/robots/px4__px4-autopilot.json`
-- `gh.intel/gazebo-sitl`: bridge-runtime, wave 9, rank 571, `MHS/registry/tasks/robots/intel__gazebo-sitl.json`
-- `gh.radarku/px4-sitl-docker`: skip, wave 9, rank 1913, `MHS/registry/tasks/robots/radarku__px4-sitl-docker.json`
+- `gh.ardupilot/ardupilot`: family-config, wave 5, rank 5, `MHS/registry/tasks/robots/ardupilot__ardupilot.json`
+- `gh.px4/px4-autopilot`: family-config, wave 5, rank 6, `MHS/registry/tasks/robots/px4__px4-autopilot.json`
+- `gh.intel/gazebo-sitl`: bridge-runtime, wave 9, rank 556, `MHS/registry/tasks/robots/intel__gazebo-sitl.json`
+- `gh.radarku/px4-sitl-docker`: skip, wave 9, rank 1851, `MHS/registry/tasks/robots/radarku__px4-sitl-docker.json`
 
 ## Sources
 

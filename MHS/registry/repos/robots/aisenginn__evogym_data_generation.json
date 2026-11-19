@@ -1,48 +1,55 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "evogym.envs.walk:WalkingFlat (evogym/envs/walk.py:15)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "conda",
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_0fffb62079c03e46",
     "https://github.com/aisenginn/evogym_data_generation"
   ],
-  "description": "aisenginn/evogym_data_generation: dataset for general (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Python, C, C++. Catalog keywords: Evogym, LLM.",
+  "description": "aisenginn/evogym_data_generation: dataset for general (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 3. Catalog role: peripheral tooling. Language: Python, C, C++. Catalog keywords: Evogym, LLM.",
   "domains": [
     "general"
   ],
   "evidence": {
     "files_read": 7,
     "notes": "bounded static scan: 175 files enumerated (max depth 3), 7 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/aisenginn__evogym_data_generation/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
     "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.aisenginn/evogym_data_generation",
   "integration": {
-    "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)"
-    ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "tooling",
+    "blockers": [],
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/aisenginn__evogym_data_generation: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/aisenginn__evogym_data_generation --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Gymnasium",
@@ -62,17 +69,19 @@
     "repo": "https://github.com/aisenginn/evogym_data_generation"
   },
   "local_path": "robots/aisenginn/evogym_data_generation",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "aisenginn",
   "package_id": "gh.aisenginn/evogym_data_generation",
   "quarantine": false,
-  "rank": 933,
+  "rank": 267,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "evogym_data_generation",
   "repo_url": "https://github.com/aisenginn/evogym_data_generation",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "91c05ab7a793f86e099c21d377f183c95c9990cd",
     "repo_url": "https://github.com/aisenginn/evogym_data_generation"
@@ -83,15 +92,15 @@
     "robotics",
     "dataset",
     "peripheral tooling",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "aisenginn/evogym_data_generation",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 3,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -131,9 +140,27 @@
       ],
       "family_rule": "scored",
       "family_score": 4,
+      "tier_note": "tier D -> B: triage family-config (override:recon)",
       "tier_rule": "D1-peripheral-role"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/aisenginn__evogym_data_generation/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": null,
       "catalog_spdx": null,
@@ -147,6 +174,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "91c05ab7a793f86e099c21d377f183c95c9990cd",
+      "driver_dir": "MHS/drivers/robots/aisenginn__evogym_data_generation",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:8ae03148f4b57ecf73d83c99b01b6913b3adafbb4087ed545c6ff5341a0d0beb",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -162,12 +204,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Reviewed by gpt-6.1-sol (a model): Use concrete Walker-v0 class evogym/envs/walk.py:15, with step at :39 and reset at :74.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "Reviewed by gpt-6.1-sol (a model): Use concrete Walker-v0 class evogym/envs/walk.py:15, with step at :39 and reset at :74.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

@@ -11,20 +11,41 @@
     "license_spdx": "BSD-2-Clause",
     "license_class": "permissive"
   },
-  "decision": "skip",
-  "reason_code": "skip:peripheral",
-  "role": "tooling",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
-  "blocked_on": [],
+  "decision": "direct-driver",
+  "reason_code": "override:recon",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "NO_HARDWARE_FREE_PATH"
+  ],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 630,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 19,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "pennylane_ls.single_qudit_device:SingleQuditDevice",
+      "file": "pennylane_ls/single_qudit_device.py",
+      "line": 23,
+      "confidence": "override"
+    },
+    {
+      "symbol": "pennylane_ls.multi_qudit_device:MultiQuditDevice",
+      "file": "pennylane_ls/multi_qudit_device.py",
+      "line": 23,
+      "confidence": "override"
+    },
+    {
+      "symbol": "pennylane_ls.fermion_device:FermionDevice",
+      "file": "pennylane_ls/fermion_device.py",
+      "line": 26,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": null,
@@ -43,17 +64,23 @@
   "hints": {
     "reads": [],
     "writes": [],
-    "actions": [],
+    "actions": [
+      "FermionDevice.reset",
+      "MultiQuditDevice.reset",
+      "SingleQuditDevice.reset"
+    ],
     "candidate_classes": []
   },
   "safety": {
-    "expected_mode": null,
+    "expected_mode": "hardware",
     "risk_floor": "R0",
     "limit_hints": []
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "capabilities"
+  ],
+  "timebox_min": 90,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/synqs__pennylane-ls --backend fake",
-  "skip_reason": "registry tier D (peripheral, not a device)",
+  "skip_reason": null,
   "publish_review": "not_required"
 }

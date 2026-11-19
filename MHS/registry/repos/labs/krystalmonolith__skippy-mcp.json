@@ -1,22 +1,30 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "python-object",
+    "entry_points": [
+      "skippy_mcp.driver.scope:Scope (packages/skippy-mcp/src/skippy_mcp/driver/scope.py:53)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "packaged"
   },
-  "blocked_on": [],
+  "blocked_on": [
+    "ENTRY_UNVERIFIED"
+  ],
   "build_systems": [
     "docker",
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.sensing.read.v1",
+    "cap.device.configure.v1",
+    "cap.sensing.image.v1"
+  ],
   "catalog_refs": [
     "repo_02933700d465d433",
     "https://github.com/krystalmonolith/skippy-mcp"
   ],
-  "description": "krystalmonolith/skippy-mcp: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: reference only (host). Declared backend: PyVISA; MCP. Language: Python. Catalog keywords: SCPI, PyVISA, Rigol, MCP.",
+  "description": "krystalmonolith/skippy-mcp: protocol implementation/bridge for electronic measurement (lab instrumentation track). OpenMHS plan: direct-driver with PythonObjectDriver, wave 5. Catalog role: device SDK. Declared backend: PyVISA; MCP. Language: Python. Catalog keywords: SCPI, PyVISA, Rigol, MCP.",
   "domains": [
     "electronic measurement"
   ],
@@ -29,20 +37,22 @@
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "scpi-visa"
+    "python-object"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.krystalmonolith/skippy-mcp",
   "integration": {
     "blockers": [
-      "REFERENCE_ONLY: role host"
+      "ENTRY_UNVERIFIED",
+      "NO_INSTALL_FILE: no root pyproject.toml, setup.py, requirements.txt or package.xml"
     ],
-    "effort": "EX",
-    "next_action": "Reference only: a host, orchestrator or MCP wrapper of a covered backend; integrate the backend instead.",
-    "reason_code": "reference:host",
-    "role": "host",
+    "effort": "E2",
+    "next_action": "Review MHS/drivers/labs/krystalmonolith__skippy-mcp/RESULT.json: the package is blocked on ENTRY_UNVERIFIED; clear the codes before MHS/registry/tasks/labs/krystalmonolith__skippy-mcp.json is dispatched again.",
+    "reason_code": "override:direct-driver",
+    "recipe": "families/python-object.md",
+    "role": "device-driver",
     "scenario_required": false,
-    "strategy": "reference"
+    "strategy": "direct-driver"
   },
   "interfaces": [
     "MCP",
@@ -64,36 +74,39 @@
     "repo": "https://github.com/krystalmonolith/skippy-mcp"
   },
   "local_path": "labs/krystalmonolith/skippy-mcp",
-  "modes": [],
+  "modes": [
+    "hardware",
+    "simulated"
+  ],
   "owner": "krystalmonolith",
   "package_id": "gh.krystalmonolith/skippy-mcp",
   "quarantine": false,
-  "rank": 831,
+  "rank": 27,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "skippy-mcp",
   "repo_url": "https://github.com/krystalmonolith/skippy-mcp",
   "ring": 3,
-  "simulation": false,
+  "simulation": true,
   "source": {
     "commit": "0f35e7dca264dc7956d7a083bcc4a652c7aac6a5",
     "repo_url": "https://github.com/krystalmonolith/skippy-mcp"
   },
   "stars": 1,
   "tags": [
-    "scpi-visa",
+    "python-object",
     "lab instrumentation",
     "device sdk",
     "hardware interface",
-    "reference"
+    "direct driver"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "krystalmonolith/skippy-mcp",
   "track": "labs",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 5,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -133,12 +146,59 @@
       "family_matches": [
         "\\bpyvisa\\b"
       ],
+      "family_note": "triage family python-object (catalogue family scpi-visa)",
       "family_rule": "scored",
       "family_score": 10,
-      "tier_note": "tier B -> D: triage reference (reference:host)",
       "tier_rule": "B1-device-sdk"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "device_id": "mhs://openmhs-registry/labs/krystalmonolith__skippy-mcp/hardware",
+        "estop_required": true,
+        "mode": "hardware",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.image.v1"
+            ],
+            "kind": "sensor.camera"
+          }
+        ],
+        "risk_floor": "R1",
+        "safe_state": "the native stop or disable path; the driver author cites it from the upstream code"
+      },
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/labs/krystalmonolith__skippy-mcp/simulated",
+        "mode": "simulated",
+        "models": [
+          "mhs://openmhs-registry/labs/krystalmonolith__skippy-mcp/hardware"
+        ],
+        "resources": [
+          {
+            "capabilities": [
+              "cap.sensing.read.v1",
+              "cap.device.configure.v1"
+            ],
+            "kind": "sensor"
+          },
+          {
+            "capabilities": [
+              "cap.sensing.image.v1"
+            ],
+            "kind": "sensor.camera"
+          }
+        ],
+        "risk_floor": "R1"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "MIT",
@@ -152,6 +212,23 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "ENTRY_UNVERIFIED"
+      ],
+      "commit": "0f35e7dca264dc7956d7a083bcc4a652c7aac6a5",
+      "driver_dir": "MHS/drivers/labs/krystalmonolith__skippy-mcp",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:59cfd993b1cf67ee54874bf5c38d5677c915fdbb5e548a4023a1f1b8e68c92ed",
+      "reviewed": false,
+      "status": "blocked"
     },
     "scan": {
       "build_systems": [
@@ -168,13 +245,15 @@
     },
     "triage": {
       "evidence": [
-        "MCP server wrapping the covered backend pyvisa"
+        "override (retriage-wave1.json): Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 implements a typed Scope facade as a direct driver; inferred SCPI readbacks still keep the package blocked.",
+        "rules alone: reference (reference:host, rule 7)"
       ],
-      "family": null,
+      "family": "python-object",
       "hardware_transport": "class skippy_mcp.transport.pyvisa_transport:PyVisaTransport uses the hardware transport pyvisa",
-      "helper": null,
-      "reason_code": "reference:host",
-      "rule": 7,
+      "helper": "PythonObjectDriver",
+      "justification": "Model review of re-triage wave 1 (gpt-6.1-sol): retriage-drivers-1 implements a typed Scope facade as a direct driver; inferred SCPI readbacks still keep the package blocked.",
+      "reason_code": "override:direct-driver",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

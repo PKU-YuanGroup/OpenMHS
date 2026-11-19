@@ -1,21 +1,29 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "gensim2.env.wrappers:GenSimTaskWrapper (gensim2/env/wrappers.py:5)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "packaged"
   },
-  "blocked_on": [],
+  "blocked_on": [
+    "HELPER_MISSING"
+  ],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_f27bdcf1c141dddc",
     "https://github.com/gensim2/gensim2"
   ],
-  "description": "gensim2/gensim2: policy/algorithm for robot arm manipulation (robotics track). OpenMHS plan: not integrated (skip:peripheral). Declared backend: SAPIEN. Language: Python. Catalog keywords: GenSim2, LLM, CoRL.",
+  "description": "gensim2/gensim2: policy/algorithm for robot arm manipulation (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 5. Catalog role: peripheral tooling. Declared backend: SAPIEN. Language: Python. Catalog keywords: GenSim2, LLM, CoRL.",
   "domains": [
     "robot arm manipulation"
   ],
@@ -28,20 +36,21 @@
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "other"
+    "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.gensim2/gensim2",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)"
+      "HELPER_MISSING"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Review MHS/drivers/robots/gensim2__gensim2/RESULT.json: the package is blocked on HELPER_MISSING; clear the codes before MHS/registry/tasks/robots/gensim2__gensim2.json is dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Python SDK",
@@ -62,36 +71,38 @@
     "repo": "https://github.com/gensim2/gensim2"
   },
   "local_path": "robots/gensim2/gensim2",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "gensim2",
   "package_id": "gh.gensim2/gensim2",
   "quarantine": false,
-  "rank": 805,
+  "rank": 58,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "gensim2",
   "repo_url": "https://github.com/gensim2/gensim2",
   "ring": 3,
-  "simulation": false,
+  "simulation": true,
   "source": {
     "commit": "4c3a5da3b515a9e772e73a93f0a315732af1c937",
     "repo_url": "https://github.com/gensim2/gensim2"
   },
   "stars": 89,
   "tags": [
-    "other",
+    "gymnasium",
     "robotics",
     "policy algorithm",
     "peripheral tooling",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "gensim2/gensim2",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 5,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -129,12 +140,30 @@
       "family_matches": [
         "\\bsapien\\b"
       ],
-      "family_note": "catalogue family sapien dropped: no structural marker in the code",
+      "family_note": "triage family gymnasium (catalogue family sapien)",
       "family_rule": "scored",
       "family_score": 10,
+      "tier_note": "tier D -> B: triage family-config (override:recon)",
       "tier_rule": "D1-peripheral-role"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/gensim2__gensim2/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "MIT",
@@ -148,6 +177,23 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "blocked_on": [
+        "HELPER_MISSING"
+      ],
+      "commit": "4c3a5da3b515a9e772e73a93f0a315732af1c937",
+      "driver_dir": "MHS/drivers/robots/gensim2__gensim2",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:d04d94ab644c17348a7633c09135cbd3cda371e1fdba3ffd3392ce1aeba91b94",
+      "reviewed": false,
+      "status": "blocked"
     },
     "scan": {
       "build_systems": [
@@ -167,12 +213,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Reviewed by gpt-6.1-sol (a model): gensim2/env/create_task.py:21 returns GenSimTaskWrapper, with step/reset at gensim2/env/wrappers.py:66 and :112.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "Reviewed by gpt-6.1-sol (a model): gensim2/env/create_task.py:21 returns GenSimTaskWrapper, with step/reset at gensim2/env/wrappers.py:66 and :112.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

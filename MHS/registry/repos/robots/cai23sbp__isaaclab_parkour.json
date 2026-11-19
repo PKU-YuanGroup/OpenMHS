@@ -1,46 +1,55 @@
 {
   "adapter": {
-    "bridge": "none",
-    "entry_points": [],
+    "bridge": "gymnasium",
+    "entry_points": [
+      "parkour_isaaclab.envs:ParkourManagerBasedRLEnv (parkour_isaaclab/envs/parkour_manager_based_rl_env.py:22)",
+      "parkour_tasks.parkour_tasks.extreme_parkour_task.config.go2.parkour_teacher_cfg:UnitreeGo2TeacherParkourEnvCfg (parkour_tasks/parkour_tasks/extreme_parkour_task/config/go2/parkour_teacher_cfg.py:33)"
+    ],
     "manifest_ref": null,
     "present": false,
-    "state": "none"
+    "state": "runnable"
   },
   "blocked_on": [],
   "build_systems": [
     "python"
   ],
-  "capabilities_offered": [],
+  "capabilities_offered": [
+    "cap.world.reset.v1",
+    "cap.world.step.v1",
+    "cap.world.seed.v1"
+  ],
   "catalog_refs": [
     "repo_bc5d00a9c4098ee4",
     "https://github.com/cai23sbp/isaaclab_parkour"
   ],
-  "description": "cai23sbp/isaaclab_parkour: catalog/discovery tooling (robotics track). OpenMHS plan: not integrated (skip:peripheral). Language: Python. Catalog keywords: Isaaclab, Parkour, locomotion.",
+  "description": "cai23sbp/isaaclab_parkour: catalog/discovery tooling (robotics track). OpenMHS plan: family-config with GymnasiumDriver, wave 6. Catalog role: physics engines. Language: Python. Catalog keywords: Isaaclab, Parkour, locomotion.",
   "domains": [],
   "evidence": {
     "files_read": 4,
     "notes": "bounded static scan: 64 files enumerated (max depth 3), 4 opened (README head <=16 KiB, build files <=32 KiB)",
-    "provenance_refs": [],
-    "read_by": "static_analysis",
-    "state": "static_scan",
+    "provenance_refs": [
+      "MHS/drivers/robots/cai23sbp__isaaclab_parkour/RESULT.json"
+    ],
+    "read_by": "runtime",
+    "state": "contract_checked",
     "verified_at": "2026-10-20T00:00:00Z"
   },
   "families": [
-    "isaac-lab"
+    "gymnasium"
   ],
-  "hardware_free": false,
+  "hardware_free": true,
   "id": "gh.cai23sbp/isaaclab_parkour",
   "integration": {
     "blockers": [
-      "NOT_A_DEVICE: registry tier D (peripheral, not a device)",
       "NEEDS_GPU: an import or the catalogue requires a GPU"
     ],
-    "effort": "EX",
-    "next_action": "Not integrated: registry tier D (peripheral, not a device)",
-    "reason_code": "skip:peripheral",
-    "role": "not-device",
+    "effort": "E1",
+    "next_action": "Maintain MHS/drivers/robots/cai23sbp__isaaclab_parkour: its RESULT.json passed the gate (contract_checked); re-run `python3 -m mhs.driver check MHS/drivers/robots/cai23sbp__isaaclab_parkour --backend fake` and review the package when the upstream commit or the SDK changes. Not dispatched again.",
+    "reason_code": "override:recon",
+    "recipe": "families/gymnasium.md",
+    "role": "sim-env",
     "scenario_required": false,
-    "strategy": "skip"
+    "strategy": "family-config"
   },
   "interfaces": [
     "Isaac Lab",
@@ -61,36 +70,38 @@
     "repo": "https://github.com/cai23sbp/isaaclab_parkour"
   },
   "local_path": "robots/cai23sbp/isaaclab_parkour",
-  "modes": [],
+  "modes": [
+    "simulated"
+  ],
   "owner": "cai23sbp",
   "package_id": "gh.cai23sbp/isaaclab_parkour",
   "quarantine": false,
-  "rank": 1222,
+  "rank": 50,
   "record_type": "package",
   "registry_id": "openmhs-registry",
   "repo": "isaaclab_parkour",
   "repo_url": "https://github.com/cai23sbp/isaaclab_parkour",
-  "ring": 3,
-  "simulation": false,
+  "ring": 1,
+  "simulation": true,
   "source": {
     "commit": "d6766d8883cffe427f2d4c087717d4eca1f23d8c",
     "repo_url": "https://github.com/cai23sbp/isaaclab_parkour"
   },
   "stars": 339,
   "tags": [
-    "isaac-lab",
+    "gymnasium",
     "robotics",
     "catalog discovery tooling",
     "physics engines",
-    "skip"
+    "family config"
   ],
-  "tier": "D",
+  "tier": "B",
   "title": "cai23sbp/isaaclab_parkour",
   "track": "robots",
   "trust": "unsigned",
   "updated_at": "2026-10-20T00:00:00Z",
   "variant_of": null,
-  "wave": 9,
+  "wave": 6,
   "x-vendor": {
     "analyst_profile": {
       "catalog_mapped_via": "manifest_path",
@@ -129,12 +140,30 @@
         "\\bmujoco",
         "\\bmujoco"
       ],
-      "family_note": "catalogue family mujoco has no structural marker; the code shows isaac-lab (imports isaaclab)",
+      "family_note": "triage family gymnasium (catalogue family mujoco)",
       "family_rule": "scored",
       "family_score": 4,
+      "tier_note": "tier D -> B: triage family-config (override:recon)",
       "tier_rule": "D2-peripheral-category"
     },
-    "device_plan": [],
+    "device_plan": [
+      {
+        "backend": "upstream-sim",
+        "device_id": "mhs://openmhs-registry/robots/cai23sbp__isaaclab_parkour/simulated",
+        "mode": "simulated",
+        "resources": [
+          {
+            "capabilities": [
+              "cap.world.reset.v1",
+              "cap.world.step.v1",
+              "cap.world.seed.v1"
+            ],
+            "kind": "world.sim"
+          }
+        ],
+        "risk_floor": "R0"
+      }
+    ],
     "license": {
       "agrees": true,
       "catalog_spdx": "GPL-3.0",
@@ -148,6 +177,21 @@
       "generated_at": "2026-10-20T00:00:00Z",
       "generator": "MHS/registry/build_registry.py",
       "registry_version": "0.9.0"
+    },
+    "overlay": {
+      "authored_by": "model",
+      "commit": "d6766d8883cffe427f2d4c087717d4eca1f23d8c",
+      "driver_dir": "MHS/drivers/robots/cai23sbp__isaaclab_parkour",
+      "evidence_state": "contract_checked",
+      "files": [
+        "RESULT.json",
+        "driver.lock.json",
+        "reference.json",
+        "task.json"
+      ],
+      "gate_digest": "sha256:18a7bc94e5c6d0acf68a54e9a998d80014bcf42ca9f2430f5e84cc0083024147",
+      "reviewed": false,
+      "status": "pass"
     },
     "scan": {
       "build_systems": [
@@ -164,12 +208,14 @@
     },
     "triage": {
       "evidence": [
-        "registry tier D (peripheral, not a device)"
+        "override (retriage-wave1.json): Family-config/gymnasium is right: Isaac Lab extension registering gym tasks for a simulated Unitree Go2, not hardware.",
+        "rules alone: skip (skip:peripheral, rule 8)"
       ],
-      "family": null,
-      "helper": null,
-      "reason_code": "skip:peripheral",
-      "rule": 8,
+      "family": "gymnasium",
+      "helper": "GymnasiumDriver",
+      "justification": "Family-config/gymnasium is right: Isaac Lab extension registering gym tasks for a simulated Unitree Go2, not hardware.",
+      "reason_code": "override:recon",
+      "rule": "override",
       "version": "0.9.4"
     }
   }

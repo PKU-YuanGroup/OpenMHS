@@ -11,20 +11,29 @@
     "license_spdx": "MIT",
     "license_class": "permissive"
   },
-  "decision": "reference",
-  "reason_code": "reference:host",
-  "role": "host",
-  "family": null,
-  "helper": null,
-  "helper_status": null,
-  "blocked_on": [],
+  "decision": "direct-driver",
+  "reason_code": "override:direct-driver",
+  "role": "device-driver",
+  "family": "python-object",
+  "helper": "PythonObjectDriver",
+  "helper_status": "available",
+  "blocked_on": [
+    "ENTRY_UNVERIFIED"
+  ],
   "quarantine": false,
   "variant_of": null,
-  "package_status": "none",
-  "wave": 9,
-  "rank": 831,
-  "exemplar": null,
-  "entry_symbols": [],
+  "package_status": "blocked",
+  "wave": 5,
+  "rank": 27,
+  "exemplar": "MHS/drivers/labs/tiagocoutinho__julabo",
+  "entry_symbols": [
+    {
+      "symbol": "skippy_mcp.driver.scope:Scope",
+      "file": "packages/skippy-mcp/src/skippy_mcp/driver/scope.py",
+      "line": 53,
+      "confidence": "override"
+    }
+  ],
   "models": [],
   "install": {
     "python": null,
@@ -44,18 +53,52 @@
     "upstream_tests": "packages/rig-contract/tests"
   },
   "hints": {
-    "reads": [],
-    "writes": [],
-    "actions": [],
-    "candidate_classes": []
+    "reads": [
+      "MSO5000Dialect.idn",
+      "MSO5000Dialect.measure_item",
+      "MSO5000Dialect.query_channel_scale",
+      "Scope.identify",
+      "Scope.read_waveform",
+      "StimulusDriver.status"
+    ],
+    "writes": [
+      "Scope.configure_channel",
+      "Scope.configure_logic",
+      "Scope.configure_trigger",
+      "StimulusDriver.set_clock_rate",
+      "StimulusDriver.set_pattern"
+    ],
+    "actions": [
+      "MSO5000Dialect.bus_enable",
+      "MSO5000Dialect.channel_enable",
+      "MSO5000Dialect.logic_enable",
+      "MSO5000Dialect.reset",
+      "MSO5000Dialect.run",
+      "MSO5000Dialect.stop",
+      "MSO5000Dialect.trigger_edge_level",
+      "MSO5000Dialect.trigger_edge_slope",
+      "MSO5000Dialect.trigger_edge_source",
+      "MSO5000Dialect.trigger_mode",
+      "Scope.capture",
+      "Scope.measure"
+    ],
+    "candidate_classes": [
+      "cap.sensing.read.v1",
+      "cap.device.configure.v1",
+      "cap.sensing.image.v1"
+    ]
   },
   "safety": {
-    "expected_mode": null,
-    "risk_floor": "R0",
-    "limit_hints": []
+    "expected_mode": "hardware",
+    "risk_floor": "R1",
+    "limit_hints": [
+      "packages/skippy-mcp/reference/logic-analyzer/diag_fault.py:35 MAX_RUNS = 30"
+    ]
   },
-  "needs_recon": [],
-  "timebox_min": 15,
+  "needs_recon": [
+    "install"
+  ],
+  "timebox_min": 90,
   "acceptance": "python3 -m mhs.driver check MHS/drivers/labs/krystalmonolith__skippy-mcp --backend fake",
   "skip_reason": null,
   "publish_review": "not_required"
