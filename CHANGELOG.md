@@ -288,7 +288,7 @@ One section per file in `MHS/changes/`. The fragments are the detailed record of
 
 ### Helper wave 1: the 33 cards the helper integration opened, reviewed by Claude (21 contracts, 11 blocks, 1 skip)
 
-[`MHS/changes/HELPER-WAVE-1.md`](MHS/changes/HELPER-WAVE-1.md): The [helper integration](HELPER-INTEGRATION.md) made 33 cards dispatchable: 10 Ophyd, 8 QCoDeS, 5 PyLabRobot, 3 MCP-client and 3 tag-bridge cards, two cards re-routed to python-object, and the re-dispatch of the code-less blocked packages neuracoreai/bigym (now Gymnasium) and misterblue/ros2_raspicam_node (now an R0 camera card through a reviewed capability-class override). The user had authorized these author runs on 2026-11-04 together with the ROS wave. DeepSeek ...
+[`MHS/changes/HELPER-WAVE-1.md`](MHS/changes/HELPER-WAVE-1.md): The [helper integration](MHS/changes/HELPER-INTEGRATION.md) made 33 cards dispatchable: 10 Ophyd, 8 QCoDeS, 5 PyLabRobot, 3 MCP-client and 3 tag-bridge cards, two cards re-routed to python-object, and the re-dispatch of the code-less blocked packages neuracoreai/bigym (now Gymnasium) and misterblue/ros2_raspicam_node (now an R0 camera card through a reviewed capability-class override). The user had authorized these author runs on 2026-11-04 together with the ROS wave. DeepSeek ...
 
 ### Helper wave 2: the 15 waiting cards the phase-2 routing opened, reviewed by Claude and verified by a second model (9 contracts, 6 blocks)
 
@@ -624,7 +624,7 @@ One section per file in `MHS/changes/`. The fragments are the detailed record of
 
 ### ROS wave C: the 150 remaining ROS cards, reviewed by Claude (58 contracts, 86 blocks, 6 skips)
 
-[`MHS/changes/ROS-WAVE-C.md`](MHS/changes/ROS-WAVE-C.md): After the reviewed ROS helper ([ROS-ACTION-SAFETY.md](ROS-ACTION-SAFETY.md), [ROS-CONTINUATION-B.md](ROS-CONTINUATION-B.md)), 150 ROS `family-config` cards were dispatchable: 148 robot cards of wave 3 and 2 lab cards of wave 6, with card floors R0 (129) and R1 (21); 55 need the owner's publication decision. On 2026-11-04 the user authorized sending their pinned sources, the SDK and the specifications to DeepSeek through the existing DeepSeek Harness for authoring only (no ...
+[`MHS/changes/ROS-WAVE-C.md`](MHS/changes/ROS-WAVE-C.md): After the reviewed ROS helper ([ROS-ACTION-SAFETY.md](MHS/changes/ROS-ACTION-SAFETY.md), [ROS-CONTINUATION-B.md](MHS/changes/ROS-CONTINUATION-B.md)), 150 ROS `family-config` cards were dispatchable: 148 robot cards of wave 3 and 2 lab cards of wave 6, with card floors R0 (129) and R1 (21); 55 need the owner's publication decision. On 2026-11-04 the user authorized sending their pinned sources, the SDK and the specifications to DeepSeek through the existing DeepSeek Harness for authoring only (no ...
 
 ### ROS continuation package review
 
@@ -632,7 +632,7 @@ One section per file in `MHS/changes/`. The fragments are the detailed record of
 
 ### Runtime and gate fixes: a confirmed stop once per e-stop, transport natives resolved, record modes, a linear G4 reader
 
-[`MHS/changes/RUNTIME-AND-GATE-FIXES.md`](MHS/changes/RUNTIME-AND-GATE-FIXES.md): Four defects that the reviews of [ROS wave C](ROS-WAVE-C.md), [helper wave 1](HELPER-WAVE-1.md) and the [helper integration](HELPER-INTEGRATION.md) recorded as found, not fixed. Claude (`claude-opus-5-5`, a model and not a human) changed them in a private copy of the 2026-11-05 tree (`snapshot-2`), with tests, and compared every package's gate before and after. Nothing ran on hardware, a ROS graph or upstream code; every result is `contract_checked` on a fake.
+[`MHS/changes/RUNTIME-AND-GATE-FIXES.md`](MHS/changes/RUNTIME-AND-GATE-FIXES.md): Four defects that the reviews of [ROS wave C](MHS/changes/ROS-WAVE-C.md), [helper wave 1](MHS/changes/HELPER-WAVE-1.md) and the [helper integration](MHS/changes/HELPER-INTEGRATION.md) recorded as found, not fixed. Claude (`claude-opus-5-5`, a model and not a human) changed them in a private copy of the 2026-11-05 tree (`snapshot-2`), with tests, and compared every package's gate before and after. Nothing ran on hardware, a ROS graph or upstream code; every result is `contract_checked` on a fake.
 
 ### SAFE-031 for permit-gated capabilities without inputs (suite 1.4.1)
 
